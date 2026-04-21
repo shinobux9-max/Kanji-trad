@@ -402,6 +402,21 @@ async function loadExemples() {
     }
 }
 
+    // 3. ENREGISTREMENT DU SERVICE WORKER (Pour le mode Plein Écran / PWA)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log("✅ Service Worker enregistré !"))
+            .catch(err => console.error("❌ Échec SW :", err));
+    });
+}
+
+// 4. INITIALISATION AU CHARGEMENT DE LA PAGE
+window.addEventListener('DOMContentLoaded', () => {
+    loadExemples();
+    // Tu peux ajouter ici d'autres fonctions d'initialisation (ex: renderDashboard)
+});
+    
 // Appelle la fonction au démarrage de ton application
 
 loadExemples();
