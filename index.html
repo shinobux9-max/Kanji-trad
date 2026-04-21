@@ -444,29 +444,37 @@ loadExemples();
     let result = event.results[0][0].transcript.trim();
     if (btn) btn.classList.remove('listening');
 
-    // 1. Table de conversion (Symboles de dictée -> Texte)
+    // 1. Table de conversion (Symboles -> Texte)
     const voiceMaps = {
-        "。": "まる",
-        ".": "まる",
-        "、": "てん",
-        ",": "てん",
-        "？": "はてな",
-        "?": "はてな",
-        "！": "びっくり",
-        "!": "びっくり"
+        "。": "まる", ".": "まる",
+        "、": "てん", ",": "てん",
+        "？": "はてな", "?": "はてな",
+        "！": "びっくり", "!": "びっくり"
     };
 
-    // 2. Si le résultat est un de ces symboles, on le convertit en mot
     if (voiceMaps[result]) {
         result = voiceMaps[result];
     }
 
-    // 3. Nettoyage final : on enlève la ponctuation qui traîne à la fin du texte
-    // et on supprime tous les espaces (ex: "ni " devient "ni")
+    // 2. Nettoyage de la ponctuation et des espaces
     result = result.replace(/[。\.、，？！!\?\s]/g, '');
 
-    // 4. Comparaison avec tes lectures valides
-    if (validReadings.includes(result)) {
+    // 3. FONCTION DE CONVERSION KATAKANA -> HIRAGANA
+    // Cela permet d'accepter "ガン" si tu attends "がん"
+    const kanaToHiragana = (str) => {
+        return str.replace(/[\u30a1-\u30f6]/g, (match) => {
+            const chr = match.charCodeAt(0) - 0x60;
+            return String.fromCharCode(chr);
+        });
+    };
+
+    result = kanaToHiragana(result);
+
+    // 4. Comparaison
+    // On s'assure que les lectures attendues sont aussi en hiragana pour comparer des pommes avec des pommes
+    const isCorrect = validReadings.some(r => kanaToHiragana(r) === result);
+
+    if (isCorrect) {
         alert(`✅ Correct ! Tu as dit : ${result}`);
         localStorage.setItem('learned_' + kanjiChar, 'true');
         if (typeof renderGrid === 'function') renderGrid(); 
