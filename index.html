@@ -441,18 +441,39 @@ loadExemples();
         recognition.start();
 
         recognition.onresult = (event) => {
-            let result = event.results[0][0].transcript.trim();
-            if (btn) btn.classList.remove('listening');
-            result = result.replace(/\.$/, '');
+    let result = event.results[0][0].transcript.trim();
+    if (btn) btn.classList.remove('listening');
 
-            if (validReadings.includes(result)) {
-                alert(`✅ Correct ! Tu as dit : ${result}`);
-                localStorage.setItem('learned_' + kanjiChar, 'true');
-                if(typeof renderGrid === 'function') renderGrid(); 
-            } else {
-                alert(`❌ Raté. Tu as dit "${result}".\nAttendu : ${validReadings.join(', ')}`);
-            }
-        };
+    // 1. Table de conversion (Symboles de dictée -> Texte)
+    const voiceMaps = {
+        "。": "まる",
+        ".": "まる",
+        "、": "てん",
+        ",": "てん",
+        "？": "はてな",
+        "?": "はてな",
+        "！": "びっくり",
+        "!": "びっくり"
+    };
+
+    // 2. Si le résultat est un de ces symboles, on le convertit en mot
+    if (voiceMaps[result]) {
+        result = voiceMaps[result];
+    }
+
+    // 3. Nettoyage final : on enlève la ponctuation qui traîne à la fin du texte
+    // et on supprime tous les espaces (ex: "ni " devient "ni")
+    result = result.replace(/[。\.、，？！!\?\s]/g, '');
+
+    // 4. Comparaison avec tes lectures valides
+    if (validReadings.includes(result)) {
+        alert(`✅ Correct ! Tu as dit : ${result}`);
+        localStorage.setItem('learned_' + kanjiChar, 'true');
+        if (typeof renderGrid === 'function') renderGrid(); 
+    } else {
+        alert(`❌ Raté. Tu as dit "${result}".\nAttendu : ${validReadings.join(', ')}`);
+    }
+};
 
         recognition.onerror = (event) => {
             if (btn) btn.classList.remove('listening');
