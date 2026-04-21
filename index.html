@@ -1745,7 +1745,6 @@ function openDetail(kanji) {
    ══════════════════════════════════════════════════ */
 
 function renderExemples(char) {
-    // 1. Cibler le conteneur ou le créer dans la zone de détail
     let container = document.getElementById('exemples-container');
     const detailContent = document.querySelector('.detail-content');
 
@@ -1756,10 +1755,8 @@ function renderExemples(char) {
         detailContent.appendChild(container);
     }
 
-    // Vider le conteneur pour éviter les doublons lors du changement de kanji
     if (container) container.innerHTML = '';
 
-    // 2. Récupérer les données
     const liste = exemplesDb[char];
     
     if (!liste || liste.length === 0) {
@@ -1770,21 +1767,28 @@ function renderExemples(char) {
         return;
     }
 
-    // 3. Construction du HTML
-    const html = liste.map(ex => `
-        <div class="example-item" onclick="speakSentence('${ex.jp.replace(/'/g, "\\'")}')" 
-             style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:12px; cursor:pointer; border-left:4px solid #00c9a7; transition:0.2s; position:relative; margin: 0 10px 12px 10px;">
-            <div style="font-size:1.2rem; color:#fff; margin-bottom:6px; letter-spacing:0.5px;">${ex.jp}</div>
-            <div style="font-size:0.85rem; color:#00c9a7; margin-bottom:6px; font-family:monospace;">${ex.ro || ''}</div>
-            <div style="font-size:0.95rem; color:#a0a0b0; line-height:1.4;">${ex.fr}</div>
-            <div style="text-align:right; font-size:10px; opacity:0.5; margin-top:8px; letter-spacing:1px;">🔊 CLIQUEZ POUR ÉCOUTER</div>
-        </div>
-    `).join('');
+    const html = liste.map(ex => {
+        // STRATÉGIE : Si le texte japonais est juste le kanji (ex: "土"), 
+        // on envoie à la voix le contenu de "ro" (ex: "つち") qui est sans ambiguïté.
+        // Sinon, on envoie la phrase complète "jp".
+        const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
+        const safeSpeak = textToSpeak.replace(/'/g, "\\'");
+
+        return `
+            <div class="example-item" onclick="speakSentence('${safeSpeak}')" 
+                 style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:12px; cursor:pointer; border-left:4px solid #00c9a7; transition:0.2s; position:relative; margin: 0 10px 12px 10px;">
+                <div style="font-size:1.2rem; color:#fff; margin-bottom:6px; letter-spacing:0.5px;">${ex.jp}</div>
+                <div style="font-size:0.85rem; color:#00c9a7; margin-bottom:6px; font-family:monospace;">${ex.ro || ''}</div>
+                <div style="font-size:0.95rem; color:#a0a0b0; line-height:1.4;">${ex.fr}</div>
+                <div style="text-align:right; font-size:10px; opacity:0.5; margin-top:8px; letter-spacing:1px;">🔊 CLIQUEZ POUR ÉCOUTER</div>
+            </div>
+        `;
+    }).join('');
 
     container.innerHTML = `
         <div style="font-size:11px; color:var(--gray); text-transform:uppercase; letter-spacing:1.5px; margin: 0 10px 15px 10px; font-weight:bold; display:flex; align-items:center; gap:8px;">
             <span style="background:#00c9a7; width:8px; height:8px; border-radius:50%;"></span>
-            Exemples de phrases
+            Exemples et Lectures
         </div>
         ${html}
     `;
