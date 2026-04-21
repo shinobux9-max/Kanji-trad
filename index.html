@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -7,10 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#121212">
    <style>
     :root {
         --bg: #0e0e12; --surface: #18181f; --card: #1e1e28; --text: #dde0eb;
@@ -18,7 +14,18 @@
         --grade-prim: #3ecf8e; --grade-mid: #6c7bff;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Noto Sans JP', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow: hidden; }
+
+    /* --- POLICE JAPONAISE UNIFIÉE ---
+       font-variant-east-asian: jis04 sur body force le glyphe japonais partout
+       (八 ouvert, sans crochet CJK) — y compris dans les éléments créés par innerHTML */
+    body {
+        font-family: 'Noto Sans JP', sans-serif;
+        font-variant-east-asian: jis04;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        overflow: hidden;
+    }
 
     /* ── TOOLBAR ─────────────────────── */
     .toolbar { background: rgba(14,14,18,0.97); height: 56px; display: flex; align-items: center; padding: 0 12px; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
@@ -45,7 +52,7 @@
     .search-empty .big { font-size: 40px; margin-bottom: 12px; }
     .search-hit { display: flex; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; gap: 14px; transition: background 0.1s; }
     .search-hit:active { background: var(--card); }
-    .search-hit-char { font-size: 30px; width: 44px; text-align: center; color: #fff; line-height: 1; padding-top: 3px; }
+    .search-hit-char { font-family: 'Noto Sans JP', sans-serif; font-variant-east-asian: jis04; font-size: 30px; width: 44px; text-align: center; color: #fff; line-height: 1; padding-top: 3px; }
     .search-hit-info { flex: 1; }
     .search-hit-meaning { font-size: 14px; color: var(--text); }
     .search-hit-readings { font-size: 11px; color: var(--gray); margin-top: 2px; }
@@ -98,7 +105,6 @@
     .tanuki-img { width: 52px; height: 52px; margin-right: 14px; border-radius: 50%; }
     
     /* Styles pour la Maîtrise / Progression */
-    .section-title { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 16px; font-weight: 700; }
     .prog-item { margin-bottom: 16px; }
     .prog-info { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
     .prog-name { font-weight: 600; color: var(--text); }
@@ -261,7 +267,7 @@
     .sq-grid-overlay::after  { top: 50%; left: 0; height: 1px; width: 100%; }
     .sq-stroke-tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 340px; }
     .sq-stroke-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background 0.2s, transform 0.15s; }
-    .sq-stroke-dot.done     { background: var(--accent); transform: scale(1.2); }
+    .sq-stroke-dot.done      { background: var(--accent); transform: scale(1.2); }
     .sq-stroke-dot.mistake { background: #e55; transform: scale(1.3); animation: shakeDot 0.3s ease; }
     @keyframes shakeDot { 0%,100%{transform:scale(1.3) translateX(0)} 25%{transform:scale(1.3) translateX(-3px)} 75%{transform:scale(1.3) translateX(3px)} }
     .sq-canvas-wrap.flash-ok  { animation: flashOk  0.35s ease; }
@@ -270,13 +276,12 @@
     @keyframes flashErr { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 0 4px #e55} }
     .sq-actions { display: flex; gap: 10px; width: 100%; max-width: 340px; }
     .sq-btn { flex: 1; padding: 13px; border: none; border-radius: 10px; font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
-    .sq-btn.hint   { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-    .sq-btn.skip   { background: var(--surface); color: var(--gray);  border: 1px solid var(--border); }
+    .sq-btn.hint    { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .sq-btn.skip    { background: var(--surface); color: var(--gray);  border: 1px solid var(--border); }
     .series-trace-btn { padding: 8px 12px; background: var(--surface); border: 1px solid var(--accent2); color: var(--accent2); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; }
     .series-trace-btn:active { background: var(--accent2); color: #fff; }
     .grade-trace-btn { width: 100%; padding: 11px; background: transparent; border: 1px solid var(--accent2); border-radius: 8px; color: var(--accent2); font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 8px; transition: all 0.15s; }
     .grade-trace-btn:active { background: var(--accent2); color: #fff; }
-
 </style>
 </head>
 <body>
@@ -384,146 +389,84 @@
 
 <script>
 
-// Déclaration de la variable globale (une seule fois en haut du script)
-
-let exemplesDb = {};
-
-async function loadExemples() {
-    const url = "https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json";
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-        
-        exemplesDb = await response.json();
-        console.log("✅ Exemples chargés avec succès depuis GitHub !");
-    } catch (error) {
-        console.error("❌ Impossible de charger le fichier exemples.json :", error);
-        exemplesDb = {}; // Éviter que la variable reste undefined
-    }
-}
-
-    // 3. ENREGISTREMENT DU SERVICE WORKER (Pour le mode Plein Écran / PWA)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log("✅ Service Worker enregistré !"))
-            .catch(err => console.error("❌ Échec SW :", err));
-    });
-}
-
-// 4. INITIALISATION AU CHARGEMENT DE LA PAGE
-window.addEventListener('DOMContentLoaded', () => {
-    loadExemples();
-    // Tu peux ajouter ici d'autres fonctions d'initialisation (ex: renderDashboard)
-});
-    
-// Appelle la fonction au démarrage de ton application
-
-loadExemples();
-
 /* ── LOGIQUE DU QUIZ VOCAL ── */
 
-    function startOralTest(kanjiChar) {
-        const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
-        if (!kanjiData) return;
+function startOralTest(kanjiChar) {
+    const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
+    if (!kanjiData) return;
 
-        // 1. Préparation des lectures valides
-        let validReadings = [
-            ...kanjiData.on, 
-            ...kanjiData.kun, 
-            kanjiChar
-        ].map(r => r.replace(/[.\-].*/, '').trim()); 
+    let validReadings = [
+        ...kanjiData.on,
+        ...kanjiData.kun,
+        kanjiChar
+    ].map(r => r.replace(/[.\-].*/, '').trim());
 
-        // 2. Équivalents numériques pour les nombres
-        const numberMap = {
-            "一": "1", "二": "2", "三": "3", "四": "4", "五": "5",
-            "六": "6", "七": "7", "八": "8", "九": "9", "十": "10"
-        };
-        if (numberMap[kanjiChar]) {
-            validReadings.push(numberMap[kanjiChar]);
-        }
+    const numberMap = {
+        "一":"1","二":"2","三":"3","四":"4","五":"5",
+        "六":"6","七":"7","八":"8","九":"9","十":"10"
+    };
+    if (numberMap[kanjiChar]) validReadings.push(numberMap[kanjiChar]);
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-            alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
-            return;
-        }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
+        return;
+    }
 
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'ja-JP';
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 1;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ja-JP';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-        const btn = document.getElementById('btn-oral-test');
-        if (btn) btn.classList.add('listening');
+    const btn = document.getElementById('btn-oral-test');
+    if (btn) btn.classList.add('listening');
+    recognition.start();
 
-        recognition.start();
+    recognition.onresult = (event) => {
+        let result = event.results[0][0].transcript.trim();
+        const btn2 = document.getElementById('btn-oral-test');
+        if (btn2) btn2.classList.remove('listening');
 
-        recognition.onresult = (event) => {
-    let result = event.results[0][0].transcript.trim();
-    if (btn) btn.classList.remove('listening');
+        if (result === '。' || result === '.') result = 'まる';
+        result = result.replace(/[。\.、，？！!\?\s]/g, '');
 
-    // 1. Nettoyage de base (Ponctuation et Espaces)
-    // On garde quand même le maru/point car c'est un cas spécial de ponctuation
-    if (result === "。" || result === ".") result = "まる";
-    result = result.replace(/[。\.、，？！!\?\s]/g, '');
+        const toHiragana = str => str.replace(/[\u30a1-\u30f6]/g,
+            m => String.fromCharCode(m.charCodeAt(0) - 0x60));
 
-    // 2. Fonction de conversion Katakana -> Hiragana
-    const toHiragana = (str) => {
-        return str.replace(/[\u30a1-\u30f6]/g, (match) => {
-            return String.fromCharCode(match.charCodeAt(0) - 0x60);
+        const kanjiToHiraganaMap = { "人":"ひと","日":"ひ","木":"き","手":"て","目":"め" };
+        if (kanjiToHiraganaMap[result]) result = kanjiToHiraganaMap[result];
+
+        const normalizedResult = toHiragana(result);
+
+        const isCorrect = validReadings.some(r => {
+            const cleanReading = toHiragana(r.replace(/[.\-].*/, '').trim());
+            return result === kanjiChar || cleanReading === normalizedResult;
         });
+
+        const feedback = document.getElementById('voice-feedback');
+        if (isCorrect) {
+            if (feedback) { feedback.style.color = 'var(--accent)'; feedback.textContent = `✔ Correct ! « ${result} »`; }
+            localStorage.setItem('learned_' + kanjiChar, 'true');
+        } else {
+            if (feedback) { feedback.style.color = '#e55'; feedback.textContent = `✘ Dit : « ${result} » — Attendu : ${validReadings.slice(0,4).join(', ')}`; }
+        }
     };
 
-    // 3. LA CLÉ : Table de secours pour les Kanjis homophones fréquents
-    // On ne peut pas tout deviner, mais on peut forcer la conversion des plus gênants
-    const kanjiToHiraganaMap = {
-        "人": "ひと",
-        "日": "ひ",
-        "木": "き",
-        "手": "て",
-        "目": "め"
+    recognition.onerror = (event) => {
+        const btn2 = document.getElementById('btn-oral-test');
+        if (btn2) btn2.classList.remove('listening');
+        const feedback = document.getElementById('voice-feedback');
+        if (feedback) { feedback.style.color = '#e55'; feedback.textContent = 'Erreur micro : ' + event.error; }
     };
-    if (kanjiToHiraganaMap[result]) {
-        result = kanjiToHiraganaMap[result];
-    }
 
-    // On convertit le résultat du micro en Hiragana (pour gérer les Katakanas de Google)
-    const normalizedResult = toHiragana(result);
+    recognition.onspeechend = () => recognition.stop();
+}
 
-    // 4. Comparaison souple
-    const isCorrect = validReadings.some(r => {
-        // On nettoie la lecture attendue (on enlève les points de liaison ex: た.べる -> たべる)
-        const cleanReading = toHiragana(r.replace(/[.\-].*/, '').trim());
-        
-        // On compare :
-        // Soit c'est le Kanji exact (ex: "一")
-        // Soit c'est la lecture convertie en Hiragana
-        return result === kanjiChar || cleanReading === normalizedResult;
-    });
-
-    if (isCorrect) {
-        alert(`✅ Correct ! Tu as dit : ${result}`);
-        localStorage.setItem('learned_' + kanjiChar, 'true');
-        if (typeof renderGrid === 'function') renderGrid(); 
-    } else {
-        alert(`❌ Raté. Tu as dit "${result}".\nAttendu : ${validReadings.join(', ')}`);
-    }
-};
-
-        recognition.onerror = (event) => {
-            if (btn) btn.classList.remove('listening');
-            alert("Erreur de micro : " + event.error);
-        };
-
-        recognition.onspeechend = () => {
-            recognition.stop();
-        };
-    }
 /* ══════════════════════════════════════════════════
    STATE
 ══════════════════════════════════════════════════ */
-let kanjiDb  = [];          // source de vérité : [{char, grade, meanings, on, kun, strokes}]
+let exemplesDb   = {};
+let kanjiDb  = [];
 let kanjiMap = new Map();   // char → index dans kanjiDb  (O(1) lookup)
 let categories = new Map(); // catId → {id, label, color, short, indices[]}
 let seriesMap  = new Map(); // seriesId → {id, catId, label, indices[]}
@@ -626,48 +569,6 @@ function buildSeries() {
     }
 }
 
-/* ══════════════════════════════════════════════════
-   JavaScript pour générer la liste
-══════════════════════════════════════════════════ */
-function initDashboard() {
-    const container = document.getElementById('progression-list');
-    if (!container) return;
-    container.innerHTML = ''; // On vide le contenu statique
-
-    const levels = [
-        { id: 5, label: 'N5 - Débutant' },
-        { id: 4, label: 'N4 - Élémentaire' },
-        { id: 3, label: 'N3 - Intermédiaire' },
-        { id: 2, label: 'N2 - Avancé' },
-        { id: 1, label: 'N1 - Expert' }
-    ];
-
-    levels.forEach(level => {
-        // On filtre les kanjis par niveau (jlpt_nouveau)
-        const totalInLevel = kanjiDb.filter(k => k.jlpt_nouveau === level.id).length;
-        
-        // On récupère combien sont "appris" dans le localStorage
-        // On créera cette clé plus tard quand tu réussiras un quiz
-        const learned = kanjiDb.filter(k => 
-            k.jlpt_nouveau === level.id && localStorage.getItem(`learned_${k.char}`)
-        ).length;
-
-        const percent = totalInLevel > 0 ? Math.round((learned / totalInLevel) * 100) : 0;
-
-        const html = `
-            <div class="prog-item">
-                <div class="prog-info">
-                    <span class="prog-name">${level.label}</span>
-                    <span class="prog-stats">${learned} / ${totalInLevel}</span>
-                </div>
-                <div class="prog-track">
-                    <div class="prog-fill" style="width: ${percent}%;"></div>
-                </div>
-            </div>
-        `;
-        container.innerHTML += html;
-    });
-}
 /* ══════════════════════════════════════════════════
    UTILITAIRES
 ══════════════════════════════════════════════════ */
@@ -873,56 +774,17 @@ function renderSidebar() {
 }
 
 /* ══════════════════════════════════════════════════
-   NAVIGATION
+   DASHBOARD
 ══════════════════════════════════════════════════ */
-function navDashboard() { toggleSidebar(false); renderDashboard(); }
-function navKana()      { toggleSidebar(false); loadKanas(); }
-
 function showDashboard() {
-    const main = document.getElementById('main-content');
-    
-    main.innerHTML = `
-        <div class="dash-wrap">
-            <div class="welcome-box">
-                <img src="https://via.placeholder.com/52" class="tanuki-img" alt="Tanuki">
-                <div>
-                    <div style="font-weight:bold; font-size:16px;">Salut, Shogun !</div>
-                    <div style="font-size:12px; color:var(--gray);">Prêt pour tes révisions ?</div>
-                </div>
-            </div>
-
-            <div class="dash-card">
-                <div class="streak-info">
-                    <div>
-                        <span class="streak-val">0</span>
-                        <span class="streak-label">JOURS</span>
-                    </div>
-                    <div>
-                        <span class="streak-val">0</span>
-                        <span class="streak-label">TOTAL</span>
-                    </div>
-                </div>
-                <div class="dots-grid" id="streak-dots">
-                    ${'<div class="dot active"></div>'.repeat(1)}
-                    ${'<div class="dot"></div>'.repeat(6)}
-                </div>
-            </div>
-
-            <div class="dash-card">
-                <div class="section-title">NIVEAUX DE MAÎTRISE</div>
-                <div id="progression-list">
-                    </div>
-            </div>
-        </div>
-    `;
-}
-
-function renderDashboard() {
-    document.getElementById('page-title').innerText = '漢字 Study';
-    const total = kanjiDb.length;
-    const nbCats = [...categories.values()].filter(c => c.indices.length).length;
     document.getElementById('main-content').innerHTML = `
         <div class="dash-wrap">
+            <div class="welcome-box">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img" alt="">
+                <div style="font-size:13px;line-height:1.6">
+                    Bienvenue !<br>Choisissez une catégorie pour commencer.
+                </div>
+            </div>
             <div class="dash-card">
                 <div class="streak-info">
                     <div><span class="streak-val">365</span><span class="streak-label">Série actuelle 🔥</span></div>
@@ -930,32 +792,24 @@ function renderDashboard() {
                     <div><span class="streak-val">今日</span><span class="streak-label">Dernière étude</span></div>
                 </div>
                 <div class="dots-grid">${Array(28).fill(0).map((_,i)=>`<div class="dot${i===27?' active':''}"></div>`).join('')}</div>
-                <div style="margin-top:12px;font-size:11px;color:var(--gray);display:flex;justify-content:space-between">
-                    <span>20 avr. 2026</span><span>${total} kanji · ${nbCats} catégories</span>
-                </div>
             </div>
-            <div class="welcome-box">
-                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img">
-                <div style="font-size:13px;line-height:1.6">Bienvenue ! ${total} kanji chargés.<br>Choisissez une catégorie pour commencer.</div>
-            </div>
-            <div style="padding:0 2px">
-                <div class="section-cards-title" style="margin-bottom:10px">Catégories</div>
-                ${CAT_DEFS.map(def => {
-                    const cat = categories.get(def.id);
-                    if (!cat || !cat.indices.length) return '';
-                    const nbSer = [...seriesMap.values()].filter(s => s.catId === def.id).length;
-                    return `<div class="section-card" onclick="loadCategory('${def.id}')">
-                        <div class="section-card-dot" style="background:${def.color}"></div>
-                        <div class="section-card-body">
-                            <div class="section-card-label">${def.label}</div>
-                            <div class="section-card-sub">${cat.indices.length} kanji · ${nbSer} séries</div>
-                        </div>
-                        <button class="section-card-quiz" onclick="event.stopPropagation();startQuiz({type:'category',id:'${def.id}'})">Quiz ▶</button>
-                    </div>`;
-                }).join('')}
+            <div class="dash-card">
+                <div class="section-title" style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
+                <div id="progression-list"></div>
             </div>
         </div>`;
 }
+
+/* ══════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════ */
+function navDashboard() {
+    toggleSidebar(false);
+    document.getElementById('page-title').innerText = '漢字 Study';
+    showDashboard();
+    renderDashboard();
+}
+function navKana() { toggleSidebar(false); loadKanas(); }
 
 /* ── PAGE CATÉGORIE ───────────────────────────────── */
 function loadCategory(catId) {
@@ -1749,177 +1603,106 @@ async function animateKanaChar(char) {
 }
 
 /* ══════════════════════════════════════════════════
-   DETAIL VIEW (conservé intégralement + HanziWriter)
+   FONCTIONS GLOBALES : EXEMPLES & AUDIO
 ══════════════════════════════════════════════════ */
-function openDetail(kanji) {
-    currentType = 'kanji'; 
-    currentChar = kanji.char;
-    
-    const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
-    
-    document.getElementById('detail-view').style.display = 'flex';
-    document.getElementById('detail-char-title').innerText = kanji.char;
 
-    // --- NETTOYAGE DES SENS ---
-    const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
-    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
+function renderExemples(char) {
+    let container = document.getElementById('exemples-container');
+    const detailContent = document.querySelector('.detail-content');
 
-    // --- AJOUT DU QUIZ VOCAL (Injection dynamique) ---
-    // On vérifie si le conteneur existe déjà, sinon on le crée après le sens
-    let oralSection = document.getElementById('oral-test-container');
-    if (!oralSection) {
-        oralSection = document.createElement('div');
-        oralSection.id = 'oral-test-container';
-        oralSection.style.textAlign = 'center';
-        oralSection.style.margin = '15px 0';
-        oralSection.style.padding = '10px';
-        oralSection.style.background = 'rgba(255,255,255,0.05)';
-        oralSection.style.borderRadius = '12px';
-        document.getElementById('d-meaning').after(oralSection);
+    if (!container && detailContent) {
+        container = document.createElement('div');
+        container.id = 'exemples-container';
+        container.style.cssText = 'margin-top:25px; border-top:1px solid var(--border); padding:20px 0; width:100%; box-sizing:border-box;';
+        detailContent.appendChild(container);
     }
 
-    oralSection.innerHTML = `
-        <div style="font-size: 10px; color: var(--gray); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Test de lecture</div>
-        <button class="oral-quiz-btn" onclick="startOralTest('${kanji.char}')" 
-                style="background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: 0.3s;">
-            🎤
-        </button>
-        <p id="voice-feedback" style="font-size: 11px; color: var(--gray); margin-top: 5px;">Cliquez et dites la lecture</p>
-    `;
+    if (container) container.innerHTML = '';
+    if (typeof exemplesDb === 'undefined') return;
 
-    // --- STATS ---
-    document.getElementById('d-level').innerText   = cat ? cat.short : '–';
-    document.getElementById('d-strokes').innerText = kanji.strokes;
-    document.getElementById('d-romaji').innerText  = '–';
+    const liste = exemplesDb[char];
+    if (!liste || liste.length === 0) {
+        if (container) container.innerHTML = `<div style="color:var(--gray);font-size:13px;text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;margin:10px 20px;">Aucun exemple disponible</div>`;
+        return;
+    }
 
-    // --- LECTURES ---
-    document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
-    document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
+    const html = liste.map(ex => {
+        const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
+        const safeSpeak = textToSpeak.replace(/'/g, "\\'");
+        return `<div class="example-item" onclick="speakSentence('${safeSpeak}')"
+             style="background:rgba(255,255,255,0.03);padding:15px;border-radius:12px;margin:0 10px 12px 10px;cursor:pointer;border-left:4px solid #00c9a7;transition:0.2s;">
+            <div style="font-size:1.2rem;color:#fff;margin-bottom:6px;">${ex.jp}</div>
+            <div style="font-size:0.85rem;color:#00c9a7;margin-bottom:6px;font-family:monospace;">${ex.ro || ''}</div>
+            <div style="font-size:0.95rem;color:#a0a0b0;line-height:1.4;">${ex.fr}</div>
+        </div>`;
+    }).join('');
 
-    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
-    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+    container.innerHTML = `<div style="font-size:11px;color:var(--gray);text-transform:uppercase;margin:0 10px 15px 10px;font-weight:bold;">Exemples et Lectures</div>${html}`;
+}
 
-    // --- HANZI WRITER ---
-    document.getElementById('kana-writer-svg').style.display     = 'none';
-    document.getElementById('writer-spinner').style.display      = 'none';
-    document.getElementById('kanji-writer-target').style.display = 'block';
-    document.getElementById('kanji-writer-target').innerHTML    = '';
-
-    writer = HanziWriter.create('kanji-writer-target', kanji.char, {
-        width:140, height:140, padding:15, strokeColor:'#00c9a7',
-        outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
-    });
-    writer.animateCharacter();
-
-    // --- EXEMPLES ---
-    if (typeof renderExemples === "function") renderExemples(kanji.char);
+function speakSentence(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'ja-JP';
+    msg.rate = 0.8;
+    window.speechSynthesis.speak(msg);
 }
 
 /* ══════════════════════════════════════════════════
-        FONCTIONS DE RENDU & AUDIO
-       ══════════════════════════════════════════════════ */
-
-    function renderExemples(char) {
-        let container = document.getElementById('exemples-container');
-        const detailContent = document.querySelector('.detail-content');
-
-        if (!container && detailContent) {
-            container = document.createElement('div');
-            container.id = 'exemples-container';
-            container.style.cssText = "margin-top:25px; border-top:1px solid var(--border); padding:20px 0; width:100%; box-sizing:border-box;";
-            detailContent.appendChild(container);
-        }
-
-        if (container) container.innerHTML = '';
-
-        if (typeof exemplesDb === 'undefined') return;
-        const liste = exemplesDb[char];
-        
-        if (!liste || liste.length === 0) {
-            if (container) {
-                container.innerHTML = `<div style="color:var(--gray); font-size:13px; text-align:center; padding:20px; border:1px dashed var(--border); border-radius:10px; margin: 10px 20px;">Aucun exemple disponible</div>`;
-            }
-            return;
-        }
-
-        const html = liste.map(ex => {
-            const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
-            const safeSpeak = textToSpeak.replace(/'/g, "\\'");
-
-            return `
-                <div class="example-item" onclick="speakSentence('${safeSpeak}')" 
-                     style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:12px; cursor:pointer; border-left:4px solid #00c9a7; transition:0.2s; position:relative; margin: 0 10px 12px 10px;">
-                    <div style="font-size:1.2rem; color:#fff; margin-bottom:6px;">${ex.jp}</div>
-                    <div style="font-size:0.85rem; color:#00c9a7; margin-bottom:6px; font-family:monospace;">${ex.ro || ''}</div>
-                    <div style="font-size:0.95rem; color:#a0a0b0; line-height:1.4;">${ex.fr}</div>
-                </div>`;
-        }).join('');
-
-        container.innerHTML = `<div style="font-size:11px; color:var(--gray); text-transform:uppercase; margin: 0 10px 15px 10px; font-weight:bold;">Exemples et Lectures</div>${html}`;
-    }
-
-    function speakSentence(text) {
-        if (!window.speechSynthesis) return;
-        window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'ja-JP';
-        msg.rate = 0.8;
-        window.speechSynthesis.speak(msg);
-    }
-
-    // Initialisation au chargement
-    window.addEventListener('DOMContentLoaded', () => {
-        // On attend un court instant pour s'assurer que les données sont prêtes
-        setTimeout(() => {
-            init();
-        }, 500);
-    });
-
-/* ══════════════════════════════════════════════════
-    GESTION DES DÉTAILS (KANA & KANJI)
-   ══════════════════════════════════════════════════ */
+   GESTION DES DÉTAILS (KANJI)
+══════════════════════════════════════════════════ */
 
 function openDetail(kanji) {
     currentType = 'kanji'; currentChar = kanji.char;
     const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
-    
-    // 1. Affichage de la vue
+
     const detailView = document.getElementById('detail-view');
     detailView.style.display = 'flex';
-    
-    // Optionnel : Remonter tout en haut de la fiche quand on change de Kanji
-    detailView.scrollTop = 0; 
+    detailView.querySelector('.detail-content').scrollTop = 0;
 
     document.getElementById('detail-char-title').innerText = kanji.char;
-    
-    // 2. Nettoyage des sens (filtre "radical")
+
+    // Sens nettoyés (sans "radical")
     const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
     document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
-    
+
+    // Bouton test oral (injecté une seule fois, mis à jour à chaque ouverture)
+    let oralSection = document.getElementById('oral-test-container');
+    if (!oralSection) {
+        oralSection = document.createElement('div');
+        oralSection.id = 'oral-test-container';
+        oralSection.style.cssText = 'text-align:center;margin:15px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:12px;';
+        document.getElementById('d-meaning').after(oralSection);
+    }
+    const safeChar = kanji.char.replace(/'/g, "\\'");
+    oralSection.innerHTML = `
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;margin-bottom:8px;letter-spacing:1px;">Test de prononciation</div>
+        <button id="btn-oral-test" class="oral-quiz-btn" onclick="startOralTest('${safeChar}')">🎤</button>
+        <p id="voice-feedback" style="font-size:11px;color:var(--gray);margin-top:5px;">Cliquez et dites la lecture</p>`;
+
+    // Stats
     document.getElementById('d-level').innerText   = cat ? cat.short : '–';
     document.getElementById('d-strokes').innerText = kanji.strokes;
     document.getElementById('d-romaji').innerText  = '–';
-    
+
+    // Lectures
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
     document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
-    
     document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
     document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
-    
-    // 3. Gestion du traceur (HanziWriter)
+
+    // HanziWriter
     document.getElementById('kana-writer-svg').style.display     = 'none';
     document.getElementById('writer-spinner').style.display      = 'none';
     document.getElementById('kanji-writer-target').style.display = 'block';
-    document.getElementById('kanji-writer-target').innerHTML    = '';
-    
+    document.getElementById('kanji-writer-target').innerHTML     = '';
     writer = HanziWriter.create('kanji-writer-target', kanji.char, {
         width:140, height:140, padding:15, strokeColor:'#00c9a7',
         outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
     });
     writer.animateCharacter();
 
-    // 4. APPEL DU RENDU DES EXEMPLES
-    // Cette fonction va chercher dans exemplesDb (GitHub) et créer le bloc exemples-container
     renderExemples(kanji.char);
 }
 
@@ -2015,63 +1798,6 @@ function renderDashboard() {
     });
 }
 
-function openDetail(kanji) {
-    currentType = 'kanji'; 
-    currentChar = kanji.char;
-    
-    const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
-    
-    document.getElementById('detail-view').style.display = 'flex';
-    document.getElementById('detail-char-title').innerText = kanji.char;
-
-    // --- NETTOYAGE DES SENS ---
-    const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
-    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
-
-    // --- INJECTION DU BOUTON VOCAL (Juste après le sens) ---
-    let oralSection = document.getElementById('oral-test-container');
-    if (!oralSection) {
-        oralSection = document.createElement('div');
-        oralSection.id = 'oral-test-container';
-        oralSection.style.textAlign = 'center';
-        oralSection.style.margin = '15px 0';
-        document.getElementById('d-meaning').after(oralSection);
-    }
-
-    oralSection.innerHTML = `
-        <div class="section-title" style="margin-bottom:10px">Test de prononciation</div>
-        <button class="oral-quiz-btn" onclick="startOralTest('${kanji.char}')" 
-                style="background: var(--surface); border: 1px solid var(--border); width:60px; height:60px; border-radius: 50%; cursor: pointer; font-size: 24px; color: white;">
-            🎤
-        </button>
-    `;
-
-    // --- STATS & LECTURES ---
-    document.getElementById('d-level').innerText   = cat ? cat.short : '–';
-    document.getElementById('d-strokes').innerText = kanji.strokes;
-    document.getElementById('d-romaji').innerText  = '–';
-
-    document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
-    document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
-
-    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
-    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
-
-    // --- HANZI WRITER ---
-    document.getElementById('kana-writer-svg').style.display     = 'none';
-    document.getElementById('writer-spinner').style.display      = 'none';
-    document.getElementById('kanji-writer-target').style.display = 'block';
-    document.getElementById('kanji-writer-target').innerHTML    = '';
-
-    writer = HanziWriter.create('kanji-writer-target', kanji.char, {
-        width:140, height:140, padding:15, strokeColor:'#00c9a7',
-        outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
-    });
-    writer.animateCharacter();
-
-    if (typeof renderExemples === "function") renderExemples(kanji.char);
-}
-
 // 2. La fonction d'initialisation principale
 async function init() {
     const mainContent = document.getElementById('main-content');
@@ -2110,31 +1836,26 @@ async function init() {
             kanjiMap.set(char, i);
         });
 
-        // Chargement du fichier exemples.json (Local ou distant)
+        // Chargement des exemples depuis GitHub (même source que kanji_jouyou_fr.json)
         try {
-            const exRes = await fetch('exemples.json');
+            const exRes = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
             if (exRes.ok) {
                 exemplesDb = await exRes.json();
-                console.log("✅ Exemples chargés");
+                console.log('✅ Exemples chargés');
             }
         } catch(e) {
-            console.warn("Fichier exemples.json non trouvé, suite du chargement...");
+            console.warn('Exemples non disponibles :', e.message);
         }
 
-        // --- PHASE D'AFFICHAGE ---
-        
-        // 1. On lance les fonctions de calcul internes
+        // Construction des structures internes
         buildCategories();
         buildSeries();
         renderSidebar();
 
-        // 2. IMPORTANT : On affiche d'abord le Dashboard (HTML) 
-        // avant d'essayer de remplir ses barres de progression
-        if (typeof showDashboard === "function") {
-            showDashboard(); 
-        }
-
-        // 3. On remplit les barres de progression
+        // Affichage du dashboard : d'abord le HTML (showDashboard),
+        // puis les barres de progression (renderDashboard)
+        document.getElementById('page-title').innerText = '漢字 Study';
+        showDashboard();
         renderDashboard();
 
         console.log(`✅ ${kanjiDb.length} kanji chargés — ${seriesMap.size} séries créées`);
