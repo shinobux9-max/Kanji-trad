@@ -444,35 +444,44 @@ loadExemples();
     let result = event.results[0][0].transcript.trim();
     if (btn) btn.classList.remove('listening');
 
-    // 1. Table de conversion (Symboles -> Texte)
-    const voiceMaps = {
-        "。": "まる", ".": "まる",
-        "、": "てん", ",": "てん",
-        "？": "はてな", "?": "はてな",
-        "！": "びっくり", "!": "びっくり"
-    };
-
-    if (voiceMaps[result]) {
-        result = voiceMaps[result];
-    }
-
-    // 2. Nettoyage de la ponctuation et des espaces
+    // 1. Nettoyage de base (Ponctuation et Espaces)
+    // On garde quand même le maru/point car c'est un cas spécial de ponctuation
+    if (result === "。" || result === ".") result = "まる";
     result = result.replace(/[。\.、，？！!\?\s]/g, '');
 
-    // 3. FONCTION DE CONVERSION KATAKANA -> HIRAGANA
-    // Cela permet d'accepter "ガン" si tu attends "がん"
-    const kanaToHiragana = (str) => {
+    // 2. Fonction de conversion Katakana -> Hiragana
+    const toHiragana = (str) => {
         return str.replace(/[\u30a1-\u30f6]/g, (match) => {
-            const chr = match.charCodeAt(0) - 0x60;
-            return String.fromCharCode(chr);
+            return String.fromCharCode(match.charCodeAt(0) - 0x60);
         });
     };
 
-    result = kanaToHiragana(result);
+    // 3. LA CLÉ : Table de secours pour les Kanjis homophones fréquents
+    // On ne peut pas tout deviner, mais on peut forcer la conversion des plus gênants
+    const kanjiToHiraganaMap = {
+        "人": "ひと",
+        "日": "ひ",
+        "木": "き",
+        "手": "て",
+        "目": "め"
+    };
+    if (kanjiToHiraganaMap[result]) {
+        result = kanjiToHiraganaMap[result];
+    }
 
-    // 4. Comparaison
-    // On s'assure que les lectures attendues sont aussi en hiragana pour comparer des pommes avec des pommes
-    const isCorrect = validReadings.some(r => kanaToHiragana(r) === result);
+    // On convertit le résultat du micro en Hiragana (pour gérer les Katakanas de Google)
+    const normalizedResult = toHiragana(result);
+
+    // 4. Comparaison souple
+    const isCorrect = validReadings.some(r => {
+        // On nettoie la lecture attendue (on enlève les points de liaison ex: た.べる -> たべる)
+        const cleanReading = toHiragana(r.replace(/[.\-].*/, '').trim());
+        
+        // On compare :
+        // Soit c'est le Kanji exact (ex: "一")
+        // Soit c'est la lecture convertie en Hiragana
+        return result === kanjiChar || cleanReading === normalizedResult;
+    });
 
     if (isCorrect) {
         alert(`✅ Correct ! Tu as dit : ${result}`);
