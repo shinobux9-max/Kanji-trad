@@ -381,6 +381,7 @@
 <script>
 
 // Déclaration de la variable globale (une seule fois en haut du script)
+
 let exemplesDb = {};
 
 async function loadExemples() {
@@ -398,53 +399,70 @@ async function loadExemples() {
 }
 
 // Appelle la fonction au démarrage de ton application
+
 loadExemples();
 
-    /* ── LOGIQUE DU QUIZ VOCAL ── */
-function startOralTest(kanjiChar) {
-    const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
-    if (!kanjiData) return;
+/* ── LOGIQUE DU QUIZ VOCAL ── */
 
-    // 1. On prépare une liste de réponses "intelligentes"
-    let validReadings = [
-        ...kanjiData.on, 
-        ...kanjiData.kun, 
-        kanjiChar
-    ].map(r => r.replace(/[.\-].*/, '').trim()); // Nettoie les points/tirets des lectures
+    function startOralTest(kanjiChar) {
+        const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
+        if (!kanjiData) return;
 
-    // 2. On ajoute les équivalents numériques pour les kanjis de nombres
-    const numberMap = {
-        "一": "1", "二": "2", "三": "3", "四": "4", "五": "5",
-        "六": "6", "七": "7", "八": "8", "九": "9", "十": "10"
-    };
-    if (numberMap[kanjiChar]) {
-        validReadings.push(numberMap[kanjiChar]);
-    }
+        // 1. Préparation des lectures valides
+        let validReadings = [
+            ...kanjiData.on, 
+            ...kanjiData.kun, 
+            kanjiChar
+        ].map(r => r.replace(/[.\-].*/, '').trim()); 
 
-    // ... (suite du code de reconnaissance)
-
-    recognition.onresult = (event) => {
-        let result = event.results[0][0].transcript.trim();
-        if (btn) btn.classList.remove('listening');
-        
-        // Nettoyage du résultat (certains navigateurs mettent un point à la fin)
-        result = result.replace(/\.$/, '');
-
-        // Vérification flexible
-        if (validReadings.includes(result)) {
-            alert(`✅ Correct ! Tu as dit : ${result}`);
-            localStorage.setItem('learned_' + kanjiChar, 'true');
-        } else {
-            alert(`❌ Raté. Tu as dit "${result}".\nAttendus : ${validReadings.join(', ')}`);
+        // 2. Équivalents numériques pour les nombres
+        const numberMap = {
+            "一": "1", "二": "2", "三": "3", "四": "4", "五": "5",
+            "六": "6", "七": "7", "八": "8", "九": "9", "十": "10"
+        };
+        if (numberMap[kanjiChar]) {
+            validReadings.push(numberMap[kanjiChar]);
         }
-    };
-}
 
-    recognition.onerror = () => {
-        if (btn) btn.classList.remove('listening');
-        alert("Erreur de micro. Vérifie les autorisations.");
-    };
-}
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const btn = document.getElementById('btn-oral-test');
+        if (btn) btn.classList.add('listening');
+
+        recognition.start();
+
+        recognition.onresult = (event) => {
+            let result = event.results[0][0].transcript.trim();
+            if (btn) btn.classList.remove('listening');
+            result = result.replace(/\.$/, '');
+
+            if (validReadings.includes(result)) {
+                alert(`✅ Correct ! Tu as dit : ${result}`);
+                localStorage.setItem('learned_' + kanjiChar, 'true');
+                if(typeof renderGrid === 'function') renderGrid(); 
+            } else {
+                alert(`❌ Raté. Tu as dit "${result}".\nAttendu : ${validReadings.join(', ')}`);
+            }
+        };
+
+        recognition.onerror = (event) => {
+            if (btn) btn.classList.remove('listening');
+            alert("Erreur de micro : " + event.error);
+        };
+
+        recognition.onspeechend = () => {
+            recognition.stop();
+        };
+    }
 /* ══════════════════════════════════════════════════
    STATE
 ══════════════════════════════════════════════════ */
@@ -1741,78 +1759,64 @@ function openDetail(kanji) {
 }
 
 /* ══════════════════════════════════════════════════
-    FONCTIONS DE RENDU & AUDIO
-   ══════════════════════════════════════════════════ */
+        FONCTIONS DE RENDU & AUDIO
+       ══════════════════════════════════════════════════ */
 
-function renderExemples(char) {
-    let container = document.getElementById('exemples-container');
-    const detailContent = document.querySelector('.detail-content');
+    function renderExemples(char) {
+        let container = document.getElementById('exemples-container');
+        const detailContent = document.querySelector('.detail-content');
 
-    // Création du container s'il n'existe pas
-    if (!container && detailContent) {
-        container = document.createElement('div');
-        container.id = 'exemples-container';
-        container.style.cssText = "margin-top:25px; border-top:1px solid var(--border); padding:20px 0; width:100%; box-sizing:border-box;";
-        detailContent.appendChild(container);
-    }
-
-    if (container) container.innerHTML = '';
-
-    // Vérification de la base de données
-    if (typeof exemplesDb === 'undefined') return;
-    const liste = exemplesDb[char];
-    
-    if (!liste || liste.length === 0) {
-        if (container) {
-            container.innerHTML = `
-                <div style="color:var(--gray); font-size:13px; text-align:center; padding:20px; border:1px dashed var(--border); border-radius:10px; margin: 10px 20px;">
-                    Aucun exemple disponible pour ce kanji
-                </div>`;
+        if (!container && detailContent) {
+            container = document.createElement('div');
+            container.id = 'exemples-container';
+            container.style.cssText = "margin-top:25px; border-top:1px solid var(--border); padding:20px 0; width:100%; box-sizing:border-box;";
+            detailContent.appendChild(container);
         }
-        return;
+
+        if (container) container.innerHTML = '';
+
+        if (typeof exemplesDb === 'undefined') return;
+        const liste = exemplesDb[char];
+        
+        if (!liste || liste.length === 0) {
+            if (container) {
+                container.innerHTML = `<div style="color:var(--gray); font-size:13px; text-align:center; padding:20px; border:1px dashed var(--border); border-radius:10px; margin: 10px 20px;">Aucun exemple disponible</div>`;
+            }
+            return;
+        }
+
+        const html = liste.map(ex => {
+            const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
+            const safeSpeak = textToSpeak.replace(/'/g, "\\'");
+
+            return `
+                <div class="example-item" onclick="speakSentence('${safeSpeak}')" 
+                     style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:12px; cursor:pointer; border-left:4px solid #00c9a7; transition:0.2s; position:relative; margin: 0 10px 12px 10px;">
+                    <div style="font-size:1.2rem; color:#fff; margin-bottom:6px;">${ex.jp}</div>
+                    <div style="font-size:0.85rem; color:#00c9a7; margin-bottom:6px; font-family:monospace;">${ex.ro || ''}</div>
+                    <div style="font-size:0.95rem; color:#a0a0b0; line-height:1.4;">${ex.fr}</div>
+                </div>`;
+        }).join('');
+
+        container.innerHTML = `<div style="font-size:11px; color:var(--gray); text-transform:uppercase; margin: 0 10px 15px 10px; font-weight:bold;">Exemples et Lectures</div>${html}`;
     }
 
-    const html = liste.map(ex => {
-        // STRATÉGIE : Si le texte japonais est juste le kanji (ex: "土"), 
-        // on envoie à la voix le contenu de "ro" (les hiraganas) pour forcer la bonne lecture.
-        const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
-        const safeSpeak = textToSpeak.replace(/'/g, "\\'");
+    function speakSentence(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'ja-JP';
+        msg.rate = 0.8;
+        window.speechSynthesis.speak(msg);
+    }
 
-        return `
-            <div class="example-item" onclick="speakSentence('${safeSpeak}')" 
-                 style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:12px; cursor:pointer; border-left:4px solid #00c9a7; transition:0.2s; position:relative; margin: 0 10px 12px 10px;">
-                <div style="font-size:1.2rem; color:#fff; margin-bottom:6px; letter-spacing:0.5px;">${ex.jp}</div>
-                <div style="font-size:0.85rem; color:#00c9a7; margin-bottom:6px; font-family:monospace;">${ex.ro || ''}</div>
-                <div style="font-size:0.95rem; color:#a0a0b0; line-height:1.4;">${ex.fr}</div>
-                <div style="text-align:right; font-size:10px; opacity:0.5; margin-top:8px; letter-spacing:1px;">🔊 CLIQUEZ POUR ÉCOUTER</div>
-            </div>
-        `;
-    }).join('');
-
-    container.innerHTML = `
-        <div style="font-size:11px; color:var(--gray); text-transform:uppercase; letter-spacing:1.5px; margin: 0 10px 15px 10px; font-weight:bold; display:flex; align-items:center; gap:8px;">
-            <span style="background:#00c9a7; width:8px; height:8px; border-radius:50%;"></span>
-            Exemples et Lectures
-        </div>
-        ${html}
-    `;
-}
-
-/**
- * UNE SEULE FONCTION speakSentence
- * Gère la synthèse vocale japonaise de manière unique
- */
-function speakSentence(text) {
-    if (!window.speechSynthesis) return;
-
-    // On annule les lectures en cours pour éviter les mélanges
-    window.speechSynthesis.cancel();
-
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'ja-JP';
-    msg.rate = 0.8; // Vitesse un peu plus lente pour l'apprentissage
-    window.speechSynthesis.speak(msg);
-}
+    // Initialisation au chargement
+    window.addEventListener('DOMContentLoaded', () => {
+        // On attend un court instant pour s'assurer que les données sont prêtes
+        setTimeout(() => {
+            init();
+        }, 500);
+    });
 
 /* ══════════════════════════════════════════════════
     GESTION DES DÉTAILS (KANA & KANJI)
