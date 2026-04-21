@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kanji Learner</title>
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+   <style>
+    :root {
+        --bg: #0e0e12; --surface: #18181f; --card: #1e1e28; --text: #dde0eb;
+        --accent: #00c9a7; --accent2: #7b61ff; --gray: #6b6e80; --border: #2a2a38;
+        --grade-prim: #3ecf8e; --grade-mid: #6c7bff;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Noto Sans JP', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow: hidden; }
+
+    /* ── TOOLBAR ─────────────────────── */
+    .toolbar { background: rgba(14,14,18,0.97); height: 56px; display: flex; align-items: center; padding: 0 12px; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+    .toolbar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 8px; border-radius: 8px; transition: background 0.15s; line-height: 1; }
+    .toolbar button:active { background: var(--card); }
+    .toolbar-title { flex: 1; margin-left: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: 0.5px; }
+
+    /* ── SEARCH BAR ──────────────────── */
+    #search-bar { background: var(--bg); padding: 8px 12px 10px; position: fixed; top: 56px; width: 100%; z-index: 990; border-bottom: 1px solid var(--border); transform: translateY(-100%); opacity: 0; transition: transform 0.2s ease, opacity 0.2s ease; pointer-events: none; }
+    #search-bar.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .search-wrap { display: flex; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; gap: 8px; transition: border-color 0.2s; }
+    .search-wrap:focus-within { border-color: var(--accent); }
+    .search-wrap span { color: var(--gray); font-size: 16px; }
+    #search-input { flex: 1; background: none; border: none; color: var(--text); font-size: 15px; padding: 10px 0; outline: none; font-family: inherit; }
+    #search-input::placeholder { color: var(--gray); }
+    #search-clear { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 18px; padding: 4px; display: none; }
+    #search-clear.show { display: block; }
+
+    /* ── SEARCH RESULTS ─────────────── */
+    #search-results { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 980; overflow-y: auto; display: none; }
+    #search-results.open { display: block; }
+    #search-results.with-bar { top: 112px; }
+    .search-empty { padding: 60px 20px; text-align: center; color: var(--gray); font-size: 14px; }
+    .search-empty .big { font-size: 40px; margin-bottom: 12px; }
+    .search-hit { display: flex; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; gap: 14px; transition: background 0.1s; }
+    .search-hit:active { background: var(--card); }
+    .search-hit-char { font-size: 30px; width: 44px; text-align: center; color: #fff; line-height: 1; padding-top: 3px; }
+    .search-hit-info { flex: 1; }
+    .search-hit-meaning { font-size: 14px; color: var(--text); }
+    .search-hit-readings { font-size: 11px; color: var(--gray); margin-top: 2px; }
+    .search-hit-badge { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: bold; color: white; }
+
+    /* ── SIDEBAR ─────────────────────── */
+    #sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: #141418; z-index: 2000; transition: left 0.28s cubic-bezier(.4,0,.2,1); overflow-y: auto; box-shadow: 8px 0 30px rgba(0,0,0,0.6); }
+    #sidebar.open { left: 0; }
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 1500; }
+    #overlay.show { display: block; }
+    .sidebar-header { padding: 28px 20px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+    .sidebar-logo { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-static { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 14px; transition: background 0.15s; }
+    .nav-static:active { background: var(--card); }
+    .nav-static .icon { width: 28px; text-align: center; font-size: 18px; }
+
+    /* Grade nav items */
+    .nav-grade-wrap { border-bottom: 1px solid var(--border); }
+    .nav-grade-item { display: flex; align-items: center; padding: 10px 16px; cursor: pointer; transition: background 0.15s; }
+    .nav-grade-item:active { background: var(--card); }
+    .nav-badge { width: 34px; height: 34px; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; flex-shrink: 0; font-family: 'Syne', sans-serif; }
+    .nav-grade-text { flex: 1; }
+    .nav-grade-text .main { font-size: 13px; font-weight: bold; }
+    .nav-grade-text .sub { font-size: 11px; color: var(--gray); margin-top: 1px; }
+    .nav-chev { color: var(--gray); font-size: 11px; padding: 6px; border-radius: 4px; transition: transform 0.2s, background 0.15s; }
+    .nav-chev:hover { background: var(--card); }
+    .nav-chev.open { transform: rotate(180deg); }
+    .nav-submenu { display: none; background: rgba(0,0,0,0.2); }
+    .nav-submenu.open { display: block; }
+    .nav-sub-item { padding: 9px 16px 9px 62px; font-size: 12px; border-bottom: 1px solid rgba(42,42,56,0.5); cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--gray); transition: background 0.1s, color 0.1s; }
+    .nav-sub-item:hover, .nav-sub-item:active { background: var(--card); color: var(--text); }
+    .nav-sub-item .scount { font-size: 10px; background: var(--card); padding: 2px 6px; border-radius: 4px; margin-left: 6px; color: var(--gray); }
+    .nav-sub-quiz { font-size: 10px; padding: 3px 8px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .nav-sub-quiz:hover { background: var(--accent); color: #000; }
+
+    /* ── CONTAINER ───────────────────── */
+    .container { padding-top: 56px; height: 100vh; overflow-y: auto; }
+    .container.search-open { padding-top: 112px; }
+
+    /* ── DASHBOARD ───────────────────── */
+    .dash-wrap { padding: 16px; }
+    .dash-card { background: var(--surface); border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); }
+    .streak-info { display: flex; justify-content: space-around; text-align: center; margin-bottom: 18px; }
+    .streak-val { font-size: 22px; font-weight: bold; display: block; font-family: 'Syne', sans-serif; color: var(--accent); }
+    .streak-label { font-size: 10px; color: var(--gray); margin-top: 2px; }
+    .dots-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
+    .dot { width: 12px; height: 12px; background: #2a2a38; border-radius: 3px; margin: auto; }
+    .dot.active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .welcome-box { display: flex; align-items: center; background: linear-gradient(135deg, #1a2a40 0%, #1a2030 100%); padding: 14px; border-radius: 12px; margin-bottom: 14px; border: 1px solid #2a3a55; }
+    .tanuki-img { width: 52px; height: 52px; margin-right: 14px; border-radius: 50%; }
+    
+    /* Styles pour la Maîtrise / Progression */
+    .section-title { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 16px; font-weight: 700; }
+    .prog-item { margin-bottom: 16px; }
+    .prog-info { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+    .prog-name { font-weight: 600; color: var(--text); }
+    .prog-stats { color: var(--accent); font-family: 'Syne', sans-serif; font-weight: bold; }
+    .prog-track { width: 100%; height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    .prog-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 10px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px rgba(0, 201, 167, 0.3); }
+
+    /* ── ORAL QUIZ / VOICE BUTTON ────── */
+    .oral-quiz-btn { background: var(--surface); border: 2px solid var(--accent); color: var(--accent); border-radius: 50%; width: 56px; height: 56px; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin: 20px auto; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .oral-quiz-btn.listening { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); animation: pulse-mic 1.5s infinite; border-color: white; }
+    @keyframes pulse-mic { 0% { transform: scale(1); } 50% { transform: scale(1.12); opacity: 0.8; } 100% { transform: scale(1); } }
+
+    /* ── GRADE OVERVIEW ──────────────── */
+    .grade-overview { padding: 14px; }
+    .grade-hero { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+    .grade-hero-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .grade-hero-badge { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: white; font-family: 'Syne', sans-serif; }
+    .grade-hero-info h2 { margin: 0 0 2px; font-family: 'Syne', sans-serif; font-size: 18px; }
+    .grade-hero-info p { margin: 0; font-size: 12px; color: var(--gray); }
+    .grade-quiz-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; border-radius: 8px; color: #000; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; transition: opacity 0.2s; }
+    .grade-quiz-btn:active { opacity: 0.85; }
+    .section-cards-title { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px; }
+    .section-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: border-color 0.15s, background 0.15s; }
+    .section-card:active { background: var(--card); }
+    .section-card-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .section-card-body { flex: 1; }
+    .section-card-label { font-size: 14px; font-weight: bold; }
+    .section-card-sub { font-size: 11px; color: var(--gray); margin-top: 3px; }
+    .section-card-right { display: flex; align-items: center; gap: 8px; }
+    .section-card-count { font-size: 12px; color: var(--gray); }
+    .section-card-quiz { padding: 6px 12px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .section-card-quiz:active { background: var(--accent); color: #000; }
+    .section-divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+    /* ── KANJI LIST ──────────────────── */
+    .list-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .list-header-info { font-size: 12px; color: var(--gray); }
+    .list-quiz-btn { padding: 7px 16px; background: var(--accent); border: none; color: #000; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; }
+    .kanji-row { display: flex; padding: 14px 16px; border-bottom: 1px solid var(--border); align-items: flex-start; cursor: pointer; transition: background 0.1s; }
+    .kanji-row:active { background: var(--card); }
+    .kanji-char-large { font-size: 30px; width: 52px; color: #fff; line-height: 1; padding-top: 3px; }
+    .kanji-info-main { flex: 1; }
+    .tag-container { display: flex; gap: 4px; margin-bottom: 4px; flex-wrap: wrap; min-height: 20px; }
+    .tag { padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+    .tag-on  { background: #1e3a32; color: #5ecba3; }
+    .tag-kun { background: #1e2a40; color: #7ab3d8; }
+    .kanji-row-stroke { font-size: 10px; color: var(--gray); margin-left: 8px; padding-top: 5px; }
+
+    /* ── KANA ────────────────────────── */
+    .kana-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .kana-tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-size: 14px; color: var(--gray); border-bottom: 2px solid transparent; transition: 0.2s; }
+    .kana-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .kana-section-title { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; padding: 12px 2px 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+    .kana-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin-bottom: 4px; }
+    .kana-cell { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 4px; text-align: center; cursor: pointer; transition: 0.15s; }
+    .kana-cell:active { background: var(--card); transform: scale(0.95); }
+    .kana-cell .kana-char { font-size: 24px; display: block; color: #fff; line-height: 1.2; }
+    .kana-cell .kana-char.yoon { font-size: 18px; }
+    .kana-cell .kana-rom { font-size: 10px; color: var(--accent); margin-top: 2px; }
+    .kana-cell.empty { background: transparent; border-color: transparent; cursor: default; }
+
+    /* ── DETAIL ──────────────────────── */
+    #detail-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; display: none; flex-direction: column; }
+    .detail-content { flex: 1; overflow-y: auto; padding: 20px; padding-top: 76px; }
+    .writer-section { display: flex; gap: 18px; margin-bottom: 22px; }
+    .writer-main { width: 140px; height: 140px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .kanji-stats { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-box { text-align: center; color: var(--gray); font-size: 11px; background: var(--surface); border-radius: 8px; padding: 10px 6px; border: 1px solid var(--border); }
+    .stat-box b { color: var(--text); display: block; font-size: 15px; font-family: 'Syne', sans-serif; margin-bottom: 2px; }
+    .section-title { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 8px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+    .meaning-text { font-size: 20px; color: var(--accent); font-weight: bold; }
+    #kana-writer-svg { width: 130px; height: 130px; }
+    .spinner { width: 28px; height: 28px; border: 3px solid #2a2a38; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .replay-btn { width: 100%; margin-top: 28px; padding: 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #000; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; }
+
+    /* ── QUIZ ────────────────────────── */
+    #quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4000; display: none; flex-direction: column; }
+    .quiz-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); }
+    .quiz-top-bar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 6px; border-radius: 8px; }
+    .quiz-pause-btn { margin-left: auto; font-size: 18px !important; }
+    .quiz-score-ok { display: flex; align-items: center; gap: 5px; background: #0b2e24; border: 1px solid var(--accent); border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: var(--accent); }
+    .quiz-score-ko { display: flex; align-items: center; gap: 5px; background: #2e0b0b; border: 1px solid #e55; border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #e55; }
+    .quiz-score-icon { font-size: 12px; }
+    .quiz-timer-badge { font-size: 13px; color: var(--gray); background: var(--card); padding: 4px 10px; border-radius: 6px; font-family: 'Syne', sans-serif; }
+    .quiz-sub-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 14px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--gray); }
+    .quiz-examples-btn { background: none; border: 1px solid var(--border); color: var(--gray); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; }
+    .quiz-prog-wrap { height: 3px; background: var(--border); }
+    .quiz-prog-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.35s cubic-bezier(.4,0,.2,1); width: 0; }
+
+    /* ── QUIZ BODY ───────────────────── */
+    .quiz-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
+
+    /* Phase 1 : prompt (lectures + sens) */
+    .quiz-prompt-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .quiz-readings-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .quiz-reading-chip { display: inline-flex; flex-direction: column; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; position: relative; min-width: 52px; }
+    .quiz-reading-chip .chip-count { position: absolute; top: -7px; left: -7px; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #000; font-size: 10px; font-weight: bold; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; }
+    .quiz-reading-chip .chip-text { font-size: 20px; color: #fff; font-weight: bold; }
+    .quiz-reading-chip.on-chip { background: #1e3a32; border-color: #2a5244; }
+    .quiz-reading-chip.kun-chip { background: #1a2a40; border-color: #2a3a55; }
+    .quiz-meaning-big { font-size: 26px; font-weight: bold; color: var(--text); margin-top: 6px; }
+    .quiz-tap-hint { font-size: 14px; color: var(--gray); margin-top: 30px; animation: blink 1.6s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    /* Phase 2 : grille de kanjis */
+    .quiz-choices-grid { width: 100%; max-width: 380px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+    .quiz-kanji-choice { aspect-ratio: 1; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 36px; color: #fff; transition: border-color 0.15s, background 0.15s; user-select: none; line-height: 1; }
+    .quiz-kanji-choice:active:not(.locked) { background: var(--card); transform: scale(0.94); }
+    .quiz-kanji-choice.correct { background: #0b2e24; border-color: var(--accent); animation: correctPop 0.3s ease; }
+    .quiz-kanji-choice.wrong   { background: #2e0b0b; border-color: #e55; }
+    .quiz-kanji-choice.reveal  { border-color: var(--accent); opacity: 0.55; }
+    .quiz-kanji-choice.locked  { cursor: default; }
+    @keyframes correctPop { 0% { transform: scale(0.9); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+    /* Résultats */
+    .quiz-results { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 20px; text-align: center; }
+    .quiz-results-emoji { font-size: 72px; margin-bottom: 16px; }
+    .quiz-score-big { font-family: 'Syne', sans-serif; font-size: 56px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .quiz-score-label { font-size: 15px; color: var(--gray); margin-top: 6px; }
+    .quiz-breakdown { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 24px; width: 100%; max-width: 280px; }
+    .quiz-breakdown-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+    .quiz-breakdown-row:last-child { margin-bottom: 0; }
+    .quiz-btn-row { display: flex; gap: 10px; margin-top: 24px; width: 100%; max-width: 280px; }
+    .quiz-action-btn { flex: 1; padding: 13px; border: none; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .quiz-action-btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #000; }
+    .quiz-action-btn.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    
+    /* ── SERIES ──────────────────────── */
+    .series-grid { display: flex; flex-direction: column; gap: 0; margin-bottom: 8px; }
+    .series-card { background: transparent; border: none; border-bottom: 1px solid var(--border); padding: 14px 16px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: background 0.1s; }
+    .series-card:active { background: var(--card); }
+    .series-card-kanji { font-size: 34px; width: 44px; text-align: center; color: #fff; line-height: 1; flex-shrink: 0; }
+    .series-card-body { flex: 1; }
+    .series-card-num { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .series-card-label { font-size: 11px; color: var(--gray); margin-top: 3px; }
+    .series-card-actions { flex-shrink: 0; }
+    .series-quiz-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; letter-spacing: 0.3px; }
+    .series-quiz-btn:active { background: var(--accent); border-color: var(--accent); color: #000; }
+    .nav-sub-series { padding: 8px 16px 8px 58px; font-size: 11px; border-bottom: 1px solid rgba(42,42,56,0.4); cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--gray); transition: background 0.1s, color 0.1s; }
+    .nav-sub-series:hover, .nav-sub-series:active { background: var(--card); color: var(--text); }
+    .nav-sub-more { padding: 7px 16px 7px 58px; font-size: 11px; color: var(--accent); cursor: pointer; border-bottom: 1px solid rgba(42,42,56,0.4); }
+    .quiz-choice { padding: 14px 10px; background: var(--surface); border: 2px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; font-size: 12px; line-height: 1.4; transition: border-color 0.15s, background 0.15s; user-select: none; color: var(--text); font-family: inherit; word-break: break-word; }
+
+    /* ── STROKE QUIZ ─────────────────── */
+    #stroke-quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4500; display: none; flex-direction: column; }
+    .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 6px; border-radius: 8px; }
+    .sq-sub-bar { display: flex; align-items: center; justify-content: space-between; padding: 5px 14px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--gray); flex-shrink: 0; }
+    #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
+    .sq-kanji-header { width: 100%; max-width: 340px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+    .sq-meaning { font-size: 18px; font-weight: bold; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+    .sq-readings-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .sq-canvas-wrap { position: relative; width: 280px; height: 280px; flex-shrink: 0; }
+    #sq-writer-target { width: 280px; height: 280px; background: var(--surface); border-radius: 16px; border: 2px solid var(--border); cursor: crosshair; touch-action: none; }
+    .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
+    .sq-grid-overlay::before,
+    .sq-grid-overlay::after { content: ''; position: absolute; background: var(--border); opacity: 0.5; }
+    .sq-grid-overlay::before { left: 50%; top: 0; width: 1px; height: 100%; }
+    .sq-grid-overlay::after  { top: 50%; left: 0; height: 1px; width: 100%; }
+    .sq-stroke-tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 340px; }
+    .sq-stroke-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background 0.2s, transform 0.15s; }
+    .sq-stroke-dot.done     { background: var(--accent); transform: scale(1.2); }
+    .sq-stroke-dot.mistake { background: #e55; transform: scale(1.3); animation: shakeDot 0.3s ease; }
+    @keyframes shakeDot { 0%,100%{transform:scale(1.3) translateX(0)} 25%{transform:scale(1.3) translateX(-3px)} 75%{transform:scale(1.3) translateX(3px)} }
+    .sq-canvas-wrap.flash-ok  { animation: flashOk  0.35s ease; }
+    .sq-canvas-wrap.flash-err { animation: flashErr 0.35s ease; }
+    @keyframes flashOk  { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 0 4px var(--accent)} }
+    @keyframes flashErr { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 0 4px #e55} }
+    .sq-actions { display: flex; gap: 10px; width: 100%; max-width: 340px; }
+    .sq-btn { flex: 1; padding: 13px; border: none; border-radius: 10px; font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
+    .sq-btn.hint   { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .sq-btn.skip   { background: var(--surface); color: var(--gray);  border: 1px solid var(--border); }
+    .series-trace-btn { padding: 8px 12px; background: var(--surface); border: 1px solid var(--accent2); color: var(--accent2); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .series-trace-btn:active { background: var(--accent2); color: #fff; }
+    .grade-trace-btn { width: 100%; padding: 11px; background: transparent; border: 1px solid var(--accent2); border-radius: 8px; color: var(--accent2); font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 8px; transition: all 0.15s; }
+    .grade-trace-btn:active { background: var(--accent2); color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- ── MAIN TOOLBAR ──────────────────────────────── -->
+<div class="toolbar">
+    <button onclick="toggleSidebar(true)">☰</button>
+    <div class="toolbar-title" id="page-title">漢字 Study</div>
+    <button onclick="toggleSearch()" id="search-btn" title="Rechercher">🔍</button>
+</div>
+
+<!-- ── SEARCH BAR ────────────────────────────────── -->
+<div id="search-bar">
+    <div class="search-wrap">
+        <span>🔍</span>
+        <input type="text" id="search-input" placeholder="Kanji, signification, lecture ON/KUN…" autocomplete="off" oninput="doSearch(this.value)">
+        <button id="search-clear" onclick="clearSearch()">✕</button>
+    </div>
+</div>
+
+<!-- ── SEARCH RESULTS ────────────────────────────── -->
+<div id="search-results">
+    <div class="search-empty">
+        <div class="big">🔎</div>
+        Tapez un kanji, sa signification ou une lecture
+    </div>
+</div>
+
+<!-- ── OVERLAY + SIDEBAR ─────────────────────────── -->
+<div id="overlay" onclick="toggleSidebar(false)"></div>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">漢字</div>
+    </div>
+    <div class="nav-static" onclick="navDashboard()"><span class="icon">🏠</span> Accueil</div>
+    <div class="nav-static" onclick="navKana()"><span class="icon">あ</span> Kana</div>
+    <div id="grade-list"></div>
+</div>
+
+<!-- ── MAIN CONTENT ──────────────────────────────── -->
+<div class="container" id="main-content"></div>
+
+<!-- ── DETAIL VIEW ───────────────────────────────── -->
+<div id="detail-view">
+    <div class="toolbar">
+        <button onclick="closeDetail()">←</button>
+        <div class="toolbar-title" id="detail-char-title"></div>
+    </div>
+    <div class="detail-content">
+        <div class="writer-section">
+            <div class="writer-main">
+                <div id="kanji-writer-target"></div>
+                <svg id="kana-writer-svg" viewBox="0 0 109 109" xmlns="http://www.w3.org/2000/svg" style="display:none"></svg>
+                <div class="spinner" id="writer-spinner" style="display:none"></div>
+            </div>
+            <div class="kanji-stats">
+                <div class="stat-box"><b id="d-level">-</b>Niveau</div>
+                <div class="stat-box"><b id="d-strokes">-</b>Traits</div>
+                <div class="stat-box"><b id="d-romaji">-</b>Rômaji</div>
+                <div class="stat-box"><b>0%</b>Progrès</div>
+            </div>
+        </div>
+        <div class="section-title">Signification</div>
+        <div class="meaning-text" id="d-meaning"></div>
+        <div id="section-on"  style="display:none"><div class="section-title">Lecture ON</div><div id="d-on" class="tag-container"></div></div>
+        <div id="section-kun" style="display:none"><div class="section-title">Lecture KUN</div><div id="d-kun" class="tag-container"></div></div>
+        <button class="replay-btn" onclick="replayAnimation()">↺ REVOIR LE TRACÉ</button>
+    </div>
+</div>
+
+<!-- ── QUIZ VIEW ─────────────────────────────────── -->
+<div id="quiz-view">
+    <div class="quiz-top-bar">
+        <button onclick="closeQuiz()">←</button>
+        <div class="quiz-score-ok"><span class="quiz-score-icon">✔</span><span id="quiz-correct">0</span></div>
+        <div class="quiz-score-ko"><span class="quiz-score-icon">✘</span><span id="quiz-wrong">0</span></div>
+        <div class="quiz-timer-badge" id="quiz-timer">0:00</div>
+        <button class="quiz-pause-btn" onclick="togglePause()">⏸</button>
+    </div>
+    <div class="quiz-sub-bar">
+        <span id="quiz-counter-sub">1 / 10</span>
+        <button class="quiz-examples-btn" id="quiz-examples-btn" onclick="toggleExamples()" style="display:none">Afficher les exemples</button>
+        <span id="quiz-score-sub">0.0 / 10.0</span>
+    </div>
+    <div class="quiz-prog-wrap"><div class="quiz-prog-bar" id="quiz-prog-bar"></div></div>
+    <div class="quiz-body" id="quiz-body"></div>
+</div>
+
+<!-- ── STROKE QUIZ VIEW ───────────────────────────── -->
+<div id="stroke-quiz-view">
+    <div class="sq-top-bar">
+        <button onclick="closeStrokeQuiz()">←</button>
+        <div class="quiz-score-ok"><span class="quiz-score-icon">✔</span><span id="sq-correct">0</span></div>
+        <div class="quiz-score-ko"><span class="quiz-score-icon">✘</span><span id="sq-wrong">0</span></div>
+        <div class="quiz-timer-badge" id="sq-timer">0:00</div>
+        <button class="quiz-pause-btn" onclick="toggleStrokePause()">⏸</button>
+    </div>
+    <div class="sq-sub-bar">
+        <span id="sq-counter">1 / ?</span>
+        <span id="sq-score-sub">0.0 / 10.0</span>
+    </div>
+    <div class="quiz-prog-wrap"><div class="quiz-prog-bar" id="sq-prog-bar"></div></div>
+    <div id="stroke-quiz-body"></div>
+</div>
+
+<script>
+
+// Déclaration de la variable globale (une seule fois en haut du script)
+let exemplesDb = {};
+
+async function loadExemples() {
+    const url = "https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json";
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+        
+        exemplesDb = await response.json();
+        console.log("✅ Exemples chargés avec succès depuis GitHub !");
+    } catch (error) {
+        console.error("❌ Impossible de charger le fichier exemples.json :", error);
+        exemplesDb = {}; // Éviter que la variable reste undefined
+    }
+}
+
+// Appelle la fonction au démarrage de ton application
+loadExemples();
+
+    /* ── LOGIQUE DU QUIZ VOCAL ── */
+function startOralTest(kanjiChar) {
+    const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
+    if (!kanjiData) return;
+
+    // Réponses acceptées : Lectures ON, KUN ou le caractère lui-même
+    const validReadings = [...kanjiData.on, ...kanjiData.kun, kanjiChar];
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("La reconnaissance vocale n'est pas supportée par votre navigateur.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ja-JP'; 
+    recognition.interimResults = false;
+
+    const btn = document.querySelector('.oral-quiz-btn');
+    if (btn) btn.classList.add('listening');
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+        const result = event.results[0][0].transcript.trim();
+        if (btn) btn.classList.remove('listening');
+        
+        if (validReadings.includes(result)) {
+            alert(`✅ Correct ! Tu as dit : ${result}`);
+            // Optionnel : marquer comme appris
+            localStorage.setItem('learned_' + kanjiChar, 'true');
+        } else {
+            alert(`❌ Raté. Tu as dit "${result}".\nAttendus : ${kanjiData.on.join(', ')}`);
+        }
+    };
+
+    recognition.onerror = () => {
+        if (btn) btn.classList.remove('listening');
+        alert("Erreur de micro. Vérifie les autorisations.");
+    };
+}
+/* ══════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════ */
+let kanjiDb  = [];          // source de vérité : [{char, grade, meanings, on, kun, strokes}]
+let kanjiMap = new Map();   // char → index dans kanjiDb  (O(1) lookup)
+let categories = new Map(); // catId → {id, label, color, short, indices[]}
+let seriesMap  = new Map(); // seriesId → {id, catId, label, indices[]}
+let writer = null, currentChar = null, currentType = null;
+let kanaAnimTimeouts = [], fetchCtrl = null;
+let currentCatId = null;    // catégorie affichée
+let quizState = null;       // {indices, shuffled, idx, score, answered, title, sourceType, sourceId}
+let searchOpen = false;
+
+const SERIES_SIZE = 20;
+
+/* ══════════════════════════════════════════════════
+   DÉFINITIONS DE CATÉGORIES
+══════════════════════════════════════════════════ */
+const CAT_DEFS = [
+    { id:"p1",  label:"Primaire 1", color:"#3ecf8e", short:"小1" },
+    { id:"p2",  label:"Primaire 2", color:"#3ecf8e", short:"小2" },
+    { id:"p3",  label:"Primaire 3", color:"#3ecf8e", short:"小3" },
+    { id:"p4",  label:"Primaire 4", color:"#3ecf8e", short:"小4" },
+    { id:"p5",  label:"Primaire 5", color:"#3ecf8e", short:"小5" },
+    { id:"p6",  label:"Primaire 6", color:"#3ecf8e", short:"小6" },
+    { id:"c1",  label:"Collège 1",  color:"#6c7bff", short:"中1" },
+    { id:"c2",  label:"Collège 2",  color:"#6c7bff", short:"中2" },
+    { id:"c3",  label:"Collège 3",  color:"#6c7bff", short:"中3" },
+    { id:"hyo", label:"Hyōgaigai", color:"#e07b54", short:"表外" },
+];
+
+/* ══════════════════════════════════════════════════
+   CONSTRUCTION DES STRUCTURES DE DONNÉES
+══════════════════════════════════════════════════ */
+function buildCategories() {
+    const pBuckets = { "1":[], "2":[], "3":[], "4":[], "5":[], "6":[] };
+    const collegeIdx = [], hyoIdx = [];
+
+    kanjiDb.forEach((k, i) => {
+        const c = String(k.grade ?? '').trim();
+        if (pBuckets[c])       pBuckets[c].push(i);
+        else if (c === '8')    collegeIdx.push(i);
+        else                   hyoIdx.push(i);      // null, '', ou toute autre valeur
+    });
+
+    // Division du collège en 3 parts égales (par ordre d'apparition dans le JSON)
+    const n = collegeIdx.length;
+    const cut1 = Math.floor(n / 3), cut2 = Math.floor(2 * n / 3);
+    const collegeParts = [
+        collegeIdx.slice(0, cut1),
+        collegeIdx.slice(cut1, cut2),
+        collegeIdx.slice(cut2)
+    ];
+
+    categories.clear();
+    CAT_DEFS.forEach(def => {
+        let indices;
+        const num = def.id[1];
+        if      (def.id.startsWith('p')) indices = pBuckets[num] || [];
+        else if (def.id === 'c1')        indices = collegeParts[0];
+        else if (def.id === 'c2')        indices = collegeParts[1];
+        else if (def.id === 'c3')        indices = collegeParts[2];
+        else                             indices = hyoIdx;
+        categories.set(def.id, { ...def, indices });
+    });
+}
+
+function buildSeries() {
+    seriesMap.clear();
+    const MIN = 10, MAX = 20;
+    for (const [catId, cat] of categories) {
+        const { indices } = cat;
+        if (!indices.length) continue;
+
+        // Découpage en chunks de MAX
+        const chunks = [];
+        for (let i = 0; i < indices.length; i += MAX) {
+            chunks.push(indices.slice(i, i + MAX));
+        }
+
+        // Fusion de la dernière chunk si elle est < MIN
+        if (chunks.length >= 2 && chunks[chunks.length - 1].length < MIN) {
+            const last = chunks.pop();
+            chunks[chunks.length - 1] = chunks[chunks.length - 1].concat(last);
+        }
+
+        // Enregistrement avec plages de kanji (début–fin, 1-indexé)
+        let offset = 0;
+        chunks.forEach((chunk, i) => {
+            const start = offset + 1;
+            const end   = offset + chunk.length;
+            const sid   = `${catId}_s${i + 1}`;
+            seriesMap.set(sid, {
+                id:    sid,
+                catId,
+                label: `Série ${i + 1}`,
+                range: `${start}–${end}`,
+                start,
+                end,
+                indices: chunk
+            });
+            offset += chunk.length;
+        });
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   JavaScript pour générer la liste
+══════════════════════════════════════════════════ */
+function initDashboard() {
+    const container = document.getElementById('progression-list');
+    if (!container) return;
+    container.innerHTML = ''; // On vide le contenu statique
+
+    const levels = [
+        { id: 5, label: 'N5 - Débutant' },
+        { id: 4, label: 'N4 - Élémentaire' },
+        { id: 3, label: 'N3 - Intermédiaire' },
+        { id: 2, label: 'N2 - Avancé' },
+        { id: 1, label: 'N1 - Expert' }
+    ];
+
+    levels.forEach(level => {
+        // On filtre les kanjis par niveau (jlpt_nouveau)
+        const totalInLevel = kanjiDb.filter(k => k.jlpt_nouveau === level.id).length;
+        
+        // On récupère combien sont "appris" dans le localStorage
+        // On créera cette clé plus tard quand tu réussiras un quiz
+        const learned = kanjiDb.filter(k => 
+            k.jlpt_nouveau === level.id && localStorage.getItem(`learned_${k.char}`)
+        ).length;
+
+        const percent = totalInLevel > 0 ? Math.round((learned / totalInLevel) * 100) : 0;
+
+        const html = `
+            <div class="prog-item">
+                <div class="prog-info">
+                    <span class="prog-name">${level.label}</span>
+                    <span class="prog-stats">${learned} / ${totalInLevel}</span>
+                </div>
+                <div class="prog-track">
+                    <div class="prog-fill" style="width: ${percent}%;"></div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += html;
+    });
+}
+/* ══════════════════════════════════════════════════
+   UTILITAIRES
+══════════════════════════════════════════════════ */
+// Résoudre des indices → objets kanji (lecture seule, pas de copie)
+function resolveKanjis(indices) {
+    return indices.map(i => kanjiDb[i]);
+}
+
+// Label de réponse quiz : "Sens • lecture" (tronqué si besoin)
+function choiceLabel(k) {
+    const sens = k.meanings[0] || '?';
+    const read = (k.kun[0] || k.on[0] || '').replace(/[.\-]/g, '').split('/')[0];
+    const full = read ? `${sens} • ${read}` : sens;
+    return full.length > 24 ? full.slice(0, 22) + '…' : full;
+}
+
+// Tirage aléatoire efficace de N leurres :
+// Priorité au pool fourni (même série/catégorie), puis kanjiDb global en fallback
+function pickDecoyIndices(excludeIdx, correctMeaning, count, preferredPool) {
+    const result = [], tried = new Set([excludeIdx]);
+
+    // Essayer d'abord dans le pool préféré (même catégorie/série)
+    if (preferredPool && preferredPool.length > count + 1) {
+        const shuffled = shuffleIndices([...preferredPool]);
+        for (const i of shuffled) {
+            if (result.length >= count) break;
+            if (tried.has(i)) continue;
+            tried.add(i);
+            const k = kanjiDb[i];
+            if (!k?.meanings[0] || k.meanings[0] === correctMeaning) continue;
+            result.push(i);
+        }
+    }
+
+    // Compléter depuis kanjiDb global si besoin
+    let attempts = 0;
+    while (result.length < count && attempts < 300) {
+        const i = Math.floor(Math.random() * kanjiDb.length);
+        attempts++;
+        if (tried.has(i)) continue;
+        tried.add(i);
+        const k = kanjiDb[i];
+        if (!k?.meanings[0] || k.meanings[0] === correctMeaning) continue;
+        result.push(i);
+    }
+    return result;
+}
+
+// Fisher-Yates sur un tableau d'indices (in-place, retourne le même tableau)
+function shuffleIndices(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+/* ══════════════════════════════════════════════════
+   RECHERCHE
+══════════════════════════════════════════════════ */
+function toggleSearch() {
+    searchOpen = !searchOpen;
+    document.getElementById('search-bar').classList.toggle('open', searchOpen);
+    document.getElementById('main-content').classList.toggle('search-open', searchOpen);
+    if (searchOpen) {
+        setTimeout(() => document.getElementById('search-input').focus(), 220);
+        showSearchPanel();
+    } else {
+        hideSearchPanel();
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-clear').classList.remove('show');
+    }
+}
+
+function showSearchPanel() {
+    document.getElementById('search-results').classList.add('open', 'with-bar');
+}
+function hideSearchPanel() {
+    document.getElementById('search-results').classList.remove('open', 'with-bar');
+}
+
+function clearSearch() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-clear').classList.remove('show');
+    document.getElementById('search-results').innerHTML =
+        '<div class="search-empty"><div class="big">🔎</div>Tapez un kanji, sa signification ou une lecture</div>';
+    showSearchPanel();
+}
+
+function doSearch(query) {
+    const q = query.trim().toLowerCase();
+    document.getElementById('search-clear').classList.toggle('show', q.length > 0);
+    if (!q) { clearSearch(); return; }
+    showSearchPanel();
+
+    const hits = kanjiDb.filter(k => {
+        if (k.char === query) return true;
+        if (k.meanings.some(m => m.toLowerCase().includes(q))) return true;
+        if (k.on.some(r  => r.toLowerCase().includes(q))) return true;
+        if (k.kun.some(r => r.replace(/[.\-].*/g,'').toLowerCase().includes(q))) return true;
+        return false;
+    }).slice(0, 60);
+
+    const el = document.getElementById('search-results');
+    if (!hits.length) {
+        el.innerHTML = `<div class="search-empty"><div class="big">🙅</div>Aucun résultat pour « ${query} »</div>`;
+        return;
+    }
+    el.innerHTML = hits.map(k => {
+        const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(k.char)));
+        const badge = cat
+            ? `<span class="search-hit-badge" style="background:${cat.color}22;color:${cat.color};border:1px solid ${cat.color}44">${cat.short}</span>`
+            : '';
+        const safeChar = k.char.replace(/'/g, "\\'");
+        return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);hideSearchPanel()">
+            <div class="search-hit-char">${k.char}</div>
+            <div class="search-hit-info">
+                <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
+                <div class="search-hit-readings">${[...k.on.slice(0,3), ...k.kun.slice(0,2)].join('  ')}</div>
+            </div>
+            ${badge}
+        </div>`;
+    }).join('');
+}
+
+/* ══════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════ */
+function toggleSidebar(show) {
+    document.getElementById('sidebar').classList.toggle('open', show);
+    document.getElementById('overlay').classList.toggle('show', show);
+}
+
+function toggleSubmenu(catId, chevEl) {
+    const sub = document.getElementById(`sub-${catId}`);
+    const isOpen = sub.classList.contains('open');
+    document.querySelectorAll('.nav-submenu.open').forEach(el => el.classList.remove('open'));
+    document.querySelectorAll('.nav-chev.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) { sub.classList.add('open'); chevEl.classList.add('open'); }
+}
+
+function renderSidebar() {
+    const c = document.getElementById('grade-list');
+    c.innerHTML = '';
+
+    for (const def of CAT_DEFS) {
+        const cat = categories.get(def.id);
+        if (!cat || !cat.indices.length) continue;
+
+        // Séries de cette catégorie
+        const catSeries = [...seriesMap.values()].filter(s => s.catId === def.id);
+        const SHOW_MAX = 5;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'nav-grade-wrap';
+
+        const item = document.createElement('div');
+        item.className = 'nav-grade-item';
+        item.innerHTML = `
+            <div class="nav-badge" style="background:${def.color}22;color:${def.color};border:1px solid ${def.color}44">${def.short}</div>
+            <div class="nav-grade-text">
+                <div class="main">${def.label}</div>
+                <div class="sub">${cat.indices.length} kanji · ${catSeries.length} séries</div>
+            </div>
+            <div class="nav-chev" id="chev-${def.id}" onclick="event.stopPropagation();toggleSubmenu('${def.id}',this)">▼</div>`;
+        item.addEventListener('click', () => loadCategory(def.id));
+
+        const sub = document.createElement('div');
+        sub.className = 'nav-submenu';
+        sub.id = `sub-${def.id}`;
+
+        // Bouton quiz catégorie entière
+        const quizAll = document.createElement('div');
+        quizAll.className = 'nav-sub-item';
+        quizAll.style.cssText = 'padding-left:58px;';
+        quizAll.innerHTML = `<span style="flex:1;color:var(--text)">⚡ Quiz complet</span>
+            <button class="nav-sub-quiz" onclick="event.stopPropagation();startQuiz({type:'category',id:'${def.id}'})">Go</button>`;
+        quizAll.addEventListener('click', () => loadCategory(def.id));
+        sub.appendChild(quizAll);
+
+        catSeries.slice(0, SHOW_MAX).forEach(ser => {
+            const row = document.createElement('div');
+            row.className = 'nav-sub-series';
+            row.innerHTML = `
+                <span style="flex:1">${ser.label} - ${ser.indices.length} kanji</span>
+                <button class="nav-sub-quiz" onclick="event.stopPropagation();startQuiz({type:'series',id:'${ser.id}'})">Quiz</button>`;
+            row.addEventListener('click', () => loadSeriesPage(ser.id));
+            sub.appendChild(row);
+        });
+
+        if (catSeries.length > SHOW_MAX) {
+            const more = document.createElement('div');
+            more.className = 'nav-sub-more';
+            more.textContent = `+ ${catSeries.length - SHOW_MAX} séries → Voir tout`;
+            more.onclick = () => loadCategory(def.id);
+            sub.appendChild(more);
+        }
+
+        wrap.appendChild(item);
+        wrap.appendChild(sub);
+        c.appendChild(wrap);
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════ */
+function navDashboard() { toggleSidebar(false); renderDashboard(); }
+function navKana()      { toggleSidebar(false); loadKanas(); }
+
+function showDashboard() {
+    const main = document.getElementById('main-content');
+    
+    main.innerHTML = `
+        <div class="dash-wrap">
+            <div class="welcome-box">
+                <img src="https://via.placeholder.com/52" class="tanuki-img" alt="Tanuki">
+                <div>
+                    <div style="font-weight:bold; font-size:16px;">Salut, Shogun !</div>
+                    <div style="font-size:12px; color:var(--gray);">Prêt pour tes révisions ?</div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="streak-info">
+                    <div>
+                        <span class="streak-val">0</span>
+                        <span class="streak-label">JOURS</span>
+                    </div>
+                    <div>
+                        <span class="streak-val">0</span>
+                        <span class="streak-label">TOTAL</span>
+                    </div>
+                </div>
+                <div class="dots-grid" id="streak-dots">
+                    ${'<div class="dot active"></div>'.repeat(1)}
+                    ${'<div class="dot"></div>'.repeat(6)}
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="section-title">NIVEAUX DE MAÎTRISE</div>
+                <div id="progression-list">
+                    </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderDashboard() {
+    document.getElementById('page-title').innerText = '漢字 Study';
+    const total = kanjiDb.length;
+    const nbCats = [...categories.values()].filter(c => c.indices.length).length;
+    document.getElementById('main-content').innerHTML = `
+        <div class="dash-wrap">
+            <div class="dash-card">
+                <div class="streak-info">
+                    <div><span class="streak-val">365</span><span class="streak-label">Série actuelle 🔥</span></div>
+                    <div><span class="streak-val">365</span><span class="streak-label">Meilleure série</span></div>
+                    <div><span class="streak-val">今日</span><span class="streak-label">Dernière étude</span></div>
+                </div>
+                <div class="dots-grid">${Array(28).fill(0).map((_,i)=>`<div class="dot${i===27?' active':''}"></div>`).join('')}</div>
+                <div style="margin-top:12px;font-size:11px;color:var(--gray);display:flex;justify-content:space-between">
+                    <span>20 avr. 2026</span><span>${total} kanji · ${nbCats} catégories</span>
+                </div>
+            </div>
+            <div class="welcome-box">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img">
+                <div style="font-size:13px;line-height:1.6">Bienvenue ! ${total} kanji chargés.<br>Choisissez une catégorie pour commencer.</div>
+            </div>
+            <div style="padding:0 2px">
+                <div class="section-cards-title" style="margin-bottom:10px">Catégories</div>
+                ${CAT_DEFS.map(def => {
+                    const cat = categories.get(def.id);
+                    if (!cat || !cat.indices.length) return '';
+                    const nbSer = [...seriesMap.values()].filter(s => s.catId === def.id).length;
+                    return `<div class="section-card" onclick="loadCategory('${def.id}')">
+                        <div class="section-card-dot" style="background:${def.color}"></div>
+                        <div class="section-card-body">
+                            <div class="section-card-label">${def.label}</div>
+                            <div class="section-card-sub">${cat.indices.length} kanji · ${nbSer} séries</div>
+                        </div>
+                        <button class="section-card-quiz" onclick="event.stopPropagation();startQuiz({type:'category',id:'${def.id}'})">Quiz ▶</button>
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>`;
+}
+
+/* ── PAGE CATÉGORIE ───────────────────────────────── */
+function loadCategory(catId) {
+    toggleSidebar(false);
+    const cat = categories.get(catId);
+    if (!cat) return;
+    currentCatId = catId;
+    document.getElementById('page-title').innerText = cat.label;
+
+    const catSeries = [...seriesMap.values()].filter(s => s.catId === catId);
+
+    const seriesCards = catSeries.map(ser => {
+        const firstKanji = kanjiDb[ser.indices[0]]?.char ?? '？';
+        return `<div class="series-card" onclick="loadSeriesPage('${ser.id}')">
+            <div class="series-card-kanji">${firstKanji}</div>
+            <div class="series-card-body">
+                <div class="series-card-num">${ser.label} - ${ser.indices.length} Kanji</div>
+            </div>
+            <div class="series-card-actions" style="display:flex;gap:6px">
+                <button class="series-quiz-btn" onclick="event.stopPropagation();startQuiz({type:'series',id:'${ser.id}'})">Quiz ▶</button>
+                <button class="series-trace-btn" onclick="event.stopPropagation();startStrokeQuiz({type:'series',id:'${ser.id}'})">✏</button>
+            </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('main-content').innerHTML = `
+        <div class="grade-overview">
+            <div class="grade-hero">
+                <div class="grade-hero-top">
+                    <div class="grade-hero-badge" style="background:${cat.color}22;color:${cat.color};border:1px solid ${cat.color}44">${cat.short}</div>
+                    <div class="grade-hero-info">
+                        <h2>${cat.label}</h2>
+                        <p>${cat.indices.length} kanji · ${catSeries.length} séries</p>
+                    </div>
+                </div>
+                <button class="grade-quiz-btn" onclick="startQuiz({type:'category',id:'${catId}'})">⚡ Quiz QCM — ${cat.indices.length} kanji</button>
+                <button class="grade-trace-btn" onclick="startStrokeQuiz({type:'category',id:'${catId}'})">✏ Quiz Tracé — ordre des traits</button>
+            </div>
+            <div class="section-cards-title">Séries</div>
+            <div class="series-grid">${seriesCards}</div>
+        </div>`;
+}
+
+/* ── PAGE SÉRIE ───────────────────────────────────── */
+function loadSeriesPage(seriesId) {
+    toggleSidebar(false);
+    const ser = seriesMap.get(seriesId);
+    if (!ser) return;
+    const cat = categories.get(ser.catId);
+    document.getElementById('page-title').innerText = `${cat.label} · ${ser.label}`;
+
+    document.getElementById('main-content').innerHTML = `
+        <div class="list-header">
+            <div>
+                <div style="font-size:14px;font-weight:bold">${ser.label}</div>
+                <div class="list-header-info">${cat.label} · ${ser.range} (${ser.indices.length} kanji)</div>
+            </div>
+        <div style="display:flex;gap:8px">
+            <button class="list-quiz-btn" onclick="startQuiz({type:'series',id:'${seriesId}'})">Quiz ▶</button>
+            <button class="list-quiz-btn" style="background:var(--accent2)" onclick="startStrokeQuiz({type:'series',id:'${seriesId}'})">✏ Tracé</button>
+        </div>
+        </div>
+        <div id="series-kanji-list"></div>`;
+
+    const list = document.getElementById('series-kanji-list');
+    resolveKanjis(ser.indices).forEach(k => list.appendChild(makeKanjiRow(k)));
+}
+
+function makeKanjiRow(k) {
+    const row = document.createElement('div');
+    row.className = 'kanji-row';
+    row.onclick = () => openDetail(k);
+    row.innerHTML = `
+        <div class="kanji-char-large">${k.char}</div>
+        <div class="kanji-info-main">
+            <div class="tag-container">
+                ${k.on.slice(0,3).map(r => `<span class="tag tag-on">${r}</span>`).join('')}
+                ${k.kun.slice(0,2).map(r => `<span class="tag tag-kun">${r.split('.')[0]}</span>`).join('')}
+            </div>
+            <div style="font-size:13px;color:var(--gray)">${k.meanings[0] || ''}</div>
+        </div>
+        <div class="kanji-row-stroke">${k.strokes}t</div>`;
+    return row;
+}
+
+/* ══════════════════════════════════════════════════
+   QUIZ — API FLEXIBLE
+   startQuiz({ type: "category", id: "p1" })
+   startQuiz({ type: "series",   id: "p1_s1" })
+══════════════════════════════════════════════════ */
+let quizTimerInterval = null;
+let quizPaused = false;
+
+function startQuiz({ type, id }) {
+    let indices, title, poolIndices;
+
+    if (type === 'category') {
+        const cat = categories.get(id);
+        if (!cat || !cat.indices.length) return;
+        indices     = shuffleIndices([...cat.indices]);
+        poolIndices = [...cat.indices];
+        title       = cat.label;
+    } else if (type === 'series') {
+        const ser = seriesMap.get(id);
+        if (!ser || !ser.indices.length) return;
+        const cat   = categories.get(ser.catId);
+        indices     = shuffleIndices([...ser.indices]);
+        // Pool de leurres = toute la catégorie pour plus de variété
+        poolIndices = [...(cat?.indices ?? ser.indices)];
+        title       = `${cat?.label ?? ''} · ${ser.label}`;
+    } else { return; }
+
+    // Arrêter un éventuel timer précédent
+    if (quizTimerInterval) clearInterval(quizTimerInterval);
+    quizPaused = false;
+
+    quizState = {
+        indices, poolIndices, idx: 0,
+        correct: 0, wrong: 0,
+        answered: false, revealed: false,
+        title, sourceType: type, sourceId: id,
+        elapsedSec: 0
+    };
+
+    // Reset UI top bar
+    document.getElementById('quiz-correct').textContent = '0';
+    document.getElementById('quiz-wrong').textContent   = '0';
+    document.getElementById('quiz-timer').textContent   = '0:00';
+    document.getElementById('quiz-view').style.display  = 'flex';
+
+    // Timer
+    quizTimerInterval = setInterval(() => {
+        if (!quizPaused && quizState) {
+            quizState.elapsedSec++;
+            const m = Math.floor(quizState.elapsedSec / 60);
+            const s = quizState.elapsedSec % 60;
+            document.getElementById('quiz-timer').textContent =
+                `${m}:${String(s).padStart(2,'0')}`;
+        }
+    }, 1000);
+
+    renderQuizQuestion();
+}
+
+function closeQuiz() {
+    if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; }
+    document.getElementById('quiz-view').style.display = 'none';
+    quizState = null;
+    quizPaused = false;
+}
+
+function togglePause() {
+    quizPaused = !quizPaused;
+    document.querySelector('.quiz-pause-btn').textContent = quizPaused ? '▶' : '⏸';
+}
+
+/* ─────────────────────────────────────────────────
+   PHASE 1 — Affichage lectures + sens (sans kanji)
+───────────────────────────────────────────────── */
+function renderQuizQuestion() {
+    if (!quizState || quizState.idx >= quizState.indices.length) { renderQuizResults(); return; }
+
+    const qs  = quizState;
+    const k   = kanjiDb[qs.indices[qs.idx]];
+    const pct = (qs.idx / qs.indices.length * 100).toFixed(1);
+
+    document.getElementById('quiz-prog-bar').style.width = pct + '%';
+    document.getElementById('quiz-counter-sub').textContent =
+        `${qs.idx + 1} / ${qs.indices.length}`;
+    const scoreFloat = (qs.correct / Math.max(qs.idx, 1) * 10).toFixed(1);
+    document.getElementById('quiz-score-sub').textContent =
+        `${scoreFloat} / 10.0`;
+    document.getElementById('quiz-examples-btn').style.display = 'none';
+
+    qs.answered = false;
+    qs.revealed = false;
+
+    // Construire les chips de lecture
+    const onChips  = k.on.slice(0,3).map(r =>
+        `<div class="quiz-reading-chip on-chip">
+            <span class="chip-count">${k.on.indexOf(r)+1}</span>
+            <span class="chip-text">${r}</span>
+        </div>`).join('');
+    const kunChips = k.kun.slice(0,3).map(r => {
+        const clean = r.replace(/[.\-].*/,'').split('/')[0];
+        return `<div class="quiz-reading-chip kun-chip">
+            <span class="chip-count">${k.kun.indexOf(r)+1}</span>
+            <span class="chip-text">${clean}</span>
+        </div>`;
+    }).join('');
+
+// On filtre pour enlever tout ce qui contient le mot "Radical"
+const filteredMeanings = k.meanings.filter(m => !m.toLowerCase().includes('radical'));
+
+// Si après filtrage il reste des sens, on les affiche. 
+// Sinon on affiche le premier sens d'origine (au cas où "Radical" était le seul sens).
+const meaning = filteredMeanings.length > 0 
+                ? filteredMeanings.join(' • ') 
+                : (k.meanings[0] || '?');
+
+    document.getElementById('quiz-body').innerHTML = `
+        <div class="quiz-prompt-wrap" id="quiz-prompt" onclick="revealChoices()">
+            <div class="quiz-readings-row">${onChips}${kunChips}</div>
+            <div class="quiz-meaning-big">${meaning}</div>
+            <div class="quiz-tap-hint" id="quiz-tap-hint">Appuyer pour afficher les choix</div>
+            <div class="quiz-choices-grid" id="quiz-choices" style="display:none"></div>
+        </div>`;
+}
+
+/* ─────────────────────────────────────────────────
+   PHASE 2 — Révélation des 6 kanjis (tap)
+───────────────────────────────────────────────── */
+function revealChoices() {
+    if (!quizState || quizState.revealed) return;
+    quizState.revealed = true;
+
+    const qs     = quizState;
+    const kIdx   = qs.indices[qs.idx];
+    const k      = kanjiDb[kIdx];
+
+    // Masquer l'indice "appuyer"
+    const hint = document.getElementById('quiz-tap-hint');
+    if (hint) hint.style.display = 'none';
+
+    // 5 leurres préférés dans la même catégorie/série, sinon global
+    const decoys = pickDecoyIndices(kIdx, k.meanings[0], 5, qs.poolIndices);
+    const choices = shuffleIndices([kIdx, ...decoys]);
+
+    const grid = document.getElementById('quiz-choices');
+    grid.style.display = 'grid';
+    grid.innerHTML = choices.map(ci =>
+        `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})">
+            ${kanjiDb[ci].char}
+        </div>`
+    ).join('');
+
+    // Désactiver le tap global sur le prompt
+    document.getElementById('quiz-prompt').onclick = null;
+
+    // Afficher le bouton exemples (si on veut l'ajouter plus tard)
+    document.getElementById('quiz-examples-btn').style.display = 'inline-block';
+}
+
+function toggleExamples() { /* placeholder pour une future expansion */ }
+
+/* ─────────────────────────────────────────────────
+   RÉPONSE
+───────────────────────────────────────────────── */
+function answerQuiz(btn, chosenIdx, correctIdx) {
+    if (!quizState || quizState.answered) return;
+    quizState.answered = true;
+
+    const isCorrect = chosenIdx === correctIdx;
+    if (isCorrect) {
+        btn.classList.add('correct');
+        quizState.correct++;
+        document.getElementById('quiz-correct').textContent = quizState.correct;
+    } else {
+        btn.classList.add('wrong');
+        quizState.wrong++;
+        document.getElementById('quiz-wrong').textContent = quizState.wrong;
+    }
+
+    // Révéler la bonne réponse sur toutes les cellules
+    document.querySelectorAll('.quiz-kanji-choice').forEach(b => {
+        b.classList.add('locked');
+        if (parseInt(b.dataset.idx) === correctIdx && !b.classList.contains('correct')) {
+            b.classList.add('reveal');
+        }
+    });
+
+    // Mise à jour score flottant
+    const next = quizState.idx + 1;
+    const scoreFloat = (quizState.correct / next * 10).toFixed(1);
+    document.getElementById('quiz-score-sub').textContent = `${scoreFloat} / 10.0`;
+
+    setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 700 : 1200);
+}
+
+function renderQuizResults() {
+    if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; }
+    if (!quizState) return;
+    document.getElementById('quiz-prog-bar').style.width = '100%';
+    document.getElementById('quiz-examples-btn').style.display = 'none';
+
+    const { correct, indices, sourceType, sourceId, elapsedSec } = quizState;
+    const total   = indices.length;
+    const wrong   = total - correct;
+    const pct     = Math.round(correct / total * 100);
+    const emoji   = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : pct >= 40 ? '💪' : '😅';
+    const msg     = pct >= 80 ? 'Excellent !' : pct >= 60 ? 'Bien joué !' : pct >= 40 ? 'Continuez !' : 'À réviser…';
+    const m = Math.floor(elapsedSec / 60), s = elapsedSec % 60;
+    const timeStr = `${m}:${String(s).padStart(2,'0')}`;
+
+    document.getElementById('quiz-body').innerHTML = `
+        <div class="quiz-results">
+            <div class="quiz-results-emoji">${emoji}</div>
+            <div class="quiz-score-big">${pct}%</div>
+            <div class="quiz-score-label">${msg}</div>
+            <div class="quiz-breakdown">
+                <div class="quiz-breakdown-row"><span>✔ Corrects</span><strong style="color:var(--accent)">${correct}</strong></div>
+                <div class="quiz-breakdown-row"><span>✘ Erreurs</span><strong style="color:#e55">${wrong}</strong></div>
+                <div class="quiz-breakdown-row"><span>Total</span><strong>${total}</strong></div>
+                <div class="quiz-breakdown-row"><span>Temps</span><strong>${timeStr}</strong></div>
+            </div>
+            <div class="quiz-btn-row">
+                <button class="quiz-action-btn secondary" onclick="closeQuiz()">Fermer</button>
+                <button class="quiz-action-btn primary"
+                    onclick="startQuiz({type:'${sourceType}',id:'${sourceId}'})">Rejouer ↺</button>
+            </div>
+        </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   QUIZ DE TRACÉ (stroke order quiz)
+   ─────────────────────────────────────────────────
+   Fonctionnement :
+   • Le kanji est affiché en outline opaque (HanziWriter showOutline)
+   • L'utilisateur trace chaque trait dans l'ordre
+   • HanziWriter valide chaque trait : correct → s'allume en vert
+   • En cas d'erreur : après 1 mauvais tracé, l'animation du bon
+     trait se lance automatiquement (showHintAfterMisses: 1)
+   • À la fin du kanji : correct (0 erreur) → ✔++, sinon ✘++
+   • Résultats finaux identiques au quiz QCM
+══════════════════════════════════════════════════ */
+let strokeQuizState  = null;
+let strokeWriter     = null;
+let sqTimerInterval  = null;
+let sqPaused         = false;
+
+function startStrokeQuiz({ type, id }) {
+    let indices, title;
+
+    if (type === 'category') {
+        const cat = categories.get(id);
+        if (!cat || !cat.indices.length) return;
+        // Garder seulement les kanji qui ont des données de tracé (kanji CJK standards)
+        indices = shuffleIndices([...cat.indices]);
+        title   = cat.label;
+    } else if (type === 'series') {
+        const ser = seriesMap.get(id);
+        if (!ser || !ser.indices.length) return;
+        const cat = categories.get(ser.catId);
+        indices   = shuffleIndices([...ser.indices]);
+        title     = `${cat?.label ?? ''} · ${ser.label}`;
+    } else { return; }
+
+    if (sqTimerInterval) clearInterval(sqTimerInterval);
+    sqPaused = false;
+
+    strokeQuizState = {
+        indices, idx: 0,
+        correct: 0, wrong: 0,
+        title, sourceType: type, sourceId: id,
+        elapsedSec: 0,
+        mistakesThisKanji: 0
+    };
+
+    document.getElementById('sq-correct').textContent = '0';
+    document.getElementById('sq-wrong').textContent   = '0';
+    document.getElementById('sq-timer').textContent   = '0:00';
+    document.getElementById('stroke-quiz-view').style.display = 'flex';
+
+    sqTimerInterval = setInterval(() => {
+        if (!sqPaused && strokeQuizState) {
+            strokeQuizState.elapsedSec++;
+            const m = Math.floor(strokeQuizState.elapsedSec / 60);
+            const s = strokeQuizState.elapsedSec % 60;
+            document.getElementById('sq-timer').textContent =
+                `${m}:${String(s).padStart(2,'0')}`;
+        }
+    }, 1000);
+
+    renderStrokeQuizQuestion();
+}
+
+function closeStrokeQuiz() {
+    if (sqTimerInterval) { clearInterval(sqTimerInterval); sqTimerInterval = null; }
+    if (strokeWriter)    { strokeWriter = null; }
+    document.getElementById('stroke-quiz-view').style.display = 'none';
+    strokeQuizState = null;
+    sqPaused = false;
+}
+
+function toggleStrokePause() {
+    sqPaused = !sqPaused;
+    document.querySelector('#stroke-quiz-view .quiz-pause-btn').textContent = sqPaused ? '▶' : '⏸';
+}
+
+/* ─────────────────────────────────────────────────
+   Affichage d'une question de tracé
+───────────────────────────────────────────────── */
+function renderStrokeQuizQuestion() {
+    if (!strokeQuizState) return;
+    const qs = strokeQuizState;
+
+    if (qs.idx >= qs.indices.length) { renderStrokeQuizResults(); return; }
+
+    const k   = kanjiDb[qs.indices[qs.idx]];
+    const pct = (qs.idx / qs.indices.length * 100).toFixed(1);
+
+    document.getElementById('sq-prog-bar').style.width = pct + '%';
+    document.getElementById('sq-counter').textContent  = `${qs.idx + 1} / ${qs.indices.length}`;
+    updateSqScore();
+
+    qs.mistakesThisKanji = 0;
+
+    // Filtrer les significations (sans "radical")
+    const meanings = k.meanings.filter(m => !m.toLowerCase().includes('radical'));
+    const mainMeaning = meanings.length ? meanings[0] : (k.meanings[0] || '?');
+    const extraMeanings = meanings.slice(1);
+
+    const onChips  = k.on.slice(0,3).map(r =>
+        `<div class="quiz-reading-chip on-chip" style="padding:5px 10px">
+            <span class="chip-count">${k.on.indexOf(r)+1}</span>
+            <span class="chip-text" style="font-size:16px">${r}</span>
+        </div>`).join('');
+    const kunChips = k.kun.slice(0,3).map(r => {
+        const clean = r.replace(/[.\-].*/,'').split('/')[0];
+        return `<div class="quiz-reading-chip kun-chip" style="padding:5px 10px">
+            <span class="chip-count">${k.kun.indexOf(r)+1}</span>
+            <span class="chip-text" style="font-size:16px">${clean}</span>
+        </div>`;
+    }).join('');
+
+    const extraHtml = extraMeanings.length
+        ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            ${extraMeanings.map(m =>
+              `<span style="font-size:12px;color:var(--gray);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px">${m}</span>`
+            ).join('')}
+           </div>` : '';
+
+    // Construire les points de suivi des traits (on connaît k.strokes)
+    const strokeDots = Array(k.strokes).fill(0).map((_, i) =>
+        `<div class="sq-stroke-dot" id="sq-dot-${i}"></div>`
+    ).join('');
+
+    document.getElementById('stroke-quiz-body').innerHTML = `
+        <div class="sq-kanji-header">
+            <div class="sq-meaning">${mainMeaning}</div>
+            ${extraHtml}
+            <div class="sq-readings-row" style="margin-top:8px">${onChips}${kunChips}</div>
+        </div>
+
+        <div class="sq-canvas-wrap" id="sq-canvas-wrap">
+            <div id="sq-writer-target"></div>
+            <div class="sq-grid-overlay"></div>
+        </div>
+
+        <div class="sq-stroke-tracker" id="sq-stroke-tracker">${strokeDots}</div>
+
+        <div id="sq-feedback" style="height:22px;font-size:13px;color:var(--gray);text-align:center"></div>
+
+        <div class="sq-actions">
+            <button class="sq-btn hint" onclick="sqShowHint()">↺ Voir l'animation</button>
+            <button class="sq-btn skip" onclick="sqSkip()">Passer →</button>
+        </div>`;
+
+    // Instancier HanziWriter en mode quiz
+    // showHintAfterMisses:1 → anime le bon trait après 1 erreur (correction immédiate)
+    strokeWriter = HanziWriter.create('sq-writer-target', k.char, {
+        width:            280,
+        height:           280,
+        padding:          28,
+        strokeColor:      '#00c9a7',   // accent vert-bleu
+        outlineColor:     '#3a3a50',   // outline sombre visible
+        drawingColor:     '#ffffff',   // trait dessiné par l'utilisateur
+        drawingWidth:     5,
+        showOutline:      true,
+        showCharacter:    false,       // cache le kanji rempli → seul l'outline est visible
+        highlightOnComplete: true,
+        showHintAfterMisses: 1,        // correction animée après 1 erreur
+        highlightColor:   '#7b61ff',   // violet pour le highlight de complétion
+        renderer:         'svg'
+    });
+
+    let strokesDone = 0;
+
+    strokeWriter.quiz({
+        onMistake(strokeData) {
+            qs.mistakesThisKanji++;
+            // Flasher le point actif en rouge
+            const dot = document.getElementById(`sq-dot-${strokesDone}`);
+            if (dot) { dot.classList.add('mistake'); setTimeout(() => dot.classList.remove('mistake'), 400); }
+            // Flash rouge sur le canvas
+            const wrap = document.getElementById('sq-canvas-wrap');
+            if (wrap) { wrap.classList.add('flash-err'); setTimeout(() => wrap.classList.remove('flash-err'), 350); }
+            // Feedback texte
+            const fb = document.getElementById('sq-feedback');
+            if (fb) {
+                fb.style.color = '#e55';
+                fb.textContent = `Mauvais tracé — l'animation va se lancer…`;
+                setTimeout(() => { if (fb) fb.textContent = ''; }, 1800);
+            }
+        },
+        onCorrectStroke(strokeData) {
+            // Allumer le point correspondant
+            const dot = document.getElementById(`sq-dot-${strokesDone}`);
+            if (dot) { dot.classList.remove('mistake'); dot.classList.add('done'); }
+            strokesDone++;
+            // Flash vert sur le canvas
+            const wrap = document.getElementById('sq-canvas-wrap');
+            if (wrap) { wrap.classList.add('flash-ok'); setTimeout(() => wrap.classList.remove('flash-ok'), 350); }
+        },
+        onComplete(summary) {
+            const isClean = summary.totalMistakes === 0;
+            if (isClean) {
+                qs.correct++;
+                document.getElementById('sq-correct').textContent = qs.correct;
+            } else {
+                qs.wrong++;
+                document.getElementById('sq-wrong').textContent = qs.wrong;
+            }
+            updateSqScore();
+
+            // Feedback final
+            const fb = document.getElementById('sq-feedback');
+            if (fb) {
+                fb.style.color = isClean ? 'var(--accent)' : '#e55';
+                fb.textContent = isClean
+                    ? `✔ Parfait ! ${k.strokes} traits corrects`
+                    : `${summary.totalMistakes} erreur${summary.totalMistakes > 1 ? 's' : ''} — continuez !`;
+            }
+
+            // Passer au suivant après un délai
+            setTimeout(() => {
+                if (!strokeQuizState) return;
+                strokeQuizState.idx++;
+                renderStrokeQuizQuestion();
+            }, isClean ? 900 : 1600);
+        }
+    });
+}
+
+function updateSqScore() {
+    if (!strokeQuizState) return;
+    const qs = strokeQuizState;
+    const done = qs.correct + qs.wrong;
+    const scoreFloat = done > 0 ? (qs.correct / done * 10).toFixed(1) : '0.0';
+    document.getElementById('sq-score-sub').textContent = `${scoreFloat} / 10.0`;
+}
+
+/* ─────────────────────────────────────────────────
+   Boutons auxiliaires
+───────────────────────────────────────────────── */
+function sqShowHint() {
+    // Lance l'animation complète du kanji pour voir tous les traits dans l'ordre
+    if (strokeWriter) strokeWriter.animateCharacter();
+}
+
+function sqSkip() {
+    // Compter comme erreur et passer
+    if (!strokeQuizState) return;
+    strokeQuizState.wrong++;
+    strokeQuizState.idx++;
+    document.getElementById('sq-wrong').textContent = strokeQuizState.wrong;
+    updateSqScore();
+    renderStrokeQuizQuestion();
+}
+
+/* ─────────────────────────────────────────────────
+   Résultats stroke quiz
+───────────────────────────────────────────────── */
+function renderStrokeQuizResults() {
+    if (sqTimerInterval) { clearInterval(sqTimerInterval); sqTimerInterval = null; }
+    if (!strokeQuizState) return;
+    document.getElementById('sq-prog-bar').style.width = '100%';
+
+    const { correct, wrong, indices, sourceType, sourceId, elapsedSec } = strokeQuizState;
+    const total   = indices.length;
+    const pct     = Math.round(correct / total * 100);
+    const emoji   = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : pct >= 40 ? '💪' : '😅';
+    const msg     = pct >= 80 ? 'Excellent !' : pct >= 60 ? 'Bien joué !' : pct >= 40 ? 'Continuez !' : 'À réviser…';
+    const m = Math.floor(elapsedSec / 60), s = elapsedSec % 60;
+
+    document.getElementById('stroke-quiz-body').innerHTML = `
+        <div class="quiz-results" style="padding-top:40px">
+            <div class="quiz-results-emoji">${emoji}</div>
+            <div class="quiz-score-big">${pct}%</div>
+            <div class="quiz-score-label">${msg}</div>
+            <div class="quiz-breakdown">
+                <div class="quiz-breakdown-row"><span>✔ Sans erreur</span><strong style="color:var(--accent)">${correct}</strong></div>
+                <div class="quiz-breakdown-row"><span>✘ Avec erreurs</span><strong style="color:#e55">${wrong}</strong></div>
+                <div class="quiz-breakdown-row"><span>Total</span><strong>${total}</strong></div>
+                <div class="quiz-breakdown-row"><span>Temps</span><strong>${m}:${String(s).padStart(2,'0')}</strong></div>
+            </div>
+            <div class="quiz-btn-row">
+                <button class="quiz-action-btn secondary" onclick="closeStrokeQuiz()">Fermer</button>
+                <button class="quiz-action-btn primary"
+                    onclick="startStrokeQuiz({type:'${sourceType}',id:'${sourceId}'})">Rejouer ↺</button>
+            </div>
+        </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   KANA DATA
+══════════════════════════════════════════════════ */
+const hiraganaBase = [
+    [{c:'あ',r:'a'},{c:'い',r:'i'},{c:'う',r:'u'},{c:'え',r:'e'},{c:'お',r:'o'}],
+    [{c:'か',r:'ka'},{c:'き',r:'ki'},{c:'く',r:'ku'},{c:'け',r:'ke'},{c:'こ',r:'ko'}],
+    [{c:'さ',r:'sa'},{c:'し',r:'shi'},{c:'す',r:'su'},{c:'せ',r:'se'},{c:'そ',r:'so'}],
+    [{c:'た',r:'ta'},{c:'ち',r:'chi'},{c:'つ',r:'tsu'},{c:'て',r:'te'},{c:'と',r:'to'}],
+    [{c:'な',r:'na'},{c:'に',r:'ni'},{c:'ぬ',r:'nu'},{c:'ね',r:'ne'},{c:'の',r:'no'}],
+    [{c:'は',r:'ha'},{c:'ひ',r:'hi'},{c:'ふ',r:'fu'},{c:'へ',r:'he'},{c:'ほ',r:'ho'}],
+    [{c:'ま',r:'ma'},{c:'み',r:'mi'},{c:'む',r:'mu'},{c:'め',r:'me'},{c:'も',r:'mo'}],
+    [{c:'や',r:'ya'},null,{c:'ゆ',r:'yu'},null,{c:'よ',r:'yo'}],
+    [{c:'ら',r:'ra'},{c:'り',r:'ri'},{c:'る',r:'ru'},{c:'れ',r:'re'},{c:'ろ',r:'ro'}],
+    [{c:'わ',r:'wa'},null,null,null,{c:'を',r:'wo'}],
+    [{c:'ん',r:'n'},null,null,null,null]
+];
+const katakanaBase = [
+    [{c:'ア',r:'a'},{c:'イ',r:'i'},{c:'ウ',r:'u'},{c:'エ',r:'e'},{c:'オ',r:'o'}],
+    [{c:'カ',r:'ka'},{c:'キ',r:'ki'},{c:'ク',r:'ku'},{c:'ケ',r:'ke'},{c:'コ',r:'ko'}],
+    [{c:'サ',r:'sa'},{c:'シ',r:'shi'},{c:'ス',r:'su'},{c:'セ',r:'se'},{c:'ソ',r:'so'}],
+    [{c:'タ',r:'ta'},{c:'チ',r:'chi'},{c:'ツ',r:'tsu'},{c:'テ',r:'te'},{c:'ト',r:'to'}],
+    [{c:'ナ',r:'na'},{c:'ニ',r:'ni'},{c:'ヌ',r:'nu'},{c:'ネ',r:'ne'},{c:'ノ',r:'no'}],
+    [{c:'ハ',r:'ha'},{c:'ヒ',r:'hi'},{c:'フ',r:'fu'},{c:'ヘ',r:'he'},{c:'ホ',r:'ho'}],
+    [{c:'マ',r:'ma'},{c:'ミ',r:'mi'},{c:'ム',r:'mu'},{c:'メ',r:'me'},{c:'モ',r:'mo'}],
+    [{c:'ヤ',r:'ya'},null,{c:'ユ',r:'yu'},null,{c:'ヨ',r:'yo'}],
+    [{c:'ラ',r:'ra'},{c:'リ',r:'ri'},{c:'ル',r:'ru'},{c:'レ',r:'re'},{c:'ロ',r:'ro'}],
+    [{c:'ワ',r:'wa'},null,null,null,{c:'ヲ',r:'wo'}],
+    [{c:'ン',r:'n'},null,null,null,null]
+];
+const hiraganaDakuten = [
+    [{c:'が',r:'ga'},{c:'ぎ',r:'gi'},{c:'ぐ',r:'gu'},{c:'げ',r:'ge'},{c:'ご',r:'go'}],
+    [{c:'ざ',r:'za'},{c:'じ',r:'ji'},{c:'ず',r:'zu'},{c:'ぜ',r:'ze'},{c:'ぞ',r:'zo'}],
+    [{c:'だ',r:'da'},{c:'ぢ',r:'di'},{c:'づ',r:'du'},{c:'で',r:'de'},{c:'ど',r:'do'}],
+    [{c:'ば',r:'ba'},{c:'び',r:'bi'},{c:'ぶ',r:'bu'},{c:'べ',r:'be'},{c:'ぼ',r:'bo'}]
+];
+const katakanaDakuten = [
+    [{c:'ガ',r:'ga'},{c:'ギ',r:'gi'},{c:'グ',r:'gu'},{c:'ゲ',r:'ge'},{c:'ゴ',r:'go'}],
+    [{c:'ザ',r:'za'},{c:'ジ',r:'ji'},{c:'ズ',r:'zu'},{c:'ゼ',r:'ze'},{c:'ゾ',r:'zo'}],
+    [{c:'ダ',r:'da'},{c:'ヂ',r:'di'},{c:'ヅ',r:'du'},{c:'デ',r:'de'},{c:'ド',r:'do'}],
+    [{c:'バ',r:'ba'},{c:'ビ',r:'bi'},{c:'ブ',r:'bu'},{c:'ベ',r:'be'},{c:'ボ',r:'bo'}]
+];
+const hiraganaHandakuten = [[{c:'ぱ',r:'pa'},{c:'ぴ',r:'pi'},{c:'ぷ',r:'pu'},{c:'ぺ',r:'pe'},{c:'ぽ',r:'po'}]];
+const katakanaHandakuten = [[{c:'パ',r:'pa'},{c:'ピ',r:'pi'},{c:'プ',r:'pu'},{c:'ペ',r:'pe'},{c:'ポ',r:'po'}]];
+const hiraganaSokuon = [[{c:'っ',r:'–'},null,null,null,null]];
+const katakanaSokuon = [[{c:'ッ',r:'–'},null,null,null,null]];
+const hiraganaYoon = [
+    [{c:'きゃ',r:'kya'},{c:'きゅ',r:'kyu'},{c:'きょ',r:'kyo'},null,null],
+    [{c:'しゃ',r:'sha'},{c:'しゅ',r:'shu'},{c:'しょ',r:'sho'},null,null],
+    [{c:'ちゃ',r:'cha'},{c:'ちゅ',r:'chu'},{c:'ちょ',r:'cho'},null,null],
+    [{c:'にゃ',r:'nya'},{c:'にゅ',r:'nyu'},{c:'にょ',r:'nyo'},null,null],
+    [{c:'ひゃ',r:'hya'},{c:'ひゅ',r:'hyu'},{c:'ひょ',r:'hyo'},null,null],
+    [{c:'みゃ',r:'mya'},{c:'みゅ',r:'myu'},{c:'みょ',r:'myo'},null,null],
+    [{c:'りゃ',r:'rya'},{c:'りゅ',r:'ryu'},{c:'りょ',r:'ryo'},null,null],
+    [{c:'ぎゃ',r:'gya'},{c:'ぎゅ',r:'gyu'},{c:'ぎょ',r:'gyo'},null,null],
+    [{c:'じゃ',r:'ja'}, {c:'じゅ',r:'ju'}, {c:'じょ',r:'jo'}, null,null],
+    [{c:'びゃ',r:'bya'},{c:'びゅ',r:'byu'},{c:'びょ',r:'byo'},null,null],
+    [{c:'ぴゃ',r:'pya'},{c:'ぴゅ',r:'pyu'},{c:'ぴょ',r:'pyo'},null,null]
+];
+const katakanaYoon = [
+    [{c:'キャ',r:'kya'},{c:'キュ',r:'kyu'},{c:'キョ',r:'kyo'},null,null],
+    [{c:'シャ',r:'sha'},{c:'シュ',r:'shu'},{c:'ショ',r:'sho'},null,null],
+    [{c:'チャ',r:'cha'},{c:'チュ',r:'chu'},{c:'チョ',r:'cho'},null,null],
+    [{c:'ニャ',r:'nya'},{c:'ニュ',r:'nyu'},{c:'ニョ',r:'nyo'},null,null],
+    [{c:'ヒャ',r:'hya'},{c:'ヒュ',r:'hyu'},{c:'ヒョ',r:'hyo'},null,null],
+    [{c:'ミャ',r:'mya'},{c:'ミュ',r:'myu'},{c:'ミョ',r:'myo'},null,null],
+    [{c:'リャ',r:'rya'},{c:'リュ',r:'ryu'},{c:'リョ',r:'ryo'},null,null],
+    [{c:'ギャ',r:'gya'},{c:'ギュ',r:'gyu'},{c:'ギョ',r:'gyo'},null,null],
+    [{c:'ジャ',r:'ja'}, {c:'ジュ',r:'ju'}, {c:'ジョ',r:'jo'}, null,null],
+    [{c:'ビャ',r:'bya'},{c:'ビュ',r:'byu'},{c:'ビョ',r:'byo'},null,null],
+    [{c:'ピャ',r:'pya'},{c:'ピュ',r:'pyu'},{c:'ピョ',r:'pyo'},null,null]
+];
+const kanaGroups = {
+    hira: [
+        {title:null,            rows:hiraganaBase},
+        {title:'Dakuten ゛',    rows:hiraganaDakuten},
+        {title:'Handakuten ゜', rows:hiraganaHandakuten},
+        {title:'Sokuon 促音',   rows:hiraganaSokuon},
+        {title:'Yoon 拗音',     rows:hiraganaYoon}
+    ],
+    kata: [
+        {title:null,            rows:katakanaBase},
+        {title:'Dakuten ゛',    rows:katakanaDakuten},
+        {title:'Handakuten ゜', rows:katakanaHandakuten},
+        {title:'Sokuon 促音',   rows:katakanaSokuon},
+        {title:'Yoon 拗音',     rows:katakanaYoon}
+    ]
+};
+
+function loadKanas() {
+    document.getElementById('page-title').innerText = 'Kana';
+    document.getElementById('main-content').innerHTML = `
+        <div class="kana-tabs">
+            <div class="kana-tab active" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
+            <div class="kana-tab"        id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>
+        </div>
+        <div id="kana-grid-container" style="padding:12px"></div>`;
+    renderKanaGrid('hira');
+}
+function switchKanaTab(type) {
+    document.getElementById('tab-hira').classList.toggle('active', type==='hira');
+    document.getElementById('tab-kata').classList.toggle('active', type==='kata');
+    renderKanaGrid(type);
+}
+function renderKanaGrid(type) {
+    const container = document.getElementById('kana-grid-container');
+    container.innerHTML = '';
+    for (const group of kanaGroups[type]) {
+        if (group.title) {
+            const h = document.createElement('div');
+            h.className = 'kana-section-title';
+            h.textContent = group.title;
+            container.appendChild(h);
+        }
+        const grid = document.createElement('div');
+        grid.className = 'kana-grid';
+        for (const row of group.rows) {
+            for (const kana of row) {
+                const cell = document.createElement('div');
+                if (!kana) {
+                    cell.className = 'kana-cell empty';
+                } else {
+                    const isYoon = [...kana.c].length > 1;
+                    cell.className = 'kana-cell';
+                    cell.innerHTML = `<span class="kana-char${isYoon?' yoon':''}">${kana.c}</span><span class="kana-rom">${kana.r}</span>`;
+                    cell.onclick = () => openKanaDetail(kana);
+                }
+                grid.appendChild(cell);
+            }
+        }
+        container.appendChild(grid);
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   KANJIVG ANIMATION (conservé intégralement)
+══════════════════════════════════════════════════ */
+async function fetchPaths(char, signal) {
+    const cp  = char.codePointAt(0).toString(16).padStart(5,'0');
+    const res = await fetch(`https://cdn.jsdelivr.net/gh/KanjiVG/kanjivg@master/kanji/${cp}.svg`, {signal});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const doc = new DOMParser().parseFromString(await res.text(), 'image/svg+xml');
+    return [...doc.querySelectorAll('path')].map(p => p.getAttribute('d'));
+}
+function makeGroup(dList, transform, color) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const g  = document.createElementNS(NS, 'g');
+    if (transform) g.setAttribute('transform', transform);
+    for (const d of dList) {
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', d); p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', color); p.setAttribute('stroke-width', '3');
+        p.setAttribute('stroke-linecap', 'round'); p.setAttribute('stroke-linejoin', 'round');
+        p.setAttribute('vector-effect', 'non-scaling-stroke');
+        g.appendChild(p);
+    }
+    return g;
+}
+async function animateKanaChar(char) {
+    const chars  = [...char], isYoon = chars.length > 1;
+    const svgEl  = document.getElementById('kana-writer-svg');
+    const spn    = document.getElementById('writer-spinner');
+    const hanz   = document.getElementById('kanji-writer-target');
+    if (fetchCtrl) fetchCtrl.abort();
+    fetchCtrl = new AbortController();
+    const { signal } = fetchCtrl;
+    kanaAnimTimeouts.forEach(clearTimeout); kanaAnimTimeouts = [];
+    hanz.style.display = 'none'; svgEl.style.display = 'none'; spn.style.display = 'block';
+    try {
+        const groups = await Promise.all(chars.map(c => fetchPaths(c, signal)));
+        if (signal.aborted) return;
+        svgEl.innerHTML = ''; svgEl.setAttribute('viewBox', '0 0 109 109');
+        const tf = isYoon ? ['scale(0.62)', 'translate(65,65) scale(0.35)'] : [null];
+        chars.forEach((_, i) => svgEl.appendChild(makeGroup(groups[i], tf[i], '#2a2a3a')));
+        const animPaths = [];
+        chars.forEach((_, i) => {
+            const g = makeGroup(groups[i], tf[i], '#00c9a7');
+            svgEl.appendChild(g); animPaths.push(...g.querySelectorAll('path'));
+        });
+        spn.style.display = 'none'; svgEl.style.display = 'block';
+        animPaths.forEach(p => {
+            const len = p.getTotalLength();
+            p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.style.transition = 'none';
+        });
+        const DUR = 550, PAU = 150; let delay = 100;
+        animPaths.forEach(p => {
+            const t = setTimeout(() => { p.style.transition = `stroke-dashoffset ${DUR}ms ease`; p.style.strokeDashoffset = '0'; }, delay);
+            delay += DUR + PAU; kanaAnimTimeouts.push(t);
+        });
+        document.getElementById('d-strokes').innerText = groups.reduce((s,g) => s + g.length, 0);
+    } catch(err) {
+        if (err.name === 'AbortError') return;
+        spn.style.display = 'none';
+        svgEl.innerHTML = `<text x="54" y="80" text-anchor="middle" fill="#dde0eb" font-size="60" font-family="serif">${char}</text>`;
+        svgEl.style.display = 'block';
+        document.getElementById('d-strokes').innerText = '?';
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   DETAIL VIEW (conservé intégralement + HanziWriter)
+══════════════════════════════════════════════════ */
+function openDetail(kanji) {
+    currentType = 'kanji'; 
+    currentChar = kanji.char;
+    
+    const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
+    
+    document.getElementById('detail-view').style.display = 'flex';
+    document.getElementById('detail-char-title').innerText = kanji.char;
+
+    // --- NETTOYAGE DES SENS ---
+    const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
+    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
+
+    // --- AJOUT DU QUIZ VOCAL (Injection dynamique) ---
+    // On vérifie si le conteneur existe déjà, sinon on le crée après le sens
+    let oralSection = document.getElementById('oral-test-container');
+    if (!oralSection) {
+        oralSection = document.createElement('div');
+        oralSection.id = 'oral-test-container';
+        oralSection.style.textAlign = 'center';
+        oralSection.style.margin = '15px 0';
+        oralSection.style.padding = '10px';
+        oralSection.style.background = 'rgba(255,255,255,0.05)';
+        oralSection.style.borderRadius = '12px';
+        document.getElementById('d-meaning').after(oralSection);
+    }
+
+    oralSection.innerHTML = `
+        <div style="font-size: 10px; color: var(--gray); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Test de lecture</div>
+        <button class="oral-quiz-btn" onclick="startOralTest('${kanji.char}')" 
+                style="background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: 0.3s;">
+            🎤
+        </button>
+        <p id="voice-feedback" style="font-size: 11px; color: var(--gray); margin-top: 5px;">Cliquez et dites la lecture</p>
+    `;
+
+    // --- STATS ---
+    document.getElementById('d-level').innerText   = cat ? cat.short : '–';
+    document.getElementById('d-strokes').innerText = kanji.strokes;
+    document.getElementById('d-romaji').innerText  = '–';
+
+    // --- LECTURES ---
+    document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
+    document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
+
+    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+
+    // --- HANZI WRITER ---
+    document.getElementById('kana-writer-svg').style.display     = 'none';
+    document.getElementById('writer-spinner').style.display      = 'none';
+    document.getElementById('kanji-writer-target').style.display = 'block';
+    document.getElementById('kanji-writer-target').innerHTML    = '';
+
+    writer = HanziWriter.create('kanji-writer-target', kanji.char, {
+        width:140, height:140, padding:15, strokeColor:'#00c9a7',
+        outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
+    });
+    writer.animateCharacter();
+
+    // --- EXEMPLES ---
+    if (typeof renderExemples === "function") renderExemples(kanji.char);
+}
+
+/* ══════════════════════════════════════════════════
+    FONCTIONS DE RENDU & AUDIO
+   ══════════════════════════════════════════════════ */
+
+function renderExemples(char) {
+    // 1. Cibler le conteneur ou le créer dans la zone de détail
+    let container = document.getElementById('exemples-container');
+    const detailContent = document.querySelector('.detail-content');
+
+    if (!container && detailContent) {
+        container = document.createElement('div');
+        container.id = 'exemples-container';
+        container.style.cssText = "margin-top:25px; border-top:1px solid var(--border); padding:20px 0; width:100%; box-sizing:border-box;";
+        detailContent.appendChild(container);
+    }
+
+    // Vider le conteneur pour éviter les doublons lors du changement de kanji
+    if (container) container.innerHTML = '';
+
+    // 2. Récupérer les données
+    const liste = exemplesDb[char];
+    
+    if (!liste || liste.length === 0) {
+        container.innerHTML = `
+            <div style="color:var(--gray); font-size:13px; text-align:center; padding:20px; border:1px dashed var(--border); border-radius:10px; margin: 10px 20px;">
+                Aucun exemple disponible pour ce kanji
+            </div>`;
+        return;
+    }
+
+    // 3. Construction du HTML
+    const html = liste.map(ex => `
+        <div class="example-item" onclick="speakSentence('${ex.jp.replace(/'/g, "\\'")}')" 
+             style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:12px; cursor:pointer; border-left:4px solid #00c9a7; transition:0.2s; position:relative; margin: 0 10px 12px 10px;">
+            <div style="font-size:1.2rem; color:#fff; margin-bottom:6px; letter-spacing:0.5px;">${ex.jp}</div>
+            <div style="font-size:0.85rem; color:#00c9a7; margin-bottom:6px; font-family:monospace;">${ex.ro || ''}</div>
+            <div style="font-size:0.95rem; color:#a0a0b0; line-height:1.4;">${ex.fr}</div>
+            <div style="text-align:right; font-size:10px; opacity:0.5; margin-top:8px; letter-spacing:1px;">🔊 CLIQUEZ POUR ÉCOUTER</div>
+        </div>
+    `).join('');
+
+    container.innerHTML = `
+        <div style="font-size:11px; color:var(--gray); text-transform:uppercase; letter-spacing:1.5px; margin: 0 10px 15px 10px; font-weight:bold; display:flex; align-items:center; gap:8px;">
+            <span style="background:#00c9a7; width:8px; height:8px; border-radius:50%;"></span>
+            Exemples de phrases
+        </div>
+        ${html}
+    `;
+}
+
+// Fonction de lecture audio
+function speakSentence(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'ja-JP';
+    msg.rate = 0.85;
+    window.speechSynthesis.speak(msg);
+}
+
+// AJOUT : La fonction de synthèse vocale pour que le clic fonctionne
+function speakSentence(text) {
+    if (!window.speechSynthesis) return;
+    // Annuler une lecture en cours pour éviter les chevauchements
+    window.speechSynthesis.cancel();
+    
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'ja-JP';
+    msg.rate = 0.85; // Vitesse légèrement réduite pour l'apprentissage
+    window.speechSynthesis.speak(msg);
+}
+
+// Fonction utilitaire pour la synthèse vocale des exemples
+function speakSentence(text) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP';
+        utterance.rate = 0.8; // Un peu plus lent pour faciliter la compréhension
+        window.speechSynthesis.speak(utterance);
+    }
+}
+
+function speakSentence(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.8; 
+    window.speechSynthesis.speak(utterance);
+}
+
+/* ══════════════════════════════════════════════════
+    GESTION DES DÉTAILS (KANA & KANJI)
+   ══════════════════════════════════════════════════ */
+
+function openDetail(kanji) {
+    currentType = 'kanji'; currentChar = kanji.char;
+    const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
+    
+    // 1. Affichage de la vue
+    const detailView = document.getElementById('detail-view');
+    detailView.style.display = 'flex';
+    
+    // Optionnel : Remonter tout en haut de la fiche quand on change de Kanji
+    detailView.scrollTop = 0; 
+
+    document.getElementById('detail-char-title').innerText = kanji.char;
+    
+    // 2. Nettoyage des sens (filtre "radical")
+    const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
+    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
+    
+    document.getElementById('d-level').innerText   = cat ? cat.short : '–';
+    document.getElementById('d-strokes').innerText = kanji.strokes;
+    document.getElementById('d-romaji').innerText  = '–';
+    
+    document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
+    document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
+    
+    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+    
+    // 3. Gestion du traceur (HanziWriter)
+    document.getElementById('kana-writer-svg').style.display     = 'none';
+    document.getElementById('writer-spinner').style.display      = 'none';
+    document.getElementById('kanji-writer-target').style.display = 'block';
+    document.getElementById('kanji-writer-target').innerHTML    = '';
+    
+    writer = HanziWriter.create('kanji-writer-target', kanji.char, {
+        width:140, height:140, padding:15, strokeColor:'#00c9a7',
+        outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
+    });
+    writer.animateCharacter();
+
+    // 4. APPEL DU RENDU DES EXEMPLES
+    // Cette fonction va chercher dans exemplesDb (GitHub) et créer le bloc exemples-container
+    renderExemples(kanji.char);
+}
+
+function openKanaDetail(kana) {
+    currentType = 'kana'; currentChar = kana.c;
+    const code = kana.c.codePointAt(0);
+    const label = (code >= 0x3040 && code <= 0x309F) ? 'Hiragana' : 'Katakana';
+    const isYoon = [...kana.c].length > 1, isSokuon = kana.c === 'っ' || kana.c === 'ッ';
+    
+    document.getElementById('detail-view').style.display = 'flex';
+    document.getElementById('detail-char-title').innerText = kana.c;
+    document.getElementById('d-level').innerText  = label;
+    document.getElementById('d-romaji').innerText = kana.r;
+    document.getElementById('section-on').style.display  = 'none';
+    document.getElementById('section-kun').style.display = 'none';
+    
+    let meaning = `Syllabe « ${kana.r} »`;
+    if (isYoon)   meaning = `Yoon (拗音) — combiné « ${kana.r} »`;
+    if (isSokuon) meaning = 'Sokuon (促音) — double la consonne suivante';
+    
+    document.getElementById('d-meaning').innerText = meaning;
+    document.getElementById('d-strokes').innerText = '…';
+    document.getElementById('kanji-writer-target').innerHTML = '';
+    document.getElementById('kanji-writer-target').style.display = 'none';
+    
+    // IMPORTANT : On vide les exemples pour les Kanas
+    const exContainer = document.getElementById('exemples-container');
+    if (exContainer) exContainer.innerHTML = '';
+    
+    animateKanaChar(kana.c);
+}
+
+function closeDetail() {
+    document.getElementById('detail-view').style.display = 'none';
+    kanaAnimTimeouts.forEach(clearTimeout); 
+    kanaAnimTimeouts = [];
+    if (fetchCtrl) { fetchCtrl.abort(); fetchCtrl = null; }
+    
+    // On supprime le bloc d'exemples à la fermeture pour repartir sur du propre
+    const exContainer = document.getElementById('exemples-container');
+    if (exContainer) exContainer.remove(); 
+}
+
+function replayAnimation() {
+    if (currentType === 'kanji' && writer)           writer.animateCharacter();
+    else if (currentType === 'kana' && currentChar)  animateKanaChar(currentChar);
+}
+
+/* ══════════════════════════════════════════════════
+    INIT & DASHBOARD LOGIC
+   ══════════════════════════════════════════════════ */
+
+// 1. La fonction de rendu du Dashboard (doit être définie AVANT init)
+function renderDashboard() {
+    const container = document.getElementById('progression-list');
+    if (!container) {
+        console.warn("Conteneur 'progression-list' non trouvé dans le DOM.");
+        return;
+    }
+
+    container.innerHTML = ''; 
+
+    const levels = [
+        { id: 5, label: 'N5 - Débutant' },
+        { id: 4, label: 'N4 - Élémentaire' },
+        { id: 3, label: 'N3 - Intermédiaire' },
+        { id: 2, label: 'N2 - Avancé' },
+        { id: 1, label: 'N1 - Expert' }
+    ];
+
+    levels.forEach(level => {
+        // Filtrage sécurisé (on vérifie si grade existe)
+        const totalInLevel = kanjiDb.filter(k => k.grade == level.id).length;
+        
+        // Récupération de la progression dans le localStorage
+        const learned = kanjiDb.filter(k => 
+            k.grade == level.id && localStorage.getItem(`learned_${k.char}`)
+        ).length;
+
+        const percent = totalInLevel > 0 ? Math.round((learned / totalInLevel) * 100) : 0;
+
+        container.innerHTML += `
+            <div class="prog-item">
+                <div class="prog-info">
+                    <span class="prog-name">${level.label}</span>
+                    <span class="prog-stats">${learned} / ${totalInLevel}</span>
+                </div>
+                <div class="prog-track">
+                    <div class="prog-fill" style="width: ${percent}%;"></div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function openDetail(kanji) {
+    currentType = 'kanji'; 
+    currentChar = kanji.char;
+    
+    const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
+    
+    document.getElementById('detail-view').style.display = 'flex';
+    document.getElementById('detail-char-title').innerText = kanji.char;
+
+    // --- NETTOYAGE DES SENS ---
+    const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
+    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
+
+    // --- INJECTION DU BOUTON VOCAL (Juste après le sens) ---
+    let oralSection = document.getElementById('oral-test-container');
+    if (!oralSection) {
+        oralSection = document.createElement('div');
+        oralSection.id = 'oral-test-container';
+        oralSection.style.textAlign = 'center';
+        oralSection.style.margin = '15px 0';
+        document.getElementById('d-meaning').after(oralSection);
+    }
+
+    oralSection.innerHTML = `
+        <div class="section-title" style="margin-bottom:10px">Test de prononciation</div>
+        <button class="oral-quiz-btn" onclick="startOralTest('${kanji.char}')" 
+                style="background: var(--surface); border: 1px solid var(--border); width:60px; height:60px; border-radius: 50%; cursor: pointer; font-size: 24px; color: white;">
+            🎤
+        </button>
+    `;
+
+    // --- STATS & LECTURES ---
+    document.getElementById('d-level').innerText   = cat ? cat.short : '–';
+    document.getElementById('d-strokes').innerText = kanji.strokes;
+    document.getElementById('d-romaji').innerText  = '–';
+
+    document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
+    document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
+
+    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+
+    // --- HANZI WRITER ---
+    document.getElementById('kana-writer-svg').style.display     = 'none';
+    document.getElementById('writer-spinner').style.display      = 'none';
+    document.getElementById('kanji-writer-target').style.display = 'block';
+    document.getElementById('kanji-writer-target').innerHTML    = '';
+
+    writer = HanziWriter.create('kanji-writer-target', kanji.char, {
+        width:140, height:140, padding:15, strokeColor:'#00c9a7',
+        outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
+    });
+    writer.animateCharacter();
+
+    if (typeof renderExemples === "function") renderExemples(kanji.char);
+}
+
+// 2. La fonction d'initialisation principale
+async function init() {
+    const mainContent = document.getElementById('main-content');
+    
+    // Affichage du loader
+    mainContent.innerHTML = `
+        <div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+            <div class="spinner"></div>
+            <div style="font-size:13px;color:var(--gray)">Chargement de la base de données…</div>
+        </div>`;
+
+    try {
+        // Chargement du JSON des Kanjis
+        const res = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json');
+        if (!res.ok) throw new Error(`Erreur réseau : ${res.status}`);
+
+        let text = await res.text();
+        text = text.trim();
+        // Nettoyage sommaire au cas où le JSON GitHub soit mal formé
+        if (!text.startsWith('{')) text = '{' + text;
+        if (!text.endsWith('}'))  text = text.replace(/,\s*$/, '') + '}';
+        const data = JSON.parse(text);
+
+        // Transformation en tableau d'objets
+        kanjiDb = [];
+        kanjiMap.clear();
+        Object.entries(data).forEach(([char, v], i) => {
+            kanjiDb.push({
+                char,
+                grade:   v.classe ?? null,
+                meanings: v.sens   || [],
+                on:       v.lectures_on || [],
+                kun:      v.lectures_kun || [],
+                strokes:  v.traits || 0
+            });
+            kanjiMap.set(char, i);
+        });
+
+        // Chargement du fichier exemples.json (Local ou distant)
+        try {
+            const exRes = await fetch('exemples.json');
+            if (exRes.ok) {
+                exemplesDb = await exRes.json();
+                console.log("✅ Exemples chargés");
+            }
+        } catch(e) {
+            console.warn("Fichier exemples.json non trouvé, suite du chargement...");
+        }
+
+        // --- PHASE D'AFFICHAGE ---
+        
+        // 1. On lance les fonctions de calcul internes
+        buildCategories();
+        buildSeries();
+        renderSidebar();
+
+        // 2. IMPORTANT : On affiche d'abord le Dashboard (HTML) 
+        // avant d'essayer de remplir ses barres de progression
+        if (typeof showDashboard === "function") {
+            showDashboard(); 
+        }
+
+        // 3. On remplit les barres de progression
+        renderDashboard();
+
+        console.log(`✅ ${kanjiDb.length} kanji chargés — ${seriesMap.size} séries créées`);
+
+    } catch(e) {
+        console.error('Erreur BDD:', e);
+        mainContent.innerHTML = `
+            <div style="padding:40px 20px;text-align:center;color:var(--gray)">
+                <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+                <div style="margin-bottom:16px">Impossible de charger la base de données.<br>${e.message}</div>
+                <button onclick="init()" style="padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:8px;font-weight:bold;cursor:pointer;font-size:14px">Réessayer</button>
+            </div>`;
+    }
+}
+
+// Lancement au démarrage
+init();
+</script>
+</body>
+</html>
