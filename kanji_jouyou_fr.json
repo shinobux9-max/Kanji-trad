@@ -1,4 +1,5 @@
-"一": {
+{
+    "一": {
         "traits": 1,
         "classe": 1,
         "frequence": 2,
@@ -55635,5 +55636,5 @@
         "wk_lectures_on": ["かく"],
         "wk_lectures_kun": [],
         "wk_radicaux": ["Porte", "Chaque"]
-    },
-                                                                                                                                                            
+    }
+}
