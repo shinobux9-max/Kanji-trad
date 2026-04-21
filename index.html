@@ -405,41 +405,40 @@ function startOralTest(kanjiChar) {
     const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
     if (!kanjiData) return;
 
-    // Réponses acceptées : Lectures ON, KUN ou le caractère lui-même
-    const validReadings = [...kanjiData.on, ...kanjiData.kun, kanjiChar];
-    
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        alert("La reconnaissance vocale n'est pas supportée par votre navigateur.");
-        return;
+    // 1. On prépare une liste de réponses "intelligentes"
+    let validReadings = [
+        ...kanjiData.on, 
+        ...kanjiData.kun, 
+        kanjiChar
+    ].map(r => r.replace(/[.\-].*/, '').trim()); // Nettoie les points/tirets des lectures
+
+    // 2. On ajoute les équivalents numériques pour les kanjis de nombres
+    const numberMap = {
+        "一": "1", "二": "2", "三": "3", "四": "4", "五": "5",
+        "六": "6", "七": "7", "八": "8", "九": "9", "十": "10"
+    };
+    if (numberMap[kanjiChar]) {
+        validReadings.push(numberMap[kanjiChar]);
     }
 
-    const recognition = new SpeechRecognition();
-recognition.lang = 'ja-JP'; 
-recognition.interimResults = false; // Garde false pour le moment pour éviter les alertes en boucle
-recognition.continuous = false;    // S'arrête dès qu'une phrase est finie
-
-    const btn = document.querySelector('.oral-quiz-btn');
-    if (btn) btn.classList.add('listening');
-
-    recognition.start();
+    // ... (suite du code de reconnaissance)
 
     recognition.onresult = (event) => {
-    const result = event.results[0][0].transcript.trim();
-    const confidence = event.results[0][0].confidence;
-    
-    if (btn) btn.classList.remove('listening');
-    
-    // Alerte pour voir ce que le téléphone a entendu
-    alert("J'ai entendu : " + result + " (Précision: " + Math.round(confidence * 100) + "%)");
-    
-    if (validReadings.includes(result)) {
-        alert("✅ Correct !");
-        localStorage.setItem('learned_' + kanjiChar, 'true');
-    } else {
-        alert(`❌ Raté.\nAttendu : ${validReadings.join(', ')}`);
-    }
-};
+        let result = event.results[0][0].transcript.trim();
+        if (btn) btn.classList.remove('listening');
+        
+        // Nettoyage du résultat (certains navigateurs mettent un point à la fin)
+        result = result.replace(/\.$/, '');
+
+        // Vérification flexible
+        if (validReadings.includes(result)) {
+            alert(`✅ Correct ! Tu as dit : ${result}`);
+            localStorage.setItem('learned_' + kanjiChar, 'true');
+        } else {
+            alert(`❌ Raté. Tu as dit "${result}".\nAttendus : ${validReadings.join(', ')}`);
+        }
+    };
+}
 
     recognition.onerror = () => {
         if (btn) btn.classList.remove('listening');
