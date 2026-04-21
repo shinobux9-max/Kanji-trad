@@ -1748,6 +1748,7 @@ function renderExemples(char) {
     let container = document.getElementById('exemples-container');
     const detailContent = document.querySelector('.detail-content');
 
+    // Création du container s'il n'existe pas
     if (!container && detailContent) {
         container = document.createElement('div');
         container.id = 'exemples-container';
@@ -1757,20 +1758,23 @@ function renderExemples(char) {
 
     if (container) container.innerHTML = '';
 
+    // Vérification de la base de données
+    if (typeof exemplesDb === 'undefined') return;
     const liste = exemplesDb[char];
     
     if (!liste || liste.length === 0) {
-        container.innerHTML = `
-            <div style="color:var(--gray); font-size:13px; text-align:center; padding:20px; border:1px dashed var(--border); border-radius:10px; margin: 10px 20px;">
-                Aucun exemple disponible pour ce kanji
-            </div>`;
+        if (container) {
+            container.innerHTML = `
+                <div style="color:var(--gray); font-size:13px; text-align:center; padding:20px; border:1px dashed var(--border); border-radius:10px; margin: 10px 20px;">
+                    Aucun exemple disponible pour ce kanji
+                </div>`;
+        }
         return;
     }
 
     const html = liste.map(ex => {
         // STRATÉGIE : Si le texte japonais est juste le kanji (ex: "土"), 
-        // on envoie à la voix le contenu de "ro" (ex: "つち") qui est sans ambiguïté.
-        // Sinon, on envoie la phrase complète "jp".
+        // on envoie à la voix le contenu de "ro" (les hiraganas) pour forcer la bonne lecture.
         const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
         const safeSpeak = textToSpeak.replace(/'/g, "\\'");
 
@@ -1794,45 +1798,20 @@ function renderExemples(char) {
     `;
 }
 
-// Fonction de lecture audio
+/**
+ * UNE SEULE FONCTION speakSentence
+ * Gère la synthèse vocale japonaise de manière unique
+ */
 function speakSentence(text) {
     if (!window.speechSynthesis) return;
+
+    // On annule les lectures en cours pour éviter les mélanges
     window.speechSynthesis.cancel();
+
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'ja-JP';
-    msg.rate = 0.85;
+    msg.rate = 0.8; // Vitesse un peu plus lente pour l'apprentissage
     window.speechSynthesis.speak(msg);
-}
-
-// AJOUT : La fonction de synthèse vocale pour que le clic fonctionne
-function speakSentence(text) {
-    if (!window.speechSynthesis) return;
-    // Annuler une lecture en cours pour éviter les chevauchements
-    window.speechSynthesis.cancel();
-    
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'ja-JP';
-    msg.rate = 0.85; // Vitesse légèrement réduite pour l'apprentissage
-    window.speechSynthesis.speak(msg);
-}
-
-// Fonction utilitaire pour la synthèse vocale des exemples
-function speakSentence(text) {
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ja-JP';
-        utterance.rate = 0.8; // Un peu plus lent pour faciliter la compréhension
-        window.speechSynthesis.speak(utterance);
-    }
-}
-
-function speakSentence(text) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ja-JP';
-    utterance.rate = 0.8; 
-    window.speechSynthesis.speak(utterance);
 }
 
 /* ══════════════════════════════════════════════════
