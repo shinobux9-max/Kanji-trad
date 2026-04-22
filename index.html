@@ -349,6 +349,7 @@
         <div id="section-on"  style="display:none"><div class="section-title">Lecture ON</div><div id="d-on" class="tag-container"></div></div>
         <div id="section-kun" style="display:none"><div class="section-title">Lecture KUN</div><div id="d-kun" class="tag-container"></div></div>
         <button class="replay-btn" onclick="replayAnimation()">↺ REVOIR LE TRACÉ</button>
+        <button class="replay-btn" style="background:var(--accent2);margin-top:10px" id="trace-practice-btn" onclick="startStrokeQuiz({type:'single',id:window.currentKanjiForStroke})">✏ PRATIQUER LE TRACÉ</button>
     </div>
 </div>
 
@@ -1103,6 +1104,14 @@ function renderQuizResults() {
     const msg     = pct >= 80 ? 'Excellent !' : pct >= 60 ? 'Bien joué !' : pct >= 40 ? 'Continuez !' : 'À réviser…';
     const m = Math.floor(elapsedSec / 60), s = elapsedSec % 60;
     const timeStr = `${m}:${String(s).padStart(2,'0')}`;
+    
+    // Save quiz scores to localStorage for each kanji
+    indices.forEach(idx => {
+        const kanji = kanjiDb[idx];
+        if (kanji) {
+            localStorage.setItem(`quiz_${kanji.char}`, pct);
+        }
+    });
 
     document.getElementById('quiz-body').innerHTML = `
         <div class="quiz-results">
@@ -1155,6 +1164,12 @@ function startStrokeQuiz({ type, id }) {
         const cat = categories.get(ser.catId);
         indices   = shuffleIndices([...ser.indices]);
         title     = `${cat?.label ?? ''} · ${ser.label}`;
+    } else if (type === 'single') {
+        // Pour la pratique d'un seul kanji depuis la page de détail
+        const kanji = kanjiDb.find(k => k.char === id);
+        if (!kanji) return;
+        indices = [kanjiDb.indexOf(kanji)];
+        title = `Pratique : ${kanji.char}`;
     } else { return; }
 
     if (sqTimerInterval) clearInterval(sqTimerInterval);
@@ -1276,8 +1291,8 @@ function renderStrokeQuizQuestion() {
         padding:          28,
         strokeColor:      '#00c9a7',   // accent vert-bleu
         outlineColor:     '#3a3a50',   // outline sombre visible
-        drawingColor:     '#ffffff',   // trait dessiné par l'utilisateur
-        drawingWidth:     5,
+        drawingColor:     '#00c9a7',   // trait dessiné en vert comme le kanji
+        drawingWidth:     8,           // augmenté de 5 à 8 pour meilleure visibilité
         showOutline:      true,
         showCharacter:    false,       // cache le kanji rempli → seul l'outline est visible
         highlightOnComplete: true,
@@ -1384,6 +1399,19 @@ function renderStrokeQuizResults() {
     const emoji   = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : pct >= 40 ? '💪' : '😅';
     const msg     = pct >= 80 ? 'Excellent !' : pct >= 60 ? 'Bien joué !' : pct >= 40 ? 'Continuez !' : 'À réviser…';
     const m = Math.floor(elapsedSec / 60), s = elapsedSec % 60;
+    
+    // Save trace scores to localStorage for each kanji
+    indices.forEach(idx => {
+        const kanji = kanjiDb[idx];
+        if (kanji) {
+            localStorage.setItem(`trace_${kanji.char}`, pct);
+        }
+    });
+    
+    // Re-render dashboard if visible (for single kanji practice)
+    if (sourceType === 'single') {
+        renderDashboard();
+    }
 
     document.getElementById('stroke-quiz-body').innerHTML = `
         <div class="quiz-results" style="padding-top:40px">
@@ -1655,6 +1683,7 @@ function speakSentence(text) {
 
 function openDetail(kanji) {
     currentType = 'kanji'; currentChar = kanji.char;
+    window.currentKanjiForStroke = kanji.char; // Store for stroke practice button
     const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
 
     const detailView = document.getElementById('detail-view');
@@ -1663,36 +1692,23 @@ function openDetail(kanji) {
 
     document.getElementById('detail-char-title').innerText = kanji.char;
 
-    // Sens nettoyés (sans "radical")
+    // Sens nettoyés
     const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
     document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
-
-    // Bouton test oral (injecté une seule fois, mis à jour à chaque ouverture)
-    let oralSection = document.getElementById('oral-test-container');
-    if (!oralSection) {
-        oralSection = document.createElement('div');
-        oralSection.id = 'oral-test-container';
-        oralSection.style.cssText = 'text-align:center;margin:15px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:12px;';
-        document.getElementById('d-meaning').after(oralSection);
-    }
-    const safeChar = kanji.char.replace(/'/g, "\\'");
-    oralSection.innerHTML = `
-        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;margin-bottom:8px;letter-spacing:1px;">Test de prononciation</div>
-        <button id="btn-oral-test" class="oral-quiz-btn" onclick="startOralTest('${safeChar}')">🎤</button>
-        <p id="voice-feedback" style="font-size:11px;color:var(--gray);margin-top:5px;">Cliquez et dites la lecture</p>`;
 
     // Stats
     document.getElementById('d-level').innerText   = cat ? cat.short : '–';
     document.getElementById('d-strokes').innerText = kanji.strokes;
+    
+    // AFFICHAGE ROMAJI (Vérifie bien que ton JSON est à jour sur GitHub !)
     document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
 
-    // Lectures
+    // ... (reste de ton code pour les lectures et HanziWriter) ...
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
     document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
     document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
     document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
 
-    // HanziWriter
     document.getElementById('kana-writer-svg').style.display     = 'none';
     document.getElementById('writer-spinner').style.display      = 'none';
     document.getElementById('kanji-writer-target').style.display = 'block';
@@ -1702,7 +1718,6 @@ function openDetail(kanji) {
         outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
     });
     writer.animateCharacter();
-
     renderExemples(kanji.char);
 }
 
@@ -1755,6 +1770,26 @@ function replayAnimation() {
     INIT & DASHBOARD LOGIC
    ══════════════════════════════════════════════════ */
 
+// Map grades to JLPT levels and calculate mastery
+function getJLPTLevel(grade) {
+    if (!grade) return null;
+    const g = parseInt(grade);
+    if (g >= 1 && g <= 2) return 5; // N5
+    if (g === 3) return 4; // N4
+    if (g === 4 || g === 5) return 3; // N3
+    if (g === 6 || g === 8) return 2; // N2 (including college)
+    return 1; // N1 (rare/advanced)
+}
+
+// Calculate mastery score based on quiz performance and writing practice
+function getKanjiMastery(kanjiChar) {
+    const quizScore = parseInt(localStorage.getItem(`quiz_${kanjiChar}`) || '0');
+    const traceScore = parseInt(localStorage.getItem(`trace_${kanjiChar}`) || '0');
+    // Average of both scores, or 0 if no practice
+    if (quizScore === 0 && traceScore === 0) return 0;
+    return Math.round((quizScore + traceScore) / 2);
+}
+
 // 1. La fonction de rendu du Dashboard (doit être définie AVANT init)
 function renderDashboard() {
     const container = document.getElementById('progression-list');
@@ -1765,33 +1800,41 @@ function renderDashboard() {
 
     container.innerHTML = ''; 
 
-    const levels = [
-        { id: 5, label: 'N5 - Débutant' },
-        { id: 4, label: 'N4 - Élémentaire' },
-        { id: 3, label: 'N3 - Intermédiaire' },
-        { id: 2, label: 'N2 - Avancé' },
-        { id: 1, label: 'N1 - Expert' }
+    const jlptLevels = [
+        { jlpt: 5, label: 'N5 - Débutant' },
+        { jlpt: 4, label: 'N4 - Élémentaire' },
+        { jlpt: 3, label: 'N3 - Intermédiaire' },
+        { jlpt: 2, label: 'N2 - Avancé' },
+        { jlpt: 1, label: 'N1 - Expert' }
     ];
 
-    levels.forEach(level => {
-        // Filtrage sécurisé (on vérifie si grade existe)
-        const totalInLevel = kanjiDb.filter(k => k.grade == level.id).length;
+    jlptLevels.forEach(levelDef => {
+        // Get all kanji for this JLPT level
+        const kanjiForLevel = kanjiDb.filter(k => {
+            const jlpt = getJLPTLevel(k.grade);
+            return jlpt === levelDef.jlpt;
+        });
+        const totalInLevel = kanjiForLevel.length;
         
-        // Récupération de la progression dans le localStorage
-        const learned = kanjiDb.filter(k => 
-            k.grade == level.id && localStorage.getItem(`learned_${k.char}`)
-        ).length;
-
-        const percent = totalInLevel > 0 ? Math.round((learned / totalInLevel) * 100) : 0;
+        // Calculate average mastery for this level
+        const totalMastery = kanjiForLevel.reduce((sum, k) => sum + getKanjiMastery(k.char), 0);
+        const avgMastery = totalInLevel > 0 ? Math.round(totalMastery / totalInLevel) : 0;
+        
+        // Count kanji with any practice (quiz or trace)
+        const practiced = kanjiForLevel.filter(k => {
+            const quiz = localStorage.getItem(`quiz_${k.char}`);
+            const trace = localStorage.getItem(`trace_${k.char}`);
+            return quiz || trace;
+        }).length;
 
         container.innerHTML += `
             <div class="prog-item">
                 <div class="prog-info">
-                    <span class="prog-name">${level.label}</span>
-                    <span class="prog-stats">${learned} / ${totalInLevel}</span>
+                    <span class="prog-name">${levelDef.label}</span>
+                    <span class="prog-stats">${practiced} / ${totalInLevel} · ${avgMastery}%</span>
                 </div>
                 <div class="prog-track">
-                    <div class="prog-fill" style="width: ${percent}%;"></div>
+                    <div class="prog-fill" style="width: ${avgMastery}%;"></div>
                 </div>
             </div>
         `;
@@ -1831,7 +1874,8 @@ async function init() {
                 meanings: v.sens   || [],
                 on:       v.lectures_on || [],
                 kun:      v.lectures_kun || [],
-                strokes:  v.traits || 0
+                strokes:  v.traits || 0,
+                romaji:   v.romaji || '–'
             });
             kanjiMap.set(char, i);
         });
