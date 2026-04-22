@@ -735,7 +735,10 @@ function renderSidebar() {
 /* ══════════════════════════════════════════════════
    DASHBOARD
 ══════════════════════════════════════════════════ */
-function showDashboard() {
+function showDashboard(isBack = false) {
+    // Si ce n'est pas un retour arrière, on enregistre l'état
+    if (!isBack) history.pushState({ view: 'dashboard' }, '');
+
     document.getElementById('main-content').innerHTML = `
         <div class="dash-wrap">
             <div class="welcome-box">
@@ -757,6 +760,8 @@ function showDashboard() {
                 <div id="progression-list"></div>
             </div>
         </div>`;
+    // Appel de la fonction de progression si nécessaire ici
+    if (typeof renderDashboardProgression === 'function') renderDashboardProgression();
 }
 
 /* ══════════════════════════════════════════════════
@@ -772,13 +777,16 @@ function navKana() { toggleSidebar(false); loadKanas(); }
 
 /* ── PAGE CATÉGORIE (Version épurée) ────────────────── */
 
-function loadCategory(catId) {
+function loadCategory(catId, isBack = false) {
     toggleSidebar(false);
     const cat = categories.get(catId);
     if (!cat) return;
+    
+    // Enregistrement de l'état
+    if (!isBack) history.pushState({ view: 'category', id: catId }, '');
+
     currentCatId = catId;
     document.getElementById('page-title').innerText = cat.label;
-
     const catSeries = [...seriesMap.values()].filter(s => s.catId === catId);
 
     const seriesCards = catSeries.map(ser => {
@@ -795,7 +803,6 @@ function loadCategory(catId) {
         </div>`;
     }).join('');
 
-    // INSERTION DU BOUTON RETOUR ICI
     document.getElementById('main-content').innerHTML = `
         <button class="back-btn-top" onclick="showDashboard()" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
             ← ACCUEIL
@@ -818,10 +825,14 @@ function loadCategory(catId) {
 }
 
 /* ── PAGE SÉRIE (Avec Bouton Retour) ──────────────── */
-function loadSeriesPage(seriesId) {
+function loadSeriesPage(seriesId, isBack = false) {
     toggleSidebar(false);
     const ser = seriesMap.get(seriesId);
     if (!ser) return;
+
+    // Enregistrement de l'état
+    if (!isBack) history.pushState({ view: 'series', id: seriesId }, '');
+
     const cat = categories.get(ser.catId);
     document.getElementById('page-title').innerText = `${cat.label} · ${ser.label}`;
 
@@ -829,7 +840,6 @@ function loadSeriesPage(seriesId) {
         <button class="back-btn-top" onclick="loadCategory('${ser.catId}')" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
             ← LISTE DES SÉRIES
         </button>
-
         <div class="list-header">
             <div>
                 <div style="font-size:14px;font-weight:bold">${ser.label}</div>
@@ -1904,6 +1914,28 @@ async function init() {
 
 // Lancement au démarrage
 init();
+
+/* ── GESTION DU BOUTON RETOUR SYSTÈME (Android / Navigateur) ── */
+window.onpopstate = function(event) {
+    // Si l'application n'est pas encore chargée (kanjiDb vide), on ne fait rien
+    if (kanjiDb.length === 0) return;
+
+    if (event.state) {
+        const state = event.state;
+        if (state.view === 'dashboard') {
+            showDashboard(true);
+            renderDashboard(); // On relance le rendu des barres de progression
+        } else if (state.view === 'category') {
+            loadCategory(state.id, true);
+        } else if (state.view === 'series') {
+            loadSeriesPage(state.id, true);
+        }
+    } else {
+        // Si on revient au tout début de l'historique
+        showDashboard(true);
+        renderDashboard();
+    }
+};
 </script>
 </body>
 </html>
