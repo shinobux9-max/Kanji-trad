@@ -703,14 +703,6 @@ function toggleSidebar(show) {
     document.getElementById('overlay').classList.toggle('show', show);
 }
 
-function toggleSubmenu(catId, chevEl) {
-    const sub = document.getElementById(`sub-${catId}`);
-    const isOpen = sub.classList.contains('open');
-    document.querySelectorAll('.nav-submenu.open').forEach(el => el.classList.remove('open'));
-    document.querySelectorAll('.nav-chev.open').forEach(el => el.classList.remove('open'));
-    if (!isOpen) { sub.classList.add('open'); chevEl.classList.add('open'); }
-}
-
 function renderSidebar() {
     const c = document.getElementById('grade-list');
     c.innerHTML = '';
@@ -719,58 +711,24 @@ function renderSidebar() {
         const cat = categories.get(def.id);
         if (!cat || !cat.indices.length) continue;
 
-        // Séries de cette catégorie
-        const catSeries = [...seriesMap.values()].filter(s => s.catId === def.id);
-        const SHOW_MAX = 5;
-
-        const wrap = document.createElement('div');
-        wrap.className = 'nav-grade-wrap';
-
         const item = document.createElement('div');
         item.className = 'nav-grade-item';
+        
+        // On a supprimé la flèche et tout le bloc "submenu"
         item.innerHTML = `
             <div class="nav-badge" style="background:${def.color}22;color:${def.color};border:1px solid ${def.color}44">${def.short}</div>
             <div class="nav-grade-text">
                 <div class="main">${def.label}</div>
-                <div class="sub">${cat.indices.length} kanji · ${catSeries.length} séries</div>
-            </div>
-            <div class="nav-chev" id="chev-${def.id}" onclick="event.stopPropagation();toggleSubmenu('${def.id}',this)">▼</div>`;
-        item.addEventListener('click', () => loadCategory(def.id));
+                <div class="sub">${cat.indices.length} kanjis</div>
+            </div>`;
 
-        const sub = document.createElement('div');
-        sub.className = 'nav-submenu';
-        sub.id = `sub-${def.id}`;
+        // Un seul clic propre : charger la catégorie et fermer la sidebar
+        item.onclick = () => {
+            loadCategory(def.id);
+            toggleSidebar(false);
+        };
 
-        // Bouton quiz catégorie entière
-        const quizAll = document.createElement('div');
-        quizAll.className = 'nav-sub-item';
-        quizAll.style.cssText = 'padding-left:58px;';
-        quizAll.innerHTML = `<span style="flex:1;color:var(--text)">⚡ Quiz complet</span>
-            <button class="nav-sub-quiz" onclick="event.stopPropagation();startQuiz({type:'category',id:'${def.id}'})">Go</button>`;
-        quizAll.addEventListener('click', () => loadCategory(def.id));
-        sub.appendChild(quizAll);
-
-        catSeries.slice(0, SHOW_MAX).forEach(ser => {
-            const row = document.createElement('div');
-            row.className = 'nav-sub-series';
-            row.innerHTML = `
-                <span style="flex:1">${ser.label} - ${ser.indices.length} kanji</span>
-                <button class="nav-sub-quiz" onclick="event.stopPropagation();startQuiz({type:'series',id:'${ser.id}'})">Quiz</button>`;
-            row.addEventListener('click', () => loadSeriesPage(ser.id));
-            sub.appendChild(row);
-        });
-
-        if (catSeries.length > SHOW_MAX) {
-            const more = document.createElement('div');
-            more.className = 'nav-sub-more';
-            more.textContent = `+ ${catSeries.length - SHOW_MAX} séries → Voir tout`;
-            more.onclick = () => loadCategory(def.id);
-            sub.appendChild(more);
-        }
-
-        wrap.appendChild(item);
-        wrap.appendChild(sub);
-        c.appendChild(wrap);
+        c.appendChild(item);
     }
 }
 
@@ -812,7 +770,8 @@ function navDashboard() {
 }
 function navKana() { toggleSidebar(false); loadKanas(); }
 
-/* ── PAGE CATÉGORIE ───────────────────────────────── */
+/* ── PAGE CATÉGORIE (Version épurée) ────────────────── */
+
 function loadCategory(catId) {
     toggleSidebar(false);
     const cat = categories.get(catId);
@@ -824,19 +783,23 @@ function loadCategory(catId) {
 
     const seriesCards = catSeries.map(ser => {
         const firstKanji = kanjiDb[ser.indices[0]]?.char ?? '？';
-        return `<div class="series-card" onclick="loadSeriesPage('${ser.id}')">
-            <div class="series-card-kanji">${firstKanji}</div>
-            <div class="series-card-body">
-                <div class="series-card-num">${ser.label} - ${ser.indices.length} Kanji</div>
+        return `<div class="series-card" onclick="loadSeriesPage('${ser.id}')" style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div class="series-card-kanji">${firstKanji}</div>
+                <div class="series-card-body">
+                    <div class="series-card-num" style="font-weight:bold;">${ser.label}</div>
+                    <div style="font-size:12px; color:var(--gray);">${ser.indices.length} Kanji</div>
+                </div>
             </div>
-            <div class="series-card-actions" style="display:flex;gap:6px">
-                <button class="series-quiz-btn" onclick="event.stopPropagation();startQuiz({type:'series',id:'${ser.id}'})">Quiz ▶</button>
-                <button class="series-trace-btn" onclick="event.stopPropagation();startStrokeQuiz({type:'series',id:'${ser.id}'})">✏</button>
-            </div>
+            <div style="color:var(--gray); font-size:14px; margin-right:10px;">❯</div>
         </div>`;
     }).join('');
 
+    // INSERTION DU BOUTON RETOUR ICI
     document.getElementById('main-content').innerHTML = `
+        <button class="back-btn-top" onclick="showDashboard()" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
+            ← ACCUEIL
+        </button>
         <div class="grade-overview">
             <div class="grade-hero">
                 <div class="grade-hero-top">
@@ -854,7 +817,7 @@ function loadCategory(catId) {
         </div>`;
 }
 
-/* ── PAGE SÉRIE ───────────────────────────────────── */
+/* ── PAGE SÉRIE (Avec Bouton Retour) ──────────────── */
 function loadSeriesPage(seriesId) {
     toggleSidebar(false);
     const ser = seriesMap.get(seriesId);
@@ -863,15 +826,19 @@ function loadSeriesPage(seriesId) {
     document.getElementById('page-title').innerText = `${cat.label} · ${ser.label}`;
 
     document.getElementById('main-content').innerHTML = `
+        <button class="back-btn-top" onclick="loadCategory('${ser.catId}')" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
+            ← LISTE DES SÉRIES
+        </button>
+
         <div class="list-header">
             <div>
                 <div style="font-size:14px;font-weight:bold">${ser.label}</div>
                 <div class="list-header-info">${cat.label} · ${ser.range} (${ser.indices.length} kanji)</div>
             </div>
-        <div style="display:flex;gap:8px">
-            <button class="list-quiz-btn" onclick="startQuiz({type:'series',id:'${seriesId}'})">Quiz ▶</button>
-            <button class="list-quiz-btn" style="background:var(--accent2)" onclick="startStrokeQuiz({type:'series',id:'${seriesId}'})">✏ Tracé</button>
-        </div>
+            <div style="display:flex;gap:8px">
+                <button class="list-quiz-btn" onclick="startQuiz({type:'series',id:'${seriesId}'})">Quiz ▶</button>
+                <button class="list-quiz-btn" style="background:var(--accent2)" onclick="startStrokeQuiz({type:'series',id:'${seriesId}'})">✏ Tracé</button>
+            </div>
         </div>
         <div id="series-kanji-list"></div>`;
 
@@ -1292,7 +1259,7 @@ function renderStrokeQuizQuestion() {
         strokeColor:      '#00c9a7',   // accent vert-bleu
         outlineColor:     '#3a3a50',   // outline sombre visible
         drawingColor:     '#00c9a7',   // trait dessiné en vert comme le kanji
-        drawingWidth:     40,           // augmenté pour meilleure visibilité
+        drawingWidth:     40,           // augmenté de 5 à 8 pour meilleure visibilité
         showOutline:      true,
         showCharacter:    false,       // cache le kanji rempli → seul l'outline est visible
         highlightOnComplete: true,
