@@ -1682,8 +1682,10 @@ function speakSentence(text) {
 ══════════════════════════════════════════════════ */
 
 function openDetail(kanji) {
-    currentType = 'kanji'; currentChar = kanji.char;
-    window.currentKanjiForStroke = kanji.char; // Store for stroke practice button
+    currentType = 'kanji'; 
+    currentChar = kanji.char;
+    window.currentKanjiForStroke = kanji.char; 
+
     const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
 
     const detailView = document.getElementById('detail-view');
@@ -1692,23 +1694,39 @@ function openDetail(kanji) {
 
     document.getElementById('detail-char-title').innerText = kanji.char;
 
-    // Sens nettoyés
+    // 1. Sens nettoyés
     const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
-    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
+    const meaningEl = document.getElementById('d-meaning');
+    meaningEl.innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
 
-    // Stats
+    // 2. RÉ-INSERTION DU BOUTON TEST ORAL (MICRO)
+    let oralSection = document.getElementById('oral-test-container');
+    if (!oralSection) {
+        oralSection = document.createElement('div');
+        oralSection.id = 'oral-test-container';
+        oralSection.style.cssText = 'text-align:center;margin:15px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:12px;';
+        // On l'injecte juste après la signification
+        meaningEl.after(oralSection);
+    }
+    const safeChar = kanji.char.replace(/'/g, "\\'");
+    oralSection.innerHTML = `
+        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;margin-bottom:8px;letter-spacing:1px;">Test de prononciation</div>
+        <button id="btn-oral-test" class="oral-quiz-btn" onclick="startOralTest('${safeChar}')">🎤</button>
+        <p id="voice-feedback" style="font-size:11px;color:var(--gray);margin-top:5px;">Cliquez et dites la lecture</p>
+    `;
+
+    // 3. Stats (Niveau, Traits, Romaji)
     document.getElementById('d-level').innerText   = cat ? cat.short : '–';
     document.getElementById('d-strokes').innerText = kanji.strokes;
-    
-    // AFFICHAGE ROMAJI (Vérifie bien que ton JSON est à jour sur GitHub !)
     document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
 
-    // ... (reste de ton code pour les lectures et HanziWriter) ...
+    // 4. Lectures ON / KUN
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
     document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
     document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
     document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
 
+    // 5. HanziWriter (Animation du tracé)
     document.getElementById('kana-writer-svg').style.display     = 'none';
     document.getElementById('writer-spinner').style.display      = 'none';
     document.getElementById('kanji-writer-target').style.display = 'block';
@@ -1718,6 +1736,8 @@ function openDetail(kanji) {
         outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
     });
     writer.animateCharacter();
+    
+    // 6. Exemples
     renderExemples(kanji.char);
 }
 
