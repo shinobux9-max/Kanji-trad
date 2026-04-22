@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kanji Learner</title>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
    <style>
@@ -15,9 +16,7 @@
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-    /* --- POLICE JAPONAISE UNIFIÉE ---
-       font-variant-east-asian: jis04 sur body force le glyphe japonais partout
-       (八 ouvert, sans crochet CJK) — y compris dans les éléments créés par innerHTML */
+    /* --- POLICE JAPONAISE UNIFIÉE --- */
     body {
         font-family: 'Noto Sans JP', sans-serif;
         font-variant-east-asian: jis04;
@@ -33,18 +32,31 @@
     .toolbar button:active { background: var(--card); }
     .toolbar-title { flex: 1; margin-left: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: 0.5px; }
 
-    /* ── SEARCH BAR ──────────────────── */
+/* ── SEARCH BAR (MAJ avec Micro) ── */
     #search-bar { background: var(--bg); padding: 8px 12px 10px; position: fixed; top: 56px; width: 100%; z-index: 990; border-bottom: 1px solid var(--border); transform: translateY(-100%); opacity: 0; transition: transform 0.2s ease, opacity 0.2s ease; pointer-events: none; }
     #search-bar.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    
+    /* On garde ta base, on assure juste le centrage vertical des icônes */
     .search-wrap { display: flex; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; gap: 8px; transition: border-color 0.2s; }
     .search-wrap:focus-within { border-color: var(--accent); }
     .search-wrap span { color: var(--gray); font-size: 16px; }
+
     #search-input { flex: 1; background: none; border: none; color: var(--text); font-size: 15px; padding: 10px 0; outline: none; font-family: inherit; }
     #search-input::placeholder { color: var(--gray); }
+
+    /* Le nouveau bouton Micro dans la barre */
+    .mic-search-btn { 
+        background: none; border: none; color: var(--accent); 
+        font-size: 18px; cursor: pointer; padding: 4px; 
+        display: flex; align-items: center; transition: 0.2s;
+    }
+    .mic-search-btn.listening { color: #ff4444; animation: pulse-mic 1.2s infinite; }
+    @keyframes pulse-mic { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
     #search-clear { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 18px; padding: 4px; display: none; }
     #search-clear.show { display: block; }
 
-    /* ── SEARCH RESULTS ─────────────── */
+    /* ── SEARCH RESULTS (Inchangé) ────── */
     #search-results { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 980; overflow-y: auto; display: none; }
     #search-results.open { display: block; }
     #search-results.with-bar { top: 112px; }
@@ -104,18 +116,12 @@
     .welcome-box { display: flex; align-items: center; background: linear-gradient(135deg, #1a2a40 0%, #1a2030 100%); padding: 14px; border-radius: 12px; margin-bottom: 14px; border: 1px solid #2a3a55; }
     .tanuki-img { width: 52px; height: 52px; margin-right: 14px; border-radius: 50%; }
     
-    /* Styles pour la Maîtrise / Progression */
     .prog-item { margin-bottom: 16px; }
     .prog-info { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
     .prog-name { font-weight: 600; color: var(--text); }
     .prog-stats { color: var(--accent); font-family: 'Syne', sans-serif; font-weight: bold; }
     .prog-track { width: 100%; height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
     .prog-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 10px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px rgba(0, 201, 167, 0.3); }
-
-    /* ── ORAL QUIZ / VOICE BUTTON ────── */
-    .oral-quiz-btn { background: var(--surface); border: 2px solid var(--accent); color: var(--accent); border-radius: 50%; width: 56px; height: 56px; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin: 20px auto; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    .oral-quiz-btn.listening { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); animation: pulse-mic 1.5s infinite; border-color: white; }
-    @keyframes pulse-mic { 0% { transform: scale(1); } 50% { transform: scale(1.12); opacity: 0.8; } 100% { transform: scale(1); } }
 
     /* ── GRADE OVERVIEW ──────────────── */
     .grade-overview { padding: 14px; }
@@ -177,51 +183,92 @@
     .section-title { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 8px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
     .meaning-text { font-size: 20px; color: var(--accent); font-weight: bold; }
     #kana-writer-svg { width: 130px; height: 130px; }
-    .spinner { width: 28px; height: 28px; border: 3px solid #2a2a38; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
     .replay-btn { width: 100%; margin-top: 28px; padding: 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #000; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; }
 
     /* ── QUIZ ────────────────────────── */
     #quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4000; display: none; flex-direction: column; }
     .quiz-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); }
     .quiz-top-bar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 6px; border-radius: 8px; }
-    .quiz-pause-btn { margin-left: auto; font-size: 18px !important; }
     .quiz-score-ok { display: flex; align-items: center; gap: 5px; background: #0b2e24; border: 1px solid var(--accent); border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: var(--accent); }
     .quiz-score-ko { display: flex; align-items: center; gap: 5px; background: #2e0b0b; border: 1px solid #e55; border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #e55; }
-    .quiz-score-icon { font-size: 12px; }
-    .quiz-timer-badge { font-size: 13px; color: var(--gray); background: var(--card); padding: 4px 10px; border-radius: 6px; font-family: 'Syne', sans-serif; }
-    .quiz-sub-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 14px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--gray); }
-    .quiz-examples-btn { background: none; border: 1px solid var(--border); color: var(--gray); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; }
     .quiz-prog-wrap { height: 3px; background: var(--border); }
     .quiz-prog-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.35s cubic-bezier(.4,0,.2,1); width: 0; }
 
-    /* ── QUIZ BODY ───────────────────── */
     .quiz-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
 
-    /* Phase 1 : prompt (lectures + sens) */
+    /* Phase 1 : prompt */
     .quiz-prompt-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-    .quiz-readings-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-    .quiz-reading-chip { display: inline-flex; flex-direction: column; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; position: relative; min-width: 52px; }
-    .quiz-reading-chip .chip-count { position: absolute; top: -7px; left: -7px; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #000; font-size: 10px; font-weight: bold; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; }
-    .quiz-reading-chip .chip-text { font-size: 20px; color: #fff; font-weight: bold; }
+    .quiz-reading-chip { display: inline-flex; flex-direction: column; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; min-width: 52px; }
     .quiz-reading-chip.on-chip { background: #1e3a32; border-color: #2a5244; }
     .quiz-reading-chip.kun-chip { background: #1a2a40; border-color: #2a3a55; }
     .quiz-meaning-big { font-size: 26px; font-weight: bold; color: var(--text); margin-top: 6px; }
     .quiz-tap-hint { font-size: 14px; color: var(--gray); margin-top: 30px; animation: blink 1.6s ease-in-out infinite; }
     @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-    /* Phase 2 : grille de kanjis */
+    /* Phase 2 : grille */
     .quiz-choices-grid { width: 100%; max-width: 380px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
-    .quiz-kanji-choice { aspect-ratio: 1; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 36px; color: #fff; transition: border-color 0.15s, background 0.15s; user-select: none; line-height: 1; }
-    .quiz-kanji-choice:active:not(.locked) { background: var(--card); transform: scale(0.94); }
-    .quiz-kanji-choice.correct { background: #0b2e24; border-color: var(--accent); animation: correctPop 0.3s ease; }
+    .quiz-kanji-choice { aspect-ratio: 1; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 36px; color: #fff; line-height: 1; }
+    .quiz-kanji-choice.correct { background: #0b2e24; border-color: var(--accent); }
     .quiz-kanji-choice.wrong   { background: #2e0b0b; border-color: #e55; }
-    .quiz-kanji-choice.reveal  { border-color: var(--accent); opacity: 0.55; }
-    .quiz-kanji-choice.locked  { cursor: default; }
-    @keyframes correctPop { 0% { transform: scale(0.9); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
-    /* Résultats */
-    .quiz-results { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 20px; text-align: center; }
+    /* ── STROKE QUIZ ─────────────────── */
+    #stroke-quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4500; display: none; flex-direction: column; }
+    .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 6px; border-radius: 8px; }
+    #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
+    #sq-writer-target { width: 280px; height: 280px; background: var(--surface); border-radius: 16px; border: 2px solid var(--border); }
+    .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
+    .sq-grid-overlay::before { left: 50%; top: 0; width: 1px; height: 100%; position:absolute; background:var(--border); opacity:0.5; content:'';}
+    .sq-grid-overlay::after  { top: 50%; left: 0; height: 1px; width: 100%; position:absolute; background:var(--border); opacity:0.5; content:'';}
+
+    .series-trace-btn { padding: 8px 12px; background: var(--surface); border: 1px solid var(--accent2); color: var(--accent2); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.15s; }
+    .series-trace-btn:active { background: var(--accent2); color: #fff; }
+    .grade-trace-btn { width: 100%; padding: 11px; background: transparent; border: 1px solid var(--accent2); border-radius: 8px; color: var(--accent2); font-weight: bold; font-size: 13px; cursor: pointer; margin-top: 8px; transition: all 0.15s; }
+    .grade-trace-btn:active { background: var(--accent2); color: #fff; }
+
+    /* ── NOUVEAU : ORAL & MODES (IMPLÉMENTATION SIMPLE) ── */
+    .oral-quiz-btn { 
+        background: var(--surface); border: 2px solid var(--accent); color: var(--accent); 
+        border-radius: 50%; width: 64px; height: 64px; font-size: 24px; 
+        display: flex; align-items: center; justify-content: center; cursor: pointer; 
+        margin: 20px auto; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .oral-quiz-btn.listening { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); animation: pulse-mic 1.5s infinite; }
+    @keyframes pulse-mic { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+    .mode-selection-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+        z-index: 5000; display: none; align-items: flex-end; justify-content: center;
+        padding: 0; backdrop-filter: blur(6px);
+    }
+    .mode-selection-overlay.open { display: flex; }
+    .mode-selection-card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: 20px 20px 0 0; width: 100%; max-width: 480px;
+        padding: 20px 20px 36px;
+        max-height: 92vh; overflow-y: auto;
+        animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .mode-section-label { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin: 14px 0 8px; }
+    .mode-option {
+        display: flex; align-items: center; gap: 14px; background: var(--card);
+        border: 1px solid var(--border); padding: 13px 14px; border-radius: 10px;
+        margin-bottom: 8px; cursor: pointer; transition: background 0.15s, transform 0.1s;
+    }
+    .mode-option:active { background: var(--bg); transform: scale(0.97); }
+    .mode-icon { font-size: 22px; width: 30px; text-align: center; flex-shrink: 0; }
+    .mode-opt-title { font-size: 14px; font-weight: bold; color: var(--text); }
+    .mode-opt-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
+    .mode-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; text-align: center; }
+    /* Audio quiz mic */
+    .mic-btn { width: 80px; height: 80px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); color: var(--accent); font-size: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; margin: 0 auto; }
+    .mic-btn.listening { background: var(--accent); color: #000; box-shadow: 0 0 24px var(--accent); animation: pulse-mic 1.5s infinite; }
+    /* Spinner */
+    .spinner { width: 28px; height: 28px; border: 3px solid #2a2a38; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Quiz results */
+    .quiz-results { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; text-align: center; }
     .quiz-results-emoji { font-size: 72px; margin-bottom: 16px; }
     .quiz-score-big { font-family: 'Syne', sans-serif; font-size: 56px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .quiz-score-label { font-size: 15px; color: var(--gray); margin-top: 6px; }
@@ -232,8 +279,7 @@
     .quiz-action-btn { flex: 1; padding: 13px; border: none; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; }
     .quiz-action-btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #000; }
     .quiz-action-btn.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-    
-    /* ── SERIES ──────────────────────── */
+    /* Series card */
     .series-grid { display: flex; flex-direction: column; gap: 0; margin-bottom: 8px; }
     .series-card { background: transparent; border: none; border-bottom: 1px solid var(--border); padding: 14px 16px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: background 0.1s; }
     .series-card:active { background: var(--card); }
@@ -242,46 +288,33 @@
     .series-card-num { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.2; }
     .series-card-label { font-size: 11px; color: var(--gray); margin-top: 3px; }
     .series-card-actions { flex-shrink: 0; }
-    .series-quiz-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; letter-spacing: 0.3px; }
+    .series-quiz-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; }
     .series-quiz-btn:active { background: var(--accent); border-color: var(--accent); color: #000; }
-    .nav-sub-series { padding: 8px 16px 8px 58px; font-size: 11px; border-bottom: 1px solid rgba(42,42,56,0.4); cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--gray); transition: background 0.1s, color 0.1s; }
-    .nav-sub-series:hover, .nav-sub-series:active { background: var(--card); color: var(--text); }
-    .nav-sub-more { padding: 7px 16px 7px 58px; font-size: 11px; color: var(--accent); cursor: pointer; border-bottom: 1px solid rgba(42,42,56,0.4); }
-    .quiz-choice { padding: 14px 10px; background: var(--surface); border: 2px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; font-size: 12px; line-height: 1.4; transition: border-color 0.15s, background 0.15s; user-select: none; color: var(--text); font-family: inherit; word-break: break-word; }
-
-    /* ── STROKE QUIZ ─────────────────── */
-    #stroke-quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4500; display: none; flex-direction: column; }
-    .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-    .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 6px; border-radius: 8px; }
-    .sq-sub-bar { display: flex; align-items: center; justify-content: space-between; padding: 5px 14px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--gray); flex-shrink: 0; }
-    #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
-    .sq-kanji-header { width: 100%; max-width: 340px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-    .sq-meaning { font-size: 18px; font-weight: bold; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
-    .sq-readings-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    /* SQ extras */
+    .sq-kanji-header { text-align: center; width: 100%; max-width: 320px; }
+    .sq-meaning { font-size: 22px; font-weight: bold; color: var(--text); }
+    .sq-readings-row { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
     .sq-canvas-wrap { position: relative; width: 280px; height: 280px; flex-shrink: 0; }
-    #sq-writer-target { width: 280px; height: 280px; background: var(--surface); border-radius: 16px; border: 2px solid var(--border); cursor: crosshair; touch-action: none; }
-    .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
-    .sq-grid-overlay::before,
-    .sq-grid-overlay::after { content: ''; position: absolute; background: var(--border); opacity: 0.5; }
-    .sq-grid-overlay::before { left: 50%; top: 0; width: 1px; height: 100%; }
-    .sq-grid-overlay::after  { top: 50%; left: 0; height: 1px; width: 100%; }
-    .sq-stroke-tracker { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 340px; }
-    .sq-stroke-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background 0.2s, transform 0.15s; }
-    .sq-stroke-dot.done      { background: var(--accent); transform: scale(1.2); }
-    .sq-stroke-dot.mistake { background: #e55; transform: scale(1.3); animation: shakeDot 0.3s ease; }
-    @keyframes shakeDot { 0%,100%{transform:scale(1.3) translateX(0)} 25%{transform:scale(1.3) translateX(-3px)} 75%{transform:scale(1.3) translateX(3px)} }
-    .sq-canvas-wrap.flash-ok  { animation: flashOk  0.35s ease; }
-    .sq-canvas-wrap.flash-err { animation: flashErr 0.35s ease; }
-    @keyframes flashOk  { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 0 4px var(--accent)} }
-    @keyframes flashErr { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 0 4px #e55} }
-    .sq-actions { display: flex; gap: 10px; width: 100%; max-width: 340px; }
-    .sq-btn { flex: 1; padding: 13px; border: none; border-radius: 10px; font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
-    .sq-btn.hint    { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-    .sq-btn.skip    { background: var(--surface); color: var(--gray);  border: 1px solid var(--border); }
-    .series-trace-btn { padding: 8px 12px; background: var(--surface); border: 1px solid var(--accent2); color: var(--accent2); border-radius: 7px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-    .series-trace-btn:active { background: var(--accent2); color: #fff; }
-    .grade-trace-btn { width: 100%; padding: 11px; background: transparent; border: 1px solid var(--accent2); border-radius: 8px; color: var(--accent2); font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 8px; transition: all 0.15s; }
-    .grade-trace-btn:active { background: var(--accent2); color: #fff; }
+    .sq-stroke-tracker { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; max-width: 320px; }
+    .sq-stroke-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
+    .sq-stroke-dot.done { background: var(--accent); }
+    .sq-stroke-dot.mistake { background: #e55; }
+    .sq-actions { display: flex; gap: 12px; }
+    .sq-btn { padding: 10px 20px; border-radius: 8px; border: none; font-weight: bold; font-size: 13px; cursor: pointer; font-family: inherit; }
+    .sq-btn.hint { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+    .sq-btn.skip { background: var(--surface); border: 1px solid #e55; color: #e55; }
+    .sq-sub-bar { display: flex; justify-content: space-between; padding: 6px 16px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--gray); }
+    .flash-ok  { animation: flashGreen 0.35s ease; }
+    .flash-err { animation: flashRed   0.35s ease; }
+    @keyframes flashGreen { 0%,100% { box-shadow: none; } 50% { box-shadow: 0 0 20px var(--accent); } }
+    @keyframes flashRed   { 0%,100% { box-shadow: none; } 50% { box-shadow: 0 0 20px #e55; } }
+    .chip-count { font-size: 9px; color: var(--gray); display: block; }
+    .chip-text { font-size: 16px; color: var(--text); }
+    .quiz-timer-badge { font-size: 12px; color: var(--gray); background: var(--card); padding: 4px 10px; border-radius: 6px; margin: 0 4px; font-family: 'Syne', sans-serif; }
+    .quiz-pause-btn { background: none; border: none; color: var(--text); font-size: 18px; cursor: pointer; }
+    .quiz-sub-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 16px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--gray); }
+    .quiz-examples-btn { padding: 4px 10px; background: var(--card); border: 1px solid var(--border); color: var(--accent); border-radius: 5px; font-size: 11px; cursor: pointer; }
+    .back-btn-top { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin: 14px; }
 </style>
 </head>
 <body>
@@ -298,6 +331,9 @@
     <div class="search-wrap">
         <span>🔍</span>
         <input type="text" id="search-input" placeholder="Kanji, signification, lecture ON/KUN…" autocomplete="off" oninput="doSearch(this.value)">
+        
+        <button id="mic-search-trigger" class="mic-search-btn" title="Recherche vocale">🎤</button>
+
         <button id="search-clear" onclick="clearSearch()">✕</button>
     </div>
 </div>
@@ -349,7 +385,6 @@
         <div id="section-on"  style="display:none"><div class="section-title">Lecture ON</div><div id="d-on" class="tag-container"></div></div>
         <div id="section-kun" style="display:none"><div class="section-title">Lecture KUN</div><div id="d-kun" class="tag-container"></div></div>
         <button class="replay-btn" onclick="replayAnimation()">↺ REVOIR LE TRACÉ</button>
-        <button class="replay-btn" style="background:var(--accent2);margin-top:10px" id="trace-practice-btn" onclick="startStrokeQuiz({type:'single',id:window.currentKanjiForStroke})">✏ PRATIQUER LE TRACÉ</button>
     </div>
 </div>
 
@@ -386,6 +421,57 @@
     </div>
     <div class="quiz-prog-wrap"><div class="quiz-prog-bar" id="sq-prog-bar"></div></div>
     <div id="stroke-quiz-body"></div>
+</div>
+
+
+<!-- ── QUIZ MODE MODAL ───────────────────────────── -->
+<div id="quiz-mode-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeQuizModal()">
+    <div class="mode-selection-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div class="mode-title" style="margin-bottom:0">Choisir un mode</div>
+            <button onclick="closeQuizModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+        </div>
+        <div class="mode-section-label">— Reconnaissance</div>
+        <div class="mode-option" onclick="launchQuizMode('kanji-to-read')">
+            <span class="mode-icon">🈳</span>
+            <div><div class="mode-opt-title">Kanji → Lectures</div><div class="mode-opt-sub">Trouvez la lecture hiragana du kanji</div></div>
+        </div>
+        <div class="mode-option" onclick="launchQuizMode('kanji-to-mean')">
+            <span class="mode-icon">🇫🇷</span>
+            <div><div class="mode-opt-title">Kanji → Traduction</div><div class="mode-opt-sub">Trouvez le sens en français</div></div>
+        </div>
+        <div class="mode-section-label">— Rappel inversé</div>
+        <div class="mode-option" onclick="launchQuizMode('read-to-kanji')">
+            <span class="mode-icon">🔄</span>
+            <div><div class="mode-opt-title">Lectures → Kanji</div><div class="mode-opt-sub">Hiragana affiché, trouvez le kanji</div></div>
+        </div>
+        <div class="mode-option" onclick="launchQuizMode('mean-to-kanji')">
+            <span class="mode-icon">🔁</span>
+            <div><div class="mode-opt-title">Français → Kanji</div><div class="mode-opt-sub">Traduction affichée, trouvez le kanji</div></div>
+        </div>
+        <div class="mode-section-label">— Tracé</div>
+        <div class="mode-option" onclick="launchStrokeMode('trace-easy')">
+            <span class="mode-icon">✏️</span>
+            <div><div class="mode-opt-title">Tracé guidé</div><div class="mode-opt-sub">Ordre des traits avec aide visuelle</div></div>
+        </div>
+        <div class="mode-option" onclick="launchStrokeMode('trace-hard')">
+            <span class="mode-icon">💀</span>
+            <div><div class="mode-opt-title">Tracé Hardcore</div><div class="mode-opt-sub">Sans ombre — de mémoire pure</div></div>
+        </div>
+        <div class="mode-section-label">— Avancé</div>
+        <div class="mode-option" onclick="launchQuizMode('mixte')">
+            <span class="mode-icon">🎲</span>
+            <div><div class="mode-opt-title">Mixte</div><div class="mode-opt-sub">Lectures + traductions aléatoirement</div></div>
+        </div>
+        <div class="mode-option" onclick="launchQuizMode('vocal')">
+            <span class="mode-icon">🎤</span>
+            <div><div class="mode-opt-title">Audio</div><div class="mode-opt-sub">Sens affiché, prononcez la lecture</div></div>
+        </div>
+        <div class="mode-option" onclick="launchQuizMode('survie')">
+            <span class="mode-icon">🔥</span>
+            <div><div class="mode-opt-title">Hardcore Mixte</div><div class="mode-opt-sub">Tous les modes mélangés aléatoirement</div></div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -628,72 +714,137 @@ function shuffleIndices(arr) {
 }
 
 /* ══════════════════════════════════════════════════
-   RECHERCHE
+   RECHERCHE
 ══════════════════════════════════════════════════ */
+// searchOpen already declared above
 function toggleSearch() {
-    searchOpen = !searchOpen;
-    document.getElementById('search-bar').classList.toggle('open', searchOpen);
-    document.getElementById('main-content').classList.toggle('search-open', searchOpen);
-    if (searchOpen) {
-        setTimeout(() => document.getElementById('search-input').focus(), 220);
-        showSearchPanel();
-    } else {
-        hideSearchPanel();
-        document.getElementById('search-input').value = '';
-        document.getElementById('search-clear').classList.remove('show');
-    }
+    searchOpen = !searchOpen;
+    document.getElementById('search-bar').classList.toggle('open', searchOpen);
+    // Changement ici : on s'assure que main-content existe pour éviter le plantage
+    const main = document.getElementById('main-content');
+    if(main) main.classList.toggle('search-open', searchOpen);
+
+    if (searchOpen) {
+        setTimeout(() => document.getElementById('search-input').focus(), 220);
+        showSearchPanel();
+    } else {
+        hideSearchPanel();
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-clear').classList.remove('show');
+    }
 }
 
+// AJOUT : Fermeture au clic à l'extérieur
+document.addEventListener('click', (e) => {
+    const bar = document.getElementById('search-bar');
+    const btn = document.getElementById('search-btn'); 
+    if (searchOpen && bar && !bar.contains(e.target) && (!btn || !btn.contains(e.target))) {
+        toggleSearch();
+    }
+});
+
 function showSearchPanel() {
-    document.getElementById('search-results').classList.add('open', 'with-bar');
+    document.getElementById('search-results').classList.add('open', 'with-bar');
 }
 function hideSearchPanel() {
-    document.getElementById('search-results').classList.remove('open', 'with-bar');
+    document.getElementById('search-results').classList.remove('open', 'with-bar');
 }
 
 function clearSearch() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('search-clear').classList.remove('show');
-    document.getElementById('search-results').innerHTML =
-        '<div class="search-empty"><div class="big">🔎</div>Tapez un kanji, sa signification ou une lecture</div>';
-    showSearchPanel();
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-clear').classList.remove('show');
+    document.getElementById('search-results').innerHTML =
+        '<div class="search-empty"><div class="big">🔎</div>Tapez un kanji, sa signification ou une lecture</div>';
+    showSearchPanel();
 }
 
-function doSearch(query) {
-    const q = query.trim().toLowerCase();
-    document.getElementById('search-clear').classList.toggle('show', q.length > 0);
-    if (!q) { clearSearch(); return; }
-    showSearchPanel();
+// Table de conversion kana → romaji pour la recherche
+const KANA_TO_ROMAJI = {"あ":"a","い":"i","う":"u","え":"e","お":"o","か":"ka","き":"ki","く":"ku","け":"ke","こ":"ko","さ":"sa","し":"shi","す":"su","せ":"se","そ":"so","た":"ta","ち":"chi","つ":"tsu","て":"te","と":"to","な":"na","に":"ni","ぬ":"nu","ね":"ne","の":"no","は":"ha","ひ":"hi","ふ":"fu","へ":"he","ほ":"ho","ま":"ma","み":"mi","む":"mu","め":"me","も":"mo","や":"ya","ゆ":"yu","よ":"yo","ら":"ra","り":"ri","る":"ru","れ":"re","ろ":"ro","わ":"wa","を":"wo","ん":"n","が":"ga","ぎ":"gi","ぐ":"gu","げ":"ge","ご":"go","ざ":"za","じ":"ji","ず":"zu","ぜ":"ze","ぞ":"zo","だ":"da","ぢ":"di","づ":"du","で":"de","ど":"do","ば":"ba","び":"bi","ぶ":"bu","べ":"be","ぼ":"bo","ぱ":"pa","ぴ":"pi","ぷ":"pu","ぺ":"pe","ぽ":"po","ア":"a","イ":"i","ウ":"u","エ":"e","オ":"o","カ":"ka","キ":"ki","ク":"ku","ケ":"ke","コ":"ko","サ":"sa","シ":"shi","ス":"su","セ":"se","ソ":"so","タ":"ta","チ":"chi","ツ":"tsu","テ":"te","ト":"to","ナ":"na","ニ":"ni","ヌ":"nu","ネ":"ne","ノ":"no","ハ":"ha","ヒ":"hi","フ":"fu","ヘ":"he","ホ":"ho","マ":"ma","ミ":"mi","ム":"mu","メ":"me","モ":"mo","ヤ":"ya","ユ":"yu","ヨ":"yo","ラ":"ra","リ":"ri","ル":"ru","レ":"re","ロ":"ro","ワ":"wa","ヲ":"wo","ン":"n"};
+function kanaToRomaji(str) { return [...str].map(c => KANA_TO_ROMAJI[c] || c).join(''); }
 
-    const hits = kanjiDb.filter(k => {
-        if (k.char === query) return true;
-        if (k.meanings.some(m => m.toLowerCase().includes(q))) return true;
-        if (k.on.some(r  => r.toLowerCase().includes(q))) return true;
-        if (k.kun.some(r => r.replace(/[.\-].*/g,'').toLowerCase().includes(q))) return true;
+function doSearch(query) {
+    const q = query.trim().toLowerCase();
+    document.getElementById('search-clear').classList.toggle('show', q.length > 0);
+    if (!q) { clearSearch(); return; }
+    showSearchPanel();
+
+    const hits = kanjiDb.filter(k => {
+        if (k.char === query) return true;
+        if (k.meanings.some(m => m.toLowerCase().includes(q))) return true;
+        if (k.on.some(r  => r.toLowerCase().includes(q))) return true;
+        if (k.kun.some(r => r.replace(/[.\-].*/g,'').toLowerCase().includes(q))) return true;
+        // Recherche romaji (ex: "ichi", "hito", "ka")
+        if (k.on.some(r  => kanaToRomaji(r.toLowerCase()).includes(q))) return true;
+        if (k.kun.some(r => kanaToRomaji(r.replace(/[\.\-].*/g,'')).includes(q))) return true;
+        if (k.romaji && k.romaji.toLowerCase().includes(q)) return true;
         return false;
     }).slice(0, 60);
 
-    const el = document.getElementById('search-results');
-    if (!hits.length) {
-        el.innerHTML = `<div class="search-empty"><div class="big">🙅</div>Aucun résultat pour « ${query} »</div>`;
+    const el = document.getElementById('search-results');
+    if (!hits.length) {
+        el.innerHTML = `<div class="search-empty"><div class="big">🙅</div>Aucun résultat pour « ${query} »</div>`;
+        return;
+    }
+    el.innerHTML = hits.map(k => {
+        const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(k.char)));
+        const badge = cat
+            ? `<span class="search-hit-badge" style="background:${cat.color}22;color:${cat.color};border:1px solid ${cat.color}44">${cat.short}</span>`
+            : '';
+        const safeChar = k.char.replace(/'/g, "\\'");
+        // Ajout du toggleSearch() ici pour fermer la barre quand on clique sur un résultat
+        return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);hideSearchPanel();toggleSearch()">
+            <div class="search-hit-char">${k.char}</div>
+            <div class="search-hit-info">
+                <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
+                <div class="search-hit-readings">${[...k.on.slice(0,3), ...k.kun.slice(0,2)].join('  ')}</div>
+            </div>
+            ${badge}
+        </div>`;
+    }).join('');
+}
+
+// LOGIQUE MICRO RECHERCHE — supporte japonais et français
+function initMicSearch() {
+    const micBtn = document.getElementById('mic-search-trigger');
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!micBtn || !SR) {
+        if (micBtn) { micBtn.style.opacity = '0.3'; micBtn.title = 'Reconnaissance vocale non supportée'; }
         return;
     }
-    el.innerHTML = hits.map(k => {
-        const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(k.char)));
-        const badge = cat
-            ? `<span class="search-hit-badge" style="background:${cat.color}22;color:${cat.color};border:1px solid ${cat.color}44">${cat.short}</span>`
-            : '';
-        const safeChar = k.char.replace(/'/g, "\\'");
-        return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);hideSearchPanel()">
-            <div class="search-hit-char">${k.char}</div>
-            <div class="search-hit-info">
-                <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
-                <div class="search-hit-readings">${[...k.on.slice(0,3), ...k.kun.slice(0,2)].join('  ')}</div>
-            </div>
-            ${badge}
-        </div>`;
-    }).join('');
+    let isListening = false;
+    micBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (isListening) return;
+        isListening = true;
+        micBtn.classList.add('listening');
+        // Langue auto : si champ vide ou dernière requête en latin → FR, sinon JP
+        const inputVal = document.getElementById('search-input').value;
+        const isLatin = /^[a-zA-ZÀ-ÿ\s]*$/.test(inputVal.trim());
+        const langOrder = isLatin ? ['fr-FR', 'ja-JP'] : ['ja-JP', 'fr-FR'];
+        const rec = new SR();
+        rec.continuous = false;
+        rec.interimResults = false;
+        rec.maxAlternatives = 3;
+        rec.lang = langOrder[0];
+        rec.start();
+        rec.onresult = (ev) => {
+            // Tenter la meilleure alternative parmi les 3
+            let best = '';
+            for (let i = 0; i < ev.results[0].length; i++) {
+                const t = ev.results[0][i].transcript.trim();
+                if (t.length > best.length) best = t;
+            }
+            if (best) {
+                document.getElementById('search-input').value = best;
+                document.getElementById('search-clear').classList.add('show');
+                doSearch(best);
+            }
+        };
+        rec.onerror = (ev) => { console.warn('Mic error:', ev.error); };
+        rec.onend = () => { micBtn.classList.remove('listening'); isListening = false; };
+    };
 }
+setTimeout(initMicSearch, 300);
 
 /* ══════════════════════════════════════════════════
    SIDEBAR
@@ -761,7 +912,7 @@ function showDashboard(isBack = false) {
             </div>
         </div>`;
     // Appel de la fonction de progression si nécessaire ici
-    if (typeof renderDashboardProgression === 'function') renderDashboardProgression();
+    if (typeof renderDashboard === 'function') renderDashboard();
 }
 
 /* ══════════════════════════════════════════════════
@@ -799,7 +950,8 @@ function loadCategory(catId, isBack = false) {
                     <div style="font-size:12px; color:var(--gray);">${ser.indices.length} Kanji</div>
                 </div>
             </div>
-            <div style="color:var(--gray); font-size:14px; margin-right:10px;">❯</div>
+                <div style="color:var(--gray); font-size:14px;">❯</div>
+            </div>
         </div>`;
     }).join('');
 
@@ -816,8 +968,7 @@ function loadCategory(catId, isBack = false) {
                         <p>${cat.indices.length} kanji · ${catSeries.length} séries</p>
                     </div>
                 </div>
-                <button class="grade-quiz-btn" onclick="startQuiz({type:'category',id:'${catId}'})">⚡ Quiz QCM — ${cat.indices.length} kanji</button>
-                <button class="grade-trace-btn" onclick="startStrokeQuiz({type:'category',id:'${catId}'})">✏ Quiz Tracé — ordre des traits</button>
+                <button class="grade-quiz-btn" onclick="showQuizModeModal('category','${catId}')">⚡ Quiz — Choisir un mode</button>
             </div>
             <div class="section-cards-title">Séries</div>
             <div class="series-grid">${seriesCards}</div>
@@ -845,10 +996,7 @@ function loadSeriesPage(seriesId, isBack = false) {
                 <div style="font-size:14px;font-weight:bold">${ser.label}</div>
                 <div class="list-header-info">${cat.label} · ${ser.range} (${ser.indices.length} kanji)</div>
             </div>
-            <div style="display:flex;gap:8px">
-                <button class="list-quiz-btn" onclick="startQuiz({type:'series',id:'${seriesId}'})">Quiz ▶</button>
-                <button class="list-quiz-btn" style="background:var(--accent2)" onclick="startStrokeQuiz({type:'series',id:'${seriesId}'})">✏ Tracé</button>
-            </div>
+            <button class="list-quiz-btn" onclick="showQuizModeModal('series','${seriesId}')">Quiz ▶</button>
         </div>
         <div id="series-kanji-list"></div>`;
 
@@ -873,6 +1021,118 @@ function makeKanjiRow(k) {
     return row;
 }
 
+
+/* ══════════════════════════════════════════════════
+   MODAL SÉLECTION DE MODE QUIZ
+══════════════════════════════════════════════════ */
+let _quizModalSource = { type: null, id: null };
+
+function showQuizModeModal(sourceType, sourceId) {
+    _quizModalSource = { type: sourceType, id: sourceId };
+    const m = document.getElementById('quiz-mode-modal');
+    m.classList.add('open');
+    m.style.display = 'flex';
+}
+
+function closeQuizModal() {
+    const m = document.getElementById('quiz-mode-modal');
+    m.classList.remove('open');
+    m.style.display = 'none';
+}
+
+function launchQuizMode(mode) {
+    closeQuizModal();
+    startQuiz({ type: _quizModalSource.type, id: _quizModalSource.id, mode });
+}
+
+function launchStrokeMode(mode) {
+    closeQuizModal();
+    startStrokeQuiz({ type: _quizModalSource.type, id: _quizModalSource.id, mode });
+}
+
+/* ══════════════════════════════════════════════════
+   QUIZ VOCAL — startVoiceRecognition()
+   Appelé depuis le prompt du mode vocal dans renderQuizQuestion
+══════════════════════════════════════════════════ */
+let _vocalRecognition = null;
+
+function startVoiceRecognition() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+        const fb = document.getElementById('vocal-feedback');
+        if (fb) { fb.style.color = '#e55'; fb.textContent = 'Reconnaissance vocale non supportée sur ce navigateur.'; }
+        return;
+    }
+    if (_vocalRecognition) { try { _vocalRecognition.abort(); } catch(e){} }
+
+    if (!quizState) return;
+    const k = kanjiDb[quizState.indices[quizState.idx]];
+
+    // Toutes les lectures valides (hiragana, katakana → romaji aussi)
+    const validReadings = [
+        ...k.on.map(r => r.toLowerCase()),
+        ...k.kun.map(r => r.replace(/[.\-].*/,'').toLowerCase()),
+        ...k.on.map(r => kanaToRomaji(r.toLowerCase())),
+        ...k.kun.map(r => kanaToRomaji(r.replace(/[.\-].*/,'').toLowerCase()))
+    ].filter(Boolean);
+
+    const toHira = str => str.replace(/[\u30a1-\u30f6]/g, m => String.fromCharCode(m.charCodeAt(0) - 0x60));
+
+    const micBtn = document.getElementById('mic-btn');
+    const fb     = document.getElementById('vocal-feedback');
+    if (micBtn) { micBtn.classList.add('listening'); document.getElementById('mic-icon').textContent = '⏹'; }
+    if (fb)     { fb.style.color = 'var(--gray)'; fb.textContent = 'Écoute en cours…'; }
+
+    _vocalRecognition = new SR();
+    _vocalRecognition.lang = 'ja-JP';
+    _vocalRecognition.interimResults = false;
+    _vocalRecognition.maxAlternatives = 3;
+    _vocalRecognition.start();
+
+    _vocalRecognition.onresult = (ev) => {
+        let said = '';
+        for (let i = 0; i < ev.results[0].length; i++) {
+            const t = ev.results[0][i].transcript.trim();
+            if (t.length > said.length) said = t;
+        }
+        const normalized = toHira(said.toLowerCase()).replace(/[.\-、。\s]/g,'');
+        const isCorrect  = validReadings.some(r => toHira(r).replace(/[.\-]/g,'') === normalized) || said === k.char;
+
+        if (micBtn) { micBtn.classList.remove('listening'); document.getElementById('mic-icon').textContent = '🎤'; }
+        if (fb) {
+            if (isCorrect) {
+                fb.style.color = 'var(--accent)';
+                fb.textContent = `✔ Correct ! « ${said} »`;
+            } else {
+                fb.style.color = '#e55';
+                fb.textContent = `✘ Dit : « ${said} »  –  Attendu : ${validReadings.slice(0,3).join(', ')}`;
+            }
+        }
+
+        if (!quizState || quizState.answered) return;
+        quizState.answered = true;
+        if (isCorrect) {
+            quizState.correct++;
+            document.getElementById('quiz-correct').textContent = quizState.correct;
+        } else {
+            quizState.wrong++;
+            document.getElementById('quiz-wrong').textContent = quizState.wrong;
+        }
+        const next = quizState.idx + 1;
+        document.getElementById('quiz-score-sub').textContent = `${(quizState.correct/next*10).toFixed(1)} / 10.0`;
+        setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 1000 : 1600);
+    };
+
+    _vocalRecognition.onerror = (ev) => {
+        if (micBtn) { micBtn.classList.remove('listening'); document.getElementById('mic-icon').textContent = '🎤'; }
+        if (fb) { fb.style.color = '#e55'; fb.textContent = 'Erreur micro : ' + ev.error; }
+    };
+
+    _vocalRecognition.onend = () => {
+        if (micBtn) micBtn.classList.remove('listening');
+    };
+}
+
 /* ══════════════════════════════════════════════════
    QUIZ — API FLEXIBLE
    startQuiz({ type: "category", id: "p1" })
@@ -881,51 +1141,48 @@ function makeKanjiRow(k) {
 let quizTimerInterval = null;
 let quizPaused = false;
 
-function startQuiz({ type, id }) {
+function startQuiz({ type, id, mode = 'kanji-to-read' }) { // 'kanji-to-read' par défaut
     let indices, title, poolIndices;
 
     if (type === 'category') {
         const cat = categories.get(id);
         if (!cat || !cat.indices.length) return;
-        indices     = shuffleIndices([...cat.indices]);
+        indices = shuffleIndices([...cat.indices]);
         poolIndices = [...cat.indices];
-        title       = cat.label;
+        title = cat.label;
     } else if (type === 'series') {
         const ser = seriesMap.get(id);
         if (!ser || !ser.indices.length) return;
-        const cat   = categories.get(ser.catId);
-        indices     = shuffleIndices([...ser.indices]);
-        // Pool de leurres = toute la catégorie pour plus de variété
+        const cat = categories.get(ser.catId);
+        indices = shuffleIndices([...ser.indices]);
         poolIndices = [...(cat?.indices ?? ser.indices)];
-        title       = `${cat?.label ?? ''} · ${ser.label}`;
+        title = `${cat?.label ?? ''} · ${ser.label}`;
     } else { return; }
 
-    // Arrêter un éventuel timer précédent
     if (quizTimerInterval) clearInterval(quizTimerInterval);
     quizPaused = false;
 
+    // On ajoute le MODE ici
     quizState = {
         indices, poolIndices, idx: 0,
         correct: 0, wrong: 0,
         answered: false, revealed: false,
         title, sourceType: type, sourceId: id,
-        elapsedSec: 0
+        elapsedSec: 0,
+        mode: mode // <--- IMPORTANT : On stocke le mode choisi
     };
 
-    // Reset UI top bar
     document.getElementById('quiz-correct').textContent = '0';
-    document.getElementById('quiz-wrong').textContent   = '0';
-    document.getElementById('quiz-timer').textContent   = '0:00';
-    document.getElementById('quiz-view').style.display  = 'flex';
+    document.getElementById('quiz-wrong').textContent = '0';
+    document.getElementById('quiz-timer').textContent = '0:00';
+    document.getElementById('quiz-view').style.display = 'flex';
 
-    // Timer
     quizTimerInterval = setInterval(() => {
         if (!quizPaused && quizState) {
             quizState.elapsedSec++;
             const m = Math.floor(quizState.elapsedSec / 60);
             const s = quizState.elapsedSec % 60;
-            document.getElementById('quiz-timer').textContent =
-                `${m}:${String(s).padStart(2,'0')}`;
+            document.getElementById('quiz-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
         }
     }, 1000);
 
@@ -950,49 +1207,61 @@ function togglePause() {
 function renderQuizQuestion() {
     if (!quizState || quizState.idx >= quizState.indices.length) { renderQuizResults(); return; }
 
-    const qs  = quizState;
-    const k   = kanjiDb[qs.indices[qs.idx]];
+    const qs = quizState;
+    const k = kanjiDb[qs.indices[qs.idx]];
+    
+    // GESTION DU MODE SURVIE : On inclut désormais le mode 'vocal'
+    let currentMode = qs.mode;
+    if (qs.mode === 'survie') {
+        const allModes = ['kanji-to-read', 'kanji-to-mean', 'read-to-kanji', 'mean-to-kanji', 'vocal'];
+        currentMode = allModes[Math.floor(Math.random() * allModes.length)];
+    } else if (qs.mode === 'mixte') {
+        const mixModes = ['kanji-to-read', 'kanji-to-mean'];
+        currentMode = mixModes[Math.floor(Math.random() * mixModes.length)];
+    }
+
     const pct = (qs.idx / qs.indices.length * 100).toFixed(1);
-
     document.getElementById('quiz-prog-bar').style.width = pct + '%';
-    document.getElementById('quiz-counter-sub').textContent =
-        `${qs.idx + 1} / ${qs.indices.length}`;
-    const scoreFloat = (qs.correct / Math.max(qs.idx, 1) * 10).toFixed(1);
-    document.getElementById('quiz-score-sub').textContent =
-        `${scoreFloat} / 10.0`;
-    document.getElementById('quiz-examples-btn').style.display = 'none';
-
+    document.getElementById('quiz-counter-sub').textContent = `${qs.idx + 1} / ${qs.indices.length}`;
+    
     qs.answered = false;
     qs.revealed = false;
 
-    // Construire les chips de lecture
-    const onChips  = k.on.slice(0,3).map(r =>
-        `<div class="quiz-reading-chip on-chip">
-            <span class="chip-count">${k.on.indexOf(r)+1}</span>
-            <span class="chip-text">${r}</span>
-        </div>`).join('');
-    const kunChips = k.kun.slice(0,3).map(r => {
-        const clean = r.replace(/[.\-].*/,'').split('/')[0];
-        return `<div class="quiz-reading-chip kun-chip">
-            <span class="chip-count">${k.kun.indexOf(r)+1}</span>
-            <span class="chip-text">${clean}</span>
-        </div>`;
-    }).join('');
+    const onStr = k.on.slice(0,2).join(', ');
+    const kunStr = k.kun.slice(0,2).map(r => r.replace(/[.\-].*/,'')).join(', ');
+    const readings = [onStr, kunStr].filter(s => s).join(' / ');
+    const meaning = k.meanings.filter(m => !m.toLowerCase().includes('radical')).slice(0,2).join(' • ');
 
-// On filtre pour enlever tout ce qui contient le mot "Radical"
-const filteredMeanings = k.meanings.filter(m => !m.toLowerCase().includes('radical'));
+    let promptHtml = "";
+    
+    // --- NOUVELLE LOGIQUE DE PROMPT ---
+    if (currentMode === 'vocal') {
+        const vMeaning = k.meanings.filter(m => !m.toLowerCase().includes('radical')).slice(0,2).join(' · ') || k.meanings[0] || '?';
+        promptHtml = `
+            <div style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Sens</div>
+            <div class="quiz-meaning-big" style="font-size:28px;margin-bottom:6px;">${vMeaning}</div>
+            <div style="font-size:12px;color:var(--gray);margin-bottom:24px;">Prononcez la lecture japonaise</div>
+            <button id="mic-btn" class="mic-btn" onclick="startVoiceRecognition()">
+                <span id="mic-icon">🎤</span>
+            </button>
+            <div id="vocal-feedback" style="font-size:13px;color:var(--gray);min-height:22px;margin-top:14px;text-align:center;max-width:300px;"></div>`;
+    } else if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
+        promptHtml = `<div class="quiz-kanji-big">${k.char}</div>
+                      <div class="quiz-tap-hint">Trouvez la bonne réponse</div>`;
+    } else if (currentMode === 'read-to-kanji') {
+        promptHtml = `<div class="quiz-reading-big" style="font-size:32px; color:var(--accent2)">${readings || '???'}</div>
+                      <div class="quiz-tap-hint">Quel est le kanji correspondant ?</div>`;
+    } else if (currentMode === 'mean-to-kanji') {
+        promptHtml = `<div class="quiz-meaning-big" style="font-size:28px;">${meaning}</div>
+                      <div class="quiz-tap-hint">Quel est le kanji correspondant ?</div>`;
+    }
 
-// Si après filtrage il reste des sens, on les affiche. 
-// Sinon on affiche le premier sens d'origine (au cas où "Radical" était le seul sens).
-const meaning = filteredMeanings.length > 0 
-                ? filteredMeanings.join(' • ') 
-                : (k.meanings[0] || '?');
+    // On n'ajoute l'événement onclick revealChoices QUE si on n'est pas en mode vocal
+    const clickAttr = currentMode !== 'vocal' ? `onclick="revealChoices('${currentMode}')"` : "";
 
     document.getElementById('quiz-body').innerHTML = `
-        <div class="quiz-prompt-wrap" id="quiz-prompt" onclick="revealChoices()">
-            <div class="quiz-readings-row">${onChips}${kunChips}</div>
-            <div class="quiz-meaning-big">${meaning}</div>
-            <div class="quiz-tap-hint" id="quiz-tap-hint">Appuyer pour afficher les choix</div>
+        <div class="quiz-prompt-wrap" id="quiz-prompt" ${clickAttr}>
+            ${promptHtml}
             <div class="quiz-choices-grid" id="quiz-choices" style="display:none"></div>
         </div>`;
 }
@@ -1000,35 +1269,42 @@ const meaning = filteredMeanings.length > 0
 /* ─────────────────────────────────────────────────
    PHASE 2 — Révélation des 6 kanjis (tap)
 ───────────────────────────────────────────────── */
-function revealChoices() {
+function revealChoices(currentMode) {
     if (!quizState || quizState.revealed) return;
     quizState.revealed = true;
 
-    const qs     = quizState;
-    const kIdx   = qs.indices[qs.idx];
-    const k      = kanjiDb[kIdx];
-
-    // Masquer l'indice "appuyer"
-    const hint = document.getElementById('quiz-tap-hint');
-    if (hint) hint.style.display = 'none';
-
-    // 5 leurres préférés dans la même catégorie/série, sinon global
-    const decoys = pickDecoyIndices(kIdx, k.meanings[0], 5, qs.poolIndices);
+    const qs = quizState;
+    const kIdx = qs.indices[qs.idx];
+    const decoys = pickDecoyIndices(kIdx, kanjiDb[kIdx].meanings[0], 5, qs.poolIndices);
     const choices = shuffleIndices([kIdx, ...decoys]);
 
     const grid = document.getElementById('quiz-choices');
     grid.style.display = 'grid';
-    grid.innerHTML = choices.map(ci =>
-        `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})">
-            ${kanjiDb[ci].char}
-        </div>`
-    ).join('');
+    
+    grid.innerHTML = choices.map(ci => {
+        const target = kanjiDb[ci];
+        let content = "";
+        
+        // DÉCIDER QUOI AFFICHER DANS LES BOUTONS
+        if (currentMode === 'kanji-to-read') {
+            // Show first reading (ON preferred, then KUN)
+            const r = target.on[0] || target.kun[0] || '?';
+            content = r.replace(/[.\u002D].*/,'');
+        } else if (currentMode === 'kanji-to-mean') {
+            content = target.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || target.meanings[0] || '?';
+        } else if (currentMode === 'read-to-kanji' || currentMode === 'mean-to-kanji') {
+            content = target.char;
+        } else {
+            // Mixte/survie fallback
+            content = target.char;
+        }
 
-    // Désactiver le tap global sur le prompt
-    document.getElementById('quiz-prompt').onclick = null;
+        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})" style="font-size:${content.length > 8 ? '12px' : '18px'}">
+            ${content}
+        </div>`;
+    }).join('');
 
-    // Afficher le bouton exemples (si on veut l'ajouter plus tard)
-    document.getElementById('quiz-examples-btn').style.display = 'inline-block';
+    document.querySelectorAll('.quiz-tap-hint').forEach(h => h.style.display = 'none');
 }
 
 function toggleExamples() { /* placeholder pour une future expansion */ }
@@ -1126,23 +1402,21 @@ let strokeWriter     = null;
 let sqTimerInterval  = null;
 let sqPaused         = false;
 
-function startStrokeQuiz({ type, id }) {
+function startStrokeQuiz({ type, id, mode = 'trace-easy' }) {
     let indices, title;
 
     if (type === 'category') {
         const cat = categories.get(id);
         if (!cat || !cat.indices.length) return;
-        // Garder seulement les kanji qui ont des données de tracé (kanji CJK standards)
         indices = shuffleIndices([...cat.indices]);
-        title   = cat.label;
+        title = cat.label;
     } else if (type === 'series') {
         const ser = seriesMap.get(id);
         if (!ser || !ser.indices.length) return;
         const cat = categories.get(ser.catId);
-        indices   = shuffleIndices([...ser.indices]);
-        title     = `${cat?.label ?? ''} · ${ser.label}`;
+        indices = shuffleIndices([...ser.indices]);
+        title = `${cat?.label ?? ''} · ${ser.label}`;
     } else if (type === 'single') {
-        // Pour la pratique d'un seul kanji depuis la page de détail
         const kanji = kanjiDb.find(k => k.char === id);
         if (!kanji) return;
         indices = [kanjiDb.indexOf(kanji)];
@@ -1157,12 +1431,13 @@ function startStrokeQuiz({ type, id }) {
         correct: 0, wrong: 0,
         title, sourceType: type, sourceId: id,
         elapsedSec: 0,
-        mistakesThisKanji: 0
+        mistakesThisKanji: 0,
+        mode: mode // <--- On stocke si c'est 'trace-hard' ou 'trace-easy'
     };
 
     document.getElementById('sq-correct').textContent = '0';
-    document.getElementById('sq-wrong').textContent   = '0';
-    document.getElementById('sq-timer').textContent   = '0:00';
+    document.getElementById('sq-wrong').textContent = '0';
+    document.getElementById('sq-timer').textContent = '0:00';
     document.getElementById('stroke-quiz-view').style.display = 'flex';
 
     sqTimerInterval = setInterval(() => {
@@ -1170,8 +1445,7 @@ function startStrokeQuiz({ type, id }) {
             strokeQuizState.elapsedSec++;
             const m = Math.floor(strokeQuizState.elapsedSec / 60);
             const s = strokeQuizState.elapsedSec % 60;
-            document.getElementById('sq-timer').textContent =
-                `${m}:${String(s).padStart(2,'0')}`;
+            document.getElementById('sq-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
         }
     }, 1000);
 
@@ -1262,20 +1536,23 @@ function renderStrokeQuizQuestion() {
 
     // Instancier HanziWriter en mode quiz
     // showHintAfterMisses:1 → anime le bon trait après 1 erreur (correction immédiate)
+    // Déterminer l'opacité selon le mode
+    const isHardcore = (qs.mode === 'trace-hard');
+
     strokeWriter = HanziWriter.create('sq-writer-target', k.char, {
-        width:            280,
-        height:           280,
-        padding:          28,
-        strokeColor:      '#00c9a7',   // accent vert-bleu
-        outlineColor:     '#3a3a50',   // outline sombre visible
-        drawingColor:     '#00c9a7',   // trait dessiné en vert comme le kanji
-        drawingWidth:     40,           // augmenté de 5 à 8 pour meilleure visibilité
-        showOutline:      true,
-        showCharacter:    false,       // cache le kanji rempli → seul l'outline est visible
+        width: 280,
+        height: 280,
+        padding: 28,
+        strokeColor: '#00c9a7',
+        // SI HARDCORE : On rend l'outline invisible (même couleur que le fond ou transparent)
+        outlineColor: isHardcore ? 'transparent' : '#3a3a50', 
+        drawingColor: '#00c9a7',
+        drawingWidth: 40,
+        showOutline: !isHardcore, // Cache l'outline en mode hardcore
+        showCharacter: false,
         highlightOnComplete: true,
-        showHintAfterMisses: 1,        // correction animée après 1 erreur
-        highlightColor:   '#7b61ff',   // violet pour le highlight de complétion
-        renderer:         'svg'
+        showHintAfterMisses: isHardcore ? 0 : 1, // Pas d'aide auto en hardcore !
+        renderer: 'svg'
     });
 
     let strokesDone = 0;
@@ -1286,14 +1563,19 @@ function renderStrokeQuizQuestion() {
             // Flasher le point actif en rouge
             const dot = document.getElementById(`sq-dot-${strokesDone}`);
             if (dot) { dot.classList.add('mistake'); setTimeout(() => dot.classList.remove('mistake'), 400); }
+            
             // Flash rouge sur le canvas
             const wrap = document.getElementById('sq-canvas-wrap');
             if (wrap) { wrap.classList.add('flash-err'); setTimeout(() => wrap.classList.remove('flash-err'), 350); }
-            // Feedback texte
+            
+            // Feedback texte adapté
             const fb = document.getElementById('sq-feedback');
             if (fb) {
                 fb.style.color = '#e55';
-                fb.textContent = `Mauvais tracé — l'animation va se lancer…`;
+                // Correction ici : message différent si Hardcore
+                fb.textContent = isHardcore 
+                    ? `Mauvais tracé ! (Pas d'aide en Hardcore)` 
+                    : `Mauvais tracé — l'animation va se lancer…`;
                 setTimeout(() => { if (fb) fb.textContent = ''; }, 1800);
             }
         },
