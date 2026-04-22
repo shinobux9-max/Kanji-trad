@@ -1684,7 +1684,7 @@ function openDetail(kanji) {
     // Stats
     document.getElementById('d-level').innerText   = cat ? cat.short : '–';
     document.getElementById('d-strokes').innerText = kanji.strokes;
-    document.getElementById('d-romaji').innerText  = '–';
+    document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
 
     // Lectures
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
