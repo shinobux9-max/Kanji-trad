@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kanji Learner</title>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
-    <script src="quiz-overrides.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -15,16 +14,13 @@
         --accent: #00c9a7; --accent2: #7b61ff; --gray: #6b6e80; --border: #2a2a38;
         --grade-prim: #3ecf8e; --grade-mid: #6c7bff;
     }
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-    /* --- POLICE JAPONAISE UNIFIÉE --- */
+    /* --- POLICE JAPONAISE UNIFIÉE ---
+       jis04 sur * garantit le glyphe japonais (八 ouvert) sur TOUS les éléments,
+       y compris ceux créés dynamiquement via innerHTML */
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-variant-east-asian: jis04; }
     body {
         font-family: 'Noto Sans JP', sans-serif;
-        font-variant-east-asian: jis04;
-        margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        overflow: hidden;
+        margin: 0; background: var(--bg); color: var(--text); overflow: hidden;
     }
 
     /* ── TOOLBAR ─────────────────────── */
@@ -386,6 +382,7 @@
         <div id="section-on"  style="display:none"><div class="section-title">Lecture ON</div><div id="d-on" class="tag-container"></div></div>
         <div id="section-kun" style="display:none"><div class="section-title">Lecture KUN</div><div id="d-kun" class="tag-container"></div></div>
         <button class="replay-btn" onclick="replayAnimation()">↺ REVOIR LE TRACÉ</button>
+        <button id="detail-quiz-btn" class="replay-btn" style="margin-top:10px;background:linear-gradient(135deg,var(--accent2),#5a40e0)" onclick="showQuizModeModal('single', window.currentKanjiForStroke)">⚡ S'ENTRAÎNER</button>
     </div>
 </div>
 
@@ -476,6 +473,29 @@
 </div>
 
 <script>
+
+/* ══════════════════════════════════════════════════
+   QUIZ OVERRIDES — Lectures prioritaires
+   Consultés en premier par getBestReading() avant
+   d'utiliser les données de kanji_jouyou_fr.json.
+   Couvrent les kanji courants mal interprétés.
+══════════════════════════════════════════════════ */
+const quizOverrides = {
+    // Chiffres (priorité ON-yomi courant)
+    "一":"いち","二":"に","三":"さん","四":"よん","五":"ご",
+    "六":"ろく","七":"なな","八":"はち","九":"きゅう","十":"じゅう",
+    "百":"ひゃく","千":"せん","万":"まん",
+    // Temps et dates
+    "日":"にち","月":"がつ","年":"ねん","時":"じ","分":"ふん","週":"しゅう","今":"いま",
+    // Positions et directions
+    "上":"うえ","下":"した","左":"ひだり","右":"みぎ","中":"なか","外":"そと",
+    "北":"きた","南":"みなみ","東":"ひがし","西":"にし",
+    // Verbes courants (forme de base)
+    "食":"たべる","飲":"のむ","行":"いく","来":"くる","見":"みる",
+    "聞":"きく","書":"かく","言":"いう","話":"はなす","読":"よむ","買":"かう",
+    // Personnes
+    "人":"ひと","子":"こ","女":"おんな","男":"おとこ","父":"ちち","母":"はは"
+};
 
 /* ── LOGIQUE DU QUIZ VOCAL ── */
 
@@ -1108,11 +1128,14 @@ function closeQuizModal() {
 
 function launchQuizMode(mode) {
     closeQuizModal();
+    // Si on vient de la fiche kanji, la fermer d'abord
+    if (_quizModalSource.type === 'single') closeDetail();
     startQuiz({ type: _quizModalSource.type, id: _quizModalSource.id, mode });
 }
 
 function launchStrokeMode(mode) {
     closeQuizModal();
+    if (_quizModalSource.type === 'single') closeDetail();
     startStrokeQuiz({ type: _quizModalSource.type, id: _quizModalSource.id, mode });
 }
 
@@ -1203,7 +1226,7 @@ function startVoiceRecognition() {
 let quizTimerInterval = null;
 let quizPaused = false;
 
-function startQuiz({ type, id, mode = 'kanji-to-read' }) { // 'kanji-to-read' par défaut
+function startQuiz({ type, id, mode = 'kanji-to-read' }) {
     let indices, title, poolIndices;
 
     if (type === 'category') {
@@ -1219,6 +1242,15 @@ function startQuiz({ type, id, mode = 'kanji-to-read' }) { // 'kanji-to-read' pa
         indices = shuffleIndices([...ser.indices]);
         poolIndices = [...(cat?.indices ?? ser.indices)];
         title = `${cat?.label ?? ''} · ${ser.label}`;
+    } else if (type === 'single') {
+        // Un seul kanji — depuis la fiche détail
+        const idx = kanjiMap.get(id);
+        if (idx === undefined) return;
+        indices = [idx];
+        // Pool = toute la catégorie du kanji pour les leurres
+        const cat = [...categories.values()].find(c => c.indices.includes(idx));
+        poolIndices = cat ? [...cat.indices] : [...Array(kanjiDb.length).keys()];
+        title = `Entraînement : ${id}`;
     } else { return; }
 
     if (quizTimerInterval) clearInterval(quizTimerInterval);
@@ -2059,6 +2091,8 @@ function openDetail(kanji) {
     document.getElementById('writer-spinner').style.display      = 'none';
     document.getElementById('kanji-writer-target').style.display = 'block';
     document.getElementById('kanji-writer-target').innerHTML     = '';
+    const dqb = document.getElementById('detail-quiz-btn');
+    if (dqb) dqb.style.display = '';
     writer = HanziWriter.create('kanji-writer-target', kanji.char, {
         width:140, height:140, padding:15, strokeColor:'#00c9a7',
         outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
@@ -2090,6 +2124,8 @@ function openKanaDetail(kana) {
     document.getElementById('d-strokes').innerText = '…';
     document.getElementById('kanji-writer-target').innerHTML = '';
     document.getElementById('kanji-writer-target').style.display = 'none';
+    const dqb = document.getElementById('detail-quiz-btn');
+    if (dqb) dqb.style.display = 'none';
     
     // IMPORTANT : On vide les exemples pour les Kanas
     const exContainer = document.getElementById('exemples-container');
