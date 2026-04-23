@@ -476,26 +476,80 @@
 <script>
 
 /* ══════════════════════════════════════════════════
+   SIDEBAR - Early definition to prevent undefined errors
+══════════════════════════════════════════════════ */
+function toggleSidebar(show) {
+    document.getElementById('sidebar').classList.toggle('open', show);
+    document.getElementById('overlay').classList.toggle('show', show);
+}
+
+/* ══════════════════════════════════════════════════
    QUIZ OVERRIDES — Lectures prioritaires
    Consultés en premier par getBestReading() avant
    d'utiliser les données de kanji_jouyou_fr.json.
    Couvrent les kanji courants mal interprétés.
 ══════════════════════════════════════════════════ */
 const quizOverrides = {
-    // Chiffres (priorité ON-yomi courant)
+    // --- CHIFFRES & COMPTAGE (Déjà faits, je complète) ---
     "一":"いち","二":"に","三":"さん","四":"よん","五":"ご",
     "六":"ろく","七":"なな","八":"はち","九":"きゅう","十":"じゅう",
-    "百":"ひゃく","千":"せん","万":"まん",
-    // Temps et dates
+    "百":"ひゃく","千":"せん","万":"まん","円":"えん",
+
+    // --- TEMPS & NATURE (Lectures les plus usuelles) ---
     "日":"にち","月":"がつ","年":"ねん","時":"じ","分":"ふん","週":"しゅう","今":"いま",
-    // Positions et directions
+    "火":"ひ","水":"みず","木":"き","金":"かね","土":"つち",
+    "天":"てん","気":"き","雨":"あめ","雪":"ゆき","風":"かぜ","空":"そら",
+
+    // --- HUMAINS & CORPS ---
+    "人":"ひと","子":"こ","女":"おんな","男":"おとこ","父":"ちち","母":"はは",
+    "私":"わたし","友":"とも","体":"からだ","目":"め","耳":"みみ","口":"くち",
+    "手":"て","足":"あし","心":"こころ","力":"ちから",
+
+    // --- DIRECTIONS & POSITIONS ---
     "上":"うえ","下":"した","左":"ひだり","右":"みぎ","中":"なか","外":"そと",
-    "北":"きた","南":"みなみ","東":"ひがし","西":"にし",
-    // Verbes courants (forme de base)
-    "食":"たべる","飲":"のむ","行":"いく","来":"くる","見":"みる",
-    "聞":"きく","書":"かく","言":"いう","話":"はなす","読":"よむ","買":"かう",
-    // Personnes
-    "人":"ひと","子":"こ","女":"おんな","男":"おとこ","父":"ちち","母":"はは"
+    "北":"きた","南":"みなみ","東":"ひがし","西":"にし","前":"まえ","後":"うしろ",
+    "間":"あいだ","近":"ちかい","遠":"とおい",
+
+    // --- VERBES (Forme dictionnaire complète) ---
+    "食":"たべる","飲":"のむ","行":"いく","来":"くる","見":"みる","聞":"きく",
+    "書":"かく","言":"いう","話":"はなす","読":"よむ","買":"かう","売":"うる",
+    "立":"たつ","歩":"あるく","走":"はしる","持":"もつ","待":"まつ","作":"つくる",
+    "休":"やすむ","会":"あう","知":"しる","思":"おもう","切":"きる",
+
+    // --- ADJECTIFS ---
+    "大":"おおきい","小":"ちいさい","高":"たかい","長":"ながい","白":"しろい",
+    "赤":"あかい","青":"あおい","黒":"くろい","安":"やすい","新":"あたらしい",
+    "古":"ふるい","多":"おおい","少":"すくない","早":"はやい",
+
+    // --- ÉDUCATION & SOCIÉTÉ ---
+    "学":"まなぶ", "校":"こう", "先":"さき", "生":"せい", "文":"ぶん",
+    "字":"じ", "本":"ほん", "名":"なまえ", "正":"ただしい", "立":"たつ",
+    "社":"しゃ", "員":"いん", "工":"こう", "場":"ばしょ", "国":"くに",
+
+    // --- NATURE & ÉLÉMENTS AVANCÉS ---
+    "海":"うみ", "地":"ち", "野":"の", "山":"やま", "川":"かわ",
+    "石":"いし", "花":"はな", "竹":"たけ", "草":"くさ", "虫":"むし",
+    "鳥":"とり", "魚":"さかな", "肉":"にく", "茶":"ちゃ", "米":"こめ",
+
+    // --- VIE QUOTIDIENNE ---
+    "家":"いえ", "族":"ぞく", "兄":"あに", "姉":"あね", "弟":"おとうと",
+    "妹":"いもうと", "自":"みずから", "店":"みせ", "色":"いろ", "物":"もの",
+    "服":"ふく", "犬":"いぬ", "猫":"ねこ", "牛":"うし", "馬":"うま",
+
+    // --- MOUVEMENT & ÉTAT ---
+    "入":"はいる", "出":"でる", "開":"あける", "閉":"しめる", "始":"はじまる",
+    "終":"おわる", "使":"つかう", "動":"うごく", "止":"とまる", "考":"かんがえる",
+    "急":"いそぐ", "決":"きめる", "送":"おくる", "待":"まつ", "借":"かりる",
+
+    // --- QUALITÉS & SENS ---
+    "好":"すき", "嫌":"きらい", "楽":"たのしい", "苦":"くるしい", "暗":"くらい",
+    "明":"あかるい", "重":"おもい", "軽":"かるい", "広":"ひろい", "早":"はやい",
+    "遅":"おそい", "強":"つよい", "弱":"よわい", "寒":"さむい", "暑":"あつい",
+
+    // --- VILLE & VOYAGE ---
+    "町":"まち", "村":"むら", "京":"きょう", "都":"と", "道":"みち",
+    "駅":"えき", "車":"くるま", "自":"じ", "転":"てん", "船":"ふね",
+    "旅":"たび", "荷":"に", "図":"ず", "書":"しょ", "館":"かん"
 };
 
 /* ── LOGIQUE DU QUIZ VOCAL ── */
@@ -934,12 +988,12 @@ function initMicSearch() {
 setTimeout(initMicSearch, 300);
 
 /* ══════════════════════════════════════════════════
-   SIDEBAR
+   SIDEBAR - Moved to top of script
 ══════════════════════════════════════════════════ */
-function toggleSidebar(show) {
-    document.getElementById('sidebar').classList.toggle('open', show);
-    document.getElementById('overlay').classList.toggle('show', show);
-}
+
+/* ─────────────────────────────────────────────────
+   SIDEBAR FUNCTIONS
+───────────────────────────────────────────────── */
 
 function renderSidebar() {
     const c = document.getElementById('grade-list');
@@ -1147,6 +1201,25 @@ function launchStrokeMode(mode) {
 let _vocalRecognition = null;
 
 function startVoiceRecognition() {
+    // Request microphone permission first
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(() => {
+                startVoiceRecognitionInternal();
+            })
+            .catch((err) => {
+                const fb = document.getElementById('vocal-feedback');
+                if (fb) {
+                    fb.style.color = '#e55';
+                    fb.textContent = 'Permission micro refusée. Vérifiez les paramètres de votre navigateur.';
+                }
+            });
+    } else {
+        startVoiceRecognitionInternal();
+    }
+}
+
+function startVoiceRecognitionInternal() {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
         const fb = document.getElementById('vocal-feedback');
@@ -1166,56 +1239,92 @@ function startVoiceRecognition() {
 
     const micBtn = document.getElementById('mic-btn');
     const fb     = document.getElementById('vocal-feedback');
-    if (micBtn) { micBtn.classList.add('listening'); document.getElementById('mic-icon').textContent = '⏹'; }
+    if (micBtn) { micBtn.classList.add('listening'); micBtn.textContent = '⏹'; }
     if (fb)     { fb.style.color = 'var(--gray)'; fb.textContent = 'Écoute en cours…'; }
 
     _vocalRecognition = new SR();
     _vocalRecognition.lang = 'ja-JP';
-    _vocalRecognition.interimResults = false;
-    _vocalRecognition.maxAlternatives = 3;
+    _vocalRecognition.interimResults = true; // Enable interim results for better feedback
+    _vocalRecognition.maxAlternatives = 5; // Increase alternatives
+    _vocalRecognition.continuous = false; // Single utterance
     _vocalRecognition.start();
 
-    _vocalRecognition.onresult = (ev) => {
-        let said = '';
-        for (let i = 0; i < ev.results[0].length; i++) {
-            const t = ev.results[0][i].transcript.trim();
-            if (t.length > said.length) said = t;
-        }
-        const normalized = toHira(said.toLowerCase()).replace(/[.\-、。\s]/g,'');
-        const isCorrect  = validReadings.some(r => toHira(r).replace(/[.\-]/g,'') === normalized) || said === k.char;
+    let finalTranscript = '';
+    let interimTranscript = '';
 
-        if (micBtn) { micBtn.classList.remove('listening'); document.getElementById('mic-icon').textContent = '🎤'; }
-        if (fb) {
-            if (isCorrect) {
-                fb.style.color = 'var(--accent)';
-                fb.textContent = `✔ Correct ! « ${said} »`;
+    _vocalRecognition.onresult = (ev) => {
+        interimTranscript = '';
+        finalTranscript = '';
+
+        for (let i = 0; i < ev.results.length; i++) {
+            const transcript = ev.results[i][0].transcript;
+            if (ev.results[i].isFinal) {
+                finalTranscript += transcript;
             } else {
-                fb.style.color = '#e55';
-                fb.textContent = `✘ Dit : « ${said} »  –  Attendu : ${bestRead}${validReadings.length > 1 ? '  (ou ' + validReadings.filter(r=>r!==bestRead).slice(0,2).join(', ') + ')' : ''}`;
+                interimTranscript += transcript;
             }
         }
 
-        if (!quizState || quizState.answered) return;
-        quizState.answered = true;
-        if (isCorrect) {
-            quizState.correct++;
-            document.getElementById('quiz-correct').textContent = quizState.correct;
-        } else {
-            quizState.wrong++;
-            document.getElementById('quiz-wrong').textContent = quizState.wrong;
+        // Show interim results for better user feedback
+        if (fb && interimTranscript) {
+            fb.style.color = 'var(--accent2)';
+            fb.textContent = `Écoute : "${interimTranscript}"…`;
         }
-        const next = quizState.idx + 1;
-        document.getElementById('quiz-score-sub').textContent = `${(quizState.correct/next*10).toFixed(1)} / 10.0`;
-        setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 1000 : 1600);
+
+        // Process final result
+        if (finalTranscript) {
+            const normalized = toHira(finalTranscript.toLowerCase()).replace(/[。\s]/g,'');
+            const isCorrect  = validReadings.some(r => toHira(r).replace(/[.\-]/g,'') === normalized) || finalTranscript === k.char;
+
+            if (micBtn) { micBtn.classList.remove('listening'); micBtn.textContent = '🎤'; }
+            if (fb) {
+                if (isCorrect) {
+                    fb.style.color = 'var(--accent)';
+                    fb.textContent = `✔ Correct ! « ${finalTranscript} »`;
+                } else {
+                    fb.style.color = '#e55';
+                    fb.textContent = `✘ Dit : « ${finalTranscript} »  –  Attendu : ${bestRead}${validReadings.length > 1 ? '  (ou ' + validReadings.filter(r=>r!==bestRead).slice(0,2).join(', ') + ')' : ''}`;
+                }
+            }
+
+            if (!quizState || quizState.answered) return;
+            quizState.answered = true;
+            if (isCorrect) {
+                quizState.correct++;
+                document.getElementById('quiz-correct').textContent = quizState.correct;
+            } else {
+                quizState.wrong++;
+                document.getElementById('quiz-wrong').textContent = quizState.wrong;
+            }
+            const next = quizState.idx + 1;
+            document.getElementById('quiz-score-sub').textContent = `${(quizState.correct/next*10).toFixed(1)} / 10.0`;
+            setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 1000 : 1600);
+        }
     };
 
     _vocalRecognition.onerror = (ev) => {
-        if (micBtn) { micBtn.classList.remove('listening'); document.getElementById('mic-icon').textContent = '🎤'; }
-        if (fb) { fb.style.color = '#e55'; fb.textContent = 'Erreur micro : ' + ev.error; }
+        if (micBtn) { micBtn.classList.remove('listening'); micBtn.textContent = '🎤'; }
+        if (fb) {
+            fb.style.color = '#e55';
+            let errorMsg = 'Erreur micro : ';
+            switch(ev.error) {
+                case 'no-speech': errorMsg += 'Aucune parole détectée. Réessayez.'; break;
+                case 'audio-capture': errorMsg += 'Problème de capture audio.'; break;
+                case 'not-allowed': errorMsg += 'Permission micro refusée.'; break;
+                case 'network': errorMsg += 'Erreur réseau.'; break;
+                default: errorMsg += ev.error;
+            }
+            fb.textContent = errorMsg;
+        }
     };
 
     _vocalRecognition.onend = () => {
         if (micBtn) micBtn.classList.remove('listening');
+        // If no final result was processed, show a message
+        if (fb && fb.textContent === 'Écoute en cours…') {
+            fb.style.color = '#e55';
+            fb.textContent = 'Aucune parole détectée. Cliquez à nouveau pour réessayer.';
+        }
     };
 }
 
@@ -1400,7 +1509,7 @@ function revealChoices(currentMode) {
             content = target.char;
         }
 
-        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})" style="font-size:${content.length > 8 ? '24px' : '24px'}">
+        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})" style="font-size:${content.length > 8 ? '20px' : '24px'}">
             ${content}
         </div>`;
     }).join('');
@@ -1654,7 +1763,7 @@ function renderStrokeQuizQuestion() {
         // SI HARDCORE : On rend l'outline invisible (même couleur que le fond ou transparent)
         outlineColor: isHardcore ? 'transparent' : '#3a3a50', 
         drawingColor: '#00c9a7',
-        drawingWidth: 40,
+        drawingWidth: 8,
         showOutline: !isHardcore, // Cache l'outline en mode hardcore
         showCharacter: false,
         highlightOnComplete: true,
@@ -2244,7 +2353,7 @@ async function init() {
 
     try {
         // Chargement du JSON des Kanjis
-        const res = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json');
+        const res = await fetch('kanji_jouyou_fr.json');
         if (!res.ok) throw new Error(`Erreur réseau : ${res.status}`);
 
         let text = await res.text();
@@ -2274,7 +2383,7 @@ async function init() {
 
         // Chargement des exemples depuis GitHub (même source que kanji_jouyou_fr.json)
         try {
-            const exRes = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
+            const exRes = await fetch('exemples.json');
             if (exRes.ok) {
                 exemplesDb = await exRes.json();
                 console.log('✅ Exemples chargés');
