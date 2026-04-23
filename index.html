@@ -1400,7 +1400,7 @@ function revealChoices(currentMode) {
             content = target.char;
         }
 
-        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})" style="font-size:${content.length > 8 ? '24px' : '30px'}">
+        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})" style="font-size:${content.length > 8 ? '24px' : '24px'}">
             ${content}
         </div>`;
     }).join('');
