@@ -482,17 +482,14 @@ function startOralTest(kanjiChar) {
     const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
     if (!kanjiData) return;
 
-    let validReadings = [
-        ...kanjiData.on,
-        ...kanjiData.kun,
-        kanjiChar
-    ].map(r => r.replace(/[.\-].*/, '').trim());
+    const validReadings = getAllValidReadings(kanjiData);
+    const bestRead = getBestReading(kanjiData);
 
     const numberMap = {
         "一":"1","二":"2","三":"3","四":"4","五":"5",
         "六":"6","七":"7","八":"8","九":"9","十":"10"
     };
-    if (numberMap[kanjiChar]) validReadings.push(numberMap[kanjiChar]);
+    if (numberMap[kanjiChar] && !validReadings.includes(numberMap[kanjiChar])) validReadings.push(numberMap[kanjiChar]);
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -535,7 +532,7 @@ function startOralTest(kanjiChar) {
             if (feedback) { feedback.style.color = 'var(--accent)'; feedback.textContent = `✔ Correct ! « ${result} »`; }
             localStorage.setItem('learned_' + kanjiChar, 'true');
         } else {
-            if (feedback) { feedback.style.color = '#e55'; feedback.textContent = `✘ Dit : « ${result} » — Attendu : ${validReadings.slice(0,4).join(', ')}`; }
+            if (feedback) { feedback.style.color = '#e55'; feedback.textContent = `✘ Dit : « ${result} » — Attendu : ${bestRead}${validReadings.length > 1 ? '  (' + validReadings.filter(r=>r!==bestRead).slice(0,2).join(', ') + ')' : ''}`; }
         }
     };
 
@@ -664,12 +661,80 @@ function resolveKanjis(indices) {
     return indices.map(i => kanjiDb[i]);
 }
 
-// Label de réponse quiz : "Sens • lecture" (tronqué si besoin)
+/* ══════════════════════════════════════════════════
+   LOGIQUE "MEILLEUR MATCH" — Règle d'or des lectures
+   ─────────────────────────────────────────────────
+   Algorithme :
+   1. Extraire les racines WK (kun d'abord, puis on).
+      Les entrées préfixées par "!" sont prioritaires.
+   2. Pour chaque racine WK (ex: "た" depuis "!た") :
+      chercher dans k.kun une entrée qui COMMENCE par
+      cette racine (ex: "た.べる") → nettoyer → "たべる"
+   3. Si aucun match kun, tenter avec on + wk_on.
+   4. Fallback : first kun nettoyé, puis first on.
+══════════════════════════════════════════════════ */
+function getBestReading(k) {
+    // --- NOUVEAU : Priorité absolue aux exceptions manuelles ---
+    if (typeof quizOverrides !== 'undefined' && quizOverrides[k.char]) {
+        return quizOverrides[k.char];
+    }
+
+    // Nettoyage d'une lecture brute : retire point et tiret et ce qui suit
+    const clean = r => r.replace(/[.·＊*].*/, '').replace(/-.*/, '').replace(/^!/, '').trim();
+
+    // Extraire les racines WK, priorité aux "!" en tête de liste
+    const wkRoots = (arr) => {
+        const priority = arr.filter(r => r.startsWith('!')).map(r => clean(r));
+        const normal   = arr.filter(r => !r.startsWith('!')).map(r => clean(r));
+        return [...priority, ...normal].filter(Boolean);
+    };
+
+    // Rechercher dans un tableau de lectures la première qui commence par la racine
+    const findMatch = (readings, root) =>
+        readings.find(r => clean(r).startsWith(root));
+
+    // --- Étape 1 : WK KUN → KUN dict ---
+    for (const root of wkRoots(k.wk_kun || [])) {
+        const match = findMatch(k.kun, root);
+        if (match) return clean(match);
+    }
+
+    // --- Étape 2 : WK ON → ON dict ---
+    for (const root of wkRoots(k.wk_on || [])) {
+        const match = findMatch(k.on, root);
+        if (match) return clean(match);
+    }
+
+    // --- Étape 3 : WK racine directe (si déjà complète) ---
+    const allWk = [...wkRoots(k.wk_kun || []), ...wkRoots(k.wk_on || [])];
+    if (allWk.length > 0) return allWk[0];
+
+    // --- Étape 4 : Fallback dictionnaire ---
+    if (k.kun && k.kun.length) return clean(k.kun[0]);
+    if (k.on && k.on.length)   return clean(k.on[0]);
+    return '?';
+}
+
+// Toutes les lectures valides pour comparaison vocale (nettoyées + romaji)
+function getAllValidReadings(k) {
+    const clean = r => r.replace(/[.·＊*].*/, '').replace(/-.*/, '').replace(/^!/, '').trim();
+    const set = new Set();
+    // Meilleure lecture en tête
+    set.add(getBestReading(k));
+    // Toutes les lectures kun et on nettoyées
+    k.kun.forEach(r => { const c = clean(r); if (c) set.add(c); });
+    k.on.forEach(r  => { const c = clean(r); if (c) set.add(c); });
+    // Versions romaji
+    [...set].forEach(r => { const ro = kanaToRomaji(r); if (ro !== r) set.add(ro); });
+    return [...set].filter(Boolean);
+}
+
+// Label de réponse quiz : "Sens • meilleure lecture" (tronqué si besoin)
 function choiceLabel(k) {
-    const sens = k.meanings[0] || '?';
-    const read = (k.kun[0] || k.on[0] || '').replace(/[.\-]/g, '').split('/')[0];
-    const full = read ? `${sens} • ${read}` : sens;
-    return full.length > 24 ? full.slice(0, 22) + '…' : full;
+    const sens = k.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || k.meanings[0] || '?';
+    const read = getBestReading(k);
+    const full = read && read !== '?' ? `${sens} • ${read}` : sens;
+    return full.length > 26 ? full.slice(0, 24) + '…' : full;
 }
 
 // Tirage aléatoire efficace de N leurres :
@@ -1068,13 +1133,9 @@ function startVoiceRecognition() {
     if (!quizState) return;
     const k = kanjiDb[quizState.indices[quizState.idx]];
 
-    // Toutes les lectures valides (hiragana, katakana → romaji aussi)
-    const validReadings = [
-        ...k.on.map(r => r.toLowerCase()),
-        ...k.kun.map(r => r.replace(/[.\-].*/,'').toLowerCase()),
-        ...k.on.map(r => kanaToRomaji(r.toLowerCase())),
-        ...k.kun.map(r => kanaToRomaji(r.replace(/[.\-].*/,'').toLowerCase()))
-    ].filter(Boolean);
+    // Toutes les lectures valides via la règle d'or
+    const validReadings = getAllValidReadings(k);
+    const bestRead = getBestReading(k);
 
     const toHira = str => str.replace(/[\u30a1-\u30f6]/g, m => String.fromCharCode(m.charCodeAt(0) - 0x60));
 
@@ -1105,7 +1166,7 @@ function startVoiceRecognition() {
                 fb.textContent = `✔ Correct ! « ${said} »`;
             } else {
                 fb.style.color = '#e55';
-                fb.textContent = `✘ Dit : « ${said} »  –  Attendu : ${validReadings.slice(0,3).join(', ')}`;
+                fb.textContent = `✘ Dit : « ${said} »  –  Attendu : ${bestRead}${validReadings.length > 1 ? '  (ou ' + validReadings.filter(r=>r!==bestRead).slice(0,2).join(', ') + ')' : ''}`;
             }
         }
 
@@ -1227,9 +1288,12 @@ function renderQuizQuestion() {
     qs.answered = false;
     qs.revealed = false;
 
-    const onStr = k.on.slice(0,2).join(', ');
-    const kunStr = k.kun.slice(0,2).map(r => r.replace(/[.\-].*/,'')).join(', ');
-    const readings = [onStr, kunStr].filter(s => s).join(' / ');
+    // Meilleure lecture (règle d'or)
+    const bestRead = getBestReading(k);
+    // Lectures secondaires pour affichage indicatif
+    const onStr  = k.on.slice(0,2).join('  ');
+    const kunStr = k.kun.slice(0,2).map(r => r.replace(/[.·*].*/,'').replace(/^!/,'')).join('  ');
+    const allReads = [bestRead, ...(bestRead !== onStr.split('  ')[0] ? [onStr] : []), kunStr].filter(s => s && s !== bestRead).join('  /  ');
     const meaning = k.meanings.filter(m => !m.toLowerCase().includes('radical')).slice(0,2).join(' • ');
 
     let promptHtml = "";
@@ -1249,7 +1313,7 @@ function renderQuizQuestion() {
         promptHtml = `<div class="quiz-kanji-big">${k.char}</div>
                       <div class="quiz-tap-hint">Trouvez la bonne réponse</div>`;
     } else if (currentMode === 'read-to-kanji') {
-        promptHtml = `<div class="quiz-reading-big" style="font-size:32px; color:var(--accent2)">${readings || '???'}</div>
+        promptHtml = `<div class="quiz-reading-big" style="font-size:32px; color:var(--accent2)">${bestRead || '???'}</div>
                       <div class="quiz-tap-hint">Quel est le kanji correspondant ?</div>`;
     } else if (currentMode === 'mean-to-kanji') {
         promptHtml = `<div class="quiz-meaning-big" style="font-size:28px;">${meaning}</div>
@@ -1287,9 +1351,7 @@ function revealChoices(currentMode) {
         
         // DÉCIDER QUOI AFFICHER DANS LES BOUTONS
         if (currentMode === 'kanji-to-read') {
-            // Show first reading (ON preferred, then KUN)
-            const r = target.on[0] || target.kun[0] || '?';
-            content = r.replace(/[.\u002D].*/,'');
+            content = getBestReading(target);
         } else if (currentMode === 'kanji-to-mean') {
             content = target.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || target.meanings[0] || '?';
         } else if (currentMode === 'read-to-kanji' || currentMode === 'mean-to-kanji') {
@@ -1488,18 +1550,24 @@ function renderStrokeQuizQuestion() {
     const mainMeaning = meanings.length ? meanings[0] : (k.meanings[0] || '?');
     const extraMeanings = meanings.slice(1);
 
-    const onChips  = k.on.slice(0,3).map(r =>
+    const _cleanR = r => r.replace(/[.·＊*].*/, '').replace(/-.*/, '').replace(/^!/, '').trim();
+    const sqBest  = getBestReading(k);
+    // Chip spéciale pour la lecture prioritaire
+    const bestChip = `<div class="quiz-reading-chip on-chip" style="padding:5px 12px;border-color:var(--accent)">
+        <span class="chip-count">★</span>
+        <span class="chip-text" style="font-size:18px;color:var(--accent)">${sqBest}</span>
+    </div>`;
+    const onChips  = k.on.slice(0,2).filter(r => _cleanR(r) !== sqBest).map(r =>
         `<div class="quiz-reading-chip on-chip" style="padding:5px 10px">
-            <span class="chip-count">${k.on.indexOf(r)+1}</span>
-            <span class="chip-text" style="font-size:16px">${r}</span>
+            <span class="chip-count">音</span>
+            <span class="chip-text" style="font-size:14px">${_cleanR(r)}</span>
         </div>`).join('');
-    const kunChips = k.kun.slice(0,3).map(r => {
-        const clean = r.replace(/[.\-].*/,'').split('/')[0];
-        return `<div class="quiz-reading-chip kun-chip" style="padding:5px 10px">
-            <span class="chip-count">${k.kun.indexOf(r)+1}</span>
-            <span class="chip-text" style="font-size:16px">${clean}</span>
-        </div>`;
-    }).join('');
+    const kunChips = k.kun.slice(0,2).filter(r => _cleanR(r) !== sqBest).map(r =>
+        `<div class="quiz-reading-chip kun-chip" style="padding:5px 10px">
+            <span class="chip-count">訓</span>
+            <span class="chip-text" style="font-size:14px">${_cleanR(r)}</span>
+        </div>`).join('');
+    const allChips = bestChip + onChips + kunChips;
 
     const extraHtml = extraMeanings.length
         ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
@@ -1517,7 +1585,7 @@ function renderStrokeQuizQuestion() {
         <div class="sq-kanji-header">
             <div class="sq-meaning">${mainMeaning}</div>
             ${extraHtml}
-            <div class="sq-readings-row" style="margin-top:8px">${onChips}${kunChips}</div>
+            <div class="sq-readings-row" style="margin-top:8px">${allChips}</div>
         </div>
 
         <div class="sq-canvas-wrap" id="sq-canvas-wrap">
@@ -2149,10 +2217,12 @@ async function init() {
         Object.entries(data).forEach(([char, v], i) => {
             kanjiDb.push({
                 char,
-                grade:   v.classe ?? null,
-                meanings: v.sens   || [],
-                on:       v.lectures_on || [],
-                kun:      v.lectures_kun || [],
+                grade:    v.classe ?? null,
+                meanings: v.sens            || [],
+                on:       v.lectures_on     || [],
+                kun:      v.lectures_kun    || [],
+                wk_on:    v.wk_lectures_on  || [],
+                wk_kun:   v.wk_lectures_kun || [],
                 strokes:  v.traits || 0,
                 romaji:   v.romaji || '–'
             });
