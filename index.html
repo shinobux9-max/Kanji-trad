@@ -196,12 +196,16 @@
     .meaning-text { font-size: 22px; color: var(--accent); font-weight: bold; line-height: 1.2; }
 
     /* Colonne droite : 4 stats */
-    .detail-right { flex: 1; margin-left: 20px; /* Espace entre le texte "Signification" et les stats */margin-right: 120px; }
-    .kanji-stats { display: grid; grid-template-columns: 1fr 1fr; /* 2 colonnes qui prennent tout l'espace */gap: 10px; width: 100%; /* Occupe toute la largeur du parent */}
+    .detail-right { flex: 1; display: flex; justify-content: center; margin-left: 20px; /* Espace entre le texte "Signification" et les stats */margin-right: 120px; }
+    .kanji-stats { display: grid; grid-template-columns: repeat(2, minmax(100px, 140px)); gap: 12px; }
     .stat-box { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface); border-radius: 8px; padding: 15px 10px; /* Plus de padding pour l'effet allongé */border: 1px solid var(--border); min-height: 80px; /* Plus hautes pour correspondre à ton image */}
     .stat-box b { color: var(--text); font-size: 20px; /* Plus gros pour le look "Header" */font-family: 'Syne', sans-serif; margin-bottom: 4px;}
-    .stat-box { color: var(--gray); font-size: 13px; text-transform: capitalize; }
-
+    .stat-box { color: var(--gray); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    @media (max-width: 600px) {
+    .kanji-stats { grid-template-columns: repeat(2, 1fr); width: 100%; max-width: 320px; }
+    .writer-section { flex-direction: column; /* Aligne les stats sous le kanji sur petit écran */
+    }
+}
     /* Sections texte sous le bloc top */
     .detail-body { padding: 0 16px 16px; }
     .section-title { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin: 14px 0 8px; }
