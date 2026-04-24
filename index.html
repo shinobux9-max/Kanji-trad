@@ -1647,25 +1647,54 @@ function renderQuizResults() {
 }
 
 /* ══════════════════════════════════════════════════
-   QUIZ DE TRACÉ (stroke order quiz)
-   ─────────────────────────────────────────────────
-   Fonctionnement :
-   • Le kanji est affiché en outline opaque (HanziWriter showOutline)
-   • L'utilisateur trace chaque trait dans l'ordre
-   • HanziWriter valide chaque trait : correct → s'allume en vert
-   • En cas d'erreur : après 1 mauvais tracé, l'animation du bon
-     trait se lance automatiquement (showHintAfterMisses: 1)
-   • À la fin du kanji : correct (0 erreur) → ✔++, sinon ✘++
-   • Résultats finaux identiques au quiz QCM
-══════════════════════════════════════════════════ */
+   QUIZ DE TRACÉ (Stroke Order Quiz) - VERSION OPTIMISÉE
+   ───────────────────────────────────────────────── */
 let strokeQuizState  = null;
 let strokeWriter     = null;
 let sqTimerInterval  = null;
 let sqPaused         = false;
 
+/**
+ * Initialise le moteur de tracé selon le mode
+ */
+function createStrokeWriter(elementId, character, isHardcore) {
+    // On récupère la couleur du fond du quiz pour s'y fondre
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--surface').trim() || '#1a1a2e';
+
+    const baseOptions = {
+        width: 280,
+        height: 280,
+        padding: 28,
+        strokeColor: '#00c9a7',
+        drawingColor: '#00c9a7',
+        drawingWidth: 50, // On augmente encore pour faciliter la détection
+        highlightOnComplete: true,
+        renderer: 'svg',
+        showCharacter: false
+    };
+
+    if (isHardcore) {
+        return HanziWriter.create(elementId, character, {
+            ...baseOptions,
+            showOutline: true,
+            // L'ASTUCE : Couleur identique au fond + opacité ultra faible
+            outlineColor: bgColor, 
+            outlineOpacity: 0.05, 
+            showHintAfterMisses: 0,
+        });
+    } else {
+        return HanziWriter.create(elementId, character, {
+            ...baseOptions,
+            showOutline: true,
+            outlineColor: '#3a3a50',
+            outlineOpacity: 0.7,
+            showHintAfterMisses: 1,
+        });
+    }
+}
+
 function startStrokeQuiz({ type, id, mode = 'trace-easy' }) {
     let indices, title;
-
     if (type === 'category') {
         const cat = categories.get(id);
         if (!cat || !cat.indices.length) return;
@@ -1693,7 +1722,7 @@ function startStrokeQuiz({ type, id, mode = 'trace-easy' }) {
         title, sourceType: type, sourceId: id,
         elapsedSec: 0,
         mistakesThisKanji: 0,
-        mode: mode // <--- On stocke si c'est 'trace-hard' ou 'trace-easy'
+        mode: mode 
     };
 
     document.getElementById('sq-correct').textContent = '0';
@@ -1713,174 +1742,91 @@ function startStrokeQuiz({ type, id, mode = 'trace-easy' }) {
     renderStrokeQuizQuestion();
 }
 
-function closeStrokeQuiz() {
-    if (sqTimerInterval) { clearInterval(sqTimerInterval); sqTimerInterval = null; }
-    if (strokeWriter)    { strokeWriter = null; }
-    document.getElementById('stroke-quiz-view').style.display = 'none';
-    strokeQuizState = null;
-    sqPaused = false;
-}
-
-function toggleStrokePause() {
-    sqPaused = !sqPaused;
-    document.querySelector('#stroke-quiz-view .quiz-pause-btn').textContent = sqPaused ? '▶' : '⏸';
-}
-
-/* ─────────────────────────────────────────────────
-   Affichage d'une question de tracé
-───────────────────────────────────────────────── */
 function renderStrokeQuizQuestion() {
     if (!strokeQuizState) return;
     const qs = strokeQuizState;
-
     if (qs.idx >= qs.indices.length) { renderStrokeQuizResults(); return; }
 
-    const k   = kanjiDb[qs.indices[qs.idx]];
-    const pct = (qs.idx / qs.indices.length * 100).toFixed(1);
-
-    document.getElementById('sq-prog-bar').style.width = pct + '%';
-    document.getElementById('sq-counter').textContent  = `${qs.idx + 1} / ${qs.indices.length}`;
+    const k = kanjiDb[qs.indices[qs.idx]];
+    const isHardcore = (qs.mode === 'trace-hard');
+    
+    // UI Update
+    document.getElementById('sq-prog-bar').style.width = (qs.idx / qs.indices.length * 100).toFixed(1) + '%';
+    document.getElementById('sq-counter').textContent = `${qs.idx + 1} / ${qs.indices.length}`;
     updateSqScore();
-
     qs.mistakesThisKanji = 0;
 
-    // Filtrer les significations (sans "radical")
+    // Header logic (meanings & readings)
     const meanings = k.meanings.filter(m => !m.toLowerCase().includes('radical'));
     const mainMeaning = meanings.length ? meanings[0] : (k.meanings[0] || '?');
-    const extraMeanings = meanings.slice(1);
-
-    const _cleanR = r => r.replace(/[.·＊*].*/, '').replace(/-.*/, '').replace(/^!/, '').trim();
-    const sqBest  = getBestReading(k);
-    // Chip spéciale pour la lecture prioritaire
-    const bestChip = `<div class="quiz-reading-chip on-chip" style="padding:5px 12px;border-color:var(--accent)">
-        <span class="chip-count">★</span>
-        <span class="chip-text" style="font-size:18px;color:var(--accent)">${sqBest}</span>
-    </div>`;
-    const onChips  = k.on.slice(0,2).filter(r => _cleanR(r) !== sqBest).map(r =>
-        `<div class="quiz-reading-chip on-chip" style="padding:5px 10px">
-            <span class="chip-count">音</span>
-            <span class="chip-text" style="font-size:14px">${_cleanR(r)}</span>
-        </div>`).join('');
-    const kunChips = k.kun.slice(0,2).filter(r => _cleanR(r) !== sqBest).map(r =>
-        `<div class="quiz-reading-chip kun-chip" style="padding:5px 10px">
-            <span class="chip-count">訓</span>
-            <span class="chip-text" style="font-size:14px">${_cleanR(r)}</span>
-        </div>`).join('');
-    const allChips = bestChip + onChips + kunChips;
-
-    const extraHtml = extraMeanings.length
-        ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
-            ${extraMeanings.map(m =>
-              `<span style="font-size:12px;color:var(--gray);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px">${m}</span>`
-            ).join('')}
-           </div>` : '';
-
-    // Construire les points de suivi des traits (on connaît k.strokes)
-    const strokeDots = Array(k.strokes).fill(0).map((_, i) =>
-        `<div class="sq-stroke-dot" id="sq-dot-${i}"></div>`
-    ).join('');
+    const sqBest = getBestReading(k);
+    
+    // Construction du HTML (simplifié pour la clarté)
+    const strokeDots = Array(k.strokes).fill(0).map((_, i) => `<div class="sq-stroke-dot" id="sq-dot-${i}"></div>`).join('');
 
     document.getElementById('stroke-quiz-body').innerHTML = `
         <div class="sq-kanji-header">
-            <div class="sq-meaning">${mainMeaning}</div>
-            ${extraHtml}
-            <div class="sq-readings-row" style="margin-top:8px">${allChips}</div>
+            <div class="sq-meaning" style="font-size:24px; font-weight:bold">${mainMeaning}</div>
+            <div class="sq-readings-row" style="margin-top:10px; color:var(--accent)">${sqBest}</div>
         </div>
-
-        <div class="sq-canvas-wrap" id="sq-canvas-wrap">
+        <div class="sq-canvas-wrap" id="sq-canvas-wrap" style="touch-action: none;">
             <div id="sq-writer-target"></div>
             <div class="sq-grid-overlay"></div>
         </div>
-
         <div class="sq-stroke-tracker" id="sq-stroke-tracker">${strokeDots}</div>
-
-        <div id="sq-feedback" style="height:22px;font-size:13px;color:var(--gray);text-align:center"></div>
-
+        <div id="sq-feedback" style="height:22px; margin-top:10px; font-weight:bold"></div>
         <div class="sq-actions">
-            <button class="sq-btn hint" onclick="sqShowHint()">↺ Voir l'animation</button>
+            <button class="sq-btn hint" onclick="sqShowHint()">↺ Animation</button>
             <button class="sq-btn skip" onclick="sqSkip()">Passer →</button>
         </div>`;
 
-    // Instancier HanziWriter en mode quiz
-    // showHintAfterMisses:1 → anime le bon trait après 1 erreur (correction immédiate)
-    // Déterminer l'opacité selon le mode
-    const isHardcore = (qs.mode === 'trace-hard');
-
-    strokeWriter = HanziWriter.create('sq-writer-target', k.char, {
-        width: 280,
-        height: 280,
-        padding: 28,
-        strokeColor: '#00c9a7',
-        // SI HARDCORE : On rend l'outline invisible (même couleur que le fond ou transparent)
-        outlineColor: isHardcore ? 'transparent' : '#3a3a50', 
-        drawingColor: '#00c9a7',
-        drawingWidth: 40,
-        showOutline: !isHardcore, // Cache l'outline en mode hardcore
-        showCharacter: false,
-        highlightOnComplete: true,
-        showHintAfterMisses: isHardcore ? false : 1,
-        renderer: 'svg'
-    });
+    // INITIALISATION DU WRITER (Séparée)
+    strokeWriter = createStrokeWriter('sq-writer-target', k.char, isHardcore);
 
     let strokesDone = 0;
-
     strokeWriter.quiz({
         onMistake(strokeData) {
             qs.mistakesThisKanji++;
-            // Flasher le point actif en rouge
             const dot = document.getElementById(`sq-dot-${strokesDone}`);
             if (dot) { dot.classList.add('mistake'); setTimeout(() => dot.classList.remove('mistake'), 400); }
             
-            // Flash rouge sur le canvas
             const wrap = document.getElementById('sq-canvas-wrap');
-            if (wrap) { wrap.classList.add('flash-err'); setTimeout(() => wrap.classList.remove('flash-err'), 350); }
+            wrap.classList.add('flash-err'); setTimeout(() => wrap.classList.remove('flash-err'), 350);
             
-            // Feedback texte adapté
             const fb = document.getElementById('sq-feedback');
-            if (fb) {
-                fb.style.color = '#e55';
-                // Correction ici : message différent si Hardcore
-                fb.textContent = isHardcore 
-                    ? `Mauvais tracé ! (Pas d'aide en Hardcore)` 
-                    : `Mauvais tracé — l'animation va se lancer…`;
-                setTimeout(() => { if (fb) fb.textContent = ''; }, 1800);
-            }
+            fb.style.color = '#e55';
+            fb.textContent = isHardcore ? "Mauvais tracé !" : "Mauvais tracé, regarde l'aide...";
         },
         onCorrectStroke(strokeData) {
-            // Allumer le point correspondant
             const dot = document.getElementById(`sq-dot-${strokesDone}`);
-            if (dot) { dot.classList.remove('mistake'); dot.classList.add('done'); }
+            if (dot) dot.classList.add('done');
             strokesDone++;
-            // Flash vert sur le canvas
+            
             const wrap = document.getElementById('sq-canvas-wrap');
-            if (wrap) { wrap.classList.add('flash-ok'); setTimeout(() => wrap.classList.remove('flash-ok'), 350); }
+            wrap.classList.add('flash-ok'); setTimeout(() => wrap.classList.remove('flash-ok'), 350);
+            
+            const fb = document.getElementById('sq-feedback');
+            fb.style.color = 'var(--accent)';
+            fb.textContent = "Bien !";
+            setTimeout(() => { if(fb.textContent === "Bien !") fb.textContent = ""; }, 800);
         },
         onComplete(summary) {
             const isClean = summary.totalMistakes === 0;
-            if (isClean) {
-                qs.correct++;
-                document.getElementById('sq-correct').textContent = qs.correct;
-            } else {
-                qs.wrong++;
-                document.getElementById('sq-wrong').textContent = qs.wrong;
-            }
+            if (isClean) { qs.correct++; } else { qs.wrong++; }
+            
+            document.getElementById('sq-correct').textContent = qs.correct;
+            document.getElementById('sq-wrong').textContent = qs.wrong;
             updateSqScore();
 
-            // Feedback final
             const fb = document.getElementById('sq-feedback');
-            if (fb) {
-                fb.style.color = isClean ? 'var(--accent)' : '#e55';
-                fb.textContent = isClean
-                    ? `✔ Parfait ! ${k.strokes} traits corrects`
-                    : `${summary.totalMistakes} erreur${summary.totalMistakes > 1 ? 's' : ''} — continuez !`;
-            }
+            fb.style.color = isClean ? 'var(--accent)' : '#e55';
+            fb.textContent = isClean ? "✔ Parfait !" : `Terminé avec ${summary.totalMistakes} erreurs.`;
 
-            // Passer au suivant après un délai
             setTimeout(() => {
                 if (!strokeQuizState) return;
                 strokeQuizState.idx++;
                 renderStrokeQuizQuestion();
-            }, isClean ? 900 : 1600);
+            }, 1000);
         }
     });
 }
@@ -1891,6 +1837,13 @@ function updateSqScore() {
     const done = qs.correct + qs.wrong;
     const scoreFloat = done > 0 ? (qs.correct / done * 10).toFixed(1) : '0.0';
     document.getElementById('sq-score-sub').textContent = `${scoreFloat} / 10.0`;
+}
+
+function closeStrokeQuiz() {
+    if (sqTimerInterval) clearInterval(sqTimerInterval);
+    strokeWriter = null;
+    document.getElementById('stroke-quiz-view').style.display = 'none';
+    strokeQuizState = null;
 }
 
 /* ─────────────────────────────────────────────────
