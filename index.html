@@ -171,16 +171,57 @@
 
     /* ── DETAIL ──────────────────────── */
     #detail-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; display: none; flex-direction: column; }
-    .detail-content { flex: 1; overflow-y: auto; padding: 20px; padding-top: 76px; }
-    .writer-section { display: flex; gap: 18px; margin-bottom: 22px; }
-    .writer-main { width: 140px; height: 140px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-    .kanji-stats { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .stat-box { text-align: center; color: var(--gray); font-size: 11px; background: var(--surface); border-radius: 8px; padding: 10px 6px; border: 1px solid var(--border); }
-    .stat-box b { color: var(--text); display: block; font-size: 15px; font-family: 'Syne', sans-serif; margin-bottom: 2px; }
-    .section-title { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 8px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-    .meaning-text { font-size: 20px; color: var(--accent); font-weight: bold; }
-    #kana-writer-svg { width: 130px; height: 130px; }
-    .replay-btn { width: 100%; margin-top: 28px; padding: 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #000; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; }
+    .detail-content { flex: 1; overflow-y: auto; padding-top: 56px; }
+
+    /* ── Bloc supérieur : 3 colonnes ── */
+    .detail-top { display: flex; gap: 14px; padding: 16px 16px 0; align-items: flex-start; }
+
+    /* Colonne gauche : writer + boutons */
+    .detail-left { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+    .writer-main { width: 150px; height: 150px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .detail-action-row { display: flex; gap: 10px; }
+    .detail-action-btn { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1px; transition: border-color 0.15s, background 0.15s; padding: 0; }
+    .detail-action-btn:active { transform: scale(0.92); }
+    .detail-action-btn.replay { border-color: var(--accent);  color: var(--accent); }
+    .detail-action-btn.mic    { border-color: #f5a623;        color: #f5a623; }
+    .detail-action-btn.trace  { border-color: var(--accent2); color: var(--accent2); }
+    .detail-action-btn .btn-label { font-size: 7px; font-weight: 800; letter-spacing: 0.3px; line-height: 1; text-transform: uppercase; }
+    .detail-action-btn.listening { background: #f5a623 !important; color: #000 !important; border-color: #f5a623 !important; box-shadow: 0 0 14px #f5a623; }
+    .oral-feedback { font-size: 10px; color: var(--gray); text-align: center; min-height: 14px; max-width: 150px; }
+
+    /* Colonne milieu : signification + lectures */
+    .detail-mid { flex: 1; min-width: 0; }
+    .detail-section-label { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 4px; margin-top: 12px; }
+    .detail-section-label:first-child { margin-top: 0; }
+    .meaning-text { font-size: 22px; color: var(--accent); font-weight: bold; line-height: 1.2; }
+
+    /* Colonne droite : 4 stats */
+    .detail-right { flex: 1; margin-left: 20px; /* Espace entre le texte "Signification" et les stats */margin-right: 120px; }
+    .kanji-stats { display: grid; grid-template-columns: 1fr 1fr; /* 2 colonnes qui prennent tout l'espace */gap: 10px; width: 100%; /* Occupe toute la largeur du parent */}
+    .stat-box { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface); border-radius: 8px; padding: 15px 10px; /* Plus de padding pour l'effet allongé */border: 1px solid var(--border); min-height: 80px; /* Plus hautes pour correspondre à ton image */}
+    .stat-box b { color: var(--text); font-size: 20px; /* Plus gros pour le look "Header" */font-family: 'Syne', sans-serif; margin-bottom: 4px;}
+    .stat-box { color: var(--gray); font-size: 13px; text-transform: capitalize; }
+
+    /* Sections texte sous le bloc top */
+    .detail-body { padding: 0 16px 16px; }
+    .section-title { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin: 14px 0 8px; }
+    .tag-container { display: flex; gap: 5px; flex-wrap: wrap; }
+    .tag { padding: 3px 10px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+    .tag-on  { background: #1e3a32; color: #a3d2ca; }
+    .tag-kun { background: #1a2a40; color: #a1c4e0; }
+
+    /* ── Stroke Order Guide ── */
+    .stroke-guide-row { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none; }
+    .stroke-guide-row::-webkit-scrollbar { display: none; }
+    .stroke-guide-cell { flex-shrink: 0; width: 72px; height: 72px; position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .stroke-guide-cell svg { width: 100%; height: 100%; }
+    .stroke-guide-num { position: absolute; top: 3px; right: 4px; font-size: 9px; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); line-height: 1; }
+
+    /* Exemples */
+    .examples-wrap { padding: 0 16px 30px; }
+    #kana-writer-svg { width: 140px; height: 140px; }
+    .spinner { width: 30px; height: 30px; border: 3px solid #333; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── QUIZ ────────────────────────── */
     #quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4000; display: none; flex-direction: column; }
@@ -372,25 +413,70 @@
         <div class="toolbar-title" id="detail-char-title"></div>
     </div>
     <div class="detail-content">
-        <div class="writer-section">
-            <div class="writer-main">
-                <div id="kanji-writer-target"></div>
-                <svg id="kana-writer-svg" viewBox="0 0 109 109" xmlns="http://www.w3.org/2000/svg" style="display:none"></svg>
-                <div class="spinner" id="writer-spinner" style="display:none"></div>
+
+        <!-- ── Bloc 3 colonnes ── -->
+        <div class="detail-top">
+
+            <!-- Gauche : writer + boutons -->
+            <div class="detail-left">
+                <div class="writer-main">
+                    <div id="kanji-writer-target"></div>
+                    <svg id="kana-writer-svg" viewBox="0 0 109 109" xmlns="http://www.w3.org/2000/svg" style="display:none"></svg>
+                    <div class="spinner" id="writer-spinner" style="display:none"></div>
+                </div>
+                <div class="detail-action-row">
+                    <button class="detail-action-btn replay" onclick="replayAnimation()" title="Revoir le tracé">
+                        <span style="font-size:18px">↩</span>
+                        <span class="btn-label">Replay</span>
+                    </button>
+                    <button class="detail-action-btn mic" id="btn-oral-test" onclick="startOralTest(window.currentKanjiForStroke)" title="Test de prononciation">
+                        <span style="font-size:18px">🎤</span>
+                        <span class="btn-label">VOIX</span>
+                    </button>
+                    <button class="detail-action-btn trace" id="detail-quiz-btn" onclick="launchDetailTrace()" title="S'entraîner au tracé guidé">
+                        <span style="font-size:18px">✍️</span>
+                        <span class="btn-label">Tracé</span>
+                    </button>
+                </div>
+                <div class="oral-feedback" id="voice-feedback"></div>
             </div>
-            <div class="kanji-stats">
-                <div class="stat-box"><b id="d-level">-</b>Niveau</div>
-                <div class="stat-box"><b id="d-strokes">-</b>Traits</div>
-                <div class="stat-box"><b id="d-romaji">-</b>Rômaji</div>
-                <div class="stat-box"><b>0%</b>Progrès</div>
+
+            <!-- Milieu : signification + lectures -->
+            <div class="detail-mid">
+                <div class="detail-section-label">Signification</div>
+                <div class="meaning-text" id="d-meaning"></div>
+
+                <div id="section-on" style="display:none">
+                    <div class="detail-section-label" style="margin-top:12px">Lecture ON</div>
+                    <div id="d-on" class="tag-container"></div>
+                </div>
+                <div id="section-kun" style="display:none">
+                    <div class="detail-section-label" style="margin-top:10px">Lecture KUN</div>
+                    <div id="d-kun" class="tag-container"></div>
+                </div>
             </div>
+
+            <!-- Droite : 4 stats -->
+            <div class="detail-right">
+                <div class="kanji-stats">
+                    <div class="stat-box"><b id="d-level">-</b>Niveau</div>
+                    <div class="stat-box"><b id="d-strokes">-</b>Traits</div>
+                    <div class="stat-box"><b id="d-romaji" style="font-size:16px">-</b>Rômaji</div>
+                    <div class="stat-box"><b id="d-mastery">0%</b>Progrès</div>
+                </div>
+            </div>
+
+        </div><!-- /detail-top -->
+
+        <!-- ── Ordre des traits ── -->
+        <div class="detail-body">
+            <div class="section-title" id="stroke-guide-title" style="display:none">Ordre des traits</div>
         </div>
-        <div class="section-title">Signification</div>
-        <div class="meaning-text" id="d-meaning"></div>
-        <div id="section-on"  style="display:none"><div class="section-title">Lecture ON</div><div id="d-on" class="tag-container"></div></div>
-        <div id="section-kun" style="display:none"><div class="section-title">Lecture KUN</div><div id="d-kun" class="tag-container"></div></div>
-        <button class="replay-btn" onclick="replayAnimation()">↺ REVOIR LE TRACÉ</button>
-        <button id="detail-quiz-btn" class="replay-btn" style="margin-top:10px;background:linear-gradient(135deg,var(--accent2),#5a40e0)" onclick="showQuizModeModal('single', window.currentKanjiForStroke)">⚡ S'ENTRAÎNER</button>
+        <div class="stroke-guide-row" id="stroke-guide-grid"></div>
+
+        <!-- ── Exemples ── -->
+        <div class="examples-wrap" id="exemples-container"></div>
+
     </div>
 </div>
 
@@ -568,7 +654,8 @@ function startOralTest(kanjiChar) {
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
+        const fb = document.getElementById('voice-feedback');
+        if (fb) { fb.style.color = '#e55'; fb.textContent = 'Micro non supporté sur ce navigateur'; }
         return;
     }
 
@@ -578,7 +665,9 @@ function startOralTest(kanjiChar) {
     recognition.maxAlternatives = 1;
 
     const btn = document.getElementById('btn-oral-test');
+    const fb  = document.getElementById('voice-feedback');
     if (btn) btn.classList.add('listening');
+    if (fb)  { fb.style.color = 'var(--gray)'; fb.textContent = '🎤 En écoute…'; }
     recognition.start();
 
     recognition.onresult = (event) => {
@@ -1687,7 +1776,7 @@ function createStrokeWriter(elementId, character, isHardcore) {
             showOutline: true,
             // 🛠️ FIX : On utilise la couleur fixe
             outlineColor: fixedBgColor, 
-            outlineOpacity: 0, // ⬅️ Baissé à 0.02 pour être encore plus invisible
+            outlineOpacity: 0.02, // ⬅️ Baissé à 0.02 pour être encore plus invisible
             showHintAfterMisses: 0,
         });
     } else {
@@ -2122,37 +2211,30 @@ async function animateKanaChar(char) {
 ══════════════════════════════════════════════════ */
 
 function renderExemples(char) {
-    let container = document.getElementById('exemples-container');
-    const detailContent = document.querySelector('.detail-content');
-
-    if (!container && detailContent) {
-        container = document.createElement('div');
-        container.id = 'exemples-container';
-        container.style.cssText = 'margin-top:25px; border-top:1px solid var(--border); padding:20px 0; width:100%; box-sizing:border-box;';
-        detailContent.appendChild(container);
-    }
-
-    if (container) container.innerHTML = '';
+    const container = document.getElementById('exemples-container');
+    if (!container) return;
+    container.innerHTML = '';
     if (typeof exemplesDb === 'undefined') return;
 
     const liste = exemplesDb[char];
     if (!liste || liste.length === 0) {
-        if (container) container.innerHTML = `<div style="color:var(--gray);font-size:13px;text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;margin:10px 20px;">Aucun exemple disponible</div>`;
+        container.innerHTML = `<div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
+            <div style="color:var(--gray);font-size:13px;text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;">Aucun exemple disponible</div>`;
         return;
     }
 
-    const html = liste.map(ex => {
+    const items = liste.map(ex => {
         const textToSpeak = (ex.jp.trim() === char && ex.ro) ? ex.ro : ex.jp;
-        const safeSpeak = textToSpeak.replace(/'/g, "\\'");
-        return `<div class="example-item" onclick="speakSentence('${safeSpeak}')"
-             style="background:rgba(255,255,255,0.03);padding:15px;border-radius:12px;margin:0 10px 12px 10px;cursor:pointer;border-left:4px solid #00c9a7;transition:0.2s;">
-            <div style="font-size:1.2rem;color:#fff;margin-bottom:6px;">${ex.jp}</div>
-            <div style="font-size:0.85rem;color:#00c9a7;margin-bottom:6px;font-family:monospace;">${ex.ro || ''}</div>
-            <div style="font-size:0.95rem;color:#a0a0b0;line-height:1.4;">${ex.fr}</div>
+        const safe = textToSpeak.replace(/'/g, "\\'");
+        return `<div onclick="speakSentence('${safe}')"
+            style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);">
+            <div style="font-size:1.15rem;color:#fff;margin-bottom:5px">${ex.jp}</div>
+            <div style="font-size:0.82rem;color:var(--accent);margin-bottom:4px;font-family:monospace">${ex.ro || ''}</div>
+            <div style="font-size:0.9rem;color:#a0a0b0;line-height:1.4">${ex.fr}</div>
         </div>`;
     }).join('');
 
-    container.innerHTML = `<div style="font-size:11px;color:var(--gray);text-transform:uppercase;margin:0 10px 15px 10px;font-weight:bold;">Exemples et Lectures</div>${html}`;
+    container.innerHTML = `<div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>${items}`;
 }
 
 function speakSentence(text) {
@@ -2183,27 +2265,20 @@ function openDetail(kanji) {
 
     // 1. Sens nettoyés
     const cleanMeanings = kanji.meanings.filter(m => !m.toLowerCase().includes('radical'));
-    const meaningEl = document.getElementById('d-meaning');
-    meaningEl.innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
+    document.getElementById('d-meaning').innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
 
-    // 2. RÉ-INSERTION DU BOUTON TEST ORAL (MICRO) — toujours recréé proprement
-    let oralSection = document.getElementById('oral-test-container');
-    if (oralSection) oralSection.remove(); // vider l'ancien avant de recréer
-    oralSection = document.createElement('div');
-    oralSection.id = 'oral-test-container';
-    oralSection.style.cssText = 'text-align:center;margin:15px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:12px;';
-    meaningEl.after(oralSection);
-    const safeChar = kanji.char.replace(/'/g, "\\'");
-    oralSection.innerHTML = `
-        <div style="font-size:10px;color:var(--gray);text-transform:uppercase;margin-bottom:8px;letter-spacing:1px;">Test de prononciation</div>
-        <button id="btn-oral-test" class="oral-quiz-btn" onclick="startOralTest('${safeChar}')">🎤</button>
-        <p id="voice-feedback" style="font-size:11px;color:var(--gray);margin-top:5px;">Cliquez et dites la lecture</p>
-    `;
+    // 2. Reset feedback oral
+    document.getElementById('voice-feedback').textContent = '';
+    document.getElementById('voice-feedback').style.color = 'var(--gray)';
 
-    // 3. Stats (Niveau, Traits, Romaji)
+    // 3. Stats
     document.getElementById('d-level').innerText   = cat ? cat.short : '–';
     document.getElementById('d-strokes').innerText = kanji.strokes;
     document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
+
+    // Maîtrise depuis localStorage
+    const mastered = localStorage.getItem('mastered_' + kanji.char);
+    document.getElementById('d-mastery').innerText = mastered ? '✔' : '0%';
 
     // 4. Lectures ON / KUN
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
@@ -2211,20 +2286,27 @@ function openDetail(kanji) {
     document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
     document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
 
-    // 5. HanziWriter (Animation du tracé)
+    // 5. Boutons : montrer les boutons kanji
+    document.getElementById('btn-oral-test').style.display = '';
+    const dqb = document.getElementById('detail-quiz-btn');
+    if (dqb) dqb.style.display = '';
+
+    // 6. HanziWriter
     document.getElementById('kana-writer-svg').style.display     = 'none';
     document.getElementById('writer-spinner').style.display      = 'none';
     document.getElementById('kanji-writer-target').style.display = 'block';
     document.getElementById('kanji-writer-target').innerHTML     = '';
-    const dqb = document.getElementById('detail-quiz-btn');
-    if (dqb) dqb.style.display = '';
     writer = HanziWriter.create('kanji-writer-target', kanji.char, {
-        width:140, height:140, padding:15, strokeColor:'#00c9a7',
-        outlineColor:'#2a2a3a', drawingColor:'#fff', showOutline:true
+        width: 160, height: 160, padding: 14,
+        strokeColor: '#00c9a7', outlineColor: '#2a2a3a',
+        drawingColor: '#00c9a7', showOutline: true
     });
     writer.animateCharacter();
-    
-    // 6. Exemples
+
+    // 7. Stroke Order Guide (asynchrone, ne bloque pas l'affichage)
+    renderStrokeGuide(kanji.char);
+
+    // 8. Exemples
     renderExemples(kanji.char);
 }
 
@@ -2238,8 +2320,19 @@ function openKanaDetail(kana) {
     document.getElementById('detail-char-title').innerText = kana.c;
     document.getElementById('d-level').innerText  = label;
     document.getElementById('d-romaji').innerText = kana.r;
+    document.getElementById('d-mastery').innerText = '–';
     document.getElementById('section-on').style.display  = 'none';
     document.getElementById('section-kun').style.display = 'none';
+    document.getElementById('voice-feedback').textContent = '';
+
+    // Masquer les boutons réservés aux kanji
+    document.getElementById('btn-oral-test').style.display = 'none';
+    const dqb = document.getElementById('detail-quiz-btn');
+    if (dqb) dqb.style.display = 'none';
+
+    // Masquer la grille stroke guide
+    document.getElementById('stroke-guide-grid').innerHTML = '';
+    document.getElementById('stroke-guide-title').style.display = 'none';
     
     let meaning = `Syllabe « ${kana.r} »`;
     if (isYoon)   meaning = `Yoon (拗音) — combiné « ${kana.r} »`;
@@ -2249,10 +2342,8 @@ function openKanaDetail(kana) {
     document.getElementById('d-strokes').innerText = '…';
     document.getElementById('kanji-writer-target').innerHTML = '';
     document.getElementById('kanji-writer-target').style.display = 'none';
-    const dqb = document.getElementById('detail-quiz-btn');
-    if (dqb) dqb.style.display = 'none';
     
-    // IMPORTANT : On vide les exemples pour les Kanas
+    // Vider les exemples pour les kana
     const exContainer = document.getElementById('exemples-container');
     if (exContainer) exContainer.innerHTML = '';
     
@@ -2270,9 +2361,94 @@ function closeDetail() {
     if (exContainer) exContainer.remove(); 
 }
 
+function launchDetailTrace() {
+    const char = window.currentKanjiForStroke;
+    if (!char) return;
+    closeDetail();
+    startStrokeQuiz({ type: 'single', id: char, mode: 'trace-easy' });
+}
+
 function replayAnimation() {
     if (currentType === 'kanji' && writer)           writer.animateCharacter();
     else if (currentType === 'kana' && currentChar)  animateKanaChar(currentChar);
+}
+
+/* ══════════════════════════════════════════════════
+   STROKE ORDER GUIDE
+   Grille de mini-SVGs : chaque cellule i affiche
+   • traits 1..i-1 en gris (outline)
+   • trait i en vert accent (mis en valeur)
+   • numéro i en haut à droite
+   Source : KanjiVG (même fetchPaths() que l'animation kana)
+══════════════════════════════════════════════════ */
+async function renderStrokeGuide(char) {
+    const row   = document.getElementById('stroke-guide-grid');
+    const title = document.getElementById('stroke-guide-title');
+    if (!row) return;
+
+    row.innerHTML = '';
+    if (title) title.style.display = 'none';
+
+    try {
+        const cp  = char.codePointAt(0).toString(16).padStart(5,'0');
+        const res = await fetch(`https://cdn.jsdelivr.net/gh/KanjiVG/kanjivg@master/kanji/${cp}.svg`);
+        if (!res.ok) throw new Error(res.status);
+
+        const doc      = new DOMParser().parseFromString(await res.text(), 'image/svg+xml');
+        const vb       = doc.querySelector('svg')?.getAttribute('viewBox') || '0 0 109 109';
+        const allPaths = [...doc.querySelectorAll('path')].map(p => p.getAttribute('d'));
+        if (!allPaths.length) throw new Error('no paths');
+
+        const NS = 'http://www.w3.org/2000/svg';
+
+        if (title) title.style.display = '';
+
+        for (let i = 0; i < allPaths.length; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'stroke-guide-cell';
+
+            const svg = document.createElementNS(NS, 'svg');
+            svg.setAttribute('viewBox', vb);
+
+            // Traits précédents en gris
+            for (let j = 0; j < i; j++) {
+                const p = document.createElementNS(NS, 'path');
+                p.setAttribute('d', allPaths[j]);
+                p.setAttribute('fill', 'none');
+                p.setAttribute('stroke', '#3a3a55');
+                p.setAttribute('stroke-width', '3.5');
+                p.setAttribute('stroke-linecap', 'round');
+                p.setAttribute('stroke-linejoin', 'round');
+                svg.appendChild(p);
+            }
+
+            // Trait courant en vert
+            const cur = document.createElementNS(NS, 'path');
+            cur.setAttribute('d', allPaths[i]);
+            cur.setAttribute('fill', 'none');
+            cur.setAttribute('stroke', '#00c9a7');
+            cur.setAttribute('stroke-width', '4');
+            cur.setAttribute('stroke-linecap', 'round');
+            cur.setAttribute('stroke-linejoin', 'round');
+            svg.appendChild(cur);
+
+            cell.appendChild(svg);
+
+            const num = document.createElement('span');
+            num.className = 'stroke-guide-num';
+            num.textContent = i + 1;
+            cell.appendChild(num);
+
+            row.appendChild(cell);
+        }
+
+        document.getElementById('d-strokes').innerText = allPaths.length;
+
+    } catch (e) {
+        row.innerHTML = '';
+        if (title) title.style.display = 'none';
+        console.warn('Stroke guide indisponible pour', char, e.message);
+    }
 }
 
 /* ══════════════════════════════════════════════════
