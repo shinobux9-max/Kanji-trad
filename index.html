@@ -476,14 +476,6 @@
 <script>
 
 /* ══════════════════════════════════════════════════
-   SIDEBAR - Early definition to prevent undefined errors
-══════════════════════════════════════════════════ */
-function toggleSidebar(show) {
-    document.getElementById('sidebar').classList.toggle('open', show);
-    document.getElementById('overlay').classList.toggle('show', show);
-}
-
-/* ══════════════════════════════════════════════════
    QUIZ OVERRIDES — Lectures prioritaires
    Consultés en premier par getBestReading() avant
    d'utiliser les données de kanji_jouyou_fr.json.
@@ -988,12 +980,12 @@ function initMicSearch() {
 setTimeout(initMicSearch, 300);
 
 /* ══════════════════════════════════════════════════
-   SIDEBAR - Moved to top of script
+   SIDEBAR
 ══════════════════════════════════════════════════ */
-
-/* ─────────────────────────────────────────────────
-   SIDEBAR FUNCTIONS
-───────────────────────────────────────────────── */
+function toggleSidebar(show) {
+    document.getElementById('sidebar').classList.toggle('open', show);
+    document.getElementById('overlay').classList.toggle('show', show);
+}
 
 function renderSidebar() {
     const c = document.getElementById('grade-list');
@@ -1199,91 +1191,102 @@ function launchStrokeMode(mode) {
    Appelé depuis le prompt du mode vocal dans renderQuizQuestion
 ══════════════════════════════════════════════════ */
 let _vocalRecognition = null;
+let _vocalListening   = false;
 
-function startVoiceRecognition() {
-    // Request microphone permission first
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(() => {
-                startVoiceRecognitionInternal();
-            })
-            .catch((err) => {
-                const fb = document.getElementById('vocal-feedback');
-                if (fb) {
-                    fb.style.color = '#e55';
-                    fb.textContent = 'Permission micro refusée. Vérifiez les paramètres de votre navigateur.';
-                }
-            });
-    } else {
-        startVoiceRecognitionInternal();
-    }
-}
-
-function startVoiceRecognitionInternal() {
+/* ════════════════════════════════════════════════════
+   startVoiceRecognition(autoStart)
+   ─────────────────────────────────────────────────
+   Corrections :
+   • Prend la transcription à PLUS HAUTE CONFIDENCE
+   • onspeechend → stop propre avant onend
+   • Abort sécurisé avec délai 100ms avant nouvelle instance
+   • null-checks sur tous les éléments DOM
+   • Comparaison élargie : exact, préfixe, forme courte/longue
+   • Auto-start en mode survie (autoStart=true)
+════════════════════════════════════════════════════ */
+function startVoiceRecognition(autoStart = false) {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
         const fb = document.getElementById('vocal-feedback');
-        if (fb) { fb.style.color = '#e55'; fb.textContent = 'Reconnaissance vocale non supportée sur ce navigateur.'; }
+        if (fb) { fb.style.color = '#e55'; fb.textContent = 'Micro non supporté sur ce navigateur.'; }
         return;
     }
-    if (_vocalRecognition) { try { _vocalRecognition.abort(); } catch(e){} }
+    if (_vocalListening) return;
 
     if (!quizState) return;
     const k = kanjiDb[quizState.indices[quizState.idx]];
-
-    // Toutes les lectures valides via la règle d'or
     const validReadings = getAllValidReadings(k);
-    const bestRead = getBestReading(k);
+    const bestRead      = getBestReading(k);
 
-    const toHira = str => str.replace(/[\u30a1-\u30f6]/g, m => String.fromCharCode(m.charCodeAt(0) - 0x60));
+    // Normalisation : kata→hira, retire ponctuation/espaces
+    const normalize = str => {
+        const hira = str.replace(/[ァ-ヶ]/g,
+            m => String.fromCharCode(m.charCodeAt(0) - 0x60));
+        return hira.replace(/[。、,.\-\s！？!?]/g, '').toLowerCase().trim();
+    };
 
-    const micBtn = document.getElementById('mic-btn');
-    const fb     = document.getElementById('vocal-feedback');
-    if (micBtn) { micBtn.classList.add('listening'); micBtn.textContent = '⏹'; }
-    if (fb)     { fb.style.color = 'var(--gray)'; fb.textContent = 'Écoute en cours…'; }
+    // Comparaison élargie
+    const matches = (said) => {
+        const ns = normalize(said);
+        if (!ns) return false;
+        if (said === k.char) return true;
+        return validReadings.some(r => {
+            const nr = normalize(r);
+            return nr === ns || ns.startsWith(nr) || nr.startsWith(ns);
+        });
+    };
 
-    _vocalRecognition = new SR();
-    _vocalRecognition.lang = 'ja-JP';
-    _vocalRecognition.interimResults = true; // Enable interim results for better feedback
-    _vocalRecognition.maxAlternatives = 5; // Increase alternatives
-    _vocalRecognition.continuous = false; // Single utterance
-    _vocalRecognition.start();
+    // Abort sécurisé : nullifier d'abord, aborter ensuite
+    const oldRec = _vocalRecognition;
+    _vocalRecognition = null;
+    if (oldRec) { try { oldRec.abort(); } catch(e){} }
 
-    let finalTranscript = '';
-    let interimTranscript = '';
+    const doStart = () => {
+        const micBtn = document.getElementById('mic-btn');
+        const fb     = document.getElementById('vocal-feedback');
+        if (!micBtn) return; // question déjà changée
 
-    _vocalRecognition.onresult = (ev) => {
-        interimTranscript = '';
-        finalTranscript = '';
+        const rec = new SR();
+        _vocalRecognition = rec;
+        _vocalListening   = true;
 
-        for (let i = 0; i < ev.results.length; i++) {
-            const transcript = ev.results[i][0].transcript;
-            if (ev.results[i].isFinal) {
-                finalTranscript += transcript;
-            } else {
-                interimTranscript += transcript;
+        rec.lang            = 'ja-JP';
+        rec.continuous      = false;
+        rec.interimResults  = false;
+        rec.maxAlternatives = 5;
+
+        rec.onstart = () => {
+            const btn = document.getElementById('mic-btn');
+            const f   = document.getElementById('vocal-feedback');
+            if (btn) btn.classList.add('listening');
+            if (f)   { f.style.color = 'var(--gray)'; f.textContent = 'Écoute en cours… parlez maintenant'; }
+        };
+
+        rec.onspeechend = () => { try { rec.stop(); } catch(e){} };
+
+        rec.onresult = (ev) => {
+            // Transcription à la PLUS HAUTE CONFIANCE
+            let bestSaid = '', bestConf = -1;
+            const result = ev.results[0];
+            for (let i = 0; i < result.length; i++) {
+                const alt = result[i];
+                if (alt.confidence > bestConf) { bestConf = alt.confidence; bestSaid = alt.transcript.trim(); }
             }
-        }
+            if (!bestSaid && result.length > 0) bestSaid = result[0].transcript.trim();
 
-        // Show interim results for better user feedback
-        if (fb && interimTranscript) {
-            fb.style.color = 'var(--accent2)';
-            fb.textContent = `Écoute : "${interimTranscript}"…`;
-        }
+            const isCorrect = matches(bestSaid);
 
-        // Process final result
-        if (finalTranscript) {
-            const normalized = toHira(finalTranscript.toLowerCase()).replace(/[。\s]/g,'');
-            const isCorrect  = validReadings.some(r => toHira(r).replace(/[.\-]/g,'') === normalized) || finalTranscript === k.char;
-
-            if (micBtn) { micBtn.classList.remove('listening'); micBtn.textContent = '🎤'; }
-            if (fb) {
+            const btn2 = document.getElementById('mic-btn');
+            const fb2  = document.getElementById('vocal-feedback');
+            if (btn2) btn2.classList.remove('listening');
+            if (fb2) {
                 if (isCorrect) {
-                    fb.style.color = 'var(--accent)';
-                    fb.textContent = `✔ Correct ! « ${finalTranscript} »`;
+                    fb2.style.color = 'var(--accent)';
+                    fb2.textContent = `✔ Correct ! « ${bestSaid} »`;
                 } else {
-                    fb.style.color = '#e55';
-                    fb.textContent = `✘ Dit : « ${finalTranscript} »  –  Attendu : ${bestRead}${validReadings.length > 1 ? '  (ou ' + validReadings.filter(r=>r!==bestRead).slice(0,2).join(', ') + ')' : ''}`;
+                    const alts = validReadings.filter(r => r !== bestRead).slice(0, 2).join(', ');
+                    fb2.style.color = '#e55';
+                    fb2.textContent = `✘ « ${bestSaid || '(rien)'} »  –  Attendu : ${bestRead}${alts ? '  (ou ' + alts + ')' : ''}`;
                 }
             }
 
@@ -1291,42 +1294,62 @@ function startVoiceRecognitionInternal() {
             quizState.answered = true;
             if (isCorrect) {
                 quizState.correct++;
-                document.getElementById('quiz-correct').textContent = quizState.correct;
+                const oc = document.getElementById('quiz-correct');
+                if (oc) oc.textContent = quizState.correct;
             } else {
                 quizState.wrong++;
-                document.getElementById('quiz-wrong').textContent = quizState.wrong;
+                const ow = document.getElementById('quiz-wrong');
+                if (ow) ow.textContent = quizState.wrong;
             }
             const next = quizState.idx + 1;
-            document.getElementById('quiz-score-sub').textContent = `${(quizState.correct/next*10).toFixed(1)} / 10.0`;
-            setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 1000 : 1600);
-        }
-    };
+            const scoreEl = document.getElementById('quiz-score-sub');
+            if (scoreEl) scoreEl.textContent = `${(quizState.correct / next * 10).toFixed(1)} / 10.0`;
 
-    _vocalRecognition.onerror = (ev) => {
-        if (micBtn) { micBtn.classList.remove('listening'); micBtn.textContent = '🎤'; }
-        if (fb) {
-            fb.style.color = '#e55';
-            let errorMsg = 'Erreur micro : ';
-            switch(ev.error) {
-                case 'no-speech': errorMsg += 'Aucune parole détectée. Réessayez.'; break;
-                case 'audio-capture': errorMsg += 'Problème de capture audio.'; break;
-                case 'not-allowed': errorMsg += 'Permission micro refusée.'; break;
-                case 'network': errorMsg += 'Erreur réseau.'; break;
-                default: errorMsg += ev.error;
+            if (isCorrect) {
+                setTimeout(() => { if (quizState) { quizState.idx++; renderQuizQuestion(); } }, 1000);
+            } else {
+                // Laisser réessayer après 2s
+                setTimeout(() => {
+                    if (!quizState) return;
+                    quizState.answered = false;
+                    _vocalListening = false;
+                    const btn3 = document.getElementById('mic-btn');
+                    const fb3  = document.getElementById('vocal-feedback');
+                    if (btn3 && fb3) { fb3.style.color = 'var(--gray)'; fb3.textContent = 'Réessayez ou → pour passer'; }
+                }, 2000);
             }
-            fb.textContent = errorMsg;
+        };
+
+        rec.onerror = (ev) => {
+            _vocalListening = false;
+            const btn = document.getElementById('mic-btn');
+            const f   = document.getElementById('vocal-feedback');
+            if (btn) btn.classList.remove('listening');
+            if (f) {
+                const msg = ev.error === 'no-speech'   ? 'Aucune voix détectée — réessayez'
+                          : ev.error === 'not-allowed' ? 'Accès micro refusé (vérifiez les permissions)'
+                          : 'Erreur : ' + ev.error;
+                f.style.color = '#e55'; f.textContent = msg;
+            }
+        };
+
+        rec.onend = () => {
+            _vocalListening = false;
+            const btn = document.getElementById('mic-btn');
+            if (btn) btn.classList.remove('listening');
+        };
+
+        try { rec.start(); }
+        catch(e) {
+            _vocalListening = false;
+            const f = document.getElementById('vocal-feedback');
+            if (f) { f.style.color = '#e55'; f.textContent = 'Impossible de démarrer le micro : ' + e.message; }
         }
     };
 
-    _vocalRecognition.onend = () => {
-        if (micBtn) micBtn.classList.remove('listening');
-        // If no final result was processed, show a message
-        if (fb && fb.textContent === 'Écoute en cours…') {
-            fb.style.color = '#e55';
-            fb.textContent = 'Aucune parole détectée. Cliquez à nouveau pour réessayer.';
-        }
-    };
+    setTimeout(doStart, oldRec ? 100 : 0);
 }
+
 
 /* ══════════════════════════════════════════════════
    QUIZ — API FLEXIBLE
@@ -1395,9 +1418,27 @@ function startQuiz({ type, id, mode = 'kanji-to-read' }) {
 
 function closeQuiz() {
     if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; }
+    // Stopper la reconnaissance vocale si active
+    if (_vocalRecognition) { try { _vocalRecognition.abort(); } catch(e){} _vocalRecognition = null; }
+    _vocalListening = false;
     document.getElementById('quiz-view').style.display = 'none';
     quizState = null;
     quizPaused = false;
+}
+
+// Passer une question vocale (compté comme erreur)
+function skipVocalQuestion() {
+    if (!quizState || quizState.answered) return;
+    if (_vocalRecognition) { try { _vocalRecognition.abort(); } catch(e){} _vocalRecognition = null; }
+    _vocalListening = false;
+    quizState.answered = true;
+    quizState.wrong++;
+    const ow = document.getElementById('quiz-wrong');
+    if (ow) ow.textContent = quizState.wrong;
+    const next = quizState.idx + 1;
+    const scoreEl = document.getElementById('quiz-score-sub');
+    if (scoreEl) scoreEl.textContent = `${(quizState.correct / next * 10).toFixed(1)} / 10.0`;
+    setTimeout(() => { if (quizState) { quizState.idx++; renderQuizQuestion(); } }, 300);
 }
 
 function togglePause() {
@@ -1435,10 +1476,11 @@ function renderQuizQuestion() {
     if (currentMode === 'vocal') {
         const vMeaning = k.meanings.filter(m => !m.toLowerCase().includes('radical')).slice(0,2).join(' · ') || k.meanings[0] || '?';
         promptHtml = `
-            <div style="font-size:11px;color:var(--gray);text-transform:uppercase;margin-bottom:10px">Sens</div>
-            <div class="quiz-meaning-big" style="font-size:28px;margin-bottom:6px;">${vMeaning}</div>
-            <button id="mic-btn" class="mic-btn" onclick="startVoiceRecognition()">🎤</button>
-            <div id="vocal-feedback" style="font-size:13px;color:var(--gray);margin-top:14px;min-height:22px;"></div>`;
+            <div style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Sens affiché — Prononcez la lecture</div>
+            <div class="quiz-meaning-big" style="font-size:30px;font-weight:bold;margin-bottom:20px;">${vMeaning}</div>
+            <button id="mic-btn" class="mic-btn" onclick="startVoiceRecognition()" title="Appuyer pour parler">🎤</button>
+            <div id="vocal-feedback" style="font-size:13px;color:var(--gray);margin-top:16px;min-height:22px;text-align:center;max-width:300px;line-height:1.5;"></div>
+            <button onclick="skipVocalQuestion()" style="margin-top:18px;background:none;border:1px solid var(--border);color:var(--gray);padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;">→ Passer</button>`;
     } else if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
         // REMPLACÉ PAR LE CONTENEUR ANIMÉ
         promptHtml = `
@@ -1475,6 +1517,15 @@ function renderQuizQuestion() {
             });
             writer.animateCharacter();
         }, 50);
+    }
+
+    // --- AUTO-START MICRO en mode vocal ---
+    // Délai de 650ms pour laisser le DOM se stabiliser et l'utilisateur lire le sens
+    if (currentMode === 'vocal') {
+        _vocalListening = false; // reset au cas où une session précédente traînerait
+        setTimeout(() => {
+            if (quizState && !quizState.answered) startVoiceRecognition(true);
+        }, 650);
     }
 }
 
@@ -1763,11 +1814,11 @@ function renderStrokeQuizQuestion() {
         // SI HARDCORE : On rend l'outline invisible (même couleur que le fond ou transparent)
         outlineColor: isHardcore ? 'transparent' : '#3a3a50', 
         drawingColor: '#00c9a7',
-        drawingWidth: 8,
+        drawingWidth: 40,
         showOutline: !isHardcore, // Cache l'outline en mode hardcore
         showCharacter: false,
         highlightOnComplete: true,
-        showHintAfterMisses: isHardcore ? 0 : 1, // Pas d'aide auto en hardcore !
+        showHintAfterMisses: isHardcore ? false : 1,
         renderer: 'svg'
     });
 
@@ -2174,15 +2225,13 @@ function openDetail(kanji) {
     const meaningEl = document.getElementById('d-meaning');
     meaningEl.innerText = cleanMeanings.length > 0 ? cleanMeanings.join(' · ') : (kanji.meanings[0] || '–');
 
-    // 2. RÉ-INSERTION DU BOUTON TEST ORAL (MICRO)
+    // 2. RÉ-INSERTION DU BOUTON TEST ORAL (MICRO) — toujours recréé proprement
     let oralSection = document.getElementById('oral-test-container');
-    if (!oralSection) {
-        oralSection = document.createElement('div');
-        oralSection.id = 'oral-test-container';
-        oralSection.style.cssText = 'text-align:center;margin:15px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:12px;';
-        // On l'injecte juste après la signification
-        meaningEl.after(oralSection);
-    }
+    if (oralSection) oralSection.remove(); // vider l'ancien avant de recréer
+    oralSection = document.createElement('div');
+    oralSection.id = 'oral-test-container';
+    oralSection.style.cssText = 'text-align:center;margin:15px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:12px;';
+    meaningEl.after(oralSection);
     const safeChar = kanji.char.replace(/'/g, "\\'");
     oralSection.innerHTML = `
         <div style="font-size:10px;color:var(--gray);text-transform:uppercase;margin-bottom:8px;letter-spacing:1px;">Test de prononciation</div>
@@ -2353,7 +2402,7 @@ async function init() {
 
     try {
         // Chargement du JSON des Kanjis
-        const res = await fetch('kanji_jouyou_fr.json');
+        const res = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json');
         if (!res.ok) throw new Error(`Erreur réseau : ${res.status}`);
 
         let text = await res.text();
@@ -2383,7 +2432,7 @@ async function init() {
 
         // Chargement des exemples depuis GitHub (même source que kanji_jouyou_fr.json)
         try {
-            const exRes = await fetch('exemples.json');
+            const exRes = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
             if (exRes.ok) {
                 exemplesDb = await exRes.json();
                 console.log('✅ Exemples chargés');
