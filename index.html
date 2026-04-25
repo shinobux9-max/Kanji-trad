@@ -2221,12 +2221,7 @@ function renderExemples(char) {
     if (!container) return;
     container.innerHTML = '';
 
-    // Vérification robuste : undefined ET objet vide
-    if (typeof exemplesDb === 'undefined' || !exemplesDb || Object.keys(exemplesDb).length === 0) {
-        container.innerHTML = `<div style="color:var(--gray);font-size:12px;text-align:center;padding:16px">
-            Chargement des exemples…</div>`;
-        return;
-    }
+    if (!exemplesDb || Object.keys(exemplesDb).length === 0) return;
 
     const liste = exemplesDb[char];
     if (!liste || liste.length === 0) {
@@ -2236,38 +2231,28 @@ function renderExemples(char) {
         return;
     }
 
-    // Nouveau format JSON :
-    // { jp: "彼女は学生です。", ka: "かのじょ は がくせい です。", ro: "Kanojo wa gakusei desu.", fr: "Elle est étudiante." }
-    // Ancien format (compatibilité) :
-    // { jp: "女", ro: "おんな", fr: "femme" }
+    // Format : { jp, ka?, ro?, fr }
+    // ka = lecture kana de la phrase (nouveau), ro = romaji (ancien ou nouveau)
     const items = liste.map(ex => {
-        // Pour la prononciation : phrase japonaise complète en priorité
-        const textToSpeak = ex.jp || char;
-        const safe = textToSpeak.replace(/'/g, "\\'");
-
-        // Kana de la phrase (nouveau champ "ka") ou champ "ro" (romaji) en fallback
-        const kanaLine  = ex.ka
-            ? `<div style="font-size:0.88rem;color:#7b61ff;margin-bottom:3px;line-height:1.5">${ex.ka}</div>`
+        const safe = (ex.jp || char).replace(/'/g, "\\'");
+        const kanaLine   = ex.ka
+            ? `<div style="font-size:0.88rem;color:#9b8bff;margin-bottom:3px;line-height:1.5">${ex.ka}</div>`
             : '';
         const romajiLine = ex.ro
-            ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.85">${ex.ro}</div>`
+            ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${ex.ro}</div>`
             : '';
-
         return `<div onclick="speakSentence('${safe}')"
             style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);transition:background 0.15s"
             onmouseenter="this.style.background='rgba(255,255,255,0.06)'"
             onmouseleave="this.style.background='rgba(255,255,255,0.03)'">
             <div style="font-size:1.1rem;color:#fff;margin-bottom:5px;line-height:1.4">${ex.jp}</div>
-            ${kanaLine}
-            ${romajiLine}
+            ${kanaLine}${romajiLine}
             <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${ex.fr}</div>
         </div>`;
     }).join('');
 
     container.innerHTML = `
-        <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">
-            Exemples et Lectures
-        </div>
+        <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
         ${items}`;
 }
 
@@ -2388,10 +2373,9 @@ function closeDetail() {
     kanaAnimTimeouts.forEach(clearTimeout); 
     kanaAnimTimeouts = [];
     if (fetchCtrl) { fetchCtrl.abort(); fetchCtrl = null; }
-    
-    // On supprime le bloc d'exemples à la fermeture pour repartir sur du propre
+
     const exContainer = document.getElementById('exemples-container');
-    if (exContainer) exContainer.remove(); 
+    if (exContainer) exContainer.innerHTML = '';
 }
 
 function launchDetailTrace() {
@@ -2599,12 +2583,26 @@ async function init() {
             kanjiMap.set(char, i);
         });
 
-        // Chargement des exemples depuis GitHub (même source que kanji_jouyou_fr.json)
+        // Chargement des exemples — priorité : fichier local, puis GitHub
         try {
-            const exRes = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
-            if (exRes.ok) {
-                exemplesDb = await exRes.json();
-                console.log('✅ Exemples chargés');
+            // 1. Essai local (fonctionne quand exemples.json est dans le même dossier)
+            let exLoaded = false;
+            try {
+                const exLocal = await fetch('./exemples.json');
+                if (exLocal.ok) {
+                    exemplesDb = await exLocal.json();
+                    console.log(`✅ Exemples chargés en local (${Object.keys(exemplesDb).length} kanji)`);
+                    exLoaded = true;
+                }
+            } catch(_) { /* pas de fichier local, on continue */ }
+
+            // 2. Fallback GitHub si le local a échoué
+            if (!exLoaded) {
+                const exGH = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
+                if (exGH.ok) {
+                    exemplesDb = await exGH.json();
+                    console.log(`✅ Exemples chargés depuis GitHub (${Object.keys(exemplesDb).length} kanji)`);
+                }
             }
         } catch(e) {
             console.warn('Exemples non disponibles :', e.message);
