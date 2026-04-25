@@ -193,14 +193,14 @@
     .detail-mid { flex: 1; min-width: 0; }
     .detail-section-label { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 4px; margin-top: 12px; }
     .detail-section-label:first-child { margin-top: 0; }
-    .meaning-text { font-size: 13px; color: var(--accent); font-weight: bold; line-height: 1.2; }
+    .meaning-text { font-size: 22px; color: var(--accent); font-weight: bold; line-height: 1.2; }
 
     /* Colonne droite : 4 stats */
     .detail-right { flex: 1; display: flex; justify-content: flex-end; margin-right: 25px; }
     .kanji-stats { display: grid; grid-template-columns: repeat(2, 95px); gap: 8px; }
     .stat-box { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface); border-radius: 10px; padding: 10px 5px; border: 1px solid var(--border); min-height: 30px; text-align: center; }
-    .stat-box b { color: var(--text); font-size: 9px; font-family: 'Syne', sans-serif; margin-bottom: 2px; line-height: 1; }
-    .stat-box span, .stat-box { color: var(--gray); font-size: 7px; text-transform: uppercase; }
+    .stat-box b { color: var(--text); font-size: 10px; font-family: 'Syne', sans-serif; margin-bottom: 2px; line-height: 1; }
+    .stat-box span, .stat-box { color: var(--gray); font-size: 6px; text-transform: uppercase; }
 
     /* --- RESPONSIVE MOBILE --- */
     @media (max-width: 800px) {
@@ -643,24 +643,90 @@ const quizOverrides = {
     "旅":"たび", "荷":"に", "図":"ず", "書":"しょ", "館":"かん"
 };
 
-/* ── LOGIQUE DU QUIZ VOCAL ── */
+/* ══════════════════════════════════════════════════
+   QUIZ VOCAL — NORMALISATION DU RÉSULTAT MICRO
+   Gère : chiffres arabes, kanji+okurigana, katakana
+══════════════════════════════════════════════════ */
 
+// Table inverse : chiffre arabe → hiragana
+const arabicToHira = {
+    '0':'ぜろ','1':'いち','2':'に','3':'さん','4':'よん','5':'ご',
+    '6':'ろく','7':'なな','8':'はち','9':'きゅう','10':'じゅう',
+    '11':'じゅういち','12':'じゅうに','20':'にじゅう',
+    '100':'ひゃく','1000':'せん','10000':'まん'
+};
+
+// Katakana → hiragana
+const toHira = s => s.replace(/[\u30a1-\u30f6]/g,
+    c => String.fromCharCode(c.charCodeAt(0) - 0x60));
+
+// Nettoie et normalise ce que le micro a capté
+function normalizeOralResult(raw) {
+    let s = raw.replace(/[。\.、，？！!\?\s「」『』]/g, '').trim();
+
+    // 1. Chiffre arabe → hiragana (le moteur retourne "8" pour "はち")
+    if (arabicToHira[s]) return arabicToHira[s];
+
+    // 2. Katakana → hiragana
+    s = toHira(s);
+
+    // 3. Si le résultat contient encore des kanji, remplacer chaque kanji
+    //    par sa lecture via quizOverrides (sans okurigana ni point)
+    if (/[\u4e00-\u9fff]/.test(s)) {
+        s = s.replace(/[\u4e00-\u9fff]/g, kanji => {
+            const ov = quizOverrides[kanji];
+            if (ov) return toHira(ov.replace(/[.\-][^\s]*$/, '')); // stem seulement
+            return kanji; // garde le kanji si pas de mapping connu
+        });
+        s = toHira(s);
+    }
+
+    return s;
+}
+
+// Vérifie si le résultat brut du micro correspond à une lecture valide du kanji
+function isResultCorrect(rawResult, kanjiChar, kanjiData) {
+    const s = normalizeOralResult(rawResult);
+
+    // --- Cas 1 : résultat = kanji cible seul ou kanji + okurigana ---
+    // ex. "入る" quand on attendait "はいる"
+    const kanjiRegex = new RegExp('^' + kanjiChar + '(.*)$');
+    const kanjiMatch = rawResult.match(kanjiRegex);
+    if (kanjiMatch) {
+        const okuInResult = toHira(kanjiMatch[1]); // la partie kana après le kanji
+        // Chercher un KUN reading dont l'okurigana correspond
+        return (kanjiData.kun || []).some(kun => {
+            const dotIdx = kun.indexOf('.');
+            if (dotIdx === -1) {
+                // Pas d'okurigana attendue : résultat doit être juste le kanji
+                return okuInResult === '';
+            }
+            const expectedOku = toHira(kun.slice(dotIdx + 1).split('/')[0]);
+            return okuInResult === '' || okuInResult === expectedOku;
+        }) || (kanjiData.on || []).length > 0 && okuInResult === '';
+    }
+
+    // --- Cas 2 : comparaison sur toutes les lectures valides ---
+    const allReadings = getAllValidReadings(kanjiData);
+    return allReadings.some(r => {
+        // Normalise la lecture attendue (retire okurigana, point, tiret)
+        const clean = toHira(r.replace(/[.\-].*/, '').replace(/[/\s].*/, '').trim());
+        return s === clean;
+    });
+}
+
+/* ── QUIZ VOCAL ── */
 function startOralTest(kanjiChar) {
     const kanjiData = kanjiDb.find(k => k.char === kanjiChar);
     if (!kanjiData) return;
 
-    const validReadings = getAllValidReadings(kanjiData);
     const bestRead = getBestReading(kanjiData);
 
-    const numberMap = {
-        "一":"1","二":"2","三":"3","四":"4","五":"5",
-        "六":"6","七":"7","八":"8","九":"9","十":"10"
-    };
-    if (numberMap[kanjiChar] && !validReadings.includes(numberMap[kanjiChar])) validReadings.push(numberMap[kanjiChar]);
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const fb  = document.getElementById('voice-feedback');
+    const btn = document.getElementById('btn-oral-test');
+
     if (!SpeechRecognition) {
-        const fb = document.getElementById('voice-feedback');
         if (fb) { fb.style.color = '#e55'; fb.textContent = 'Micro non supporté sur ce navigateur'; }
         return;
     }
@@ -668,49 +734,37 @@ function startOralTest(kanjiChar) {
     const recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
     recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+    recognition.maxAlternatives = 3; // plus d'alternatives pour augmenter les chances
 
-    const btn = document.getElementById('btn-oral-test');
-    const fb  = document.getElementById('voice-feedback');
     if (btn) btn.classList.add('listening');
     if (fb)  { fb.style.color = 'var(--gray)'; fb.textContent = '🎤 En écoute…'; }
     recognition.start();
 
     recognition.onresult = (event) => {
-        let result = event.results[0][0].transcript.trim();
-        const btn2 = document.getElementById('btn-oral-test');
-        if (btn2) btn2.classList.remove('listening');
+        if (btn) btn.classList.remove('listening');
 
-        if (result === '。' || result === '.') result = 'まる';
-        result = result.replace(/[。\.、，？！!\?\s]/g, '');
+        // Essayer toutes les alternatives retournées par le moteur
+        const alternatives = Array.from({ length: event.results[0].length },
+            (_, i) => event.results[0][i].transcript.trim());
 
-        const toHiragana = str => str.replace(/[\u30a1-\u30f6]/g,
-            m => String.fromCharCode(m.charCodeAt(0) - 0x60));
+        const isCorrect = alternatives.some(alt => isResultCorrect(alt, kanjiChar, kanjiData));
+        const displayed = alternatives[0]; // pour l'affichage
 
-        const kanjiToHiraganaMap = { "人":"ひと","日":"ひ","木":"き","手":"て","目":"め" };
-        if (kanjiToHiraganaMap[result]) result = kanjiToHiraganaMap[result];
-
-        const normalizedResult = toHiragana(result);
-
-        const isCorrect = validReadings.some(r => {
-            const cleanReading = toHiragana(r.replace(/[.\-].*/, '').trim());
-            return result === kanjiChar || cleanReading === normalizedResult;
-        });
-
-        const feedback = document.getElementById('voice-feedback');
         if (isCorrect) {
-            if (feedback) { feedback.style.color = 'var(--accent)'; feedback.textContent = `✔ Correct ! « ${result} »`; }
-            localStorage.setItem('learned_' + kanjiChar, 'true');
+            if (fb) { fb.style.color = 'var(--accent)'; fb.textContent = `✔ Correct ! « ${displayed} »`; }
+            localStorage.setItem('mastered_' + kanjiChar, 'true');
+            const dm = document.getElementById('d-mastery');
+            if (dm) dm.innerText = '✔';
         } else {
-            if (feedback) { feedback.style.color = '#e55'; feedback.textContent = `✘ Dit : « ${result} » — Attendu : ${bestRead}${validReadings.length > 1 ? '  (' + validReadings.filter(r=>r!==bestRead).slice(0,2).join(', ') + ')' : ''}`; }
+            const hint = getAllValidReadings(kanjiData).slice(0,3)
+                .map(r => toHira(r.replace(/[.\-].*/, ''))).join(', ');
+            if (fb) { fb.style.color = '#e55'; fb.textContent = `✘ Dit : « ${displayed} » — Attendu : ${bestRead}  (${hint})`; }
         }
     };
 
-    recognition.onerror = (event) => {
-        const btn2 = document.getElementById('btn-oral-test');
-        if (btn2) btn2.classList.remove('listening');
-        const feedback = document.getElementById('voice-feedback');
-        if (feedback) { feedback.style.color = '#e55'; feedback.textContent = 'Erreur micro : ' + event.error; }
+    recognition.onerror = (e) => {
+        if (btn) btn.classList.remove('listening');
+        if (fb)  { fb.style.color = '#e55'; fb.textContent = 'Erreur micro : ' + e.error; }
     };
 
     recognition.onspeechend = () => recognition.stop();
@@ -2221,7 +2275,13 @@ function renderExemples(char) {
     if (!container) return;
     container.innerHTML = '';
 
-    if (!exemplesDb || Object.keys(exemplesDb).length === 0) return;
+    if (!exemplesDb || Object.keys(exemplesDb).length === 0) {
+        // Exemples pas encore chargés — réessayer dans 2s
+        container.innerHTML = `<div style="color:var(--gray);font-size:12px;text-align:center;padding:12px">
+            ⏳ Chargement des exemples…</div>`;
+        setTimeout(() => renderExemples(char), 2000);
+        return;
+    }
 
     const liste = exemplesDb[char];
     if (!liste || liste.length === 0) {
@@ -2584,12 +2644,26 @@ async function init() {
             kanjiMap.set(char, i);
         });
 
-        // Chargement des exemples depuis GitHub
+        // Chargement des exemples : localStorage en priorité, GitHub en fallback
+        const CACHE_KEY = 'exemplesDb_v2';
         try {
-            const exRes = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
-            if (!exRes.ok) throw new Error(`HTTP ${exRes.status}`);
-            exemplesDb = await exRes.json();
-            console.log(`✅ Exemples chargés (${Object.keys(exemplesDb).length} kanji)`);
+            // 1. Essai depuis le cache localStorage (instantané, offline-proof)
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (cached) {
+                exemplesDb = JSON.parse(cached);
+                console.log(`✅ Exemples depuis cache (${Object.keys(exemplesDb).length} kanji)`);
+            }
+
+            // 2. Toujours rafraîchir depuis GitHub en arrière-plan
+            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json')
+                .then(r => r.ok ? r.json() : Promise.reject(r.status))
+                .then(data => {
+                    exemplesDb = data;
+                    try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch(_) {}
+                    console.log(`✅ Exemples mis à jour depuis GitHub (${Object.keys(data).length} kanji)`);
+                })
+                .catch(e => console.warn('Refresh exemples GitHub échoué :', e));
+
         } catch(e) {
             console.warn('Exemples non disponibles :', e.message);
             exemplesDb = {};
