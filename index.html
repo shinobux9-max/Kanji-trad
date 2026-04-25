@@ -2322,10 +2322,11 @@ function openDetail(kanji) {
     });
     writer.animateCharacter();
 
-    // 7 + 8. Stroke guide d'abord (async), puis exemples après résolution
-    // Important : renderExemples APRÈS renderStrokeGuide pour éviter que
-    // le reflow de la grille ne cache le conteneur d'exemples
-    renderStrokeGuide(kanji.char).then(() => renderExemples(kanji.char));
+    // 7. Stroke guide (async) — les exemples s'affichent dans tous les cas,
+    // même si le fetch KanjiVG échoue (catch sur le reject de la promesse)
+    renderStrokeGuide(kanji.char)
+        .then(() => renderExemples(kanji.char))
+        .catch(() => renderExemples(kanji.char));
 }
 
 function openKanaDetail(kana) {
@@ -2583,29 +2584,15 @@ async function init() {
             kanjiMap.set(char, i);
         });
 
-        // Chargement des exemples — priorité : fichier local, puis GitHub
+        // Chargement des exemples depuis GitHub
         try {
-            // 1. Essai local (fonctionne quand exemples.json est dans le même dossier)
-            let exLoaded = false;
-            try {
-                const exLocal = await fetch('./exemples.json');
-                if (exLocal.ok) {
-                    exemplesDb = await exLocal.json();
-                    console.log(`✅ Exemples chargés en local (${Object.keys(exemplesDb).length} kanji)`);
-                    exLoaded = true;
-                }
-            } catch(_) { /* pas de fichier local, on continue */ }
-
-            // 2. Fallback GitHub si le local a échoué
-            if (!exLoaded) {
-                const exGH = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
-                if (exGH.ok) {
-                    exemplesDb = await exGH.json();
-                    console.log(`✅ Exemples chargés depuis GitHub (${Object.keys(exemplesDb).length} kanji)`);
-                }
-            }
+            const exRes = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json');
+            if (!exRes.ok) throw new Error(`HTTP ${exRes.status}`);
+            exemplesDb = await exRes.json();
+            console.log(`✅ Exemples chargés (${Object.keys(exemplesDb).length} kanji)`);
         } catch(e) {
             console.warn('Exemples non disponibles :', e.message);
+            exemplesDb = {};
         }
 
         // Construction des structures internes
