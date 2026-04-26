@@ -1374,21 +1374,17 @@ function startVoiceRecognition(autoStart = false) {
     const validReadings = getAllValidReadings(k);
     const bestRead      = getBestReading(k);
 
-    // Normalisation : kata→hira, retire ponctuation/espaces
-    const normalize = str => {
-        const hira = str.replace(/[ァ-ヶ]/g,
-            m => String.fromCharCode(m.charCodeAt(0) - 0x60));
-        return hira.replace(/[。、,.\-\s！？!?]/g, '').toLowerCase().trim();
-    };
-
-    // Comparaison élargie
+    // On réutilise les fonctions partagées normalizeOralResult + isResultCorrect
+    // qui gèrent : chiffres arabes ("8"→"はち"), kanji+okurigana ("入る"), katakana, etc.
     const matches = (said) => {
-        const ns = normalize(said);
-        if (!ns) return false;
-        if (said === k.char) return true;
+        if (!said) return false;
+        // Tester d'abord isResultCorrect (gère tous les cas complexes)
+        if (isResultCorrect(said, k.char, k)) return true;
+        // Fallback : comparaison souple sur le normalisé (startsWith pour les formes longues)
+        const ns = normalizeOralResult(said);
         return validReadings.some(r => {
-            const nr = normalize(r);
-            return nr === ns || ns.startsWith(nr) || nr.startsWith(ns);
+            const nr = toHira(r.replace(/[.·＊*\-].*/, '').replace(/^!/, '').trim());
+            return nr && (nr === ns || ns.startsWith(nr) || nr.startsWith(ns));
         });
     };
 
