@@ -489,6 +489,20 @@
       "fr": "Dessinons un cercle."
     }
   ],
+  "疲": [
+    {
+      "jp": "仕事でとても疲れました。",
+      "ka": "しごと で とても つかれました。",
+      "ro": "Shigoto de totemo tsukaremashita.",
+      "fr": "Je suis très fatigué à cause du travail."
+    },
+    {
+      "jp": "疲れがたまっています。",
+      "ka": "つかれ が たまっています。",
+      "ro": "Tsukare ga tamatte imasu.",
+      "fr": "La fatigue s'accumule."
+    }
+  ]
   "天": [
     {
       "jp": "明日はいい天気になるでしょう。",
