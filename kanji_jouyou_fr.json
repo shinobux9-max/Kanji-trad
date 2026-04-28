@@ -1023,6 +1023,21 @@
     "wk_radicaux": ["Voiture"],
     "romaji": "sha, kuruma"
   },
+  "疲": {
+    "traits": 10,
+    "classe": 3,
+    "frequence": 917,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 3,
+    "sens": ["Fatigue", "Se fatiguer", "Épuisé"],
+    "lectures_on": ["ひ"],
+    "lectures_kun": ["つか.れる", "つか.らす"],
+    "wk_niveau": 14,
+    "wk_sens": ["Fatigue", "Épuisement"],
+    "wk_lectures_on": ["ひ"],
+    "wk_lectures_kun": ["!つか"],
+    "wk_radicaux": ["Maladie", "Peau"]
+},
   "不": {
     "traits": 4,
     "classe": 4,
