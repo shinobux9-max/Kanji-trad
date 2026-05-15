@@ -607,6 +607,22 @@
     "wk_radicaux": ["Main"],
     "romaji": "shu, zu, te, ta"
   },
+  "兎": {
+    "traits": 8,
+    "classe": 9,
+    "frequence": 2243,
+    "jlpt_ancien": 1,
+    "jlpt_nouveau": 1,
+    "sens": ["Lapin"],
+    "lectures_on": ["と"],
+    "lectures_kun": ["うさぎ"],
+    "wk_niveau": 34,
+    "wk_sens": ["Lapin"],
+    "wk_lectures_on": ["と"],
+    "wk_lectures_kun": ["!うさぎ"],
+    "wk_radicaux": ["Bound", "Pieds"],
+    "romaji": "to, usagi"
+  },
   "文": {
     "traits": 4,
     "classe": 1,
