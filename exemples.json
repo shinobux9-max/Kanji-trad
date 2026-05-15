@@ -531,6 +531,20 @@
       "fr": "Le Japon est un pays insulaire."
     }
 ],
+  "筆": [
+    {
+      "jp": "筆で漢字を書きます。",
+      "ka": "ふで で かんじ を かきます。",
+      "ro": "Fude de kanji o kakimasu.",
+      "fr": "J'écris des kanji avec un pinceau."
+    },
+    {
+      "jp": "彼は筆箱を忘れました。",
+      "ka": "かれ は ふでばこ を わすれました。",
+      "ro": "Kare wa fudebako o wasuremashita.",
+      "fr": "Il a oublié sa trousse (boîte à pinceaux)."
+    }
+],
   "疲": [
     {
       "jp": "仕事でとても疲れました。",
