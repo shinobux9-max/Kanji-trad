@@ -503,6 +503,20 @@
       "fr": "Dessinons un cercle."
     }
   ],
+  "国": [
+    {
+      "jp": "あなたの国はどこですか？",
+      "ka": "あなた の くに は どこ です か？",
+      "ro": "Anata no kuni wa doko desu ka?",
+      "fr": "D'où vient votre pays ? / Quel est votre pays ?"
+    },
+    {
+      "jp": "日本は島国です。",
+      "ka": "にほん は しまぐに です。",
+      "ro": "Nihon wa shimaguni desu.",
+      "fr": "Le Japon est un pays insulaire."
+    }
+],
   "疲": [
     {
       "jp": "仕事でとても疲れました。",
