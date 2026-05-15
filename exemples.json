@@ -349,6 +349,20 @@
       "fr": "Le charpentier construit des maisons."
     }
   ],
+  "海": [
+    {
+      "jp": "夏休みに海へ行きました。",
+      "ka": "なつやすみ に うみ へ いきました。",
+      "ro": "Natsuyasumi ni umi e ikimashita.",
+      "fr": "Je suis allé à la mer pendant les vacances d'été."
+    },
+    {
+      "jp": "日本海はとても広いです。",
+      "ka": "にほんかい は とても ひろい です。",
+      "ro": "Nihonkai wa totemo hiroi desu.",
+      "fr": "La mer du Japon est très vaste."
+    }
+],
   "刀": [
     {
       "jp": "日本刀は美しいです。",
