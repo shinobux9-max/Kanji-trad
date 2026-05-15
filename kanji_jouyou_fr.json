@@ -511,6 +511,22 @@
     "wk_radicaux": ["Barbe"],
     "romaji": "ryou"
   },
+  "海": {
+    "traits": 9,
+    "classe": 2,
+    "frequence": 194,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 4,
+    "sens": ["Mer", "Océan"],
+    "lectures_on": ["かい"],
+    "lectures_kun": ["うみ"],
+    "wk_niveau": 6,
+    "wk_sens": ["Mer"],
+    "wk_lectures_on": ["かい"],
+    "wk_lectures_kun": ["!うみ"],
+    "wk_radicaux": ["Eau (Sanzui)", "Chaque / Mère"],
+    "romaji": "kai, umi"
+},
   "又": {
     "traits": 2,
     "classe": 8,
