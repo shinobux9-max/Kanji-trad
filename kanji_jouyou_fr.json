@@ -815,6 +815,14 @@
     "wk_radicaux": ["Narval", "Bouche"],
     "romaji": "u, yuu, migi"
   },
+  "山羊": {
+    "traits": 9, 
+    "sens": ["Chèvre"],
+    "lectures_on": ["さんよう"],
+    "lectures_kun": ["やぎ"],
+    "romaji": "yagi",
+    "composants": ["山", "羊"]
+},
   "左": {
     "traits": 5,
     "classe": 1,
