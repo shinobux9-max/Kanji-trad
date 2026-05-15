@@ -531,6 +531,20 @@
       "fr": "C'est un enfant qui ressemble à un ange."
     }
   ],
+  "山羊": [
+    {
+      "jp": "山羊は崖を登るのが得意です。",
+      "ka": "やぎ は がけ を のぼる の が とくい です。",
+      "ro": "Yagi wa gake o noboru no ga tokui desu.",
+      "fr": "Les chèvres sont douées pour grimper aux falaises."
+    },
+    {
+      "jp": "山羊のミルクからチーズを作ります。",
+      "ka": "やぎ の ミルク から チーズ を つくります。",
+      "ro": "Yagi no miruku kara chīzu o tsukurimasu.",
+      "fr": "On fait du fromage à partir du lait de chèvre."
+    }
+],
   "手": [
     {
       "jp": "石鹸で手を洗います。",
