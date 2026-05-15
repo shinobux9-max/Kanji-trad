@@ -495,6 +495,22 @@
     "wk_radicaux": ["Rue"],
     "romaji": "chou, tei, chin, tou, chi, hinoto"
   },
+  "筆": {
+    "traits": 12,
+    "classe": 3,
+    "frequence": 1133,
+    "jlpt_ancien": 2,
+    "jlpt_nouveau": 3,
+    "sens": ["Pinceau d'écriture", "Écriture", "Pinceau"],
+    "lectures_on": ["ひつ"],
+    "lectures_kun": ["ふで"],
+    "wk_niveau": 15,
+    "wk_sens": ["Pinceau d'écriture"],
+    "wk_lectures_on": ["ひつ"],
+    "wk_lectures_kun": ["!ふde"],
+    "wk_radicaux": ["Bambou"],
+    "romaji": "hitsu, fude"
+},
   "了": {
     "traits": 2,
     "classe": 8,
