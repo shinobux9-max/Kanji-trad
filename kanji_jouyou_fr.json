@@ -303,6 +303,22 @@
     "wk_radicaux": ["Bouche"],
     "romaji": "kou, ku, kuchi"
   },
+  "国": {
+    "traits": 8,
+    "classe": 2,
+    "frequence": 6,
+    "jlpt_ancien": 4,
+    "jlpt_nouveau": 5,
+    "sens": ["Pays", "Région", "Nation"],
+    "lectures_on": ["こく"],
+    "lectures_kun": ["くに"],
+    "wk_niveau": 6,
+    "wk_sens": ["Pays"],
+    "wk_lectures_on": ["こく"],
+    "wk_lectures_kun": ["!くに"],
+    "wk_radicaux": ["Enclos", "Roi (variante avec point)"],
+    "romaji": "koku, kuni"
+},
   "大": {
     "traits": 3,
     "classe": 1,
