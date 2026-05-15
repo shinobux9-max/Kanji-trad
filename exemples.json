@@ -293,6 +293,20 @@
       "fr": "C'est une femme aimable."
     }
   ],
+  "兎": [
+    {
+      "jp": "庭に兎がいます。",
+      "ka": "にわ に うさぎ が います。",
+      "ro": "Niwa ni usagi ga imasu.",
+      "fr": "Il y a un lapin dans le jardin."
+    },
+    {
+      "jp": "兎は耳が長いです。",
+      "ka": "うさぎ は みみ が ながい です。",
+      "ro": "Usagi wa mimi ga nagai desu.",
+      "fr": "Le lapin a de longues oreilles."
+    }
+  ],
   "山": [
     {
       "jp": "高い山に登ります。",
