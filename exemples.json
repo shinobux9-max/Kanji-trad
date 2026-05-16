@@ -489,6 +489,20 @@
       "fr": "Mon petit frère va avoir huit ans."
     }
   ],
+  "卵": [
+    {
+      "jp": "朝ご飯に卵を食べます。",
+      "ka": "あすごはん に たまご を たべます。",
+      "ro": "Asagohan ni tamago o tabemasu.",
+      "fr": "Je mange un œuf au petit-déjeuner."
+    },
+    {
+      "jp": "卵焼きを作りました。",
+      "ka": "たまごやき を つくりました。",
+      "ro": "Tamagoyaki o tsukurimashita.",
+      "fr": "J'ai cuisiné une omelette japonaise."
+    }
+],
   "中": [
     {
       "jp": "箱の中に猫がいます。",
