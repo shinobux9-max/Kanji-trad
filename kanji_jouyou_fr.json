@@ -543,6 +543,22 @@
     "wk_radicaux": ["Eau (Sanzui)", "Chaque / Mère"],
     "romaji": "kai, umi"
 },
+  "卵": {
+    "traits": 7,
+    "classe": 6,
+    "frequence": 1251,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 4,
+    "sens": ["Œuf"],
+    "lectures_on": ["らん"],
+    "lectures_kun": ["たまご"],
+    "wk_niveau": 13,
+    "wk_sens": ["Œuf"],
+    "wk_lectures_on": ["らん"],
+    "wk_lectures_kun": ["!たまご"],
+    "wk_radicaux": ["Œuf"],
+    "romaji": "ran, tamago"
+},
   "又": {
     "traits": 2,
     "classe": 8,
