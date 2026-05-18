@@ -545,6 +545,20 @@
       "fr": "Le Japon est un pays insulaire."
     }
 ],
+  "島": [
+    {
+      "jp": "日本にはたくさんの島があります。",
+      "ka": "にほん に は たくさん の しま が あります。",
+      "ro": "Nihon ni wa takusan no shima ga arimasu.",
+      "fr": "Il y a beaucoup d'îles au Japon."
+    },
+    {
+      "jp": "広島へ旅行に行きました。",
+      "ka": "ひろしま へ りょこう に いきました。",
+      "ro": "Hiroshima e ryokō ni ikimashita.",
+      "fr": "Je suis parti en voyage à Hiroshima (litt. 'Large Île')."
+    }
+],
   "筆": [
     {
       "jp": "筆で漢字を書きます。",
