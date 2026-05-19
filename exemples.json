@@ -685,6 +685,20 @@
       "fr": "Je regarderai un film jeudi."
     }
   ],
+  "宝": [
+    {
+      "jp": "これは私の一番の宝物です。",
+      "ka": "これ は わたし の いちばん の たからもの です。",
+      "ro": "Kore wa watashi no ichiban no takaramono desu.",
+      "fr": "C'est mon trésor le plus précieux."
+    },
+    {
+      "jp": "島で宝箱を見つけました。",
+      "ka": "しま で たからばこ を みつけました。",
+      "ro": "Shima de takarabako o mitsukemashita.",
+      "fr": "J'ai trouvé un coffre au trésor sur l'île."
+    }
+],
   "水": [
     {
       "jp": "コップ一杯の水を飲みます。",
