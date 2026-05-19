@@ -607,6 +607,22 @@
     "wk_radicaux": ["Oiseau", "Montagne"],
     "romaji": "tō, shima"
   },
+  "宝": {
+    "traits": 8,
+    "classe": 6,
+    "frequence": 997,
+    "jlpt_ancien": 2,
+    "jlpt_nouveau": 3,
+    "sens": ["Trésor", "Richesse", "Précieux"],
+    "lectures_on": ["ほう"],
+    "lectures_kun": ["たから"],
+    "wk_niveau": 14,
+    "wk_sens": ["Trésor"],
+    "wk_lectures_on": ["ほう"],
+    "wk_lectures_kun": ["!たから"],
+    "wk_radicaux": ["Toit", "Jade"],
+    "romaji": "hō, takara"
+},
   "才": {
     "traits": 3,
     "classe": 2,
