@@ -532,7 +532,7 @@
         <div class="mode-section-label">— Reconnaissance</div>
         <div class="mode-option" onclick="launchQuizMode('kanji-to-read')">
             <span class="mode-icon">🈳</span>
-            <div><div class="mode-opt-title">Kanji → Lectures</div><div class="mode-opt-sub">Trouvez la lecture hiragana du kanji</div></div>
+            <div><div class="mode-opt-title">Kanji → Onyomi / Kunyomi</div><div class="mode-opt-sub">Trouvez la bonne lecture (on ou kun) du kanji</div></div>
         </div>
         <div class="mode-option" onclick="launchQuizMode('kanji-to-mean')">
             <span class="mode-icon">🇫🇷</span>
@@ -541,7 +541,7 @@
         <div class="mode-section-label">— Rappel inversé</div>
         <div class="mode-option" onclick="launchQuizMode('read-to-kanji')">
             <span class="mode-icon">🔄</span>
-            <div><div class="mode-opt-title">Lectures → Kanji</div><div class="mode-opt-sub">Hiragana affiché, trouvez le kanji</div></div>
+            <div><div class="mode-opt-title">Onyomi / Kunyomi → Kanji</div><div class="mode-opt-sub">Lecture(s) affichée(s), trouvez le kanji</div></div>
         </div>
         <div class="mode-option" onclick="launchQuizMode('mean-to-kanji')">
             <span class="mode-icon">🔁</span>
@@ -951,6 +951,42 @@ function getAllValidReadings(k) {
     // Versions romaji
     [...set].forEach(r => { const ro = kanaToRomaji(r); if (ro !== r) set.add(ro); });
     return [...set].filter(Boolean);
+}
+
+/* ── HELPER : génère les chips ON/KUN pour l'affichage quiz ──────────────
+   Retourne du HTML avec toutes les lectures ON (fond vert) et KUN (fond bleu).
+   clean : retire point/tiret/okurigana et déduplication.
+   maxOn / maxKun : limite d'affichage pour ne pas saturer l'interface.
+   showBadge : affiche le label ON / KUN sur chaque chip.
+───────────────────────────────────────────────────────────────────────── */
+function buildReadingChips(k, { maxOn = 4, maxKun = 4, showBadge = true, chipStyle = '' } = {}) {
+    const clean = r => r.replace(/[.·＊*].*/, '').replace(/-.*/, '').replace(/^!/, '').trim();
+    const seen  = new Set();
+
+    const onChips = (k.on || [])
+        .map(clean).filter(r => r && !seen.has(r) && seen.add(r))
+        .slice(0, maxOn)
+        .map(r => `<span class="quiz-reading-chip on-chip" ${chipStyle ? `style="${chipStyle}"` : ''}>
+            ${showBadge ? '<span style="font-size:8px;opacity:0.7;display:block;line-height:1;margin-bottom:2px">ON</span>' : ''}
+            <span class="chip-text">${r}</span>
+        </span>`).join('');
+
+    const kunChips = (k.kun || [])
+        .map(clean).filter(r => r && !seen.has(r) && seen.add(r))
+        .slice(0, maxKun)
+        .map(r => `<span class="quiz-reading-chip kun-chip" ${chipStyle ? `style="${chipStyle}"` : ''}>
+            ${showBadge ? '<span style="font-size:8px;opacity:0.7;display:block;line-height:1;margin-bottom:2px">KUN</span>' : ''}
+            <span class="chip-text">${r}</span>
+        </span>`).join('');
+
+    if (!onChips && !kunChips) {
+        // Fallback : afficher getBestReading si aucune lecture connue
+        const best = getBestReading(k);
+        return `<span class="quiz-reading-chip on-chip" ${chipStyle ? `style="${chipStyle}"` : ''}>
+            <span class="chip-text">${best}</span>
+        </span>`;
+    }
+    return onChips + kunChips;
 }
 
 // Label de réponse quiz : "Sens • meilleure lecture" (tronqué si besoin)
@@ -1627,9 +1663,12 @@ function renderQuizQuestion() {
     
     if (currentMode === 'vocal') {
         const vMeaning = k.meanings.filter(m => !m.toLowerCase().includes('radical')).slice(0,2).join(' · ') || k.meanings[0] || '?';
+        const vChips   = buildReadingChips(k, { maxOn: 3, maxKun: 3, showBadge: true });
         promptHtml = `
             <div style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Sens affiché — Prononcez la lecture</div>
-            <div class="quiz-meaning-big" style="font-size:30px;font-weight:bold;margin-bottom:20px;">${vMeaning}</div>
+            <div class="quiz-meaning-big" style="font-size:30px;font-weight:bold;margin-bottom:12px;">${vMeaning}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:18px;opacity:0.45"
+                 title="Lectures possibles (aide — masquée volontairement)">${vChips}</div>
             <button id="mic-btn" class="mic-btn" onclick="startVoiceRecognition()" title="Appuyer pour parler">🎤</button>
             <div id="vocal-feedback" style="font-size:13px;color:var(--gray);margin-top:16px;min-height:22px;text-align:center;max-width:300px;line-height:1.5;"></div>
             <button onclick="skipVocalQuestion()" style="margin-top:18px;background:none;border:1px solid var(--border);color:var(--gray);padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;">→ Passer</button>`;
@@ -1639,8 +1678,11 @@ function renderQuizQuestion() {
             <div id="quiz-kanji-animated" class="quiz-kanji-animated"></div>
             <div class="quiz-tap-hint">Trouvez la bonne réponse</div>`;
     } else if (currentMode === 'read-to-kanji') {
-        promptHtml = `<div class="quiz-reading-big" style="font-size:32px; color:var(--accent2)">${bestRead}</div>
-                      <div class="quiz-tap-hint">Quel est le kanji correspondant ?</div>`;
+        promptHtml = `
+            <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px">
+                ${buildReadingChips(k, { maxOn: 4, maxKun: 4, showBadge: true })}
+            </div>
+            <div class="quiz-tap-hint">Quel est le kanji correspondant ?</div>`;
     } else if (currentMode === 'mean-to-kanji') {
         promptHtml = `<div class="quiz-meaning-big">${meaning}</div>
                       <div class="quiz-tap-hint">Quel est le kanji correspondant ?</div>`;
@@ -1699,20 +1741,25 @@ function revealChoices(currentMode) {
     grid.innerHTML = choices.map(ci => {
         const target = kanjiDb[ci];
         let content = "";
-        
-        // DÉCIDER QUOI AFFICHER DANS LES BOUTONS
+
         if (currentMode === 'kanji-to-read') {
-            content = getBestReading(target);
+            // Toutes les lectures ON + KUN en chips (max 3+3 pour tenir dans la cellule)
+            content = `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;padding:4px">
+                ${buildReadingChips(target, { maxOn: 3, maxKun: 3, showBadge: true, chipStyle: 'padding:3px 7px;font-size:13px' })}
+            </div>`;
         } else if (currentMode === 'kanji-to-mean') {
             content = target.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || target.meanings[0] || '?';
         } else if (currentMode === 'read-to-kanji' || currentMode === 'mean-to-kanji') {
             content = target.char;
         } else {
-            // Mixte/survie fallback
             content = target.char;
         }
 
-        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})" style="font-size:${content.length > 8 ? '20px' : '24px'}">
+        const fontSize = (currentMode === 'read-to-kanji' || currentMode === 'mean-to-kanji') ? '36px' : '14px';
+        const isChipMode = currentMode === 'kanji-to-read';
+
+        return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})"
+            style="${isChipMode ? 'font-size:14px;align-items:center' : `font-size:${content.length > 8 ? '18px' : fontSize}`}">
             ${content}
         </div>`;
     }).join('');
@@ -1911,16 +1958,27 @@ function renderStrokeQuizQuestion() {
 
     // Header logic (meanings & readings)
     const meanings = k.meanings.filter(m => !m.toLowerCase().includes('radical'));
-    const mainMeaning = meanings.length ? meanings[0] : (k.meanings[0] || '?');
-    const sqBest = getBestReading(k);
-    
+    const mainMeaning  = meanings.length ? meanings[0] : (k.meanings[0] || '?');
+    const extraMeanings = meanings.slice(1, 3); // 2 sens supplémentaires max
+
+    const extraHtml = extraMeanings.length
+        ? `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px">
+            ${extraMeanings.map(m => `<span style="font-size:11px;color:var(--gray);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px">${m}</span>`).join('')}
+           </div>` : '';
+
+    // Chips ON/KUN — toutes les lectures sans dépasser 4+4
+    const readingsChips = buildReadingChips(k, { maxOn: 4, maxKun: 4, showBadge: true });
+
     // Construction du HTML (simplifié pour la clarté)
     const strokeDots = Array(k.strokes).fill(0).map((_, i) => `<div class="sq-stroke-dot" id="sq-dot-${i}"></div>`).join('');
 
     document.getElementById('stroke-quiz-body').innerHTML = `
         <div class="sq-kanji-header">
-            <div class="sq-meaning" style="font-size:24px; font-weight:bold">${mainMeaning}</div>
-            <div class="sq-readings-row" style="margin-top:10px; color:var(--accent)">${sqBest}</div>
+            <div class="sq-meaning" style="font-size:22px;font-weight:bold">${mainMeaning}</div>
+            ${extraHtml}
+            <div class="sq-readings-row" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
+                ${readingsChips}
+            </div>
         </div>
         <div class="sq-canvas-wrap" id="sq-canvas-wrap" style="touch-action: none;">
             <div id="sq-writer-target"></div>
