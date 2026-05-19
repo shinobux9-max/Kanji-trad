@@ -97,6 +97,51 @@
     .nav-sub-quiz { font-size: 10px; padding: 3px 8px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
     .nav-sub-quiz:hover { background: var(--accent); color: #000; }
 
+    /* ── DOSSIERS / FAVORIS ──────────── */
+    .detail-action-btn.save  { border-color: #f5a623; color: #f5a623; }
+    .detail-action-btn.save.saved { background: #2e1f00; border-color: #f5a623; color: #f5a623; }
+
+    /* Modal dossiers */
+    #folder-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.82); z-index: 7000; display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(5px); }
+    #folder-modal.open { display: flex; }
+    .fm-sheet { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 80vh; display: flex; flex-direction: column; border: 1px solid var(--border); border-bottom: none; }
+    .fm-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; }
+    .fm-header { padding: 12px 18px 10px; flex-shrink: 0; }
+    .fm-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; }
+    .fm-kanji { font-size: 13px; color: var(--accent); font-weight: bold; margin-top: 2px; }
+    .fm-list { flex: 1; overflow-y: auto; padding: 4px 0; border-top: 1px solid var(--border); }
+    .fm-item { display: flex; align-items: center; padding: 13px 18px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.12s; gap: 12px; }
+    .fm-item:active { background: var(--card); }
+    .fm-item-icon { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+    .fm-item-name { flex: 1; font-size: 14px; }
+    .fm-item-count { font-size: 11px; color: var(--gray); background: var(--card); padding: 2px 7px; border-radius: 10px; }
+    .fm-item-check { font-size: 16px; color: var(--accent); width: 20px; text-align: right; flex-shrink: 0; }
+    .fm-new-row { padding: 12px 18px; flex-shrink: 0; border-top: 1px solid var(--border); }
+    .fm-new-inp { width: 100%; padding: 10px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; font-family: inherit; box-sizing: border-box; outline: none; }
+    .fm-new-inp:focus { border-color: var(--accent); }
+    .fm-btns { display: flex; gap: 8px; margin-top: 8px; }
+    .fm-btn { flex: 1; padding: 11px; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: inherit; }
+    .fm-btn.primary { background: linear-gradient(135deg,var(--accent),var(--accent2)); color: #000; }
+    .fm-btn.secondary { background: var(--card); color: var(--gray); border: 1px solid var(--border); }
+
+    /* Page Mes Dossiers */
+    .folders-wrap { padding: 16px; }
+    .folder-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
+    .folder-card:active { border-color: var(--accent); }
+    .folder-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .folder-card-icon { font-size: 22px; }
+    .folder-card-name { flex: 1; font-weight: bold; font-size: 15px; }
+    .folder-card-count { font-size: 12px; color: var(--gray); }
+    .folder-card-kanjis { display: flex; flex-wrap: wrap; gap: 6px; }
+    .folder-kanji-chip { font-size: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; color: #fff; cursor: pointer; }
+    .folder-card-actions { display: flex; gap: 8px; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+    .folder-action-btn { flex: 1; padding: 8px; background: none; border: 1px solid var(--border); border-radius: 7px; color: var(--gray); font-size: 12px; cursor: pointer; font-family: inherit; }
+    .folder-action-btn.danger { border-color: #e55; color: #e55; }
+    .folder-action-btn:active { background: var(--card); }
+    .folder-empty { text-align: center; padding: 40px 20px; color: var(--gray); }
+    .folder-empty-icon { font-size: 48px; margin-bottom: 12px; }
+    .folder-empty-text { font-size: 14px; line-height: 1.6; }
+
     /* ── CONTAINER ───────────────────── */
     .container { padding-top: 56px; height: 100vh; overflow-y: auto; }
     .container.search-open { padding-top: 112px; }
@@ -408,6 +453,7 @@
     </div>
     <div class="nav-static" onclick="navDashboard()"><span class="icon">🏠</span> Accueil</div>
     <div class="nav-static" onclick="navKana()"><span class="icon">あ</span> Kana</div>
+    <div class="nav-static" onclick="navFolders()"><span class="icon">📁</span> Mes Dossiers</div>
     <div id="grade-list"></div>
 </div>
 
@@ -444,6 +490,10 @@
                     <button class="detail-action-btn trace" id="detail-quiz-btn" onclick="launchDetailTrace()" title="S'entraîner au tracé guidé">
                         <span style="font-size:18px">✍️</span>
                         <span class="btn-label">Tracé</span>
+                    </button>
+                    <button class="detail-action-btn save" id="btn-save-kanji" onclick="openFolderModal(window.currentKanjiForStroke)" title="Enregistrer dans un dossier">
+                        <span style="font-size:18px" id="save-icon">⭐</span>
+                        <span class="btn-label">SAUV.</span>
                     </button>
                 </div>
                 <div class="oral-feedback" id="voice-feedback"></div>
@@ -485,6 +535,26 @@
         <!-- ── Exemples ── -->
         <div class="examples-wrap" id="exemples-container"></div>
 
+    </div>
+</div>
+
+<!-- ── MODAL DOSSIERS ─────────────────────────────── -->
+<div id="folder-modal">
+    <div class="fm-sheet">
+        <div class="fm-handle"></div>
+        <div class="fm-header">
+            <div class="fm-title">Enregistrer dans un dossier</div>
+            <div class="fm-kanji" id="fm-kanji-label"></div>
+        </div>
+        <div class="fm-list" id="fm-folder-list"></div>
+        <div class="fm-new-row" id="fm-new-row">
+            <input class="fm-new-inp" id="fm-new-inp" placeholder="Nom du nouveau dossier…" maxlength="30"
+                onkeydown="if(event.key==='Enter')confirmNewFolder()">
+            <div class="fm-btns">
+                <button class="fm-btn secondary" onclick="closeFolderModal()">Annuler</button>
+                <button class="fm-btn primary"   onclick="confirmNewFolder()">Créer et ajouter</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1172,6 +1242,277 @@ function initMicSearch() {
     };
 }
 setTimeout(initMicSearch, 300);
+
+/* ══════════════════════════════════════════════════
+   SYSTÈME DE DOSSIERS / FAVORIS
+   Stockage : localStorage clé 'kanji_folders_v1'
+   Structure : { "Animaux": ["猫","犬"], ... }
+══════════════════════════════════════════════════ */
+const FOLDERS_KEY = 'kanji_folders_v1';
+
+function loadFolders() {
+    try { return JSON.parse(localStorage.getItem(FOLDERS_KEY)) || {}; }
+    catch(_) { return {}; }
+}
+
+function saveFolders(folders) {
+    try { localStorage.setItem(FOLDERS_KEY, JSON.stringify(folders)); }
+    catch(e) { console.warn('Folders save error:', e); }
+}
+
+function isKanjiInAnyFolder(char) {
+    const f = loadFolders();
+    return Object.values(f).some(arr => arr.includes(char));
+}
+
+function getFoldersContaining(char) {
+    const f = loadFolders();
+    return Object.keys(f).filter(name => f[name].includes(char));
+}
+
+function addKanjiToFolder(char, folderName) {
+    const f = loadFolders();
+    if (!f[folderName]) f[folderName] = [];
+    if (!f[folderName].includes(char)) f[folderName].push(char);
+    saveFolders(f);
+}
+
+function removeKanjiFromFolder(char, folderName) {
+    const f = loadFolders();
+    if (f[folderName]) {
+        f[folderName] = f[folderName].filter(c => c !== char);
+        if (f[folderName].length === 0) delete f[folderName];
+    }
+    saveFolders(f);
+}
+
+function renameFolder(oldName, newName) {
+    if (!newName || oldName === newName) return false;
+    const f = loadFolders();
+    if (!f[oldName]) return false;
+    if (f[newName]) return false; // doublon
+    f[newName] = f[oldName];
+    delete f[oldName];
+    saveFolders(f);
+    return true;
+}
+
+function deleteFolder(name) {
+    const f = loadFolders();
+    delete f[name];
+    saveFolders(f);
+}
+
+// ── Modal dossiers ─────────────────────────────
+let _fmChar = null;
+
+function openFolderModal(char) {
+    if (!char) return;
+    _fmChar = char;
+    document.getElementById('fm-kanji-label').textContent = `Kanji : ${char}`;
+    document.getElementById('fm-new-inp').value = '';
+    renderFolderModalList(char);
+    document.getElementById('folder-modal').classList.add('open');
+}
+
+function closeFolderModal() {
+    document.getElementById('folder-modal').classList.remove('open');
+    _fmChar = null;
+}
+
+function renderFolderModalList(char) {
+    const f       = loadFolders();
+    const names   = Object.keys(f);
+    const inList  = getFoldersContaining(char);
+    const list    = document.getElementById('fm-folder-list');
+
+    let html = '';
+
+    // Bouton "Créer un nouveau dossier"
+    html += `<div class="fm-item" onclick="toggleFmNewRow()">
+        <span class="fm-item-icon">➕</span>
+        <span class="fm-item-name" style="color:var(--accent)">Créer un nouveau dossier</span>
+    </div>`;
+
+    if (names.length === 0) {
+        html += `<div style="padding:20px;text-align:center;color:var(--gray);font-size:13px">
+            Aucun dossier encore créé</div>`;
+    } else {
+        names.forEach(name => {
+            const isIn  = inList.includes(name);
+            const count = f[name].length;
+            html += `<div class="fm-item" onclick="toggleKanjiInFolder('${char.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}')">
+                <span class="fm-item-icon">📁</span>
+                <span class="fm-item-name">${name}</span>
+                <span class="fm-item-count">${count} kanji</span>
+                <span class="fm-item-check">${isIn ? '✔' : ''}</span>
+            </div>`;
+        });
+    }
+
+    list.innerHTML = html;
+}
+
+function toggleKanjiInFolder(char, folderName) {
+    const inList = getFoldersContaining(char);
+    if (inList.includes(folderName)) {
+        removeKanjiFromFolder(char, folderName);
+    } else {
+        addKanjiToFolder(char, folderName);
+    }
+    renderFolderModalList(char);
+    updateSaveBtnState(char);
+}
+
+function toggleFmNewRow() {
+    const row = document.getElementById('fm-new-row');
+    const inp = document.getElementById('fm-new-inp');
+    const isHidden = row.style.display === 'none';
+    row.style.display = isHidden ? '' : 'none';
+    if (isHidden) setTimeout(() => inp.focus(), 50);
+}
+
+function confirmNewFolder() {
+    const inp  = document.getElementById('fm-new-inp');
+    const name = inp.value.trim();
+    if (!name) { inp.focus(); return; }
+    if (!_fmChar) return;
+
+    addKanjiToFolder(_fmChar, name);
+    inp.value = '';
+    document.getElementById('fm-new-row').style.display = 'none';
+    renderFolderModalList(_fmChar);
+    updateSaveBtnState(_fmChar);
+}
+
+// ── Bouton ⭐ dans la fiche ─────────────────────
+function updateSaveBtnState(char) {
+    const btn  = document.getElementById('btn-save-kanji');
+    const icon = document.getElementById('save-icon');
+    if (!btn || !icon) return;
+    const saved = isKanjiInAnyFolder(char);
+    icon.textContent = saved ? '★' : '⭐';
+    btn.classList.toggle('saved', saved);
+    btn.title = saved ? 'Enregistré — cliquer pour modifier' : 'Enregistrer dans un dossier';
+}
+
+// ── Page "Mes Dossiers" ─────────────────────────
+function navFolders() {
+    toggleSidebar(false);
+    document.getElementById('page-title').innerText = '📁 Mes Dossiers';
+    renderFoldersPage();
+}
+
+function renderFoldersPage() {
+    const main    = document.getElementById('main-content');
+    const folders = loadFolders();
+    const names   = Object.keys(folders);
+
+    main.innerHTML = '';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'folders-wrap';
+
+    if (names.length === 0) {
+        wrap.innerHTML = `<div class="folder-empty">
+            <div class="folder-empty-icon">📂</div>
+            <div class="folder-empty-text">Aucun dossier créé.<br>
+            Ouvrez une fiche kanji et appuyez sur ⭐ pour commencer.</div>
+        </div>`;
+        main.appendChild(wrap);
+        return;
+    }
+
+    // Bouton "Créer un dossier vide"
+    wrap.innerHTML = `<button onclick="promptCreateEmptyFolder()"
+        style="width:100%;padding:12px;margin-bottom:16px;background:none;border:1px dashed var(--accent);border-radius:10px;color:var(--accent);font-size:13px;cursor:pointer;font-family:inherit;">
+        ➕ Créer un dossier vide
+    </button>`;
+
+    names.forEach(name => {
+        const kanjis = folders[name];
+        const card   = document.createElement('div');
+        card.className = 'folder-card';
+
+        const kanjiChips = kanjis.map(c =>
+            `<span class="folder-kanji-chip" onclick="event.stopPropagation();openKanjiFromChar('${c}')"
+                title="${getKanjiMeaning(c)}">${c}</span>`
+        ).join('');
+
+        const safeN = name.replace(/'/g,"\\'");
+        card.innerHTML = `
+            <div class="folder-card-header">
+                <span class="folder-card-icon">📁</span>
+                <span class="folder-card-name">${name}</span>
+                <span class="folder-card-count">${kanjis.length} kanji</span>
+            </div>
+            <div class="folder-card-kanjis">${kanjiChips || '<span style="color:var(--gray);font-size:12px">Dossier vide</span>'}</div>
+            <div class="folder-card-actions">
+                <button class="folder-action-btn" onclick="promptRenameFolder('${safeN}')">✏ Renommer</button>
+                <button class="folder-action-btn" onclick="startFolderQuiz('${safeN}')">⚡ Quiz</button>
+                <button class="folder-action-btn danger" onclick="promptDeleteFolder('${safeN}')">🗑 Supprimer</button>
+            </div>`;
+
+        wrap.appendChild(card);
+    });
+
+    main.appendChild(wrap);
+}
+
+function getKanjiMeaning(char) {
+    const k = kanjiDb.find(k => k.char === char);
+    if (!k) return char;
+    return k.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || k.meanings[0] || '';
+}
+
+function openKanjiFromChar(char) {
+    const idx = kanjiMap.get(char);
+    if (idx === undefined) return;
+    openDetail(kanjiDb[idx]);
+}
+
+function promptCreateEmptyFolder() {
+    const name = prompt('Nom du nouveau dossier :');
+    if (!name || !name.trim()) return;
+    const f = loadFolders();
+    if (!f[name.trim()]) { f[name.trim()] = []; saveFolders(f); }
+    renderFoldersPage();
+}
+
+function promptRenameFolder(oldName) {
+    const newName = prompt(`Renommer "${oldName}" en :`, oldName);
+    if (!newName || !newName.trim() || newName.trim() === oldName) return;
+    if (!renameFolder(oldName, newName.trim())) {
+        alert('Un dossier avec ce nom existe déjà.');
+        return;
+    }
+    renderFoldersPage();
+}
+
+function promptDeleteFolder(name) {
+    if (!confirm(`Supprimer le dossier "${name}" ?\nLes kanjis ne seront pas supprimés, seulement le dossier.`)) return;
+    deleteFolder(name);
+    renderFoldersPage();
+}
+
+function startFolderQuiz(folderName) {
+    const folders = loadFolders();
+    const chars   = folders[folderName];
+    if (!chars || chars.length < 2) {
+        alert('Il faut au moins 2 kanjis dans le dossier pour lancer un quiz.');
+        return;
+    }
+    // Construire un pool ad hoc d'indices
+    const indices = chars.map(c => kanjiMap.get(c)).filter(i => i !== undefined);
+    if (indices.length < 2) return;
+
+    // Stocker temporairement dans quizState en utilisant startQuiz avec type 'folder'
+    // On passe par un mode catégorie inline
+    const tempId = '__folder__' + folderName;
+    // Créer une entrée temporaire dans les catégories
+    categories.set(tempId, { id: tempId, label: `📁 ${folderName}`, short: '📁', indices, color: '#f5a623' });
+    showQuizModeModal('category', tempId);
+}
 
 /* ══════════════════════════════════════════════════
    SIDEBAR
@@ -2430,6 +2771,9 @@ function openDetail(kanji) {
     document.getElementById('btn-oral-test').style.display = '';
     const dqb = document.getElementById('detail-quiz-btn');
     if (dqb) dqb.style.display = '';
+    const bsk = document.getElementById('btn-save-kanji');
+    if (bsk) bsk.style.display = '';
+    updateSaveBtnState(kanji.char);
 
     // 6. HanziWriter
     document.getElementById('kana-writer-svg').style.display     = 'none';
@@ -2469,6 +2813,8 @@ function openKanaDetail(kana) {
     document.getElementById('btn-oral-test').style.display = 'none';
     const dqb = document.getElementById('detail-quiz-btn');
     if (dqb) dqb.style.display = 'none';
+    const bsk = document.getElementById('btn-save-kanji');
+    if (bsk) bsk.style.display = 'none';
 
     // Masquer la grille stroke guide
     document.getElementById('stroke-guide-grid').innerHTML = '';
