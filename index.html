@@ -250,8 +250,10 @@
     @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
     /* Phase 2 : grille */
-    .quiz-choices-grid { width: 100%; max-width: 380px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-    .quiz-kanji-choice { aspect-ratio: 1; background: var(--card); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 50px; color: #fff; text-align: center; padding: 5px; }
+    .quiz-choices-grid { width: 100%; max-width: 400px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+    .quiz-choices-grid.chip-mode { grid-template-columns: repeat(2, 1fr); max-width: 400px; }
+    .quiz-kanji-choice { background: var(--card); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 50px; color: #fff; text-align: center; padding: 8px 6px; min-height: 80px; transition: border-color 0.15s, background 0.15s; }
+    .quiz-choices-grid.chip-mode .quiz-kanji-choice { min-height: 90px; padding: 10px 8px; align-items: flex-start; padding-top: 12px; }
     .quiz-kanji-choice.correct { background: #0b2e24; border-color: var(--accent); color: var(--accent); }
     .quiz-kanji-choice.wrong   { background: #2e0b0b; border-color: #e55; color: #e55; }
     .quiz-kanji-choice.reveal  { border-color: var(--accent); color: var(--accent); border-style: dashed; }
@@ -966,17 +968,17 @@ function buildReadingChips(k, { maxOn = 4, maxKun = 4, showBadge = true, chipSty
     const onChips = (k.on || [])
         .map(clean).filter(r => r && !seen.has(r) && seen.add(r))
         .slice(0, maxOn)
-        .map(r => `<span class="quiz-reading-chip on-chip" ${chipStyle ? `style="${chipStyle}"` : ''}>
-            ${showBadge ? '<span style="font-size:8px;opacity:0.7;display:block;line-height:1;margin-bottom:2px">ON</span>' : ''}
-            <span class="chip-text">${r}</span>
+        .map(r => `<span class="quiz-reading-chip on-chip" style="display:inline-flex;flex-direction:column;align-items:center;${chipStyle}">
+            ${showBadge ? '<span style="font-size:7px;opacity:0.65;line-height:1;margin-bottom:1px;font-weight:800;letter-spacing:.5px">ON</span>' : ''}
+            <span class="chip-text" style="white-space:nowrap">${r}</span>
         </span>`).join('');
 
     const kunChips = (k.kun || [])
         .map(clean).filter(r => r && !seen.has(r) && seen.add(r))
         .slice(0, maxKun)
-        .map(r => `<span class="quiz-reading-chip kun-chip" ${chipStyle ? `style="${chipStyle}"` : ''}>
-            ${showBadge ? '<span style="font-size:8px;opacity:0.7;display:block;line-height:1;margin-bottom:2px">KUN</span>' : ''}
-            <span class="chip-text">${r}</span>
+        .map(r => `<span class="quiz-reading-chip kun-chip" style="display:inline-flex;flex-direction:column;align-items:center;${chipStyle}">
+            ${showBadge ? '<span style="font-size:7px;opacity:0.65;line-height:1;margin-bottom:1px;font-weight:800;letter-spacing:.5px">KUN</span>' : ''}
+            <span class="chip-text" style="white-space:nowrap">${r}</span>
         </span>`).join('');
 
     if (!onChips && !kunChips) {
@@ -1737,15 +1739,20 @@ function revealChoices(currentMode) {
 
     const grid = document.getElementById('quiz-choices');
     grid.style.display = 'grid';
+    if (currentMode === 'kanji-to-read') {
+        grid.classList.add('chip-mode');
+    } else {
+        grid.classList.remove('chip-mode');
+    }
     
     grid.innerHTML = choices.map(ci => {
         const target = kanjiDb[ci];
         let content = "";
 
         if (currentMode === 'kanji-to-read') {
-            // Toutes les lectures ON + KUN en chips (max 3+3 pour tenir dans la cellule)
-            content = `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;padding:4px">
-                ${buildReadingChips(target, { maxOn: 3, maxKun: 3, showBadge: true, chipStyle: 'padding:3px 7px;font-size:13px' })}
+            // Toutes les lectures ON + KUN en chips compactes (max 3+3)
+            content = `<div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;align-items:flex-start;width:100%">
+                ${buildReadingChips(target, { maxOn: 3, maxKun: 3, showBadge: true, chipStyle: 'padding:3px 6px;font-size:12px;min-width:0' })}
             </div>`;
         } else if (currentMode === 'kanji-to-mean') {
             content = target.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || target.meanings[0] || '?';
