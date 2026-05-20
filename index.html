@@ -308,7 +308,10 @@
     .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 6px; border-radius: 8px; }
     #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
-    #sq-writer-target { width: 280px; height: 280px; background: #1a1a2e !important; border-radius: 16px; border: 2px solid var(--border); display: block; margin: 0 auto;}
+    #stroke-quiz-body.tracing { overflow-y: hidden; } /* désactive le scroll pendant le tracé */
+    #sq-writer-target { width: 280px; height: 280px; background: #1a1a2e !important; border-radius: 16px; border: 2px solid var(--border); display: block; margin: 0 auto; touch-action: none; }
+    #sq-writer-target svg { touch-action: none; user-select: none; -webkit-user-select: none; }
+    #sq-writer-target svg * { touch-action: none; }
     #sq-writer-target svg path[stroke="#1a1a2e"], 
     #sq-writer-target svg path[opacity="0.05"],
     #sq-writer-target svg path[opacity="0"] {
@@ -393,7 +396,7 @@
     .sq-kanji-header { text-align: center; width: 100%; max-width: 320px; }
     .sq-meaning { font-size: 22px; font-weight: bold; color: var(--text); }
     .sq-readings-row { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-    .sq-canvas-wrap { position: relative; width: 280px; height: 280px; flex-shrink: 0; }
+    .sq-canvas-wrap { position: relative; width: 280px; height: 280px; flex-shrink: 0; touch-action: none; }
     .sq-stroke-tracker { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; max-width: 320px; }
     .sq-stroke-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
     .sq-stroke-dot.done { background: var(--accent); }
@@ -2214,7 +2217,7 @@ function createStrokeWriter(elementId, character, isHardcore) {
         padding:  24,
         strokeColor:      '#00c9a7',
         drawingColor:     '#00c9a7',
-        drawingWidth:     15,        // valeur réelle en px (50 était invalide)
+        drawingWidth:     6,        // valeur réelle en px (50 était invalide)
         highlightOnComplete: true,
         highlightColor:   '#7b61ff',
         renderer:         'svg',
@@ -2341,10 +2344,27 @@ function renderStrokeQuizQuestion() {
     // Attendre le prochain frame pour que le DOM soit stabilisé
     // avant d'initialiser HanziWriter (évite le bug "élément invisible")
     requestAnimationFrame(() => {
-        if (!strokeQuizState || strokeQuizState.idx !== qs.idx) return; // quiz changé entretemps
+        if (!strokeQuizState || strokeQuizState.idx !== qs.idx) return;
 
         strokeWriter = createStrokeWriter('sq-writer-target', k.char, isHardcore);
-        if (!strokeWriter) { sqSkip(); return; } // kanji non supporté → passer
+        if (!strokeWriter) { sqSkip(); return; }
+
+        // Désactiver le scroll pendant le tracé (empêche le vol d'events touch)
+        const sqBody = document.getElementById('stroke-quiz-body');
+        if (sqBody) sqBody.classList.add('tracing');
+
+        // Forcer touch-action:none sur tout le SVG créé dynamiquement par HanziWriter
+        // (l'héritage CSS ne s'applique pas toujours aux SVG sur Chrome Android / Samsung)
+        requestAnimationFrame(() => {
+            const target = document.getElementById('sq-writer-target');
+            if (!target) return;
+            const applyTouchNone = el => {
+                el.style.touchAction = 'none';
+                el.style.userSelect  = 'none';
+                Array.from(el.children).forEach(applyTouchNone);
+            };
+            applyTouchNone(target);
+        });
 
         let strokesDone = 0;
 
@@ -2370,6 +2390,10 @@ function renderStrokeQuizQuestion() {
             },
             onComplete(summary) {
                 if (!strokeQuizState) return;
+                // Réactiver le scroll
+                const sqBody = document.getElementById('stroke-quiz-body');
+                if (sqBody) sqBody.classList.remove('tracing');
+
                 const isClean = summary.totalMistakes === 0;
                 if (isClean) { qs.correct++; document.getElementById('sq-correct').textContent = qs.correct; }
                 else         { qs.wrong++;   document.getElementById('sq-wrong').textContent   = qs.wrong; }
@@ -2419,6 +2443,8 @@ function sqSkip() {
     if (!strokeQuizState) return;
     if (strokeQuizState._nextTimer) { clearTimeout(strokeQuizState._nextTimer); strokeQuizState._nextTimer = null; }
     if (strokeWriter) { try { strokeWriter.cancelQuiz(); } catch(_) {} strokeWriter = null; }
+    const sqBody = document.getElementById('stroke-quiz-body');
+    if (sqBody) sqBody.classList.remove('tracing');
     strokeQuizState.wrong++;
     strokeQuizState.idx++;
     document.getElementById('sq-wrong').textContent = strokeQuizState.wrong;
