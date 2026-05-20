@@ -2349,21 +2349,35 @@ function renderStrokeQuizQuestion() {
         strokeWriter = createStrokeWriter('sq-writer-target', k.char, isHardcore);
         if (!strokeWriter) { sqSkip(); return; }
 
-        // Désactiver le scroll pendant le tracé (empêche le vol d'events touch)
         const sqBody = document.getElementById('stroke-quiz-body');
         if (sqBody) sqBody.classList.add('tracing');
 
-        // Forcer touch-action:none sur tout le SVG créé dynamiquement par HanziWriter
-        // (l'héritage CSS ne s'applique pas toujours aux SVG sur Chrome Android / Samsung)
+        // Le vrai fix mobile : setPointerCapture sur pointerdown.
+        // HanziWriter utilise pointer events. Sur Android/iOS, quand le doigt
+        // quitte le SVG à la fin d'un trait, pointerup est parfois capturé
+        // par un parent → HanziWriter ne reçoit jamais la fin → trait reste ouvert.
+        // setPointerCapture force TOUS les events suivants sur le même élément,
+        // même si le pointeur sort du canvas.
         requestAnimationFrame(() => {
             const target = document.getElementById('sq-writer-target');
             if (!target) return;
-            const applyTouchNone = el => {
-                el.style.touchAction = 'none';
-                el.style.userSelect  = 'none';
-                Array.from(el.children).forEach(applyTouchNone);
-            };
-            applyTouchNone(target);
+
+            // touch-action inline sur tous les descendants (y compris les SVG paths)
+            target.style.touchAction = 'none';
+            target.querySelectorAll('*').forEach(el => { el.style.touchAction = 'none'; });
+
+            // Capturer le pointeur dès pointerdown pour ne jamais perdre pointerup
+            target.addEventListener('pointerdown', e => {
+                try { target.setPointerCapture(e.pointerId); } catch(_) {}
+            }, { passive: false });
+
+            // Bloquer uniquement touchstart et touchmove pour empêcher le scroll.
+            // NE PAS bloquer touchend : sur Chrome Android, preventDefault sur touchend
+            // empêche la génération du pointerup → HanziWriter ne reçoit jamais la fin
+            // du dernier trait → onComplete ne se déclenche jamais.
+            ['touchstart','touchmove'].forEach(evt => {
+                target.addEventListener(evt, e => e.preventDefault(), { passive: false });
+            });
         });
 
         let strokesDone = 0;
