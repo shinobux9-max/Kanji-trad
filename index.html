@@ -2217,27 +2217,37 @@ function createStrokeWriter(elementId, character, isHardcore) {
         padding:  24,
         strokeColor:      '#00c9a7',
         drawingColor:     '#00c9a7',
-        drawingWidth:     6,        // valeur réelle en px (50 était invalide)
+        drawingWidth:     8,
         highlightOnComplete: true,
         highlightColor:   '#7b61ff',
         renderer:         'svg',
-        showCharacter:    false
+        showCharacter:    false,
+        // Bug 2 fix : si HanziWriter ne trouve pas les données du kanji (ex: 黒),
+        // appeler sqSkip() après un court délai plutôt que rester bloqué
+        onLoadCharDataError: () => {
+            console.warn('HanziWriter: données manquantes pour', character);
+            setTimeout(() => {
+                const fb = document.getElementById('sq-feedback');
+                if (fb) { fb.style.color = '#f5a623'; fb.textContent = `Données manquantes pour ${character} — passage automatique`; }
+                setTimeout(sqSkip, 1200);
+            }, 300);
+        }
     };
 
     if (isHardcore) {
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
-            showOutline:        true,
-            outlineColor:       '#1a1a2e',
-            outlineOpacity:     0.02,
+            showOutline:         true,
+            outlineColor:        '#1a1a2e',
+            outlineOpacity:      0.02,
             showHintAfterMisses: false,
         });
     } else {
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
-            showOutline:        true,
-            outlineColor:       '#3a3a50',
-            outlineOpacity:     0.8,
+            showOutline:         true,
+            outlineColor:        '#3a3a50',
+            outlineOpacity:      0.8,
             showHintAfterMisses: 1,
         });
     }
@@ -2352,35 +2362,22 @@ function renderStrokeQuizQuestion() {
         const sqBody = document.getElementById('stroke-quiz-body');
         if (sqBody) sqBody.classList.add('tracing');
 
-        // Le vrai fix mobile : setPointerCapture sur pointerdown.
-        // HanziWriter utilise pointer events. Sur Android/iOS, quand le doigt
-        // quitte le SVG à la fin d'un trait, pointerup est parfois capturé
-        // par un parent → HanziWriter ne reçoit jamais la fin → trait reste ouvert.
-        // setPointerCapture force TOUS les events suivants sur le même élément,
-        // même si le pointeur sort du canvas.
+        // Attendre que HanziWriter ait créé son SVG (asynchrone)
+        // puis poser touch-action:none et bloquer le scroll sans toucher aux pointer events
         requestAnimationFrame(() => {
             const target = document.getElementById('sq-writer-target');
             if (!target) return;
-
-            // touch-action inline sur tous les descendants (y compris les SVG paths)
             target.style.touchAction = 'none';
             target.querySelectorAll('*').forEach(el => { el.style.touchAction = 'none'; });
 
-            // Capturer le pointeur dès pointerdown pour ne jamais perdre pointerup
-            target.addEventListener('pointerdown', e => {
-                try { target.setPointerCapture(e.pointerId); } catch(_) {}
-            }, { passive: false });
-
-            // Bloquer uniquement touchstart et touchmove pour empêcher le scroll.
-            // NE PAS bloquer touchend : sur Chrome Android, preventDefault sur touchend
-            // empêche la génération du pointerup → HanziWriter ne reçoit jamais la fin
-            // du dernier trait → onComplete ne se déclenche jamais.
-            ['touchstart','touchmove'].forEach(evt => {
-                target.addEventListener(evt, e => e.preventDefault(), { passive: false });
-            });
+            // Bloquer scroll uniquement sur touchmove (pas touchstart ni touchend)
+            // touchstart bloqué = certains navigateurs ne génèrent plus pointerdown
+            // touchend bloqué = pointerup n'est plus généré → onComplete ne fire jamais
+            target.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
         });
 
         let strokesDone = 0;
+        let lastStrokeTimer = null; // Bug 1 fix : timer de secours pour le dernier trait
 
         strokeWriter.quiz({
             onMistake() {
@@ -2400,9 +2397,31 @@ function renderStrokeQuizQuestion() {
                 if (wrap) { wrap.classList.add('flash-ok'); setTimeout(() => wrap.classList.remove('flash-ok'), 350); }
                 const fb = document.getElementById('sq-feedback');
                 if (fb) { fb.style.color = 'var(--accent)'; fb.textContent = 'Bien !';
-                    setTimeout(() => { if (fb.textContent === 'Bien !') fb.textContent = ''; }, 800); }
+                    setTimeout(() => { if (fb && fb.textContent === 'Bien !') fb.textContent = ''; }, 800); }
+
+                // Bug 1 fix : si c'était le dernier trait attendu, HanziWriter
+                // doit recevoir un pointerup pour déclencher onComplete.
+                // Sur mobile, ce pointerup est parfois perdu (doigt légèrement hors zone).
+                // Après 600ms sans onComplete, on envoie un pointerup synthétique sur le SVG.
+                if (strokesDone >= k.strokes) {
+                    if (lastStrokeTimer) clearTimeout(lastStrokeTimer);
+                    lastStrokeTimer = setTimeout(() => {
+                        const svg = document.querySelector('#sq-writer-target svg');
+                        if (!svg || !strokeQuizState) return;
+                        try {
+                            const rect   = svg.getBoundingClientRect();
+                            const cx     = rect.left + rect.width  / 2;
+                            const cy     = rect.top  + rect.height / 2;
+                            svg.dispatchEvent(new PointerEvent('pointerup', {
+                                bubbles: true, cancelable: true,
+                                clientX: cx, clientY: cy, pointerId: 1
+                            }));
+                        } catch(_) {}
+                    }, 600);
+                }
             },
             onComplete(summary) {
+                if (lastStrokeTimer) { clearTimeout(lastStrokeTimer); lastStrokeTimer = null; }
                 if (!strokeQuizState) return;
                 // Réactiver le scroll
                 const sqBody = document.getElementById('stroke-quiz-body');
