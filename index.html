@@ -2251,24 +2251,19 @@ function createStrokeWriter(elementId, character, isHardcore) {
     const el = document.getElementById(elementId);
     if (!el) return null;
 
-    // Sécurité de synchronisation si la bibliothèque est encore en cours d'injection
     if (typeof HanziWriter === 'undefined') {
         console.warn("[Kanji Learner] HanziWriter indisponible pour createStrokeWriter, attente...");
         setTimeout(() => createStrokeWriter(elementId, character, isHardcore), 150);
         return null;
     }
 
+    // 1. Définition des options de base (communes aux deux modes)
     const baseOptions = {
         width:    280,
         height:   280,
         padding:  24,
-        strokeColor:      '#00c9a7',
-        drawingColor:     '#00c9a7',
         drawingWidth:     8,
-        highlightOnComplete: true,
-        highlightColor:   '#7b61ff',
         renderer:         'svg',
-        showCharacter:    false,
         charDataLoader: function(char, onComplete) {
             fetch(`https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${encodeURIComponent(char)}.json`)
                 .then(res => {
@@ -2297,20 +2292,29 @@ function createStrokeWriter(elementId, character, isHardcore) {
         }
     };
 
+    // 2. Configuration spécifique selon le mode
     if (isHardcore) {
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
-            showOutline:         true,
-            outlineColor:        '#1a1a2e',
-            outlineOpacity:      0.02,
-            showHintAfterMisses: false,
+            showCharacter:       false, // Cache le kanji de fond rempli
+            showOutline:         true,  // Doit rester true pour que le moteur fonctionne
+            outlineColor:        '#000000', // On met une vraie couleur (noir)...
+            outlineOpacity:      0,         // ...mais on la rend à 100% invisible !
+            strokeColor:         '#00c9a7', // Couleur du trait pendant que tu le dessines
+            highlightOnComplete: false,     // Évite le flash violet à la fin
+            showHintAfterMisses: false,     // Désactive l'aide visuelle après des erreurs
         });
     } else {
+        // Mode Normal / Easy
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
+            showCharacter:       false,
             showOutline:         true,
-            outlineColor:        '#3a3a50',
+            outlineColor:        '#3a3a50', // Gris visible pour guider l'utilisateur
             outlineOpacity:      0.8,
+            strokeColor:         '#00c9a7',
+            highlightOnComplete: true,
+            highlightColor:      '#7b61ff',
             showHintAfterMisses: 1,
         });
     }
