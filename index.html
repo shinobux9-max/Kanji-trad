@@ -322,20 +322,6 @@
         pointer-events: none;
     }
 
-    /* 🎯 FIX ABSOLU : Cache tout le contenu généré par le moteur au départ (Chinois et Japonais) */
-    #stroke-quiz-body.tracing #sq-writer-target svg g path {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-    }
-
-    /* 🟢 RÉAUTORISE l'affichage de tes lignes vertes au fur et à mesure du tracé manuel */
-    #stroke-quiz-body.tracing #sq-writer-target svg g path[stroke="#00c9a7"] {
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-
     .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
     .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
     .sq-grid-overlay::before { left: 50%; top: 0; width: 1px; height: 100%; position:absolute; background:var(--border); opacity:0.5; content:'';}
@@ -2312,15 +2298,13 @@ function createStrokeWriter(elementId, character, isHardcore) {
     if (isHardcore) {
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
-            showCharacter:       false,
-            showOutline:         true, 
+            showCharacter:       false, 
             
-            // 🎯 ASTUCE DE CAMOUFLAGE : On donne la couleur exacte du fond de ta grille
-            // Si #0b0e14 ne correspond pas tout à fait, ajuste-le avec la couleur CSS exacte de ton .sq-canvas-wrap
-            outlineColor:        '#0b0e1a', 
+            // 🎯 LE SECRET EST LÀ : On dit au moteur de ne pas dessiner le contour.
+            // Le quiz marchera parfaitement en arrière-plan avec les données JSON !
+            showOutline:         false, 
             
-            outlineOpacity:      1,         // On s'en fiche s'il est opaque, il est camouflé !
-            strokeColor:         '#00c9a7', 
+            strokeColor:         '#00c9a7', // Ton trait et tes succès seront bien verts
             highlightOnComplete: false,     
             showHintAfterMisses: false,     
         });
