@@ -2071,6 +2071,7 @@ if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
             delayBetweenStrokes: 200,
             strokeColor: '#00c9a7',
             outlineColor: '#4a4d5e',
+            charColor: '#4a4d5e',    // 🎯 AJOUTE CETTE LIGNE ICI
             showOutline: true,
             // L'outil de chargement blindé contre les bugs d'encodage
             charDataLoader: function(char, onComplete) {
@@ -2421,7 +2422,7 @@ function renderStrokeQuizQuestion() {
         <div class="sq-stroke-tracker" id="sq-stroke-tracker">${strokeDots}</div>
         <div id="sq-feedback" style="height:22px;margin-top:10px;font-weight:bold;text-align:center;font-size:13px;color:var(--gray)"></div>
         <div class="sq-actions">
-            <button class="sq-btn hint" onclick="sqShowHint()">↺ Animation</button>
+            <button class="sq-btn hint" onclick="sqShowHint()">💡 Indice</button>
             <button class="sq-btn skip" onclick="sqSkip()">Passer →</button>
         </div>`;
 
@@ -2451,9 +2452,42 @@ function renderStrokeQuizQuestion() {
         });
 
         let strokesDone = 0;
-        let lastStrokeTimer = null; // Bug 1 fix : timer de secours pour le dernier trait
+        let lastStrokeTimer = null;
+        let _quizCompleted = false;
 
-        strokeWriter.quiz({
+        const triggerComplete = (totalMistakes) => {
+            if (_quizCompleted) return;
+            _quizCompleted = true;
+            if (lastStrokeTimer) { clearTimeout(lastStrokeTimer); lastStrokeTimer = null; }
+            if (!strokeQuizState) return;
+
+            const sqBody = document.getElementById('stroke-quiz-body');
+            if (sqBody) sqBody.classList.remove('tracing');
+
+            const totalErrors = (totalMistakes != null) ? totalMistakes : qs.mistakesThisKanji;
+            const isClean = totalErrors === 0;
+
+            if (isClean) { qs.correct++; document.getElementById('sq-correct').textContent = qs.correct; }
+            else         { qs.wrong++;   document.getElementById('sq-wrong').textContent   = qs.wrong; }
+            updateSqScore();
+            if (isClean) markMastered(k.char);
+
+            const fb = document.getElementById('sq-feedback');
+            if (fb) {
+                fb.style.color = isClean ? 'var(--accent)' : '#e55';
+                fb.textContent = isClean ? '✔ Parfait !' : `Terminé — ${totalErrors} erreur${totalErrors > 1 ? 's' : ''}`;
+            }
+            qs._nextTimer = setTimeout(() => {
+                qs._nextTimer = null;
+                if (!strokeQuizState) return;
+                strokeQuizState.idx++;
+                renderStrokeQuizQuestion();
+            }, 1100);
+        };
+
+        // Callbacks stockés dans qs._quizCallbacks pour être réutilisés
+        // par sqShowHint() lors du redémarrage du quiz après un indice
+        const quizCallbacks = {
             onMistake() {
                 qs.mistakesThisKanji++;
                 const dot = document.getElementById(`sq-dot-${strokesDone}`);
@@ -2473,69 +2507,25 @@ function renderStrokeQuizQuestion() {
                 if (fb) { fb.style.color = 'var(--accent)'; fb.textContent = 'Bien !';
                     setTimeout(() => { if (fb && fb.textContent === 'Bien !') fb.textContent = ''; }, 800); }
 
-                // Bug 1 fix : si c'était le dernier trait attendu, HanziWriter
-                // doit recevoir un pointerup pour déclencher onComplete.
-                // Sur mobile, ce pointerup est parfois perdu (doigt légèrement hors zone).
-                // Après 600ms sans onComplete, on envoie un pointerup synthétique sur le SVG.
                 if (strokesDone >= k.strokes) {
                     if (lastStrokeTimer) clearTimeout(lastStrokeTimer);
                     lastStrokeTimer = setTimeout(() => {
-                        const svg = document.querySelector('#sq-writer-target svg');
-                        if (!svg || !strokeQuizState) return;
-                        try {
-                            const rect   = svg.getBoundingClientRect();
-                            const cx     = rect.left + rect.width  / 2;
-                            const cy     = rect.top  + rect.height / 2;
-                            svg.dispatchEvent(new PointerEvent('pointerup', {
-                                bubbles: true, cancelable: true,
-                                clientX: cx, clientY: cy, pointerId: 1
-                            }));
-                        } catch(_) {}
-                    }, 600);
+                        lastStrokeTimer = null;
+                        triggerComplete(qs.mistakesThisKanji);
+                    }, 700);
                 }
             },
             onComplete(summary) {
-                if (lastStrokeTimer) { clearTimeout(lastStrokeTimer); lastStrokeTimer = null; }
-                if (!strokeQuizState) return;
-                
-                // Réactiver le scroll
-                const sqBody = document.getElementById('stroke-quiz-body');
-                if (sqBody) sqBody.classList.remove('tracing');
-
-                // 🎯 FIX SANS-FAUTE : Utilisation de ton propre compteur sécurisé
-                // Si summary est undefined ou si mistakesThisKanji vaut 0, c'est un sans-faute
-                const totalErrors = (summary && typeof summary.totalMistakes !== 'undefined') 
-                                    ? summary.totalMistakes 
-                                    : qs.mistakesThisKanji;
-
-                const isClean = totalErrors === 0;
-                
-                if (isClean) { 
-                    qs.correct++; 
-                    document.getElementById('sq-correct').textContent = qs.correct; 
-                } else { 
-                    qs.wrong++;   
-                    document.getElementById('sq-wrong').textContent   = qs.wrong; 
-                }
-                
-                updateSqScore();
-                if (isClean) markMastered(k.char);
-
-                const fb = document.getElementById('sq-feedback');
-                if (fb) { 
-                    fb.style.color = isClean ? 'var(--accent)' : '#e55';
-                    fb.textContent = isClean ? '✔ Parfait !' : `Terminé — ${totalErrors} erreur${totalErrors > 1 ? 's' : ''}`; 
-                }
-
-                // Ce bloc va maintenant s'exécuter dans TOUS les cas !
-                qs._nextTimer = setTimeout(() => {
-                    qs._nextTimer = null;
-                    if (!strokeQuizState) return;
-                    strokeQuizState.idx++;
-                    renderStrokeQuizQuestion();
-                }, 1100);
+                const totalMistakes = (summary && typeof summary.totalMistakes !== 'undefined')
+                    ? summary.totalMistakes : qs.mistakesThisKanji;
+                triggerComplete(totalMistakes);
             }
-        });
+        };
+        qs._quizCallbacks  = quizCallbacks;
+        qs._isHardcore     = isHardcore;
+        qs._strokesDoneRef = () => strokesDone; // référence live
+
+        strokeWriter.quiz(quizCallbacks);
     });
 }
 
@@ -2558,8 +2548,38 @@ function closeStrokeQuiz() {
    Boutons auxiliaires
 ───────────────────────────────────────────────── */
 function sqShowHint() {
-    // Lance l'animation complète du kanji pour voir tous les traits dans l'ordre
-    if (strokeWriter) strokeWriter.animateCharacter();
+    if (!strokeWriter || !strokeQuizState) return;
+    const qs = strokeQuizState;
+    const k  = kanjiDb[qs.indices[qs.idx]];
+    if (!k || !qs._quizCallbacks) return;
+
+    // Nombre de traits déjà validés
+    const strokesDone = qs._strokesDoneRef ? qs._strokesDoneRef() : 0;
+    if (strokesDone >= k.strokes) return;
+
+    // Compter comme erreur
+    qs.mistakesThisKanji++;
+    const fb = document.getElementById('sq-feedback');
+    if (fb) { fb.style.color = '#f5a623'; fb.textContent = `💡 Indice — trait ${strokesDone + 1}`; }
+
+    // API HanziWriter réelle :
+    // cancelQuiz() → animateStroke(N) → quiz({ quizStartStrokeNum: N+1, ...mêmes callbacks })
+    try { strokeWriter.cancelQuiz(); } catch(_) {}
+
+    strokeWriter.animateStroke(strokesDone, {
+        onComplete: () => {
+            if (!strokeQuizState || !strokeWriter) return;
+            setTimeout(() => {
+                if (!strokeQuizState || !strokeWriter) return;
+                if (fb) fb.textContent = '';
+                strokeWriter.quiz({
+                    quizStartStrokeNum:  strokesDone + 1,
+                    showHintAfterMisses: qs._isHardcore ? false : 1,
+                    ...qs._quizCallbacks
+                });
+            }, 400);
+        }
+    });
 }
 
 function sqSkip() {
@@ -2935,8 +2955,12 @@ function openDetail(kanji) {
     
     writer = HanziWriter.create('kanji-writer-target', kanji.char, {
         width: 160, height: 160, padding: 14,
-        strokeColor: '#00c9a7', outlineColor: '#4a4d5e',
-        drawingColor: '#00c9a7', showOutline: true,
+        strokeColor: '#00c9a7', 
+        outlineColor: '#4a4d5e', 
+        charColor: '#4a4d5e',    // 🎯 AJOUTE-LA AUSSI ICI
+        drawingColor: '#00c9a7', 
+        showOutline: true,
+        // ...
         charDataLoader: function(char, onComplete) {
             // 🎯 Requête directe sur le dépôt que tu as trouvé !
             fetch(`https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${encodeURIComponent(char)}.json`)
@@ -3026,8 +3050,21 @@ function launchDetailTrace() {
 }
 
 function replayAnimation() {
-    if (currentType === 'kanji' && writer)           writer.animateCharacter();
-    else if (currentType === 'kana' && currentChar)  animateKanaChar(currentChar);
+    if (currentType === 'kanji' && typeof writer !== 'undefined' && writer) {
+        // On lance l'animation complète
+        writer.animateCharacter({
+            onComplete: function() {
+                // Dès que l'animation est finie, on vérifie si un quiz était actif
+                // et si oui, on relance le mode dessin !
+                if (writer._quiz) {
+                    writer.quiz(); 
+                }
+            }
+        });
+    } 
+    else if (currentType === 'kana' && currentChar) {
+        animateKanaChar(currentChar);
+    }
 }
 
 /* ══════════════════════════════════════════════════
