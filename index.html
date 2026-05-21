@@ -320,7 +320,16 @@
         display: none !important;
         visibility: hidden !important;
         pointer-events: none;
-}
+    }
+
+    /* 🎯 FIX FINAL : Cache radicalement tous les tracés de contour (outline) en mode tracé */
+    #stroke-quiz-body.tracing #sq-writer-target svg path[type="outline"] {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
     .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
     .sq-grid-overlay::before { left: 50%; top: 0; width: 1px; height: 100%; position:absolute; background:var(--border); opacity:0.5; content:'';}
     .sq-grid-overlay::after  { top: 50%; left: 0; height: 1px; width: 100%; position:absolute; background:var(--border); opacity:0.5; content:'';}
