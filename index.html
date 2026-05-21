@@ -2296,13 +2296,17 @@ function createStrokeWriter(elementId, character, isHardcore) {
     if (isHardcore) {
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
-            showCharacter:       false, // Cache le kanji de fond rempli
-            showOutline:         true,  // Doit rester true pour que le moteur fonctionne
-            outlineColor:        '#000000', // On met une vraie couleur (noir)...
-            outlineOpacity:      0,         // ...mais on la rend à 100% invisible !
-            strokeColor:         '#00c9a7', // Couleur du trait pendant que tu le dessines
-            highlightOnComplete: false,     // Évite le flash violet à la fin
-            showHintAfterMisses: false,     // Désactive l'aide visuelle après des erreurs
+            showCharacter:       false,
+            showOutline:         true, 
+            
+            // 🎯 ASTUCE DE CAMOUFLAGE : On donne la couleur exacte du fond de ta grille
+            // Si #0b0e14 ne correspond pas tout à fait, ajuste-le avec la couleur CSS exacte de ton .sq-canvas-wrap
+            outlineColor:        '#0b0e1a', 
+            
+            outlineOpacity:      1,         // On s'en fiche s'il est opaque, il est camouflé !
+            strokeColor:         '#00c9a7', 
+            highlightOnComplete: false,     
+            showHintAfterMisses: false,     
         });
     } else {
         // Mode Normal / Easy
