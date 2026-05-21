@@ -322,11 +322,18 @@
         pointer-events: none;
     }
 
-    /* 🎯 FIX FINAL : Cache radicalement tous les tracés de contour (outline) en mode tracé */
-    #stroke-quiz-body.tracing #sq-writer-target svg path[type="outline"] {
+    /* 🎯 FIX ABSOLU : Cache tout le contenu généré par le moteur au départ (Chinois et Japonais) */
+    #stroke-quiz-body.tracing #sq-writer-target svg g path {
         display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
+    }
+
+    /* 🟢 RÉAUTORISE l'affichage de tes lignes vertes au fur et à mesure du tracé manuel */
+    #stroke-quiz-body.tracing #sq-writer-target svg g path[stroke="#00c9a7"] {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
