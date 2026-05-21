@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kanji Learner</title>
-    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+
+    <script src="hanzi-writer.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -2045,7 +2047,21 @@ function renderQuizQuestion() {
 // --- INITIALISATION HANZIWRITER ---
 if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
     setTimeout(() => {
-        const writer = HanziWriter.create('quiz-kanji-animated', k.char, {
+        const targetId = 'quiz-kanji-animated';
+        const targetDiv = document.getElementById(targetId);
+        
+        if (!targetDiv) {
+            console.error(`La div #${targetId} est introuvable dans le DOM.`);
+            return;
+        }
+
+        // 1. On vide la div pour éviter les conflits d'anciennes animations
+        targetDiv.innerHTML = '';
+
+        // 2. On sécurise le caractère (on s'assure qu'on a bien une chaîne propre)
+        const charToDraw = String(k.char).trim();
+
+        const writer = HanziWriter.create(targetId, charToDraw, {
             width: 160,
             height: 160,
             padding: 5,
@@ -2054,17 +2070,23 @@ if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
             strokeColor: '#00c9a7',
             outlineColor: '#2a2a38',
             showOutline: true,
-            // 🚀 AJOUT CRUCIAL : Force le chargement des tracés japonais (Kanji)
+            // L'outil de chargement blindé contre les bugs d'encodage
             charDataLoader: function(char, onComplete) {
-                fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@1/${char}.json`)
+                const encodedChar = encodeURIComponent(char);
+                fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@1/${encodedChar}.json`)
                     .then(res => {
-                        if (!res.ok) throw new Error("Kanji introuvable");
+                        if (!res.ok) throw new Error(`Statut HTTP: ${res.status}`);
                         return res.json();
                     })
                     .then(onComplete)
-                    .catch(err => console.error("Erreur de chargement pour le kanji :", char, err));
+                    .catch(err => {
+                        console.error(`[HanziWriter] Erreur pour le kanji "${char}":`, err);
+                        // Message d'alerte visuel temporaire pour debugger dans ton app
+                        targetDiv.innerHTML = `<span style="color:red; font-size:12px;">Erreur de chargement (${char})</span>`;
+                    });
             }
         });
+        
         writer.animateCharacter();
     }, 50);
 }
@@ -2215,6 +2237,14 @@ let sqTimerInterval  = null;
 let sqPaused         = false;
 
 /**
+ * Enregistre un Kanji réussi sans faute dans le localStorage
+ */
+function markMastered(character) {
+    localStorage.setItem('mastered_' + character, 'true');
+    console.log(`🎯 Kanji ${character} marqué comme maîtrisé !`);
+}
+
+/**
  * Initialise le moteur de tracé selon le mode
  */
 function createStrokeWriter(elementId, character, isHardcore) {
@@ -2285,6 +2315,7 @@ function createStrokeWriter(elementId, character, isHardcore) {
         });
     }
 }
+
 function startStrokeQuiz({ type, id, mode = 'trace-easy' }) {
     let indices, title;
     if (type === 'category') {
@@ -2455,21 +2486,37 @@ function renderStrokeQuizQuestion() {
             onComplete(summary) {
                 if (lastStrokeTimer) { clearTimeout(lastStrokeTimer); lastStrokeTimer = null; }
                 if (!strokeQuizState) return;
+                
                 // Réactiver le scroll
                 const sqBody = document.getElementById('stroke-quiz-body');
                 if (sqBody) sqBody.classList.remove('tracing');
 
-                const isClean = summary.totalMistakes === 0;
-                if (isClean) { qs.correct++; document.getElementById('sq-correct').textContent = qs.correct; }
-                else         { qs.wrong++;   document.getElementById('sq-wrong').textContent   = qs.wrong; }
+                // 🎯 FIX SANS-FAUTE : Utilisation de ton propre compteur sécurisé
+                // Si summary est undefined ou si mistakesThisKanji vaut 0, c'est un sans-faute
+                const totalErrors = (summary && typeof summary.totalMistakes !== 'undefined') 
+                                    ? summary.totalMistakes 
+                                    : qs.mistakesThisKanji;
+
+                const isClean = totalErrors === 0;
+                
+                if (isClean) { 
+                    qs.correct++; 
+                    document.getElementById('sq-correct').textContent = qs.correct; 
+                } else { 
+                    qs.wrong++;   
+                    document.getElementById('sq-wrong').textContent   = qs.wrong; 
+                }
+                
                 updateSqScore();
                 if (isClean) markMastered(k.char);
 
                 const fb = document.getElementById('sq-feedback');
-                if (fb) { fb.style.color = isClean ? 'var(--accent)' : '#e55';
-                    fb.textContent = isClean ? '✔ Parfait !' : `Terminé — ${summary.totalMistakes} erreur${summary.totalMistakes > 1 ? 's' : ''}`; }
+                if (fb) { 
+                    fb.style.color = isClean ? 'var(--accent)' : '#e55';
+                    fb.textContent = isClean ? '✔ Parfait !' : `Terminé — ${totalErrors} erreur${totalErrors > 1 ? 's' : ''}`; 
+                }
 
-                // Stocker le timer pour pouvoir l'annuler si on passe au suivant manuellement
+                // Ce bloc va maintenant s'exécuter dans TOUS les cas !
                 qs._nextTimer = setTimeout(() => {
                     qs._nextTimer = null;
                     if (!strokeQuizState) return;
@@ -2869,7 +2916,7 @@ function openDetail(kanji) {
     if (bsk) bsk.style.display = '';
     updateSaveBtnState(kanji.char);
 
-    // 6. HanziWriter
+   // 6. HanziWriter
     document.getElementById('kana-writer-svg').style.display     = 'none';
     document.getElementById('writer-spinner').style.display      = 'none';
     document.getElementById('kanji-writer-target').style.display = 'block';
