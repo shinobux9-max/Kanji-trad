@@ -2070,7 +2070,7 @@ if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
             strokeAnimationSpeed: 1,
             delayBetweenStrokes: 200,
             strokeColor: '#00c9a7',
-            outlineColor: '#2a2a38',
+            outlineColor: '#4a4d5e',
             showOutline: true,
             // L'outil de chargement blindé contre les bugs d'encodage
             charDataLoader: function(char, onComplete) {
@@ -2935,7 +2935,7 @@ function openDetail(kanji) {
     
     writer = HanziWriter.create('kanji-writer-target', kanji.char, {
         width: 160, height: 160, padding: 14,
-        strokeColor: '#00c9a7', outlineColor: '#2a2a3a',
+        strokeColor: '#00c9a7', outlineColor: '#4a4d5e',
         drawingColor: '#00c9a7', showOutline: true,
         charDataLoader: function(char, onComplete) {
             // 🎯 Requête directe sur le dépôt que tu as trouvé !
