@@ -2042,22 +2042,32 @@ function renderQuizQuestion() {
             <div class="quiz-choices-grid" id="quiz-choices" style="display:none"></div>
         </div>`;
 
-    // --- INITIALISATION HANZIWRITER ---
-    if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
-        setTimeout(() => {
-            const writer = HanziWriter.create('quiz-kanji-animated', k.char, {
-                width: 160,
-                height: 160,
-                padding: 5,
-                strokeAnimationSpeed: 1,
-                delayBetweenStrokes: 200,
-                strokeColor: '#00c9a7',
-                outlineColor: '#2a2a38',
-                showOutline: true
-            });
-            writer.animateCharacter();
-        }, 50);
-    }
+// --- INITIALISATION HANZIWRITER ---
+if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
+    setTimeout(() => {
+        const writer = HanziWriter.create('quiz-kanji-animated', k.char, {
+            width: 160,
+            height: 160,
+            padding: 5,
+            strokeAnimationSpeed: 1,
+            delayBetweenStrokes: 200,
+            strokeColor: '#00c9a7',
+            outlineColor: '#2a2a38',
+            showOutline: true,
+            // 🚀 AJOUT CRUCIAL : Force le chargement des tracés japonais (Kanji)
+            charDataLoader: function(char, onComplete) {
+                fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@1/${char}.json`)
+                    .then(res => {
+                        if (!res.ok) throw new Error("Kanji introuvable");
+                        return res.json();
+                    })
+                    .then(onComplete)
+                    .catch(err => console.error("Erreur de chargement pour le kanji :", char, err));
+            }
+        });
+        writer.animateCharacter();
+    }, 50);
+}
 
     // --- AUTO-START MICRO en mode vocal ---
     // Délai de 650ms pour laisser le DOM se stabiliser et l'utilisateur lire le sens
