@@ -2313,13 +2313,16 @@ function createStrokeWriter(elementId, character, isHardcore) {
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
             showCharacter:       false,
-            showOutline:         true,
-            outlineColor:        '#3a3a50', // Gris visible pour guider l'utilisateur
-            outlineOpacity:      0.8,
-            strokeColor:         '#00c9a7',
+            showOutline:         true,  // On affiche le guide
+            
+            // 🎯 LA SOLUTION EST ICI : On force une couleur unique pour tous les kanjis !
+            // Remplace ce code couleur par celui que tu préfères (ici un gris bleuté)
+            outlineColor:        '#4a4d5e', 
+            
+            strokeColor:         '#00c9a7', // Tes traits réussis en vert
+            drawingColor:        '#00c9a7', // Ton tracé en cours en vert
             highlightOnComplete: true,
-            highlightColor:      '#7b61ff',
-            showHintAfterMisses: 1,
+            showHintAfterMisses: 2,
         });
     }
 }
