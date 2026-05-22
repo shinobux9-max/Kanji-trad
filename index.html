@@ -2069,9 +2069,9 @@ if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
             padding: 5,
             strokeAnimationSpeed: 1,
             delayBetweenStrokes: 200,
-            strokeColor: '#00c9a7',
-            outlineColor: '#4a4d5e',
-            charColor: '#4a4d5e',    // 🎯 AJOUTE CETTE LIGNE ICI
+            strokeColor:  '#00c9a7',
+            outlineColor: '#18181f',   // = --surface, fond exact du writer-main
+            charColor:    '#18181f',   // idem : traits non-animés invisibles sur fond
             showOutline: true,
             // L'outil de chargement blindé contre les bugs d'encodage
             charDataLoader: function(char, onComplete) {
@@ -2318,7 +2318,7 @@ function createStrokeWriter(elementId, character, isHardcore) {
             
             // 🎯 LA SOLUTION EST ICI : On force une couleur unique pour tous les kanjis !
             // Remplace ce code couleur par celui que tu préfères (ici un gris bleuté)
-            outlineColor:        '#4a4d5e', 
+            outlineColor:        '#1a1a2e',   // = fond du canvas quiz, traits non-tracés invisibles
             
             strokeColor:         '#00c9a7', // Tes traits réussis en vert
             drawingColor:        '#00c9a7', // Ton tracé en cours en vert
@@ -2956,8 +2956,8 @@ function openDetail(kanji) {
     writer = HanziWriter.create('kanji-writer-target', kanji.char, {
         width: 160, height: 160, padding: 14,
         strokeColor: '#00c9a7', 
-        outlineColor: '#4a4d5e', 
-        charColor: '#4a4d5e',    // 🎯 AJOUTE-LA AUSSI ICI
+        outlineColor: '#18181f',   // = --surface, fond exact du writer-main
+        charColor:    '#18181f',   // traits non-animés invisibles sur fond
         drawingColor: '#00c9a7', 
         showOutline: true,
         // ...
