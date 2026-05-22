@@ -314,13 +314,6 @@
     #sq-writer-target { width: 280px; height: 280px; background: #1a1a2e !important; border-radius: 16px; border: 2px solid var(--border); display: block; margin: 0 auto; touch-action: none; }
     #sq-writer-target svg { touch-action: none; user-select: none; -webkit-user-select: none; }
     #sq-writer-target svg * { touch-action: none; }
-    #sq-writer-target svg path[stroke="#1a1a2e"], 
-    #sq-writer-target svg path[opacity="0.05"],
-    #sq-writer-target svg path[opacity="0"] {
-        display: none !important;
-        visibility: hidden !important;
-        pointer-events: none;
-    }
 
     .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
     .sq-grid-overlay { position: absolute; inset: 0; pointer-events: none; border-radius: 16px; overflow: hidden; }
@@ -2306,22 +2299,19 @@ function createStrokeWriter(elementId, character, isHardcore) {
             showOutline:         false, 
             
             strokeColor:         '#00c9a7', // Ton trait et tes succès seront bien verts
+            drawingColor:        '#00c9a7',
             highlightOnComplete: false,     
-            showHintAfterMisses: false,     
+            showHintAfterMisses: 4,     
         });
     } else {
-        // Mode Normal / Easy
         return HanziWriter.create(elementId, character, {
             ...baseOptions,
             showCharacter:       false,
-            showOutline:         true,  // On affiche le guide
-            
-            // 🎯 LA SOLUTION EST ICI : On force une couleur unique pour tous les kanjis !
-            // Remplace ce code couleur par celui que tu préfères (ici un gris bleuté)
-            outlineColor:        '#1a1a2e',   // = fond du canvas quiz, traits non-tracés invisibles
-            
-            strokeColor:         '#00c9a7', // Tes traits réussis en vert
-            drawingColor:        '#00c9a7', // Ton tracé en cours en vert
+            showOutline:         true,
+            outlineColor:        '#88899E',   // guide vert comme les traits réussis
+            outlineOpacity:      0.15,        // très discret, juste visible comme guide
+            strokeColor:         '#00c9a7',
+            drawingColor:        '#00c9a7',
             highlightOnComplete: true,
             showHintAfterMisses: 2,
         });
