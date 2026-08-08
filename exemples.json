@@ -153,6 +153,62 @@
       "fr": "C'est un assistant qui a la force de cent hommes."
     }
   ],
+  "姉": [
+    {
+      "jp": "姉は高校生です。",
+      "ka": "あね は こうこうせい です。",
+      "ro": "Ane wa kouseisei desu.",
+      "fr": "Ma grande sœur est lycéenne."
+    },
+    {
+      "jp": "お姉さんは親切です。",
+      "ka": "おねえさん は しんせつ です。",
+      "ro": "Oneesan wa shinsetsu desu.",
+      "fr": "Votre grande sœur est gentille."
+    }
+  ],
+  "妹": [
+    {
+      "jp": "妹は十歳です。",
+      "ka": "いもうと は じゅっさい です。",
+      "ro": "Imouto wa jussai desu.",
+      "fr": "Ma petite sœur a dix ans."
+    },
+    {
+      "jp": "妹と映画を見ました。",
+      "ka": "いもうと と えいが を みました。",
+      "ro": "Imouto to eiga wo mimashita.",
+      "fr": "J'ai regardé un film avec ma petite sœur."
+    }
+  ],
+  "兄": [
+    {
+      "jp": "兄は大学生です。",
+      "ka": "あに は だいがくせい です。",
+      "ro": "Ani wa daigakusei desu.",
+      "fr": "Mon grand frère est étudiant à l'université."
+    },
+    {
+      "jp": "お兄さんは背が高いです。",
+      "ka": "おにいさん は せ が たかい です。",
+      "ro": "Oniisan wa se ga takai desu.",
+      "fr": "Votre grand frère est grand."
+    }
+  ],
+  "弟": [
+    {
+      "jp": "弟はサッカーが好きです。",
+      "ka": "おとうと は さっかー が すき です。",
+      "ro": "Otouto wa sakkaa ga suki desu.",
+      "fr": "Mon petit frère aime le football."
+    },
+    {
+      "jp": "兄弟がいますか。",
+      "ka": "きょうだい が います か。",
+      "ro": "Kyoudai ga imasu ka.",
+      "fr": "Avez-vous des frères et sœurs ?"
+    }
+  ],
   "千": [
     {
       "jp": "千円貸してください。",
