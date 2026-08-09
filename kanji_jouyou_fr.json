@@ -8470,6 +8470,22 @@
     "wk_radicaux": ["Yeux", "Toboggan", "Cœur"],
     "romaji": "gu, oro"
   },
+  "可": {
+    "traits": 5,
+    "classe": 5,
+    "frequence": 287,
+    "jlpt_ancien": 2,
+    "jlpt_nouveau": 3,
+    "sens": ["Possible", "Approbation", "Permettre"],
+    "lectures_on": ["カ"],
+    "lectures_kun": ["べ.き", "べ.し"],
+    "wk_niveau": 18,
+    "wk_sens": ["Passable", "Possible"],
+    "wk_lectures_on": ["カ"],
+    "wk_lectures_kun": [],
+    "wk_radicaux": ["Bouche", "Clou"],
+    "romaji": "ka, beki, beshi"
+  },
   "愛": {
     "traits": 13,
     "classe": 4,
