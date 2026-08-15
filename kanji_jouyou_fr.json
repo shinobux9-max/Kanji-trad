@@ -303,6 +303,22 @@
     "wk_radicaux": ["Bouche"],
     "romaji": "kou, ku, kuchi"
   },
+  "京": {
+    "traits": 8,
+    "classe": 2,
+    "frequence": 74,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 4,
+    "sens": ["Capitale"],
+    "lectures_on": ["キョウ", "ケイ", "キン"],
+    "lectures_kun": ["みやこ"],
+    "wk_niveau": 4,
+    "wk_sens": ["Capitale"],
+    "wk_lectures_on": ["キョウ", "ケイ"],
+    "wk_lectures_kun": ["!みやこ"],
+    "wk_radicaux": ["Couvercle", "Bouche", "Petits"],
+    "romaji": "kyou, kei, miyako"
+  },
   "姉": {
     "traits": 8,
     "classe": 2,
