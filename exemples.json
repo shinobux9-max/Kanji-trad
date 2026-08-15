@@ -377,6 +377,20 @@
       "fr": "Le lapin a de longues oreilles."
     }
   ],
+  "京": [
+    {
+      "jp": "東京に行きたいです。",
+      "ka": "とうきょう に いきたい です。",
+      "ro": "Toukyou ni ikitai desu.",
+      "fr": "Je veux aller à Tokyo."
+    },
+    {
+      "jp": "京都は古い町です。",
+      "ka": "きょうと は ふるい まち です。",
+      "ro": "Kyouto wa furui machi desu.",
+      "fr": "Kyoto est une ville ancienne."
+    }
+  ],
   "山": [
     {
       "jp": "高い山に登ります。",
