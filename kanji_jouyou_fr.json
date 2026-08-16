@@ -575,6 +575,22 @@
     "wk_radicaux": ["Petit"],
     "romaji": "shou, chii, ko, o, sa"
   },
+  "供": {
+    "traits": 8,
+    "classe": 6,
+    "frequence": 542,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 3,
+    "sens": ["Accompagner", "Soumettre", "Enfant"],
+    "lectures_on": ["キョウ", "ク"],
+    "lectures_kun": ["そな.える", "とも"],
+    "wk_niveau": 13,
+    "wk_sens": ["Accompagner"],
+    "wk_lectures_on": ["キョウ"],
+    "wk_lectures_kun": ["!とも"],
+    "wk_radicaux": ["Personne", "Ensemble"],
+    "romaji": "kyou, ku, sonaeru, tomo"
+  },
   "丁": {
     "traits": 2,
     "classe": 3,
