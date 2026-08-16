@@ -367,6 +367,22 @@
     "wk_radicaux": ["Bouche", "Jambes"],
     "romaji": "kei, kyou, ani"
   },
+  "共": {
+    "traits": 6,
+    "classe": 4,
+    "frequence": 317,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 3,
+    "sens": ["Ensemble", "Commun", "Partager"],
+    "lectures_on": ["キョウ"],
+    "lectures_kun": ["とも", "ども"],
+    "wk_niveau": 13,
+    "wk_sens": ["Ensemble"],
+    "wk_lectures_on": ["キョウ"],
+    "wk_lectures_kun": ["!とも"],
+    "wk_radicaux": ["Vingt", "Huit"],
+    "romaji": "kyou, tomo"
+  },
   "弟": {
     "traits": 7,
     "classe": 2,
