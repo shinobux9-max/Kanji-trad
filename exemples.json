@@ -391,6 +391,20 @@
       "fr": "Le lapin a de longues oreilles."
     }
   ],
+  "供": [
+    {
+      "jp": "子供たちが公園で遊んでいます。",
+      "ka": "こどもたち が こうえん で あそんでいます。",
+      "ro": "Kodomotachi ga kouen de asonde imasu.",
+      "fr": "Les enfants jouent dans le parc."
+    },
+    {
+      "jp": "神様にお供え物をします。",
+      "ka": "かみさま に おそなえもの を します。",
+      "ro": "Kamisama ni osonaemono wo shimasu.",
+      "fr": "On fait une offrande aux dieux."
+    }
+  ],
   "京": [
     {
       "jp": "東京に行きたいです。",
