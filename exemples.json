@@ -237,6 +237,20 @@
       "fr": "Couper les légumes en fines lanières."
     }
   ],
+  "共": [
+    {
+      "jp": "友達と共に旅行に行きました。",
+      "ka": "ともだち と とも に りょこう に いきました。",
+      "ro": "Tomodachi to tomo ni ryokou ni ikimashita.",
+      "fr": "Je suis parti en voyage avec un ami."
+    },
+    {
+      "jp": "共通の趣味があります。",
+      "ka": "きょうつう の しゅみ が あります。",
+      "ro": "Kyoutsuu no shumi ga arimasu.",
+      "fr": "Nous avons des centres d'intérêt communs."
+    }
+  ],
   "大": [
     {
       "jp": "大きな犬ですね。",
