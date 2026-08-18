@@ -377,6 +377,20 @@
       "fr": "C'est une femme aimable."
     }
   ],
+  "也": [
+    {
+      "jp": "これまた然り。也。",
+      "ka": "これ また しかり。 なり。",
+      "ro": "Kore mata shikari. Nari.",
+      "fr": "Il en va de même pour ceci."
+    },
+    {
+      "jp": "和也さんは日本語を勉強しています。",
+      "ka": "かずや さん は にほんご を べんきょう しています。",
+      "ro": "Kazuya-san wa nihongo wo benkyou shite imasu.",
+      "fr": "Kazuya étudie le japonais."
+    }
+  ],
   "兎": [
     {
       "jp": "庭に兎がいます。",
