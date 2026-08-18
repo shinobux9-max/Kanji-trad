@@ -255,6 +255,22 @@
     "wk_radicaux": ["Pouvoir"],
     "romaji": "ryoku, riki, rii, chikara"
   },
+  "也": {
+    "traits": 3,
+    "classe": 9,
+    "frequence": 1856,
+    "jlpt_ancien": 1,
+    "jlpt_nouveau": 1,
+    "sens": ["Être", "Aussi", "Classique"],
+    "lectures_on": ["ヤ", "エ"],
+    "lectures_kun": ["なり", "また"],
+    "wk_niveau": 53,
+    "wk_sens": ["Être", "Aussi"],
+    "wk_lectures_on": ["ヤ"],
+    "wk_lectures_kun": ["!なり"],
+    "wk_radicaux": ["Alligator"],
+    "romaji": "ya, e, nari, mata"
+  },
   "上": {
     "traits": 3,
     "classe": 1,
