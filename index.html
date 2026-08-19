@@ -2039,6 +2039,32 @@ function renderQuizQuestion() {
             <div class="quiz-choices-grid" id="quiz-choices" style="display:none"></div>
         </div>`;
 
+
+/* ════════════════════════════════════════════════════
+   HANZIWRITER — LOADER UNIVERSEL
+   Signature correcte HanziWriter 3.x : (char, onLoad, onError)
+   1. GitHub hanzi-writer-data-jp (ordre des traits japonais)
+   2. Fallback jsdelivr hanzi-writer-data@2.0 (base mondiale)
+   3. Si tout échoue : onError() sans crasher l'app
+════════════════════════════════════════════════════ */
+function kanjiDataLoader(char, onLoad, onError) {
+    const cdn = `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${char}.json`;
+    const gh  = `https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${char}.json`;
+
+    fetch(gh)
+        .then(r => r.ok ? r.json() : Promise.reject('jp-404'))
+        .then(onLoad)
+        .catch(() =>
+            fetch(cdn)
+                .then(r => r.ok ? r.json() : Promise.reject('cdn-404'))
+                .then(onLoad)
+                .catch(() => {
+                    console.warn('[HanziWriter] Données introuvables pour :', char);
+                    if (typeof onError === 'function') onError();
+                })
+        );
+}
+
 // --- INITIALISATION HANZIWRITER ---
 if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
     setTimeout(() => {
@@ -2067,19 +2093,10 @@ if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
             charColor:    '#18181f',   // idem : traits non-animés invisibles sur fond
             showOutline: true,
             // L'outil de chargement blindé contre les bugs d'encodage
-            charDataLoader: function(char, onComplete) {
-                const encodedChar = encodeURIComponent(char);
-                fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@1/${encodedChar}.json`)
-                    .then(res => {
-                        if (!res.ok) throw new Error(`Statut HTTP: ${res.status}`);
-                        return res.json();
-                    })
-                    .then(onComplete)
-                    .catch(err => {
-                        console.error(`[HanziWriter] Erreur pour le kanji "${char}":`, err);
-                        // Message d'alerte visuel temporaire pour debugger dans ton app
-                        targetDiv.innerHTML = `<span style="color:red; font-size:12px;">Erreur de chargement (${char})</span>`;
-                    });
+            charDataLoader: kanjiDataLoader,
+            onLoadCharDataError: () => {
+                if (targetDiv) targetDiv.innerHTML =
+                    `<div style="font-size:90px;line-height:160px;text-align:center;color:#fff">${charToDraw}</div>`;
             }
         });
         
@@ -2259,25 +2276,8 @@ function createStrokeWriter(elementId, character, isHardcore) {
         height:   280,
         padding:  24,
         drawingWidth:     8,
-        renderer:         'svg',
-        charDataLoader: function(char, onComplete) {
-            fetch(`https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${encodeURIComponent(char)}.json`)
-                .then(res => {
-                    if (!res.ok) {
-                        return fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`);
-                    }
-                    return res;
-                })
-                .then(res => {
-                    if (!res.ok) throw new Error("Kanji introuvable");
-                    return res.json();
-                })
-                .then(onComplete)
-                .catch(err => {
-                    console.error("[HanziWriter Loader Erreur]", err);
-                    if (baseOptions.onLoadCharDataError) baseOptions.onLoadCharDataError();
-                });
-        },
+        // renderer canvas par défaut (fiable pour le tracé tactile mobile)
+        charDataLoader: kanjiDataLoader,
         onLoadCharDataError: () => {
             console.warn('HanziWriter: données manquantes pour', character);
             setTimeout(() => {
@@ -2951,25 +2951,7 @@ function openDetail(kanji) {
         drawingColor: '#00c9a7', 
         showOutline: true,
         // ...
-        charDataLoader: function(char, onComplete) {
-            // 🎯 Requête directe sur le dépôt que tu as trouvé !
-            fetch(`https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${encodeURIComponent(char)}.json`)
-                .then(res => {
-                    // Si absent du pack JP (ex: 一, 三 qui n'ont pas de variante), on prend la base mondiale
-                    if (!res.ok) {
-                        return fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`);
-                    }
-                    return res;
-                })
-                .then(res => {
-                    if (!res.ok) throw new Error("Kanji introuvable");
-                    return res.json();
-                })
-                .then(onComplete)
-                .catch(err => {
-                    console.error("[HanziWriter Loader Erreur]", err);
-                });
-        }
+        charDataLoader: kanjiDataLoader
     });
     writer.animateCharacter();
 
