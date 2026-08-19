@@ -969,6 +969,20 @@ function resolveKanjis(indices) {
    3. Si aucun match kun, tenter avec on + wk_on.
    4. Fallback : first kun nettoyé, puis first on.
 ══════════════════════════════════════════════════ */
+    function kanjiDataLoader(char, onLoad, onError) {
+    const cdn = `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${char}.json`;
+    const gh  = `https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${char}.json`;
+    fetch(gh)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(onLoad)
+        .catch(() =>
+            fetch(cdn)
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(onLoad)
+                .catch(() => { if (typeof onError === 'function') onError(); })
+        );
+}
+    
 function getBestReading(k) {
     // --- NOUVEAU : Priorité absolue aux exceptions manuelles ---
     if (typeof quizOverrides !== 'undefined' && quizOverrides[k.char]) {
