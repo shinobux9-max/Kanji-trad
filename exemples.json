@@ -475,6 +475,20 @@
       "fr": "Le charpentier construit des maisons."
     }
   ],
+  "嫌": [
+    {
+      "jp": "私は魚が嫌いです。",
+      "ka": "わたし は さかな が きらい です。",
+      "ro": "Watashi wa sakana ga kirai desu.",
+      "fr": "Je déteste le poisson."
+    },
+    {
+      "jp": "雨の日は嫌です。",
+      "ka": "あめ の ひ は いや です。",
+      "ro": "Ame no hi wa iya desu.",
+      "fr": "Je n'aime pas les jours de pluie."
+    }
+  ],
   "海": [
     {
       "jp": "夏休みに海へ行きました。",
