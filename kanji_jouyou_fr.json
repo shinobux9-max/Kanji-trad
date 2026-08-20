@@ -255,6 +255,22 @@
     "wk_radicaux": ["Pouvoir"],
     "romaji": "ryoku, riki, rii, chikara"
   },
+  "嫌": {
+    "traits": 13,
+    "classe": 8,
+    "frequence": 1056,
+    "jlpt_ancien": 2,
+    "jlpt_nouveau": 3,
+    "sens": ["Détester", "Aversion", "Répugner"],
+    "lectures_on": ["ケン", "ゲン"],
+    "lectures_kun": ["きら.う", "きら.い", "いや", "きら.う"],
+    "wk_niveau": 24,
+    "wk_sens": ["Détester"],
+    "wk_lectures_on": ["ケン"],
+    "wk_lectures_kun": ["!いや", "!きら"],
+    "wk_radicaux": ["Femme", "Auparavant"],
+    "romaji": "ken, gen, kirau, kirai, iya"
+  },
   "也": {
     "traits": 3,
     "classe": 9,
