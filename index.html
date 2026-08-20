@@ -2296,9 +2296,6 @@ function answerQuiz(btn, chosenIdx, correctIdx) {
     const scoreFloat = (quizState.correct / next * 10).toFixed(1);
     document.getElementById('quiz-score-sub').textContent = `${scoreFloat} / 10.0`;
 
-    // AVANT :
-setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 700 : 1200);
-
 // APRÈS :
 const correctKanji = kanjiDb[correctIdx];
 setTimeout(() => {
