@@ -559,6 +559,20 @@
       "fr": "Tournez à droite au coin du 3ème bloc (quartier)."
     }
   ],
+  "介": [
+    {
+      "jp": "自己紹介をしてください。",
+      "ka": "じこしょうかい を してください。",
+      "ro": "Jikoshoukai wo shite kudasai.",
+      "fr": "Présentez-vous, s'il vous plaît."
+    },
+    {
+      "jp": "介護の仕事は大変です。",
+      "ka": "かいご の しごと は たいへん です。",
+      "ro": "Kaigo no shigoto wa taihen desu.",
+      "fr": "Le travail de soins aux personnes âgées est difficile."
+    }
+  ],
   "了": [
     {
       "jp": "準備が完了しました。",
