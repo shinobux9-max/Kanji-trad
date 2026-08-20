@@ -305,6 +305,28 @@
     .quiz-kanji-choice.wrong   { background: #2e0b0b; border-color: #e55; color: #e55; }
     .quiz-kanji-choice.reveal  { border-color: var(--accent); color: var(--accent); border-style: dashed; }
 
+    /* ── QUIZ FEEDBACK MODAL ─────────────────── */
+    #quiz-feedback-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 6000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+    #quiz-feedback-modal.open { display: flex; }
+    .qfm-card { width: 100%; max-width: 340px; border-radius: 18px; padding: 26px 22px 22px; text-align: center; border: 2px solid transparent; animation: qfmPop 0.25s ease; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    @keyframes qfmPop { from { transform: scale(0.9); opacity:0; } to { transform: scale(1); opacity:1; } }
+    .qfm-card.correct { background: #0b2e24; border-color: var(--accent); }
+    .qfm-card.wrong   { background: #2e0b0b; border-color: #e55; }
+    .qfm-kanji { font-size: 64px; font-weight: bold; color: #fff; line-height: 1; margin-bottom: 8px; }
+    .qfm-meaning { font-size: 16px; font-weight: bold; color: var(--text); margin-bottom: 16px; }
+    .qfm-readings { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .qfm-read-block { text-align: left; }
+    .qfm-read-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); font-weight: 700; margin-bottom: 5px; }
+    .qfm-read-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .qfm-read-tags .tag-on  { background: #1e3a32; color: #a3d2ca; }
+    .qfm-read-tags .tag-kun { background: #1a2a40; color: #a1c4e0; }
+    .qfm-read-tags .tag-empty { font-size: 11px; color: var(--gray); font-style: italic; }
+    .qfm-verdict { font-size: 14px; font-weight: bold; margin-bottom: 18px; }
+    .qfm-card.correct .qfm-verdict { color: var(--accent); }
+    .qfm-card.wrong .qfm-verdict { color: #e55; }
+    .qfm-continue-btn { width: 100%; padding: 13px; border: none; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: inherit; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #000; }
+    .qfm-continue-btn:active { opacity: 0.85; }
+
     /* ── STROKE QUIZ ─────────────────── */
     #stroke-quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4500; display: none; flex-direction: column; }
     .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
@@ -644,8 +666,27 @@
     </div>
 </div>
 
-<script>
+<!-- ── QUIZ FEEDBACK MODAL ────────────────────────── -->
+<div id="quiz-feedback-modal">
+    <div class="qfm-card" id="qfm-card">
+        <div class="qfm-kanji" id="qfm-kanji"></div>
+        <div class="qfm-meaning" id="qfm-meaning"></div>
+        <div class="qfm-readings">
+            <div class="qfm-read-block">
+                <div class="qfm-read-label">On'yomi</div>
+                <div class="qfm-read-tags" id="qfm-on"></div>
+            </div>
+            <div class="qfm-read-block">
+                <div class="qfm-read-label">Kun'yomi</div>
+                <div class="qfm-read-tags" id="qfm-kun"></div>
+            </div>
+        </div>
+        <div class="qfm-verdict" id="qfm-verdict"></div>
+        <button class="qfm-continue-btn" onclick="continueAfterFeedback()">Continuer →</button>
+    </div>
+</div>
 
+<script>
 /* ══════════════════════════════════════════════════
    QUIZ OVERRIDES — Lectures prioritaires
    Consultés en premier par getBestReading() avant
@@ -731,6 +772,10 @@ const arabicToHira = {
 // Katakana → hiragana
 const toHira = s => s.replace(/[\u30a1-\u30f6]/g,
     c => String.fromCharCode(c.charCodeAt(0) - 0x60));
+
+// Hiragana → Katakana (inverse de toHira) — pour l'affichage On'yomi
+const toKata = s => s.replace(/[\u3041-\u3096]/g,
+    c => String.fromCharCode(c.charCodeAt(0) + 0x60));
 
 // Nettoie et normalise ce que le micro a capté
 function normalizeOralResult(raw) {
@@ -969,7 +1014,7 @@ function resolveKanjis(indices) {
    3. Si aucun match kun, tenter avec on + wk_on.
    4. Fallback : first kun nettoyé, puis first on.
 ══════════════════════════════════════════════════ */
-    function kanjiDataLoader(char, onLoad, onError) {
+function kanjiDataLoader(char, onLoad, onError) {
     const cdn = `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${char}.json`;
     const gh  = `https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${char}.json`;
     fetch(gh)
@@ -982,7 +1027,7 @@ function resolveKanjis(indices) {
                 .catch(() => { if (typeof onError === 'function') onError(); })
         );
 }
-    
+
 function getBestReading(k) {
     // --- NOUVEAU : Priorité absolue aux exceptions manuelles ---
     if (typeof quizOverrides !== 'undefined' && quizOverrides[k.char]) {
@@ -2182,6 +2227,47 @@ function toggleExamples() { /* placeholder pour une future expansion */ }
 /* ─────────────────────────────────────────────────
    RÉPONSE
 ───────────────────────────────────────────────── */
+let _qfmPending = null; // callback exécuté au clic "Continuer"
+
+function showQuizFeedbackModal(k, isCorrect, onContinue) {
+    _qfmPending = onContinue;
+
+    const card = document.getElementById('qfm-card');
+    card.classList.remove('correct', 'wrong');
+    card.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    document.getElementById('qfm-kanji').textContent = k.char;
+
+    const meanings = k.meanings.filter(m => !m.toLowerCase().includes('radical'));
+    document.getElementById('qfm-meaning').textContent =
+        (meanings.length ? meanings : k.meanings).slice(0, 3).join(' · ') || '–';
+
+    const cleanReading = r => r.replace(/[.·＊*].*/, '').replace(/-.*/, '').replace(/^!/, '').trim();
+    const seenOn = new Set(), seenKun = new Set();
+
+    const onTags = (k.on || [])
+        .map(cleanReading).filter(r => r && !seenOn.has(r) && seenOn.add(r))
+        .map(r => `<span class="tag tag-on">${toKata(r)}</span>`).join('');
+    const kunTags = (k.kun || [])
+        .map(cleanReading).filter(r => r && !seenKun.has(r) && seenKun.add(r))
+        .map(r => `<span class="tag tag-kun">${toHira(r)}</span>`).join('');
+
+    document.getElementById('qfm-on').innerHTML  = onTags  || '<span class="tag-empty">Aucune</span>';
+    document.getElementById('qfm-kun').innerHTML = kunTags || '<span class="tag-empty">Aucune</span>';
+
+    document.getElementById('qfm-verdict').textContent =
+        isCorrect ? '✔ Bonne réponse !' : `✘ Réponse correcte : ${k.char}`;
+
+    document.getElementById('quiz-feedback-modal').classList.add('open');
+}
+
+function continueAfterFeedback() {
+    document.getElementById('quiz-feedback-modal').classList.remove('open');
+    const cb = _qfmPending;
+    _qfmPending = null;
+    if (cb) cb();
+}
+
 function answerQuiz(btn, chosenIdx, correctIdx) {
     if (!quizState || quizState.answered) return;
     quizState.answered = true;
@@ -2210,7 +2296,16 @@ function answerQuiz(btn, chosenIdx, correctIdx) {
     const scoreFloat = (quizState.correct / next * 10).toFixed(1);
     document.getElementById('quiz-score-sub').textContent = `${scoreFloat} / 10.0`;
 
-    setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 700 : 1200);
+    // AVANT :
+setTimeout(() => { quizState.idx++; renderQuizQuestion(); }, isCorrect ? 700 : 1200);
+
+// APRÈS :
+const correctKanji = kanjiDb[correctIdx];
+setTimeout(() => {
+    showQuizFeedbackModal(correctKanji, isCorrect, () => {
+        if (quizState) { quizState.idx++; renderQuizQuestion(); }
+    });
+}, isCorrect ? 400 : 700);
 }
 
 function renderQuizResults() {
