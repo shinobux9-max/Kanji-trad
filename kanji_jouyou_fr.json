@@ -495,6 +495,22 @@
     "wk_radicaux": ["Rivière"],
     "romaji": "sen, kawa"
   },
+  "介": {
+    "traits": 4,
+    "classe": 8,
+    "frequence": 605,
+    "jlpt_ancien": 2,
+    "jlpt_nouveau": 3,
+    "sens": ["Intermédiaire", "Présenter", "Coincé"],
+    "lectures_on": ["カイ"],
+    "lectures_kun": ["たす.ける", "すけ"],
+    "wk_niveau": 24,
+    "wk_sens": ["Intermédiaire"],
+    "wk_lectures_on": ["カイ"],
+    "wk_lectures_kun": [],
+    "wk_radicaux": ["Chapeau", "Personne"],
+    "romaji": "kai, tasukeru, suke"
+  },
   "工": {
     "traits": 3,
     "classe": 2,
