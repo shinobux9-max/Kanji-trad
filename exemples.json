@@ -489,6 +489,62 @@
       "fr": "Je n'aime pas les jours de pluie."
     }
   ],
+  "教": [
+    {
+      "jp": "先生が日本語を教えてくれます。",
+      "ka": "せんせい が にほんご を おしえて くれます。",
+      "ro": "Sensei ga nihongo wo oshiete kuremasu.",
+      "fr": "Le professeur m'enseigne le japonais."
+    },
+    {
+      "jp": "教室で勉強します。",
+      "ka": "きょうしつ で べんきょう します。",
+      "ro": "Kyoushitsu de benkyou shimasu.",
+      "fr": "J'étudie dans la salle de classe."
+    }
+  ],
+  "世": [
+    {
+      "jp": "世界は広いです。",
+      "ka": "せかい は ひろい です。",
+      "ro": "Sekai wa hiroi desu.",
+      "fr": "Le monde est grand."
+    },
+    {
+      "jp": "世の中には色々な人がいます。",
+      "ka": "よのなか に は いろいろ な ひと が います。",
+      "ro": "Yononaka ni wa iroiro na hito ga imasu.",
+      "fr": "Il y a toutes sortes de personnes dans le monde."
+    }
+  ],
+  "免": [
+    {
+      "jp": "運転免許証を見せてください。",
+      "ka": "うんてん めんきょしょう を みせて ください。",
+      "ro": "Unten menkyoshou wo misete kudasai.",
+      "fr": "Montrez-moi votre permis de conduire, s'il vous plaît."
+    },
+    {
+      "jp": "彼は税金を免除されました。",
+      "ka": "かれ は ぜいきん を めんじょ されました。",
+      "ro": "Kare wa zeikin wo menjo saremashita.",
+      "fr": "Il a été exempté d'impôts."
+    }
+  ],
+  "勉": [
+    {
+      "jp": "毎日日本語を勉強しています。",
+      "ka": "まいにち にほんご を べんきょう しています。",
+      "ro": "Mainichi nihongo wo benkyou shite imasu.",
+      "fr": "J'étudie le japonais tous les jours."
+    },
+    {
+      "jp": "彼は勤勉な学生です。",
+      "ka": "かれ は きんべん な がくせい です。",
+      "ro": "Kare wa kinben na gakusei desu.",
+      "fr": "C'est un étudiant assidu."
+    }
+  ],
   "海": [
     {
       "jp": "夏休みに海へ行きました。",
