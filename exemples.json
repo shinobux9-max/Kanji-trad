@@ -503,6 +503,20 @@
       "fr": "J'étudie dans la salle de classe."
     }
   ],
+  "英": [
+    {
+      "jp": "英語を話すことができます。",
+      "ka": "えいご を はなす こと が できます。",
+      "ro": "Eigo wo hanasu koto ga dekimasu.",
+      "fr": "Je peux parler anglais."
+    },
+    {
+      "jp": "彼は英国に行きました。",
+      "ka": "かれ は えいこく に いきました。",
+      "ro": "Kare wa eikoku ni ikimashita.",
+      "fr": "Il est allé au Royaume-Uni."
+    }
+  ],
   "世": [
     {
       "jp": "世界は広いです。",
