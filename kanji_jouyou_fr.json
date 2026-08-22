@@ -671,6 +671,22 @@
     "wk_radicaux": ["Enfant"],
     "romaji": "shi, su, tsu, ko, ne"
   },
+  "英": {
+    "traits": 8,
+    "classe": 4,
+    "frequence": 343,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 4,
+    "sens": ["Angleterre", "Héros", "Excellent"],
+    "lectures_on": ["エイ"],
+    "lectures_kun": ["はなぶさ"],
+    "wk_niveau": 9,
+    "wk_sens": ["Angleterre", "Anglais"],
+    "wk_lectures_on": ["エイ"],
+    "wk_lectures_kun": [],
+    "wk_radicaux": ["Herbe", "Centre"],
+    "romaji": "ei, hanabusa"
+  },
   "小": {
     "traits": 3,
     "classe": 1,
