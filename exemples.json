@@ -223,6 +223,20 @@
       "fr": "Avez-vous des frères et sœurs ?"
     }
   ],
+    "昨": [
+    {
+      "jp": "昨日、友達に会いました。",
+      "ka": "きのう、 ともだち に あいました。",
+      "ro": "Kinou, tomodachi ni aimashita.",
+      "fr": "Hier, j'ai rencontré un ami."
+    },
+    {
+      "jp": "昨日は雨が降っていました。",
+      "ka": "きのう は あめ が ふっていました。",
+      "ro": "Kinou wa ame ga futte imashita.",
+      "fr": "Hier, il pleuvait."
+    }
+  ],
   "千": [
     {
       "jp": "千円貸してください。",
