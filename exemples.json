@@ -391,6 +391,20 @@
       "fr": "Où est la sortie du métro ?"
     }
   ],
+    "刺": [
+    {
+      "jp": "名刺を交換しました。",
+      "ka": "めいし を こうかん しました。",
+      "ro": "Meishi wo koukan shimashita.",
+      "fr": "J'ai échangé des cartes de visite."
+    },
+    {
+      "jp": "蜂に刺されました。",
+      "ka": "はち に さされました。",
+      "ro": "Hachi ni sasaremashita.",
+      "fr": "Je me suis fait piquer par une abeille."
+    }
+  ],
   "女": [
     {
       "jp": "女の子が遊んでいます。",
