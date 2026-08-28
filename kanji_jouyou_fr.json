@@ -207,6 +207,22 @@
     "wk_radicaux": ["Feuille", "Sabre"],
     "romaji": "man, ban, yorozu"
   },
+    "昨": {
+    "traits": 9,
+    "classe": 4,
+    "frequence": 673,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 3,
+    "sens": ["Passé", "Précédent", "Hier"],
+    "lectures_on": ["サク"],
+    "lectures_kun": [],
+    "wk_niveau": 10,
+    "wk_sens": ["Hier", "Précédent"],
+    "wk_lectures_on": ["サク"],
+    "wk_lectures_kun": [],
+    "wk_radicaux": ["Soleil", "Fabriquer"],
+    "romaji": "saku"
+  },
   "人": {
     "traits": 2,
     "classe": 1,
