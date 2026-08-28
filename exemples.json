@@ -335,6 +335,20 @@
       "fr": "Je cours à toute force (à pleine puissance)."
     }
   ],
+    "使": [
+    {
+      "jp": "この辞書を使ってもいいですか。",
+      "ka": "この じしょ を つかって も いい です か。",
+      "ro": "Kono jisho wo tsukatte mo ii desu ka.",
+      "fr": "Puis-je utiliser ce dictionnaire ?"
+    },
+    {
+      "jp": "大使館に行かなければなりません。",
+      "ka": "たいしかん に いかなければ なりません。",
+      "ro": "Taishikan ni ikanakereba narimasen.",
+      "fr": "Je dois aller à l'ambassade."
+    }
+  ],
   "上": [
     {
       "jp": "机の上に本があります。",
