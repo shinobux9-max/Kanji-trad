@@ -351,6 +351,22 @@
     "wk_radicaux": ["Sol", "Orteil"],
     "romaji": "ka, ge, shita, shimo, moto, sa, kuda, o"
   },
+    "刺": {
+    "traits": 8,
+    "classe": 8,
+    "frequence": 1039,
+    "jlpt_ancien": 2,
+    "jlpt_nouveau": 2,
+    "sens": ["Poignarder", "Piquer", "Carte", "Epine"],
+    "lectures_on": ["シ"],
+    "lectures_kun": ["さ.す", "さ.さる", "さ.し", "トゲ"],
+    "wk_niveau": 22,
+    "wk_sens": ["Poignarder", "Piquer"],
+    "wk_lectures_on": ["シ"],
+    "wk_lectures_kun": ["!さ"],
+    "wk_radicaux": ["Arbre", "Sabre"],
+    "romaji": "shi, sasu, sasaru, meishi"
+  },
   "口": {
     "traits": 3,
     "classe": 1,
