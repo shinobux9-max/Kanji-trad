@@ -1039,13 +1039,26 @@ async function loadJLPTCategory(levelId, category) {
         
         const data = await res.json();
         
+        // Charger aussi les exemples si c'est vocab ou grammar
+        let examples = null;
+        if (category === 'vocab' || category === 'grammar') {
+            try {
+                const exRes = await fetch(`./data/${levelId}/examples.json`);
+                if (exRes.ok) {
+                    examples = await exRes.json();
+                }
+            } catch (e) {
+                console.warn(`Exemples non trouvés pour ${levelId}:`, e);
+            }
+        }
+        
         // Afficher selon la catégorie
         if (category === 'kanji') {
             displayKanjiList(levelId, data);
         } else if (category === 'vocab') {
-            displayVocabList(levelId, data);
+            displayVocabList(levelId, data, examples);
         } else if (category === 'grammar') {
-            displayGrammarList(levelId, data);
+            displayGrammarList(levelId, data, examples);
         }
         
         // Marquer l'onglet comme actif
@@ -1088,7 +1101,7 @@ function displayKanjiList(levelId, data) {
         </div>`;
 }
 
-function displayVocabList(levelId, data) {
+function displayVocabList(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
         container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
@@ -1113,14 +1126,31 @@ function displayVocabList(levelId, data) {
         const label = VOCAB_CATEGORY_MAP[cat] || `📌 ${cat}`;
         const words = grouped[cat];
         
-        const wordCards = words.map(word => `
-            <div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px">
-                <div style="font-size:13px;font-weight:bold;color:#fff">${word.word}</div>
-                <div style="font-size:11px;color:var(--accent);margin-top:2px">${word.reading}</div>
-                <div style="font-size:12px;color:var(--gray);margin-top:4px;line-height:1.4">${word.meanings.join(' • ')}</div>
-                <div style="font-size:9px;color:var(--gray);margin-top:4px;opacity:0.6">${word.type}</div>
-            </div>
-        `).join('');
+        const wordCards = words.map(word => {
+            // Charger les exemples pour ce mot s'ils existent
+            const wordExamples = examples && examples.vocab && examples.vocab[word.id] ? examples.vocab[word.id] : [];
+            const exHTML = wordExamples.length > 0 
+                ? `<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:10px;color:var(--gray)">
+                    ${wordExamples.slice(0, 1).map(ex => `
+                        <div style="margin-top:6px;padding:6px;background:rgba(0,0,0,0.2);border-radius:4px;line-height:1.3">
+                            <div style="color:#fff;font-size:11px">${ex.jp}</div>
+                            <div style="color:var(--accent);font-size:9px;margin-top:2px">${ex.ro}</div>
+                            <div style="color:var(--gray);font-size:10px;margin-top:2px">${ex.fr}</div>
+                        </div>
+                    `).join('')}
+                </div>`
+                : '';
+            
+            return `
+                <div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px">
+                    <div style="font-size:13px;font-weight:bold;color:#fff">${word.word}</div>
+                    <div style="font-size:11px;color:var(--accent);margin-top:2px">${word.reading}</div>
+                    <div style="font-size:12px;color:var(--gray);margin-top:4px;line-height:1.4">${word.meanings.join(' • ')}</div>
+                    <div style="font-size:9px;color:var(--gray);margin-top:4px;opacity:0.6">${word.type}</div>
+                    ${exHTML}
+                </div>
+            `;
+        }).join('');
         
         html += `
             <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
@@ -1142,7 +1172,7 @@ function displayVocabList(levelId, data) {
     container.innerHTML = html;
 }
 
-function displayGrammarList(levelId, data) {
+function displayGrammarList(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
         container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
@@ -1167,20 +1197,34 @@ function displayGrammarList(levelId, data) {
         const label = GRAMMAR_TYPE_MAP[type] || type;
         const patterns = grouped[type];
         
-        const patternCards = patterns.map((pattern, idx) => `
-            <div style="padding:12px;background:rgba(255,255,255,0.02);border-left:3px solid #9b8bff;border-radius:6px;cursor:pointer;transition:all 0.15s" onclick="this.querySelector('[data-examples]').style.display = this.querySelector('[data-examples]').style.display === 'none' ? 'block' : 'none'" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
-                <div style="font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:6px">${pattern.pattern}</div>
-                <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:8px">${pattern.meaning}</div>
-                <div style="font-size:10px;color:var(--gray);opacity:0.6">Cliquez pour voir des exemples →</div>
-                <div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+        const patternCards = patterns.map((pattern, idx) => {
+            // Charger les exemples réels pour ce pattern
+            const patternExamples = examples && examples.grammar && pattern.examples
+                ? pattern.examples.slice(0, 2).map(exId => examples.grammar[exId]).filter(ex => ex)
+                : [];
+            
+            const exHTML = patternExamples.length > 0
+                ? `<div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
                     <div style="font-size:11px;color:var(--gray);margin-bottom:8px;font-weight:bold">Exemples :</div>
-                    ${pattern.examples && pattern.examples.length > 0 
-                        ? pattern.examples.slice(0, 2).map(exId => `<div style="font-size:11px;color:var(--gray);padding:6px;background:rgba(0,0,0,0.2);border-radius:4px;margin-bottom:4px">${exId}</div>`).join('')
-                        : '<div style="font-size:11px;color:var(--gray)">Pas d\'exemples disponibles</div>'
-                    }
+                    ${patternExamples.map(ex => `
+                        <div style="font-size:11px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;margin-bottom:6px;line-height:1.4">
+                            <div style="color:#fff;font-size:12px">${ex.jp}</div>
+                            <div style="color:var(--accent);font-size:10px;margin-top:3px">${ex.ro}</div>
+                            <div style="color:var(--gray);font-size:11px;margin-top:3px">${ex.fr}</div>
+                        </div>
+                    `).join('')}
+                </div>`
+                : '<div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--gray)">Pas d\'exemples disponibles</div>';
+            
+            return `
+                <div style="padding:12px;background:rgba(255,255,255,0.02);border-left:3px solid #9b8bff;border-radius:6px;cursor:pointer;transition:all 0.15s;user-select:none" onclick="const ex = this.querySelector('[data-examples]'); ex.style.display = ex.style.display === 'none' ? 'block' : 'none'" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
+                    <div style="font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:6px">${pattern.pattern}</div>
+                    <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:8px">${pattern.meaning}</div>
+                    <div style="font-size:10px;color:var(--gray);opacity:0.6">Cliquez pour voir les exemples →</div>
+                    ${exHTML}
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
         
         html += `
             <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
