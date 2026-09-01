@@ -225,6 +225,53 @@ let searchOpen = false;
 const SERIES_SIZE = 20;
 
 /* ══════════════════════════════════════════════════
+   MAPPING CATÉGORIES : Anglais → Français
+══════════════════════════════════════════════════ */
+const VOCAB_CATEGORY_MAP = {
+    'action': '🎬 Action',
+    'color': '🎨 Couleurs',
+    'descriptor': '✨ Descripteurs',
+    'nature': '🌿 Nature',
+    'time': '⏰ Temps',
+    'food': '🍜 Nourriture',
+    'body': '🏃 Corps',
+    'weather': '⛅ Météo',
+    'direction': '🧭 Directions',
+    'people': '👥 Personnes',
+    'family': '👨‍👩‍👧‍👦 Famille',
+    'place': '🏠 Lieux',
+    'object': '📦 Objets',
+    'state': '💫 État',
+    'communication': '💬 Communication',
+    'movement': '🚶 Mouvement',
+    'question': '❓ Questions',
+    'interrogative': '❓ Interrogatifs',
+    'number': '🔢 Nombres',
+    'animal': '🐶 Animaux',
+    'abstract': '🧠 Concepts',
+    'art': '🎭 Arts',
+    'language': '🗣️ Langues',
+    'clothing': '👕 Vêtements',
+    'phrase': '💭 Expressions',
+    'grammar': '📚 Grammaire'
+};
+
+const GRAMMAR_TYPE_MAP = {
+    'copula': 'Copule (être)',
+    'verb-form': 'Formes verbales',
+    'particle': 'Particules',
+    'adjective': 'Adjectifs',
+    'verb-phrase': 'Expressions verbales',
+    'suffix': 'Suffixes',
+    'expression': 'Expressions',
+    'comparison': 'Comparaisons',
+    'quotation': 'Citations',
+    'opinion': 'Opinions',
+    'conjunction': 'Conjonctions',
+    'time-clause': 'Clauses temporelles'
+};
+
+/* ══════════════════════════════════════════════════
    DÉFINITIONS DE CATÉGORIES
 ══════════════════════════════════════════════════ */
 const CAT_DEFS = [
@@ -1048,16 +1095,51 @@ function displayVocabList(levelId, data) {
         return;
     }
     
-    const items = data.map(word => `
-        <div style="padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin-bottom:8px">
-            <div style="font-size:14px;font-weight:bold;margin-bottom:4px">${word.word}</div>
-            <div style="font-size:12px;color:var(--accent);margin-bottom:6px">${word.reading}</div>
-            <div style="font-size:13px;color:var(--gray);line-height:1.4">${word.meanings.join(', ')}</div>
-            <div style="font-size:10px;color:var(--gray);margin-top:6px;opacity:0.6">${word.type} • ${word.category}</div>
-        </div>
-    `).join('');
+    // Grouper par catégorie
+    const grouped = {};
+    data.forEach(word => {
+        const cat = word.category || 'other';
+        if (!grouped[cat]) grouped[cat] = [];
+        grouped[cat].push(word);
+    });
     
-    container.innerHTML = `<div>${items}</div>`;
+    // Trier les catégories
+    const sortedCats = Object.keys(grouped).sort();
+    
+    // Construire l'HTML
+    let html = '<div style="display:flex;flex-direction:column;gap:16px">';
+    
+    sortedCats.forEach(cat => {
+        const label = VOCAB_CATEGORY_MAP[cat] || `📌 ${cat}`;
+        const words = grouped[cat];
+        
+        const wordCards = words.map(word => `
+            <div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px">
+                <div style="font-size:13px;font-weight:bold;color:#fff">${word.word}</div>
+                <div style="font-size:11px;color:var(--accent);margin-top:2px">${word.reading}</div>
+                <div style="font-size:12px;color:var(--gray);margin-top:4px;line-height:1.4">${word.meanings.join(' • ')}</div>
+                <div style="font-size:9px;color:var(--gray);margin-top:4px;opacity:0.6">${word.type}</div>
+            </div>
+        `).join('');
+        
+        html += `
+            <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
+                <div style="padding:12px;background:rgba(0,201,167,0.1);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onclick="this.parentElement.querySelector('[data-words]').style.display = this.parentElement.querySelector('[data-words]').style.display === 'none' ? 'block' : 'none'; this.parentElement.querySelector('[data-arrow]').style.transform = this.parentElement.querySelector('[data-words]').style.display === 'none' ? 'rotate(0deg)' : 'rotate(90deg)'">
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(90deg)">▶</span>
+                        <span style="font-size:13px;font-weight:bold">${label}</span>
+                        <span style="font-size:11px;color:var(--gray);margin-left:auto">${words.length} mots</span>
+                    </div>
+                </div>
+                <div data-words style="padding:12px;display:flex;flex-direction:column;gap:8px">
+                    ${wordCards}
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 function displayGrammarList(levelId, data) {
@@ -1067,15 +1149,57 @@ function displayGrammarList(levelId, data) {
         return;
     }
     
-    const items = data.map(pattern => `
-        <div style="padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin-bottom:8px">
-            <div style="font-size:14px;font-weight:bold;margin-bottom:4px;color:var(--accent)">${pattern.pattern}</div>
-            <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:6px">${pattern.meaning}</div>
-            <div style="font-size:10px;color:var(--gray);opacity:0.6">${pattern.type}</div>
-        </div>
-    `).join('');
+    // Grouper par type de grammaire
+    const grouped = {};
+    data.forEach(pattern => {
+        const type = pattern.type || 'other';
+        if (!grouped[type]) grouped[type] = [];
+        grouped[type].push(pattern);
+    });
     
-    container.innerHTML = `<div>${items}</div>`;
+    // Trier les types
+    const sortedTypes = Object.keys(grouped).sort();
+    
+    // Construire l'HTML : afficher comme des leçons
+    let html = '<div style="display:flex;flex-direction:column;gap:16px">';
+    
+    sortedTypes.forEach(type => {
+        const label = GRAMMAR_TYPE_MAP[type] || type;
+        const patterns = grouped[type];
+        
+        const patternCards = patterns.map((pattern, idx) => `
+            <div style="padding:12px;background:rgba(255,255,255,0.02);border-left:3px solid #9b8bff;border-radius:6px;cursor:pointer;transition:all 0.15s" onclick="this.querySelector('[data-examples]').style.display = this.querySelector('[data-examples]').style.display === 'none' ? 'block' : 'none'" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
+                <div style="font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:6px">${pattern.pattern}</div>
+                <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:8px">${pattern.meaning}</div>
+                <div style="font-size:10px;color:var(--gray);opacity:0.6">Cliquez pour voir des exemples →</div>
+                <div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+                    <div style="font-size:11px;color:var(--gray);margin-bottom:8px;font-weight:bold">Exemples :</div>
+                    ${pattern.examples && pattern.examples.length > 0 
+                        ? pattern.examples.slice(0, 2).map(exId => `<div style="font-size:11px;color:var(--gray);padding:6px;background:rgba(0,0,0,0.2);border-radius:4px;margin-bottom:4px">${exId}</div>`).join('')
+                        : '<div style="font-size:11px;color:var(--gray)">Pas d\'exemples disponibles</div>'
+                    }
+                </div>
+            </div>
+        `).join('');
+        
+        html += `
+            <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
+                <div style="padding:12px;background:rgba(155,139,255,0.1);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onclick="this.parentElement.querySelector('[data-lessons]').style.display = this.parentElement.querySelector('[data-lessons]').style.display === 'none' ? 'block' : 'none'; this.parentElement.querySelector('[data-arrow]').style.transform = this.parentElement.querySelector('[data-lessons]').style.display === 'none' ? 'rotate(0deg)' : 'rotate(90deg)'">
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(90deg)">▶</span>
+                        <span style="font-size:13px;font-weight:bold">${label}</span>
+                        <span style="font-size:11px;color:var(--gray);margin-left:auto">${patterns.length} leçons</span>
+                    </div>
+                </div>
+                <div data-lessons style="padding:12px;display:flex;flex-direction:column;gap:8px">
+                    ${patternCards}
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 /* ══════════════════════════════════════════════════
