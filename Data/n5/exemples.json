@@ -576,6 +576,12 @@
         "ka": "ぎんこう は どこ です か。",
         "ro": "ginkou wa doko desu ka.",
         "fr": "Où est la banque ?"
+      },
+    {
+        "jp": "旅行に行きます。",
+        "ka": "りょこう に いきます。",
+        "ro": "ryokou ni ikimasu.",
+        "fr": "Je pars en voyage."
       }
     ],
     "来": [
@@ -816,6 +822,12 @@
         "ka": "がくせい です か。",
         "ro": "gakusei desu ka.",
         "fr": "Êtes-vous étudiant ?"
+      },
+            {
+        "jp": "学校で学びます。",
+        "ka": "がっこう で まなびます。",
+        "ro": "gakkou de manabimasu.",
+        "fr": "J'apprends à l'école."
       }
     ],
     "校": [
@@ -944,22 +956,6 @@
         "fr": "Je dis quelques mots."
       }
     ],
-    "立": [
-      {
-        "jp": "ここに立ちます。",
-        "ka": "ここ に たちます。",
-        "ro": "koko ni tachimasu.",
-        "fr": "Je me tiens ici."
-      }
-    ],
-    "行": [
-      {
-        "jp": "旅行に行きます。",
-        "ka": "りょこう に いきます。",
-        "ro": "ryokou ni ikimasu.",
-        "fr": "Je pars en voyage."
-      }
-    ],
     "車": [
       {
         "jp": "車で行きます。",
@@ -1002,20 +998,18 @@
         "fr": "L'entrée est par ici."
       }
     ],
-    "学": [
-      {
-        "jp": "学校で学びます。",
-        "ka": "がっこう で まなびます。",
-        "ro": "gakkou deまなびます。",
-        "fr": "J'apprends à l'école."
-      }
-    ],
     "立": [
       {
         "jp": "立つと見えます。",
         "ka": "たつ と みえます。",
         "ro": "tatsu to miemasu.",
         "fr": "On peut voir quand on se lève."
+      },
+    {
+        "jp": "ここに立ちます。",
+        "ka": "ここ に たちます。",
+        "ro": "koko ni tachimasu.",
+        "fr": "Je me tiens ici."
       }
     ],
     "目": [
@@ -1110,22 +1104,6 @@
         "ka": "ともだち と はなします。",
         "ro": "tomodachi to hanashimasu.",
         "fr": "Je parle avec un ami."
-      }
-    ],
-    "女": [
-      {
-        "jp": "彼女は学生です。",
-        "ka": "かのじょ は がくせい です。",
-        "ro": "kanojo wa gakusei desu.",
-        "fr": "Elle est étudiante."
-      }
-    ],
-    "古": [
-      {
-        "jp": "古本を買いました。",
-        "ka": "ふるほん を かいました。",
-        "ro": "furuhon o kaimashita.",
-        "fr": "J'ai acheté un livre d'occasion."
       }
     ],
     "気": [
@@ -1304,65 +1282,124 @@
         "fr": "Je bois l'eau du robinet."
       }
     ]
-  }
-}
-    "1": [
-      {
-        "jp": "会う前に電話します。",
-        "ka": "あう まえ に でんわ します。",
-        "ro": "au mae ni denwa shimasu.",
-        "fr": "J'appelle avant de rencontrer quelqu'un."
-      },
+  },
+
+  "vocab": {
+    "n5_v_1": [
       {
         "jp": "駅で友達に会いました。",
         "ka": "えき で ともだち に あいました。",
         "ro": "eki de tomodachi ni aimashita.",
         "fr": "J'ai rencontré un ami à la gare."
-      }
-    ],
-    "2": [
-      {
-        "jp": "部屋をあけます。",
-        "ka": "へや を あけます。",
-        "ro": "heya o akemasu.",
-        "fr": "J'ouvre la pièce."
       },
       {
-        "jp": "ドアをあけてください。",
+        "jp": "明日先生に会います。",
+        "ka": "あした せんせい に あいます。",
+        "ro": "ashita sensei ni aimasu.",
+        "fr": "Je rencontre le professeur demain."
+      }
+    ],
+    "n5_v_2": [
+      {
+        "jp": "青い車を買いました。",
+        "ka": "あおい くるま を かいました。",
+        "ro": "aoi kuruma o kaimashita.",
+        "fr": "J'ai acheté une voiture bleue."
+      },
+      {
+        "jp": "空が青いです。",
+        "ka": "そら が あおい です。",
+        "ro": "sora ga aoi desu.",
+        "fr": "Le ciel est bleu."
+      }
+    ],
+    "n5_v_3": [
+      {
+        "jp": "赤い花が見えます。",
+        "ka": "あかい はな が みえます。",
+        "ro": "akai hana ga miemasu.",
+        "fr": "On voit une fleur rouge."
+      },
+      {
+        "jp": "このりんごは赤いですね。",
+        "ka": "この りんご は あかい です ね。",
+        "ro": "kono ringo wa akai desu ne.",
+        "fr": "Cette pomme est rouge, n'est-ce pas ?"
+      }
+    ],
+    "n5_v_4": [
+      {
+        "jp": "部屋が明るいです。",
+        "ka": "へや が あかるい です。",
+        "ro": "heya ga akarui desu.",
+        "fr": "La pièce est lumineuse."
+      }
+    ],
+    "n5_v_5": [
+      {
+        "jp": "秋が好きです。",
+        "ka": "あき が すき です。",
+        "ro": "aki ga suki desu.",
+        "fr": "J'aime l'automne."
+      },
+      {
+        "jp": "秋に行きます。",
+        "ka": "あき に いきます。",
+        "ro": "aki ni ikimasu.",
+        "fr": "J'y vais en automne."
+      }
+    ],
+    "n5_v_6": [
+      {
+        "jp": "ドアを開けてください。",
         "ka": "ドア を あけて ください。",
         "ro": "doa o akete kudasai.",
         "fr": "Ouvrez la porte s'il vous plaît."
-      }
-    ],
-    "3": [
-      {
-        "jp": "手をあげます。",
-        "ka": "て を あげます。",
-        "ro": "te o agemasu.",
-        "fr": "Je lève la main."
       },
       {
-        "jp": "友達に本をあげました。",
+        "jp": "本を開けます。",
+        "ka": "ほん を あけます。",
+        "ro": "hon o akemasu.",
+        "fr": "J'ouvre le livre."
+      }
+    ],
+    "n5_v_7": [
+      {
+        "jp": "手を上げてください。",
+        "ka": "て を あげて ください。",
+        "ro": "te o agete kudasai.",
+        "fr": "Levez la main s'il vous plaît."
+      },
+      {
+        "jp": "友達に本を上げました。",
         "ka": "ともだち に ほん を あげました。",
         "ro": "tomodachi ni hon o agemashita.",
         "fr": "J'ai donné un livre à un ami."
       }
     ],
-    "4": [
+    "n5_v_8": [
       {
-        "jp": "朝早く起きます。",
-        "ka": "あさ はやく おきます。",
-        "ro": "asa hayaku okimasu.",
-        "fr": "Je me lève tôt le matin."
+        "jp": "毎朝七時に起きます。",
+        "ka": "まいあさ しちじ に おきます。",
+        "ro": "maiasa shichiji ni okimasu.",
+        "fr": "Je me lève à sept heures tous les matins."
       },
       {
-        "jp": "今朝雨が降っていました。",
-        "ka": "けさ あめ が ふっていました。",
-        "ro": "kesa ame ga futte imashita.",
-        "fr": "Ce matin, il pleuvait."
+        "jp": "朝の運動をします。",
+        "ka": "あさ の うんどう を します。",
+        "ro": "asa no undou o shimasu.",
+        "fr": "Je fais de l'exercice le matin."
       }
     ],
-    "5": [
+    "n5_v_9": [
+      {
+        "jp": "八時に朝ご飯を食べます。",
+        "ka": "はちじ に あさごはん を たべます。",
+        "ro": "hachiji ni asagohan o tabemasu.",
+        "fr": "Je mange le petit-déjeuner à huit heures."
+      }
+    ],
+    "n5_v_10": [
       {
         "jp": "あさって会いましょう。",
         "ka": "あさって あいましょう。",
@@ -1370,7 +1407,35 @@
         "fr": "Rencontrons-nous après-demain."
       }
     ],
-    "6": [
+    "n5_v_11": [
+      {
+        "jp": "足が痛いです。",
+        "ka": "あし が いたい です。",
+        "ro": "ashi ga itai desu.",
+        "fr": "J'ai mal au pied."
+      },
+      {
+        "jp": "足が速いです。",
+        "ka": "あし が はやい です。",
+        "ro": "ashi ga hayai desu.",
+        "fr": "Il court vite (ses jambes sont rapides)."
+      }
+    ],
+    "n5_v_12": [
+      {
+        "jp": "明日学校へ行きます。",
+        "ka": "あした がっこう へ いきます。",
+        "ro": "ashita gakkou he ikimasu.",
+        "fr": "Demain, je vais à l'école."
+      },
+      {
+        "jp": "明日また会いましょう。",
+        "ka": "あした また あいましょう。",
+        "ro": "ashita mata aimashou.",
+        "fr": "Aujourd'hui terminé, revoyons-nous demain."
+      }
+    ],
+    "n5_v_13": [
       {
         "jp": "公園で遊びます。",
         "ka": "こうえん で あそびます。",
@@ -1381,18 +1446,18 @@
         "jp": "友達と遊んでいます。",
         "ka": "ともだち と あそんでいます。",
         "ro": "tomodachi to asonde imasu.",
-        "fr": "Je suis en train de m'amuser avec des amis."
+        "fr": "Je m'amuse avec des amis."
       }
     ],
-    "7": [
+    "n5_v_14": [
       {
-        "jp": "外は暖かいです。",
-        "ka": "そと は あたたかい です。",
-        "ro": "soto wa atatakai desu.",
-        "fr": "Il fait doux/chaud dehors."
+        "jp": "今日は暖かいですね。",
+        "ka": "きょう は あたたかい です ね。",
+        "ro": "kyou wa atatakai desu ne.",
+        "fr": "Il fait doux aujourd'hui, n'est-ce pas ?"
       }
     ],
-    "8": [
+    "n5_v_15": [
       {
         "jp": "頭が痛いです。",
         "ka": "あたま が いたい です。",
@@ -1400,15 +1465,21 @@
         "fr": "J'ai mal à la tête."
       }
     ],
-    "9": [
+    "n5_v_16": [
       {
-        "jp": "新しい本を買いました。",
-        "ka": "あたらしい ほん を かいました。",
-        "ro": "atarashii hon o kaimashita.",
-        "fr": "J'ai acheté un nouveau livre."
+        "jp": "新しい車を買いました。",
+        "ka": "あたらしい くるま を かいました。",
+        "ro": "atarashii kuruma o kaimashita.",
+        "fr": "J'ai acheté une nouvelle voiture."
+      },
+      {
+        "jp": "新しい本を読みます。",
+        "ka": "あたらしい ほん を よみます。",
+        "ro": "atarashii hon o yomimasu.",
+        "fr": "Je lis un nouveau livre."
       }
     ],
-    "10": [
+    "n5_v_17": [
       {
         "jp": "あちらへ行きましょう。",
         "ka": "あちら へ いきましょう。",
@@ -1416,15 +1487,23 @@
         "fr": "Allons de ce côté-là."
       }
     ],
-    "11": [
+    "n5_v_18": [
       {
-        "jp": "外は暑いです。",
-        "ka": "そと は あつい です。",
-        "ro": "soto wa atsui desu.",
-        "fr": "Il fait chaud dehors."
+        "jp": "夏はとても暑いです。",
+        "ka": "なつ は とても あつい です。",
+        "ro": "natsu wa totemo atsui desu.",
+        "fr": "L'été, il fait très chaud."
       }
     ],
-    "12": [
+    "n5_v_19": [
+      {
+        "jp": "熱いお茶を飲みます。",
+        "ka": "あつい おちゃ を のみます。",
+        "ro": "atsui ocha o nomimasu.",
+        "fr": "Je bois du thé chaud."
+      }
+    ],
+    "n5_v_20": [
       {
         "jp": "厚い本を読みます。",
         "ka": "あつい ほん を よみます。",
@@ -1432,7 +1511,7 @@
         "fr": "Je lis un livre épais."
       }
     ],
-    "13": [
+    "n5_v_21": [
       {
         "jp": "後で話しましょう。",
         "ka": "あと で はなしましょう。",
@@ -1440,31 +1519,71 @@
         "fr": "Parlons plus tard."
       }
     ],
-    "14": [
+    "n5_v_22": [
       {
-        "jp": " there に人がいます。",
-        "ka": "あそこ に ひと が います。",
-        "ro": "asoko ni hito ga imasu.",
-        "fr": "Il y a quelqu'un là-bas."
+        "jp": "あなたの名前は何ですか。",
+        "ka": "あなた の なまえ は なん です か。",
+        "ro": "anata no namae wa nan desu ka.",
+        "fr": "Quel est votre nom ?"
       }
     ],
-    "15": [
+    "n5_v_23": [
       {
-        "jp": "浴びてから出かけます。",
-        "ka": "あびて から でかけます。",
-        "ro": "abite kara dekakemasu.",
-        "fr": "Je sors après avoir pris une douche."
+        "jp": "兄は学生です。",
+        "ka": "あに は がくせい です。",
+        "ro": "ani wa gakusei desu.",
+        "fr": "Mon grand frère est étudiant."
       }
     ],
-    "16": [
+    "n5_v_24": [
       {
-        "jp": "甘い物を食べます。",
-        "ka": "あまい もの を たべます。",
-        "ro": "amai mono o tabemasu.",
-        "fr": "Je mange quelque chose de sucré."
+        "jp": "姉は東京にいます。",
+        "ka": "あね は とうきょう に います。",
+        "ro": "ane wa Toukyou ni imasu.",
+        "fr": "Ma grande sœur est à Tokyo."
       }
     ],
-    "17": [
+    "n5_v_25": [
+      {
+        "jp": "小さなアパートに住んでいます。",
+        "ka": "ちいさな アパート に すんでいます。",
+        "ro": "chiisana apaato ni sunde imasu.",
+        "fr": "J'habite dans un petit appartement."
+      }
+    ],
+    "n5_v_26": [
+      {
+        "jp": "シャワーを浴びます。",
+        "ka": "シャワー を あびます。",
+        "ro": "shawaa o abimasu.",
+        "fr": "Je prends une douche."
+      }
+    ],
+    "n5_v_27": [
+      {
+        "jp": "ここは危ないです。",
+        "ka": "ここ は あぶない です。",
+        "ro": "koko wa abunai desu.",
+        "fr": "C'est dangereux ici."
+      }
+    ],
+    "n5_v_28": [
+      {
+        "jp": "甘いお菓子を食べます。",
+        "ka": "あまい おかし を たべます。",
+        "ro": "amai okashi o tabemasu.",
+        "fr": "Je mange des gâteaux sucrés."
+      }
+    ],
+    "n5_v_29": [
+      {
+        "jp": "あまり高くありません。",
+        "ka": "あまり たかく ありません。",
+        "ro": "amari takaku arimasen.",
+        "fr": "Ce n'est pas très cher."
+      }
+    ],
+    "n5_v_30": [
       {
         "jp": "雨が降っています。",
         "ka": "あめ が ふっています。",
@@ -1472,29 +1591,31 @@
         "fr": "La pluie tombe."
       }
     ],
-    "18": [
+    "n5_v_31": [
       {
-        "jp": "飴を食べます。",
-        "ka": "あめ を たべます。",
-        "ro": "ame o tabemasu.",
-        "fr": "Je mange un bonbon."
+        "jp": "飴をどうぞ。",
+        "ka": "あめ を どうぞ。",
+        "ro": "ame o douzo.",
+        "fr": "Prenez un bonbon, s'il vous plaît."
       }
     ],
-    "19": [
+    "n5_v_32": [
       {
-        "jp": "洗ってください。",
-        "ka": "あらってください。",
-        "ro": "aratte kudasai.",
-        "fr": "Lavez s'il vous plaît."
-      },
-      {
-        "jp": "手と顔を洗います。",
-        "ka": "て と かお を あらいます。",
-        "ro": "te to kao o araimasu.",
-        "fr": "Je me lave les mains et le visage."
+        "jp": "手を洗います。",
+        "ka": "て を あらいます。",
+        "ro": "te o araimasu.",
+        "fr": "Je me lave les mains."
       }
     ],
-    "20": [
+    "n5_v_33": [
+      {
+        "jp": "机の上に本があります。",
+        "ka": "つくえ の うえ に ほん が あります。",
+        "ro": "tsukue no ue ni hon ga arimasu.",
+        "fr": "Il y a un livre sur le bureau."
+      }
+    ],
+    "n5_v_34": [
       {
         "jp": "歩いて学校へ行きます。",
         "ka": "あるいて がっこう へ いきます。",
@@ -1502,3 +1623,6306 @@
         "fr": "Je vais à l'école à pied."
       }
     ],
+    "n5_v_35": [
+      {
+        "jp": "天気がいいです。",
+        "ka": "てんき が いい です。",
+        "ro": "tenki ga ii desu.",
+        "fr": "Il fait beau."
+      }
+    ],
+    "n5_v_36": [
+      {
+        "jp": "いいえ、違います。",
+        "ka": "いいえ、ちがいます。",
+        "ro": "iie, chigaimasu.",
+        "fr": "Non, ce n'est pas ça."
+      }
+    ],
+    "n5_v_37": [
+      {
+        "jp": "日本語で言います。",
+        "ka": "にほんご で いいます。",
+        "ro": "nihongo de iimasu.",
+        "fr": "Je le dis en japonais."
+      }
+    ],
+    "n5_v_38": [
+      {
+        "jp": "家に帰ります。",
+        "ka": "うち に かえります。",
+        "ro": "uchi ni kaerimasu.",
+        "fr": "Je rentre à la maison."
+      }
+    ],
+    "n5_v_39": [
+      {
+        "jp": "銀行へ行きます。",
+        "ka": "ぎんこう へ いきます。",
+        "ro": "ginkou he ikimasu.",
+        "fr": "Je vais à la banque."
+      }
+    ],
+    "n5_v_40": [
+      {
+        "jp": "りんごがいくつありますか。",
+        "ka": "りんご が いくつ あります か。",
+        "ro": "ringo ga ikutsu arimasu ka.",
+        "fr": "Combien y a-t-il de pommes ?"
+      }
+    ],
+    "n5_v_41": [
+      {
+        "jp": "これはいくらですか。",
+        "ka": "これ は いくら です か。",
+        "ro": "kore wa ikura desu ka.",
+        "fr": "Combien coûte ceci ?"
+      }
+    ],
+    "n5_v_42": [
+      {
+        "jp": "池に魚がいます。",
+        "ka": "いけ に さかな が います。",
+        "ro": "ike ni sakana ga imasu.",
+        "fr": "Il y a des poissons dans l'étang."
+      }
+    ],
+    "n5_v_43": [
+      {
+        "jp": "医者に会います。",
+        "ka": "いしゃ に あいます。",
+        "ro": "isha ni aimasu.",
+        "fr": "Je vais chez le médecin."
+      }
+    ],
+    "n5_v_44": [
+      {
+        "jp": "いすに座ってください。",
+        "ka": "いす に すわってください。",
+        "ro": "isu ni suwatte kudasai.",
+        "fr": "Asseyez-vous sur la chaise s'il vous plaît."
+      }
+    ],
+    "n5_v_45": [
+      {
+        "jp": "今日は忙しいです。",
+        "ka": "きょう は いそがしい です。",
+        "ro": "kyou wa isogashii desu.",
+        "fr": "Je suis occupé aujourd'hui."
+      }
+    ],
+    "n5_v_46": [
+      {
+        "jp": "足が痛いです。",
+        "ka": "あし が いたい です。",
+        "ro": "ashi ga itai desu.",
+        "fr": "J'ai mal au pied."
+      }
+    ],
+    "n5_v_47": [
+      {
+        "jp": "一から十まで数えます。",
+        "ka": "いち から じゅう まで かぞえます。",
+        "ro": "ichi kara juu made kazoemasu.",
+        "fr": "Je compte de un à dix."
+      }
+    ],
+    "n5_v_48": [
+      {
+        "jp": "一日中勉強しました。",
+        "ka": "いちにちじゅう べんきょう しました。",
+        "ro": "ichinichijuu benkyou shimashita.",
+        "fr": "J'ai étudié toute la journée."
+      }
+    ],
+    "n5_v_49": [
+      {
+        "jp": "これが一番好きです。",
+        "ka": "これ が いちばん すき です。",
+        "ro": "kore ga ichiban suki desu.",
+        "fr": "C'est celui-ci que j'aime le plus."
+      }
+    ],
+    "n5_v_50": [
+      {
+        "jp": "いつ日本に行きますか。",
+        "ka": "いつ にほん に いきます か。",
+        "ro": "itsu nihon ni ikimasu ka.",
+        "fr": "Quand allez-vous au Japon ?"
+      }
+    ],
+    "n5_v_51": [
+      {
+        "jp": "五日に友達が来ます。",
+        "ka": "いつか に ともだち が きます。",
+        "ro": "itsuka ni tomodachi ga kimasu.",
+        "fr": "Un ami vient le cinq."
+      }
+    ],
+    "n5_v_52": [
+      {
+        "jp": "一緒に行きましょう。",
+        "ka": "いっしょ に いきましょう。",
+        "ro": "issho ni ikimashou.",
+        "fr": "Allons-y ensemble."
+      }
+    ],
+    "n5_v_53": [
+      {
+        "jp": "白い犬がいます。",
+        "ka": "しろい いぬ が います。",
+        "ro": "shiroi inu ga imasu.",
+        "fr": "Il y a un chien blanc."
+      }
+    ],
+    "n5_v_54": [
+      {
+        "jp": "今何時ですか。",
+        "ka": "いま なんじ です か。",
+        "ro": "ima nanji desu ka.",
+        "fr": "Quelle heure est-il maintenant ?"
+      }
+    ],
+    "n5_v_55": [
+      {
+        "jp": "この言葉の意味は何ですか。",
+        "ka": "この ことば の いみ は なん です か。",
+        "ro": "kono kotoba no imi wa nan desu ka.",
+        "fr": "Quelle est la signification de ce mot ?"
+      }
+    ],
+    "n5_v_56": [
+      {
+        "jp": "妹は高校生です。",
+        "ka": "いもうと は こうこうせい です。",
+        "ro": "imouto wa koukousei desu.",
+        "fr": "Ma petite sœur est lycéenne."
+      }
+    ],
+    "n5_v_57": [
+      {
+        "jp": "カバンに本を入れます。",
+        "ka": "カバン に ほん を いれます。",
+        "ro": "kaban ni hon o iremasu.",
+        "fr": "Je mets le livre dans le sac."
+      }
+    ],
+    "n5_v_58": [
+      {
+        "jp": "入口はこちらです。",
+        "ka": "いりぐち は こちら です。",
+        "ro": "iriguchi wa kochira desu.",
+        "fr": "L'entrée est par ici."
+      }
+    ],
+    "n5_v_59": [
+      {
+        "jp": "教室に学生がいます。",
+        "ka": "きょうしつ に がくせい が います。",
+        "ro": "kyoushitsu ni gakusei ga imasu.",
+        "fr": "Il y a des étudiants dans la classe."
+      }
+    ],
+    "n5_v_60": [
+      {
+        "jp": "新しい本が要ります。",
+        "ka": "あたらしい ほん が いります。",
+        "ro": "atarashii hon ga irimasu.",
+        "fr": "J'ai besoin d'un nouveau livre."
+      }
+    ],
+    "n5_v_61": [
+      {
+        "jp": "どの色が好きですか。",
+        "ka": "どの いろ が すき です か。",
+        "ro": "dono iro ga suki desu ka.",
+        "fr": "Quelle couleur aimez-vous ?"
+      }
+    ],
+    "n5_v_62": [
+      {
+        "jp": "いろいろな本があります。",
+        "ka": "いろいろ な ほん が あります。",
+        "ro": "iroiro na hon ga arimasu.",
+        "fr": "Il y a divers livres."
+      }
+    ],
+    "n5_v_63": [
+      {
+        "jp": "机の上に本があります。",
+        "ka": "つくえ の うえ に ほん が あります。",
+        "ro": "tsukue no ue ni hon ga arimasu.",
+        "fr": "Il y a un livre sur le bureau."
+      }
+    ],
+    "n5_v_64": [
+      {
+        "jp": "学校の後ろに山があります。",
+        "ka": "がっこう の うしろ に やま が あります。",
+        "ro": "gakkou no ushiro ni yama ga arimasu.",
+        "fr": "Il y a une montagne derrière l'école."
+      }
+    ],
+    "n5_v_65": [
+      {
+        "jp": "この紙は薄いです。",
+        "ka": "この かみ は うすい です。",
+        "ro": "kono kami wa usui desu.",
+        "fr": "Ce papier est fin."
+      }
+    ],
+    "n5_v_66": [
+      {
+        "jp": "日本の歌を聞きます。",
+        "ka": "にほん の うた を ききます。",
+        "ro": "nihon no uta o kikimasu.",
+        "fr": "J'écoute une chanson japonaise."
+      }
+    ],
+    "n5_v_67": [
+      {
+        "jp": "みんなで歌を歌いましょう。",
+        "ka": "みんな で うた を うたいましょう。",
+        "ro": "minna de uta o utaimashou.",
+        "fr": "Chantons une chanson tous ensemble."
+      }
+    ],
+    "n5_v_68": [
+      {
+        "jp": "先月生まれました。",
+        "ka": "せんげつ うまれました。",
+        "ro": "sengetsu umaremashita.",
+        "fr": "Je suis né le mois dernier."
+      }
+    ],
+    "n5_v_69": [
+      {
+        "jp": "夏休みに海へ行きます。",
+        "ka": "なつやすみ に うみ へ いきます。",
+        "ro": "natsuyasumi ni umi he ikimasu.",
+        "fr": "Je vais à la mer pendant les vacances d'été."
+      }
+    ],
+    "n5_v_70": [
+      {
+        "jp": "本屋で本を売っています。",
+        "ka": "ほんや で ほん を うっています。",
+        "ro": "hon'ya de hon o utte imasu.",
+        "fr": "On vend des livres à la librairie."
+      }
+    ],
+    "n5_v_71": [
+      {
+        "jp": "外がうるさいです。",
+        "ka": "そと が うるさい です。",
+        "ro": "soto ga urusai desu.",
+        "fr": "C'est bruyant dehors."
+      }
+    ],
+    "n5_v_72": [
+      {
+        "jp": "上着を着ます。",
+        "ka": "うわぎ を きます。",
+        "ro": "uwagi o kimasu.",
+        "fr": "Je mets une veste."
+      }
+    ],
+    "n5_v_73": [
+      {
+        "jp": "きれいな絵を見ます。",
+        "ka": "きれい な え を みます。",
+        "ro": "kirei na e o mimasu.",
+        "fr": "Je regarde une belle peinture."
+      }
+    ],
+    "n5_v_74": [
+      {
+        "jp": "友達と映画を見に行きます。",
+        "ka": "ともだち と えいが を み に いきます。",
+        "ro": "tomodachi to eiga o mi ni ikimasu.",
+        "fr": "Je vais voir un film avec un ami."
+      }
+    ],
+    "n5_v_75": [
+      {
+        "jp": "映画館はどこですか。",
+        "ka": "えいがかん は どこ です か。",
+        "ro": "eigakan wa doko desu ka.",
+        "fr": "Où est le cinéma ?"
+      }
+    ],
+    "n5_v_76": [
+      {
+        "jp": "学校で英語を教えます。",
+        "ka": "がっこう で えいご を おしえます。",
+        "ro": "gakkou de eigo o oshiemasu.",
+        "fr": "J'enseigne l'anglais à l'école."
+      }
+    ],
+    "n5_v_77": [
+      {
+        "jp": "ええ、わかりました。",
+        "ka": "ええ、わかりました。",
+        "ro": "ee, wakarimashita.",
+        "fr": "Oui, j'ai compris."
+      }
+    ],
+    "n5_v_78": [
+      {
+        "jp": "東京駅に行きます。",
+        "ka": "とうきょうえき に いきます。",
+        "ro": "Toukyoueki ni ikimasu.",
+        "fr": "Je vais à la gare de Tokyo."
+      }
+    ],
+    "n5_v_79": [
+      {
+        "jp": "エレベーターで三階へ行きます。",
+        "ka": "エレベーター で さんがい へ いきます。",
+        "ro": "erebeetaa de sangai he ikimasu.",
+        "fr": "Je vais au troisième étage en ascenseur."
+      }
+    ],
+    "n5_v_80": [
+      {
+        "jp": "鉛筆で書きます。",
+        "ka": "えんぴつ で かきます。",
+        "ro": "enpitsu de kakimasu.",
+        "fr": "J'écris au crayon."
+      }
+    ],
+    "n5_v_81": [
+      {
+        "jp": "この日本料理はおいしいです。",
+        "ka": "この にほんりょうり は おいしい です。",
+        "ro": "kono nihonryouri wa oishii desu.",
+        "fr": "Cette cuisine japonaise est délicieuse."
+      }
+    ],
+    "n5_v_82": [
+      {
+        "jp": "大きい車に乗ります。",
+        "ka": "おおきい くるま に のります。",
+        "ro": "ookii kuruma ni norimasu.",
+        "fr": "Je monte dans une grande voiture."
+      }
+    ],
+    "n5_v_83": [
+      {
+        "jp": "人が大勢います。",
+        "ka": "ひと が おおぜい います。",
+        "ro": "hito ga oozei imasu.",
+        "fr": "Il y a beaucoup de monde."
+      }
+    ],
+    "n5_v_84": [
+      {
+        "jp": "お母さんは元気にしていますか。",
+        "ka": "おかあさん は げんき に しています か。",
+        "ro": "okaasan wa genki ni shite imasu ka.",
+        "fr": "Comment va votre mère ?"
+      }
+    ],
+    "n5_v_85": [
+      {
+        "jp": "お菓子を食べましょう。",
+        "ka": "おかし を たべましょう。",
+        "ro": "okashi o tabemashou.",
+        "fr": "Mangeons des gâteaux."
+      }
+    ],
+    "n5_v_86": [
+      {
+        "jp": "お金があまりありません。",
+        "ka": "おかね が あまり ありません。",
+        "ro": "okane ga amari arimasen.",
+        "fr": "Je n'ai pas beaucoup d'argent."
+      }
+    ],
+    "n5_v_87": [
+      {
+        "jp": "朝六時に起きます。",
+        "ka": "あさ ろくじ に おきます。",
+        "ro": "asa rokuji ni okimasu.",
+        "fr": "Je me lève à six heures du matin."
+      }
+    ],
+    "n5_v_88": [
+      {
+        "jp": "本を机の上に置きます。",
+        "ka": "ほん を つくえ の うえ に おきます。",
+        "ro": "hon o tsukue no ue ni okimasu.",
+        "fr": "Je pose le livre sur le bureau."
+      }
+    ],
+    "n5_v_89": [
+      {
+        "jp": "田中さんの奥さんに会いました。",
+        "ka": "たなかさん の おくさん に あいました。",
+        "ro": "Tanakesan no okusan ni aimashita.",
+        "fr": "J'ai rencontré l'épouse de M. Tanaka."
+      }
+    ],
+    "n5_v_90": [
+      {
+        "jp": "お酒を飲みますか。",
+        "ka": "おさけ を のみます か。",
+        "ro": "osake o nomimasu ka.",
+        "fr": "Buvez-vous de l'alcool ?"
+      }
+    ],
+    "n5_v_91": [
+      {
+        "jp": "お皿を洗います。",
+        "ka": "おさら を あらいます。",
+        "ro": "osara o araimasu.",
+        "fr": "Je lave les assiettes."
+      }
+    ],
+    "n5_v_92": [
+      {
+        "jp": "叔父は医者です。",
+        "ka": "おじ は いしゃ です。",
+        "ro": "oji wa isha desu.",
+        "fr": "Mon oncle est médecin."
+      }
+    ],
+    "n5_v_93": [
+      {
+        "jp": "おじいさんはお元気ですか。",
+        "ka": "おじいさん は おげんき です か。",
+        "ro": "ojiisan wa ogenki desu ka.",
+        "fr": "Votre grand-père va-t-il bien ?"
+      }
+    ],
+    "n5_v_94": [
+      {
+        "jp": "日本語を教えてください。",
+        "ka": "にほんご を おしえて ください。",
+        "ro": "nihongo o oshiete kudasai.",
+        "fr": "Enseignez-moi le japonais s'il vous plaît."
+      }
+    ],
+    "n5_v_95": [
+      {
+        "jp": "ボタンを押します。",
+        "ka": "ボタン を おします。",
+        "ro": "botan o oshimasu.",
+        "fr": "J'appuie sur le bouton."
+      }
+    ],
+    "n5_v_96": [
+      {
+        "jp": "電車の時間が遅いです。",
+        "ka": "でんしゃ の じかん が おそい です。",
+        "ro": "densha no jikan ga osoi desu.",
+        "fr": "L'horaire du train est tardif."
+      }
+    ],
+    "n5_v_97": [
+      {
+        "jp": "温かいお茶を飲みます。",
+        "ka": "あたたかい おちゃ を のみます。",
+        "ro": "atatakai ocha o nomimasu.",
+        "fr": "Je bois du thé vert chaud."
+      }
+    ],
+    "n5_v_98": [
+      {
+        "jp": "お手洗いはどこですか。",
+        "ka": "おてあらい は どこ です か。",
+        "ro": "otearai wa doko desu ka.",
+        "fr": "Où sont les toilettes ?"
+      }
+    ],
+    "n5_v_99": [
+      {
+        "jp": "お父さんと話します。",
+        "ka": "おとうさん と はなします。",
+        "ro": "otousan to hanashimasu.",
+        "fr": "Je parle avec votre père."
+      }
+    ],
+    "n5_v_100": [
+      {
+        "jp": "弟は小学生です。",
+        "ka": "おとうと は しょうがくせい です。",
+        "ro": "otouto wa shougakusei desu.",
+        "fr": "Mon petit frère est élève à l'école primaire."
+      }
+    ],
+    "n5_v_101": [
+      {
+        "jp": "男の人が歩いています。",
+        "ka": "おとこ の ひと が あるいています。",
+        "ro": "otoko no hito ga aruite imasu.",
+        "fr": "Un homme marche."
+      }
+    ],
+    "n5_v_102": [
+      {
+        "jp": "男の子が遊んでいます。",
+        "ka": "おとこのこ が あそんでいます。",
+        "ro": "otokonoko ga asonde imasu.",
+        "fr": "Un garçon joue."
+      }
+    ],
+    "n5_v_103": [
+      {
+        "jp": "去年日本に行きました。",
+        "ka": "きょねん にほん に いきました。",
+        "ro": "kyonen nihon ni ikimashita.",
+        "fr": "Je suis allé au Japon l'année dernière."
+      }
+    ],
+    "n5_v_104": [
+      {
+        "jp": "去年は忙しかったです。",
+        "ka": "きょねん は いそがしかった です。",
+        "ro": "kyonen wa isogashikatta desu.",
+        "fr": "L'année dernière était chargée."
+      }
+    ],
+    "n5_v_105": [
+      {
+        "jp": "おととい友達に会いました。",
+        "ka": "おととい ともだち に あいました。",
+        "ro": "ototoi tomodachi ni aimashita.",
+        "fr": "J'ai rencontré un ami avant-hier."
+      }
+    ],
+    "n5_v_106": [
+      {
+        "jp": "おととし日本に来ました。",
+        "ka": "おととし にほん に きました。",
+        "ro": "ototoshi nihon ni kimashita.",
+        "fr": "Je suis venu au Japon il y a deux ans."
+      }
+    ],
+    "n5_v_107": [
+      {
+        "jp": "大人一人と子ども一人です。",
+        "ka": "おとな ひとり と こども ひとり です。",
+        "ro": "otona hitori to kodomo hitori desu.",
+        "fr": "Un adulte et un enfant."
+      }
+    ],
+    "n5_v_108": [
+      {
+        "jp": "お腹がすきました。",
+        "ka": "おなか が すきました。",
+        "ro": "onaka ga sukimashita.",
+        "fr": "J'ai faim (mon ventre s'est vidé)."
+      }
+    ],
+    "n5_v_109": [
+      {
+        "jp": "同じ本を持っています。",
+        "ka": "おなじ ほん を もっています。",
+        "ro": "onaji hon o motte imasu.",
+        "fr": "J'ai le même livre."
+      }
+    ],
+    "n5_v_110": [
+      {
+        "jp": "お兄さんは学生ですか。",
+        "ka": "おにいさん は がくせい です か。",
+        "ro": "oniisan wa gakusei desu ka.",
+        "fr": "Votre grand frère est-il étudiant ?"
+      }
+    ],
+    "n5_v_111": [
+      {
+        "jp": "お姉さんは何歳ですか。",
+        "ka": "おねえさん は なんさい です か。",
+        "ro": "oneesan wa nansai desu ka.",
+        "fr": "Quel âge a votre grande sœur ?"
+      }
+    ],
+    "n5_v_112": [
+      {
+        "jp": "叔母さんは東京に住んでいます。",
+        "ka": "おばさん は とうきょう に すんで います。",
+        "ro": "obasan wa Toukyou ni sunde imasu.",
+        "fr": "Ma tante habite à Tokyo."
+      }
+    ],
+    "n5_v_113": [
+      {
+        "jp": "おばあさんに手紙を書きます。",
+        "ka": "おばあさん に てがみ を かきます。",
+        "ro": "obaasan ni tegami o kakimasu.",
+        "fr": "J'écris une lettre à ma grand-mère."
+      }
+    ],
+    "n5_v_114": [
+      {
+        "jp": "夜にお風呂に入ります。",
+        "ka": "よる に おふろ に はいります。",
+        "ro": "yoru ni ofuro ni hairimasu.",
+        "fr": "Je prends un bain le soir."
+      }
+    ],
+    "n5_v_115": [
+      {
+        "jp": "お弁当を食べましょう。",
+        "ka": "おべんとう を たべましょう。",
+        "ro": "obentou o tabemashou.",
+        "fr": "Mangeons notre bento."
+      }
+    ],
+    "n5_v_116": [
+      {
+        "jp": "新しい漢字を覚えます。",
+        "ka": "あたらしい かんじ を おぼえます。",
+        "ro": "atarashii kanji o oboemasu.",
+        "fr": "Je mémorise de nouveaux kanjis."
+      }
+    ],
+    "n5_v_117": [
+      {
+        "jp": "おまわりさんに道を尋ねます。",
+        "ka": "おまわりさん に みち を たずねます。",
+        "ro": "omawarisan ni michi o tazunemasu.",
+        "fr": "Je demande mon chemin à un agent de police."
+      }
+    ],
+    "n5_v_118": [
+      {
+        "jp": "この荷物は重いです。",
+        "ka": "この にもつ は おもい です。",
+        "ro": "kono nimotsu wa omoi desu.",
+        "fr": "Ce bagage est lourd."
+      }
+    ],
+    "n5_v_119": [
+      {
+        "jp": "この本は面白いです。",
+        "ka": "この ほん は おもしろい です。",
+        "ro": "kono hon wa omoshiroi desu.",
+        "fr": "Ce livre est intéressant."
+      }
+    ],
+    "n5_v_120": [
+      {
+        "jp": "夏に海で泳ぎます。",
+        "ka": "なつ に うみ で およぎます。",
+        "ro": "natsu ni umi de oyogimasu.",
+        "fr": "Je nage dans la mer en été."
+      }
+    ],
+    "n5_v_121": [
+      {
+        "jp": "次の駅で降ります。",
+        "ka": "つぎ の えき で おります。",
+        "ro": "tsugi no eki de orimasu.",
+        "fr": "Je descends à la prochaine gare."
+      }
+    ],
+    "n5_v_122": [
+      {
+        "jp": "授業が終わりました。",
+        "ka": "じゅぎょう が おわりました。",
+        "ro": "jugyou ga owarimashita.",
+        "fr": "Le cours est terminé."
+      }
+    ],
+    "n5_v_123": [
+      {
+        "jp": "静かな音楽を聞きます。",
+        "ka": "しずかな おんがく を ききます。",
+        "ro": "shizukana ongaku o kikimasu.",
+        "fr": "J'écoute de la musique calme."
+      }
+    ],
+    "n5_v_124": [
+      {
+        "jp": "女の人が話しています。",
+        "ka": "おんな の ひと が はなして います。",
+        "ro": "onna no hito ga hanashite imasu.",
+        "fr": "Une femme parle."
+      }
+    ],
+    "n5_v_125": [
+      {
+        "jp": "女の子が遊んでいます。",
+        "ka": "おんなのこ が あそんで います。",
+        "ro": "onnanoko ga asonde imasu.",
+        "fr": "Une fillette joue."
+      }
+    ],
+    "n5_v_126": [
+      {
+        "jp": "いつか外国へ行きたいです。",
+        "ka": "いつか がいこく へ いきたい です。",
+        "ro": "itsuka gaikoku he ikitai desu.",
+        "fr": "Je veux aller à l'étranger un jour."
+      }
+    ],
+    "n5_v_127": [
+      {
+        "jp": "ここは外国人が多いです。",
+        "ka": "ここ は がいこくじん が おおい です。",
+        "ro": "koko wa gaikokujin ga ooi desu.",
+        "fr": "Il y a beaucoup d'étrangers ici."
+      }
+    ],
+    "n5_v_128": [
+      {
+        "jp": "会社で働いています。",
+        "ka": "かいしゃ で はたらいて います。",
+        "ro": "kaisha de hataraite imasu.",
+        "fr": "Je travaille dans une entreprise."
+      }
+    ],
+    "n5_v_129": [
+      {
+        "jp": "階段を上ります。",
+        "ka": "かいだん を のぼります。",
+        "ro": "kaidan o noborimasu.",
+        "fr": "Je monte les escaliers."
+      }
+    ],
+    "n5_v_130": [
+      {
+        "jp": "スーパーで買い物をします。",
+        "ka": "スーパー で かいもの を します。",
+        "ro": "suupaa de kaimono o shimasu.",
+        "fr": "Je fais des courses au supermarché."
+      }
+    ],
+    "n5_v_131": [
+      {
+        "jp": "新しい服を買いました。",
+        "ka": "あたらしい ふく を かいました。",
+        "ro": "atarashii fuku o kaimashita.",
+        "fr": "J'ai acheté de nouveaux vêtements."
+      }
+    ],
+    "n5_v_132": [
+      {
+        "jp": "本を図書館に返します。",
+        "ka": "ほん を としょかん に かえします。",
+        "ro": "hon o toshokan ni kaeshimasu.",
+        "fr": "Je rends le livre à la bibliothèque."
+      }
+    ],
+    "n5_v_133": [
+      {
+        "jp": "予定を変えます。",
+        "ka": "よてい を かえます。",
+        "ro": "yotei o kaemasu.",
+        "fr": "Je change le programme."
+      }
+    ],
+    "n5_v_134": [
+      {
+        "jp": "六時にうちに帰ります。",
+        "ka": "ろくじ に うち に かえります。",
+        "ro": "rokuji ni uchi ni kaerimasu.",
+        "fr": "Je rentre à la maison à six heures."
+      }
+    ],
+    "n5_v_135": [
+      {
+        "jp": "顔を洗います。",
+        "ka": "かお を あらいます。",
+        "ro": "kao o araimasu.",
+        "fr": "Je me lave le visage."
+      }
+    ],
+    "n5_v_136": [
+      {
+        "jp": "時間がかかります。",
+        "ka": "じかん が かかります。",
+        "ro": "jikan ga kakarimasu.",
+        "fr": "Cela prend du temps."
+      }
+    ],
+    "n5_v_137": [
+      {
+        "jp": "部屋の鍵を開けます。",
+        "ka": "へや の かぎ を あけます。",
+        "ro": "heya no kagi o akemasu.",
+        "fr": "J'ouvre la clé de la pièce (la porte)."
+      }
+    ],
+    "n5_v_138": [
+      {
+        "jp": "ノートに名前を書きます。",
+        "ka": "ノート に なまえ を かきます。",
+        "ro": "nooto ni namae o kakimasu.",
+        "fr": "J'écris mon nom sur le cahier."
+      }
+    ],
+    "n5_v_139": [
+      {
+        "jp": "私は学生です。",
+        "ka": "わたし は がくせい です。",
+        "ro": "watashi wa gakusei desu.",
+        "fr": "Je suis étudiant."
+      }
+    ],
+    "n5_v_140": [
+      {
+        "jp": "雨が降っているので傘をさします。",
+        "ka": "あめ が ふって いる ので かさ を さします。",
+        "ro": "ame ga futte iru node kasa o sashimasu.",
+        "fr": "Comme il pleut, je prends un parapluie."
+      }
+    ],
+    "n5_v_141": [
+      {
+        "jp": "友達に消しゴムを貸します。",
+        "ka": "ともだち に けしごむ を かします。",
+        "ro": "tomodachi ni keshigomu o kashimasu.",
+        "fr": "Je prête une gomme à un ami."
+      }
+    ],
+    "n5_v_142": [
+      {
+        "jp": "強い風が吹いています。",
+        "ka": "つよい かぜ が ふいて います。",
+        "ro": "tsuyoi kaze ga fuite imasu.",
+        "fr": "Un vent fort souffle."
+      }
+    ],
+    "n5_v_143": [
+      {
+        "jp": "風邪を引きました。",
+        "ka": "かぜ を ひきました。",
+        "ro": "kaze o hikimashita.",
+        "fr": "J'ai attrapé un rhume."
+      }
+    ],
+    "n5_v_144": [
+      {
+        "jp": "家族と旅行に行きます。",
+        "ka": "かぞく と りょこう に いきます。",
+        "ro": "kazoku to ryokou ni ikimasu.",
+        "fr": "Je vais en voyage avec ma famille."
+      }
+    ],
+    "n5_v_145": [
+      {
+        "jp": "あの方はどなたですか。",
+        "ka": "あのかた は どなた です か。",
+        "ro": "ano kata wa donata desu ka.",
+        "fr": "Qui est cette personne ?"
+      }
+    ],
+    "n5_v_146": [
+      {
+        "jp": "八時に学校へ行きます。",
+        "ka": "はちじ に がっこう へ いきます。",
+        "ro": "hachiji ni gakkou he ikimasu.",
+        "fr": "Je vais à l'école à huit heures."
+      }
+    ],
+    "n5_v_147": [
+      {
+        "jp": "次の角を右に曲がります。",
+        "ka": "つぎ の かど を みぎ に まがります。",
+        "ro": "tsugi no kado o migi ni magarimasu.",
+        "fr": "Je tourne à droite au prochain coin."
+      }
+    ],
+    "n5_v_148": [
+      {
+        "jp": "家内と買い物をします。",
+        "ka": "かない と かいもの を します。",
+        "ro": "kanai to kaimono o shimasu.",
+        "fr": "Je fais des courses avec ma femme."
+      }
+    ],
+    "n5_v_149": [
+      {
+        "jp": "新しい鞄を買いました。",
+        "ka": "あたらしい かばん を かいました。",
+        "ro": "atarashii kaban o kaimashita.",
+        "fr": "J'ai acheté un nouveau sac."
+      }
+    ],
+    "n5_v_150": [
+      {
+        "jp": "テーブルの上に花瓶があります。",
+        "ka": "テーブル の うえ に かびん が あります。",
+        "ro": "teeburu no ue ni kabin ga arimasu.",
+        "fr": "Il y a un vase sur la table."
+      }
+    ],
+    "n5_v_151": [
+      {
+        "jp": "白い紙に書きます。",
+        "ka": "しろい かみ に かきます。",
+        "ro": "shiroi kami ni kakimasu.",
+        "fr": "J'écris sur du papier blanc."
+      }
+    ],
+    "n5_v_152": [
+      {
+        "jp": "髪をきります。",
+        "ka": "かみ を きります。",
+        "ro": "kami o kirimasu.",
+        "fr": "Je me coupe les cheveux."
+      }
+    ],
+    "n5_v_153": [
+      {
+        "jp": "カメラで写真を撮ります。",
+        "ka": "カメラ で しゃしん を とります。",
+        "ro": "kamera de shashin o torimasu.",
+        "fr": "Je prends une photo avec un appareil photo."
+      }
+    ],
+    "n5_v_154": [
+      {
+        "jp": "火曜日にテストがあります。",
+        "ka": "かようび に テスト が あります。",
+        "ro": "kayoubi ni tesuto ga arimasu.",
+        "fr": "J'ai un test mardi."
+      }
+    ],
+    "n5_v_155": [
+      {
+        "jp": "このカレーは辛いです。",
+        "ka": "この カレー は からい です。",
+        "ro": "kono karee wa karai desu.",
+        "fr": "Ce curry est épicé."
+      }
+    ],
+    "n5_v_156": [
+      {
+        "jp": "体に気を付けてください。",
+        "ka": "からだ に き を つけて ください。",
+        "ro": "karada ni ki o tsukete kudasai.",
+        "fr": "Prenez soin de votre corps (votre santé)."
+      }
+    ],
+    "n5_v_157": [
+      {
+        "jp": "図書館で本を借ります。",
+        "ka": "としょかん で ほん を かります。",
+        "ro": "toshokan de hon o karimasu.",
+        "fr": "J'emprunte un livre à la bibliothèque."
+      }
+    ],
+    "n5_v_158": [
+      {
+        "jp": "この鞄は軽いです。",
+        "ka": "この かばん は かるい です。",
+        "ro": "kono kaban wa karui desu.",
+        "fr": "Ce sac est léger."
+      }
+    ],
+    "n5_v_159": [
+      {
+        "jp": "壁にカレンダーをかけます。",
+        "ka": "かべ に カレンダー を かけます。",
+        "ro": "kabe ni karendaa o kakemasu.",
+        "fr": "J'accroche un calendrier au mur."
+      }
+    ],
+    "n5_v_160": [
+      {
+        "jp": "川で泳ぎます。",
+        "ka": "かわ で およぎます。",
+        "ro": "kawa de oyogimasu.",
+        "fr": "Je nage dans la rivière."
+      }
+    ],
+    "n5_v_161": [
+      {
+        "jp": "可愛い猫がいます。",
+        "ka": "かわいい ねこ が います。",
+        "ro": "kawaii neko ga imasu.",
+        "fr": "Il y a un chat mignon."
+      }
+    ],
+    "n5_v_162": [
+      {
+        "jp": "毎日漢字を練習します。",
+        "ka": "まいにち かんじ を れんしゅう します。",
+        "ro": "mainichi kanji o renshuu shimasu.",
+        "fr": "J'entraîne mes kanjis tous les jours."
+      }
+    ],
+    "n5_v_163": [
+      {
+        "jp": "大きな木が見えます。",
+        "ka": "おおきな き が みえます。",
+        "ro": "ookina ki ga miemasu.",
+        "fr": "On voit un grand arbre."
+      }
+    ],
+    "n5_v_164": [
+      {
+        "jp": "黄色い花を買いました。",
+        "ka": "きいろい はな を かいました。",
+        "ro": "kiiroi hana o kaimashita.",
+        "fr": "J'ai acheté une fleur jaune."
+      }
+    ],
+    "n5_v_165": [
+      {
+        "jp": "部屋の電気を消します。",
+        "ka": "へや の でんき を けします。",
+        "ro": "heya no denki o keshimasu.",
+        "fr": "La lumière de la pièce s'éteint."
+      }
+    ],
+    "n5_v_166": [
+      {
+        "jp": "ラジオを聞きます。",
+        "ka": "ラジオ を ききます。",
+        "ro": "rajio o kikimasu.",
+        "fr": "J'écoute la radio."
+      }
+    ],
+    "n5_v_167": [
+      {
+        "jp": "日本の北へ行きます。",
+        "ka": "にほん の きた へ いきます。",
+        "ro": "nihon no kita he ikimasu.",
+        "fr": "Je vais dans le nord du Japon."
+      }
+    ],
+    "n5_v_168": [
+      {
+        "jp": "ギターを弾きます。",
+        "ka": "ギター を ひきます。",
+        "ro": "gitaa o hikimasu.",
+        "fr": "Je joue de la guitare."
+      }
+    ],
+    "n5_v_169": [
+      {
+        "jp": "手が汚いです。",
+        "ka": "て が きたない です。",
+        "ro": "te ga kitanai desu.",
+        "fr": "Mes mains sont sales."
+      }
+    ],
+    "n5_v_170": [
+      {
+        "jp": "喫茶店でコーヒーを飲みます。",
+        "ka": "きっさてん で コーヒー を のみます。",
+        "ro": "kissaten de koohii o nomimasu.",
+        "fr": "Je bois du café au café."
+      }
+    ],
+    "n5_v_171": [
+      {
+        "jp": "手紙に切手を貼ります。",
+        "ka": "てがみ に きって を はります。",
+        "ro": "tegami ni kitte o harimasu.",
+        "fr": "Je colle un timbre sur la lettre."
+      }
+    ],
+    "n5_v_172": [
+      {
+        "jp": "駅で切符を買います。",
+        "ka": "えき で きっぷ を かいます。",
+        "ro": "eki de kippu o kaimashita.",
+        "fr": "J'achète un billet à la gare."
+      }
+    ],
+    "n5_v_173": [
+      {
+        "jp": "昨日映画を見ました。",
+        "ka": "きのう えいが を みました。",
+        "ro": "kinou eiga o mimashita.",
+        "fr": "Hier, j'ai regardé un film."
+      }
+    ],
+    "n5_v_174": [
+      {
+        "jp": "りんごが九つあります。",
+        "ka": "りんご が ここのつ あります。",
+        "ro": "ringo ga kokonotsu arimasu.",
+        "fr": "Il y a neuf pommes."
+      }
+    ],
+    "n5_v_175": [
+      {
+        "jp": "スーパーで牛肉を買いました。",
+        "ka": "スーパー で ぎゅうにく を かいました。",
+        "ro": "suupaa de gyuuniku o kaimashita.",
+        "fr": "J'ai acheté de la viande de bœuf au supermarché."
+      }
+    ],
+    "n5_v_176": [
+      {
+        "jp": "毎朝牛乳を飲みます。",
+        "ka": "まいあさ ぎゅうにゅう を のみます。",
+        "ro": "maiasa gyuunyuu o nomimasu.",
+        "fr": "Je bois du lait tous les matins."
+      }
+    ],
+    "n5_v_177": [
+      {
+        "jp": "今日はいい天気ですね。",
+        "ka": "きょう は いい てんき です ね。",
+        "ro": "kyou wa ii tenki desu ne.",
+        "fr": "Il fait beau aujourd'hui, n'est-ce pas ?"
+      }
+    ],
+    "n5_v_178": [
+      {
+        "jp": "教室で日本語を勉強します。",
+        "ka": "きょうしつ で にほんご を べんきょう します。",
+        "ro": "kyoushitsu de nihongo o benkyou shimasu.",
+        "fr": "J'étudie le japonais dans la salle de classe."
+      }
+    ],
+    "n5_v_179": [
+      {
+        "jp": "兄弟が三人います。",
+        "ka": "きょうだい が さんにん います。",
+        "ro": "kyoudai ga sannin imasu.",
+        "fr": "J'ai trois frères et sœurs."
+      }
+    ],
+    "n5_v_180": [
+      {
+        "jp": "ナイフでパンを切ります。",
+        "ka": "ナイフ で パン を きります。",
+        "ro": "naifu de pan o kirimasu.",
+        "fr": "Je coupe le pain avec un couteau."
+      }
+    ],
+    "n5_v_181": [
+      {
+        "jp": "赤いシャツを着ます。",
+        "ka": "あかい シャツ を きます。",
+        "ro": "akai shatsu o kimasu.",
+        "fr": "Je porte une chemise rouge."
+      }
+    ],
+    "n5_v_182": [
+      {
+        "jp": "この花はとても綺麗です。",
+        "ka": "この はな は とても きれい です。",
+        "ro": "kono hana wa totemo kirei desu.",
+        "fr": "Cette fleur est très jolie."
+      }
+    ],
+    "n5_v_183": [
+      {
+        "jp": "りんごを二キロ買いました。",
+        "ka": "りんご を にキロ かいました。",
+        "ro": "ringo o nikiro kaimashita.",
+        "fr": "J'ai acheté deux kilos de pommes."
+      }
+    ],
+    "n5_v_184": [
+      {
+        "jp": "家から駅まで一キロです。",
+        "ka": "うち から えき まで いっきろ です。",
+        "ro": "uchi kara eki made ikkiro desu.",
+        "fr": "Il y a un kilomètre de la maison à la gare."
+      }
+    ],
+    "n5_v_185": [
+      {
+        "jp": "銀行でお金をおろします。",
+        "ka": "ぎんこう で おかね を おろします。",
+        "ro": "ginkou de okane o oroshimasu.",
+        "fr": "Retirer de l'argent à la banque."
+      }
+    ],
+    "n5_v_186": [
+      {
+        "jp": "金曜日に友達と会います。",
+        "ka": "きんようび に ともだち と あいます。",
+        "ro": "kin'youbi ni tomodachi to aimasu.",
+        "fr": "Je vois un ami vendredi."
+      }
+    ],
+    "n5_v_187": [
+      {
+        "jp": "食後に薬を飲みます。",
+        "ka": "しょくご に くすり を のみます。",
+        "ro": "shokugo ni kusuri o nomimasu.",
+        "fr": "Je prends des médicaments après le repas."
+      }
+    ],
+    "n5_v_188": [
+      {
+        "jp": "水をください。",
+        "ka": "みず を ください。",
+        "ro": "mizu o kudasai.",
+        "fr": "Donnez-moi de l'eau s'il vous plaît."
+      }
+    ],
+    "n5_v_189": [
+      {
+        "jp": "甘い果物が好きです。",
+        "ka": "あまい くだもの が すき です。",
+        "ro": "amai kudamono ga suki desu.",
+        "fr": "J'aime les fruits sucrés."
+      }
+    ],
+    "n5_v_190": [
+      {
+        "jp": "口を開けてください。",
+        "ka": "くち を あけて ください。",
+        "ro": "kuchi o akete kudasai.",
+        "fr": "Ouvrez la bouche s'il vous plaît."
+      }
+    ],
+    "n5_v_191": [
+      {
+        "jp": "新しい靴をはきます。",
+        "ka": "あたらしい くつ を はきます。",
+        "ro": "atarashii kutsu o hakimasu.",
+        "fr": "Je mets de nouvelles chaussures."
+      }
+    ],
+    "n5_v_192": [
+      {
+        "jp": "暖かい靴下をかいました。",
+        "ka": "あたたかい くつした を かいました。",
+        "ro": "atatakai kutsushita o kaimashita.",
+        "fr": "J'ai acheté des chaussettes chaudes."
+      }
+    ],
+    "n5_v_193": [
+      {
+        "jp": "お国はどちらですか。",
+        "ka": "おくに は どちら です か。",
+        "ro": "okuni wa dochira desu ka.",
+        "fr": "De quel pays venez-vous ?"
+      }
+    ],
+    "n5_v_194": [
+      {
+        "jp": "今日は曇りですね。",
+        "ka": "きょう は くもり です ね。",
+        "ro": "kyou wa kumori desu ne.",
+        "fr": "Le temps est nuageux aujourd'hui, n'est-ce pas ?"
+      }
+    ],
+    "n5_v_195": [
+      {
+        "jp": "空が曇ってきました。",
+        "ka": "そら が くもって きました。",
+        "ro": "sora ga kumotte kimashita.",
+        "fr": "Le ciel s'est couvert."
+      }
+    ],
+    "n5_v_196": [
+      {
+        "jp": "この部屋は暗いです。",
+        "ka": "この へや は くらい です。",
+        "ro": "kono heya wa kurai desu.",
+        "fr": "Cette pièce est sombre."
+      }
+    ],
+    "n5_v_197": [
+      {
+        "jp": "日本語のクラスに行きます。",
+        "ka": "にほんご の クラス に いきます。",
+        "ro": "nihongo no kurasu ni ikimasu.",
+        "fr": "Je vais au cours de japonais."
+      }
+    ],
+    "n5_v_198": [
+      {
+        "jp": "お肉を五百グラムください。",
+        "ka": "おにく を ごひゃく グラム ください。",
+        "ro": "oniku o gohyaku guramu kudasai.",
+        "fr": "Donnez-moi 500 grammes de viande s'il vous plaît."
+      }
+    ],
+    "n5_v_199": [
+      {
+        "jp": "来月京都へ行きます。",
+        "ka": "らいげつ きょうと へ いきます。",
+        "ro": "raigetsu kyouto he ikimasu.",
+        "fr": "Je vais à Kyoto le mois prochain."
+      }
+    ],
+    "n5_v_200": [
+      {
+        "jp": "来週テストがあります。",
+        "ka": "らいしゅう テスト が あります。",
+        "ro": "raishuu tesuto ga arimasu.",
+        "fr": "Il y a un test la semaine prochaine."
+      }
+    ],
+    "n5_v_201": [
+      {
+        "jp": "来年日本へ行きます。",
+        "ka": "らいねん にほん へ いきます。",
+        "ro": "rainen nihon he ikimasu.",
+        "fr": "J'irai au Japon l'année prochaine."
+      }
+    ],
+    "n5_v_202": [
+      {
+        "jp": "毎朝ラジオを聞きます。",
+        "ka": "まいあさ ラジオ を ききます。",
+        "ro": "maiasa rajio o kikimasu.",
+        "fr": "J'écoute la radio tous les matins."
+      }
+    ],
+    "n5_v_203": [
+      {
+        "jp": "ラジカセで音楽を聞きます。",
+        "ka": "ラジカセ で おんがく を ききます。",
+        "ro": "rajikase de ongaku o kikimasu.",
+        "fr": "J'écoute de la musique sur le radio-cassette."
+      }
+    ],
+    "n5_v_204": [
+      {
+        "jp": "来月帰国します。",
+        "ka": "らいげつ きこく します。",
+        "ro": "raigetsu kikoku shimasu.",
+        "fr": "Je retourne dans mon pays le mois prochain."
+      }
+    ],
+    "n5_v_205": [
+      {
+        "jp": "黒い靴を履きます。",
+        "ka": "くろい くつ を はきます。",
+        "ro": "kuroi kutsu o hakimasu.",
+        "fr": "Je mets des chaussures noires."
+      }
+    ],
+    "n5_v_206": [
+      {
+        "jp": "ここで靴を脱いでください。",
+        "ka": "ここ で くつ を ぬいで ください。",
+        "ro": "koko de kutsu o nuide kudasai.",
+        "fr": "Veuillez enlever vos chaussures ici."
+      }
+    ],
+    "n5_v_207": [
+      {
+        "jp": "清い水が流れています。",
+        "ka": "きよい みず が ながれています。",
+        "ro": "kiyoi mizu ga nagarete imasu.",
+        "fr": "Une eau pure coule."
+      }
+    ],
+    "n5_v_208": [
+      {
+        "jp": "部屋を綺麗にします。",
+        "ka": "へや を きれい に します。",
+        "ro": "heya o kirei ni shimasu.",
+        "fr": "Je nettoie la pièce."
+      }
+    ],
+    "n5_v_209": [
+      {
+        "jp": "ここから三キロあります。",
+        "ka": "ここ から さんキロ あります。",
+        "ro": "koko kara sankiro arimasu.",
+        "fr": "Il y a trois kilomètres d'ici."
+      }
+    ],
+    "n5_v_210": [
+      {
+        "jp": "昨夜遅く帰りました。",
+        "ka": "ゆうべ おそく かえりました。",
+        "ro": "yuube osoku kaerimashita.",
+        "fr": "Je suis rentré tard hier soir."
+      }
+    ],
+    "n5_v_211": [
+      {
+        "jp": "彼は有名な歌手です。",
+        "ka": "かれ は ゆうめい な かしゅ です。",
+        "ro": "kare wa yuumei na kashu desu.",
+        "fr": "C'est un chanteur célèbre."
+      }
+    ],
+    "n5_v_212": [
+      {
+        "jp": "郵便局で切手を買います。",
+        "ka": "ゆうびんきょく で きって を かいます。",
+        "ro": "yuubinkyoku de kitte o kaimasu.",
+        "fr": "J'achète des timbres au bureau de poste."
+      }
+    ],
+    "n5_v_213": [
+      {
+        "jp": "夕方散歩をします。",
+        "ka": "ゆうがた さんぽ を します。",
+        "ro": "yuugata sanpo o shimasu.",
+        "fr": "Je me promène en fin d'après-midi."
+      }
+    ],
+    "n5_v_214": [
+      {
+        "jp": "七時に夕飯を食べます。",
+        "ka": "しちじ に ゆうはん を たべます。",
+        "ro": "shichiji ni yuuhan o tabemasu.",
+        "fr": "Je mange le dîner à sept heures."
+      }
+    ],
+    "n5_v_215": [
+      {
+        "jp": "冬に雪が降ります。",
+        "ka": "ふゆ に ゆき が ふります。",
+        "ro": "fuyu ni yuki ga furimasu.",
+        "fr": "Il neige en hiver."
+      }
+    ],
+    "n5_v_216": [
+      {
+        "jp": "どこへ行きますか。",
+        "ka": "どこ へ ゆきます か。",
+        "ro": "doko he yukimasu ka.",
+        "fr": "Où allez-vous ?"
+      }
+    ],
+    "n5_v_217": [
+      {
+        "jp": "ゆっくり話してください。",
+        "ka": "ゆっくり はなして ください。",
+        "ro": "yukkuri hanashite kudasai.",
+        "fr": "Parlez lentement s'il vous plaît."
+      }
+    ],
+    "n5_v_218": [
+      {
+        "jp": "八日にテストがあります。",
+        "ka": "ようか に テスト が あります。",
+        "ro": "youka ni tesuto ga arimasu.",
+        "fr": "Il y a un test le 8."
+      }
+    ],
+    "n5_v_219": [
+      {
+        "jp": "店で洋服を買います。",
+        "ka": "みせ で ようふく を かいます。",
+        "ro": "mise de youfuku o kaimasu.",
+        "fr": "J'achète des vêtements dans un magasin."
+      }
+    ],
+    "n5_v_220": [
+      {
+        "jp": "妹は幼稚園に行きます。",
+        "ka": "いもうと は ようちえん に いきます。",
+        "ro": "imouto wa youchien ni ikimasu.",
+        "fr": "Ma petite sœur va à l'école maternelle."
+      }
+    ],
+    "n5_v_221": [
+      {
+        "jp": "よく日本語を勉強します。",
+        "ka": "よく にほんご を べんきょう します。",
+        "ro": "yoku nihongo o benkyou shimasu.",
+        "fr": "J'étudie souvent le japonais."
+      }
+    ],
+    "n5_v_222": [
+      {
+        "jp": "本の横にペンがあります。",
+        "ka": "ほん の よこ に ペン が あります。",
+        "ro": "hon no yoko ni pen ga arimasu.",
+        "fr": "Il y a un stylo à côté du livre."
+      }
+    ],
+    "n5_v_223": [
+      {
+        "jp": "四日に友達が来ます。",
+        "ka": "よっか に ともだち が きます。",
+        "ro": "yokka ni tomodachi ga kimasu.",
+        "fr": "Un ami vient le 4."
+      }
+    ],
+    "n5_v_224": [
+      {
+        "jp": "タクシーを呼びます。",
+        "ka": "タクシー を よびます。",
+        "ro": "takushii o yobimasu.",
+        "fr": "J'appelle un taxi."
+      }
+    ],
+    "n5_v_225": [
+      {
+        "jp": "図書館で本を読みます。",
+        "ka": "としょかん で ほん を よみます。",
+        "ro": "toshokan de hon o yomimasu.",
+        "fr": "Je lis un livre à la bibliothèque."
+      }
+    ],
+    "n5_v_226": [
+      {
+        "jp": "夜十時に寝ます。",
+        "ka": "よる じゅうじ に ねます。",
+        "ro": "yoru juuji ni nemasu.",
+        "fr": "Je me couche à dix heures du soir."
+      }
+    ],
+    "n5_v_227": [
+      {
+        "jp": "風が弱くなりました。",
+        "ka": "かぜ が よわく なりました。",
+        "ro": "kaze ga yowaku narimashita.",
+        "fr": "Le vent est devenu faible."
+      }
+    ],
+    "n5_v_228": [
+      {
+        "jp": "体が少し弱い です。",
+        "ka": "からだ が すこし よわい です。",
+        "ro": "karada ga sukoshi yowai desu.",
+        "fr": "Mon corps est un peu fragile."
+      }
+    ],
+    "n5_v_229": [
+      {
+        "jp": "来月旅行に行きます。",
+        "ka": "らいげつ りょこう に いきます。",
+        "ro": "raigetsu ryokou ni ikimasu.",
+        "fr": "Je pars en voyage le mois prochain."
+      }
+    ],
+    "n5_v_230": [
+      {
+        "jp": "来週また会いましょう。",
+        "ka": "らいしゅう また あいましょう。",
+        "ro": "raishuu mata aimashou.",
+        "fr": "Revoyons-nous la semaine prochaine."
+      }
+    ],
+    "n5_v_231": [
+      {
+        "jp": "来年日本へ行きます。",
+        "ka": "らいねん にほん へ いきます。",
+        "ro": "rainen nihon he ikimasu.",
+        "fr": "J'irai au Japon l'année prochaine."
+      }
+    ],
+    "n5_v_232": [
+      {
+        "jp": "ラジオを聞きながら勉強します。",
+        "ka": "ラジオ を ききながら べんきょう します。",
+        "ro": "rajio o kikinagara benkyou shimasu.",
+        "fr": "J'étudie tout en écoutant la radio."
+      }
+    ],
+    "n5_v_233": [
+      {
+        "jp": "大学で留学生と話します。",
+        "ka": "だいがく で りゅうがくせい と はなし ます。",
+        "ro": "daigaku de ryuugakusei to hanashimasu.",
+        "fr": "Je parle avec des étudiants étrangers à l'université."
+      }
+    ],
+    "n5_v_234": [
+      {
+        "jp": "両親に手紙を書きます。",
+        "ka": "りょうしん に てがみ を かきます。",
+        "ro": "ryoushin ni tegami o kakimasu.",
+        "fr": "J'écris une lettre à mes parents."
+      }
+    ],
+    "n5_v_235": [
+      {
+        "jp": "今夜は日本料理を作ります。",
+        "ka": "こんや は にほんりょうり を つくります。",
+        "ro": "kon'ya wa nihonryouri o tsukurimasu.",
+        "fr": "Je prépare de la cuisine japonaise ce soir."
+      }
+    ],
+    "n5_v_236": [
+      {
+        "jp": "夏休みに旅行をします。",
+        "ka": "なつやすみ に りょこう を します。",
+        "ro": "natsuyasumi ni ryokou o shimasu.",
+        "fr": "Je fais un voyage pendant les vacances d'été."
+      }
+    ],
+    "n5_v_237": [
+      {
+        "jp": "温度が零度になりました。",
+        "ka": "おんど が れいど に なりました。",
+        "ro": "ondo ga reido ni narimashita.",
+        "fr": "La température est descendue à zéro degré."
+      }
+    ],
+    "n5_v_238": [
+      {
+        "jp": "牛乳を冷蔵庫に入れます。",
+        "ka": "ぎゅうにゅう を れいぞうこ に いれます。",
+        "ro": "gyuunyuu o reizouko ni iremasu.",
+        "fr": "Je mets le lait dans le réfrigérateur."
+      }
+    ],
+    "n5_v_239": [
+      {
+        "jp": "古いレコードを聞きます。",
+        "ka": "ふるい レコード を ききます。",
+        "ro": "furui rekoodo o kikimasu.",
+        "fr": "J'écoute un vieux disque vinyle."
+      }
+    ],
+    "n5_v_240": [
+      {
+        "jp": "日曜日にレストランで食事をします。",
+        "ka": "にちようび に レストラン で しょくじ を します。",
+        "ro": "nichiyoubi ni resutoran de shokuji o shimasu.",
+        "fr": "Je prends un repas au restaurant le dimanche."
+      }
+    ],
+    "n5_v_241": [
+      {
+        "jp": "毎日漢字の練習をします。",
+        "ka": "まいにち かんじ の れんしゅう を します。",
+        "ro": "mainichi kanji no renshuu o shimasu.",
+        "fr": "Je fais des exercices de kanji tous les jours."
+      }
+    ],
+    "n5_v_242": [
+      {
+        "jp": "廊下を走らないでください。",
+        "ka": "ろうか を はしらない で ください。",
+        "ro": "rouka o hashiranai de kudasai.",
+        "fr": "Ne courez pas dans le couloir s'il vous plaît."
+      }
+    ],
+    "n5_v_243": [
+      {
+        "jp": "ペンが六本あります。",
+        "ka": "ペン が ろっぽん あります。",
+        "ro": "pen ga roppon arimasu.",
+        "fr": "Il y a six stylos."
+      }
+    ],
+    "n5_v_244": [
+      {
+        "jp": "六日に日本へ来ました。",
+        "ka": "むいか に にほん へ きました。",
+        "ro": "muika ni nihon he kimashita.",
+        "fr": "Je suis venu au Japon le 6."
+      }
+    ],
+    "n5_v_245": [
+      {
+        "jp": "白いワイシャツを着ます。",
+        "ka": "しろい ワイシャツ を きます。",
+        "ro": "shiroi waishatsu o kimasu.",
+        "fr": "Je mets une chemise blanche."
+      }
+    ],
+    "n5_v_246": [
+      {
+        "jp": "彼はまだ若いです。",
+        "ka": "かれ は まだ わかい です。",
+        "ro": "kare wa mada wakai desu.",
+        "fr": "Il est encore jeune."
+      }
+    ],
+    "n5_v_247": [
+      {
+        "jp": "若い人がたくさんいます。",
+        "ka": "わかい ひと が たくさん います。",
+        "ro": "wakai hito ga takusan imasu.",
+        "fr": "Il y a beaucoup de jeunes gens."
+      }
+    ],
+    "n5_v_248": [
+      {
+        "jp": "先生の質問が分かりました。",
+        "ka": "せんせい の しつもん が わかりました。",
+        "ro": "sensei no shitsumon ga wakarimashita.",
+        "fr": "J'ai compris la question du professeur."
+      }
+    ],
+    "n5_v_249": [
+      {
+        "jp": "傘を電車に忘れました。",
+        "ka": "かさ を でんしゃ に わすれました。",
+        "ro": "kasa o densha ni wasuremashita.",
+        "fr": "J'ai oublié mon parapluie dans le train."
+      }
+    ],
+    "n5_v_250": [
+      {
+        "jp": "私はフランス人です。",
+        "ka": "わたし は フランスじん です。",
+        "ro": "watashi wa furansujin desu.",
+        "fr": "Je suis français."
+      }
+    ],
+    "n5_v_251": [
+      {
+        "jp": "友達にプレゼントを渡します。",
+        "ka": "ともだち に プレゼント を ワタシます。",
+        "ro": "tomodachi ni purezento o watashimasu.",
+        "fr": "Je remets un cadeau à un ami."
+      }
+    ],
+    "n5_v_252": [
+      {
+        "jp": "橋を渡ります。",
+        "ka": "はし を わたります。",
+        "ro": "hashi o watarimasu.",
+        "fr": "Je traverse le pont."
+      }
+    ],
+    "n5_v_253": [
+      {
+        "jp": "天気が悪くなりました。",
+        "ka": "てんき が わるく なりました。",
+        "ro": "tenki ga waruku narimashita.",
+        "fr": "Le temps est devenu mauvais."
+      }
+    ],
+    "n5_v_254": [
+      {
+        "jp": "母の料理は美味しいです。",
+        "ka": "はは の りょうり は おいしい です。",
+        "ro": "haha no ryouri wa oishii desu.",
+        "fr": "La cuisine de ma mère est délicieuse."
+      }
+    ],
+    "n5_v_255": [
+      {
+        "jp": "楽しい旅行でした。",
+        "ka": "たのしい りょこう でした。",
+        "ro": "tanoshii ryokou deshita.",
+        "fr": "C'était un voyage agréable."
+      }
+    ],
+    "n5_v_256": [
+      {
+        "jp": "電話番号の最初は零です。",
+        "ka": "でんわばんごう の さいしょ は れい です。",
+        "ro": "denwabangou no saisho wa rei desu.",
+        "fr": "Le début du numéro de téléphone est zéro."
+      }
+    ],
+    "n5_v_257": [
+      {
+        "jp": "冷蔵庫に野菜があります。",
+        "ka": "れいぞうこ に やさい が あります。",
+        "ro": "reizouko ni yasai ga arimasu.",
+        "fr": "Il y a des légumes dans le réfrigérateur."
+      }
+    ],
+    "n5_v_258": [
+      {
+        "jp": "レコードで音楽を聴きます。",
+        "ka": "レコード で おんがく を ききます。",
+        "ro": "rekoodo de ongaku o kikimasu.",
+        "fr": "J'écoute de la musique sur un disque vinyle."
+      }
+    ],
+    "n5_v_259": [
+      {
+        "jp": "そのレストランは有名です。",
+        "ka": "その レストラン は ゆうめい です。",
+        "ro": "sono resutoran wa yuumei desu.",
+        "fr": "Ce restaurant est célèbre."
+      }
+    ],
+    "n5_v_260": [
+      {
+        "jp": "毎日ピアノの練習をします。",
+        "ka": "まいにち ピアノ の れんしゅう を します。",
+        "ro": "mainichi piano no renshuu o shimasu.",
+        "fr": "Je fais de la pratique de piano tous les jours."
+      }
+    ],
+    "n5_v_261": [
+      {
+        "jp": "静かに廊下を歩きます。",
+        "ka": "しずかに ろうか を あるきます。",
+        "ro": "shizukani rouka o arukimasu.",
+        "fr": "Je marche silencieusement dans le couloir."
+      }
+    ],
+    "n5_v_262": [
+      {
+        "jp": "六つのりんごを食べます。",
+        "ka": "むっつ の りんご を たべます。",
+        "ro": "muttsu no ringo o tabemasu.",
+        "fr": "Je mange six pommes."
+      }
+    ],
+    "n5_v_263": [
+      {
+        "jp": "六日に旅行に行きます。",
+        "ka": "むいか に りょこう に いきます。",
+        "ro": "muika ni ryokou ni ikimasu.",
+        "fr": "Je pars en voyage le 6."
+      }
+    ],
+    "n5_v_264": [
+      {
+        "jp": "新しいワイシャツを買いました。",
+        "ka": "あたらしい ワイシャツ を かいました。",
+        "ro": "atarashii waishatsu o kaimashita.",
+        "fr": "J'ai acheté une nouvelle chemise."
+      }
+    ],
+    "n5_v_265": [
+      {
+        "jp": "若い時は一生懸命勉強します。",
+        "ka": "わかい とき は いっしょうけんめい べんきょう します。",
+        "ro": "wakai toki wa isshoukenmei benkyou shimasu.",
+        "fr": "J'étudie dur pendant ma jeunesse."
+      }
+    ],
+    "n5_v_266": [
+      {
+        "jp": "日本語が少し分かります。",
+        "ka": "にほんご が すこし わかります。",
+        "ro": "nihongo ga sukoshi wakarimasu.",
+        "fr": "Je comprends un peu le japonais."
+      }
+    ],
+    "n5_v_267": [
+      {
+        "jp": "宿題を忘れないでください。",
+        "ka": "しゅくだい を わすれない で ください。",
+        "ro": "shukudai o wasurenai de kudasai.",
+        "fr": "N'oubliez pas vos devoirs s'il vous plaît."
+      }
+    ],
+    "n5_v_268": [
+      {
+        "jp": "私は学生です。",
+        "ka": "わたし は がくせい です。",
+        "ro": "watashi wa gakusei desu.",
+        "fr": "Je suis étudiant."
+      }
+    ],
+    "n5_v_269": [
+      {
+        "jp": "私からご挨拶申し上げます。",
+        "ka": "わたくし から ごあいさつ もうしあげます。",
+        "ro": "watakushi kara goaisatsu moushiagemasu.",
+        "fr": "Permettez-moi de vous présenter mes salutations."
+      }
+    ],
+    "n5_v_270": [
+      {
+        "jp": "先生にノートを渡します。",
+        "ka": "せんせい に ノート を ワタシます。",
+        "ro": "sensei ni nooto o watashimasu.",
+        "fr": "Je remets mon cahier au professeur."
+      }
+    ],
+    "n5_v_271": [
+      {
+        "jp": "安全に道路を渡ります。",
+        "ka": "あんぜんに どうろ を わたります。",
+        "ro": "anzen ni douro o watarimasu.",
+        "fr": "Je traverse la route en toute sécurité."
+      }
+    ],
+    "n5_v_272": [
+      {
+        "jp": "寒いので上着を着ます。",
+        "ka": "さむい ので うわぎ を きます。",
+        "ro": "samui node uwagi o kimasu." ,
+        "fr": "Je mets une veste car il fait froid."
+      }
+    ],
+    "n5_v_273": [
+      {
+        "jp": "美術館で綺麗な絵を見ました。",
+        "ka": "びじゅつかん で きれいな え を みました。",
+        "ro": "bijutsukan de kireina e o mimashita.",
+        "fr": "J'ai vu de jolies peintures au musée des beaux-arts."
+      }
+    ],
+    "n5_v_274": [
+      {
+        "jp": "土曜日に映画を見ます。",
+        "ka": "どようび に えいが を みます。",
+        "ro": "doyoubi ni eiga o mimasu.",
+        "fr": "Je regarde un film le samedi."
+      }
+    ],
+    "n5_v_275": [
+      {
+        "jp": "週末に映画館へ行きます。",
+        "ka": "しゅうまつ に えいがかん へ いきます。",
+        "ro": "shuumatsu ni eigakan he ikimasu.",
+        "fr": "Je vais au cinéma le week-end."
+      }
+    ],
+    "n5_v_276": [
+      {
+        "jp": "学校で英語を勉強します。",
+        "ka": "がっこう で えいご を べんきょう します。",
+        "ro": "gakkou de eigo o benkyou shimasu.",
+        "fr": "J'étudie l'anglais à l'école."
+      }
+    ],
+    "n5_v_277": [
+      {
+        "jp": "毎朝駅から電車に乗ります。",
+        "ka": "まいあさ えき から でんしゃ に のります。",
+        "ro": "maiasa eki kara densha ni norimasu.",
+        "fr": "Je prends le train à la gare tous les matins."
+      }
+    ],
+    "n5_v_278": [
+      {
+        "jp": "エレベーターで五階へ上がります。",
+        "ka": "エレベーター で ごかい へ あがります。",
+        "ro": "erebeetaa de gokai he agarimasu.",
+        "fr": "Je monte au cinquième étage avec l'ascenseur."
+      }
+    ],
+    "n5_v_279": [
+      {
+        "jp": "鉛筆で漢字を書きます。",
+        "ka": "えんぴつ で かんじ を かきます。",
+        "ro": "enpitsu de kanji o kakimasu.",
+        "fr": "J'écris les kanjis au crayon."
+      }
+    ],
+    "n5_v_280": [
+      {
+        "jp": "このラーメンはとても美味しいです。",
+        "ka": "この ラーメン は とても おいしい です。",
+        "ro": "kono raamen wa totemo oishii desu.",
+        "fr": "Ces ramen sont très délicieux."
+      }
+    ],
+    "n5_v_281": [
+      {
+        "jp": "公園に大勢の人がいます。",
+        "ka": "こうえん に おおぜい の ひと が います。",
+        "ro": "kouen ni oozei no hito ga imasu.",
+        "fr": "Il y a beaucoup de monde dans le parc."
+      }
+    ],
+    "n5_v_282": [
+      {
+        "jp": "東京は大きい街です。",
+        "ka": "とうきょう は おおきい まち です。",
+        "ro": "toukyou wa ookii machi desu.",
+        "fr": "Tokyo est une grande ville."
+      }
+    ],
+    "n5_v_283": [
+      {
+        "jp": "庭に大きな木があります。",
+        "ka": "にわ に おおきな き が あります。",
+        "ro": "niwa ni ookina ki ga arimasu.",
+        "fr": "Il y a un grand arbre dans le jardin."
+      }
+    ],
+    "n5_v_284": [
+      {
+        "jp": "駅前は大勢の人で賑やかです。",
+        "ka": "えきまえ は おおぜい の ひと で にぎやか です。",
+        "ro": "ekimae wa oozei no hito de nigiyaka desu.",
+        "fr": "L'avant-gare est animée par une grande foule."
+      }
+    ],
+    "n5_v_285": [
+      {
+        "jp": "お母さんに花をあげます。",
+        "ka": "おかあさん に はな を あげます。",
+        "ro": "okaasan ni hana o agemasu.",
+        "fr": "J'offre des fleurs à ma mère."
+      }
+    ],
+    "n5_v_286": [
+      {
+        "jp": "おやつの時間にお菓子を食べます。",
+        "ka": "おやつ の じかん に おかし を たべます。",
+        "ro": "oyatsu no jikan ni okashi o tabemasu.",
+        "fr": "Je mange des sucreries à l'heure du goûter."
+      }
+    ],
+    "n5_v_287": [
+      {
+        "jp": "財布にお金を入れます。",
+        "ka": "さいふ に おかね を いれます。",
+        "ro": "saifu ni okane o iremasu.",
+        "fr": "Je mets de l'argent dans mon portefeuille."
+      }
+    ],
+    "n5_v_288": [
+      {
+        "jp": "毎朝六時に起きます。",
+        "ka": "まいあさ ろくじ に おきます。",
+        "ro": "maiasa rokuji ni okimasu.",
+        "fr": "Je me lève à six heures tous les matins."
+      }
+    ],
+    "n5_v_289": [
+      {
+        "jp": "机の上に本を置きます。",
+        "ka": "つくえ の うえ に ほん を おきます。",
+        "ro": "tsukue no ue ni hon o okimasu.",
+        "fr": "Je pose le livre sur le bureau."
+      }
+    ],
+    "n5_v_290": [
+      {
+        "jp": "田中さんの奥さんは優しいてす。",
+        "ka": "たなかさん の おくさん は やさしい です。",
+        "ro": "tanaka-san no okusan wa yasashii desu.",
+        "fr": "L'épouse de M. Tanaka est gentille."
+      }
+    ],
+    "n5_v_291": [
+      {
+        "jp": "週末にお酒を飲みます。",
+        "ka": "しゅうまつ に おさけ を のみます。",
+        "ro": "shuumatsu ni osake o nomimasu.",
+        "fr": "Je bois de l'alcool le week-end."
+      }
+    ],
+    "n5_v_292": [
+      {
+        "jp": "お皿の上にケーキを置きます。",
+        "ka": "おさら の うえ に ケーキ を おきます。",
+        "ro": "osara no ue ni keeki o okimasu.",
+        "fr": "Je pose le gâteau sur l'assiette."
+      }
+    ],
+    "n5_v_293": [
+      {
+        "jp": "私のおじさんは医者です。",
+        "ka": "わたし の おじさん は いしゃ です。",
+        "ro": "watashi no ojisan wa isha desu.",
+        "fr": "Mon oncle est médecin."
+      }
+    ],
+    "n5_v_294": [
+      {
+        "jp": "おじいさんは庭で散歩をします。",
+        "ka": "おじいさん は にわ で さんぽ を します。",
+        "ro": "ojiisan wa niwa de sanpo o shimasu.",
+        "fr": "Grand-père se promène dans le jardin."
+      }
+    ],
+    "n5_v_295": [
+      {
+        "jp": "このボタンを押してください。",
+        "ka": "この ボタン を おして ください。",
+        "ro": "kono botan o oshite kudasai.",
+        "fr": "Appuyez sur ce bouton s'il vous plaît."
+      }
+    ],
+    "n5_v_296": [
+      {
+        "jp": "今日は帰るのが遅いです。",
+        "ka": "きょう は かえる の が おそい です。",
+        "ro": "kyou wa kaeru no ga osoi desu.",
+        "fr": "Je rentre tard aujourd'hui."
+      }
+    ],
+    "n5_v_297": [
+      {
+        "jp": "毎朝温かいお茶を飲みます。",
+        "ka": "まいあさ あたたかい おちゃ を のみます。",
+        "ro": "maiasa atatakai ocha o nomimasu.",
+        "fr": "Je bois du thé chaud tous les matins."
+      }
+    ],
+    "n5_v_298": [
+      {
+        "jp": "すみません、お手洗い很どこですか。",
+        "ka": "すみません、 おてあらい は どこ です か。",
+        "ro": "sumimasen, otearai wa doko desu ka.",
+        "fr": "Excusez-moi, où sont les toilettes ?"
+      }
+    ],
+    "n5_v_299": [
+      {
+        "jp": "お父さんは会社員です。",
+        "ka": "おとうさん は かいしゃいん です。",
+        "ro": "otousan wa kaishain desu.",
+        "fr": "Mon père est employé de bureau."
+      }
+    ],
+    "n5_v_300": [
+      {
+        "jp": "弟は中学生です。",
+        "ka": "おとうと は ちゅうがくせい です。",
+        "ro": "otouto wa chuugakusei desu.",
+        "fr": "Mon petit frère est collégien."
+      }
+    ],
+    "n5_v_301": [
+      {
+        "jp": "あの男の人は親切です。",
+        "ka": "あの おとこ の ひと は しんせつ です。",
+        "ro": "ano otoko no hito wa shinsetsu desu.",
+        "fr": "Cet homme est gentil."
+      }
+    ],
+    "n5_v_302": [
+      {
+        "jp": "男の子が公園で遊んでいます。",
+        "ka": "おとこのこ が こうえん で あそんで います。",
+        "ro": "otokonoko ga kouen de asonde imasu.",
+        "fr": "Un garçon joue dans le parc."
+      }
+    ],
+    "n5_v_303": [
+      {
+        "jp": "おととい映画を見ました。",
+        "ka": "おととい えいが を みました。",
+        "ro": "ototoi eiga o mimashita.",
+        "fr": "J'ai regardé un film avant-hier."
+      }
+    ],
+    "n5_v_304": [
+      {
+        "jp": "おととし日本に来ました。",
+        "ka": "おととし にほん に きました。",
+        "ro": "ototoshi nihon ni kimashita.",
+        "fr": "Je suis venu au Japon il y a deux ans."
+      }
+    ],
+    "n5_v_305": [
+      {
+        "jp": "彼は立派な大人になりました。",
+        "ka": "かれ は りっぱな おとな に なりました。",
+        "ro": "kare wa rippana otona ni narimashita.",
+        "fr": "Il est devenu un adulte remarquable."
+      }
+    ],
+    "n5_v_306": [
+      {
+        "jp": "お腹が痛いです。",
+        "ka": "おなか が いたい です。",
+        "ro": "onaka ga itai desu.",
+        "fr": "J'ai mal au ventre."
+      }
+    ],
+    "n5_v_307": [
+      {
+        "jp": "このシャツはあれと同じです。",
+        "ka": "この シャツ は あれ と おなじ です。",
+        "ro": "kono shatsu wa are to onaji desu.",
+        "fr": "Cette chemise est identique à celle-là."
+      }
+    ],
+    "n5_v_308": [
+      {
+        "jp": "お兄さんは大学生ですか。",
+        "ka": "おにいさん は だいがくせい です か。",
+        "ro": "oniisan wa daigakusei desu ka.",
+        "fr": "Est-ce que votre grand frère est étudiant à l'université ?"
+      }
+    ],
+    "n5_v_309": [
+      {
+        "jp": "お姉さんは料理が得意です。",
+        "ka": "おねえさん は りょうり が とくい です。",
+        "ro": "oneesan ga ryouri ga tokui desu.",
+        "fr": "Votre grande sœur est douée en cuisine."
+      }
+    ],
+    "n5_v_310": [
+      {
+        "jp": "おばさんは北海道に住んでいます。",
+        "ka": "おばさん は ほっかいどう に すんで います。",
+        "ro": "obasan wa hokkaidou ni sunde imasu.",
+        "fr": "Ma tante habite à Hokkaidō."
+      }
+    ],
+    "n5_v_311": [
+      {
+        "jp": "おばあさんは優しい人です。",
+        "ka": "おばあさん は やさしい ひと です。",
+        "ro": "obaasan wa yasashii hito desu.",
+        "fr": "Grand-mère est une personne gentille."
+      }
+    ],
+    "n5_v_312": [
+      {
+        "jp": "お昼にお弁当を食べます。",
+        "ka": "おひる に おべんとう を たべます。",
+        "ro": "ohiru ni obentou o tabemasu.",
+        "fr": "Je mange un bento à midi."
+      }
+    ],
+    "n5_v_313": [
+      {
+        "jp": "新しい漢字を覚えます。",
+        "ka": "あたらしい かんじ を おぼえます。",
+        "ro": "atarashii kanji o oboemasu.",
+        "fr": "Je mémorise de nouveaux kanjis."
+      }
+    ],
+    "n5_v_314": [
+      {
+        "jp": "この荷物はとても重いです。",
+        "ka": "この にもつ は とても おもい です。",
+        "ro": "kono nimotsu wa totemo omoi desu.",
+        "fr": "Ce bagage est très lourd."
+      }
+    ],
+    "n5_v_315": [
+      {
+        "jp": "この本はとても面白いです。",
+        "ka": "この ほん は とても おもしろい です。",
+        "ro": "kono hon wa totemo omoshiroi desu.",
+        "fr": "Ce livre est très intéressant."
+      }
+    ],
+    "n5_v_316": [
+      {
+        "jp": "夏に海で泳ぎます。",
+        "ka": "なつ に うみ で およぎます。",
+        "ro": "natsu ni umi de oyogimasu.",
+        "fr": "Je nage dans la mer en été."
+      }
+    ],
+    "n5_v_317": [
+      {
+        "jp": "次の駅で電車を降ります。",
+        "ka": "つぎ の えき で でんしゃ を おります。",
+        "ro": "tsugi no eki de densha o orimasu.",
+        "fr": "Je descends du train à la prochaine gare."
+      }
+    ],
+    "n5_v_318": [
+      {
+        "jp": "五時に仕事が終わります。",
+        "ka": "ごじ に しごと が おわります。",
+        "go": "goji ni shigoto ga owarimasu.",
+        "ro": "goji ni shigoto ga owarimasu.",
+        "fr": "Le travail se termine à cinq heures."
+      }
+    ],
+    "n5_v_319": [
+      {
+        "jp": "部屋で静かな音楽を聞きます。",
+        "ka": "へや で しずかな おんがく を ききます。",
+        "ro": "heya de shizukana ongaku o kikimasu.",
+        "fr": "J'écoute de la musique calme dans ma chambre."
+      }
+    ],
+    "n5_v_320": [
+      {
+        "jp": "あの女の人は先生です。",
+        "ka": "あの おんな の ひと は せんせい です。",
+        "ro": "ano onna no hito wa sensei desu.",
+        "fr": "Cette femme est professeur."
+      }
+    ],
+    "n5_v_321": [
+      {
+        "jp": "女の子が人形て遊んでいます。",
+        "ka": "おんなのこ が にんぎょう で あそんで います。",
+        "ro": "onnanoko ga ningyou de asonde imasu.",
+        "fr": "Une petite fille joue avec une poupée."
+      }
+    ],
+    "n5_v_322": [
+      {
+        "jp": "いつか外国へ行ってみたいです。",
+        "ka": "いつか がいこく へ いって みたい です。",
+        "ro": "itsuka gaikoku he itte mitai desu.",
+        "fr": "J'aimerais aller à l'étranger un jour."
+      }
+    ],
+    "n5_v_323": [
+      {
+        "jp": "東京にはたくさんの外国人が住んでいます。",
+        "ka": "とうきょう に は たくさん の がいこくじん が すんで います。",
+        "ro": "toukyou ni wa takusan no gaikokujin ga sunde imasu.",
+        "fr": "Beaucoup d'étrangers vivent à Tokyo."
+      }
+    ],
+    "n5_v_324": [
+      {
+        "jp": "父は毎朝会社へ行きます。",
+        "ka": "ちち は まいあさ かいしゃ へ いきます。",
+        "ro": "chichi wa maiasa kaisha he ikimasu.",
+        "fr": "Mon père va au entreprise tous les matins."
+      }
+    ],
+    "n5_v_325": [
+      {
+        "jp": "この階段を上ると三階です。",
+        "ka": "この かいだん を あがると さんかい です。",
+        "ro": "kono kaidan o agaruto sankai desu.",
+        "fr": "Monter cet escalier mène au troisième étage."
+      }
+    ],
+    "n5_v_326": [
+      {
+        "jp": "スーパーへ買い物に行きます。",
+        "ka": "スーパー へ かいもの に いきます。",
+        "ro": "suupaa he kaimono ni ikimasu.",
+        "fr": "Je vais faire des courses au supermarché."
+      }
+    ],
+    "n5_v_327": [
+      {
+        "jp": "デパートで新しい服を買います。",
+        "ka": "デパート で あたらしい ふく を かいます。",
+        "ro": "depaato de atatarashii fuku o kaimasu.",
+        "fr": "J'achète de nouveaux vêtements au grand magasin."
+      }
+    ],
+    "n5_v_328": [
+      {
+        "jp": "図書館の本を明日返します。",
+        "ka": "としょかん の ほん を あした かえします。",
+        "ro": "toshokan no hon o ashita kaeshimasu.",
+        "fr": "Je rendrai le livre de la bibliothèque demain."
+      }
+    ],
+    "n5_v_329": [
+      {
+        "jp": "予定を来週に変えます。",
+        "ka": "よてい を らいしゅう に かえます。",
+        "ro": "yotei o raishuu ni kaemasu.",
+        "fr": "Je change le programme pour la semaine prochaine."
+      }
+    ],
+    "n5_v_330": [
+      {
+        "jp": "今日は六時に家に帰ります。",
+        "ka": "きょう は ろくじ に うち に かえます。",
+        "ro": "kyou wa rokuji ni uchi ni kaerimasu.",
+        "fr": "Je rentre chez moi à six heures aujourd'hui."
+      }
+    ],
+    "n5_v_331": [
+      {
+        "jp": "彼女の顔に笑顔が見えます。",
+        "ka": "かのじょ の かお に えがお が みえます。",
+        "ro": "kanojo no kao ni egao ga miemasu.",
+        "fr": "On voit un sourire sur son visage."
+      }
+    ],
+    "n5_v_332": [
+      {
+        "jp": "駅から家まで十分かかります。",
+        "ka": "えき から うち まで じゅっぷん かかります。",
+        "ro": "eki kara uchi madé juppun kakarimasu.",
+        "fr": "Il faut dix minutes de la gare à la maison."
+      }
+    ],
+    "n5_v_333": [
+      {
+        "jp": "ドアの鍵を閉めてください。",
+        "ka": "ドア の かぎ を しめて ください。",
+        "ro": "doa no kagi o shimete kudasai.",
+        "fr": "Fermez la porte à clé s'il vous plaît."
+      }
+    ],
+    "n5_v_334": [
+      {
+        "jp": "ノートに名前を書きます。",
+        "ka": "ノート に なまえ を かきます。",
+        "ro": "nooto ni namae o kakimasu.",
+        "fr": "J'écris mon nom sur le cahier."
+      }
+    ],
+    "n5_v_335": [
+      {
+        "jp": "私は大学で勉強している学生です。",
+        "ka": "わたし は だいがく で べんきょう して いる がくせい です。",
+        "ro": "watashi wa daigaku de benkyou shite iru gakusei desu.",
+        "fr": "Je suis un étudiant qui étudie à l'université."
+      }
+    ],
+    "n5_v_336": [
+      {
+        "jp": "雨が降っているので傘をさします。",
+        "ka": "あめ が ふって いる ので かさ を さします。",
+        "ro": "ame ga futte iru node kasa o sashimasu.",
+        "fr": "Je prends un parapluie car il pleut."
+      }
+    ],
+    "n5_v_337": [
+      {
+        "jp": "友達に鉛筆を貸します。",
+        "ka": "ともだち に えんぴつ を かします。",
+        "ro": "tomodachi ni enpitsu o kashimasu.",
+        "fr": "Je prête un crayon à mon ami."
+      }
+    ],
+    "n5_v_338": [
+      {
+        "jp": "今日は風がとても強いです。",
+        "ka": "きょう は かぜ が とても つよい です。",
+        "ro": "kyou wa kaze ga totemo tsuyoi desu.",
+        "fr": "Le vent souffle très fort aujourd'hui."
+      }
+    ],
+    "n5_v_339": [
+      {
+        "jp": "風邪を引いたので病院に行きます。",
+        "ka": "かぜ を ひいた ので びょういん に いきます。",
+        "ro": "kaze o hiita node byouin ni ikimasu.",
+        "fr": "J'ai attrapé un rhume alors je vais à l'hôpital."
+      }
+    ],
+    "n5_v_340": [
+      {
+        "jp": "私の家族は四人です。",
+        "ka": "わたし の かぞく は よにん です。",
+        "ro": "watashi no kazoku wa yonin desu.",
+        "fr": "Ma famille est composée de quatre personnes."
+      }
+    ],
+    "n5_v_341": [
+      {
+        "jp": "この漢字の書き方を教えてください。",
+        "ka": "この かんじ の かきかた を おしえて ください。",
+        "ro": "kono kanji no kakikata o oshiete kudasai.",
+        "fr": "Veuillez m'apprendre la manière d'écrire ce kanji."
+      }
+    ],
+    "n5_v_342": [
+      {
+        "jp": "毎朝八時に学校へ行きます。",
+        "ka": "まいあさ はちじ に がっこう へ いきます。",
+        "ro": "maiasa hachiji ni gakkou he ikimasu.",
+        "fr": "Je vais à l'école à huit heures tous les matins."
+      }
+    ],
+    "n5_v_343": [
+      {
+        "jp": "カップにコーヒーを入れます。",
+        "ka": "カップ に コーヒー を いれます。",
+        "ro": "kappu ni koohii o iremasu.",
+        "fr": "Je mets du café dans la tasse."
+      }
+    ],
+    "n5_v_344": [
+      {
+        "jp": "家族みんなで温かい家庭を作ります。",
+        "ka": "かぞく みんな で あたたかい かてい を つくります。",
+        "ro": "kazoku minna de atatakai katei o tsukurimasu.",
+        "fr": "Nous créons un foyer chaleureux avec toute la famille."
+      }
+    ],
+    "n5_v_345": [
+      {
+        "jp": "次の角を右に曲がってください。",
+        "ka": "つぎ の かど を みぎ に まがって ください。",
+        "ro": "tsugi no kado o migi ni magatte kudasai.",
+        "fr": "Tournez à droite au prochain coin de rue s'il vous plaît."
+      }
+    ],
+    "n5_v_346": [
+      {
+        "jp": "家内と買い物に行きます。",
+        "ka": "かない と かいもの に いきます。",
+        "ro": "kanai to kaimono ni ikimasu.",
+        "fr": "Je vais faire les courses avec mon épouse."
+      }
+    ],
+    "n5_v_347": [
+      {
+        "jp": "新しい鞄に教科書を入れます。",
+        "ka": "あたらしい かばん に きょうかしょ を いれます。",
+        "ro": "atarashii kaban ni kyoukasho o iremasu.",
+        "fr": "Je mets les manuels scolaires dans mon nouveau sac."
+      }
+    ],
+    "n5_v_348": [
+      {
+        "jp": "花瓶にきれいな薔薇をいけました。",
+        "ka": "かびん に きれいな ばら を いけました。",
+        "ro": "kabin ni kireina bara o ikemashita.",
+        "fr": "J'ai arrangé de jolies roses dans le vase."
+      }
+    ],
+    "n5_v_349": [
+      {
+        "jp": "火曜日に日本語の授業があります。",
+        "ka": "かようび に にほんご の じゅぎょう が あります。",
+        "ro": "kayoubi ni nihongo no jugyou ga arimasu.",
+        "fr": "Il y a un cours de japonais le mardi."
+      }
+    ],
+    "n5_v_350": [
+      {
+        "jp": "運動をして体を健康にします。",
+        "ka": "うんどう を して からだ を けんこう に します。",
+        "ro": "undou o shite karada o kenkou ni shimasu.",
+        "fr": "Je fais de l'exercice pour garder mon corps en bonne santé."
+      }
+    ],
+    "n5_v_351": [
+      {
+        "jp": "図書館で本を借ります。",
+        "ka": "としょかん で ほん を かります。",
+        "ro": "toshokan de hon o karimasu.",
+        "fr": "J'emprunte un livre à la bibliothèque."
+      }
+    ],
+    "n5_v_352": [
+      {
+        "jp": "このカバンは軽くて便利です。",
+        "ka": "この カバン は かるくて べんり です。",
+        "ro": "kono kaban wa karukute benri desu.",
+        "fr": "Ce sac est léger et pratique."
+      }
+    ],
+    "n5_v_353": [
+      {
+        "jp": "今日の夕ご飯はカレーです。",
+        "ka": "きょう の ゆうごはん は カレー です。",
+        "ro": "kyou no yuugohan wa karee desu.",
+        "fr": "Le dîner d'aujourd'hui est du curry."
+      }
+    ],
+    "n5_v_354": [
+      {
+        "jp": "カレンダーに予定を書き込みます。",
+        "ka": "カレンダー に よてい を かきこみます。",
+        "ro": "karendaa ni yotei o kakikomasu.",
+        "fr": "Je note mon emploi du temps sur le calendrier."
+      }
+    ],
+    "n5_v_355": [
+      {
+        "jp": "橋の上から綺麗な川が見えます。",
+        "ka": "はし の うえ から きれいな かわ が みえます。",
+        "ro": "hashi no ue kara kireina kawa ga miemasu.",
+        "fr": "On voit une belle rivière depuis le pont."
+      }
+    ],
+    "n5_v_356": [
+      {
+        "jp": "公園に可愛い猫がいます。",
+        "ka": "こうえん に かわいい ねこ が います。",
+        "ro": "kouen ni kawaii neko ga imasu.",
+        "fr": "Il y a un chat mignon dans le parc."
+      }
+    ],
+    "n5_v_357": [
+      {
+        "jp": "毎日新しい漢字を勉強します。",
+        "ka": "まいにち あたらしい かんじ を べんきょう します。",
+        "ro": "mainichi atatarashii kanji o benkyou shimasu.",
+        "fr": "J'étudie de nouveaux kanjis tous les jours."
+      }
+    ],
+    "n5_v_358": [
+      {
+        "jp": "庭に大きな木が植えてあります。",
+        "ka": "にわ に おおきな き が うえて あります。",
+        "ro": "niwa ni ookina ki ga uete arimasu.",
+        "fr": "Un grand arbre est planté dans le jardin."
+      }
+    ],
+    "n5_v_359": [
+      {
+        "jp": "彼女は黄色い花が好きです。",
+        "ka": "かのじょ は きいろい はな が すき です。",
+        "ro": "kanojo wa kiiroi hana ga suki desu.",
+        "fr": "Elle aime les fleurs jaunes."
+      }
+    ],
+    "n5_v_360": [
+      {
+        "jp": "部屋を出るとき、電気が消えます。",
+        "ka": "へや を でる とき、 でんき が きえます。",
+        "ro": "heya o deru toki, denki ga kiemasu.",
+        "fr": "En sortant de la pièce, la lumière s'éteint."
+      }
+    ],
+    "n5_v_361": [
+      {
+        "jp": "先生に分からないことを聞きます。",
+        "ka": "せんせい に わからない こと を ききます。",
+        "ro": "sensei ni wakaranai koto o kikimasu.",
+        "fr": "Je demande au professeur ce que je ne comprends pas."
+      }
+    ],
+    "n5_v_362": [
+      {
+        "jp": "北海道は日本の一番北にあります。",
+        "ka": "ほっかいどう は にほん の いちばん きた に あります。",
+        "ro": "hokkaidou wa nihon no ichiban kita ni arimasu.",
+        "fr": "Hokkaidō se trouve à l'extrême nord du Japon."
+      }
+    ],
+    "n5_v_363": [
+      {
+        "jp": "趣味でギターを弾きます。",
+        "ka": "しゅみ で ギター を ひきます。",
+        "ro": "shumi de gitaa o hikimasu.",
+        "fr": "Je joue de la guitare par loisir."
+      }
+    ],
+    "n5_v_364": [
+      {
+        "jp": "雨の後で靴が汚くなりました。",
+        "ka": "あめ の あと で くつ が きたなく なりました。",
+        "ro": "ame no ato de kutsu ga kitanaku narimashita.",
+        "fr": "Mes chaussures sont devenues sales après la pluie."
+      }
+    ],
+    "n5_v_365": [
+      {
+        "jp": "喫茶店でコーヒーを飲みます。",
+        "ka": "きっさてん で コーヒー を のみます。",
+        "ro": "kissaten de koohii o nomimasu.",
+        "fr": "Je bois du café dans un salon de thé."
+      }
+    ],
+    "n5_v_366": [
+      {
+        "jp": "手紙に切手を貼ります。",
+        "ka": "てがみ に きって を はります。",
+        "ro": "tegami ni kitte o harimasu.",
+        "fr": "Je colle un timbre sur la lettre."
+      }
+    ],
+    "n5_v_367": [
+      {
+        "jp": "駅で電車の切符を買います。",
+        "ka": "えき で でんしゃ の きっぷ を かいます。",
+        "ro": "eki de densha no kippu o kaimasu.",
+        "fr": "J'achète un billet de train à la gare."
+      }
+    ],
+    "n5_v_368": [
+      {
+        "jp": "昨日は友達と映画を見ました。",
+        "ka": "きのう は ともだち と えいが を みました。",
+        "ro": "kinou wa tomodachi to eiga o mimashita.",
+        "fr": "J'ai regardé un film avec un ami hier."
+      }
+    ],
+    "n5_v_369": [
+      {
+        "jp": "りんごが九つあります。",
+        "ka": "りんご が ここのつ あります。",
+        "ro": "ringo ga kokonotsu arimasu.",
+        "fr": "Il y a neuf pommes."
+      }
+    ],
+    "n5_v_370": [
+      {
+        "jp": "スーパーで牛肉を買いました。",
+        "ka": "スーパー で ぎゅうにく を かいました。",
+        "ro": "suupaa de gyuuniku o kaimashita.",
+        "fr": "J'ai acheté de la viande de bœuf au supermarché."
+      }
+    ],
+    "n5_v_371": [
+      {
+        "jp": "毎朝グラス一杯の牛乳を飲みます。",
+        "ka": "まいあさ グラス いっぱい の ぎゅうにゅう を のみます。",
+        "ro": "maiasa gurasu ippai no gyuunyuu o nomimasu.",
+        "fr": "Je bois un verre de lait tous les matins."
+      }
+    ],
+    "n5_v_372": [
+      {
+        "jp": "今日はとても良い天気です。",
+        "ka": "きょう は とても よい てんき です。",
+        "ro": "kyou wa totemo yoi tenki desu.",
+        "fr": "Il fait très beau aujourd'hui."
+      }
+    ],
+    "n5_v_373": [
+      {
+        "jp": "学生たちが教室で勉強しています。",
+        "ka": "がくせいたち が きょうしつ で べんきょう して います。",
+        "ro": "gakuseitachi ga kyoushitsu de benkyou shite imasu.",
+        "fr": "Les étudiants étudient dans la salle de classe."
+      }
+    ],
+    "n5_v_374": [
+      {
+        "jp": "私には兄弟が三人います。",
+        "ka": "わたし に は きょうだい が さんにん います。",
+        "ro": "watashi ni wa kyoudai ga sannin imasu.",
+        "fr": "J'ai trois frères et sœurs."
+      }
+    ],
+    "n5_v_375": [
+      {
+        "jp": "去年の夏に日本へ旅行しました。",
+        "ka": "きょねん の なつ に にほん へ りょこう しました。",
+        "ro": "kyonen no natsu ni nihon he ryokou shimashita.",
+        "fr": "J'ai voyagé au Japon l'été dernier."
+      }
+    ],
+    "n5_v_376": [
+      {
+        "jp": "ナイフでパンを切ります。",
+        "ka": "ナイフ で パン を きります。",
+        "ro": "naifu de pan o kirimasu.",
+        "fr": "Je coupe le pain avec un couteau."
+      }
+    ],
+    "n5_v_377": [
+      {
+        "jp": "新しいセーターを着ます。",
+        "ka": "あたらしい セーター を きます。",
+        "ro": "atarashii seetaa o kimasu.",
+        "fr": "Je mets un nouveau pull."
+      }
+    ],
+    "n5_v_378": [
+      {
+        "jp": "この部屋はとてもきれいです。",
+        "ka": "この へや は とても きれい です。",
+        "ro": "kono heya wa totemo kirei desu.",
+        "fr": "Cette pièce est très propre / jolie."
+      }
+    ],
+    "n5_v_379": [
+      {
+        "jp": "駅から家まで一キロあります。",
+        "ka": "えき から うち まで いちキロ あります。",
+        "ro": "eki kara uchi made ichikiro arimasu.",
+        "fr": "Il y a un kilomètre de la gare à la maison."
+      }
+    ],
+    "n5_v_380": [
+      {
+        "jp": "お金を下ろしに銀行へ行きます。",
+        "ka": "おかね を おろし に ぎんこう へ いきます。",
+        "ro": "okane o oroshi ni ginkou he ikimasu.",
+        "fr": "Je vais à la banque pour retirer de l'argent."
+      }
+    ],
+    "n5_v_381": [
+      {
+        "jp": "金曜日にテストがあります。",
+        "ka": "きんようび に テスト が あります。",
+        "ro": "kinyoubi ni tesuto ga arimasu.",
+        "fr": "Il y a un test vendredi."
+      }
+    ],
+    "n5_v_382": [
+      {
+        "jp": "九人の学生が教室にいます。",
+        "ka": "きゅうにん の がくせい が きょうしつ に います。",
+        "ro": "kyuunin no gakusei ga kyoushitsu ni imasu.",
+        "fr": "Il y a neuf étudiants dans la salle de classe."
+      }
+    ],
+    "n5_v_383": [
+      {
+        "jp": "食後に薬を飲みます。",
+        "ka": "しょくご に くすり を のみます。",
+        "ro": "shokugo ni kusuri o nomimasu.",
+        "fr": "Je prends un médicament après le repas."
+      }
+    ],
+    "n5_v_384": [
+      {
+        "jp": "毎日新鮮な果物を食べます。",
+        "ka": "まいにち しんせんな くだもの を たべます。",
+        "ro": "mainichi shinsenna kudamono o tabemasu.",
+        "fr": "Je mange des fruits frais tous les jours."
+      }
+    ],
+    "n5_v_385": [
+      {
+        "jp": "口を開けてください。",
+        "ka": "くち を あけて ください。",
+        "ro": "kuchi o akete kudasai.",
+        "fr": "Ouvrez la bouche s'il vous plaît."
+      }
+    ],
+    "n5_v_386": [
+      {
+        "jp": "玄関で新しい靴を履きます。",
+        "ka": "げんかん で あたらしい くつ を はきます。",
+        "ro": "genkan de atatarashii kutsu o hakimasu.",
+        "fr": "Je mets de nouvelles chaussures dans l'entrée."
+      }
+    ],
+    "n5_v_387": [
+      {
+        "jp": "冬は温かい靴下を穿きます。",
+        "ka": "ふゆ は あたたかい くつした を はきます。",
+        "ro": "fuyu wa atatakai kutsushita o hakimasu.",
+        "fr": "Je porte des chaussettes chaudes en hiver."
+      }
+    ],
+    "n5_v_388": [
+      {
+        "jp": "夏休みに自分の国へ帰ります。",
+        "ka": "なつやすみ に じぶん の くに へ かえります。",
+        "ro": "natsuyasumi ni jibun no kuni he kaerimasu.",
+        "fr": "Je rentre dans mon pays pendant les vacances d'été."
+      }
+    ],
+    "n5_v_389": [
+      {
+        "jp": "今日は一日中曇りです。",
+        "ka": "きょう は いち日じゅう くもり です。",
+        "ro": "kyou wa ichinichijuu kumori desu.",
+        "fr": "Le temps est nuageux toute la journée aujourd'hui."
+      }
+    ],
+    "n5_v_390": [
+      {
+        "jp": "空がだんだん曇ってきました。",
+        "ka": "そら が だんだん くもって きました。",
+        "ro": "sora ga dandan kumotte kimashita.",
+        "fr": "Le ciel est progressivement devenu nuageux."
+      }
+    ],
+    "n5_v_391": [
+      {
+        "jp": "夜道は暗いので気をつけてください。",
+        "ka": "よみち は くらい ので きをつけて ください。",
+        "ro": "yomichi wa kurai node kiwo tsukete kudasai.",
+        "fr": "Faites attention car les chemins la nuit sont sombres."
+      }
+    ],
+    "n5_v_392": [
+      {
+        "jp": "クラスの友達と一緒に勉強します。",
+        "ka": "クラス の ともだち と いっしょ に べんきょう します。",
+        "ro": "kurasu no tomodachi to issho ni benkyou shimasu.",
+        "fr": "J'étudie avec mes amis de la classe."
+      }
+    ],
+    "n5_v_393": [
+      {
+        "jp": "父は赤い車を持っています。",
+        "ka": "ちち は あかい くるま を もって います。",
+        "ro": "chichi wa akai kuruma o motte imasu.",
+        "fr": "Mon père possède une voiture rouge."
+      }
+    ],
+    "n5_v_394": [
+      {
+        "jp": "夜空に黒い猫が見えました。",
+        "ka": "よぞら に くろい ねこ が みえました。",
+        "ro": "yozora ni kuroi neko ga miemashita.",
+        "fr": "On a pu voir un chat noir dans le ciel nocturne."
+      }
+    ],
+    "n5_v_395": [
+      {
+        "jp": "道で警官に道を聞きました。",
+        "ka": "みち で けいかん に みち を ききました。",
+        "ro": "michi de keikan ni michi o kikimashita.",
+        "fr": "J'ai demandé mon chemin à un policier dans la rue."
+      }
+    ],
+    "n5_v_396": [
+      {
+        "jp": "今朝は早く起きてジョギングをしました。",
+        "ka": "けさ は はやく おきて ジョギング を しました。",
+        "ro": "kesa wa hayaku okite jogingu o shimashita.",
+        "fr": "Je me suis levé tôt ce matin pour faire du jogging."
+      }
+    ],
+    "n5_v_397": [
+      {
+        "jp": "部屋を出るとき、電気を消します。",
+        "ka": "へや を でる とき、 でんき を けします。",
+        "ro": "heya o deru toki, denki o keshimasu.",
+        "fr": "J'éteins la lumière en quittant la pièce."
+      }
+    ],
+    "n5_v_398": [
+      {
+        "jp": "この料理は結構美味しいです。",
+        "ka": "この りょうり は けっこう おいしい です。",
+        "ro": "kono ryouri wa kekkou oishii desu.",
+        "fr": "Ce plat est plutôt délicieux."
+      }
+    ],
+    "n5_v_399": [
+      {
+        "jp": "来月、友達が結婚します。",
+        "ka": "らいげつ、 ともだち が けっこん します。",
+        "ro": "raigetsu, tomodachi ga kekkon shimasu.",
+        "fr": "Un ami se marie le mois prochain."
+      }
+    ],
+    "n5_v_400": [
+      {
+        "jp": "月曜日は仕事が忙しいです。",
+        "ka": "げつようび は しごと が いそがしい です。",
+        "ro": "getsuyoubi wa shigoto ga isogashii desu.",
+        "fr": "Le travail est chargé le lundi."
+      }
+    ],
+    "n5_v_401": [
+      {
+        "jp": "玄関で靴を脱ぎます。",
+        "ka": "げんかん で くつ を ぬぎます。",
+        "ro": "genkan de kutsu o nugimasu.",
+        "fr": "Je retire mes chaussures dans l'entrée."
+      }
+    ],
+    "n5_v_402": [
+      {
+        "jp": "毎日運動しているので元気です。",
+        "ka": "まいにち うんどう して いる ので げんき です。",
+        "ro": "mainichi undou shite iru node genki desu.",
+        "fr": "Je suis en forme car je fais de l'exercice tous les jours."
+      }
+    ],
+    "n5_v_403": [
+      {
+        "jp": "休日に子供と公園で遊びます。",
+        "ka": "きゅうじつ に こども と こうえん で あそびます。",
+        "ro": "kyuujitsu ni kodomo to kouen de asobimasu.",
+        "fr": "Je joue avec les enfants dans le parc pendant les jours de repos."
+      }
+    ],
+    "n5_v_404": [
+      {
+        "jp": "交差点を渡るときは気をつけます。",
+        "ka": "こうさてん を わたる とき は きをつけます。",
+        "ro": "kousaten o wataru toki wa kiwotsukemasu.",
+        "fr": "Je fais attention lorsque je traverse le carrefour."
+      }
+    ],
+    "n5_v_405": [
+      {
+        "jp": "午後にレモンを入れた紅茶を飲みます。",
+        "ka": "ごご に レモン を いれた こうちゃ を のみます。",
+        "ro": "gogo ni remon o ireta koucha o nomimasu.",
+        "fr": "Je bois du thé noir avec du citron l'après-midi."
+      }
+    ],
+    "n5_v_406": [
+      {
+        "jp": "道が分からないので交番で聞きます。",
+        "ka": "みち が わからない ので こうばん で ききます。",
+        "ro": "michi ga wakaranai node kouban de kikimasu.",
+        "fr": "Je ne connais pas le chemin, alors je demande au poste de police."
+      }
+    ],
+    "n5_v_407": [
+      {
+        "jp": "彼女はきれいな声で歌います。",
+        "ka": "かのじょ は きれいな こえ で うたいます。",
+        "ro": "kanojo wa kireina koe de utaimasu.",
+        "fr": "Elle chante d'une belle voix."
+      }
+    ],
+    "n5_v_408": [
+      {
+        "jp": "寒いので暖かいコートを着ます。",
+        "ka": "さむい ので あたたかい コート を きます。",
+        "ro": "samui node atatakai kooto o kimasu.",
+        "fr": "Je mets un manteau chaud car il fait froid."
+      }
+    ],
+    "n5_v_409": [
+      {
+        "jp": "毎朝目を覚ますためにコーヒーを飲みます。",
+        "ka": "まいあさ めをさます ため に コーヒー を のみます。",
+        "ro": "maiasa memosamasu tame ni koohii o nomimasu.",
+        "fr": "Je bois du café tous les matins pour me réveiller."
+      }
+    ],
+    "n5_v_410": [
+      {
+        "jp": "ここに名前と住所を書いてください。",
+        "ka": "ここ に なまえ と じゅうしょ を かいて ください。",
+        "ro": "koko ni namae to juusho o kaite kudasai.",
+        "fr": "Veuillez écrire votre nom et votre adresse ici."
+      }
+    ],
+    "n5_v_411": [
+      {
+        "jp": "午後に会議があります。",
+        "ka": "ごご に かいぎ が あります。",
+        "ro": "gogo ni kaigi ga arimasu.",
+        "fr": "Il y a une réunion cet après-midi."
+      }
+    ],
+    "n5_v_412": [
+      {
+        "jp": "九日に東京へ出発します。",
+        "ka": "ここのか に とうきょう へ しゅっぱつ します。",
+        "ro": "kokonoka ni toukyou ni shuppatsu shimasu.",
+        "fr": "Je pars pour Tokyo le 9."
+      }
+    ],
+    "n5_v_413": [
+      {
+        "jp": "りんごを九つ買いました。",
+        "ka": "りんご を ここのつ かいました。",
+        "ro": "ringo o kokonotsu kaimashita.",
+        "fr": "J'ai acheté neuf pommes."
+      }
+    ],
+    "n5_v_414": [
+      {
+        "jp": "午前に日本語の勉強をします。",
+        "ka": "ごぜん に にほんご の べんきょう を します。",
+        "ro": "gozen ni nihongo no benkyou o shimasu.",
+        "fr": "J'étudie le japonais le matin."
+      }
+    ],
+    "n5_v_415": [
+      {
+        "jp": "先生の質問に答えます。",
+        "ka": "せんせい の しつもん に こたえます。",
+        "ro": "sensei no shitsumon ni kotaemasu.",
+        "fr": "Je réponds à la question du professeur."
+      }
+    ],
+    "n5_v_416": [
+      {
+        "jp": "どうぞこちらへお入りください。",
+        "ka": "どうぞ こちら へ おはいり ください。",
+        "ro": "douzo kochira he ohairi kudasai.",
+        "fr": "Veuillez entrer par ici."
+      }
+    ],
+    "n5_v_417": [
+      {
+        "jp": "コップに水を入れます。",
+        "ka": "コップ に みず を いれます。",
+        "ro": "koppu ni mizu o iremasu.",
+        "fr": "Je mets de l'eau dans le verre."
+      }
+    ],
+    "n5_v_418": [
+      {
+        "jp": "今年は日本へ行きたいです。",
+        "ka": "ことし は にほん へ いきたい です。",
+        "ro": "kotoshi wa nihon he ikitai desu.",
+        "fr": "Je veux aller au Japon cette année."
+      }
+    ],
+    "n5_v_419": [
+      {
+        "jp": "外国の言葉を覚えます。",
+        "ka": "がいこく の ことば を おぼえます。",
+        "ro": "gaikoku no kotoba o oboemasu.",
+        "fr": "J'apprends les mots d'une langue étrangère."
+      }
+    ],
+    "n5_v_420": [
+      {
+        "jp": "公園で子供たちが遊んでいます。",
+        "ka": "こうえん で こどもたち が あそんで います。",
+        "ro": "kouen ni kodomotachi ga asonde imasu.",
+        "fr": "Des enfants jouent dans le parc."
+      }
+    ],
+    "n5_v_421": [
+      {
+        "jp": "この本はとても面白いです。",
+        "ka": "この ほん は とても おもしろい です。",
+        "ro": "kono hon wa totemo omoshiroi desu.",
+        "fr": "Ce livre est très intéressant."
+      }
+    ],
+    "n5_v_422": [
+      {
+        "jp": "毎朝ご飯を食べます。",
+        "ka": "まいあさ ごはん を たべます。",
+        "ro": "maiasa gohan o tabemasu.",
+        "fr": "Je mange du riz / un repas tous les matins."
+      }
+    ],
+    "n5_v_423": [
+      {
+        "jp": "書類をコピーしてください。",
+        "ka": "しょるい を コピー して ください。",
+        "ro": "shorui o kopii shite kudasai.",
+        "fr": "Veuillez photocopier les documents."
+      }
+    ],
+    "n5_v_424": [
+      {
+        "jp": "道が分からなくて困っています。",
+        "ka": "みち が わからない で こまって います。",
+        "ro": "michi ga wakaranakute komatte imasu.",
+        "fr": "Je suis embarrassé car je ne connais pas le chemin."
+      }
+    ],
+    "n5_v_425": [
+      {
+        "jp": "これは私のペンです。",
+        "ka": "これ は わたし の ペン です。",
+        "ro": "kore wa watashi no pen desu.",
+        "fr": "Ceci est mon stylo."
+      }
+    ],
+    "n5_v_426": [
+      {
+        "jp": "今月はテストがたくさんあります。",
+        "ka": "こんげつ は テスト が たくさん あります。",
+        "ro": "kongetsu wa tesuto ga takusan arimasu.",
+        "fr": "Il y a beaucoup de tests ce mois-ci."
+      }
+    ],
+    "n5_v_427": [
+      {
+        "jp": "今週は忙しいです。",
+        "ka": "こんしゅう は いそがしい です。",
+        "ro": "konshuu wa isogashii desu.",
+        "fr": "Je suis occupé cette semaine."
+      }
+    ],
+    "n5_v_428": [
+      {
+        "jp": "こんな問題は簡単です。",
+        "ka": "こんな もんだい は かんたん です。",
+        "ro": "konna mondai wa kantan desu.",
+        "fr": "Ce genre de problème est facile."
+      }
+    ],
+    "n5_v_429": [
+      {
+        "jp": "今晩一緒に食事をしませんか。",
+        "ka": "こんばん いっしょ に しょくじ を しませんか。",
+        "ro": "konban issho ni shokuji o shimasen ka.",
+        "fr": "Voudriez-vous qu'on prenne un repas ensemble ce soir ?"
+      }
+    ],
+    "n5_v_430": [
+      {
+        "jp": "さあ、出かけましょう。",
+        "ka": "さあ、 でかけましょう。",
+        "ro": "saa, dekakemashou.",
+        "fr": "Allons-y, partons !"
+      }
+    ],
+    "n5_v_431": [
+      {
+        "jp": "財布の中に現金が入っています。",
+        "ka": "さいふ の なか に げんきん が はいって います。",
+        "ro": "saifu no naka ni genkin ga haitte imasu.",
+        "fr": "Il y a de l'argent liquide dans le portefeuille."
+      }
+    ],
+    "n5_v_432": [
+      {
+        "jp": "川で魚を釣ります。",
+        "ka": "かわ で さかな を つります。",
+        "ro": "kawa de sakana o tsurimasu.",
+        "fr": "Je pêche du poisson dans la rivière."
+      }
+    ],
+    "n5_v_433": [
+      {
+        "jp": "少し先を歩いてください。",
+        "ka": "すこし さき を あるいて ください。",
+        "ro": "sukoshi saki o aruite kudasai.",
+        "fr": "Veuillez marcher un peu devant."
+      }
+    ],
+    "n5_v_434": [
+      {
+        "jp": "庭の桜の花が咲きました。",
+        "ka": "にわ の さくら の はな が さきました。",
+        "ro": "niwa no sakura no hana ga sakimashita.",
+        "fr": "Les fleurs de cerisier du jardin ont éclos."
+      }
+    ],
+    "n5_v_435": [
+      {
+        "jp": "日本語で作文を書きます。",
+        "ka": "にほんご で さくぶん を かきます。",
+        "ro": "nihongo de sakubun o kakimasu.",
+        "fr": "J'écris une rédaction en japonais."
+      }
+    ],
+    "n5_v_436": [
+      {
+        "jp": "雨が降ってきたので傘をさします。",
+        "ka": "あめ が ふって きた ので かさ を さします。",
+        "ro": "ame ga futte kita node kasa o sashimasu.",
+        "fr": "Je prends/ouvre un parapluie car il a commencé à pleuvoir."
+      }
+    ],
+    "n5_v_437": [
+      {
+        "jp": "図書館で雑誌を読みます。",
+        "ka": "としょかん で ざっし を よみます。",
+        "ro": "toshokan de zasshi o yomimasu.",
+        "fr": "Je lis des magazines à la bibliothèque."
+      }
+    ],
+    "n5_v_438": [
+      {
+        "jp": "コーヒーに砂糖を入れます。",
+        "ka": "コーヒー に さとう を いれます。",
+        "ro": "koohii ni satou o iremasu.",
+        "fr": "Je mets du sucre dans le café."
+      }
+    ],
+    "n5_v_439": [
+      {
+        "jp": "冬はとても寒いです。",
+        "ka": "ふゆ は とても さむい です。",
+        "ro": "fuyu wa totemo samui desu.",
+        "fr": "L'hiver est très froid."
+      }
+    ],
+    "n5_v_440": [
+      {
+        "jp": "朝の空気はさわやかです。",
+        "ka": "あさ の くうき は さわやか です。",
+        "ro": "asa no kuuki wa sawayaka desu.",
+        "fr": "L'air du matin est frais et rafraîchissant."
+      }
+    ],
+    "n5_v_441": [
+      {
+        "jp": "机の上に本が三冊あります。",
+        "ka": "つくえ の うえ に ほん が さんさつ あります。",
+        "ro": "tsukue no ue ni hon ga sansatsu arimasu.",
+        "fr": "Il y a trois livres sur le bureau."
+      }
+    ],
+    "n5_v_442": [
+      {
+        "jp": "毎朝、公園を散歩します。",
+        "ka": "まいあさ、 こうえん を さんぽ します。",
+        "ro": "maiasa, kouen o sanpo shimasu.",
+        "fr": "Je me promène dans le parc tous les matins."
+      }
+    ],
+    "n5_v_443": [
+      {
+        "jp": "四人の友達と映画を見ました。",
+        "ka": "よにん の ともだち と えいが を みました。",
+        "ro": "yonin no tomodachi to eiga o mimashita.",
+        "fr": "J'ai regardé un film avec quatre amis."
+      }
+    ],
+    "n5_v_444": [
+      {
+        "jp": "スープに少し塩を入れます。",
+        "ka": "スープ に すこし しお を いれます。",
+        "ro": "suupu ni sukoshi shio o iremasu.",
+        "fr": "Je mets un peu de sel dans la soupe."
+      }
+    ],
+    "n5_v_445": [
+      {
+        "jp": "日本の生活に慣れてきました。",
+        "ka": "にほん の せいかつ に なれて きました。",
+        "ro": "nihon no seikatsu ni narete kimashita.",
+        "fr": "Je commence à m'habituer à la vie au Japon."
+      }
+    ],
+    "n5_v_446": [
+      {
+        "jp": "毎日二時間日本語を勉強します。",
+        "ka": "まいにち にじかん にほんご を べんきょう します。",
+        "ro": "mainichi nijikan nihongo o benkyou shimasu.",
+        "fr": "J'étudie le japonais deux heures par jour."
+      }
+    ],
+    "n5_v_447": [
+      {
+        "jp": "月曜日から金曜日まで仕事をします。",
+        "ka": "げつようび から きんようび まで しごと を します。",
+        "ro": "getsuyoubi kara kinyoubi made shigoto o shimasu.",
+        "fr": "Je travaille du lundi au vendredi."
+      }
+    ],
+    "n5_v_448": [
+      {
+        "jp": "分からない言葉を辞書で調べます。",
+        "ka": "わからない ことば を じしょ で しらべます。",
+        "ro": "wakaranai kotoba o jisho de shiramemasu.",
+        "fr": "Je cherche les mots que je ne comprends pas dans le dictionnaire."
+      }
+    ],
+    "n5_v_449": [
+      {
+        "jp": "夜の図書館はとても静かです。",
+        "ka": "よる の としょかん は とても しずか です。",
+        "ro": "yoru no toshokan wa totemo shizuka desu.",
+        "fr": "La bibliothèque le soir est très calme."
+      }
+    ],
+    "n5_v_450": [
+      {
+        "jp": "机の下に猫がいます。",
+        "ka": "つくえ の した に ねこ が います。",
+        "ro": "tsukue no shita ni neko ga imasu.",
+        "fr": "Il y a un chat sous le bureau."
+      }
+    ],
+    "n5_v_451": [
+      {
+        "jp": "先生に質問があります。",
+        "ka": "せんせい に しつもん が あります。",
+        "ro": "sensei ni shitsumon ga arimasu.",
+        "fr": "J'ai une question à poser au professeur."
+      }
+    ],
+    "n5_v_452": [
+      {
+        "jp": "週末は自転車で公園に行きます。",
+        "ka": "しゅうまつ は じてんしゃ で こうえん に いきます。",
+        "ro": "shuumatsu wa jitensha de kouen ni ikimasu.",
+        "fr": "Je vais au parc à vélo le week-end."
+      }
+    ],
+    "n5_v_453": [
+      {
+        "jp": "道路にたくさんの自動車が走っています。",
+        "ka": "どうろ に たくさん の じどうしゃ が は走って います。",
+        "ro": "douro ni takusan no jidousha ga hashitte imasu.",
+        "fr": "Beaucoup d'automobiles circulent sur la route."
+      }
+    ],
+    "n5_v_454": [
+      {
+        "jp": "昔の人も動物もいつか死にます。",
+        "ka": "むかし の ひと も どうぶつ も いつか しにます。",
+        "ro": "mukashi no hito mo doubutsu mo itsuka shinimasu.",
+        "fr": "Autant les hommes que les animaux finissent par mourir un jour."
+      }
+    ],
+    "n5_v_455": [
+      {
+        "jp": "この漢字の正しい書き方を教えてください。",
+        "ka": "この かんじ の ただしき かきかた を おしえて ください。",
+        "ro": "kono kanji no tadashii kakikata o oshiete kudasai.",
+        "fr": "Veuillez m'enseigner la bonne façon d'écrire ce kanji."
+      }
+    ],
+    "n5_v_456": [
+      {
+        "jp": "自分のことは自分でしなければなりません。",
+        "ka": "じぶん の こと は じぶん で しなければ なりません。",
+        "ro": "jibun no koto wa jibun de shinakereba narimasen.",
+        "fr": "Il faut faire soi-même ce qui nous concerne."
+      }
+    ],
+    "n5_v_457": [
+      {
+        "jp": "午後九時にデパートが閉まります。",
+        "ka": "ごご くじ に デパート が しまります。",
+        "ro": "gogo kuji ni depaato ga shimarimasu.",
+        "fr": "Le grand magasin ferme à 21h00."
+      }
+    ],
+    "n5_v_458": [
+      {
+        "jp": "ネクタイをしっかりと締めます。",
+        "ka": "ネクタイ を しっかり と しめます。",
+        "ro": "nekutai o sikkari to shimemasu.",
+        "fr": "Je serre bien ma cravate."
+      }
+    ],
+    "n5_v_459": [
+      {
+        "jp": "じゃあ、また明日会いましょう。",
+        "ka": "じゃあ、 また あした あいましょう。",
+        "ro": "jaa, mata ashita aimashou.",
+        "fr": "Alors, on se revoit demain !"
+      }
+    ],
+    "n5_v_460": [
+      {
+        "jp": "家族と一緒に写真を撮りました。",
+        "ka": "かぞく と いっしょ に しゃしん を とりました。",
+        "ro": "kazoku to issho ni shashin o torimashita.",
+        "fr": "J'ai pris une photo avec ma famille."
+      }
+    ],
+    "n5_v_461": [
+      {
+        "jp": "白いシャツを着ています。",
+        "ka": "しろい シャツ を きて います。",
+        "ro": "shiroi syatsu o kite imasu.",
+        "fr": "Je porte une chemise blanche."
+      }
+    ],
+    "n5_v_462": [
+      {
+        "jp": "スポーツの後にシャワーを浴びます。",
+        "ka": "スポーツ の あと に シャワー を あびます。",
+        "ro": "supootsu no ato ni syawaa o abimasu.",
+        "fr": "Je prends une douche après le sport."
+      }
+    ],
+    "n5_v_463": [
+      {
+        "jp": "クラスに十人の学生がいます。",
+        "ka": "クラス に じゅうにん の がくせい が います。",
+        "ro": "kurasu ni juunin no gakusei ga imasu.",
+        "fr": "Il y a dix étudiants dans la classe."
+      }
+    ],
+    "n5_v_464": [
+      {
+        "jp": "今日の授業はとても面白かったです。",
+        "ka": "きょう の じゅぎょう は とても おもしろかった です。",
+        "ro": "kyou no jugyou wa totemo omoshirokatta desu.",
+        "fr": "Le cours d'aujourd'hui était très intéressant."
+      }
+    ],
+    "n5_v_465": [
+      {
+        "jp": "晩御飯の後に宿題をします。",
+        "ka": "ばんごはん の あと に しゅくだい を します。",
+        "ro": "bangohan no ato ni shukudai o shimasu.",
+        "fr": "Je fais mes devoirs après le dîner."
+      }
+    ],
+    "n5_v_466": [
+      {
+        "jp": "彼女は料理がとても上手です。",
+        "ka": "かのじょ は りょうり が とても じょうず です。",
+        "ro": "kanojo wa ryouri ga totemo jouzu desu.",
+        "fr": "Elle est très douée en cuisine."
+      }
+    ],
+    "n5_v_467": [
+      {
+        "jp": "このカバンは丈夫で長持ちします。",
+        "ka": "この カバン は じょうぶ で ながもち します。",
+        "ro": "kono kaban wa joubu de nagamochi shimasu.",
+        "fr": "Ce sac est solide et dure longtemps."
+      }
+    ],
+    "n5_v_468": [
+      {
+        "jp": "寿司に醤油をつけて食べます。",
+        "ka": "すし に しょうゆ を つけて たべます。",
+        "ro": "sushi ni shouyu o tsukete tabemasu.",
+        "fr": "Je mange les sushis en les trempant dans la sauce soja."
+      }
+    ],
+    "n5_v_469": [
+      {
+        "jp": "お昼ご飯は会社の食堂で食べます。",
+        "ka": "おひるごはん は かいしゃ の しょくどう で たべます。",
+        "ro": "ohirugohan wa kaisha no shokudou de tabemasu.",
+        "fr": "Je prends mon déjeuner à la cantine de l'entreprise."
+      }
+    ],
+    "n5_v_470": [
+      {
+        "jp": "彼の名前を知っていますか。",
+        "ka": "かれ の なまえ を しって います か。",
+        "ro": "kare no namae o shitte imasu ka.",
+        "fr": "Connais-tu son nom ?"
+      }
+    ],
+    "n5_v_471": [
+      {
+        "jp": "白い犬が走っています。",
+        "ka": "しろい いぬ が はしって います。",
+        "ro": "shiroi inu ga hashitte imasu.",
+        "fr": "Un chien blanc court."
+      }
+    ],
+    "n5_v_472": [
+      {
+        "jp": "毎朝新聞を読みます。",
+        "ka": "まいあさ しんぶん を よみます。",
+        "ro": "maiasa shinbun o yomimasu.",
+        "fr": "Je lis le journal tous les matins."
+      }
+    ],
+    "n5_v_473": [
+      {
+        "jp": "水曜日に日本語のテストがあります。",
+        "ka": "すいようび に にほんご の テスト が あります。",
+        "ro": "suiyoubi ni nihongo no tesuto ga arimasu.",
+        "fr": "Il y a un test de japonais mercredi."
+      }
+    ],
+    "n5_v_474": [
+      {
+        "jp": "ここでタバコを吸わないでください。",
+        "ka": "ここ で タバコ を すわない で ください。",
+        "ro": "koko de tabako o suwanai de kudasai.",
+        "fr": "Veuillez ne pas fumer de cigarette ici."
+      }
+    ],
+    "n5_v_475": [
+      {
+        "jp": "彼女は白いスカートを穿いています。",
+        "ka": "かのじょ は しろい スカート を はいて います。",
+        "ro": "kanojo wa shiroi sukaato o haite imasu.",
+        "fr": "Elle porte une jupe blanche."
+      }
+    ],
+    "n5_v_476": [
+      {
+        "jp": "私は猫が好きです。",
+        "ka": "わたし は ねこ が すき です。",
+        "ro": "watashi wa neko ga suki desu.",
+        "fr": "J'aime les chats."
+      }
+    ],
+    "n5_v_477": [
+      {
+        "jp": "今年は雨の日が少ないです。",
+        "ka": "ことし は あめ の ひ が すくない です。",
+        "ro": "kotoshi wa ame no hi ga sukunai desu.",
+        "fr": "Il y a peu de jours de pluie cette année."
+      }
+    ],
+    "n5_v_478": [
+      {
+        "jp": "宿題をすぐに終わらせます。",
+        "ka": "しゅくだい を すぐに おわらせます。",
+        "ro": "shukudai o suguni owarasemasu.",
+        "fr": "Je finis mes devoirs tout de suite."
+      }
+    ],
+    "n5_v_479": [
+      {
+        "jp": "水を少し飲んでください。",
+        "ka": "みず を すこし のんで ください。",
+        "ro": "mizu o sukoshi nonde kudasai.",
+        "fr": "Veuillez boire un peu d'eau."
+      }
+    ],
+    "n5_v_480": [
+      {
+        "jp": "秋の夜は涼しいです。",
+        "ka": "あき の よる は すずしい です。",
+        "ro": "aki no yoru wa suzushii desu.",
+        "fr": "Les nuits d'automne sont fraîches."
+      }
+    ],
+    "n5_v_481": [
+      {
+        "jp": "冬は部屋でストーブを使います。",
+        "ka": "ふゆ は へや で ストーブ を つかいます。",
+        "ro": "fuyu wa heya de sutoobu o tsukaimasu.",
+        "fr": "J'utilise un poêle dans la pièce en hiver."
+      }
+    ],
+    "n5_v_482": [
+      {
+        "jp": "スプーンでスープを飲みます。",
+        "ka": "スプーン で スープ を のみます。",
+        "ro": "supuun de suupu o nomimasu.",
+        "fr": "Je bois de la soupe avec une cuillère."
+      }
+    ],
+    "n5_v_483": [
+      {
+        "jp": "週末にスポーツをします。",
+        "ka": "しゅうまつ に スポーツ を します。",
+        "ro": "shuumatsu ni supootsu o shimasu.",
+        "fr": "Je fais du sport le week-end."
+      }
+    ],
+    "n5_v_484": [
+      {
+        "jp": "新しいズボンを買いました。",
+        "ka": "あたらしい ズボン を かいました。",
+        "ro": "atarashii zubon o kaimashita.",
+        "fr": "J'ai acheté un nouveau pantalon."
+      }
+    ],
+    "n5_v_485": [
+      {
+        "jp": "私は東京に住んでいます。",
+        "ka": "わたし は とうきょう に すんで います。",
+        "ro": "watashi wa toukyou ni sunde imasu.",
+        "fr": "J'habite à Tokyo."
+      }
+    ],
+    "n5_v_486": [
+      {
+        "jp": "家に入る時、スリッパに履き替えます。",
+        "ka": "いえ に はる とき、 スリッパ に はきかえます。",
+        "ro": "ie ni hairu toki, surippa ni hakikaemasu.",
+        "fr": "En entrant dans la maison, je change pour des pantoufles."
+      }
+    ],
+    "n5_v_487": [
+      {
+        "jp": "週末に部屋の掃除をします。",
+        "ka": "しゅうまつ に へや の そうじ を します。",
+        "ro": "shuumatsu ni heya no souji o shimasu.",
+        "fr": "Je fais le ménage de la pièce le week-end."
+      }
+    ],
+    "n5_v_488": [
+      {
+        "jp": "椅子に座ってください。",
+        "ka": "いす に すわって ください。",
+        "ro": "isu ni suwatte kudasai.",
+        "fr": "Veuillez vous asseoir sur la chaise."
+      }
+    ],
+    "n5_v_489": [
+      {
+        "jp": "彼は背が高いです。",
+        "ka": "かれ は せ が たかい です。",
+        "ro": "kare wa se ga takai desu.",
+        "fr": "Il est grand (de taille)."
+      }
+    ],
+    "n5_v_490": [
+      {
+        "jp": "学校に多くの生徒がいます。",
+        "ka": "gakkou ni ooku no seito ga imasu。",
+        "ro": "gakkou ni ooku no seito ga imasu.",
+        "fr": "Il y a beaucoup d'élèves à l'école."
+      }
+    ],
+    "n5_v_491": [
+      {
+        "jp": "冬は温かいセーターを着ます。",
+        "ka": "ふゆ は あたたかい セーター を きます。",
+        "ro": "fuyu wa atatakai seetaa o kimasu.",
+        "fr": "Je porte un pull chaud en hiver."
+      }
+    ],
+    "n5_v_492": [
+      {
+        "jp": "石鹸で手を洗います。",
+        "ka": "せっけん で て を あらいます。",
+        "ro": "sekken de te o araimasu.",
+        "fr": "Je me lave les mains avec du savon."
+      }
+    ],
+    "n5_v_493": [
+      {
+        "jp": "父は仕事に背広を着て行きます。",
+        "ka": "ちち は しごと に せびろ を きて いきます。",
+        "ro": "chichi wa shigoto ni sebiro o kite ikimasu.",
+        "fr": "Mon père va au travail en costume."
+      }
+    ],
+    "n5_v_494": [
+      {
+        "jp": "この部屋は少し狭いです。",
+        "ka": "この へや は すこし せまい です。",
+        "ro": "kono heya wa sukoshi semai desu.",
+        "fr": "Cette pièce est un peu étroite."
+      }
+    ],
+    "n5_v_495": [
+      {
+        "jp": "この辞書は千円です。",
+        "ka": "この じしょ は せんえん です。",
+        "ro": "kono jisho wa senen desu.",
+        "fr": "Ce dictionnaire coûte mille yens."
+      }
+    ],
+    "n5_v_496": [
+      {
+        "jp": "先月に新しい車を買いました。",
+        "ka": "せんげつ に あたらしい くるま を かいました。",
+        "ro": "sengetsu ni atatarashii kuruma o kaimashita.",
+        "fr": "J'ai acheté une nouvelle voiture le mois dernier."
+      }
+    ],
+    "n5_v_497": [
+      {
+        "jp": "先週は毎日忙しかったです。",
+        "ka": "せんしゅう は まいにち いそがしかった です。",
+        "ro": "senshuu wa mainichi isogashikatta desu.",
+        "fr": "J'ai été occupé tous les jours la semaine dernière."
+      }
+    ],
+    "n5_v_498": [
+      {
+        "jp": "先生に日本語を習います。",
+        "ka": "せんせい に にほんご を ならいます。",
+        "ro": "sensei ni nihongo o naraimasu.",
+        "fr": "J'apprends le japonais auprès du professeur."
+      }
+    ],
+    "n5_v_499": [
+      {
+        "jp": "今日は天気が良いので洗濯をします。",
+        "ka": "きょう は てんき が よい ので せんたく を します。",
+        "ro": "kyou wa tenki ga yoi node sentaku o shimasu.",
+        "fr": "Il fait beau aujourd'hui, alors je fais la lessive."
+      }
+    ],
+    "n5_v_500": [
+      {
+        "jp": "週末に部屋の掃除をします。",
+        "ka": "しゅうまつ に へや の そうじ を します。",
+        "ro": "shuumatsu ni heya no souji o shimasu.",
+        "fr": "Je nettoie la pièce le week-end."
+      }
+    ],
+    "n5_v_501": [
+      {
+        "jp": "本を読んで、そうして寝ました。",
+        "ka": "ほん を よんで、 そうして ねました。",
+        "ro": "hon o yonde, soushite nemashita.",
+        "fr": "J'ai lu un livre, et puis je suis allé me coucher."
+      }
+    ],
+    "n5_v_502": [
+      {
+        "jp": "そこにペンがあります。",
+        "ka": "そこ に ペン が あります。",
+        "ro": "soko ni pen ga arimasu.",
+        "fr": "Il y a un stylo là-bas."
+      }
+    ],
+    "n5_v_503": [
+      {
+        "jp": "そちらの天気はどうですか。",
+        "ka": "そちら の てんき は どう です か。",
+        "ro": "sochira no tenki wa dou desu ka.",
+        "fr": "Quel temps fait-il chez vous ?"
+      }
+    ],
+    "n5_v_504": [
+      {
+        "jp": "外は雨が降っています。",
+        "ka": "そと は あめ が ふって います。",
+        "ro": "soto wa ame ga futte imasu.",
+        "fr": "Il pleut dehors."
+      }
+    ],
+    "n5_v_505": [
+      {
+        "jp": "その本は私のものです。",
+        "ka": "その ほん は わたし の もの です。",
+        "ro": "sono hon wa watashi no mono desu.",
+        "fr": "Ce livre est le mien."
+      }
+    ],
+    "n5_v_506": [
+      {
+        "jp": "机のそばに椅子があります。",
+        "ka": "つくえ の そば に いす が あります。",
+        "ro": "tsukue no soba ni isu ga arimasu.",
+        "fr": "Il y a une chaise à côté du bureau."
+      }
+    ],
+    "n5_v_507": [
+      {
+        "jp": "今日の空は青いです。",
+        "ka": "きょう の そら は あおい です。",
+        "ro": "kyou no sora wa aoi desu.",
+        "fr": "Le ciel est bleu aujourd'hui."
+      }
+    ],
+    "n5_v_508": [
+      {
+        "jp": "それは何ですか。",
+        "ka": "それ は なん です か。",
+        "ro": "sore wa nan desu ka.",
+        "fr": "Qu'est-ce que c'est ?"
+      }
+    ],
+    "n5_v_509": [
+      {
+        "jp": "朝ご飯を食べました。それから学校へ行きます。",
+        "ka": "あさごはん を たべました。それから がっこう へ いきます。",
+        "ro": "asagohan o tabemashita. Sorekara gakkou he ikimasu.",
+        "fr": "J'ai pris mon petit-déjeuner. Ensuite, je vais à l'école."
+      }
+    ],
+    "n5_v_510": [
+      {
+        "jp": "それでは、始めましょう。",
+        "ka": "それでは、 はじめましょう。",
+        "ro": "soredewa, hajimemashou.",
+        "fr": "Bien, commençons."
+      }
+    ],
+    "n5_v_511": [
+      {
+        "jp": "仕事は大体終わりました。",
+        "ka": "しごと は だいたい おわりました。",
+        "ro": "shigoto wa daitai owarimashita.",
+        "fr": "Le travail est presque terminé."
+      }
+    ],
+    "n5_v_512": [
+      {
+        "jp": "東京にフランスの大使館があります。",
+        "ka": "とうきょう に フランス の たいしかん が あります。",
+        "ro": "toukyou ni furansu no taishikan ga arimasu.",
+        "fr": "Il y a l'ambassade de France à Tokyo."
+      }
+    ],
+    "n5_v_513": [
+      {
+        "jp": "テストは大丈夫でした。",
+        "ka": "テスト は だいじょうぶ でした。",
+        "ro": "tesuto wa daijoubu deshita.",
+        "fr": "Le test s'est bien passé / c'était bon."
+      }
+    ],
+    "n5_v_514": [
+      {
+        "jp": "私は猫が大好きです。",
+        "ka": "わたし は ねこ が だいすき です。",
+        "ro": "watashi wa neko ga daisuki desu.",
+        "fr": "J'adore les chats."
+      }
+    ],
+    "n5_v_515": [
+      {
+        "jp": "家族はとても大切です。",
+        "ka": "かぞく は とても たいせつ です。",
+        "ro": "kazoku wa totemo taisetsu desu.",
+        "fr": "La famille est très précieuse."
+      }
+    ],
+    "n5_v_516": [
+      {
+        "jp": "たいてい朝フォークとパンを食べます。",
+        "ka": "たいてい あさ パン を たべます。",
+        "ro": "taitei asa pan o tabemasu.",
+        "fr": "Je mange généralement du pain le matin."
+      }
+    ],
+    "n5_v_517": [
+      {
+        "jp": "母は台所で料理をしています。",
+        "ka": "はは は だいどころ で りょうり を して います。",
+        "ro": "haha wa daidokoro de ryouri o shite imasu.",
+        "fr": "Ma mère cuisine dans la cuisine."
+      }
+    ],
+    "n5_v_518": [
+      {
+        "jp": "今日は仕事が大変でした。",
+        "ka": "きょう は しごと が たいへん でした。",
+        "ro": "kyou wa shigoto ga taihen deshita.",
+        "fr": "Le travail a été dur aujourd'hui."
+      }
+    ],
+    "n5_v_519": [
+      {
+        "jp": "この山はとても高いです。",
+        "ka": "この やま は とても たかい です。",
+        "ro": "kono yama wa totemo takai desu.",
+        "fr": "Cette montagne est très haute."
+      }
+    ],
+    "n5_v_520": [
+      {
+        "jp": "本がたくさんあります。",
+        "ka": "ほん が たくさん あります。",
+        "ro": "hon ga takusan arimasu.",
+        "fr": "Il y a beaucoup de livres."
+      }
+    ],
+    "n5_v_521": [
+      {
+        "jp": "駅からタクシーに乗りました。",
+        "ka": "えき から タクシー に のりました。",
+        "ro": "eki kara takushii ni norimashita.",
+        "fr": "J'ai pris un taxi depuis la gare."
+      }
+    ],
+    "n5_v_522": [
+      {
+        "jp": "ポストに手紙を出します。",
+        "ka": "ポスト に てがみ を だします。",
+        "ro": "posuto ni tegami o dashimasu.",
+        "fr": "Je mets/envoie une lettre dans la boîte aux lettres."
+      }
+    ],
+    "n5_v_523": [
+      {
+        "jp": "先生が入ってきたので立ちます。",
+        "ka": "せんせい が はいって きた ので たちます。",
+        "ro": "sensei ga haitte kita node tachimasu.",
+        "fr": "Je me lève car le professeur est entré."
+      }
+    ],
+    "n5_v_524": [
+      {
+        "jp": "あの大きな建物は何ですか。",
+        "ka": "あの おおきな たてもの は なんです か。",
+        "ro": "ano ookina tatemono wa nan desu ka.",
+        "fr": "Quel est ce grand bâtiment ?"
+      }
+    ],
+    "n5_v_525": [
+      {
+        "jp": "日本語の勉強は楽しいです。",
+        "ka": "にほんご の べんきょう は たのしい です。",
+        "ro": "nihongo no benkyou wa tanoshii desu.",
+        "fr": "L'étude du japonais est amusante."
+      }
+    ],
+    "n5_v_526": [
+      {
+        "jp": "レストランで料理を頼みます。",
+        "ka": "レストラン で りょうり を たのみます。",
+        "ro": "resutoran de ryouri o tanomimasu.",
+        "fr": "Je commande un plat au restaurant."
+      }
+    ],
+    "n5_v_527": [
+      {
+        "jp": "ここでタバコを吸わないでください。",
+        "ka": "ここ で タバコ を すわない で ください。",
+        "ro": "koko de tabako o suwanai de kudasai.",
+        "fr": "Veuillez ne pas fumer de tabac ici."
+      }
+    ],
+    "n5_v_528": [
+      {
+        "jp": "明日はたぶん雨が降ります。",
+        "ka": "あした は たぶん あめ が ふります。",
+        "ro": "ashita wa tabun ame ga furimasu.",
+        "fr": "Il pleuvra peut-être demain."
+      }
+    ],
+    "n5_v_529": [
+      {
+        "jp": "スーパーで食べ物を買いました。",
+        "ka": "スーパー で たべもの を かいました。",
+        "ro": "suupaa de tabemono o kaimashita.",
+        "fr": "J'ai acheté de la nourriture au supermarché."
+      }
+    ],
+    "n5_v_530": [
+      {
+        "jp": "朝ご飯にパンを食べます。",
+        "ka": "あさごはん に パン を たべます。",
+        "ro": "asagohan ni pan o tabemasu.",
+        "fr": "Je mange du pain au petit-déjeuner."
+      }
+    ],
+    "n5_v_531": [
+      {
+        "jp": "朝ご飯に卵を２つ食べます。",
+        "ka": "あさごはん に たまご を ふたつ たべます。",
+        "ro": "asagohan ni tamago o futatsu tabemasu.",
+        "fr": "Je mange deux œufs au petit-déjeuner."
+      }
+    ],
+    "n5_v_532": [
+      {
+        "jp": "あの人は誰ですか。",
+        "ka": "あの ひと は だれ です か。",
+        "ro": "ano hito wa dare desu ka.",
+        "fr": "Qui est cette personne ?"
+      }
+    ],
+    "n5_v_533": [
+      {
+        "jp": "教室に誰かいますか。",
+        "ka": "きょうしつ に だれか います か。",
+        "ro": "kyoushitsu ni dareka imasu ka.",
+        "fr": "Y a-t-il quelqu'un dans la salle de classe ?"
+      }
+    ],
+    "n5_v_534": [
+      {
+        "jp": "今日は私の誕生日です。",
+        "ka": "きょう は わたし の たんじょうび です。",
+        "ro": "kyou wa watashi no tanjoubi desu.",
+        "fr": "C'est mon anniversaire aujourd'hui."
+      }
+    ],
+    "n5_v_535": [
+      {
+        "jp": "日本語がだんだん分かってきました。",
+        "ka": "にほんご が だんだん わかって きました。",
+        "ro": "nihongo ga dandan wakatte kimashita.",
+        "fr": "Je comprends de mieux en mieux le japonais petit à petit."
+      }
+    ],
+    "n5_v_536": [
+      {
+        "jp": "この部屋は小さくてきれいです。",
+        "ka": "この へや は ちいさくて きれい です。",
+        "ro": "kono heya wa chiisakute kirei desu.",
+        "fr": "Cette pièce est petite et propre."
+      }
+    ],
+    "n5_v_537": [
+      {
+        "jp": "庭に小さな犬がいます。",
+        "ka": "にわ に ちいさな いぬ が います。",
+        "ro": "niwa ni chiisana inu ga imasu.",
+        "fr": "Il y a un petit chien dans le jardin."
+      }
+    ],
+    "n5_v_538": [
+      {
+        "jp": "近々日本へ行きます。",
+        "ka": "ちかぢか にほん へ いきます。",
+        "ro": "chikajika nihon he ikimasu.",
+        "fr": "Je vais aller au Japon bientôt."
+      }
+    ],
+    "n5_v_539": [
+      {
+        "jp": "地下鉄で会社に行きます。",
+        "ka": "ちかてつ で かいしゃ に いきます。",
+        "ro": "chikatetsu de kaisha ni ikimasu.",
+        "fr": "Je vais au travail en métro."
+      }
+    ],
+    "n5_v_540": [
+      {
+        "jp": "駅の近くに本屋があります。",
+        "ka": "えき の ちかく に ほんや が あります。",
+        "ro": "eki no chikaku ni honya ga arimasu.",
+        "fr": "Il y a une librairie près de la gare."
+      }
+    ],
+    "n5_v_541": [
+      {
+        "jp": "私の答えは違いますか。",
+        "ka": "わたし の こたえ は ちがいます か。",
+        "ro": "watashi no kotae wa chigaimasu ka.",
+        "fr": "Est-ce que ma réponse est fausse / différente ?"
+      }
+    ],
+    "n5_v_542": [
+      {
+        "jp": "私の家は駅から近いです。",
+        "ka": "わたし の いえ は えき から ちかい です。",
+        "ro": "watashi no ie wa eki kara chikai desu.",
+        "fr": "Ma maison est proche de la gare."
+      }
+    ],
+    "n5_v_543": [
+      {
+        "jp": "力を入れて重い荷物を持ちます。",
+        "ka": "ちから を いれて おもい にもつ を もちます。",
+        "ro": "chikara o irete omoi nimotsu o mochimasu.",
+        "fr": "Je mets de la force pour porter un lourd bagage."
+      }
+    ],
+    "n5_v_544": [
+      {
+        "jp": "ポケットにちり紙が入っています。",
+        "ka": "ポケット に ちりがみ が はいって います。",
+        "ro": "poketto ni chirigami ga haitte imasu.",
+        "fr": "Il y a du papier mouchoir dans la poche."
+      }
+    ],
+    "n5_v_545": [
+      {
+        "jp": "電車で東京に着きました。",
+        "ka": "でんしゃ で とうきょう に つきました。",
+        "ro": "densha de toukyou ni tskimashita.",
+        "fr": "Je suis arrivé à Tokyo en train."
+      }
+    ],
+    "n5_v_546": [
+      {
+        "jp": "机の上に本とノートがあります。",
+        "ka": "つくえ の うえ に ほん と ノート が あります。",
+        "ro": "tsukue no ue ni hon to nooto ga arimasu.",
+        "fr": "Il y a un livre et un cahier sur le bureau."
+      }
+    ],
+    "n5_v_547": [
+      {
+        "jp": "台所で美味しい料理を作ります。",
+        "ka": "だいどころ で おいしい りょうり を つくります。",
+        "ro": "daidokoro de oishii ryouri o tsukurimasu.",
+        "fr": "Je cuisine un délicieux plat dans la cuisine."
+      }
+    ],
+    "n5_v_548": [
+      {
+        "jp": "部屋に入って電気をつけます。",
+        "ka": "へや に はいって でんき を つけます。",
+        "ro": "heya ni haitte denki o tsukemasu.",
+        "fr": "J'entre dans la pièce et j'allume la lumière."
+      }
+    ],
+    "n5_v_549": [
+      {
+        "jp": "父は会社に勤めています。",
+        "ka": "ちち は かいしゃ に つとめて います。",
+        "ro": "chichi wa kaisha ni tsutomete imasu.",
+        "fr": "Mon père travaille dans une entreprise."
+      }
+    ],
+    "n5_v_550": [
+      {
+        "jp": "この映画は少しつまらないです。",
+        "ka": "この えいが は すこし つまらない です。",
+        "ro": "kono eiga wa sukoshi tsumaranai desu.",
+        "fr": "Ce film est un peu ennuyeux."
+      }
+    ],
+    "n5_v_551": [
+      {
+        "jp": "冷蔵庫から冷たい水を飲みます。",
+        "ka": "れいぞうこ から つめたい みず を のみます。",
+        "ro": "reizouko kara tsumetai mizu o nomimasu.",
+        "fr": "Je bois de l'eau froide provenant du réfrigérateur."
+      }
+    ],
+    "n5_v_552": [
+      {
+        "jp": "彼は日本語が強く話せます。",
+        "ka": "かれ は にほんご が つよく はなせます。",
+        "ro": "kare wa nihongo ga tsuyoku hanasemasu.",
+        "fr": "Il parle couramment le japonais."
+      }
+    ],
+    "n5_v_553": [
+      {
+        "jp": "週末に川で釣りをします。",
+        "ka": "しゅうまつ に かわ で つり を します。",
+        "ro": "shuumatsu ni kawa de tsuri o shimasu.",
+        "fr": "Je fais de la pêche à la rivière le week-end."
+      }
+    ],
+    "n5_v_554": [
+      {
+        "jp": "石鹸で手をきれいに洗います。",
+        "ka": "せっけん で て を きれい に あらいます。",
+        "ro": "sekken de te o kirei ni araimasu.",
+        "fr": "Je me lave bien les mains avec du savon."
+      }
+    ],
+    "n5_v_555": [
+      {
+        "jp": "テープで紙をはります。",
+        "ka": "テープ で かみ を はります。",
+        "ro": "teepu de kami o harimasu.",
+        "fr": "Je colle le papier avec du ruban adhésif."
+      }
+    ],
+    "n5_v_556": [
+      {
+        "jp": "テープレコーダーで日本語を聞きます。",
+        "ka": "テープレコーダー で にほんご を ききます。",
+        "ro": "teepurekoodaa de nihongo o kikimasu.",
+        "fr": "J'écoute du japonais sur le magnétophone."
+      }
+    ],
+    "n5_v_557": [
+      {
+        "jp": "テーブルの上にカップがあります。",
+        "ka": "テーブル の うえ に カップ が あります。",
+        "ro": "teeburu no ue ni kappu ga arimasu.",
+        "fr": "Il y a une tasse sur la table."
+      }
+    ],
+    "n5_v_558": [
+      {
+        "jp": "今から買い物に出かけます。",
+        "ka": "いま から かいもの に でかけます。",
+        "ro": "ima kara kaimono ni dekakemasu.",
+        "fr": "Je sors faire des courses dès maintenant."
+      }
+    ],
+    "n5_v_559": [
+      {
+        "jp": "友達に長い手紙を書きました。",
+        "ka": "ともだち に ながい てがみ を かきました。",
+        "ro": "tomodachi ni nagai tegami o kakimashita.",
+        "fr": "J'ai écrit une longue lettre à un ami."
+      }
+    ],
+    "n5_v_560": [
+      {
+        "jp": "私は日本語が少しできます。",
+        "ka": "わたし は にほんご が すこし できます。",
+        "ro": "watashi wa nihongo ga sukoshi dekimasu.",
+        "fr": "Je peux parler un peu japonais."
+      }
+    ],
+    "n5_v_561": [
+      {
+        "jp": "電車の出口はあそこです。",
+        "ka": "でんしゃ の でぐち は あそこ です。",
+        "ro": "densha no deguchi wa asoko desu.",
+        "fr": "La sortie du train est par là-bas."
+      }
+    ],
+    "n5_v_562": [
+      {
+        "jp": "明日は日本語のテストがあります。",
+        "ka": "あした は にほんご の テスト が あります。",
+        "ro": "ashita wa nihongo no tesuto ga arimasu.",
+        "fr": "Il y a un test de japonais demain."
+      }
+    ],
+    "n5_v_563": [
+      {
+        "jp": "では、始めましょう。",
+        "ka": "では、 はじめましょう。",
+        "ro": "dewa, hajimemashou.",
+        "fr": "Bien, commençons."
+      }
+    ],
+    "n5_v_564": [
+      {
+        "jp": "デパートで買い物をします。",
+        "ka": "デパート で かいもの を します。",
+        "ro": "depaato de kaimono o shimasu.",
+        "fr": "Je fais des achats au grand magasin."
+      }
+    ],
+    "n5_v_565": [
+      {
+        "jp": "日本語は難しいです。でも面白いです。",
+        "ka": "にほんご は まずかしい です。でも おもしろい です。",
+        "ro": "nihongo wa muzukashii desu. Demo omoshiroi desu.",
+        "fr": "Le japonais est difficile. Mais c'est intéressant."
+      }
+    ],
+    "n5_v_566": [
+      {
+        "jp": "毎朝七時に家を出ます。",
+        "ka": "まいあさ しちじ に いえ を でます。",
+        "ro": "maiasa shichiji ni ie o demasu.",
+        "fr": "Je sors de la maison à sept heures tous les matins."
+      }
+    ],
+    "n5_v_567": [
+      {
+        "jp": "夜にテレビを見ます。",
+        "ka": "よる に テレビ を みます。",
+        "ro": "yoru ni terebi o mimasu.",
+        "fr": "Je regarde la télévision le soir."
+      }
+    ],
+    "n5_v_568": [
+      {
+        "jp": "今日の天気はとても良いです。",
+        "ka": "きょう の てんき は とても よい です。",
+        "ro": "kyou no tenki wa totemo yoi desu.",
+        "fr": "La météo d'aujourd'hui est très belle."
+      }
+    ],
+    "n5_v_569": [
+      {
+        "jp": "部屋の電気をつけます。",
+        "ka": "へや の でんき を つけます。",
+        "ro": "heya no denki o tsukemasu.",
+        "fr": "J'allume la lumière de la pièce."
+      }
+    ],
+    "n5_v_570": [
+      {
+        "jp": "電車に乗って会社に行きます。",
+        "ka": "でんしゃ に のって かいしゃ に いきます。",
+        "ro": "densha ni notte kaisha ni ikimasu.",
+        "fr": "Je monte dans le train pour aller au travail."
+      }
+    ],
+    "n5_v_571": [
+      {
+        "jp": "友達に電話をかけます。",
+        "ka": "ともだち に でんわ を かけます。",
+        "ro": "tomodachi ni denwa o kakemasu.",
+        "fr": "Je passe un coup de fil à un ami."
+      }
+    ],
+    "n5_v_572": [
+      {
+        "jp": "風が強いので戸を閉めます。",
+        "ka": "かぜ が つよい ので と を しめます。",
+        "ro": "kaze ga tsuyoi node to o shimemasu.",
+        "fr": "Le vent souffle fort, alors je ferme la porte."
+      }
+    ],
+    "n5_v_573": [
+      {
+        "jp": "部屋のドアを開けてください。",
+        "ka": "へや の ドア を あけて ください。",
+        "ro": "heya no doa o akete kudasai.",
+        "fr": "Veuillez ouvrir la porte de la pièce."
+      }
+    ],
+    "n5_v_574": [
+      {
+        "jp": "トイレはどこですか。",
+        "ka": "トイレ は どこ です か。",
+        "ro": "toire wa doko desu ka.",
+        "fr": "Où sont les toilettes ?"
+      }
+    ],
+    "n5_v_575": [
+      {
+        "jp": "日本語の勉強はどうですか。",
+        "ka": "にほんご の べんきょう は どう です か。",
+        "ro": "nihongo no benkyou wa dou desu ka.",
+        "fr": "Comment se passe l'étude du japonais ?"
+      }
+    ],
+    "n5_v_576": [
+      {
+        "jp": "どうして学校を休みましたか。",
+        "ka": "どうして がっこう を やすみました か。",
+        "ro": "doushite gakkou o yasumimashita ka.",
+        "fr": "Pourquoi as-tu raté l'école ?"
+      }
+    ],
+    "n5_v_577": [
+      {
+        "jp": "どうぞ、お入りください。",
+        "ka": "どうぞ、 おはいり ください。",
+        "ro": "douzo, ohairi kudasai.",
+        "fr": "Je vous en prie, entrez."
+      }
+    ],
+    "n5_v_578": [
+      {
+        "jp": "動物園で多くの動物を見ました。",
+        "ka": "どうぶつえん で おおく の どうぶつ を みました。",
+        "ro": "doubutsuen de ooku no doubutsu o mimashita.",
+        "fr": "J'ai vu beaucoup d'animaux au zoo."
+      }
+    ],
+    "n5_v_579": [
+      {
+        "jp": "どうもありがとうございます。",
+        "ka": "どうも ありがとう ございます。",
+        "ro": "doumo arigatou gozaimasu.",
+        "fr": "Merci beaucoup."
+      }
+    ],
+    "n5_v_580": [
+      {
+        "jp": "りんごを十個買いました。",
+        "ka": "りんご を とおこ かいました。",
+        "ro": "ringo o tooko kaimashita.",
+        "fr": "J'ai acheté dix pommes."
+      }
+    ],
+    "n5_v_581": [
+      {
+        "jp": "私の家から学校は遠いです。",
+        "ka": "わたし の いえ から がっこう は とおい です。",
+        "ro": "watashi no ie kara gakkou wa tooi desu.",
+        "fr": "L'école est loin de chez moi."
+      }
+    ],
+    "n5_v_582": [
+      {
+        "jp": "今月の十日に日本へ行きます。",
+        "ka": "こんげつ の とおか に にほん へ いきます。",
+        "ro": "kongetsu no tooka ni nihon he ikimasu.",
+        "fr": "Je vais au Japon le 10 de ce mois-ci."
+      }
+    ],
+    "n5_v_583": [
+      {
+        "jp": "時々図書館で本を読みます。",
+        "ka": "ときどき としょかん で ほん を よみます。",
+        "ro": "tokidoki toshokan de hon o yomimasu.",
+        "fr": "Je lis parfois des livres à la bibliothèque."
+      }
+    ],
+    "n5_v_584": [
+      {
+        "jp": "壁に時計がかかっています。",
+        "ka": "かべ に とけい が かかって います。",
+        "ro": "kabe ni tokei ga kakatte imasu.",
+        "fr": "Il y a une horloge accrochée au mur."
+      }
+    ],
+    "n5_v_585": [
+      {
+        "jp": "あなたのカバンはどこにありますか。",
+        "ka": "あなた の カバン は どこ に あります か。",
+        "ro": "anata no kaban wa doko ni arimasu ka.",
+        "fr": "Où est ton sac ?"
+      }
+    ],
+    "n5_v_586": [
+      {
+        "jp": "ここは静かな所です。",
+        "ka": "ここ は しずかな ところ です。",
+        "ro": "koko wa shizukana tokoro desu.",
+        "fr": "C'est un endroit calme ici."
+      }
+    ],
+    "n5_v_587": [
+      {
+        "jp": "彼は今年で二十歳になります。",
+        "ka": "かれ は ことし で はたち に なります。",
+        "ro": "kare wa kotoshi de hatachi ni narimasu.",
+        "fr": "Il aura vingt ans cette année."
+      }
+    ],
+    "n5_v_588": [
+      {
+        "jp": "図書館で静かに勉強します。",
+        "ka": "としょかん で しずか に べんきょう します。",
+        "ro": "toshokan de shizuka ni benkyou shimasu.",
+        "fr": "J'étudie tranquillement à la bibliothèque."
+      }
+    ],
+    "n5_v_589": [
+      {
+        "jp": "りんごとバナナと、どちらが好きですか。",
+        "ka": "りんご と バナナ と、 どちら が すき です か。",
+        "ro": "ringo to banana to, dochira ga suki desu ka.",
+        "fr": "Entre la pomme et la banane, laquelle préférez-vous ?"
+      }
+    ],
+    "n5_v_590": [
+      {
+        "jp": "赤と青、どっちが好きですか。",
+        "ka": "あか と あお、 どっち が すき です か。",
+        "ro": "aka to ao, docchi ga suki desu ka.",
+        "fr": "Entre le rouge et le bleu, lequel préfères-tu ?"
+      }
+    ],
+    "n5_v_591": [
+      {
+        "jp": "このラーメンはとても美味しいです。",
+        "ka": "この ラーメン は とても おいしい です。",
+        "ro": "kono raamen wa totemo oishii desu.",
+        "fr": "Ce ramen est très délicieux."
+      }
+    ],
+    "n5_v_592": [
+      {
+        "jp": "あちらの方位はどなたですか。",
+        "ka": "あちら の ほうい は どなた です か。",
+        "ro": "achira no houi wa donata desu ka.",
+        "fr": "Qui est la personne là-bas ?"
+      }
+    ],
+    "n5_v_593": [
+      {
+        "jp": "隣の部屋に友達が住んでいます。",
+        "ka": "となり の へや に ともだち が すんで います。",
+        "ro": "tonari no heya ni tomodachi ga sunde imasu.",
+        "fr": "Un ami habite dans la pièce d'à côté."
+      }
+    ],
+    "n5_v_594": [
+      {
+        "jp": "どのペンがあなたのですか。",
+        "ka": "どの ペン が あなた の です か。",
+        "ro": "dono pen ga anata no desu ka.",
+        "fr": "Quel stylo est le tien ?"
+      }
+    ],
+    "n5_v_595": [
+      {
+        "jp": "空を鳥が飛んでいます。",
+        "ka": "そら を とり が とんで います。",
+        "ro": "sora o tori ga tonde imasu.",
+        "fr": "Un oiseau vole dans le ciel."
+      }
+    ],
+    "n5_v_596": [
+      {
+        "jp": "バスがバス停で止まりました。",
+        "ka": "バス が バスてい で とまりました。",
+        "ro": "basu ga basutei de tomarimashita.",
+        "fr": "Le bus s'est arrêté à l'arrêt de bus."
+      }
+    ],
+    "n5_v_597": [
+      {
+        "jp": "週末に友達と映画を見ます。",
+        "ka": "しゅうまつ に ともだち と えいが を みます。",
+        "ro": "shuumatsu ni tomodachi to eiga o mimasu.",
+        "fr": "Je regarde un film avec un ami le week-end."
+      }
+    ],
+    "n5_v_598": [
+      {
+        "jp": "土曜日に買い物をします。",
+        "ka": "どようび に かいもの を します。",
+        "ro": "doyoubi ni kaimono o shimasu.",
+        "fr": "Je fais des courses le samedi."
+      }
+    ],
+    "n5_v_599": [
+      {
+        "jp": "木の上に小さな鳥がいます。",
+        "ka": "き の うえ に ちいさな とり が います。",
+        "ro": "ki no ue ni chiisana tori ga imasu.",
+        "fr": "Il y a un petit oiseau sur l'arbre."
+      }
+    ],
+    "n5_v_600": [
+      {
+        "jp": "晩ご飯にとり肉を焼きます。",
+        "ka": "ばんごはん に とりにく を やきます。",
+        "ro": "bangohan ni toriniku o yakimasu.",
+        "fr": "Je fais cuire de la viande de poulet pour le dîner."
+      }
+    ],
+    "n5_v_601": [
+      {
+        "jp": "テーブルの上からペンを取ります。",
+        "ka": "テーブル の うえ から ペン を とります。",
+        "ro": "teeburu no ue kara pen o torimasu.",
+        "fr": "Je prends le stylo de sur la table."
+      }
+    ],
+    "n5_v_602": [
+      {
+        "jp": "カメラで写真を撮ります。",
+        "ka": "カメラ で しゃしん を とります。",
+        "ro": "kamera de shashin o torimasu.",
+        "fr": "Je prends une photo avec un appareil photo."
+      }
+    ],
+    "n5_v_603": [
+      {
+        "jp": "この中でどれが一番好きですか。",
+        "ka": "この なか で どれ が いちばん すき です か。",
+        "ro": "kono naka de dore ga ichiban suki desu ka.",
+        "fr": "Lequel préfères-tu le plus parmi ceux-ci ?"
+      }
+    ],
+    "n5_v_604": [
+      {
+        "jp": "ナイフでパンを切ります。",
+        "ka": "ナイフ で パン を きります。",
+        "ro": "naifu de pan o kirimasu.",
+        "fr": "Je coupe le pain avec un couteau."
+      }
+    ],
+    "n5_v_605": [
+      {
+        "jp": "カバンの中に財布が入っています。",
+        "ka": "カバン の なか に さいふ が はいって います。",
+        "ro": "kaban no naka ni saifu ga haitte imasu.",
+        "fr": "Il y a un portefeuille à l'intérieur du sac."
+      }
+    ],
+    "n5_v_606": [
+      {
+        "jp": "彼は髪が長いです。",
+        "ka": "かれ は かみ が ながい です。",
+        "ro": "kare wa kami ga nagai desu.",
+        "fr": "Il a les cheveux longs."
+      }
+    ],
+    "n5_v_607": [
+      {
+        "jp": "朝になると鳥が鳴きます。",
+        "ka": "あさ に なると とり が なきます。",
+        "ro": "asa ni naruto tori ga nakimasu.",
+        "fr": "Quand le matin arrive, les oiseaux chantent."
+      }
+    ],
+    "n5_v_608": [
+      {
+        "jp": "鍵を無くしてしまいました。",
+        "ka": "かぎ を なくして しまいました。",
+        "ro": "kagi o nakushite shimaimashita.",
+        "fr": "J'ai perdu mes clés."
+      }
+    ],
+    "n5_v_609": [
+      {
+        "jp": "なぜ学校を休みましたか。",
+        "ka": "なぜ がっこう を やすみました か。",
+        "ro": "naze gakkou o yasumimashita ka.",
+        "fr": "Pourquoi as-tu manqué l'école ?"
+      }
+    ],
+    "n5_v_610": [
+      {
+        "jp": "今年は暑い夏です。",
+        "ka": "ことし は あつい なつ です。",
+        "ro": "kotoshi wa atsui natsu desu.",
+        "fr": "Cette année, c'est un été chaud."
+      }
+    ],
+    "n5_v_611": [
+      {
+        "jp": "夏休みに海へ行きます。",
+        "ka": "なつやすみ に うみ へ いきます。",
+        "ro": "natsuyasumi ni umi he ikimasu.",
+        "fr": "Je vais à la mer pendant les vacances d'été."
+      }
+    ],
+    "n5_v_612": [
+      {
+        "jp": "りんごを七つ食べました。",
+        "ka": "りんご を ななつ たべました。",
+        "ro": "ringo o nanatsu tabemashita.",
+        "fr": "J'ai mangé sept pommes."
+      }
+    ],
+    "n5_v_613": [
+      {
+        "jp": "今月の七日に日本へ行きます。",
+        "ka": "こんげつ の なのか に にほん へ いきます。",
+        "ro": "kongetsu no nanoka ni nihon he ikimasu.",
+        "fr": "Je vais au Japon le 7 de ce mois-ci."
+      }
+    ],
+    "n5_v_614": [
+      {
+        "jp": "ノートに名前を書きます。",
+        "ka": "ノート に なまえ を かきます。",
+        "ro": "nooto ni namae o kakimasu.",
+        "fr": "J'écris mon nom sur le cahier."
+      }
+    ],
+    "n5_v_615": [
+      {
+        "jp": "先生から日本語を習います。",
+        "ka": "せんせい から にほんご を ならいます。",
+        "ro": "sensei kara nihongo o naraimasu.",
+        "fr": "J'apprends le japonais auprès d'un professeur."
+      }
+    ],
+    "n5_v_616": [
+      {
+        "jp": "店鋪の前で人が並んでいます。",
+        "ka": "てんぽ の まえ で ひと が ならんで います。",
+        "ro": "tempo no mae de hito ga narande imasu.",
+        "fr": "Des gens font la queue devant le magasin."
+      }
+    ],
+    "n5_v_617": [
+      {
+        "jp": "机の上に本を並べます。",
+        "ka": "つくえ の うえ に ほん を ならべます。",
+        "ro": "tsukue no ue ni hon o narabemasu.",
+        "fr": "J'aligne les livres sur le bureau."
+      }
+    ],
+    "n5_v_618": [
+      {
+        "jp": "将来は医者になりたいです。",
+        "ka": "しょうらい は いしゃ に なりたい です。",
+        "ro": "shourai wa isha ni naritai desu.",
+        "fr": "Je veux devenir médecin dans le futur."
+      }
+    ],
+    "n5_v_619": [
+      {
+        "jp": "箱の中に何が入っていますか。",
+        "ka": "はこ の なか に なに が はいって います か。",
+        "ro": "hako no naka ni nani ga haitte imasu ka.",
+        "fr": "Qu'y a-t-il à l'intérieur de la boîte ?"
+      }
+    ],
+    "n5_v_620": [
+      {
+        "jp": "ペンを二本持っています。",
+        "ka": "ペン を にほん もって います。",
+        "ro": "pen o nihon motte imasu.",
+        "fr": "J'ai deux stylos."
+      }
+    ],
+    "n5_v_621": [
+      {
+        "jp": "この街はいつも賑やかです。",
+        "ka": "この まち は いつも にぎやか です。",
+        "ro": "kono machi wa itsumo nigiyaka desu.",
+        "fr": "Cette ville est toujours animée."
+      }
+    ],
+    "n5_v_622": [
+      {
+        "jp": "晩ご飯に美味しい肉をを食べます。",
+        "ka": "ばんご飯 に おいしい にく を たべます。",
+        "ro": "bangohan ni oishii niku o tabemasu.",
+        "fr": "Je mange de la bonne viande pour le dîner."
+      }
+    ],
+    "n5_v_623": [
+      {
+        "jp": "太陽は西に沈みます。",
+        "ka": "たいよう は にし に しずみます。",
+        "ro": "taiyou wa nishi ni shizumasu.",
+        "fr": "Le soleil se couche à l'ouest."
+      }
+    ],
+    "n5_v_624": [
+      {
+        "jp": "日曜日に友達と遊びます。",
+        "ka": "にちようび に ともだち と あそびます。",
+        "ro": "nichiyoubi ni tomodachi to asobimasu.",
+        "fr": "Je m'amuse avec un ami le dimanche."
+      }
+    ],
+    "n5_v_625": [
+      {
+        "jp": "旅行の荷物を作ります。",
+        "ka": "りょこう の にもつ を つくります。",
+        "ro": "ryokou no nimotsu o tsukurimasu.",
+        "fr": "Je fais mes bagages pour le voyage."
+      }
+    ],
+    "n5_v_626": [
+      {
+        "jp": "夜九時にニュースを見ます。",
+        "ka": "よる くじ に ニュース を みます。",
+        "ro": "yoru kuji ni nyuusu o mimasu.",
+        "fr": "Je regarde les informations à neuf heures du soir."
+      }
+    ],
+    "n5_v_627": [
+      {
+        "jp": "庭にきれいな花が咲いています。",
+        "ka": "にわ に きれいな はな が さいて います。",
+        "ro": "niwa ni kireina hana ga saite imasu.",
+        "fr": "De jolies fleurs poussent dans le jardin."
+      }
+    ],
+    "n5_v_628": [
+      {
+        "jp": "家に入る時、靴を脱ぎます。",
+        "ka": "いえ に はる とき、 くつ を ぬぎます。",
+        "ro": "ie ni hairu toki, kutsu o nugimasu.",
+        "fr": "En entrant dans la maison, je retire mes chaussures."
+      }
+    ],
+    "n5_v_629": [
+      {
+        "jp": "今日は温かいお茶を飲みます。",
+        "ka": "きょう は あたたかい おちゃ を のみます。",
+        "ro": "kyou wa atatakai ocha o nomimasu.",
+        "fr": "Je bois du thé chaud aujourd'hui."
+      }
+    ],
+    "n5_v_630": [
+      {
+        "jp": "父は新しいネクタイをしています。",
+        "ka": "ちち は あたらしい ネクタイ を して います。",
+        "ro": "chichi wa atatarashii nekutai o shite imasu.",
+        "fr": "Mon père porte une nouvelle cravate."
+      }
+    ],
+    "n5_v_631": [
+      {
+        "jp": "部屋で白い猫が寝ています。",
+        "ka": "へや で しろい ねこ が ねて います。",
+        "ro": "heya de shiroi neko ga nete imasu.",
+        "fr": "Un chat blanc dort dans la pièce."
+      }
+    ],
+    "n5_v_632": [
+      {
+        "jp": "夜十一時に寝ます。",
+        "ka": "よる じゅういちじ に ねます。",
+        "ro": "yoru jyuuichiji ni nemasu.",
+        "fr": "Je vais me coucher à onze heures du soir."
+      }
+    ],
+    "n5_v_633": [
+      {
+        "jp": "ノートに日本語を書き込みます。",
+        "ka": "ノート に にほんご を かきこみます。",
+        "ro": "nooto ni nihongo o kakikomasu.",
+        "fr": "J'écris du japonais dans le cahier."
+      }
+    ],
+    "n5_v_634": [
+      {
+        "jp": "週末に高い山に登ります。",
+        "ka": "しゅうまつ に たかい やま に のぼります。",
+        "ro": "shuumatsu ni takai yama ni noborimasu.",
+        "fr": "Je grimpe une haute montagne le week-end."
+      }
+    ],
+    "n5_v_635": [
+      {
+        "jp": "自動販売機で飲み物を買います。",
+        "ka": "じどうはんばいき で のみもの を かいます。",
+        "ro": "jidouhanbaiki de nomimono o kaimasu.",
+        "fr": "J'achète une boisson au distributeur automatique."
+      }
+    ],
+    "n5_v_636": [
+      {
+        "jp": "喉が渇いたので水を飲みます。",
+        "ka": "のど が かわいた ので みず を のみます。",
+        "ro": "nodo ga kawaita node mizu o nomimasu." ,
+        "fr": "J'ai soif, alors je bois de l'eau."
+      }
+    ],
+    "n5_v_637": [
+      {
+        "jp": "駅から電車に乗ります。",
+        "ka": "えき から でんしゃ に のります。",
+        "ro": "eki kara densha ni norimasu.",
+        "fr": "Je monte dans le train depuis la gare."
+      }
+    ],
+    "n5_v_638": [
+      {
+        "jp": "毎食後、歯を磨きます。",
+        "ka": "まいしょくご、 は を みがきます。",
+        "ro": "maishokugo, ha o migakimasu.",
+        "fr": "Je me brosse les dents après chaque repas."
+      }
+    ],
+    "n5_v_639": [
+      {
+        "jp": "週末に友達の家でパーティーをします。",
+        "ka": "しゅうまつ に ともだち の いえ で パーティー を します。",
+        "ro": "shuumatsu ni tomodachi no ie de paatii o shimasu.",
+        "fr": "Je fais une fête chez un ami le week-end."
+      }
+    ],
+    "n5_v_640": [
+      {
+        "jp": "「はい、分かりました。」",
+        "ka": "「はい、 わかりました。」",
+        "ro": "\"hai, wakarimashita.\"",
+        "fr": "\"Oui, j'ai compris.\""
+      }
+    ],
+    "n5_v_641": [
+      {
+        "jp": "テーブルの上に灰皿があります。",
+        "ka": "テーブル の うえ に はいざら が あります。",
+        "ro": "teeburu no ue ni haizara ga arimasu.",
+        "fr": "Il y a un cendrier sur la table."
+      }
+    ],
+    "n5_v_642": [
+      {
+        "jp": "ゆっくり部屋に入ってください。",
+        "ka": "ゆっくり へや に はいって ください。",
+        "ro": "yukkuri heya ni haitte kudasai.",
+        "fr": "Veuillez entrer doucement dans la pièce."
+      }
+    ],
+    "n5_v_643": [
+      {
+        "jp": "友達に葉書を書きました。",
+        "ka": "ともだち に はがき を かきました。",
+        "ro": "tomodachi ni hagaki o kakimashita.",
+        "fr": "J'ai écrit une carte postale à un ami."
+      }
+    ],
+    "n5_v_644": [
+      {
+        "jp": "新しいズボンを履きます。",
+        "ka": "あたらしい ズボン を はきます。",
+        "ro": "atarashii zubon o hakimasu.",
+        "fr": "J'enfile un nouveau pantalon."
+      }
+    ],
+    "n5_v_645": [
+      {
+        "jp": "大きな箱を開けます。",
+        "ka": "おおきな はこ を あけます。",
+        "ro": "ookina hako o akemasu.",
+        "fr": "J'ouvre la grande boîte."
+      }
+    ],
+    "n5_v_646": [
+      {
+        "jp": "川の上の橋を渡ります。",
+        "ka": "かわ の うえ の はし を わたります。",
+        "ro": "kawa no ue no hashi o watarimasu.",
+        "fr": "Je traverse le pont au-dessus de la rivière."
+      }
+    ],
+    "n5_v_647": [
+      {
+        "jp": "箸でご飯を食べます。",
+        "ka": "はし で ごはん を たべます。",
+        "ro": "hashi de gohan o tabemasu.",
+        "fr": "Je mange du riz avec des baguettes."
+      }
+    ],
+    "n5_v_648": [
+      {
+        "jp": "授業がもうすぐ始まります。",
+        "ka": "じぎょう が もうすぐ はじまります。",
+        "ro": "jigyou ga mousugu hajimarimasu.",
+        "fr": "Le cours va bientôt commencer."
+      }
+    ],
+    "n5_v_649": [
+      {
+        "jp": "本読みの初めを読みます。",
+        "ka": "ほんよみ の はじめ を よみます。",
+        "ro": "honyomi no hajime o yomimasu.",
+        "fr": "Je lis le début de la lecture."
+      }
+    ],
+    "n5_v_650": [
+      {
+        "jp": "日本へ行くのは初めてです。",
+        "ka": "にほん へ いく の は はじめて です。",
+        "ro": "nihon he iku no wa hajimete desu.",
+        "fr": "C'est la première fois que je vais au Japon."
+      }
+    ],
+    "n5_v_651": [
+      {
+        "jp": "公園の中を走ります。",
+        "ka": "こうえん の なか を はしります。",
+        "ro": "kouen no naka o hashirimasu.",
+        "fr": "Je cours à l'intérieur du parc."
+      }
+    ],
+    "n5_v_652": [
+      {
+        "jp": "バスに乗って学校に行きます。",
+        "ka": "バス に のって がっこう に いきます。",
+        "ro": "basu ni notte gakkou ni ikimasu.",
+        "fr": "Je prends le bus pour aller à l'école."
+      }
+    ],
+    "n5_v_653": [
+      {
+        "jp": "パンにバターを塗ります。",
+        "ka": "パン に バター を ぬります。",
+        "ro": "pan ni bataa o nurimasu.",
+        "fr": "Je beurre du pain."
+      }
+    ],
+    "n5_v_654": [
+      {
+        "jp": "姉は今年で二十歳になります。",
+        "ka": "あね は ことし で はたち に なります。",
+        "ro": "ane wa kotoshi de hatachi ni narimasu.",
+        "fr": "Ma sœur aînée aura vingt ans cette année."
+      }
+    ],
+    "n5_v_655": [
+      {
+        "jp": "父は毎日会社で働いています。",
+        "ka": "ちち は まいにち かいしゃ で はたらいて います。",
+        "ro": "chichi wa mainichi kaisha de hataraite imasu.",
+        "fr": "Mon père travaille tous les jours à l'entreprise."
+      }
+    ],
+    "n5_v_656": [
+      {
+        "jp": "今月の二十日に日本へ行きます。",
+        "ka": "こんげつ の はつか に にほん へ いきます。",
+        "ro": "kongetsu no hatsuka ni nihon he ikimasu.",
+        "fr": "Je vais au Japon le 20 de ce mois-ci."
+      }
+    ],
+    "n5_v_657": [
+      {
+        "jp": "庭にきれいな花が咲いています。",
+        "ka": "にわ に きれいな はな が さいて います。",
+        "ro": "niwa ni kireina hana ga saite imasu.",
+        "fr": "De jolies fleurs poussent dans le jardin."
+      }
+    ],
+    "n5_v_658": [
+      {
+        "jp": "風邪を引いて鼻が痛いです。",
+        "ka": "かぜ を ひいて はな が いたい です。",
+        "ro": "kaze o hiite hana ga itai desu.",
+        "fr": "J'ai attrapé un rhume et j'ai mal au nez."
+      }
+    ],
+    "n5_v_659": [
+      {
+        "jp": "友達と面白い話をしました。",
+        "ka": "ともだち と おもしろい はなし を しました。",
+        "ro": "tomodachi ni omoshiroi hanashi o shimashita.",
+        "fr": "J'ai eu une discussion intéressante avec un ami."
+      }
+    ],
+    "n5_v_660": [
+      {
+        "jp": "先生と日本語で話します。",
+        "ka": "せんせい と にほんご で はなします。",
+        "ro": "sensei to nihongo de hanashimasu.",
+        "fr": "Je parle en japonais avec le professeur."
+      }
+    ],
+    "n5_v_661": [
+      {
+        "jp": "母は台所で料理を作っています。",
+        "ka": "はは は だいどころ で りょうり を つくって います。",
+        "ro": "haha wa daidokoro de ryouri o tsukutte imasu.",
+        "fr": "Ma mère prépare la cuisine dans la cuisine."
+      }
+    ],
+    "n5_v_662": [
+      {
+        "jp": "毎朝早く起きます。",
+        "ka": "まいあさ はやく おきます。",
+        "ro": "maiasa hayaku okimasu.",
+        "fr": "Je me lève tôt tous les matins."
+      }
+    ],
+    "n5_v_663": [
+      {
+        "jp": "新幹線の電車は速いです。",
+        "ka": "しんかんせん の でんしゃ は はやい です。",
+        "ro": "shinkansen no densha wa hayai desu.",
+        "fr": "Le train Shinkansen est rapide."
+      }
+    ],
+    "n5_v_664": [
+      {
+        "jp": "春になると桜が咲きます。",
+        "ka": "はる に なると さくら が さきます。",
+        "ro": "haru ni naruto sakura ga sakimasu.",
+        "fr": "Quand le printemps arrive, les cerisiers fleurissent."
+      }
+    ],
+    "n5_v_665": [
+      {
+        "jp": "壁にポスターを貼ります。",
+        "ka": "かべ に ポスター を はります。",
+        "ro": "kabe ni posutaa o harimasu.",
+        "fr": "Je colle une affiche sur le mur."
+      }
+    ],
+    "n5_v_666": [
+      {
+        "jp": "今日は良い天気で晴れです。",
+        "ka": "きょう は よい てんき で はれ です。",
+        "ro": "kyou wa yoi tenki de hare desu.",
+        "fr": "Il fait beau temps aujourd'hui, c'est dégagé."
+      }
+    ],
+    "n5_v_667": [
+      {
+        "jp": "午後から空が晴れてきました。",
+        "ka": "ごご から そら が はれて きました。",
+        "ro": "gogo kara sora ga harete kimashita.",
+        "fr": "Le ciel a commencé à se dégager à partir de l'après-midi."
+      }
+    ],
+    "n5_v_668": [
+      {
+        "jp": "今は十時半です。",
+        "ka": "いま は じゅうじはん です。",
+        "ro": "ima wa jyuujihan desu.",
+        "fr": "Il est dix heures et demie maintenant."
+      }
+    ],
+    "n5_v_669": [
+      {
+        "jp": "晩になると寒くなります。",
+        "ka": "ばん に なると さむく なります。",
+        "ro": "ban ni naruto samuku narimasu.",
+        "fr": "Quand le soir arrive, il fait froid."
+      }
+    ],
+    "n5_v_670": [
+      {
+        "jp": "朝ご飯にパンを食べます。",
+        "ka": "あさごはん に パン を たべます。",
+        "ro": "asagohan ni pan o tabemasu.",
+        "fr": "Je mange du pain pour le petit-déjeuner."
+      }
+    ],
+    "n5_v_671": [
+      {
+        "jp": "ポケットにハンカチが入っています。",
+        "ka": "ポケット に ハンカチ が はいって います。",
+        "ro": "poketto ni hankachi ga haitte imasu.",
+        "fr": "Il y a un mouchoir dans la poche."
+      }
+    ],
+    "n5_v_672": [
+      {
+        "jp": "電話の番号を教えてください。",
+        "ka": "でんわ の ばんごう を おしえて ください。",
+        "ro": "denwa no bangou o oshiete kudasai.",
+        "fr": "Veuillez me donner votre numéro de téléphone."
+      }
+    ],
+    "n5_v_673": [
+      {
+        "jp": "毎晩七時に晩ご飯を食べます。",
+        "ka": "まいばん しちじ に ばんごはん を たべます。",
+        "ro": "maiban shichiji ni bangohan o tabemasu.",
+        "fr": "Je prends mon dîner à sept heures tous les soirs."
+      }
+    ],
+    "n5_v_674": [
+      {
+        "jp": "りんごを半分こに切ります。",
+        "ka": "りんご を はんぶんこ に きります。",
+        "ro": "ringo o hanbunko ni kirimasu.",
+        "fr": "Je coupe la pomme en deux moitiés."
+      }
+    ],
+    "n5_v_675": [
+      {
+        "jp": "太陽は東から昇ります。",
+        "ka": "たいよう は ひがし から のぼります。",
+        "ro": "taiyou wa higashi kara noborimasu.",
+        "fr": "Le soleil se lève à l'est."
+      }
+    ],
+    "n5_v_676": [
+      {
+        "jp": "部屋に猫が二匹います。",
+        "ka": "へや に ねこ が にひき います。",
+        "ro": "heya ni neko ga nihiki imasu.",
+        "fr": "Il y a deux chats dans la pièce."
+      }
+    ],
+    "n5_v_677": [
+      {
+        "jp": "ドアを強く引いて開けます。",
+        "ka": "ドア を つよく ひいて あけます。",
+        "ro": "doa o tsuyoku hiite akemasu.",
+        "fr": "Je tire fort sur la porte pour l'ouvrir."
+      }
+    ],
+    "n5_v_678": [
+      {
+        "jp": "週末にピアノを弾きます。",
+        "ka": "しゅうまつ に ピアノ を ひきます。",
+        "ro": "shuumatsu ni piano o hikimasu.",
+        "fr": "Je joue du piano le week-end."
+      }
+    ],
+    "n5_v_679": [
+      {
+        "jp": "この机は背が低いです。",
+        "ka": "この つくえ は せ が ひくい です。",
+        "ro": "kono tsukue wa se ga hikui desu.",
+        "fr": "Ce bureau est bas."
+      }
+    ],
+    "n5_v_680": [
+      {
+        "jp": "飛行機に乗って日本へ行きます。",
+        "ka": "ひこうき に のって にほん へ いきます。",
+        "ro": "hikouki ni notte nihon he ikimasu.",
+        "fr": "Je monte dans un avion pour aller au Japon."
+      }
+    ],
+    "n5_v_681": [
+      {
+        "jp": "角を左に曲がります。",
+        "ka": "かど を ひだり に まがります。",
+        "ro": "kado o hidari ni magarimasu.",
+        "fr": "Je tourne à gauche au coin de la rue."
+      }
+    ],
+    "n5_v_682": [
+      {
+        "jp": "公園に多くの人がいます。",
+        "ka": "こうえん に おおく の ひと が います。",
+        "ro": "kouen ni ooku no hito ga imasu.",
+        "fr": "Il y a beaucoup de gens dans le parc."
+      }
+    ],
+    "n5_v_683": [
+      {
+        "jp": "リンゴを一つください。",
+        "ka": "リンゴ を ひとつ ください。",
+        "ro": "ringo o hitotsu kudasai.",
+        "fr": "Donnez-moi une pomme, s'il vous plaît."
+      }
+    ],
+    "n5_v_684": [
+      {
+        "jp": "日本で一つきます。",
+        "ka": "にほん で ひとつき ます。",
+        "ro": "nihon de hitotsukimasu.",
+        "fr": "Je passe un mois au Japon."
+      }
+    ],
+    "n5_v_685": [
+      {
+        "jp": "部屋で一人で勉強します。",
+        "ka": "へや で ひとり で べんきょう します。",
+        "ro": "heya de hitori de benkyou shimasu.",
+        "fr": "J'étudie seul dans la pièce."
+      }
+    ],
+    "n5_v_686": [
+      {
+        "jp": "今日は暇ですから、映画を見ます。",
+        "ka": "きょう は ひま です から、 えいが を みます。",
+        "ro": "kyou wa hima desu kara, eiga o mimasu.",
+        "fr": "Comme je suis libre aujourd'hui, je regarde un film."
+      }
+    ],
+    "n5_v_687": [
+      {
+        "jp": "建物の表に名前が書いてあります。",
+        "ka": "たてもの の おもて に なまえ が かいて あります。",
+        "ro": "tatemono no omote ni namae ga kaite arimasu.",
+        "fr": "Le nom est écrit sur la façade du bâtiment."
+      }
+    ],
+    "n5_v_688": [
+      {
+        "jp": "風邪を引いたので病院に行きます。",
+        "ka": "かぜ を ひいた ので びょういん に いきます。",
+        "ro": "kaze o hiita node byouin ni ikimasu.",
+        "fr": "J'ai attrapé un rhume, alors je vais à l'hôpital."
+      }
+    ],
+    "n5_v_689": [
+      {
+        "jp": "病気で学校を休みました。",
+        "ka": "びょうき で がっこう を やすみました。",
+        "ro": "byouki de gakkou o yasumimashita.",
+        "fr": "J'ai raté l'école à cause d'une maladie."
+      }
+    ],
+    "n5_v_690": [
+      {
+        "jp": "この漢字のひらがなを書いてください。",
+        "ka": "この かんじ の ひらがな を かいて ください。",
+        "ro": "kono kanji no hiragana o kaite kudasai.",
+        "fr": "Veuillez écrire les hiraganas de ce kanji."
+      }
+    ],
+    "n5_v_691": [
+      {
+        "jp": "昼になると暖かくなります。",
+        "ka": "ひる に なると あたたかく なります。",
+        "ro": "hiru ni naruto atatakaku narimasu.",
+        "fr": "Quand le midi arrive, il fait plus chaud."
+      }
+    ],
+    "n5_v_692": [
+      {
+        "jp": "食堂で昼ご飯を食べます。",
+        "ka": "しょくどう で ひるごはん を たべます。",
+        "ro": "shokudou de hirugohan o tabemasu.",
+        "fr": "Je déjeune à la cantine."
+      }
+    ],
+    "n5_v_693": [
+      {
+        "jp": "この部屋は広くて明るいです。",
+        "ka": "この へや は ひろくて あかるい です。",
+        "ro": "kono heya wa hirokute akarui desu.",
+        "fr": "Cette pièce est spacieuse et lumineuse."
+      }
+    ],
+    "n5_v_694": [
+      {
+        "jp": "カメラにフィルムを入れます。",
+        "ka": "カメラ に フィルム を いれます。",
+        "ro": "kamera ni firumu o iremasu.",
+        "fr": "Je mets la pellicule dans l'appareil photo."
+      }
+    ],
+    "n5_v_695": [
+      {
+        "jp": "手紙を封筒に入れます。",
+        "ka": "てがみ を ふうとう に いれます。",
+        "ro": "tegami o fuutou ni iremasu.",
+        "fr": "Je mets la lettre dans l'enveloppe."
+      }
+    ],
+    "n5_v_696": [
+      {
+        "jp": "夏休みにプールで泳ぎます。",
+        "ka": "なつやすみ に プール で およぎます。",
+        "ro": "natsuyasumi ni puuru de oyogimasu.",
+        "fr": "Je nage à la piscine pendant les vacances d'été."
+      }
+    ],
+    "n5_v_697": [
+      {
+        "jp": "フォークでスパゲッティを食べます。",
+        "ka": "フォーク で スパゲッティ を たべます。",
+        "ro": "fooku de supagetthi o tabemasu.",
+        "fr": "Je mange des spaghettis avec une fourchette."
+      }
+    ],
+    "n5_v_698": [
+      {
+        "jp": "外で冷たい風が吹いています。",
+        "ka": "そと で つめたい かぜ が ふいて います。",
+        "ro": "soto de tsumetai kaze ga fuite imasu.",
+        "fr": "Un vent froid souffle dehors."
+      }
+    ],
+    "n5_v_699": [
+      {
+        "jp": "クローゼットに新しい服を掛けます。",
+        "ka": "クローゼット に あたらしい ふく を かけます。",
+        "ro": "kuroozetto ni atatarashii fuku o kakemasu.",
+        "fr": "Je suspends de nouveaux vêtements dans le placard."
+      }
+    ],
+    "n5_v_700": [
+      {
+        "jp": "ノートを二つ買いました。",
+        "ka": "ノート を ふたつ かいました。",
+        "ro": "nooto o futatsu kaimashita.",
+        "fr": "J'ai acheté deux cahiers."
+      }
+    ],
+    "n5_v_701": [
+      {
+        "jp": "夕食に豚肉の生姜焼きを作ります。",
+        "ka": "ゆうしょく に ぶたにく の しょうがやき を つくります。",
+        "ro": "yuushoku ni butaniku no shougayaki o tsukurimasu.",
+        "fr": "Je prépare du porc au gingembre pour le dîner."
+      }
+    ],
+    "n5_v_702": [
+      {
+        "jp": "レストランで二人で食事をします。",
+        "ka": "レストラン で ふたり で しょくじ を します。",
+        "ro": "resutoran de futari de shokuji o shimasu.",
+        "fr": "Nous dînons à deux au restaurant."
+      }
+    ],
+    "n5_v_703": [
+      {
+        "jp": "ホテルに二日間泊まります。",
+        "ka": "ホテル に ふつかかん とまります。",
+        "ro": "hoteru ni futsukakan tomarimasu.",
+        "fr": "Je reste à l'hôtel pendant deux jours."
+      }
+    ],
+    "n5_v_704": [
+      {
+        "jp": "彼は太いペンで字を書きます。",
+        "ka": "かれ は ふとい ペン で じ を かきます。",
+        "ro": "kare wa futoi pen de ji o kakimasu.",
+        "fr": "Il écrit les caractères avec un gros stylo."
+      }
+    ],
+    "n5_v_705": [
+      {
+        "jp": "冬になると雪が降ります。",
+        "ka": "ふゆ に なると ゆき が ふります。",
+        "ro": "fuyu ni naruto yuki ga furimasu.",
+        "fr": "Quand l'hiver arrive, il neige."
+      }
+    ],
+    "n5_v_706": [
+      {
+        "jp": "空から雨が降ってきました。",
+        "ka": "そら から あめ が ふって きました。",
+        "ro": "sora kara ame ga futte kimashita.",
+        "fr": "La pluie s'est mise à tomber du ciel."
+      }
+    ],
+    "n5_v_707": [
+      {
+        "jp": "これは私の古い自転車です。",
+        "ka": "これ は わたし の ふるい じてんしゃ です。",
+        "ro": "kore wa watashi no furui jitensha desu.",
+        "fr": "C'est mon vieux vélo."
+      }
+    ],
+    "n5_v_708": [
+      {
+        "jp": "夜にお風呂に入ります。",
+        "ka": "よる に おふろ に はいります。",
+        "ro": "yoru ni ofuro ni hairimasu.",
+        "fr": "Je prends un bain le soir."
+      }
+    ],
+    "n5_v_709": [
+      {
+        "jp": "教科書の文章を読みます。",
+        "ka": "きょうかしょ の ぶんしょう を よみます。",
+        "ro": "kyoukasho no bunshou o yomimasu.",
+        "fr": "Je lis le texte du manuel scolaire."
+      }
+    ],
+    "n5_v_710": [
+      {
+        "jp": "本を十ページまで読みました。",
+        "ka": "ほん を じゅうページ まで よみました。",
+        "ro": "hon o jyuupeeji made yomimashita.",
+        "fr": "J'ai lu le livre jusqu'à la page 10."
+      }
+    ],
+    "n5_v_711": [
+      {
+        "jp": "私は絵を描くのが下手です。",
+        "ka": "わたし は え を かく の が へた です。",
+        "ro": "watashi wa e o kaku no ga heta desu.",
+        "fr": "Je suis nul en dessin."
+      }
+    ],
+    "n5_v_712": [
+      {
+        "jp": "夜になるとベッドで寝ます。",
+        "ka": "よる に なると ベッド で ねます。",
+        "ro": "yoru ni naruto beddo de nemasu.",
+        "fr": "Je dors dans le lit quand le soir arrive."
+      }
+    ],
+    "n5_v_713": [
+      {
+        "jp": "私の部屋はとても広いです。",
+        "ka": "わたし の へや は とても ひろい です。",
+        "ro": "watashi no heya wa totemo hiroi desu.",
+        "fr": "Ma chambre est très spacieuse."
+      }
+    ],
+    "n5_v_714": [
+      {
+        "jp": "この辺に美味しいレストランがありますか。",
+        "ka": "この へん に おいしい レストラン が あります か。",
+        "ro": "kono hen ni oishii resutoran ga arimasu ka.",
+        "fr": "Y a-t-il un bon restaurant dans les environs ?"
+      }
+    ],
+    "n5_v_715": [
+      {
+        "jp": "ペンでノートに名前を書きます。",
+        "ka": "ペン で ノート に なまえ を かきます。",
+        "ro": "pen de nooto ni namae o kakimasu.",
+        "fr": "J'écris mon nom sur le cahier avec un stylo."
+      }
+    ],
+    "n5_v_716": [
+      {
+        "jp": "毎日日本語の勉強をします。",
+        "ka": "まいにち にほんご の べんきょう を します。",
+        "ro": "mainichi nihongo no benkyou o shimasu.",
+        "fr": "J'étudie le japonais tous les jours."
+      }
+    ],
+    "n5_v_717": [
+      {
+        "jp": "地下鉄は早くて便利です。",
+        "ka": "ちかてつ は はやくて べんり です。",
+        "ro": "chikatetsu wa hayakute benri desu.",
+        "fr": "Le métro est rapide et pratique."
+      }
+    ],
+    "n5_v_718": [
+      {
+        "jp": "外出する時、帽子をかぶります。",
+        "ka": "がいしゅつ する とき、 ぼうし を かぶります。",
+        "ro": "gaishutsu suru toki, boushi o kaburimasu.",
+        "fr": "Je mets un chapeau quand je sors."
+      }
+    ],
+    "n5_v_719": [
+      {
+        "jp": "ボールペンで手紙を書きます。",
+        "ka": "ボールペン で てがみ を かきます。",
+        "ro": "boorupen de tegami o kakimasu.",
+        "fr": "J'écris une lettre avec un stylo à bille."
+      }
+    ],
+    "n5_v_720": [
+      {
+        "jp": "ほかの本も見せてください。",
+        "ka": "ほか の ほん も みせて ください。",
+        "ro": "hoka no hon mo misete kudasai.",
+        "fr": "Montrez-moi d'autres livres aussi, s'il vous plaît."
+      }
+    ],
+    "n5_v_721": [
+      {
+        "jp": "ズボンのポケットに鍵が入っています。",
+        "ka": "ズボン の ポケット に かぎ が はいって います。",
+        "ro": "zubon no poketto ni kagi ga haitte imasu.",
+        "fr": "Il y a des clés dans la poche du pantalon."
+      }
+    ],
+    "n5_v_722": [
+      {
+        "jp": "新しいカメラが欲しいです。",
+        "ka": "あたらしい カメラ が ほしい です。",
+        "ro": "atarashii kamera ga hoshii desu.",
+        "fr": "Je veux un nouvel appareil photo."
+      }
+    ],
+    "n5_v_723": [
+      {
+        "jp": "郵便局の前にポストがあります。",
+        "ka": "ゆうびんきょく の まえ に ポスト が あります。",
+        "ro": "yuubinkyoku no mae ni posuto ga arimasu.",
+        "fr": "Il y a une boîte aux lettres devant la poste."
+      }
+    ],
+    "n5_v_724": [
+      {
+        "jp": "彼女は指が細いです。",
+        "ka": "かのじょ は ゆび が ほそい です。",
+        "ro": "kanojo wa yubi ga hosoi desu.",
+        "fr": "Elle a les doigts fins."
+      }
+    ],
+    "n5_v_725": [
+      {
+        "jp": "シャツのボタンが取れました。",
+        "ka": "シャツ の ボタン が とれました。",
+        "ro": "shatsu no botan ga toremashita.",
+        "fr": "Le bouton de la chemise s'est arraché."
+      }
+    ],
+    "n5_v_726": [
+      {
+        "jp": "旅行の間、ホテルの部屋に泊まります。",
+        "ka": "りょこう の あいだ、 ホテル の へや に とまります。",
+        "ro": "ryokou no aida, hotelu no heya ni tomarimasu.",
+        "fr": "Je reste dans une chambre d'hôtel pendant le voyage."
+      }
+    ],
+    "n5_v_727": [
+      {
+        "jp": "図書館で面白い本を借りました。",
+        "ka": "としょかん で おもしろい ほん を かりました。",
+        "ro": "toshokan de omoshiroi hon o karimashita.",
+        "fr": "J'ai emprunté un livre intéressant à la bibliothèque."
+      }
+    ],
+    "n5_v_728": [
+      {
+        "jp": "部屋の本棚に辞書が並んでいます。",
+        "ka": "へや の ほんだな に じしょ が ならんで います。",
+        "ro": "heya no hondana ni jisho ga narande imasu.",
+        "fr": "Des dictionnaires sont alignés sur l'étagère de la chambre."
+      }
+    ],
+    "n5_v_729": [
+      {
+        "jp": "それは本当の話ですか。",
+        "ka": "それ は ほんとう の はなし です か。",
+        "ro": "sore wa hontou no hanashi desu ka.",
+        "fr": "Est-ce une vraie histoire ?"
+      }
+    ],
+    "n5_v_730": [
+      {
+        "jp": "毎朝七時に起きます。",
+        "ka": "まいあさ しちじ に おきます。",
+        "ro": "maiasa shichiji ni okimasu.",
+        "fr": "Je me lève à sept heures tous les matins."
+      }
+    ],
+    "n5_v_731": [
+      {
+        "jp": "毎月日本語のテストがあります。",
+        "ka": "まいげつ にほんご の テスト が あります。",
+        "ro": "maigetsu nihongo no tesuto ga arimasu.",
+        "fr": "Il y a un test de japonais chaque mois."
+      }
+    ],
+    "n5_v_732": [
+      {
+        "jp": "毎週日曜日にテニスをします。",
+        "ka": "まいしゅう にちようび に テニス を します。",
+        "ro": "maishuu nichiyoubi ni tenisu o shimasu.",
+        "fr": "Je joue au tennis chaque dimanche."
+      }
+    ],
+    "n5_v_733": [
+      {
+        "jp": "毎日漢字の練習をします。",
+        "ka": "まいにち かんじ の れんしゅう を します。",
+        "ro": "mainichi kanji no renshuu o shimasu.",
+        "fr": "Je pratique les kanjis tous les jours."
+      }
+    ],
+    "n5_v_734": [
+      {
+        "jp": "毎年夏休みに海へ行きます。",
+        "ka": "まいとし なつやすみ に うみ へ いきます。",
+        "ro": "maitoshi natsuyasumi ni umi he ikimasu.",
+        "fr": "Je vais à la mer chaque année pendant les vacances d'été."
+      }
+    ],
+    "n5_v_735": [
+      {
+        "jp": "毎晩寝る前に本を読みます。",
+        "ka": "まいばん ねる まえ に ほん を よみます。",
+        "ro": "maiban neru mae ni hon o yomimasu.",
+        "fr": "Je lis un livre tous les soirs avant de me coucher."
+      }
+    ],
+    "n5_v_736": [
+      {
+        "jp": "駅の前に大きな木があります。",
+        "ka": "えき の まえ に おおきな き が あります。",
+        "ro": "eki no mae ni ookina ki ga arimasu.",
+        "fr": "Il y a un grand arbre devant la gare."
+      }
+    ],
+    "n5_v_737": [
+      {
+        "jp": "次の角を右に曲がります。",
+        "ka": "つぎ の かど を みぎ に まがります。",
+        "ro": "tsugi no kado o migi ni magarimasu.",
+        "fr": "Je tourne à droite au prochain coin de rue."
+      }
+    ],
+    "n5_v_738": [
+      {
+        "jp": "この料理はちょっとまずいです。",
+        "ka": "この りょうり は ちょっと まずい です。",
+        "ro": "kono ryouri wa chotto mazui desu.",
+        "fr": "Ce plat a un peu mauvais goût."
+      }
+    ],
+    "n5_v_739": [
+      {
+        "jp": "また日本へ行きたいです。",
+        "ka": "また にほん へ いきたい です。",
+        "ro": "mata nihon he ikitai desu.",
+        "fr": "Je veux aller au Japon à nouveau."
+      }
+    ],
+    "n5_v_740": [
+      {
+        "jp": "宿題はまだ終わっていません。",
+        "ka": "しゅくだい は まだ おわって いません。",
+        "ro": "shukudai wa mada owatte imasen.",
+        "fr": "Je n'ai pas encore fini mes devoirs."
+      }
+    ],
+    "n5_v_741": [
+      {
+        "jp": "私の住んでいる町は静かです。",
+        "ka": "わたし の すんで いる まち は しずか です。",
+        "ro": "watashi no sunde iru machi wa shizuka desu.",
+        "fr": "La ville où j'habite est calme."
+      }
+    ],
+    "n5_v_742": [
+      {
+        "jp": "駅の前で友達を待っています。",
+        "ka": "えき の まえ で ともだち を まって います。",
+        "ro": "eki no mae de tomodachi o matte imasu.",
+        "fr": "J'attends un ami devant la gare."
+      }
+    ],
+    "n5_v_743": [
+      {
+        "jp": "この道をまっすぐ行ってください。",
+        "ka": "この みち を まっすぐ いって ください。",
+        "ro": "kono michi o massugu itte kudasai.",
+        "fr": "Veuillez aller tout droit sur cette route."
+      }
+    ],
+    "n5_v_744": [
+      {
+        "jp": "マッチでキャンドルに火をつけます。",
+        "ka": "マッチ で キャンドル に ひ を つけます。",
+        "ro": "matchi de kyandoru ni hi o tsukemasu.",
+        "fr": "J'allume une bougie avec une allumette."
+      }
+    ],
+    "n5_v_745": [
+      {
+        "jp": "暑いので窓を開けます。",
+        "ka": "あつい ので まど を あけます。",
+        "ro": "atsui node mado o akemasu.",
+        "fr": "Il fait chaud, alors j'ouvre la fenêtre."
+      }
+    ],
+    "n5_v_746": [
+      {
+        "jp": "テーブルの上に丸いケーキがあります。",
+        "ka": "テーブル の うえ に まるい ケーキ が あります。",
+        "ro": "teeburu no ue ni marui keeki ga arimasu.",
+        "fr": "Il y a un gâteau rond sur la table."
+      }
+    ],
+    "n5_v_747": [
+      {
+        "jp": "このカメラは一万円です。",
+        "ka": "この カメラ は いちまんえん です。",
+        "ro": "kono kamera wa ichimanen desu.",
+        "fr": "Cet appareil photo coûte dix mille yens."
+      }
+    ],
+    "n5_v_748": [
+      {
+        "jp": "万年筆で手紙を書きます。",
+        "ka": "まんねんひつ で てがみ を かきます。",
+        "ro": "mannenhitsu de tegami o kakimasu.",
+        "fr": "J'écris une lettre avec un stylo-plume."
+      }
+    ],
+    "n5_v_749": [
+      {
+        "jp": "毎朝、歯をきれいに磨きます。",
+        "ka": "まいあさ、 は を きれいに みがきます。",
+        "ro": "maiasa, ha o kirei ni migakimasu.",
+        "fr": "Je me brosse soigneusement les dents tous les matins."
+      }
+    ],
+    "n5_v_750": [
+      {
+        "jp": "次の角を右に曲がってください。",
+        "ka": "つぎ の かど を みぎ に まがって ください。",
+        "ro": "tsugi no kado o migi ni magatte kudasai.",
+        "fr": "Veuillez tourner à droite au prochain coin de rue."
+      }
+    ]
+  },
+  "grammar": {
+    "n5_g_1_ex1": {
+      "jp": "私は学生です。",
+      "ka": "わたし は がくせい です。",
+      "ro": "watashi wa gakusei desu.",
+      "fr": "Je suis étudiant."
+    },
+    "n5_g_1_ex2": {
+      "jp": "これはペンです。",
+      "ka": "これ は ペン です。",
+      "ro": "kore wa pen desu.",
+      "fr": "Ceci est un stylo."
+    },
+    "n5_g_2_ex1": {
+      "jp": "私は学生ではありません。",
+      "ka": "わたし は がくせい で は ありません。",
+      "ro": "watashi wa gakusei de wa arimasen.",
+      "fr": "Je ne suis pas étudiant."
+    },
+    "n5_g_2_ex2": {
+      "jp": "それはペンじゃないです。",
+      "ka": "それ は ペン じゃ ない です。",
+      "ro": "sore wa pen ja nai desu.",
+      "fr": "Ce n'est pas un stylo."
+    },
+    "n5_g_3_ex1": {
+      "jp": "昨日は学生でした。",
+      "ka": "きのう は がくせい でした。",
+      "ro": "kinou wa gakusei deshita.",
+      "fr": "J'étais étudiant hier."
+    },
+    "n5_g_4_ex1": {
+      "jp": "毎日勉強します。",
+      "ka": "まいにち べんきょう します。",
+      "ro": "mainichi benkyou shimasu.",
+      "fr": "J'étudie chaque jour."
+    },
+    "n5_g_4_ex2": {
+      "jp": "明日学校に行きます。",
+      "ka": "あした がっこう に いきます。",
+      "ro": "ashita gakkou ni ikimasu.",
+      "fr": "Demain, je vais à l'école."
+    },
+    "n5_g_5_ex1": {
+      "jp": "肉を食べません。",
+      "ka": "にく を たべません。",
+      "ro": "niku o tabemasen.",
+      "fr": "Je ne mange pas de viande."
+    },
+    "n5_g_6_ex1": {
+      "jp": "昨日本を読みました。",
+      "ka": "きのう ほん を よみました。",
+      "ro": "kinou hon o yomimashita.",
+      "fr": "J'ai lu un livre hier."
+    },
+    "n5_g_7_ex1": {
+      "jp": "今朝朝ご飯を食べませんでした。",
+      "ka": "けさ あさごはん を たべませんでした。",
+      "ro": "kesa asagohan o tabemasen deshita.",
+      "fr": "Je n'ai pas pris le petit-déjeuner ce matin."
+    },
+    "n5_g_8_ex1": {
+      "jp": "私はフランス人です。",
+      "ka": "わたし は フランスじん です。",
+      "ro": "watashi wa furansujin desu.",
+      "fr": "En ce qui me concerne, je suis français."
+    },
+    "n5_g_8_ex2": {
+      "jp": "これは私の本です。",
+      "ka": "これ は わたし の ほん です。",
+      "ro": "kore wa watashi no hon desu.",
+      "fr": "Ceci est mon livre."
+    },
+    "n5_g_9_ex1": {
+      "jp": "猫がいます。",
+      "ka": "ねこ が います。",
+      "ro": "neko ga imasu.",
+      "fr": "Il y a un chat."
+    },
+    "n5_g_9_ex2": {
+      "jp": "日本語は難しいですが、面白いです。",
+      "ka": "にほんご は むずかしい です が、 おもしろい です。",
+      "ro": "nihongo wa muzukashii desu ga, omoshiroi desu.",
+      "fr": "Le japonais est difficile, mais c'est intéressant."
+    },
+    "n5_g_10_ex1": {
+      "jp": "りんごを食べます。",
+      "ka": "りんご を たべます。",
+      "ro": "ringo o tabemasu.",
+      "fr": "Je mange une pomme."
+    },
+    "n5_g_11_ex1": {
+      "jp": "学校に行きます。",
+      "ka": "がっこう に いきます。",
+      "ro": "gakkou ni ikimasu.",
+      "fr": "Je vais à l'école."
+    },
+    "n5_g_11_ex2": {
+      "jp": "七時に起きます。",
+      "ka": "しちじ に おきます。",
+      "ro": "shichiji ni okimasu.",
+      "fr": "Je me lève à sept heures."
+    },
+    "n5_g_11_ex3": {
+      "jp": "部屋に猫がいます。",
+      "ka": "へや に ねこ が います。",
+      "ro": "heya ni neko ga imasu.",
+      "fr": "Il y a un chat dans la pièce."
+    },
+    "n5_g_12_ex1": {
+      "jp": "図書館で勉強します。",
+      "ka": "としょかん で べんきょう します。",
+      "ro": "toshokan de benkyou shimasu.",
+      "fr": "J'étudie à la bibliothèque."
+    },
+    "n5_g_12_ex2": {
+      "jp": "日本語で話します。",
+      "ka": "にほんご で はなします。",
+      "ro": "nihongo de hanashimasu.",
+      "fr": "Je parle en japonais."
+    },
+    "n5_g_13_ex1": {
+      "jp": "日本へ行きます。",
+      "ka": "にほん へ いきます。",
+      "ro": "nihon he ikimasu.",
+      "fr": "Je vais vers le Japon."
+    },
+    "n5_g_14_ex1": {
+      "jp": "友達と映画を見ます。",
+      "ka": "ともだち と えいが を みます。",
+      "ro": "tomodachi to eiga o mimasu.",
+      "fr": "Je regarde un film avec un ami."
+    },
+    "n5_g_14_ex2": {
+      "jp": "ペンとノートを買いました。",
+      "ka": "ペン と ノート を かいました。",
+      "ro": "pen to nooto o kaimashita.",
+      "fr": "J'ai acheté un stylo et un cahier."
+    },
+    "n5_g_15_ex1": {
+      "jp": "私も学生です。",
+      "ka": "わたし も がくせい です。",
+      "ro": "watashi mo gakusei desu.",
+      "fr": "Je suis étudiant aussi."
+    },
+    "n5_g_16_ex1": {
+      "jp": "これは私の本です。",
+      "ka": "これ は わたし の ほん です。",
+      "ro": "kore wa watashi no hon desu.",
+      "fr": "Ceci est mon livre."
+    },
+    "n5_g_16_ex2": {
+      "jp": "日本語の本を読みます。",
+      "ka": "にほんご の ほん を よみます。",
+      "ro": "nihongo no hon o yomimashita.",
+      "fr": "Je lis un livre de japonais."
+    },
+    "n5_g_17_ex1": {
+      "jp": "あなたは学生ですか。",
+      "ka": "あなた は がくせい です か。",
+      "ro": "anata wa gakusei desu ka.",
+      "fr": "Êtes-vous étudiant ?"
+    },
+    "n5_g_18_ex1": {
+      "jp": "今日はいい天気ですね。",
+      "ka": "きょう は いい てんき です ね。",
+      "ro": "kyou wa ii tenki desu ne.",
+      "fr": "Il fait beau aujourd'hui, n'est-ce pas ?"
+    },
+    "n5_g_19_ex1": {
+      "jp": "この本は面白いですよ。",
+      "ka": "この ほん は おもしろい です よ。",
+      "ro": "kono hon wa omoshiroi desu yo.",
+      "fr": "Ce livre est intéressant, je t'assure."
+    },
+    "n5_g_20_ex1": {
+      "jp": "東京から来ました。",
+      "ka": "とうきょう から 来ました。",
+      "ro": "toukyou kara kimashita.",
+      "fr": "Je viens de Tokyo."
+    },
+    "n5_g_20_ex2": {
+      "jp": "時間がないから、走りません。",
+      "ka": "じかん が ない から、 はしりません。",
+      "ro": "jikan ga nai kara, hashirimasen.",
+      "fr": "Puisque je n'ai pas le temps, je ne cours pas."
+    },
+    "n5_g_21_ex1": {
+      "jp": "五時まで勉強します。",
+      "ka": "ごじ まで べんきょう します。",
+      "ro": "goji made benkyou shimasu.",
+      "fr": "J'étudie jusqu'à cinq heures."
+    },
+    "n5_g_22_ex1": {
+      "jp": "りんごよりバナナが好きです。",
+      "ka": "りんご より バナナ が すき です。",
+      "ro": "ringo yori banana ga suki desu.",
+      "fr": "Je préfère les bananes aux pommes."
+    },
+    "n5_g_23_ex1": {
+      "jp": "りんごを一つだけ食べます。",
+      "ka": "りんご を ひとつ だけ たべます。",
+      "ro": "ringo o hitotsu dake tabemasu.",
+      "fr": "Je ne mange qu'une seule pomme."
+    },
+    "n5_g_24_ex1": {
+      "jp": "七時ごろに起きます。",
+      "ka": "しちじ ごろ に おきます。",
+      "ro": "shichiji goro ni okimasu.",
+      "fr": "Je me lève vers sept heures."
+    },
+    "n5_g_25_ex1": {
+      "jp": "りんごを三つくらい食べます。",
+      "ka": "りんご を みっつ ぐらい たべます。",
+      "ro": "ringo o mittsu gurai tabemasu.",
+      "fr": "Je mange environ trois pommes."
+    },
+    "n5_g_26_ex1": {
+      "jp": "机の上にペンやノートがあります。",
+      "ka": "つくえ の うえ に ペン や ノート が あります。",
+      "ro": "tsukue no ue ni pen ya nooto ga arimasu.",
+      "fr": "Il y a des stylos et des cahiers sur le bureau (entre autres)."
+    },
+    "n5_g_27_ex1": {
+      "jp": "りんごやバナナなどを食べます。",
+      "ka": "りんご や バナナ など を たべます。",
+      "ro": "ringo ya banana nado o tabemasu.",
+      "fr": "Je mange des pommes, des bananes, etc."
+    },
+    "n5_g_28_ex1": {
+      "jp": "この本は新しいです。",
+      "ka": "この ほん は あたらしい です。",
+      "ro": "kono hon wa atarashii desu.",
+      "fr": "Ce livre est neuf."
+    },
+    "n5_g_28_ex2": {
+      "jp": "この部屋は大きくないです。",
+      "ka": "この へや は おおく ない です。",
+      "ro": "kono heya wa ooku nai desu.",
+      "fr": "Cette pièce n'est pas grande."
+    },
+    "n5_g_29_ex1": {
+      "jp": "昨日の映画は面白かったです。",
+      "ka": "きのう の えいが は おもしろかった です。",
+      "ro": "kinou no eiga wa omoshirokatta desu.",
+      "fr": "Le film d'hier était intéressant."
+    },
+    "n5_g_29_ex2": {
+      "jp": "昨日の天気は良くなかったです。",
+      "ka": "きのう の てんき は よくなかった です。",
+      "ro": "kinou no tenki wa yokunakatta desu.",
+      "fr": "Le temps n'était pas beau hier."
+    },
+    "n5_g_30_ex1": {
+      "jp": "このまちは静かでした。",
+      "ka": "この まち は しずか でした。",
+      "ro": "kono machi wa shizuka deshita.",
+      "fr": "Cette ville était calme."
+    },
+    "n5_g_31_ex1": {
+      "jp": "部屋に机があります。",
+      "ka": "へや に つくえ が あります。",
+      "ro": "heya ni tsukue ga arimasu.",
+      "fr": "Il y a un bureau dans la pièce."
+    },
+    "n5_g_32_ex1": {
+      "jp": "庭に猫がいます。",
+      "ka": "にわ に ねこ が います。",
+      "ro": "niwa ni neko ga imasu.",
+      "fr": "Il y a un chat dans le jardin."
+    },
+    "n5_g_33_ex1": {
+      "jp": "日本へ行きたいです。",
+      "ka": "にほん へ いきたい です。",
+      "ro": "nihon he ikitai desu.",
+      "fr": "Je veux aller au Japon."
+    },
+    "n5_g_34_ex1": {
+      "jp": "明日学校に行きます。",
+      "ka": "あした がっこう に いきます。",
+      "ro": "ashita gakkou ni ikimasu.",
+      "fr": "Demain, je vais à l'école."
+    },
+    "n5_g_35_ex1": {
+      "jp": "本を買いに行きます。",
+      "ka": "ほん を かい に いきます。",
+      "ro": "hon o kai ni ikimasu.",
+      "fr": "Je vais acheter un livre."
+    },
+    "n5_g_36_ex1": {
+      "jp": "ここに名前を書いてください。",
+      "ka": "ここ に なまえ を かいて ください。",
+      "ro": "koko ni namae o kaite kudasai.",
+      "fr": "Veuillez écrire votre nom ici."
+    },
+    "n5_g_37_ex1": {
+      "jp": "今本を読んでいます。",
+      "ka": "いま ほん を よんで います。",
+      "ro": "ima hon o yonde imasu.",
+      "fr": "Je suis en train de lire un livre."
+    },
+    "n5_g_37_ex2": {
+      "jp": "東京に住んでいます。",
+      "ka": "とうきょう に すんで います。",
+      "ro": "toukyou ni sunde imasu.",
+      "fr": "J'habite à Tokyo."
+    },
+    "n5_g_38_ex1": {
+      "jp": "ここで写真を撮ってもいいです。",
+      "ka": "ここ で しゃしん を とっても いい です。",
+      "ro": "koko de shashin o totte mo ii desu.",
+      "fr": "On peut prendre des photos ici."
+    },
+    "n5_g_39_ex1": {
+      "jp": "ここで写真を撮ってははいけません。",
+      "ka": "ここ で しゃしん を とって は いけません。",
+      "ro": "koko de shashin o totte wa ikemasen.",
+      "fr": "Il est interdit de prendre des photos ici."
+    },
+    "n5_g_40_ex1": {
+      "jp": "手を洗ってからご飯を食べます。",
+      "ka": "て を あらって から ごはん を たべます。",
+      "ro": "te o aratte kara gohan o tabemasu.",
+      "fr": "Je mange après m'être lavé les mains."
+    },
+    "n5_g_41_ex1": {
+      "jp": "朝起きて、顔を洗います。",
+      "ka": "あさ おきて、 かお を あらいます。",
+      "ro": "asa okite, kao o araimasu.",
+      "fr": "Je me lève le matin et je me lave le visage."
+    },
+    "n5_g_42_ex1": {
+      "jp": "ここで写真を撮らないでください。",
+      "ka": "ここ で しゃしん を とらない で ください。",
+      "ro": "koko de shashin o toranai de kudasai.",
+      "fr": "Veuillez ne pas prendre de photos ici."
+    },
+    "n5_g_43_ex1": {
+      "jp": "毎日勉強しなければなりません。",
+      "ka": "まいち べんきょう しなければ なりません。",
+      "ro": "mainichi benkyou shinakereba narimasen.",
+      "fr": "Je dois étudier tous les jours."
+    },
+    "n5_g_44_ex1": {
+      "jp": "明日早く起きなくてもいいです。",
+      "ka": "あした はやく おきなくても いい です。",
+      "ro": "ashita hayaku okinakute mo ii desu.",
+      "fr": "Demain, il n'est pas nécessaire de se lever tôt."
+    },
+    "n5_g_45_ex1": {
+      "jp": "本を読むのが好きです。",
+      "ka": "ほん を よむ の が すき です。",
+      "ro": "hon o yomu no ga suki desu.",
+      "fr": "J'aime lire des livres."
+    },
+    "n5_g_46_ex1": {
+      "jp": "漢字を読むことができます。",
+      "ka": "かんじ を よむ こと が できます。",
+      "ro": "kanji o yomu koto gaできます.",
+      "fr": "Je sais lire les kanjis."
+    },
+    "n5_g_47_ex1": {
+      "jp": "寝る前に本を読みます。",
+      "ka": "ねる まえ に ほん を よみます。",
+      "ro": "neru mae ni hon o yomimasu.",
+      "fr": "Je lis un livre avant de dormir."
+    },
+    "n5_g_48_ex1": {
+      "jp": "日本に行ったことがあります。",
+      "ka": "にほん に いった こと が あります。",
+      "ro": "nihon ni itta koto ga arimasu.",
+      "fr": "Je suis déjà allé au Japon."
+    },
+    "n5_g_49_ex1": {
+      "jp": "日曜日に本を読んだり、テレビを見たりします。",
+      "ka": "にちようび に ほん を よんだり、 テレビ を みたり します。",
+      "ro": "nichiyoubi ni hon o yondari, terebi o mitari shimasu.",
+      "fr": "Le dimanche, je lis des livres, je regarde la télévision, etc."
+    },
+    "n5_g_50_ex1": {
+      "jp": "薬を飲んだほうがいいです。",
+      "ka": "くすり を のんだ ほうが いい です。",
+      "ro": "kusuri o nonda hou ga ii desu.",
+      "fr": "Il vaut mieux prendre des médicaments."
+    },
+    "n5_g_51_ex1": {
+      "jp": "明日は雨でしょう。",
+      "ka": "あした は あめ でしょう。",
+      "ro": "ashita wa ame deshou.",
+      "fr": "Il pleuvra probablement demain."
+    },
+    "n5_g_52_ex1": {
+      "jp": "来年、二十歳になります。",
+      "ka": "らいねん、 はたち に なります。",
+      "ro": "rainen, hatachi ni narimasu.",
+      "fr": "L'année prochaine, j'aurai vingt ans (je deviendrai vingtenaire)."
+    },
+    "n5_g_52_ex2": {
+      "jp": "空がだんだん青くなります。",
+      "ka": "そら が だんだん あおく なります。",
+      "ro": "sora ga dandan aoku narimasu.",
+      "fr": "Le ciel devient progressivement bleu."
+    },
+    "n5_g_53_ex1": {
+      "jp": "この料理は辛すぎます。",
+      "ka": "この りょうり は から すぎます。",
+      "ro": "kono ryouri wa kara sugimasu.",
+      "fr": "Ce plat est trop épicé."
+    },
+    "n5_g_54_ex1": {
+      "jp": "音楽を聞きながら勉強します。",
+      "ka": "おんがく を ききながら べんきょう します。",
+      "ro": "ongaku o kikinagara benkyou shimasu.",
+      "fr": "J'étudie tout en écoutant de la musique."
+    },
+    "n5_g_55_ex1": {
+      "jp": "きれいな花ですね。",
+      "ka": "きれい な はな です ね。",
+      "ro": "kirei na hana desu ne.",
+      "fr": "C'est une jolie fleur, n'est-ce pas ?"
+    },
+    "n5_g_56_ex1": {
+      "jp": "東京は京都より大きいです。",
+      "ka": "とうきょう は きょうと より おおきい です。",
+      "ro": "toukyou wa kyouto yori ookii desu.",
+      "fr": "Tokyo est plus grand que Kyoto."
+    },
+    "n5_g_57_ex1": {
+      "jp": "りんご ど バナナ と どちらが 好きですか。",
+      "ka": "りんご と バナナ と どちら が すき です か。",
+      "ro": "ringo to banana to dochira ga suki desu ka.",
+      "fr": "Entre la pomme et la banane, laquelle préférez-vous ?"
+    },
+    "n5_g_58_ex1": {
+      "jp": "私はバナナのほうが好きです。",
+      "ka": "わたし は バナナ の ほうが すき です。",
+      "ro": "watashi wa banana no hou ga suki desu.",
+      "fr": "Je préfère les bananes."
+    },
+    "n5_g_59_ex1": {
+      "jp": "果物の中でりんごが一番好きです。",
+      "ka": "くだもの の なか で りんご が いちばん すき です。",
+      "ro": "kudamono no naka de ringo ga ichiban suki desu.",
+      "fr": "Parmi les fruits, c'est la pomme que je préfère."
+    },
+    "n5_g_60_ex1": {
+      "jp": "来週、日本へ行くつもりです。",
+      "ka": "らいしゅう、 にほん へ いく つもり です。",
+      "ro": "raishuu, nihon he iku tsumori desu.",
+      "fr": "J'ai l'intention d'aller au Japon la semaine prochaine."
+    },
+    "n5_g_61_ex1": {
+      "jp": "部屋をきれいにします。",
+      "ka": "へや を きれい に します。",
+      "ro": "heya o kirei ni shimasu.",
+      "fr": "Je nettoie la pièce (je la rends propre)."
+    },
+    "n5_g_61_ex2": {
+      "jp": "髪を短くします。",
+      "ka": "かみ を みじかく します。",
+      "ro": "kami o mijikaku shimasu.",
+      "fr": "Je me coupe les cheveux court (je les raccourcis)."
+    },
+    "n5_g_62_ex1": {
+      "jp": "ドアが開きます。",
+      "ka": "ドア が あきます。",
+      "ro": "doa ga akimasu.",
+      "fr": "La porte s'ouvre."
+    },
+    "n5_g_62_ex2": {
+      "jp": "ドアを開けます。",
+      "ka": "ドア を あけます。",
+      "ro": "doa o akemasu.",
+      "fr": "J'ouvre la porte."
+    },
+    "n5_g_63_ex1": {
+      "jp": "「明日行きます」と言いました。",
+      "ka": "「あした いきます」 と いいました。",
+      "ro": "\"ashita ikimasu\" to iimashita.",
+      "fr": "Il a dit : « J'irai demain »."
+    },
+    "n5_g_64_ex1": {
+      "jp": "明日は雨が降ると思います。",
+      "ka": "あした は あめ が ふる と おもいます。",
+      "ro": "ashita wa ame ga furu to omoimasu.",
+      "fr": "Je pense qu'il pleuvra demain."
+    },
+    "n5_g_65_ex1": {
+      "jp": "彼は来るでしょう。",
+      "ka": "かれ は くる でしょう。",
+      "ro": "kare wa kuru deshou.",
+      "fr": "Il viendra probablement."
+    },
+    "n5_g_66_ex1": {
+      "jp": "時間がありませんからです。",
+      "ka": "じかん が ありません から です。",
+      "ro": "jikan ga arimasen kara desu.",
+      "fr": "C'est parce que je n'ai pas le temps."
+    },
+    "n5_g_67_ex1": {
+      "jp": "勉強しましたが、難しかったです。",
+      "ka": "べんきょう しましたが、 むずかしかった です。",
+      "ro": "benkyou shimashita ga, muzukashikatta desu.",
+      "fr": "J'ai étudié, mais c'était difficile."
+    },
+    "n5_g_68_ex1": {
+      "jp": "暇なとき、本を読みます。",
+      "ka": "ひま な とき、 ほん を よみます。",
+      "ro": "hima na toki, hon o yomimasu.",
+      "fr": "Quand j'ai du temps libre, je lis des livres."
+    },
+    "n5_g_69_ex1": {
+      "jp": "食べたあとで、薬を飲みます。",
+      "ka": "たべた あと で、 くすり を のみます。",
+      "ro": "tabeta ato de, kusuri o nomimasu.",
+      "fr": "Après avoir mangé, je prends des médicaments."
+    },
+    "n5_g_70_ex1": {
+      "jp": "漢字の書き方を教えてください。",
+      "ka": "かんじ の かきかた を おしえて ください。",
+      "ro": "kanji no kakikata o oshiete kudasai.",
+      "fr": "Veuillez m'enseigner la façon d'écrire les kanjis."
+    },
+    "n5_g_71_ex1": {
+      "jp": "この漢字は書きやすいです。",
+      "ka": "この かんじ は かきやすい です。",
+      "ro": "kono kanji wa kakiyasui desu.",
+      "fr": "Ce kanji est facile à écrire."
+    },
+    "n5_g_71_ex2": {
+      "jp": "この漢字は書きにくいです。",
+      "ka": "この かんじ は かきにくい です。",
+      "ro": "kono kanji wa kakinikui desu.",
+      "fr": "Ce kanji est difficile à écrire."
+    },
+    "n5_g_72_ex1": {
+      "jp": "友達に本をあげました。",
+      "ka": "ともだち に ほん を あげました。",
+      "ro": "tomodachi ni hon o agemashita.",
+      "fr": "J'ai offert un livre à un ami."
+    },
+    "n5_g_72_ex2": {
+      "jp": "友達から本をもらいました。",
+      "ka": "ともだち から ほん を もらいました。",
+      "ro": "tomodachi kara hon o moraimashita.",
+      "fr": "J'ai reçu un livre d'un ami."
+    },
+    "n5_g_72_ex3": {
+      "jp": "友達が本をくれました。",
+      "ka": "ともだち が ほん を くれました。",
+      "ro": "tomodachi ga hon o kuremashita.",
+      "fr": "Un ami m'a donné un livre."
+    },
+    "n5_g_73_ex1": {
+      "jp": "日本語を教えてあげました。",
+      "ka": "にほんご を おしえて あげました。",
+      "ro": "nihongo o oshiete agemashita.",
+      "fr": "Je lui ai enseigné le japonais (je lui ai fait ce service)."
+    },
+    "n5_g_74_ex1": {
+      "jp": "このケーキは美味しそうです。",
+      "ka": "この ケーキ は おいしそう です。",
+      "ro": "kono keeki wa oishisou desu.",
+      "fr": "Ce gâteau a l'air délicieux."
+    },
+    "n5_g_75_ex1": {
+      "jp": "宿題はまだ終わっていません。",
+      "ka": "しゅくだい は まだ おわって いません。",
+      "ro": "shukudai wa mada owatte imasen.",
+      "fr": "Je n'ai pas encore terminé mes devoirs."
+    }
+  }
+}
