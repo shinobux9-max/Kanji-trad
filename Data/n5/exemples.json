@@ -1,0 +1,1504 @@
+{
+  "kanji": {
+    "一": [
+      {
+        "jp": "一人で行きます。",
+        "ka": "ひとり で いきます。",
+        "ro": "hitori de ikimasu.",
+        "fr": "Je vais seul."
+      },
+      {
+        "jp": "一つください。",
+        "ka": "ひとつ ください。",
+        "ro": "hitotsu kudasai.",
+        "fr": "Donnez-m'en un."
+      }
+    ],
+    "二": [
+      {
+        "jp": "二日間です。",
+        "ka": "ふつか かん です。",
+        "ro": "futsuka kan desu.",
+        "fr": "C'est deux jours."
+      },
+      {
+        "jp": "二人がいます。",
+        "ka": "ふたり が います。",
+        "ro": "futari ga imasu.",
+        "fr": "Il y a deux personnes."
+      }
+    ],
+    "三": [
+      {
+        "jp": "三時に行きましょう。",
+        "ka": "さんじ に いきましょう。",
+        "ro": "sanji ni ikimashou.",
+        "fr": "Allons-y à trois heures."
+      },
+      {
+        "jp": "りんごを三つ買いました。",
+        "ka": "りんご を みっつ かいました。",
+        "ro": "ringo o mittsu kaimashita.",
+        "fr": "J'ai acheté trois pommes."
+      }
+    ],
+    "四": [
+      {
+        "jp": "四月は春です。",
+        "ka": "しがつ は はる です。",
+        "ro": "shigatsu wa haru desu.",
+        "fr": "Avril, c'est le printemps."
+      },
+      {
+        "jp": "みかんが四つあります。",
+        "ka": "みかん が よっつ あります。",
+        "ro": "mikan ga yottsu arimasu.",
+        "fr": "Il y a quatre mandarines."
+      }
+    ],
+    "五": [
+      {
+        "jp": "五分待ちます。",
+        "ka": "ごふん まちます。",
+        "ro": "gofun machimasu.",
+        "fr": "J'attends cinq minutes."
+      },
+      {
+        "jp": "五日にお会いしましょう。",
+        "ka": "いつか に おあいしましょう。",
+        "ro": "itsuka ni oaishimashou.",
+        "fr": "Rencontrons-nous le cinq du mois."
+      }
+    ],
+    "六": [
+      {
+        "jp": "六時に起きます。",
+        "ka": "ろくじ に おきます。",
+        "ro": "rokuji ni okimasu.",
+        "fr": "Je me lève à six heures."
+      },
+      {
+        "jp": "六つ買いました。",
+        "ka": "むっつ かいました。",
+        "ro": "muttsu kaimashita.",
+        "fr": "J'en ai acheté six."
+      }
+    ],
+    "七": [
+      {
+        "jp": "七月に行きます。",
+        "ka": "しちがつ に いきます。",
+        "ro": "shichigatsu ni ikimasu.",
+        "fr": "J'y vais en juillet."
+      },
+      {
+        "jp": "七つあります。",
+        "ka": "ななつ あります。",
+        "ro": "nanatsu arimasu.",
+        "fr": "Il y en a sept."
+      }
+    ],
+    "八": [
+      {
+        "jp": "八時に朝ご飯を食べます。",
+        "ka": "はちじ に あさごはん を たべます。",
+        "ro": "hachiji ni asagohan o tabemasu.",
+        "fr": "Je prends le petit-déjeuner à huit heures."
+      },
+      {
+        "jp": "八日に行きます。",
+        "ka": "ようか に いきます。",
+        "ro": "youka ni ikimasu.",
+        "fr": "J'y vais le huit."
+      }
+    ],
+    "九": [
+      {
+        "jp": "九時に寝ます。",
+        "ka": "くじ に ねます。",
+        "ro": "kuji ni nemasu.",
+        "fr": "Je me couche à neuf heures."
+      },
+      {
+        "jp": "九日かかります。",
+        "ka": "ここのか かかります。",
+        "ro": "kokonoka kakarimasu.",
+        "fr": "Cela prend neuf jours."
+      }
+    ],
+    "十": [
+      {
+        "jp": "十円あります。",
+        "ka": "じゅうえん あります。",
+        "ro": "juuen arimasu.",
+        "fr": "J'ai dix yens."
+      },
+      {
+        "jp": "十日後に帰ります。",
+        "ka": "とおかご に かえります。",
+        "ro": "tookago ni kaerimasu.",
+        "fr": "Je rentre dans dix jours."
+      }
+    ],
+    "百": [
+      {
+        "jp": "百円のパンです。",
+        "ka": "ひゃくえん の パン です。",
+        "ro": "hyakuen no pan desu.",
+        "fr": "C'est un pain à cent yens."
+      },
+      {
+        "jp": "三百人がいます。",
+        "ka": "さんびゃくにん が います。",
+        "ro": "sanbyakunin ga imasu.",
+        "fr": "Il y a trois cents personnes."
+      }
+    ],
+    "千": [
+      {
+        "jp": "千円をはらいます。",
+        "ka": "せんえん を はらいます。",
+        "ro": "sen'en o haraimasu.",
+        "fr": "Je paie mille yens."
+      },
+      {
+        "jp": "三千円です。",
+        "ka": "さんぜんえん です。",
+        "ro": "sanzen'en desu.",
+        "fr": "C'est trois mille yens."
+      }
+    ],
+    "万": [
+      {
+        "jp": "一万円の物を買いました。",
+        "ka": "いちまんえん の もの を かいました。",
+        "ro": "ichiman'en no mono o kaimashita.",
+        "fr": "J'ai acheté quelque chose à dix mille yens."
+      }
+    ],
+    "円": [
+      {
+        "jp": "これは何円ですか。",
+        "ka": "これ は なんえん です か。",
+        "ro": "kore wa nan'en desu ka.",
+        "fr": "Combien de yens vaut ceci ?"
+      }
+    ],
+    "日": [
+      {
+        "jp": "日曜日に行きます。",
+        "ka": "にちようび に いきます。",
+        "ro": "nichiyoubi ni ikimasu.",
+        "fr": "J'y vais dimanche."
+      },
+      {
+        "jp": "毎日日本語を勉強します。",
+        "ka": "まいにち にほんご を べんきょう します。",
+        "ro": "mainichi nihongo o benkyou shimasu.",
+        "fr": "J'étudie le japonais chaque jour."
+      }
+    ],
+    "月": [
+      {
+        "jp": "今月はいそがしいです。",
+        "ka": "こんげつ は いそがしい です。",
+        "ro": "kongetsu wa isogashii desu.",
+        "fr": "Ce mois-ci, je suis occupé."
+      },
+      {
+        "jp": "月曜日に行きます。",
+        "ka": "げつようび に いきます。",
+        "ro": "getsuyoubi ni ikimasu.",
+        "fr": "J'y vais lundi."
+      }
+    ],
+    "火": [
+      {
+        "jp": "火曜日に会いましょう。",
+        "ka": "かようび に あいましょう。",
+        "ro": "kayoubi ni aimashou.",
+        "fr": "Rencontrons-nous mardi."
+      },
+      {
+        "jp": "火であぶないです。",
+        "ka": "ひ で あぶない です。",
+        "ro": "hi de abunai desu.",
+        "fr": "C'est dangereux avec le feu."
+      }
+    ],
+    "水": [
+      {
+        "jp": "水を飲みます。",
+        "ka": "みず を のみます。",
+        "ro": "mizu o nomimasu.",
+        "fr": "Je bois de l'eau."
+      },
+      {
+        "jp": "水曜日に行きます。",
+        "ka": "すいようび に いきます。",
+        "ro": "suiyoubi ni ikimasu.",
+        "fr": "J'y vais mercredi."
+      }
+    ],
+    "木": [
+      {
+        "jp": "大きな木があります。",
+        "ka": "おおきな き が あります。",
+        "ro": "ookina ki ga arimasu.",
+        "fr": "Il y a un grand arbre."
+      },
+      {
+        "jp": "木曜日は休みです。",
+        "ka": "もくようび は やすみ です。",
+        "ro": "mokuyoubi wa yasumi desu.",
+        "fr": "Jeudi est mon jour de repos."
+      }
+    ],
+    "金": [
+      {
+        "jp": "お金がありません。",
+        "ka": "おかね が ありません。",
+        "ro": "okane ga arimasen.",
+        "fr": "Je n'ai pas d'argent."
+      },
+      {
+        "jp": "金曜日に行きます。",
+        "ka": "きんようび に いきます。",
+        "ro": "kinyoubi ni ikimasu.",
+        "fr": "J'y vais vendredi."
+      }
+    ],
+    "土": [
+      {
+        "jp": "土曜日に行きましょう。",
+        "ka": "どようび に いきましょう。",
+        "ro": "doyoubi ni ikimashou.",
+        "fr": "Allons-y samedi."
+      },
+      {
+        "jp": "土の上でたっています。",
+        "ka": "つち の うえ で たっています。",
+        "ro": "tsuchi no ue de tatte imasu.",
+        "fr": "Je me tiens sur la terre."
+      }
+    ],
+    "年": [
+      {
+        "jp": "今年日本に行きます。",
+        "ka": "ことし にほん に いきます。",
+        "ro": "kotoshi nihon ni ikimasu.",
+        "fr": "Je vais au Japon cette année."
+      },
+      {
+        "jp": "何年すんでいますか。",
+        "ka": "なんねん すんでいます か。",
+        "ro": "nannen sunde imasu ka.",
+        "fr": "Depuis combien d'années y habitez-vous ?"
+      }
+    ],
+    "上": [
+      {
+        "jp": "机の上に本があります。",
+        "ka": "つくえ の うえ に ほん が あります。",
+        "ro": "tsukue no ue ni hon ga arimasu.",
+        "fr": "Il y a un livre sur bureau."
+      },
+      {
+        "jp": "エレベーターで上に上がります。",
+        "ka": "エレベーター で うえ に あがります。",
+        "ro": "erebeetaa de ue ni agarimasu.",
+        "fr": "On monte en haut via l'ascenseur."
+      }
+    ],
+    "下": [
+      {
+        "jp": "椅子の下に猫がいます。",
+        "ka": "いす の した に ねこ が います。",
+        "ro": "isu no shita ni neko ga imasu.",
+        "fr": "Il y a un chat sous la chaise."
+      },
+      {
+        "jp": "地下鉄で行きます。",
+        "ka": "ちかてつ で いきます。",
+        "ro": "chikasetsu de ikimasu.",
+        "fr": "J'y vais en métro."
+      }
+    ],
+    "中": [
+      {
+        "jp": "箱の中に何がありますか。",
+        "ka": "はこ の なか に なに が あります か。",
+        "ro": "hako no naka ni nani ga arimasu ka.",
+        "fr": "Qu'y a-t-il dans la boîte ?"
+      },
+      {
+        "jp": "一日中勉強しました。",
+        "ka": "いちにちじゅう べんきょう しました。",
+        "ro": "ichinichijuu benkyou shimashita.",
+        "fr": "J'ai étudié toute la journée."
+      }
+    ],
+    "外": [
+      {
+        "jp": "外は寒いです。",
+        "ka": "そと は さむい です。",
+        "ro": "soto wa samui desu.",
+        "fr": "Il fait froid dehors."
+      },
+      {
+        "jp": "外国に行きたいです。",
+        "ka": "がいこく に いきたい です。",
+        "ro": "gaikoku ni ikitai desu.",
+        "fr": "Je veux aller à l'étranger."
+      }
+    ],
+    "前": [
+      {
+        "jp": "駅の前で会いましょう。",
+        "ka": "えき の まえ で あいましょう。",
+        "ro": "eki no mae de aimashou.",
+        "fr": "Retrouvons-nous devant la gare."
+      },
+      {
+        "jp": "三日前に着きました。",
+        "ka": "みっかまえ に つきました。",
+        "ro": "mikkamae ni tsukimashita.",
+        "fr": "Je suis arrivé il y a trois jours."
+      }
+    ],
+    "後": [
+      {
+        "jp": "後ろを見てください。",
+        "ka": "うしろ を みて ください。",
+        "ro": "ushiro o mite kudasai.",
+        "fr": "Regardez derrière vous."
+      },
+      {
+        "jp": "昼休みの後で話しましょう。",
+        "ka": "ひるやすみ の あと で はなしましょう。",
+        "ro": "hiruyasumi no ato de hanashimashou.",
+        "fr": "Parlons-en après la pause déjeuner."
+      }
+    ],
+    "右": [
+      {
+        "jp": "右に曲がってください。",
+        "ka": "みぎ に まがってください。",
+        "ro": "migi ni magatte kudasai.",
+        "fr": "Tournez à droite s'il vous plaît."
+      },
+      {
+        "jp": "右手を出してください。",
+        "ka": "みぎて を だしてください。",
+        "ro": "migite o dashite kudasai.",
+        "fr": "Tendez la main droite."
+      }
+    ],
+    "左": [
+      {
+        "jp": "左に店があります。",
+        "ka": "ひだり に みせ が あります。",
+        "ro": "hidari ni mise ga arimasu.",
+        "fr": "Il y a un magasin sur la gauche."
+      },
+      {
+        "jp": "左手で見ます。",
+        "ka": "ひだりて で みます。",
+        "ro": "hidarite de mimasu.",
+        "fr": "Je regarde du côté gauche."
+      }
+    ],
+    "大": [
+      {
+        "jp": "大きい犬がいます。",
+        "ka": "おおきい いぬ が います。",
+        "ro": "ookii inu ga imasu.",
+        "fr": "Il y a un grand chien."
+      },
+      {
+        "jp": "大学で勉強します。",
+        "ka": "だいがく で べんきょう します。",
+        "ro": "daigaku de benkyou shimasu.",
+        "fr": "J'étudie à l'université."
+      }
+    ],
+    "小": [
+      {
+        "jp": "小さい車を買いました。",
+        "ka": "ちいさい くるま を かいました。",
+        "ro": "chiisai kuruma o kaimashita.",
+        "fr": "J'ai acheté une petite voiture."
+      },
+      {
+        "jp": "小川さんが来ました。",
+        "ka": "おがわさん が きました。",
+        "ro": "Ogawasan ga kimashita.",
+        "fr": "Mme Ogawa est arrivée."
+      }
+    ],
+    "長": [
+      {
+        "jp": "髪が長いです。",
+        "ka": "かみ が ながい です。",
+        "ro": "kami ga nagai desu.",
+        "fr": "Les cheveux sont longs."
+      },
+      {
+        "jp": "校長先生に会いました。",
+        "ka": "こうちょうせんせい に あいました。",
+        "ro": "kouchousensei ni aimashita.",
+        "fr": "J'ai rencontré le directeur."
+      }
+    ],
+    "多": [
+      {
+        "jp": "人が多いです。",
+        "ka": "ひと が おおい です。",
+        "ro": "hito ga ooi desu.",
+        "fr": "Il y a beaucoup de monde."
+      },
+      {
+        "jp": "多分明日雨が降ります。",
+        "ka": "たぶん あした あめ が ふります。",
+        "ro": "tabun ashita ame ga furimasu.",
+        "fr": "Il pleuvra probablement demain."
+      }
+    ],
+    "少": [
+      {
+        "jp": "少し水をください。",
+        "ka": "すこし みず を ください。",
+        "ro": "sukoshi mizu o kudasai.",
+        "fr": "Donnez-moi un peu d'eau."
+      },
+      {
+        "jp": "お金が少ないです。",
+        "ka": "おかね が すくない です。",
+        "ro": "okane ga sukunai desu.",
+        "fr": "L'argent est peu abondant."
+      }
+    ],
+    "高": [
+      {
+        "jp": "この本は高いです。",
+        "ka": "この ほん は たかい です。",
+        "ro": "kono hon wa takai desu.",
+        "fr": "Ce livre est cher."
+      },
+      {
+        "jp": "高校生です。",
+        "ka": "こうこうせい です。",
+        "ro": "koukousei desu.",
+        "fr": "Je suis lycéen."
+      }
+    ],
+    "安": [
+      {
+        "jp": "安い肉を買います。",
+        "ka": "やすい にく を かいます。",
+        "ro": "yasui niku o kaimashita.",
+        "fr": "J'achète de la viande pas chère."
+      },
+      {
+        "jp": "安心してください。",
+        "ka": "あんしん して ください。",
+        "ro": "anshin shite kudasai.",
+        "fr": "Rassurez-vous."
+      }
+    ],
+    "新": [
+      {
+        "jp": "新しい靴をはきます。",
+        "ka": "あたらしい くつ を はきます。",
+        "ro": "atarashii kutsu o hakimasu.",
+        "fr": "Je mets de nouvelles chaussures."
+      },
+      {
+        "jp": "新聞を読みます。",
+        "ka": "しんぶん を よみます。",
+        "ro": "shinbun o yomimasu.",
+        "fr": "Je lis le journal."
+      }
+    ],
+    "古": [
+      {
+        "jp": "古い本を売ります。",
+        "ka": "ふるい ほん を うります。",
+        "ro": "furui hon o urimasu.",
+        "fr": "Je vends de vieux livres."
+      },
+      {
+        "jp": "中古のカメラです。",
+        "ka": "ちゅうこ の カメラ です。",
+        "ro": "chuuko no kamera desu.",
+        "fr": "C'est un appareil photo d'occasion."
+      }
+    ],
+    "明": [
+      {
+        "jp": "部屋が明るいです。",
+        "ka": "へや が あかるい です。",
+        "ro": "heya ga akarui desu.",
+        "fr": "La pièce est lumineuse."
+      },
+      {
+        "jp": "明日会いましょう。",
+        "ka": "あした あいましょう。",
+        "ro": "ashita aimashou.",
+        "fr": "Rencontrons-nous demain."
+      }
+    ],
+    "暗": [
+      {
+        "jp": "外は暗いです。",
+        "ka": "そと は くらい です。",
+        "ro": "soto wa kurai desu.",
+        "fr": "Il fait sombre dehors."
+      }
+    ],
+    "早": [
+      {
+        "jp": "朝早く起きます。",
+        "ka": "あさ はやく おきます。",
+        "ro": "asa hayaku okimasu.",
+        "fr": "Je me lève tôt le matin."
+      }
+    ],
+    "行": [
+      {
+        "jp": "学校に行きます。",
+        "ka": "がっこう に いきます。",
+        "ro": "gakkou ni ikimasu.",
+        "fr": "Je vais à l'école."
+      },
+      {
+        "jp": "銀行はどこですか。",
+        "ka": "ぎんこう は どこ です か。",
+        "ro": "ginkou wa doko desu ka.",
+        "fr": "Où est la banque ?"
+      }
+    ],
+    "来": [
+      {
+        "jp": "友達がうちに来ます。",
+        "ka": "ともだち が うち に きます。",
+        "ro": "tomodachi ga uchi ni kimasu.",
+        "fr": "Un ami vient chez moi."
+      },
+      {
+        "jp": "来週また会いましょう。",
+        "ka": "らいしゅう また あいましょう。",
+        "ro": "raishuu mata aimashou.",
+        "fr": "Revoyons-nous la semaine prochaine."
+      }
+    ],
+    "帰": [
+      {
+        "jp": "六時にうちに帰ります。",
+        "ka": "ろくじ に うち に かえります。",
+        "ro": "rokuji ni uchi ni kaerimasu.",
+        "fr": "Je rentre à la maison à six heures."
+      }
+    ],
+    "食": [
+      {
+        "jp": "パンを食べます。",
+        "ka": "パン を たべます。",
+        "ro": "pan o tabemasu.",
+        "fr": "Je mange du pain."
+      },
+      {
+        "jp": "食堂で食べましょう。",
+        "ka": "しょくどう で たべましょう。",
+        "ro": "shokudou de tabemashou.",
+        "fr": "Mangeons à la cafétéria."
+      }
+    ],
+    "飲": [
+      {
+        "jp": "水をおいしく飲みます。",
+        "ka": "みず を おいしく のみます。",
+        "ro": "mizu o oishiku nomimasu.",
+        "fr": "Je bois de l'eau avec plaisir."
+      },
+      {
+        "jp": "飲みものを買います。",
+        "ka": "のみもの を かいます。",
+        "ro": "nomimono o kaimasu.",
+        "fr": "J'achète une boisson."
+      }
+    ],
+    "見": [
+      {
+        "jp": "テレビを見ます。",
+        "ka": "テレビ を みます。",
+        "ro": "terebi o mimasu.",
+        "fr": "Je regarde la télévision."
+      },
+      {
+        "jp": "富士山が見えます。",
+        "ka": "ふじさん が みえます。",
+        "ro": "Fujisan ga miemasu.",
+        "fr": "On peut voir le mont Fuji."
+      }
+    ],
+    "聞": [
+      {
+        "jp": "ラジオを聞きます。",
+        "ka": "ラジオ を ききます。",
+        "ro": "rajio o kikimasu.",
+        "fr": "J'écoute la radio."
+      },
+      {
+        "jp": "ニュースを聞きました。",
+        "ka": "ニュース を ききました。",
+        "ro": "nyuusu o kikimashita.",
+        "fr": "J'ai entendu les informations."
+      }
+    ],
+    "読": [
+      {
+        "jp": "本を読みます。",
+        "ka": "ほん を よみます。",
+        "ro": "hon o yomimasu.",
+        "fr": "Je lis un livre."
+      },
+      {
+        "jp": "読書が好きです。",
+        "ka": "どくしょ が すき です。",
+        "ro": "dokusho ga suki desu.",
+        "fr": "J'aime la lecture."
+      }
+    ],
+    "書": [
+      {
+        "jp": "手紙を書きます。",
+        "ka": "てがみ を かきます。",
+        "ro": "tegami o kakimasu.",
+        "fr": "J'écris une lettre."
+      },
+      {
+        "jp": "教科書を開けてください。",
+        "ka": "きょうかしょ を あけて ください。",
+        "ro": "kyoukasho o akete kudasai.",
+        "fr": "Ouvrez le manuel s'il vous plaît."
+      }
+    ],
+    "話": [
+      {
+        "jp": "日本語で話します。",
+        "ka": "にほんご で はなします。",
+        "ro": "nihongo de hanashimasu.",
+        "fr": "Je parle en japonais."
+      },
+      {
+        "jp": "話を聞いてください。",
+        "ka": "はなし を きいて ください。",
+        "ro": "hanashi o kiite kudasai.",
+        "fr": "Écoutez cette histoire, s'il vous plaît."
+      }
+    ],
+    "買": [
+      {
+        "jp": "本を買います。",
+        "ka": "ほん を かいます。",
+        "ro": "hon o kaimasu.",
+        "fr": "J'achète un livre."
+      },
+      {
+        "jp": "買い物に行きます。",
+        "ka": "かいもの に いきます。",
+        "ro": "kaimono ni ikimasu.",
+        "fr": "Je vais faire des courses."
+      }
+    ],
+    "教": [
+      {
+        "jp": "英語を教えます。",
+        "ka": "えいご を おしえます。",
+        "ro": "eigo o oshiemasu.",
+        "fr": "J'enseigne l'anglais."
+      },
+      {
+        "jp": "教室はどこですか。",
+        "ka": "きょうしつ は どこ です か。",
+        "ro": "kyoushitsu wa doko desu ka.",
+        "fr": "Où est la salle de classe ?"
+      }
+    ],
+    "朝": [
+      {
+        "jp": "毎朝七時に起きます。",
+        "ka": "まいあさ しちじ に おきます。",
+        "ro": "maiasa shichiji ni okimasu.",
+        "fr": "Je me lève tous les matins à sept heures."
+      },
+      {
+        "jp": "今朝パンを食べました。",
+        "ka": "けさ パン を たべました。",
+        "ro": "kesa pan o tabemashita.",
+        "fr": "Ce matin, j'ai mangé du pain."
+      }
+    ],
+    "昼": [
+      {
+        "jp": "昼ご飯を食べましょう。",
+        "ka": "ひるごはん を たべましょう。",
+        "ro": "hirugohan o tabemashou.",
+        "fr": "Mangeons le déjeuner."
+      },
+      {
+        "jp": "昼休みは十二時からです。",
+        "ka": "ひるやすみ は じゅうにじ から です。",
+        "ro": "hiruyasumi wa juuniji kara desu.",
+        "fr": "La pause déjeuner commence à midi."
+      }
+    ],
+    "夜": [
+      {
+        "jp": "夜十時に寝ます。",
+        "ka": "よる じゅうじ に ねます。",
+        "ro": "yoru juuji ni nemasu.",
+        "fr": "Je me couche à dix heures du soir."
+      },
+      {
+        "jp": "今夜雨が降ります。",
+        "ka": "こんや あめ が ふります。",
+        "ro": "konya ame ga furimasu.",
+        "fr": "Il pleuvra ce soir."
+      }
+    ],
+    "男": [
+      {
+        "jp": "男の人がいます。",
+        "ka": "おとこ の ひと が います。",
+        "ro": "otoko no hito ga imasu.",
+        "fr": "Il y a un homme."
+      },
+      {
+        "jp": "男の子が走っています。",
+        "ka": "おとこのこ が はしっています。",
+        "ro": "otokonoko ga hashitte imasu.",
+        "fr": "Un garçon court."
+      }
+    ],
+    "女": [
+      {
+        "jp": "女の人が話しています。",
+        "ka": "おんな の ひと が はなしています。",
+        "ro": "onna no hito ga hanashite imasu.",
+        "fr": "Une femme parle."
+      },
+      {
+        "jp": "女の子がいます。",
+        "ka": "おんなのこ が います。",
+        "ro": "onnanoko ga imasu.",
+        "fr": "Il y a une fille."
+      }
+    ],
+    "子": [
+      {
+        "jp": "子どもが遊んでいます。",
+        "ka": "こども が あそんでいます。",
+        "ro": "kodomo ga asonde imasu.",
+        "fr": "Des enfants jouent."
+      }
+    ],
+    "学": [
+      {
+        "jp": "大学で勉強します。",
+        "ka": "だいがく で べんきょう します。",
+        "ro": "daigaku de benkyou shimasu.",
+        "fr": "J'étudie à l'université."
+      },
+      {
+        "jp": "学生ですか。",
+        "ka": "がくせい です か。",
+        "ro": "gakusei desu ka.",
+        "fr": "Êtes-vous étudiant ?"
+      }
+    ],
+    "校": [
+      {
+        "jp": "学校へ行きます。",
+        "ka": "がっこう へ いきます。",
+        "ro": "gakkou he ikimasu.",
+        "fr": "Je vais à l'école."
+      },
+      {
+        "jp": "高校生です。",
+        "ka": "こうこうせい です。",
+        "ro": "koukousei desu.",
+        "fr": "Je suis lycéen."
+      }
+    ],
+    "先": [
+      {
+        "jp": "先生に聞きます。",
+        "ka": "せんせい に ききます。",
+        "ro": "sensei ni kikimasu.",
+        "fr": "Je demande au professeur."
+      },
+      {
+        "jp": "先週行きました。",
+        "ka": "せんしゅう いきました。",
+        "ro": "senshuu ikimashita.",
+        "fr": "J'y suis allé la semaine dernière."
+      }
+    ],
+    "生": [
+      {
+        "jp": "学生です。",
+        "ka": "がくせい です。",
+        "ro": "gakusei desu.",
+        "fr": "Je suis étudiant."
+      },
+      {
+        "jp": "今月生まれました。",
+        "ka": "こんげつ うまれました。",
+        "ro": "kongetsu umaremashita.",
+        "fr": "Je suis né ce mois-ci."
+      }
+    ],
+    "人": [
+      {
+        "jp": "あの人は誰ですか。",
+        "ka": "あの ひと は だれ です か。",
+        "ro": "ano hito wa dare desu ka.",
+        "fr": "Qui est cette personne ?"
+      },
+      {
+        "jp": "日本人です。",
+        "ka": "にほんじん です。",
+        "ro": "nihonjin desu.",
+        "fr": "Je suis japonais."
+      }
+    ],
+    "名": [
+      {
+        "jp": "お名前は何ですか。",
+        "ka": "おなまえ は なん です か。",
+        "ro": "onamae wa nan desu ka.",
+        "fr": "Quel est votre nom ?"
+      },
+      {
+        "jp": "有名な本です。",
+        "ka": "ゆうめい な ほん です。",
+        "ro": "yuumei na hon desu.",
+        "fr": "C'est un livre célèbre."
+      }
+    ],
+    "方": [
+      {
+        "jp": "あの方を知っていますか。",
+        "ka": "あのかた を しっています か。",
+        "ro": "anokata o shitte imasu ka.",
+        "fr": "Connaissez-vous cette personne ?"
+      },
+      {
+        "jp": "読み方を教えてください。",
+        "ka": "よみかた を おしえて ください。",
+        "ro": "yomikata o oshiete kudasai.",
+        "fr": "Enseignez-moi la façon de lire, s'il vous plaît."
+      }
+    ],
+    "本": [
+      {
+        "jp": "本を三冊買いました。",
+        "ka": "ほん を さんさつ かいました。",
+        "ro": "hon o sansatsu kaimashita.",
+        "fr": "J'ai acheté trois livres."
+      },
+      {
+        "jp": "日本に行きます。",
+        "ka": "にほん に いきます。",
+        "ro": "nihon ni ikimasu.",
+        "fr": "Je vais au Japon."
+      }
+    ],
+    "休": [
+      {
+        "jp": "会社を休みます。",
+        "ka": "かいしゃ を やすみます。",
+        "ro": "kaisha o yasumimasu.",
+        "fr": "Je m'absente de l'entreprise."
+      },
+      {
+        "jp": "明日は休日です。",
+        "ka": "あした は きゅうじつ です。",
+        "ro": "ashita wa kyuujitsu desu.",
+        "fr": "Demain, c'est un jour de repos."
+      }
+    ],
+    "言": [
+      {
+        "jp": "日本語で言います。",
+        "ka": "にほんご で いいます。",
+        "ro": "nihongo de iimasu.",
+        "fr": "Je le dis en japonais."
+      },
+      {
+        "jp": "一言話します。",
+        "ka": "ひとこと はなします。",
+        "ro": "hitokoto hanashimasu.",
+        "fr": "Je dis quelques mots."
+      }
+    ],
+    "立": [
+      {
+        "jp": "ここに立ちます。",
+        "ka": "ここ に たちます。",
+        "ro": "koko ni tachimasu.",
+        "fr": "Je me tiens ici."
+      }
+    ],
+    "行": [
+      {
+        "jp": "旅行に行きます。",
+        "ka": "りょこう に いきます。",
+        "ro": "ryokou ni ikimasu.",
+        "fr": "Je pars en voyage."
+      }
+    ],
+    "車": [
+      {
+        "jp": "車で行きます。",
+        "ka": "くるま で いきます。",
+        "ro": "kuruma de ikimasu.",
+        "fr": "J'y vais en voiture."
+      },
+      {
+        "jp": "電車に乗ります。",
+        "ka": "でんしゃ に のります。",
+        "ro": "densha ni norimasu.",
+        "fr": "Je monte dans le train."
+      }
+    ],
+    "出": [
+      {
+        "jp": "家を出ます。",
+        "ka": "うち を でます。",
+        "ro": "uchi o demasu.",
+        "fr": "Je sors de la maison."
+      },
+      {
+        "jp": "出口はどこですか。",
+        "ka": "でぐち は どこ です か。",
+        "ro": "deguchi wa doko desu ka.",
+        "fr": "Où est la sortie ?"
+      }
+    ],
+    "入": [
+      {
+        "jp": "部屋に入ります。",
+        "ka": "へや に はいります。",
+        "ro": "heya ni hairimasu.",
+        "fr": "Entrez dans la pièce."
+      },
+      {
+        "jp": "入口はこちらです。",
+        "ka": "いりぐち は こちら です。",
+        "ro": "iriguchi wa kochira desu.",
+        "fr": "L'entrée est par ici."
+      }
+    ],
+    "学": [
+      {
+        "jp": "学校で学びます。",
+        "ka": "がっこう で まなびます。",
+        "ro": "gakkou deまなびます。",
+        "fr": "J'apprends à l'école."
+      }
+    ],
+    "立": [
+      {
+        "jp": "立つと見えます。",
+        "ka": "たつ と みえます。",
+        "ro": "tatsu to miemasu.",
+        "fr": "On peut voir quand on se lève."
+      }
+    ],
+    "目": [
+      {
+        "jp": "目が大きいです。",
+        "ka": "め が おおきい です。",
+        "ro": "me ga ookii desu.",
+        "fr": "Les yeux sont grands."
+      },
+      {
+        "jp": "一日目です。",
+        "ka": "いちにちめ です。",
+        "ro": "ichinichime desu.",
+        "fr": "C'est le premier jour."
+      }
+    ],
+    "耳": [
+      {
+        "jp": "耳が痛いです。",
+        "ka": "みみ が いたい です。",
+        "ro": "mimi ga itai desu.",
+        "fr": "J'ai mal aux oreilles."
+      }
+    ],
+    "手": [
+      {
+        "jp": "手を洗います。",
+        "ka": "て を あらいます。",
+        "ro": "te o araimasu.",
+        "fr": "Je me lave les mains."
+      },
+      {
+        "jp": "下手ですが頑張ります。",
+        "ka": "へた です が がんばります。",
+        "ro": "heta desu ga ganbarimasu.",
+        "fr": "Je suis maladroit, mais je ferai de mon mieux."
+      }
+    ],
+    "足": [
+      {
+        "jp": "足が速いです。",
+        "ka": "あし が はやい です。",
+        "ro": "ashi ga hayai desu.",
+        "fr": "Les jambes sont rapides (il court vite)."
+      },
+      {
+        "jp": "一足買いました。",
+        "ka": "いっそく かいました。",
+        "ro": "issoku kaimashita.",
+        "fr": "J'ai acheté une paire de chaussures."
+      }
+    ],
+    "力": [
+      {
+        "jp": "力が強いです。",
+        "ka": "ちから が つよい です。",
+        "ro": "chikara ga tsuyoi desu.",
+        "fr": "La force est grande."
+      }
+    ],
+    "父": [
+      {
+        "jp": "父は五十歳です。",
+        "ka": "ちち は ごじゅっさい です。",
+        "ro": "chichi wa gojussai desu.",
+        "fr": "Mon père a cinquante ans."
+      },
+      {
+        "jp": "お父さんはどこですか。",
+        "ka": "おとうさん は どこ です か。",
+        "ro": "otousan wa doko desu ka.",
+        "fr": "Où est votre père ?"
+      }
+    ],
+    "母": [
+      {
+        "jp": "母の料理はおいしいです。",
+        "ka": "はは の りょうり は おいしい です。",
+        "ro": "haha no ryouri wa oishii desu.",
+        "fr": "La cuisine de ma mère est délicieuse."
+      },
+      {
+        "jp": "お母さんに電話します。",
+        "ka": "おかあさん に でんわ します。",
+        "ro": "okaasan ni denwa shimasu.",
+        "fr": "J'appelle ma mère."
+      }
+    ],
+    "友": [
+      {
+        "jp": "友達と話します。",
+        "ka": "ともだち と はなします。",
+        "ro": "tomodachi to hanashimasu.",
+        "fr": "Je parle avec un ami."
+      }
+    ],
+    "女": [
+      {
+        "jp": "彼女は学生です。",
+        "ka": "かのじょ は がくせい です。",
+        "ro": "kanojo wa gakusei desu.",
+        "fr": "Elle est étudiante."
+      }
+    ],
+    "古": [
+      {
+        "jp": "古本を買いました。",
+        "ka": "ふるほん を かいました。",
+        "ro": "furuhon o kaimashita.",
+        "fr": "J'ai acheté un livre d'occasion."
+      }
+    ],
+    "気": [
+      {
+        "jp": "お元気ですか。",
+        "ka": "おげんき です か。",
+        "ro": "ogenki desu ka.",
+        "fr": "Comment allez-vous ?"
+      },
+      {
+        "jp": "天気がいいです。",
+        "ka": "てんき が いい です。",
+        "ro": "tenki ga ii desu.",
+        "fr": "Il fait beau."
+      }
+    ],
+    "雨": [
+      {
+        "jp": "雨が降っています。",
+        "ka": "あめ が ふっています。",
+        "ro": "ame ga futte imasu.",
+        "fr": "La pluie tombe."
+      },
+      {
+        "jp": "大雨ですね。",
+        "ka": "おおあめ です ね。",
+        "ro": "ooame desu ne.",
+        "fr": "C'est une forte pluie, n'est-ce pas ?"
+      }
+    ],
+    "天": [
+      {
+        "jp": "天気がわるいです。",
+        "ka": "てんき が わるい です。",
+        "ro": "tenki ga warui desu.",
+        "fr": "Le temps est mauvais."
+      },
+      {
+        "jp": "天才ですね。",
+        "ka": "てんさい です ね。",
+        "ro": "tensai desu ne.",
+        "fr": "C'est un génie, n'est-ce pas ?"
+      }
+    ],
+    "川": [
+      {
+        "jp": "川で泳ぎます。",
+        "ka": "かわ で およぎます。",
+        "ro": "kawa de oyogimasu.",
+        "fr": "Je nage dans la rivière."
+      }
+    ],
+    "山": [
+      {
+        "jp": "山に登ります。",
+        "ka": "やま に のぼります。",
+        "ro": "yama ni noborimasu.",
+        "fr": "Je me promène / monte à la montagne."
+      },
+      {
+        "jp": "富士山は高いです。",
+        "ka": "ふじさん は たかい です。",
+        "ro": "Fujisan wa takai desu.",
+        "fr": "Le mont Fuji est haut."
+      }
+    ],
+    "花": [
+      {
+        "jp": "きれいな花です。",
+        "ka": "きれい な はな です。",
+        "ro": "kirei na hana desu.",
+        "fr": "C'est une belle fleur."
+      },
+      {
+        "jp": "花見に行きます。",
+        "ka": "はなみ に いきます。",
+        "ro": "hanami ni ikimasu.",
+        "fr": "Je vais voir les fleurs (hanami)."
+      }
+    ],
+    "店": [
+      {
+        "jp": "あの店に入りましょう。",
+        "ka": "あの みせ に はいりましょう。",
+        "ro": "ano mise ni hairimashou.",
+        "fr": "Entrons dans ce magasin."
+      },
+      {
+        "jp": "店員さんに聞きます。",
+        "ka": "てんいんさん に ききます。",
+        "ro": "ten'insan ni kikimasu.",
+        "fr": "Je demande au vendeur."
+      }
+    ],
+    "社": [
+      {
+        "jp": "会社で働きます。",
+        "ka": "かいしゃ で はたらきます。",
+        "ro": "kaisha de hatarakimasu.",
+        "fr": "Je travaille dans une entreprise."
+      },
+      {
+        "jp": "神社に行きます。",
+        "ka": "じんじゃ に いきます。",
+        "ro": "jinja ni ikimasu.",
+        "fr": "Je vais au sanctuaire."
+      }
+    ],
+    "国": [
+      {
+        "jp": "お国はどこですか。",
+        "ka": "おくに は どこ です か。",
+        "ro": "okuni wa doko desu ka.",
+        "fr": "De quel pays venez-vous ?"
+      },
+      {
+        "jp": "外国語を勉強します。",
+        "ka": "がいこくご を べんきょう します。",
+        "ro": "gaikokugo o benkyou shimasu.",
+        "fr": "J'étudie une langue étrangère."
+      }
+    ],
+    "会": [
+      {
+        "jp": "友達に会います。",
+        "ka": "ともだち に あいます。",
+        "ro": "tomodachi ni aimashita.",
+        "fr": "Je rencontre un ami."
+      },
+      {
+        "jp": "会話の練習をします。",
+        "ka": "かいわ の れんしゅう を します。",
+        "ro": "kaiwa no renshuu o shimasu.",
+        "fr": "Je m'entraîne à la conversation."
+      }
+    ],
+    "駅": [
+      {
+        "jp": "駅はどこですか。",
+        "ka": "えき は どこ です か。",
+        "ro": "eki wa doko desu ka.",
+        "fr": "Où est la gare ?"
+      },
+      {
+        "jp": "東京駅に着きました。",
+        "ka": "とうきょうえき に つきました。",
+        "ro": "Toukyoueki ni tsukimashita.",
+        "fr": "Je suis arrivé à la gare de Tokyo."
+      }
+    ],
+    "電": [
+      {
+        "jp": "電車で行きます。",
+        "ka": "でんしゃ で いきます。",
+        "ro": "densha de ikimasu.",
+        "fr": "J'y vais en train."
+      },
+      {
+        "jp": "電気をつけます。",
+        "ka": "でんき を つけます。",
+        "ro": "denki o tsukemasu.",
+        "fr": "J'allume la lumière."
+      }
+    ],
+    "道": [
+      {
+        "jp": "この道をまっすぐ行きます。",
+        "ka": "この みち を まっすぐ いきます。",
+        "ro": "kono michi o massugu ikimasu.",
+        "fr": "Allez tout droit sur cette rue."
+      },
+      {
+        "jp": "水道の水を飲みます。",
+        "ka": "すいどう の みず を のみます。",
+        "ro": "suidou no mizu o nomimasu.",
+        "fr": "Je bois l'eau du robinet."
+      }
+    ]
+  }
+}
+    "1": [
+      {
+        "jp": "会う前に電話します。",
+        "ka": "あう まえ に でんわ します。",
+        "ro": "au mae ni denwa shimasu.",
+        "fr": "J'appelle avant de rencontrer quelqu'un."
+      },
+      {
+        "jp": "駅で友達に会いました。",
+        "ka": "えき で ともだち に あいました。",
+        "ro": "eki de tomodachi ni aimashita.",
+        "fr": "J'ai rencontré un ami à la gare."
+      }
+    ],
+    "2": [
+      {
+        "jp": "部屋をあけます。",
+        "ka": "へや を あけます。",
+        "ro": "heya o akemasu.",
+        "fr": "J'ouvre la pièce."
+      },
+      {
+        "jp": "ドアをあけてください。",
+        "ka": "ドア を あけて ください。",
+        "ro": "doa o akete kudasai.",
+        "fr": "Ouvrez la porte s'il vous plaît."
+      }
+    ],
+    "3": [
+      {
+        "jp": "手をあげます。",
+        "ka": "て を あげます。",
+        "ro": "te o agemasu.",
+        "fr": "Je lève la main."
+      },
+      {
+        "jp": "友達に本をあげました。",
+        "ka": "ともだち に ほん を あげました。",
+        "ro": "tomodachi ni hon o agemashita.",
+        "fr": "J'ai donné un livre à un ami."
+      }
+    ],
+    "4": [
+      {
+        "jp": "朝早く起きます。",
+        "ka": "あさ はやく おきます。",
+        "ro": "asa hayaku okimasu.",
+        "fr": "Je me lève tôt le matin."
+      },
+      {
+        "jp": "今朝雨が降っていました。",
+        "ka": "けさ あめ が ふっていました。",
+        "ro": "kesa ame ga futte imashita.",
+        "fr": "Ce matin, il pleuvait."
+      }
+    ],
+    "5": [
+      {
+        "jp": "あさって会いましょう。",
+        "ka": "あさって あいましょう。",
+        "ro": "asatte aimashou.",
+        "fr": "Rencontrons-nous après-demain."
+      }
+    ],
+    "6": [
+      {
+        "jp": "公園で遊びます。",
+        "ka": "こうえん で あそびます。",
+        "ro": "kouen de asobimasu.",
+        "fr": "Je joue au parc."
+      },
+      {
+        "jp": "友達と遊んでいます。",
+        "ka": "ともだち と あそんでいます。",
+        "ro": "tomodachi to asonde imasu.",
+        "fr": "Je suis en train de m'amuser avec des amis."
+      }
+    ],
+    "7": [
+      {
+        "jp": "外は暖かいです。",
+        "ka": "そと は あたたかい です。",
+        "ro": "soto wa atatakai desu.",
+        "fr": "Il fait doux/chaud dehors."
+      }
+    ],
+    "8": [
+      {
+        "jp": "頭が痛いです。",
+        "ka": "あたま が いたい です。",
+        "ro": "atama ga itai desu.",
+        "fr": "J'ai mal à la tête."
+      }
+    ],
+    "9": [
+      {
+        "jp": "新しい本を買いました。",
+        "ka": "あたらしい ほん を かいました。",
+        "ro": "atarashii hon o kaimashita.",
+        "fr": "J'ai acheté un nouveau livre."
+      }
+    ],
+    "10": [
+      {
+        "jp": "あちらへ行きましょう。",
+        "ka": "あちら へ いきましょう。",
+        "ro": "achira he ikimashou.",
+        "fr": "Allons de ce côté-là."
+      }
+    ],
+    "11": [
+      {
+        "jp": "外は暑いです。",
+        "ka": "そと は あつい です。",
+        "ro": "soto wa atsui desu.",
+        "fr": "Il fait chaud dehors."
+      }
+    ],
+    "12": [
+      {
+        "jp": "厚い本を読みます。",
+        "ka": "あつい ほん を よみます。",
+        "ro": "atsui hon o yomimasu.",
+        "fr": "Je lis un livre épais."
+      }
+    ],
+    "13": [
+      {
+        "jp": "後で話しましょう。",
+        "ka": "あと で はなしましょう。",
+        "ro": "ato de hanashimashou.",
+        "fr": "Parlons plus tard."
+      }
+    ],
+    "14": [
+      {
+        "jp": " there に人がいます。",
+        "ka": "あそこ に ひと が います。",
+        "ro": "asoko ni hito ga imasu.",
+        "fr": "Il y a quelqu'un là-bas."
+      }
+    ],
+    "15": [
+      {
+        "jp": "浴びてから出かけます。",
+        "ka": "あびて から でかけます。",
+        "ro": "abite kara dekakemasu.",
+        "fr": "Je sors après avoir pris une douche."
+      }
+    ],
+    "16": [
+      {
+        "jp": "甘い物を食べます。",
+        "ka": "あまい もの を たべます。",
+        "ro": "amai mono o tabemasu.",
+        "fr": "Je mange quelque chose de sucré."
+      }
+    ],
+    "17": [
+      {
+        "jp": "雨が降っています。",
+        "ka": "あめ が ふっています。",
+        "ro": "ame ga futte imasu.",
+        "fr": "La pluie tombe."
+      }
+    ],
+    "18": [
+      {
+        "jp": "飴を食べます。",
+        "ka": "あめ を たべます。",
+        "ro": "ame o tabemasu.",
+        "fr": "Je mange un bonbon."
+      }
+    ],
+    "19": [
+      {
+        "jp": "洗ってください。",
+        "ka": "あらってください。",
+        "ro": "aratte kudasai.",
+        "fr": "Lavez s'il vous plaît."
+      },
+      {
+        "jp": "手と顔を洗います。",
+        "ka": "て と かお を あらいます。",
+        "ro": "te to kao o araimasu.",
+        "fr": "Je me lave les mains et le visage."
+      }
+    ],
+    "20": [
+      {
+        "jp": "歩いて学校へ行きます。",
+        "ka": "あるいて がっこう へ いきます。",
+        "ro": "aruite gakkou he ikimasu.",
+        "fr": "Je vais à l'école à pied."
+      }
+    ],
