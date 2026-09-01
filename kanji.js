@@ -2469,8 +2469,17 @@ function speakSentence(text) {
 function openDetail(kanji) {
     currentType = 'kanji'; 
     currentChar = kanji.char;
-    window.currentKanjiForStroke = kanji.char; 
+    window.currentKanjiForStroke = kanji.char;
+    
+    // Si kanji n'a pas toutes ses propriétés, chercher dans kanjiDb
+    if (!kanji.meanings) {
+        const fullKanji = kanjiDb.find(k => k.char === kanji.char);
+        if (fullKanji) {
+            kanji = fullKanji;
+        }
+    }
 
+    // Chercher la catégorie (ancienne navigation) — peut être undefined avec JLPT
     const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(kanji.char)));
 
     const detailView = document.getElementById('detail-view');
@@ -2488,7 +2497,14 @@ function openDetail(kanji) {
     document.getElementById('voice-feedback').style.color = 'var(--gray)';
 
     // 3. Stats
-    document.getElementById('d-level').innerText   = cat ? cat.short : '–';
+    // Afficher le niveau JLPT si on vient de cette navigation, sinon afficher la catégorie ancienne
+    let levelDisplay = '–';
+    if (currentJLPTLevel && jlptMapping) {
+        levelDisplay = jlptMapping.levels[currentJLPTLevel].label;
+    } else if (cat) {
+        levelDisplay = cat.short;
+    }
+    document.getElementById('d-level').innerText = levelDisplay;
     document.getElementById('d-strokes').innerText = kanji.strokes;
     document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
 
