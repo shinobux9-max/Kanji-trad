@@ -1417,14 +1417,6 @@ function renderQuizQuestion() {
         </div>`;
 
 
-/* ════════════════════════════════════════════════════
-   HANZIWRITER — LOADER UNIVERSEL
-   Signature correcte HanziWriter 3.x : (char, onLoad, onError)
-   1. GitHub hanzi-writer-data-jp (ordre des traits japonais)
-   2. Fallback jsdelivr hanzi-writer-data@2.0 (base mondiale)
-   3. Si tout échoue : onError() sans crasher l'app
-════════════════════════════════════════════════════ */
-
 // --- INITIALISATION HANZIWRITER ---
 if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
     setTimeout(() => {
