@@ -1424,23 +1424,6 @@ function renderQuizQuestion() {
    2. Fallback jsdelivr hanzi-writer-data@2.0 (base mondiale)
    3. Si tout échoue : onError() sans crasher l'app
 ════════════════════════════════════════════════════ */
-function kanjiDataLoader(char, onLoad, onError) {
-    const cdn = `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${char}.json`;
-    const gh  = `https://raw.githubusercontent.com/chanind/hanzi-writer-data-jp/master/data/${char}.json`;
-
-    fetch(gh)
-        .then(r => r.ok ? r.json() : Promise.reject('jp-404'))
-        .then(onLoad)
-        .catch(() =>
-            fetch(cdn)
-                .then(r => r.ok ? r.json() : Promise.reject('cdn-404'))
-                .then(onLoad)
-                .catch(() => {
-                    console.warn('[HanziWriter] Données introuvables pour :', char);
-                    if (typeof onError === 'function') onError();
-                })
-        );
-}
 
 // --- INITIALISATION HANZIWRITER ---
 if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
