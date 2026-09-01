@@ -209,6 +209,8 @@ function startOralTest(kanjiChar) {
    STATE
 ══════════════════════════════════════════════════ */
 let exemplesDb   = {};
+let jlptMapping  = null;    // Mapping JLPT (chargé depuis data/mapping.json)
+let exemplesByLevel = {};  // {n5: {...}, n4: {...}, ...} — exemples contextualisés
 let kanjiDb  = [];
 let kanjiMap = new Map();   // char → index dans kanjiDb  (O(1) lookup)
 let categories = new Map(); // catId → {id, label, color, short, indices[]}
@@ -216,6 +218,7 @@ let seriesMap  = new Map(); // seriesId → {id, catId, label, indices[]}
 let writer = null, currentChar = null, currentType = null;
 let kanaAnimTimeouts = [], fetchCtrl = null;
 let currentCatId = null;    // catégorie affichée
+let currentJLPTLevel = null; // niveau JLPT actuel ('n5', 'n4', etc.)
 let quizState = null;       // {indices, shuffled, idx, score, answered, title, sourceType, sourceId}
 let searchOpen = false;
 
@@ -903,29 +906,176 @@ function renderSidebar() {
     const c = document.getElementById('grade-list');
     c.innerHTML = '';
 
-    for (const def of CAT_DEFS) {
-        const cat = categories.get(def.id);
-        if (!cat || !cat.indices.length) continue;
+    // Si le mapping JLPT n'est pas chargé, afficher un message
+    if (!jlptMapping) {
+        c.innerHTML = '<div style="color:var(--gray);font-size:13px;padding:12px">Chargement des niveaux…</div>';
+        return;
+    }
 
+    // Afficher les niveaux JLPT
+    for (const [levelId, levelData] of Object.entries(jlptMapping.levels)) {
         const item = document.createElement('div');
         item.className = 'nav-grade-item';
         
-        // On a supprimé la flèche et tout le bloc "submenu"
         item.innerHTML = `
-            <div class="nav-badge" style="background:${def.color}22;color:${def.color};border:1px solid ${def.color}44">${def.short}</div>
+            <div class="nav-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
             <div class="nav-grade-text">
-                <div class="main">${def.label}</div>
-                <div class="sub">${cat.indices.length} kanjis</div>
+                <div class="main">${levelData.label_full}</div>
+                <div class="sub">${levelData.count} kanji</div>
             </div>`;
 
-        // Un seul clic propre : charger la catégorie et fermer la sidebar
+        // Clic : charger le niveau JLPT et afficher le sélecteur de catégories
         item.onclick = () => {
-            loadCategory(def.id);
+            currentJLPTLevel = levelId;
+            showLevelCategorySelector(levelId);
             toggleSidebar(false);
         };
 
         c.appendChild(item);
     }
+}
+
+/* ══════════════════════════════════════════════════
+   LEVEL CATEGORY SELECTOR — Onglets Kanji | Vocab | Grammar
+══════════════════════════════════════════════════ */
+function showLevelCategorySelector(levelId) {
+    if (!jlptMapping || !jlptMapping.levels[levelId]) return;
+    
+    const levelData = jlptMapping.levels[levelId];
+    const mainContent = document.getElementById('main-content');
+    
+    // Construire les onglets
+    const tabs = levelData.categories.map(cat => {
+        const catData = jlptMapping.categories[cat];
+        return `<button class="tab-btn" data-category="${cat}" onclick="loadJLPTCategory('${levelId}', '${cat}')" style="flex:1;padding:12px;background:rgba(255,255,255,0.05);border:none;color:var(--gray);font-size:14px;cursor:pointer;transition:all 0.15s;border-bottom:2px solid transparent" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+            ${catData.icon} ${catData.label}
+        </button>`;
+    }).join('');
+    
+    mainContent.innerHTML = `
+        <div style="display:flex;flex-direction:column;height:100%;gap:0">
+            <div style="padding:16px;border-bottom:1px solid var(--border);background:var(--surface)">
+                <div style="font-size:24px;font-weight:bold;margin-bottom:8px">${levelData.label_full}</div>
+                <div style="font-size:13px;color:var(--gray)">${levelData.description}</div>
+            </div>
+            <div style="display:flex;gap:0;border-bottom:1px solid var(--border)">
+                ${tabs}
+            </div>
+            <div id="category-content" style="flex:1;overflow-y:auto;padding:16px">
+                <div style="text-align:center;color:var(--gray);margin-top:40px">
+                    <div class="spinner" style="margin-bottom:16px"></div>
+                    Chargement…
+                </div>
+            </div>
+        </div>`;
+    
+    // Charger la première catégorie par défaut (kanji)
+    if (levelData.categories.length > 0) {
+        loadJLPTCategory(levelId, levelData.categories[0]);
+    }
+}
+
+async function loadJLPTCategory(levelId, category) {
+    const container = document.getElementById('category-content');
+    if (!container) return;
+    
+    try {
+        container.innerHTML = '<div style="text-align:center;color:var(--gray)"><div class="spinner" style="margin-bottom:16px"></div>Chargement…</div>';
+        
+        // Charger le fichier JSON correspondant
+        const url = `./data/${levelId}/${category}.json`;
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error(`Fichier non trouvé : ${url}`);
+        }
+        
+        const data = await res.json();
+        
+        // Afficher selon la catégorie
+        if (category === 'kanji') {
+            displayKanjiList(levelId, data);
+        } else if (category === 'vocab') {
+            displayVocabList(levelId, data);
+        } else if (category === 'grammar') {
+            displayGrammarList(levelId, data);
+        }
+        
+        // Marquer l'onglet comme actif
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            if (btn.dataset.category === category) {
+                btn.style.borderBottomColor = 'var(--accent)';
+                btn.style.color = '#fff';
+            } else {
+                btn.style.borderBottomColor = 'transparent';
+                btn.style.color = 'var(--gray)';
+            }
+        });
+        
+    } catch (e) {
+        container.innerHTML = `<div style="color:#e55;font-size:13px;padding:20px;text-align:center">Erreur : ${e.message}</div>`;
+        console.error('loadJLPTCategory error:', e);
+    }
+}
+
+function displayKanjiList(levelId, data) {
+    const container = document.getElementById('category-content');
+    if (!data.chars || !Array.isArray(data.chars)) {
+        container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
+        return;
+    }
+    
+    // Créer une grille de kanji cliquables
+    const grid = data.chars.map(char => {
+        const kanjiData = kanjiDb.find(k => k.char === char);
+        if (!kanjiData) return '';
+        return `<div onclick="openDetail({char:'${char}'})" style="padding:16px;text-align:center;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;background:var(--surface)" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='var(--surface)'">
+            <div style="font-size:32px;font-weight:bold">${char}</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:6px">${kanjiData.meanings[0] || '–'}</div>
+        </div>`;
+    }).join('');
+    
+    container.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px">
+            ${grid}
+        </div>`;
+}
+
+function displayVocabList(levelId, data) {
+    const container = document.getElementById('category-content');
+    if (!Array.isArray(data)) {
+        container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
+        return;
+    }
+    
+    const items = data.map(word => `
+        <div style="padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin-bottom:8px">
+            <div style="font-size:14px;font-weight:bold;margin-bottom:4px">${word.word}</div>
+            <div style="font-size:12px;color:var(--accent);margin-bottom:6px">${word.reading}</div>
+            <div style="font-size:13px;color:var(--gray);line-height:1.4">${word.meanings.join(', ')}</div>
+            <div style="font-size:10px;color:var(--gray);margin-top:6px;opacity:0.6">${word.type} • ${word.category}</div>
+        </div>
+    `).join('');
+    
+    container.innerHTML = `<div>${items}</div>`;
+}
+
+function displayGrammarList(levelId, data) {
+    const container = document.getElementById('category-content');
+    if (!Array.isArray(data)) {
+        container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
+        return;
+    }
+    
+    const items = data.map(pattern => `
+        <div style="padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin-bottom:8px">
+            <div style="font-size:14px;font-weight:bold;margin-bottom:4px;color:var(--accent)">${pattern.pattern}</div>
+            <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:6px">${pattern.meaning}</div>
+            <div style="font-size:10px;color:var(--gray);opacity:0.6">${pattern.type}</div>
+        </div>
+    `).join('');
+    
+    container.innerHTML = `<div>${items}</div>`;
 }
 
 /* ══════════════════════════════════════════════════
@@ -2233,20 +2383,44 @@ async function animateKanaChar(char) {
    FONCTIONS GLOBALES : EXEMPLES & AUDIO
 ══════════════════════════════════════════════════ */
 
-function renderExemples(char) {
+async function renderExemples(char) {
     const container = document.getElementById('exemples-container');
     if (!container) return;
     container.innerHTML = '';
 
-    if (!exemplesDb || Object.keys(exemplesDb).length === 0) {
-        // Exemples pas encore chargés — réessayer dans 2s
-        container.innerHTML = `<div style="color:var(--gray);font-size:12px;text-align:center;padding:12px">
-            ⏳ Chargement des exemples…</div>`;
-        setTimeout(() => renderExemples(char), 2000);
-        return;
+    let liste = null;
+    
+    // 1. Essayer de charger depuis data/nX/examples.json si on a un niveau JLPT actif
+    if (currentJLPTLevel && exemplesByLevel[currentJLPTLevel]) {
+        const levelExamples = exemplesByLevel[currentJLPTLevel];
+        if (levelExamples.kanji && levelExamples.kanji[char]) {
+            liste = levelExamples.kanji[char];
+        }
     }
-
-    const liste = exemplesDb[char];
+    
+    // 2. Fallback : charger depuis exemplesDb (universel, charge en bg dans init)
+    if (!liste && exemplesDb && exemplesDb[char]) {
+        liste = exemplesDb[char];
+    }
+    
+    // 3. Si rien n'a été trouvé et qu'on a un niveau JLPT, charger en async
+    if (!liste && currentJLPTLevel) {
+        try {
+            if (!exemplesByLevel[currentJLPTLevel]) {
+                const res = await fetch(`./data/${currentJLPTLevel}/examples.json`);
+                if (res.ok) {
+                    exemplesByLevel[currentJLPTLevel] = await res.json();
+                    if (exemplesByLevel[currentJLPTLevel].kanji && exemplesByLevel[currentJLPTLevel].kanji[char]) {
+                        liste = exemplesByLevel[currentJLPTLevel].kanji[char];
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn(`Impossible de charger examples pour ${currentJLPTLevel}:`, e);
+        }
+    }
+    
+    // 4. Si toujours rien, afficher un message
     if (!liste || liste.length === 0) {
         container.innerHTML = `
             <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
@@ -2602,11 +2776,24 @@ async function init() {
         </div>`;
 
     try {
-        // Chargement du JSON des Kanjis
-        const res = await fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json');
-        if (!res.ok) throw new Error(`Erreur réseau : ${res.status}`);
+        // Chargement en parallèle : mapping JLPT + Kanjis
+        const [mappingRes, kanjiRes] = await Promise.all([
+            fetch('./data/mapping.json'),
+            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json')
+        ]);
+        
+        if (!kanjiRes.ok) throw new Error(`Erreur réseau kanji : ${kanjiRes.status}`);
+        
+        // Charger mapping (fallback si fichier manquant)
+        if (mappingRes.ok) {
+            jlptMapping = await mappingRes.json();
+            console.log('✅ Mapping JLPT chargé');
+        } else {
+            console.warn('⚠️ data/mapping.json non trouvé, fallback à structure par défaut');
+            jlptMapping = null;
+        }
 
-        let text = await res.text();
+        let text = await kanjiRes.text();
         text = text.trim();
         // Nettoyage sommaire au cas où le JSON GitHub soit mal formé
         if (!text.startsWith('{')) text = '{' + text;
