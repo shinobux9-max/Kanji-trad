@@ -3,14 +3,9 @@
    Stratégie : Network-first pour HTML/JSON, Cache-first pour assets
 ══════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'kanji-trad-v1';
+const CACHE_NAME = 'kanji-trad-v2-20250903';
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html',
-  '/kanji.css',
-  '/kanji.js',
-  '/hanzi-writer.js',
-  '/kanji_jouyou_fr.json',
   '/manifest.json'
 ];
 
@@ -75,15 +70,17 @@ self.addEventListener('fetch', (event) => {
       url.pathname.includes('/data/')) {
     event.respondWith(networkFirst(request));
   } 
-  // Stratégie 2 : CACHE-FIRST pour CSS, JS, images (assets statiques)
-  else if (url.pathname.endsWith('.css') || 
-           url.pathname.endsWith('.js') ||
-           url.pathname.endsWith('.png') ||
+  // Stratégie 2 : CACHE-FIRST pour images/fonts (assets statiques rares à changer)
+  else if (url.pathname.endsWith('.png') || 
            url.pathname.endsWith('.jpg') ||
            url.pathname.endsWith('.webp') ||
            url.pathname.endsWith('.woff') ||
            url.pathname.endsWith('.woff2')) {
     event.respondWith(cacheFirst(request));
+  }
+  // Stratégie 3 : NETWORK-FIRST pour CSS/JS (code applicatif, change souvent)
+  else if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js')) {
+    event.respondWith(networkFirst(request));
   }
   // Par défaut : NETWORK-FIRST
   else {
