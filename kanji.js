@@ -1044,7 +1044,7 @@ function showLevelCategorySelector(levelId) {
     // Construire les onglets
     const tabs = levelData.categories.map(cat => {
         const catData = jlptMapping.categories[cat];
-        return `<button class="tab-btn" data-category="${cat}" onclick="loadJLPTCategory('${levelId}', '${cat}')" style="flex:1;padding:12px;background:rgba(255,255,255,0.05);border:none;color:var(--gray);font-size:14px;cursor:pointer;transition:all 0.15s;border-bottom:2px solid transparent" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+        return `<button class="tab-btn" data-category="${cat}" onclick="loadJLPTCategory('${levelId}', '${cat}')" style="flex:1;padding:12px;background:rgba(255,255,255,0.12);border:none;color:var(--gray);font-size:14px;cursor:pointer;transition:all 0.15s;border-bottom:2px solid transparent" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
             ${catData.icon} ${catData.label}
         </button>`;
     }).join('');
@@ -1182,7 +1182,7 @@ function displayVocabList(levelId, data, examples = null) {
             const exHTML = wordExamples.length > 0 
                 ? `<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:10px;color:var(--gray)">
                     ${wordExamples.slice(0, 1).map(ex => `
-                        <div style="margin-top:6px;padding:6px;background:rgba(0,0,0,0.2);border-radius:4px;line-height:1.3">
+                        <div style="margin-top:6px;padding:6px;background:rgba(0,0,0,0.4);border-radius:4px;line-height:1.3">
                             <div style="color:#fff;font-size:11px">${ex.jp}</div>
                             <div style="color:var(--accent);font-size:9px;margin-top:2px">${ex.ro}</div>
                             <div style="color:var(--gray);font-size:10px;margin-top:2px">${ex.fr}</div>
@@ -1192,7 +1192,7 @@ function displayVocabList(levelId, data, examples = null) {
                 : '';
             
             return `
-                <div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px">
+                <div style="padding:10px;background:rgba(255,255,255,0.08);border-left:4px solid var(--accent);border-radius:6px;border:1px solid rgba(0,201,167,0.2);border-left:4px solid var(--accent)">
                     <div style="font-size:13px;font-weight:bold;color:#fff">${word.word}</div>
                     <div style="font-size:11px;color:var(--accent);margin-top:2px">${word.reading}</div>
                     <div style="font-size:12px;color:var(--gray);margin-top:4px;line-height:1.4">${word.meanings.join(' • ')}</div>
@@ -1261,7 +1261,7 @@ function showGrammarHome(levelId, data, examples = null) {
             const patterns = grouped[type];
             const typeLabel = GRAMMAR_TYPE_MAP[type] || type;
             const typeMastered = patterns.filter(p => getItemStatus(p.id) === 'mastered').length;
-            return `<div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
+            return `<div style="border:2px solid rgba(155,139,255,0.3);border-radius:10px;overflow:hidden;background:var(--surface);background:rgba(24,24,31,0.8)">
                 <div style="padding:12px;background:rgba(155,139,255,0.1);border-bottom:1px solid var(--border);cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';this.querySelector('[data-arrow]').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(90deg)'">
                     <div style="display:flex;justify-content:space-between">
                         <div><span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(0deg)">▶</span> <span style="font-size:13px;font-weight:bold">${typeLabel}</span></div>
@@ -1271,7 +1271,7 @@ function showGrammarHome(levelId, data, examples = null) {
                 <div style="padding:8px;display:none;flex-direction:column;gap:6px">
                     ${patterns.map(p => {
                         const s = getItemStatus(p.id);
-                        return `<div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px;cursor:pointer;display:flex;justify-content:space-between" onclick="showGrammarDetail('${p.id}')">
+                        return `<div style="padding:10px;background:rgba(255,255,255,0.08);border-left:3px solid var(--accent);border-radius:6px;cursor:pointer;display:flex;justify-content:space-between" onclick="showGrammarDetail('${p.id}')">
                             <div><div style="font-size:12px;font-weight:bold;color:#fff">${p.pattern}</div><div style="font-size:11px;color:var(--gray);margin-top:2px">${p.meaning.substring(0,45)}...</div></div>
                             <div style="font-size:14px">${s === 'mastered' ? '✓' : s === 'favorited' ? '❤' : ''}</div>
                         </div>`;
@@ -1306,13 +1306,13 @@ function showGrammarDetail(patternId) {
             <div style="font-size:32px;font-weight:bold;color:var(--accent);margin-bottom:8px">${pattern.pattern}</div>
             <div style="font-size:16px;color:#fff;line-height:1.4">${pattern.meaning}</div>
             <div style="display:flex;gap:8px;margin-top:12px">
-                <button onclick="trackItem('${pattern.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'favorited' ? 'rgba(255,56,129,0.2)' : 'rgba(255,255,255,0.05)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">❤ ${status === 'favorited' ? 'Favorisé' : 'Favoriser'}</button>
-                <button onclick="trackItem('${pattern.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'mastered' ? 'rgba(0,201,167,0.2)' : 'rgba(255,255,255,0.05)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">✓ ${status === 'mastered' ? 'Maîtrisé' : 'Marquer maîtrisé'}</button>
+                <button onclick="trackItem('${pattern.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'favorited' ? 'rgba(255,56,129,0.2)' : 'rgba(255,255,255,0.12)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">❤ ${status === 'favorited' ? 'Favorisé' : 'Favoriser'}</button>
+                <button onclick="trackItem('${pattern.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'mastered' ? 'rgba(0,201,167,0.2)' : 'rgba(255,255,255,0.12)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">✓ ${status === 'mastered' ? 'Maîtrisé' : 'Marquer maîtrisé'}</button>
             </div>
         </div>
         ${patternExamples.length > 0 ? `<div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
             <div style="font-size:11px;color:var(--gray);text-transform:uppercase;margin-bottom:12px;font-weight:bold">Exemples</div>
-            ${patternExamples.map(ex => `<div style="padding:12px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px;margin-bottom:8px;cursor:pointer" onclick="speakText('${ex.jp.replace(/'/g, "\\'")}')" title="Cliquer pour écouter">
+            ${patternExamples.map(ex => `<div style="padding:12px;background:rgba(255,255,255,0.08);border-left:3px solid var(--accent);border-radius:6px;margin-bottom:8px;cursor:pointer" onclick="speakText('${ex.jp.replace(/'/g, "\\'")}')" title="Cliquer pour écouter">
                 <div style="font-size:14px;color:#fff;margin-bottom:4px">${ex.jp}</div>
                 <div style="font-size:11px;color:var(--accent);margin-bottom:4px">${ex.ro}</div>
                 <div style="font-size:12px;color:var(--gray)">${ex.fr}</div>
@@ -1371,7 +1371,7 @@ function displayGrammarList(levelId, data, examples = null) {
                 : '<div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--gray)">Pas d\'exemples disponibles</div>';
             
             return `
-                <div style="padding:12px;background:rgba(255,255,255,0.02);border-left:3px solid #9b8bff;border-radius:6px;cursor:pointer;transition:all 0.15s;user-select:none" onclick="const ex = this.querySelector('[data-examples]'); ex.style.display = ex.style.display === 'none' ? 'block' : 'none'" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
+                <div style="padding:12px;background:rgba(255,255,255,0.08);border-left:3px solid #9b8bff;border-radius:6px;cursor:pointer;transition:all 0.15s;user-select:none" onclick="const ex = this.querySelector('[data-examples]'); ex.style.display = ex.style.display === 'none' ? 'block' : 'none'" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
                     <div style="font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:6px">${pattern.pattern}</div>
                     <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:8px">${pattern.meaning}</div>
                     <div style="font-size:10px;color:var(--gray);opacity:0.6">Cliquez pour voir les exemples →</div>
