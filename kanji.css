@@ -437,14 +437,18 @@
     /* ── GRAMMAR CONTAINER ── */
     .grammar-container { display: flex; flex-direction: column; gap: 24px; }
     
-    .unit-section { display: flex; flex-direction: column; gap: 12px; }
+    .unit-section-collapsible { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
     
-    .unit-header { padding: 16px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); }
+    .unit-header-collapsible { padding: 12px 16px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .unit-header-collapsible:hover { background: rgba(0, 201, 167, 0.08); }
+    .unit-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); margin-right: 8px; }
+    .unit-arrow.open { transform: rotate(90deg); }
     .unit-title { font-size: 14px; color: #fff; font-weight: bold; letter-spacing: 0.5px; }
     .unit-number { color: var(--accent); }
     .unit-progress { font-size: 11px; color: var(--gray); margin-top: 8px; }
     
-    .lessons-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .lessons-grid { display: none; grid-template-columns: 1fr; gap: 12px; }
+    .lessons-grid.open { display: grid; }
     @media (min-width: 768px) { .lessons-grid { grid-template-columns: 1fr 1fr; } }
     @media (min-width: 1200px) { .lessons-grid { grid-template-columns: 1fr 1fr 1fr; } }
     
@@ -482,3 +486,49 @@
     .example-ro { color: var(--accent); font-size: 9px; margin-top: 2px; }
     .example-fr { color: var(--gray); font-size: 10px; margin-top: 2px; }
 </style>
+    
+    /* ══════════════════════════════════════════════════
+       DETAIL PAGE GRAMMAR (Fiche pédagogique)
+    ══════════════════════════════════════════════════ */
+    .detail-page { display: flex; flex-direction: column; gap: 16px; padding: 12px 0; }
+    
+    .detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+    .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; color: var(--gray); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+    .back-btn:hover { background: rgba(0,201,167,0.2); }
+    .header-info { flex: 1; }
+    .lesson-title { font-size: 18px; color: #fff; font-weight: bold; }
+    .lesson-subtitle { font-size: 12px; color: var(--gray); margin-top: 4px; }
+    
+    .grammar-point-box { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
+    .item-display { font-size: 48px; color: #ff6b9d; font-weight: bold; margin: 12px 0; line-height: 1.2; }
+    .item-description { font-size: 14px; color: #fff; font-weight: 500; margin-bottom: 12px; }
+    .pattern-box { font-size: 12px; color: var(--gray); background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; }
+    
+    .action-buttons { display: flex; gap: 8px; }
+    .link-btn { flex: 1; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 12px; }
+    .link-btn:hover { background: rgba(255,255,255,0.1); }
+    .revise-btn { flex: 1; padding: 12px; background: #ff6b9d; border: none; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; font-weight: bold; }
+    .revise-btn:hover { background: #ff5588; }
+    .revise-btn.active { background: #00c9a7; }
+    
+    .detail-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+    .detail-section .section-label { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
+    .section-content-box { font-size: 13px; color: #fff; line-height: 1.6; }
+    
+    .examples-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+    .examples-section .section-label { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .examples-container { display: flex; flex-direction: column; gap: 12px; }
+    .example-item { padding: 12px; background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); border-radius: 6px; position: relative; }
+    .example-jp { font-size: 14px; color: #fff; margin-bottom: 4px; font-weight: 500; }
+    .example-ro { font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+    .example-fr { font-size: 12px; color: var(--gray); }
+    .speak-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 18px; }
+    .speak-btn:hover { opacity: 0.7; }
+    
+    .highlight-grammar { color: #ff6b9d; font-weight: bold; }
+    
+    .favorite-btn-section { padding: 16px; text-align: center; }
+    .favorite-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 13px; }
+    .favorite-btn:hover { background: rgba(255,255,255,0.1); }
+    .favorite-btn.active { background: rgba(255, 107, 157, 0.2); border-color: #ff6b9d; color: #ff6b9d; }
+

@@ -1254,21 +1254,23 @@ function showGrammarHome(levelId, data, examples = null) {
     
     let html = `<div class="grammar-container">`;
     
-    html += sortedUnits.map(unitKey => {
+    html += sortedUnits.map((unitKey, idx) => {
         const unit = groupedByUnit[unitKey];
         const tracking = getTracking();
         const unitMastered = unit.lessons.filter(l => tracking[l.id]?.status === 'mastered').length;
+        const unitId = `unit-${unitKey}`;
         
         return `
-            <div class="unit-section">
-                <div class="unit-header">
+            <div class="unit-section-collapsible">
+                <div class="unit-header-collapsible" onclick="const grid = document.getElementById('${unitId}'); grid.classList.toggle('open'); this.querySelector('.unit-arrow').classList.toggle('open')">
                     <div class="unit-title">
+                        <span class="unit-arrow">▶</span>
                         <span class="unit-number">${String(unitKey).padStart(2, '0')} — ${unit.title}</span>
                     </div>
                     <div class="unit-progress">${unitMastered}/${unit.lessons.length} maîtrisés</div>
                 </div>
                 
-                <div class="lessons-grid">
+                <div class="lessons-grid" id="${unitId}">
                     ${unit.lessons.map(lesson => {
                         const status = getItemStatus(lesson.id);
                         const badgeText = lesson.badge || 'Leçon';
@@ -1308,76 +1310,85 @@ function showGrammarDetail(lessonId) {
     }
     
     const status = getItemStatus(lesson.id);
-    
-    // Fonction helper pour mettre en avant le highlight dans la phrase
-    const highlightJapanese = (japanese, highlight) => {
-        if (!japanese || !highlight) return japanese || '';
-        return japanese.replace(
-            new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'),
-            '<span class="highlighted-grammar">$1</span>'
-        );
-    };
-    
     const itemText = lesson.item || lesson.pattern || 'Formule';
     const titleText = lesson.title || lesson.meaning || 'Sans titre';
     const patternText = lesson.pattern || itemText;
-    const unitText = lesson.unit ? `Unité ${lesson.unit}` : 'Leçon';
-    const unitTitleText = lesson.unit_title || '';
+    const lessonNum = lesson.lesson_number ? String(lesson.lesson_number).padStart(2, '0') : '01';
+    const unitText = lesson.unit_title || `Unité ${lesson.unit}`;
     const badgeText = lesson.badge || 'Leçon';
     
-    let html = `<div class="grammar-detail-container">
-        <div class="detail-header">
-            <button onclick="showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" class="back-btn">← Retour</button>
-            
-            <div class="detail-info">
-                <div class="lesson-unit">${unitText}${unitTitleText ? ' - ' + unitTitleText : ''}</div>
-                <div class="lesson-badge">${badgeText}</div>
-                <div class="lesson-item">${itemText}</div>
-                <div class="lesson-title">${titleText}</div>
-                <div class="lesson-pattern">${patternText}</div>
-            </div>
-            
-            <div class="detail-actions">
-                <button onclick="trackItem('${lesson.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" 
-                    class="action-btn ${status === 'favorited' ? 'active' : ''}">
-                    ❤ ${status === 'favorited' ? 'Favorisé' : 'Favoriser'}
-                </button>
-                <button onclick="trackItem('${lesson.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" 
-                    class="action-btn ${status === 'mastered' ? 'active' : ''}">
-                    ✓ ${status === 'mastered' ? 'Maîtrisé' : 'Maîtriser'}
-                </button>
+    // Fonction helper pour surligner
+    const highlightText = (text, highlight) => {
+        if (!text || !highlight) return text || '';
+        return text.replace(
+            new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'),
+            '<span class="highlight-grammar">$1</span>'
+        );
+    };
+    
+    let html = `<div class="detail-page">
+        <!-- HEADER -->
+        <div class="detail-header-top">
+            <button onclick="showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" class="back-btn">←</button>
+            <div class="header-info">
+                <div class="lesson-title">Leçon ${lessonNum}</div>
+                <div class="lesson-subtitle">N5 • ${unitText}</div>
             </div>
         </div>
         
-        ${lesson.sections && Array.isArray(lesson.sections) && lesson.sections.length > 0 ? `
-            <div class="detail-sections">
-                ${lesson.sections.map(section => `
-                    <div class="detail-section">
-                        <div class="section-label">${section.label || 'Section'}</div>
-                        <div class="section-text">${section.text || ''}</div>
-                    </div>
-                `).join('')}
+        <!-- POINT DE GRAMMAIRE -->
+        <div class="grammar-point-box">
+            <div class="section-label">POINT DE GRAMMAIRE</div>
+            <div class="item-display">${itemText}</div>
+            <div class="item-description">${titleText}</div>
+            <div class="pattern-box">${highlightText(patternText, itemText)}</div>
+        </div>
+        
+        <!-- BOUTONS ACTIONS -->
+        <div class="action-buttons">
+            <button class="link-btn">⏵ Revoir le cours animé</button>
+            <button class="revise-btn ${status === 'mastered' ? 'active' : ''}" onclick="trackItem('${lesson.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarDetail('${lesson.id}')">
+                ${status === 'mastered' ? '✓ Révisé' : 'Réviser'}
+            </button>
+        </div>
+        
+        <!-- SECTIONS -->
+        ${lesson.sections && Array.isArray(lesson.sections) ? lesson.sections.map(section => `
+            <div class="detail-section">
+                <div class="section-label">${section.label || 'Section'}</div>
+                <div class="section-content-box">
+                    ${section.text || ''}
+                </div>
+            </div>
+        `).join('') : ''}
+        
+        <!-- EXEMPLES -->
+        ${lesson.examples && Array.isArray(lesson.examples) && lesson.examples.length > 0 ? `
+            <div class="examples-section">
+                <div class="section-label">EXEMPLES</div>
+                <div class="examples-container">
+                    ${lesson.examples.map(example => `
+                        <div class="example-item">
+                            <div class="example-jp">${highlightText(example.japanese || '', example.highlight || '')}</div>
+                            <div class="example-ro">${example.romaji || ''}</div>
+                            <div class="example-fr">${example.french || ''}</div>
+                            ${example.japanese ? `<button class="speak-btn" onclick="speakText('${(example.japanese || '').replace(/'/g, "\\'")}')" title="Cliquer pour écouter">🔊</button>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
             </div>
         ` : ''}
         
-        ${lesson.examples && Array.isArray(lesson.examples) && lesson.examples.length > 0 ? `
-            <div class="detail-examples">
-                <div class="examples-title">EXEMPLES</div>
-                ${lesson.examples.map(example => `
-                    <div class="example-card">
-                        <div class="example-japanese">${highlightJapanese(example.japanese || '', example.highlight || '')}</div>
-                        <div class="example-romaji">${example.romaji || ''}</div>
-                        <div class="example-french">${example.french || ''}</div>
-                        ${example.japanese ? `<button class="speak-btn" onclick="speakText('${(example.japanese || '').replace(/'/g, "\\'")}')" title="Cliquer pour écouter">🔊</button>` : ''}
-                    </div>
-                `).join('')}
-            </div>
-        ` : ''}
+        <!-- FAVORIS -->
+        <div class="favorite-btn-section">
+            <button class="favorite-btn ${status === 'favorited' ? 'active' : ''}" onclick="trackItem('${lesson.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarDetail('${lesson.id}')">
+                ${status === 'favorited' ? '❤ Favorisé' : '🤍 Ajouter aux favoris'}
+            </button>
+        </div>
     </div>`;
     
     container.innerHTML = html;
 }
-
 
 function displayGrammarList(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
