@@ -1,527 +1,2014 @@
 [
   {
     "id": "n5_g_1",
-    "pattern": "〜です",
-    "meaning": "Être / Politesse formelle",
-    "type": "copula",
-    "examples": ["n5_g_1_ex1", "n5_g_1_ex2"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 1,
+    "title": "Affirmer avec politesse",
+    "item": "です",
+    "pattern": "[Nom / Adj] + です",
+    "badge": "Copule",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "です (desu) est l'équivalent du verbe « être ». Il sert à identifier, décrire ou donner des informations sur le sujet tout en apportant une touche de politesse."
+      },
+      {
+        "label": "UTILISATION",
+        "text": "Placez-le simplement après un nom ou un adjectif en fin de phrase. La voyelle 'u' à la fin est presque muette, on le prononce généralement « dess »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "Waito-san です。",
+        "romaji": "Waito-san desu.",
+        "french": "Je suis M. White / C'est M. White.",
+        "highlight": "です"
+      },
+      {
+        "japanese": "学生 です。",
+        "romaji": "Gakusei desu.",
+        "french": "Je suis étudiant.",
+        "highlight": "です"
+      }
+    ]
   },
   {
     "id": "n5_g_2",
-    "pattern": "〜ではありません / 〜じゃないです",
-    "meaning": "Ne pas être (négation de です)",
-    "type": "copula",
-    "examples": ["n5_g_2_ex1", "n5_g_2_ex2"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 2,
+    "title": "Nier poliment",
+    "item": "ではありません / じゃないです",
+    "pattern": "[Nom / Adj] + ではありません / じゃないです",
+    "badge": "Copule Négative",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "C'est la forme négative de です. Elle sert à dire « ce n'est pas » ou « je ne suis pas »."
+      },
+      {
+        "label": "NIVEAU DE LANGUE",
+        "text": "ではありません (dewa arimasen) est formel et parfait à l'écrit. じゃないです (janai desu) est plus naturel et courant à l'oral."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "Pān ではありません。",
+        "romaji": "Pan dewa arimasen.",
+        "french": "Ce n'est pas du pain.",
+        "highlight": "ではありません"
+      },
+      {
+        "japanese": "先生 じゃないです。",
+        "romaji": "Sensei janai desu.",
+        "french": "Je ne suis pas professeur.",
+        "highlight": "じゃないです"
+      }
+    ]
   },
   {
     "id": "n5_g_3",
-    "pattern": "〜でした",
-    "meaning": "Était (passé de です)",
-    "type": "copula",
-    "examples": ["n5_g_3_ex1"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 3,
+    "title": "Parler au passé",
+    "item": "でした",
+    "pattern": "[Nom / Adj] + でした",
+    "badge": "Copule Passée",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "でした (deshita) est le passé poli de です. Il s'utilise pour indiquer un état ou une identité passée (« c'était » / « j'étais »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "学生 でした。",
+        "romaji": "Gakusei deshita.",
+        "french": "J'étais étudiant.",
+        "highlight": "でした"
+      },
+      {
+        "japanese": "雨 でした。",
+        "romaji": "Ame deshita.",
+        "french": "C'était de la pluie / Il pleuvait.",
+        "highlight": "でした"
+      }
+    ]
   },
   {
     "id": "n5_g_4",
-    "pattern": "〜ます",
-    "meaning": "Forme polie du verbe (présent/futur)",
-    "type": "verb-form",
-    "examples": ["n5_g_4_ex1", "n5_g_4_ex2"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 4,
+    "title": "Exprimer une action au présent ou au futur",
+    "item": "〜ます",
+    "pattern": "[Base verbale] + ます",
+    "badge": "Verbe Poli",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "La forme en 〜ます (masu) s'attache à la racine d'un verbe pour exprimer une action présente, une habitude ou une action future dans un registre poli."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "水 を 飲みます。",
+        "romaji": "Mizu wo nomimasu.",
+        "french": "Je bois de l'eau / Je boirai de l'eau.",
+        "highlight": "飲みます"
+      },
+      {
+        "japanese": "明日 行きます。",
+        "romaji": "Ashita ikimasu.",
+        "french": "J'irai demain.",
+        "highlight": "行きます"
+      }
+    ]
   },
   {
     "id": "n5_g_5",
-    "pattern": "〜ません",
-    "meaning": "Négation polie du verbe",
-    "type": "verb-form",
-    "examples": ["n5_g_5_ex1"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 5,
+    "title": "Nier une action",
+    "item": "〜ません",
+    "pattern": "[Base verbale] + ません",
+    "badge": "Verbe Négatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "C'est la forme négative polie des verbes. Elle remplace 〜ます pour dire que l'on ne fait pas ou ne fera pas une action."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "肉 を 食べません。",
+        "romaji": "Niku wo tabemasen.",
+        "french": "Je ne mange pas de viande.",
+        "highlight": "食べません"
+      }
+    ]
   },
   {
     "id": "n5_g_6",
-    "pattern": "〜ました",
-    "meaning": "Passé poli du verbe",
-    "type": "verb-form",
-    "examples": ["n5_g_6_ex1"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 6,
+    "title": "Action accomplie dans le passé",
+    "item": "〜ました",
+    "pattern": "[Base verbale] + ました",
+    "badge": "Verbe Passé",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Remplace la terminaison 〜ます pour indiquer qu'une action a déjà eu lieu dans le passé."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "本 を 読みました。",
+        "romaji": "Hon wo yomimashita.",
+        "french": "J'ai lu un livre.",
+        "highlight": "読みました"
+      }
+    ]
   },
   {
     "id": "n5_g_7",
-    "pattern": "〜ませんでした",
-    "meaning": "Passé négatif poli du verbe",
-    "type": "verb-form",
-    "examples": ["n5_g_7_ex1"]
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 7,
+    "title": "Action non accomplie au passé",
+    "item": "〜ませんでした",
+    "pattern": "[Base verbale] + ませんでした",
+    "badge": "Verbe Passé Négatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Combine le passé et la négation. Il s'utilise pour indiquer qu'une action n'a pas eu lieu."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "昨日 は 勉強しませんでした。",
+        "romaji": "Kinou wa benkyoushimasendhita.",
+        "french": "Hier, je n'ai pas étudié.",
+        "highlight": "勉強しませんでした"
+      }
+    ]
   },
   {
     "id": "n5_g_8",
-    "pattern": "〜は",
-    "meaning": "Particule de thème (en ce qui concerne...)",
-    "type": "particle",
-    "examples": ["n5_g_8_ex1", "n5_g_8_ex2"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 8,
+    "title": "Poser le thème de la phrase",
+    "item": "は",
+    "pattern": "[Nom] + は",
+    "badge": "Particule de thème",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "La particule は (prononcée « wa » lorsqu'elle est particule) sert à introduire le thème principal de la phrase : « En ce qui concerne... »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "私 は マイク です。",
+        "romaji": "Watashi wa Maiku desu.",
+        "french": "En ce qui me concerne, je suis Mike.",
+        "highlight": "は"
+      }
+    ]
   },
   {
     "id": "n5_g_9",
-    "pattern": "〜が",
-    "meaning": "Particule de sujet / Opposition (mais)",
-    "type": "particle",
-    "examples": ["n5_g_9_ex1", "n5_g_9_ex2"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 9,
+    "title": "Identifier le sujet précis",
+    "item": "が",
+    "pattern": "[Nom] + が",
+    "badge": "Particule de sujet",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "La particule が désigne précisément l'auteur de l'action ou le sujet d'un état. Elle met un coup de projecteur sur le mot qui la précède."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "猫 が います。",
+        "romaji": "Neko ga imasu.",
+        "french": "Il y a un chat (c'est le chat qui est là).",
+        "highlight": "が"
+      }
+    ]
   },
   {
     "id": "n5_g_10",
-    "pattern": "〜を",
-    "meaning": "Particule de COD (objet direct)",
-    "type": "particle",
-    "examples": ["n5_g_10_ex1"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 10,
+    "title": "Désigner l'objet direct d'une action",
+    "item": "を",
+    "pattern": "[Nom] + を + [Verbe]",
+    "badge": "Particule de COD",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "La particule を (prononcée « o ») marque l'objet direct d'un verbe d'action (ce que l'on mange, ce que l'on regarde, ce que l'on achète...)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "りんご を 食べます。",
+        "romaji": "Ringo wo tabemasen.",
+        "french": "Je mange une pomme.",
+        "highlight": "を"
+      }
+    ]
   },
   {
     "id": "n5_g_11",
-    "pattern": "〜に",
-    "meaning": "Destination, heure précise, lieu d'existence",
-    "type": "particle",
-    "examples": ["n5_g_11_ex1", "n5_g_11_ex2", "n5_g_11_ex3"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 11,
+    "title": "Cible, destination et temps précis",
+    "item": "に",
+    "pattern": "[Lieu / Temps / Personne] + に",
+    "badge": "Particule de cible",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "La particule に a plusieurs rôles essentiels : elle indique le point d'arrivée d'un déplacement (aller à), l'heure exacte d'un événement (à 7h), ou le lieu où se trouve quelque chose."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "７時 に 起きます。",
+        "romaji": "Shichiji ni okimasu.",
+        "french": "Je me réveille à 7 heures.",
+        "highlight": "に"
+      },
+      {
+        "japanese": "日本 に 行きます。",
+        "romaji": "Nihon ni ikimasu.",
+        "french": "Je vais au Japon.",
+        "highlight": "に"
+      }
+    ]
   },
   {
     "id": "n5_g_12",
-    "pattern": "〜で",
-    "meaning": "Lieu d'action, moyen/outil",
-    "type": "particle",
-    "examples": ["n5_g_12_ex1", "n5_g_12_ex2"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 12,
+    "title": "Lieu d'action et moyen utilisé",
+    "item": "で",
+    "pattern": "[Lieu / Moyen] + で",
+    "badge": "Particule de moyen/lieu",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "で indique l'endroit où se déroule une action (manger au restaurant), ou le moyen/outil utilisé pour réaliser une action (en train, avec des baguettes)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "レストラン で 食べます。",
+        "romaji": "Resutoran de tabemasu.",
+        "french": "Je mange au restaurant.",
+        "highlight": "で"
+      },
+      {
+        "japanese": "バス で 行きます。",
+        "romaji": "Basu de ikimasu.",
+        "french": "J'y vais en bus.",
+        "highlight": "で"
+      }
+    ]
   },
   {
     "id": "n5_g_13",
-    "pattern": "〜へ",
-    "meaning": "Direction (vers)",
-    "type": "particle",
-    "examples": ["n5_g_13_ex1"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 13,
+    "title": "Indiquer une direction générale",
+    "item": "へ",
+    "pattern": "[Lieu] + へ",
+    "badge": "Particule de direction",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "La particule へ (prononcée « e ») met l'accent sur la direction ou le cap vers lequel on se dirige (« vers », « en direction de »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "東京 へ 行きます。",
+        "romaji": "Toukyou e ikimasu.",
+        "french": "Je pars en direction de Tokyo.",
+        "highlight": "へ"
+      }
+    ]
   },
   {
     "id": "n5_g_14",
-    "pattern": "〜と",
-    "meaning": "Accompagnement (avec), énumération exhaustive (et)",
-    "type": "particle",
-    "examples": ["n5_g_14_ex1", "n5_g_14_ex2"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 14,
+    "title": "Accompagnement et énumération complète",
+    "item": "と",
+    "pattern": "[Nom] + と + [Nom]",
+    "badge": "Particule d'association",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "と sert à dire « et » entre des noms (liste exhaustive) ou à indiquer la personne avec qui l'on fait une action (« avec »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "友達 と 話します。",
+        "romaji": "Tomodachi to hanashimasu.",
+        "french": "Je parle avec un ami.",
+        "highlight": "と"
+      },
+      {
+        "japanese": "パン と 卵 を 買いました。",
+        "romaji": "Pan to tamago wo kaimashita.",
+        "french": "J'ai acheté du pain et des œufs.",
+        "highlight": "と"
+      }
+    ]
   },
   {
     "id": "n5_g_15",
-    "pattern": "〜も",
-    "meaning": "Aussi / Non plus",
-    "type": "particle",
-    "examples": ["n5_g_15_ex1"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 15,
+    "title": "Inclusion et similitude",
+    "item": "も",
+    "pattern": "[Nom] + も",
+    "badge": "Particule d'inclusion",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "も signifie « aussi » ou « non plus ». Elle remplace les particules は, が ou を lorsqu'on ajoute un élément similaire."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "私 も 学生 です。",
+        "romaji": "Watashi mo gakusei desu.",
+        "french": "Moi aussi, je suis étudiant.",
+        "highlight": "も"
+      }
+    ]
   },
   {
     "id": "n5_g_16",
-    "pattern": "〜の",
-    "meaning": "Possession, appartenance, modification de nom",
-    "type": "particle",
-    "examples": ["n5_g_16_ex1", "n5_g_16_ex2"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 16,
+    "title": "Possession et lien entre les mots",
+    "item": "の",
+    "pattern": "[Nom A] + の + [Nom B]",
+    "badge": "Particule de lien",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "の relie deux noms. Le premier nom apporte une précision ou indique la possession du second (équivalent de « de » ou du 's anglais)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "私 の 本 です。",
+        "romaji": "Watashi no hon desu.",
+        "french": "C'est mon livre (le livre de moi).",
+        "highlight": "の"
+      },
+      {
+        "japanese": "日本語 の 先生。",
+        "romaji": "Nihongo no sensei.",
+        "french": "Un professeur de japonais.",
+        "highlight": "の"
+      }
+    ]
   },
   {
     "id": "n5_g_17",
-    "pattern": "〜か",
-    "meaning": "Particule interrogative (interrogation)",
-    "type": "particle",
-    "examples": ["n5_g_17_ex1"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 17,
+    "title": "Poser une question",
+    "item": "か",
+    "pattern": "[Phrase] + か",
+    "badge": "Particule interrogative",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Placée à la toute fin d'une phrase, か transforme immédiatement celle-ci en question (fait office de point d'interrogation)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "元気 です か。",
+        "romaji": "Genki desu ka.",
+        "french": "Comment vas-tu ? / Allez-vous bien ?",
+        "highlight": "か"
+      }
+    ]
   },
   {
     "id": "n5_g_18",
-    "pattern": "〜ね",
-    "meaning": "Particule finale de confirmation (n'est-ce pas ?)",
-    "type": "particle",
-    "examples": ["n5_g_18_ex1"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 18,
+    "title": "Demander confirmation",
+    "item": "ね",
+    "pattern": "[Phrase] + ね",
+    "badge": "Particule finale",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise en fin de phrase pour rechercher l'accord de l'interlocuteur, équivalent de « n'est-ce pas ? » ou « hein »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "いい 天気 です ね。",
+        "romaji": "Ii tenki desu ne.",
+        "french": "Il fait beau, n'est-ce pas ?",
+        "highlight": "ね"
+      }
+    ]
   },
   {
     "id": "n5_g_19",
-    "pattern": "〜よ",
-    "meaning": "Particule finale d'affirmation/information",
-    "type": "particle",
-    "examples": ["n5_g_19_ex1"]
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 19,
+    "title": "Informer ou affirmer avec assurance",
+    "item": "よ",
+    "pattern": "[Phrase] + よ",
+    "badge": "Particule finale",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Placée en fin de phrase pour partager une information que l'interlocuteur ne sait pas ou pour appuyer une affirmation."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "美味しい です よ。",
+        "romaji": "Oishii desu yo.",
+        "french": "C'est délicieux, je te l'assure !",
+        "highlight": "よ"
+      }
+    ]
   },
   {
     "id": "n5_g_20",
-    "pattern": "〜から",
-    "meaning": "Origine (depuis/de) ou cause (parce que)",
-    "type": "particle",
-    "examples": ["n5_g_20_ex1", "n5_g_20_ex2"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 20,
+    "title": "Point de départ ou raison",
+    "item": "から",
+    "pattern": "[Lieu / Temps / Raison] + から",
+    "badge": "Particule d'origine",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique le point de départ spatial ou temporel (« depuis », « de »). En fin de proposition, elle exprime la cause (« parce que »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "９時 から です。",
+        "romaji": "Ku-ji kara desu.",
+        "french": "C'est à partir de 9 heures.",
+        "highlight": "から"
+      },
+      {
+        "japanese": "フランス から 来ました。",
+        "romaji": "Furansu kara kimashita.",
+        "french": "Je viens de France.",
+        "highlight": "から"
+      }
+    ]
   },
   {
     "id": "n5_g_21",
-    "pattern": "〜まで",
-    "meaning": "Limite spatiale ou temporelle (jusqu'à)",
-    "type": "particle",
-    "examples": ["n5_g_21_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 21,
+    "title": "Fixer une limite spatiale ou temporelle",
+    "item": "まで",
+    "pattern": "[Lieu / Temps] + まで",
+    "badge": "Particule de limite",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique la limite jusqu'où va une action ou un déplacement (« jusqu'à »). S'associe souvent avec から (de... jusqu'à...)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "５時 まで 働きます。",
+        "romaji": "Goji made hatarakimasu.",
+        "french": "Je travaille jusqu'à 5 heures.",
+        "highlight": "まで"
+      },
+      {
+        "japanese": "東京 まで 行きます。",
+        "romaji": "Toukyou made ikimasu.",
+        "french": "J'vais jusqu'à Tokyo.",
+        "highlight": "まで"
+      }
+    ]
   },
   {
     "id": "n5_g_22",
-    "pattern": "〜より",
-    "meaning": "Comparaison (plus que / par rapport à)",
-    "type": "particle",
-    "examples": ["n5_g_22_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 22,
+    "title": "Exprimer un point de comparaison",
+    "item": "より",
+    "pattern": "[Nom] + より",
+    "badge": "Particule de comparaison",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Sert de point de référence dans une comparaison pour dire « plus que » ou « par rapport à »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "新幹線 は バス より 早い です。",
+        "romaji": "Shinkansen wa basu yori hayai desu.",
+        "french": "Le Shinkansen est plus rapide que le bus.",
+        "highlight": "より"
+      }
+    ]
   },
   {
     "id": "n5_g_23",
-    "pattern": "〜だけ",
-    "meaning": "Restriction (seulement, seulement que)",
-    "type": "particle",
-    "examples": ["n5_g_23_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 23,
+    "title": "Exprimer la restriction",
+    "item": "だけ",
+    "pattern": "[Nom / Nombre] + だけ",
+    "badge": "Particule de restriction",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Signifie « seulement », « uniquement » ou « juste ». S'associe directement après le mot qu'il restreint."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "水 だけ 飲みます。",
+        "romaji": "Mizu dake nomimasu.",
+        "french": "Je bois seulement de l'eau.",
+        "highlight": "だけ"
+      },
+      {
+        "japanese": "一つ だけ あります。",
+        "romaji": "Hitotsu dake arimasu.",
+        "french": "Il y en a seulement un.",
+        "highlight": "だけ"
+      }
+    ]
   },
   {
     "id": "n5_g_24",
-    "pattern": "〜ごろ",
-    "meaning": "Approximation temporelle (vers / environ)",
-    "type": "suffix",
-    "examples": ["n5_g_24_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 24,
+    "title": "Approximation temporelle",
+    "item": "ごろ",
+    "pattern": "[Heure / moment] + ごろ",
+    "badge": "Suffixe temporel",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique un horaire approximatif (« vers », « environ »). S'utilise uniquement avec un moment précis de la journée."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "６時 ごろ 会いましょう。",
+        "romaji": "Rokuji goro aimashou.",
+        "french": "Retrouvons-nous vers 6 heures.",
+        "highlight": "ごろ"
+      }
+    ]
   },
   {
     "id": "n5_g_25",
-    "pattern": "〜くらい / ぐらい",
-    "meaning": "Approximation de quantité ou durée (environ)",
-    "type": "particle",
-    "examples": ["n5_g_25_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 25,
+    "title": "Approximation de durée ou quantité",
+    "item": "くらい / ぐらい",
+    "pattern": "[Quantité / Durée] + くらい",
+    "badge": "Particule d'estimation",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Exprimer une durée ou une quantité approximative (« environ », « à peu près »). Différent de ごろ qui concerne l'heure précise."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "３時間 くらい 勉強しました。",
+        "romaji": "Sanjikan kurai benkyoushimashita.",
+        "french": "J'ai étudié pendant environ 3 heures.",
+        "highlight": "くらい"
+      }
+    ]
   },
   {
     "id": "n5_g_26",
-    "pattern": "〜や",
-    "meaning": "Énumération non exhaustive (et, entre autres)",
-    "type": "particle",
-    "examples": ["n5_g_26_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 26,
+    "title": "Énumération incomplète",
+    "item": "や",
+    "pattern": "[Nom A] + や + [Nom B]",
+    "badge": "Particule de liste",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Sert à citer des exemples dans une liste non exhaustive (« comme », « et entre autres »). À la différence de と qui liste tout."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "パン や 果物 を 買いました。",
+        "romaji": "Pan ya kudamono wo kaimashita.",
+        "french": "J'ai acheté du pain, des fruits (entre autres).",
+        "highlight": "や"
+      }
+    ]
   },
   {
     "id": "n5_g_27",
-    "pattern": "〜など",
-    "meaning": "Et cetera / Entre autres choses",
-    "type": "particle",
-    "examples": ["n5_g_27_ex1"]
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 27,
+    "title": "Conclure une énumération",
+    "item": "など",
+    "pattern": "[Nom] + など",
+    "badge": "Particule d'exemple",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise fréquemment en combinaison avec や pour dire « et cætera », « et d'autres choses similaires »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "犬 や 猫 など が います。",
+        "romaji": "Inu ya neko nado ga imasu.",
+        "french": "Il y a des chiens, des chats, etc.",
+        "highlight": "など"
+      }
+    ]
   },
   {
     "id": "n5_g_28",
-    "pattern": "い-adjectif (Présent affirmatif / négatif)",
-    "meaning": "Adjectif en -i (~い / ~くないです)",
-    "type": "adjective",
-    "examples": ["n5_g_28_ex1", "n5_g_28_ex2"]
+    "unit": 4,
+    "unit_title": "Les Adjectifs",
+    "lesson_number": 28,
+    "title": "Adjectifs en -i au présent",
+    "item": "い-adjectif (Présent)",
+    "pattern": "[Racine + い] + です / くないです",
+    "badge": "Adjectif en い",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Les adjectifs en -i se terminent toujours par い. Au négatif, on remplace le い final par くない (ex: 大きい -> 大きくない)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "この お茶 は 高い です。",
+        "romaji": "Kono ocha wa takai desu.",
+        "french": "Ce thé est cher.",
+        "highlight": "高い"
+      },
+      {
+        "japanese": "この お茶 は 高くない です。",
+        "romaji": "Kono ocha wa takakunai desu.",
+        "french": "Ce thé n'est pas cher.",
+        "highlight": "高くない"
+      }
+    ]
   },
   {
     "id": "n5_g_29",
-    "pattern": "い-adjectif (Passé affirmatif / négatif)",
-    "meaning": "Adjectif en -i (~かったです / ~くなかったです)",
-    "type": "adjective",
-    "examples": ["n5_g_29_ex1", "n5_g_29_ex2"]
+    "unit": 4,
+    "unit_title": "Les Adjectifs",
+    "lesson_number": 29,
+    "title": "Adjectifs en -i au passé",
+    "item": "い-adjectif (Passé)",
+    "pattern": "[Racine] + かったです / くなかったです",
+    "badge": "Adjectif en い",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Pour le passé d'un adjectif en -i, on remplace le い final par かった (affirmatif) ou くなかった (négatif)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "映画 は 面白かった です。",
+        "romaji": "Eiga wa omoshirokatta desu.",
+        "french": "Le film était intéressant.",
+        "highlight": "面白かった"
+      },
+      {
+        "japanese": "寒くなかった です。",
+        "romaji": "Samukunakatta desu.",
+        "french": "Il ne faisait pas froid.",
+        "highlight": "寒くなかった"
+      }
+    ]
   },
   {
     "id": "n5_g_30",
-    "pattern": "な-adjectif (Présent et passé)",
-    "meaning": "Adjectif en -na (~です / ~じゃないです / ~でした)",
-    "type": "adjective",
-    "examples": ["n5_g_30_ex1"]
+    "unit": 4,
+    "unit_title": "Les Adjectifs",
+    "lesson_number": 30,
+    "title": "Adjectifs en -na",
+    "item": "な-adjectif",
+    "pattern": "[Nom d'adjectif] + です / じゃないです",
+    "badge": "Adjectif en な",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Les adjectifs en -na se conjuguent exactement comme un nom avec です, じゃないです ou でした. On ajoute な uniquement quand il qualifie directement un nom qui suit."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "この 街 は 静か です。",
+        "romaji": "Kono machi wa shizuka desu.",
+        "french": "Cette ville est calme.",
+        "highlight": "静か"
+      },
+      {
+        "japanese": "静か な 街。",
+        "romaji": "Shizuka na machi.",
+        "french": "Une ville calme.",
+        "highlight": "静か な"
+      }
+    ]
   },
   {
     "id": "n5_g_31",
-    "pattern": "〜があります",
-    "meaning": "Existence d'objets inanimés (il y a...)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_31_ex1"]
+    "unit": 5,
+    "unit_title": "L'existence et la possession",
+    "lesson_number": 31,
+    "title": "Existence d'objets inanimés",
+    "item": "あります",
+    "pattern": "[Nom] + が + あります",
+    "badge": "Existence (Inanimé)",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour indiquer la présence ou la possession d'objets, de plantes, de concepts abstraits ou d'événements (ce qui ne bouge pas de lui-même)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "机 の 上 に 本 が あります。",
+        "romaji": "Tsukue no ue ni hon ga arimasu.",
+        "french": "Il y a un livre sur le bureau.",
+        "highlight": "あります"
+      },
+      {
+        "japanese": "時間 が あります。",
+        "romaji": "Jikan ga arimasu.",
+        "french": "J'ai du temps.",
+        "highlight": "あります"
+      }
+    ]
   },
   {
     "id": "n5_g_32",
-    "pattern": "〜に います",
-    "meaning": "Existence d'êtres animés (il y a / se trouve)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_32_ex1"]
+    "unit": 5,
+    "unit_title": "L'existence et la possession",
+    "lesson_number": 32,
+    "title": "Existence d'êtres vivants",
+    "item": "います",
+    "pattern": "[Nom] + が + います",
+    "badge": "Existence (Animé)",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour indiquer la présence de personnes ou d'animaux (ce qui se déplace par soi-même)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "部屋 に 誰 か が います。",
+        "romaji": "Heya ni dare ka ga imasu.",
+        "french": "Il y a quelqu'un dans la chambre.",
+        "highlight": "います"
+      },
+      {
+        "japanese": "犬 が います。",
+        "romaji": "Inu ga imasu.",
+        "french": "J'ai un chien / Il y a un chien.",
+        "highlight": "います"
+      }
+    ]
   },
   {
     "id": "n5_g_33",
-    "pattern": "〜たいです",
-    "meaning": "Exprimer un désir personnel (vouloir faire)",
-    "type": "verb-form",
-    "examples": ["n5_g_33_ex1"]
+    "unit": 5,
+    "unit_title": "L'existence et la possession",
+    "lesson_number": 33,
+    "title": "Exprimer ses désirs",
+    "item": "欲しい",
+    "pattern": "[Nom] + が + 欲しいです",
+    "badge": "Désir",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "欲しい (hoshii) est un adjectif en -i qui sert à exprimer le fait de vouloir un objet ou quelque chose de matériel."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "新しい 車 が 欲しい です。",
+        "romaji": "Atarashii kuruma ga hoshii desu.",
+        "french": "Je veux une nouvelle voiture.",
+        "highlight": "欲しい"
+      }
+    ]
   },
   {
     "id": "n5_g_34",
-    "pattern": "〜へ / に 行きます・来ます・帰ります",
-    "meaning": "Déplacement vers un lieu",
-    "type": "verb-phrase",
-    "examples": ["n5_g_34_ex1"]
+    "unit": 5,
+    "unit_title": "L'existence et la possession",
+    "lesson_number": 34,
+    "title": "Exprimer une envie de faire",
+    "item": "〜たい",
+    "pattern": "[Base verbale] + たいです",
+    "badge": "Volonté",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Se fixe sur la base verbale (forme en -masu sans le masu) pour exprimer le désir d'effectuer une action (« vouloir faire »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "日本 に 行きたい です。",
+        "romaji": "Nihon ni ikitai desu.",
+        "french": "Je veux aller au Japon.",
+        "highlight": "行きたい"
+      },
+      {
+        "japanese": "水 を 飲みたい です。",
+        "romaji": "Mizu wo nomitai desu.",
+        "french": "Je veux boire de l'eau.",
+        "highlight": "飲みたい"
+      }
+    ]
   },
   {
     "id": "n5_g_35",
-    "pattern": "〜に 行きます (But de déplacement)",
-    "meaning": "Aller faire quelque chose (base verbale + に 行く)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_35_ex1"]
+    "unit": 6,
+    "unit_title": "La forme en TE (て)",
+    "lesson_number": 35,
+    "title": "Demander poliment (Demande)",
+    "item": "〜てください",
+    "pattern": "[Verbe forme TE] + ください",
+    "badge": "Requête",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour demander poliment à quelqu'un d'effectuer une action (« S'il vous plaît, faites... »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "ここ に 書いて ください。",
+        "romaji": "Koko ni kaite kudasai.",
+        "french": "Écrivez ici, s'il vous plaît.",
+        "highlight": "書いて ください"
+      },
+      {
+        "japanese": "見て ください。",
+        "romaji": "Mite kudasai.",
+        "french": "Regardez, s'il vous plaît.",
+        "highlight": "見て ください"
+      }
+    ]
   },
   {
     "id": "n5_g_36",
-    "pattern": "〜てください",
-    "meaning": "Demande ou instruction polie (faites s'il vous plaît)",
-    "type": "verb-form",
-    "examples": ["n5_g_36_ex1"]
+    "unit": 6,
+    "unit_title": "La forme en TE (て)",
+    "lesson_number": 36,
+    "title": "Action en cours et état continu",
+    "item": "〜ている",
+    "pattern": "[Verbe forme TE] + います",
+    "badge": "Progressif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Exprime une action en train de se dérouler au moment où l'on parle (être en train de...) ou un état résultant d'une action passée."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "今 、ご飯 を 食べて います。",
+        "romaji": "Ima, gohan wo tabete imasu.",
+        "french": "Je suis en train de manger.",
+        "highlight": "食べて います"
+      },
+      {
+        "japanese": "東京 に 住んで います。",
+        "romaji": "Toukyou ni sunde imasu.",
+        "french": "J'habite à Tokyo.",
+        "highlight": "住んで います"
+      }
+    ]
   },
   {
     "id": "n5_g_37",
-    "pattern": "〜ています",
-    "meaning": "Action en cours (en train de) ou état résultant",
-    "type": "verb-form",
-    "examples": ["n5_g_37_ex1", "n5_g_37_ex2"]
+    "unit": 6,
+    "unit_title": "La forme en TE (て)",
+    "lesson_number": 37,
+    "title": "Demander ou donner une permission",
+    "item": "〜てもいい",
+    "pattern": "[Verbe forme TE] + もいいです",
+    "badge": "Permission",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Sert à donner ou demander la permission d'effectuer une action (« Tu peux... », « Est-ce que je peux... ? »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "写真 を 撮ってもいい です か。",
+        "romaji": "Shashin wo tottemo ii desu ka.",
+        "french": "Est-ce que je peux prendre une photo ?",
+        "highlight": "撮ってもいい"
+      }
+    ]
   },
   {
     "id": "n5_g_38",
-    "pattern": "〜てもいいです",
-    "meaning": "Demander ou donner la permission (il est possible de)",
-    "type": "verb-form",
-    "examples": ["n5_g_38_ex1"]
+    "unit": 6,
+    "unit_title": "La forme en TE (て)",
+    "lesson_number": 38,
+    "title": "Exprimer une interdiction",
+    "item": "〜てはいけない",
+    "pattern": "[Verbe forme TE] + はけません",
+    "badge": "Interdiction",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique une interdiction stricte ou une règle à ne pas enfreindre (« Il ne faut pas... », « Défense de... »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "ここ で タバコ を 吸ってはいけません。",
+        "romaji": "Koko de tabako wo sutte wa ikemasen.",
+        "french": "Il ne faut pas fumer ici.",
+        "highlight": "吸ってはいけません"
+      }
+    ]
   },
   {
     "id": "n5_g_39",
-    "pattern": "〜てはいけません",
-    "meaning": "Interdiction (il ne faut pas)",
-    "type": "verb-form",
-    "examples": ["n5_g_39_ex1"]
+    "unit": 6,
+    "unit_title": "La forme en TE (て)",
+    "lesson_number": 39,
+    "title": "Enchaîner des actions",
+    "item": "〜てから",
+    "pattern": "[Verbe A forme TE] + から 、[Verbe B]",
+    "badge": "Séquence",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Sert à indiquer une succession chronologique précise (« Après avoir fait A, je fais B »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "手 を 洗って から 、食べます。",
+        "romaji": "Te wo aratte kara, tabemasu.",
+        "french": "Après m'être lavé les mains, je mange.",
+        "highlight": "洗って から"
+      }
+    ]
   },
   {
     "id": "n5_g_40",
-    "pattern": "〜てから",
-    "meaning": "Séquence temporelle (après avoir fait...)",
-    "type": "verb-form",
-    "examples": ["n5_g_40_ex1"]
+    "unit": 7,
+    "unit_title": "Obligations et interdictions (Forme NAI)",
+    "lesson_number": 40,
+    "title": "Demander de ne pas faire",
+    "item": "〜ないでください",
+    "pattern": "[Verbe forme NAI] + でください",
+    "badge": "Requête Négative",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour demander poliment à quelqu'un d'éviter de faire une action (« S'il vous plaît, ne faites pas... »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "心配しないで ください。",
+        "romaji": "Shinpai shinaide kudasai.",
+        "french": "Ne vous inquiétez pas, s'il vous plaît.",
+        "highlight": "心配しないで ください"
+      }
+    ]
   },
   {
     "id": "n5_g_41",
-    "pattern": "Forme en -te (Coordination)",
-    "meaning": "Relier des verbes ou des propositions (et)",
-    "type": "verb-form",
-    "examples": ["n5_g_41_ex1"]
+    "unit": 7,
+    "unit_title": "Obligations et interdictions (Forme NAI)",
+    "lesson_number": 41,
+    "title": "Exprimer une obligation",
+    "item": "〜なければならない",
+    "pattern": "[Verbe forme NAI sans い] + ければなりません",
+    "badge": "Obligation",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Exprime une obligation stricte (« il faut absolument », « devoir faire »). La forme littérale signifie « si on ne fait pas, ça ne va pas »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "薬 を 飲まなければなりません。",
+        "romaji": "Kusuri wo nomanakereba narimasen.",
+        "french": "Je dois prendre mes médicaments.",
+        "highlight": "飲まなければなりません"
+      }
+    ]
   },
   {
     "id": "n5_g_42",
-    "pattern": "〜ないでください",
-    "meaning": "Demande négative polie (ne faites pas s'il vous plaît)",
-    "type": "verb-form",
-    "examples": ["n5_g_42_ex1"]
+    "unit": 7,
+    "unit_title": "Obligations et interdictions (Forme NAI)",
+    "lesson_number": 42,
+    "title": "Absence d'obligation",
+    "item": "〜なくてもいい",
+    "pattern": "[Verbe forme NAI sans い] + くてもいいです",
+    "badge": "Non-obligation",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique qu'il n'est pas nécessaire de faire une action (« ce n'est pas la peine de », « vous n'êtes pas obligé de »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "明日 は 来なくてもいい です。",
+        "romaji": "Ashita wa konakutemo ii desu.",
+        "french": "Ce n'est pas la peine de venir demain.",
+        "highlight": "来なくてもいい"
+      }
+    ]
   },
   {
     "id": "n5_g_43",
-    "pattern": "〜なければなりません",
-    "meaning": "Obligation (devoir faire / il faut)",
-    "type": "verb-form",
-    "examples": ["n5_g_43_ex1"]
+    "unit": 8,
+    "unit_title": "La forme dictionnaire et les capacités",
+    "lesson_number": 43,
+    "title": "Exprimer une capacité ou possibilité",
+    "item": "〜ことができる",
+    "pattern": "[Verbe forme dictionnaire] + ことが できます",
+    "badge": "Capacité",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Permet d'exprimer la capacité physique ou la possibilité légale/matérielle de faire une action (« savoir faire », « pouvoir faire »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "日本語 を 話す ことが できます。",
+        "romaji": "Nihongo wo hanasu koto ga dekimasu.",
+        "french": "Je peux parler japonais.",
+        "highlight": "話す ことが できます"
+      },
+      {
+        "japanese": "カード で 払う ことが できます。",
+        "romaji": "Kaado de harau koto ga dekimasu.",
+        "french": "On peut payer par carte.",
+        "highlight": "払う ことが できます"
+      }
+    ]
   },
   {
     "id": "n5_g_44",
-    "pattern": "〜なくてもいいです",
-    "meaning": "Absence d'obligation (ce n'est pas la peine de)",
-    "type": "verb-form",
-    "examples": ["n5_g_44_ex1"]
+    "unit": 8,
+    "unit_title": "La forme dictionnaire et les capacités",
+    "lesson_number": 44,
+    "title": "Parler de ses loisirs",
+    "item": "〜趣味は〜ことです",
+    "pattern": "趣味 は [Verbe forme dict.] + こと です",
+    "badge": "Passetemps",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Sert à nommer un passe-temps ou un centre d'intérêt à partir d'un verbe d'action en le nominalisant avec こと."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "趣味 は 音楽 を 聴く こと です。",
+        "romaji": "Shumi wa ongaku wo kiku koto desu.",
+        "french": "Mon passe-temps est d'écouter de la musique.",
+        "highlight": "聴く こと です"
+      }
+    ]
   },
   {
     "id": "n5_g_45",
-    "pattern": "〜のが好きです / 上手です / 下手です",
-    "meaning": "Nominalisation avec の (aimer / être doué / être mauvais à faire)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_45_ex1"]
+    "unit": 8,
+    "unit_title": "La forme dictionnaire et les capacités",
+    "lesson_number": 45,
+    "title": "Indiquer un moment (avant)",
+    "item": "〜まえに",
+    "pattern": "[Verbe dict. / Nom + の] + まえに",
+    "badge": "Chronologie",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique qu'une action se produit avant une autre (« avant de faire... » ou « avant tel moment »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "寝る まえに 、本 を 読みます。",
+        "romaji": "Neru mae ni, hon wo yomimasu.",
+        "french": "Avant de dormir, je lis un livre.",
+        "highlight": "寝る まえに"
+      },
+      {
+        "japanese": "食事 の まえに 、手 を 洗います。",
+        "romaji": "Shokuji no mae ni, te wo araimasu.",
+        "french": "Avant le repas, je me lave les mains.",
+        "highlight": "食事 の まえに"
+      }
+    ]
   },
   {
     "id": "n5_g_46",
-    "pattern": "〜ことができる",
-    "meaning": "Capacité ou possibilité (pouvoir faire)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_46_ex1"]
+    "unit": 9,
+    "unit_title": "Expériences et propositions (Forme TA)",
+    "lesson_number": 46,
+    "title": "Exprimer une expérience passée",
+    "item": "〜ことがある",
+    "pattern": "[Verbe forme TA] + ことが あります",
+    "badge": "Expérience",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Permet de dire qu'on a déjà eu l'occasion de faire une action au moins une fois dans sa vie (« être déjà allé », « avoir déjà fait »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "富士山 に 登った ことが あります。",
+        "romaji": "Fujisan ni nobotta koto ga arimasu.",
+        "french": "J'ai déjà gravi le mont Fuji.",
+        "highlight": "登った ことが あります"
+      }
+    ]
   },
   {
     "id": "n5_g_47",
-    "pattern": "〜まえに",
-    "meaning": "Avant de faire une action",
-    "type": "verb-phrase",
-    "examples": ["n5_g_47_ex1"]
+    "unit": 9,
+    "unit_title": "Expériences et propositions (Forme TA)",
+    "lesson_number": 47,
+    "title": "Donner un conseil ou une recommandation",
+    "item": "〜ほうがいい",
+    "pattern": "[Verbe forme TA / NAI] + ほう が いいです",
+    "badge": "Conseil",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour donner un conseil direct (« tu devrais faire... » ou « il vaut mieux ne pas faire... »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "早く 食べた ほう が いい です。",
+        "romaji": "Hayaku tabeta hou ga ii desu.",
+        "french": "Il vaut mieux manger rapidement.",
+        "highlight": "食べた ほう が いい"
+      },
+      {
+        "japanese": "休んだ ほう が いい です よ。",
+        "romaji": "Yasunda hou ga ii desu yo.",
+        "french": "Tu devrais te reposer.",
+        "highlight": "休んだ ほう が いい"
+      }
+    ]
   },
   {
     "id": "n5_g_48",
-    "pattern": "〜たことがある",
-    "meaning": "Expérience passée (avoir déjà fait)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_48_ex1"]
+    "unit": 9,
+    "unit_title": "Expériences et propositions (Forme TA)",
+    "lesson_number": 48,
+    "title": "Énumérer des actions représentatives",
+    "item": "〜たり〜たりする",
+    "pattern": "[Verbe A forme TA]り 、[Verbe B forme TA]り します",
+    "badge": "Actions diverses",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour citer des exemples d'actions parmi d'autres, faites sans ordre particulier (« faire des choses comme... et... »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "日曜日 は 本 を 読んだり 、テレビ を 見たり します。",
+        "romaji": "Nichiyoubi wa hon wo yondari, terebi wo mitari shimasu.",
+        "french": "Le dimanche, je lis des livres, je regarde la télé, etc.",
+        "highlight": "読んだり 、テレビ を 見たり します"
+      }
+    ]
   },
   {
     "id": "n5_g_49",
-    "pattern": "〜たり 〜たり する",
-    "meaning": "Actions non exhaustives (faire ceci, cela, etc.)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_49_ex1"]
+    "unit": 9,
+    "unit_title": "Expériences et propositions (Forme TA)",
+    "lesson_number": 49,
+    "title": "Proposer poliment une action commune",
+    "item": "〜ましょう",
+    "pattern": "[Base verbale] + ましょう",
+    "badge": "Proposition",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour proposer de faire une action ensemble de manière enthousiaste (« Faisons... », « Allons-y »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "一緒 に 行きましょう。",
+        "romaji": "Issho ni ikimashou.",
+        "french": "Allons-y ensemble !",
+        "highlight": "行きましょう"
+      }
+    ]
   },
   {
     "id": "n5_g_50",
-    "pattern": "〜形 + ほうがいいです",
-    "meaning": "Conseil (il vaut mieux / il serait préférable de)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_50_ex1"]
+    "unit": 9,
+    "unit_title": "Expériences et propositions (Forme TA)",
+    "lesson_number": 50,
+    "title": "Inviter poliment quelqu'un",
+    "item": "〜ましょうか / 〜ませんか",
+    "pattern": "[Base verbale] + ましょうか / ませんか",
+    "badge": "Invitation",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "〜ませんか invite poliment quelqu'un à faire quelque chose (« Ça te dirait de... ? »). 〜ましょうか propose son aide ou une initiative (« Et si on faisait... ? »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "コーヒー を 飲みませんか。",
+        "romaji": "Koohii wo nomimasen ka.",
+        "french": "Ça te dirait de prendre un café ?",
+        "highlight": "飲みませんか"
+      },
+      {
+        "japanese": "手伝いましょうか。",
+        "romaji": "Tetsudaimashou ka.",
+        "french": "Est-ce que je vous aide ?",
+        "highlight": "手伝いましょうか"
+      }
+    ]
   },
   {
     "id": "n5_g_51",
-    "pattern": "〜でしょう / 〜だろう",
-    "meaning": "Conjecture ou confirmation (probablement / n'est-ce pas ?)",
-    "type": "expression",
-    "examples": ["n5_g_51_ex1"]
+    "unit": 10,
+    "unit_title": "Exprimer les changements et les raisons",
+    "lesson_number": 51,
+    "title": "Exprimer un changement d'état",
+    "item": "になる / になる",
+    "pattern": "[Nom / Adj-な] + になる | [Adj-い sans い] + くなる",
+    "badge": "Changement",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour indiquer une transformation ou un changement d'état (« devenir »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "医者 に なります。",
+        "romaji": "Isha ni narimasu.",
+        "french": "Je vais devenir médecin.",
+        "highlight": "に なります"
+      },
+      {
+        "japanese": "寒く なりました。",
+        "romaji": "Samuku narimashita.",
+        "french": "Il fait devenu froid.",
+        "highlight": "寒く なりました"
+      }
+    ]
   },
   {
     "id": "n5_g_52",
-    "pattern": "〜名詞 + になる / 〜形容詞 + くなる",
-    "meaning": "Changement d'état (devenir)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_52_ex1", "n5_g_52_ex2"]
+    "unit": 10,
+    "unit_title": "Exprimer les changements et les raisons",
+    "lesson_number": 52,
+    "title": "Donner une raison ou une cause",
+    "item": "から / ので",
+    "pattern": "[Phrase] + から / ので",
+    "badge": "Cause",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour expliquer la cause d'une action (« parce que », « comme »). ので est plus poli et plus doux que から."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "雨 が 降っている から 、行きません。",
+        "romaji": "Ame ga futte iru kara, ikimasen.",
+        "french": "Je n'y vais pas parce qu'il pleut.",
+        "highlight": "から"
+      },
+      {
+        "japanese": "時間 が ありません ので 、失礼します。",
+        "romaji": "Jikan ga arimasen node, shitsurei shimasu.",
+        "french": "Comme je n'ai pas de temps, je vous prie de m'excuser.",
+        "highlight": "ので"
+      }
+    ]
   },
   {
     "id": "n5_g_53",
-    "pattern": "〜すぎる",
-    "meaning": "Excès (trop / exagérément)",
-    "type": "verb-form",
-    "examples": ["n5_g_53_ex1"]
+    "unit": 10,
+    "unit_title": "Exprimer les changements et les raisons",
+    "lesson_number": 53,
+    "title": "Exprimer une opposition légère",
+    "item": "が / けど",
+    "pattern": "[Phrase A] + が / けど 、[Phrase B]",
+    "badge": "Opposition",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Relie deux phrases pour exprimer un contraste (« mais »). が s'utilise en registre poli ou écrit, tandis que けど est plus courant à l'oral."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "高かった です が 、買いました。",
+        "romaji": "Takakatta desu ga, kaimashita.",
+        "french": "C'était cher, mais je l'ai acheté.",
+        "highlight": "が"
+      }
+    ]
   },
   {
     "id": "n5_g_54",
-    "pattern": "〜ながら",
-    "meaning": "Actions simultanées (tout en faisant)",
-    "type": "verb-form",
-    "examples": ["n5_g_54_ex1"]
+    "unit": 10,
+    "unit_title": "Exprimer les changements et les raisons",
+    "lesson_number": 54,
+    "title": "Citer des paroles ou des pensées",
+    "item": "〜と（言う / 思う）",
+    "pattern": "[Phrase forme neutre] + と 思います / 言いました",
+    "badge": "Citation",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour rapporter des propos (« dire que ») ou exprimer son opinion (« penser que »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "明日 は 雨 だ と 思います。",
+        "romaji": "Ashita wa ame da to omoimasu.",
+        "french": "Je pense qu'il pleuvra demain.",
+        "highlight": "と 思います"
+      },
+      {
+        "japanese": "田中さん は 行く と 言いました。",
+        "romaji": "Tanaka-san wa iku to iimashita.",
+        "french": "M. Tanaka a dit qu'il irait.",
+        "highlight": "と 言いました"
+      }
+    ]
   },
   {
     "id": "n5_g_55",
-    "pattern": "〜でしょう (Intonation montante)",
-    "meaning": "Invitation modeste ou vérification auprès de l'interlocuteur",
-    "type": "expression",
-    "examples": ["n5_g_55_ex1"]
+    "unit": 11,
+    "unit_title": "Les démonstratifs et positions",
+    "lesson_number": 55,
+    "title": "Designers d'objets (Ko-So-A-Do)",
+    "item": "これ / それ / あれ / どれ",
+    "pattern": "[これ / それ / あれ / どれ] + は",
+    "badge": "Démonstratif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Pronom démonstratif désignant un objet : これ (près du locuteur), それ (près de l'interlocuteur), あれ (éloigné des deux), どれ (lequel)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "これ は 私 の です。",
+        "romaji": "Kore wa watashi no desu.",
+        "french": "C'est le mien.",
+        "highlight": "これ"
+      },
+      {
+        "japanese": "どれ が あなた の です か。",
+        "romaji": "Dore ga anata no desu ka.",
+        "french": "Lequel est le tien ?",
+        "highlight": "どれ"
+      }
+    ]
   },
   {
     "id": "n5_g_56",
-    "pattern": "〜[A] は [B] より [形容詞] です",
-    "meaning": "Comparaison directe ([A] est plus [Adjectif] que [B])",
-    "type": "comparison",
-    "examples": ["n5_g_56_ex1"]
+    "unit": 11,
+    "unit_title": "Les démonstratifs et positions",
+    "lesson_number": 56,
+    "title": "Déterminants démonstratifs",
+    "item": "この / その / あの / どの",
+    "pattern": "[この / その / あの / どの] + [Nom]",
+    "badge": "Déterminant",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise directement devant un nom pour préciser quel objet ou quelle personne on désigne (« ce », « cette »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "この 本 は 面白い です。",
+        "romaji": "Kono hon wa omoshiroi desu.",
+        "french": "Ce livre est intéressant.",
+        "highlight": "この"
+      }
+    ]
   },
   {
     "id": "n5_g_57",
-    "pattern": "〜[A] と [B] と どちらが [形容詞] ですか",
-    "meaning": "Question de comparaison entre deux choix (Lequel est le plus... ?)",
-    "type": "comparison",
-    "examples": ["n5_g_57_ex1"]
+    "unit": 11,
+    "unit_title": "Les démonstratifs et positions",
+    "lesson_number": 57,
+    "title": "Désigner des lieux",
+    "item": "ここ / そこ / あそこ / どこ",
+    "pattern": "[ここ / そこ / あそこ / どこ] + に / で",
+    "badge": "Lieu",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique un endroit précis : ここ (ici), そこ (là), あそこ (là-bas), どこ (où)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "トイレ は どこ です か。",
+        "romaji": "Toire wa doko desu ka.",
+        "french": "Où sont les toilettes ?",
+        "highlight": "どこ"
+      }
+    ]
   },
   {
     "id": "n5_g_58",
-    "pattern": "〜[A] のほうが [形容詞] です",
-    "meaning": "Exprimer une préférence dans une comparaison ([A] est plus...)",
-    "type": "comparison",
-    "examples": ["n5_g_58_ex1"]
+    "unit": 11,
+    "unit_title": "Les démonstratifs et positions",
+    "lesson_number": 58,
+    "title": "Exprimer la position spatiale",
+    "item": "上 / 下 / 前 / 後ろ / 中 / 隣",
+    "pattern": "[Nom] + の + [Position]",
+    "badge": "Spatial",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'associe avec la particule の pour situer un objet par rapport à un autre (sur, sous, devant, derrière, dans, à côté)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "箱 の 中 に 何 が あります か。",
+        "romaji": "Hako no naka ni nani ga arimasu ka.",
+        "french": "Qu'y a-t-il à l'intérieur de la boîte ?",
+        "highlight": "中"
+      }
+    ]
   },
   {
     "id": "n5_g_59",
-    "pattern": "〜[カテゴリ] の中で [A] が一番 [形容詞] です",
-    "meaning": "Superlatif ([A] est le plus [Adjectif] au sein d'un groupe)",
-    "type": "comparison",
-    "examples": ["n5_g_59_ex1"]
+    "unit": 12,
+    "unit_title": "Mots interrogatifs et indéfinis",
+    "lesson_number": 59,
+    "title": "Quantité et fréquence",
+    "item": "どのくらい / どのぐらい",
+    "pattern": "どのくらい + [Verbe]",
+    "badge": "Interrogatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour demander « combien de temps » ou « quelle quantité »."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "どのくらい 日本語 を 勉強しました か。",
+        "romaji": "Donokurai Nihongo wo benkyoushimashita ka.",
+        "french": "Combien de temps as-tu étudié le japonais ?",
+        "highlight": "どのくらい"
+      }
+    ]
   },
   {
     "id": "n5_g_60",
-    "pattern": "〜つもりです",
-    "meaning": "Intention ou plan (avoir l'intention de)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_60_ex1"]
+    "unit": 12,
+    "unit_title": "Mots interrogatifs et indéfinis",
+    "lesson_number": 60,
+    "title": "Pronoms indéfinis (Quelque chose / Quelqu'un)",
+    "item": "何か / 誰か / どこか",
+    "pattern": "[何 / 誰 / どこ] + か",
+    "badge": "Indéfini",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Ajouter か après un mot interrogatif transforme celui-ci en pronom indéfini (« quelque chose », « quelqu'un », « quelque part »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "何か 飲みたい です。",
+        "romaji": "Nani ka nomitai desu.",
+        "french": "Je veux boire quelque chose.",
+        "highlight": "何か"
+      },
+      {
+        "japanese": "どこか 行きました か。",
+        "romaji": "Doko ka ikimashita ka.",
+        "french": "Es-tu allé quelque part ?",
+        "highlight": "どこか"
+      }
+    ]
   },
   {
     "id": "n5_g_61",
-    "pattern": "〜くする / 〜にする",
-    "meaning": "Rendre quelque chose dans un état (rendre propre, faire court...)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_61_ex1", "n5_g_61_ex2"]
+    "unit": 12,
+    "unit_title": "Mots interrogatifs et indéfinis",
+    "lesson_number": 61,
+    "title": "Négation totale",
+    "item": "何も / 誰も / どこも",
+    "pattern": "[何 / 誰 / どこ] + も + [Négatif]",
+    "badge": "Absolu Négatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Associés à un verbe au négatif, ces mots expriment l'absence totale (« rien », « personne », « nulle part »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "何も  we 食べません。",
+        "romaji": "Nani mo tabemasen.",
+        "french": "Je ne mange rien.",
+        "highlight": "何も"
+      },
+      {
+        "japanese": "誰も いません。",
+        "romaji": "Dare mo imasen.",
+        "french": "Il n'y a personne.",
+        "highlight": "誰も"
+      }
+    ]
   },
   {
     "id": "n5_g_62",
-    "pattern": "〜他動詞 vs 自動詞",
-    "meaning": "Paires de verbes transitifs et intransitifs de base (ex: 開ける / 開く)",
-    "type": "verb-form",
-    "examples": ["n5_g_62_ex1", "n5_g_62_ex2"]
+    "unit": 13,
+    "unit_title": "Structures avancées et polies",
+    "lesson_number": 62,
+    "title": "Donner ou recevoir des objets",
+    "item": "あげる / もらう / くれる",
+    "pattern": "[Donneur] は [Receveur] に [Objet] を あげる / もらう / くれる",
+    "badge": "Don & Réception",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "あげる = donner à quelqu'un. もらう = recevoir de quelqu'un. くれる = quelqu'un me donne (à moi ou à mon cercle)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "私 は 友達 に 本 を あげました。",
+        "romaji": "Watashi wa tomodachi ni hon wo agemashita.",
+        "french": "J'ai donné un livre à un ami.",
+        "highlight": "あげました"
+      },
+      {
+        "japanese": "田中さん が 私 に 本 を くれました。",
+        "romaji": "Tanaka-san ga watashi ni hon wo kuremashita.",
+        "french": "M. Tanaka m'a donné un livre.",
+        "highlight": "くれました"
+      }
+    ]
   },
   {
     "id": "n5_g_63",
-    "pattern": "〜と言いました",
-    "meaning": "Citation directe ou indirecte (avoir dit que...)",
-    "type": "quotation",
-    "examples": ["n5_g_63_ex1"]
+    "unit": 13,
+    "unit_title": "Structures avancées et polies",
+    "lesson_number": 63,
+    "title": "Rendre service (Faire pour quelqu'un)",
+    "item": "〜てあげる / 〜てくれる / 〜てもらう",
+    "pattern": "[Verbe forme TE] + あげる / くれる / もらう",
+    "badge": "Service",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Permet d'exprimer le fait d'accomplir une action en tant que service rendu ou reçu de la part de quelqu'un."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "日本語 を 教えて くれました。",
+        "romaji": "Nihongo wo oshiete kuremashita.",
+        "french": "Il m'a enseigné le japonais (rendu ce service).",
+        "highlight": "教えて くれました"
+      }
+    ]
   },
   {
     "id": "n5_g_64",
-    "pattern": "〜と思います",
-    "meaning": "Exprimer une opinion ou une pensée (penser que...)",
-    "type": "opinion",
-    "examples": ["n5_g_64_ex1"]
+    "unit": 13,
+    "unit_title": "Structures avancées et polies",
+    "lesson_number": 64,
+    "title": "Exprimer la facilité ou la difficulté",
+    "item": "〜やすい / 〜にくい",
+    "pattern": "[Base verbale] + やすい / にくい",
+    "badge": "Facilité/Difficulté",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Attaché à la base verbale : 〜やすい indique qu'une action est facile à faire, 〜にくい qu'elle est difficile à faire."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "この 漢字 は 覚えやすい です。",
+        "romaji": "Kono kanji wa oboeyasui desu.",
+        "french": "Ce kanji est facile à mémoriser.",
+        "highlight": "覚えやすい"
+      },
+      {
+        "japanese": "この ペン は 書きにくい です。",
+        "romaji": "Kono pen wa kakinikui desu.",
+        "french": "Ce stylo est difficile pour écrire.",
+        "highlight": "書きにくい"
+      }
+    ]
   },
   {
     "id": "n5_g_65",
-    "pattern": "〜でしょう / 〜だろう (Conjecture)",
-    "meaning": "Exprimer une incertitude modérée (probablement...)",
-    "type": "expression",
-    "examples": ["n5_g_65_ex1"]
+    "unit": 13,
+    "unit_title": "Structures avancées et polies",
+    "lesson_number": 65,
+    "title": "Même si / Malgré",
+    "item": "〜ても",
+    "pattern": "[Verbe / Adj forme TE] + も",
+    "badge": "Concession",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Exprime une condition concessive (« même si », « quand bien même »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "雨 が 降っても 、行きます。",
+        "romaji": "Ame ga futtemo, ikimasu.",
+        "french": "Même s'il pleut, j'irai.",
+        "highlight": "降っても"
+      }
+    ]
   },
   {
     "id": "n5_g_66",
-    "pattern": "〜からです",
-    "meaning": "Justification en fin de phrase (C'est parce que...)",
-    "type": "conjunction",
-    "examples": ["n5_g_66_ex1"]
+    "unit": 13,
+    "unit_title": "Structures avancées et polies",
+    "lesson_number": 66,
+    "title": "Simultanéité de deux actions",
+    "item": "〜ながら",
+    "pattern": "[Base verbale] + ながら",
+    "badge": "Simultanéité",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique que deux actions sont effectuées en même temps par la même personne (« tout en faisant »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "音楽 を 聴きながら 勉強します。",
+        "romaji": "Ongaku wo kikinagara benkyoushimasu.",
+        "french": "J'étudie tout en écoutant de la musique.",
+        "highlight": "聴きながら"
+      }
+    ]
   },
   {
     "id": "n5_g_67",
-    "pattern": "〜けど / 〜ですが",
-    "meaning": "Lien d'opposition léger ou transition (mais / cependant)",
-    "type": "conjunction",
-    "examples": ["n5_g_67_ex1"]
+    "unit": 14,
+    "unit_title": "Conditionnels et nuances",
+    "lesson_number": 67,
+    "title": "Conditionnel temporel ou logique",
+    "item": "〜たら",
+    "pattern": "[Verbe / Adj forme TA] + ら",
+    "badge": "Conditionnel",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Exprime une condition (« si ») ou un enchaînement temporel (« une fois que », « quand »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "時間 が あったら 、行きましょう。",
+        "romaji": "Jikan ga attara, ikimashou.",
+        "french": "Si on a du temps, allons-y.",
+        "highlight": "あったら"
+      },
+      {
+        "japanese": "家 に 帰ったら 、電話します。",
+        "romaji": "Ie ni kaettara, denwashimasu.",
+        "french": "Quand je serai rentré à la maison, j'appellerai.",
+        "highlight": "帰ったら"
+      }
+    ]
   },
   {
     "id": "n5_g_68",
-    "pattern": "〜とき",
-    "meaning": "Indication temporelle (quand / lorsque...)",
-    "type": "time-clause",
-    "examples": ["n5_g_68_ex1"]
+    "unit": 14,
+    "unit_title": "Conditionnels et nuances",
+    "lesson_number": 68,
+    "title": "Exprimer l'excès ou le trop-plein",
+    "item": "〜すぎる",
+    "pattern": "[Base verbale / Racines d'Adj] + すぎます",
+    "badge": "Excès",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique qu'une action ou qu'un état dépasse la mesure raisonnable (« trop », « exagérément »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "食べすぎました。",
+        "romaji": "Tabesugimashita.",
+        "french": "J'ai trop mangé.",
+        "highlight": "食べすぎました"
+      },
+      {
+        "japanese": "この 部屋 は 狭すぎます。",
+        "romaji": "Kono heya wa semasugimasu.",
+        "french": "Cette pièce est trop étroite.",
+        "highlight": "狭すぎます"
+      }
+    ]
   },
   {
     "id": "n5_g_69",
-    "pattern": "〜あとで",
-    "meaning": "Après avoir fait une action (forme passé + あとで)",
-    "type": "time-clause",
-    "examples": ["n5_g_69_ex1"]
+    "unit": 14,
+    "unit_title": "Conditionnels et nuances",
+    "lesson_number": 69,
+    "title": "Faire sans effectuer une action",
+    "item": "〜ないで",
+    "pattern": "[Verbe forme NAI] + で",
+    "badge": "Absence d'action",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Indique qu'on réalise une action sans en effectuer une autre qui aurait été normale ou attendue (« sans faire »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "朝ごはん を 食べないで 学校 へ 行きました。",
+        "romaji": "Asagohan wo tabenaide gakkou e ikimashita.",
+        "french": "Je suis allé à l'école sans manger de petit-déjeuner.",
+        "highlight": "食べないで"
+      }
+    ]
   },
   {
     "id": "n5_g_70",
-    "pattern": "〜方 (かた)",
-    "meaning": "Manière ou méthode de faire (base verbale + 方)",
-    "type": "suffix",
-    "examples": ["n5_g_70_ex1"]
+    "unit": 14,
+    "unit_title": "Conditionnels et nuances",
+    "lesson_number": 70,
+    "title": "Proposer son aide",
+    "item": "〜ましょうか",
+    "pattern": "[Base verbale] + ましょうか",
+    "badge": "Proposition d'aide",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour proposer de manière proactive de faire quelque chose pour rendre service à l'interlocuteur."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "荷物 を 持ちましょうか。",
+        "romaji": "Nimotsu wo mochimashou ka.",
+        "french": "Puis-je porter vos bagages ?",
+        "highlight": "持ちましょうか"
+      }
+    ]
   },
   {
     "id": "n5_g_71",
-    "pattern": "〜やすい / 〜にくい",
-    "meaning": "Facilité ou difficulté à accomplir une action (facile à / difficile à)",
-    "type": "suffix",
-    "examples": ["n5_g_71_ex1", "n5_g_71_ex2"]
+    "unit": 15,
+    "unit_title": "Expressions d'intention et d'état",
+    "lesson_number": 71,
+    "title": "Avoir l'intention de",
+    "item": "〜つもり",
+    "pattern": "[Verbe dict. / NAI] + つもりです",
+    "badge": "Intention",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Exprime une décision ferme ou un projet prémédité (« avoir l'intention de », « compter faire »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "来年 日本 へ 行く つもり です。",
+        "romaji": "Rainen Nihon e iku tsumori desu.",
+        "french": "J'ai l'intention d'aller au Japon l'année prochaine.",
+        "highlight": "行く つもり"
+      }
+    ]
   },
   {
     "id": "n5_g_72",
-    "pattern": "〜あげます / 〜もらいます / 〜くれます",
-    "meaning": "Verbes de don et de réception de base (offrir / recevoir / donner à soi)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_72_ex1", "n5_g_72_ex2", "n5_g_72_ex3"]
+    "unit": 15,
+    "unit_title": "Expressions d'intention et d'état",
+    "lesson_number": 72,
+    "title": "Exprimer la possibilité ou le doute",
+    "item": "〜でしょう / 〜だろう",
+    "pattern": "[Forme neutre] + でしょう",
+    "badge": "Probabilité",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise pour exprimer une supposition ou une forte probabilité (« probablement », « sans doute »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "明日 は 雨 が 降る でしょう。",
+        "romaji": "Ashita wa ame ga kuru deshou.",
+        "french": "Il pleuvra probablement demain.",
+        "highlight": "でしょう"
+      }
+    ]
   },
   {
     "id": "n5_g_73",
-    "pattern": "〜てあげる / 〜てもらう / 〜てくれる",
-    "meaning": "Faire une action au bénéfice de quelqu'un",
-    "type": "verb-phrase",
-    "examples": ["n5_g_73_ex1"]
+    "unit": 15,
+    "unit_title": "Expressions d'intention et d'état",
+    "lesson_number": 73,
+    "title": "Exprimer la possession d'un objet",
+    "item": "〜を持っている",
+    "pattern": "[Nom] + を 持って います",
+    "badge": "Possession",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Forme continue du verbe 持つ (porter/avoir sur soi), utilisée pour dire qu'on possède ou détient quelque chose."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "車 を 持って います。",
+        "romaji": "Kuruma wo motte imasu.",
+        "french": "J'ai une voiture.",
+        "highlight": "持って います"
+      }
+    ]
   },
   {
     "id": "n5_g_74",
-    "pattern": "〜そう (Apparence visuelle)",
-    "meaning": "Avoir l'air de / Sembler (sur la base d'une observation directe)",
-    "type": "expression",
-    "examples": ["n5_g_74_ex1"]
+    "unit": 15,
+    "unit_title": "Expressions d'intention et d'état",
+    "lesson_number": 74,
+    "title": "Devoir / Il faut (Forme courte)",
+    "item": "〜なくちゃ / 〜なきゃ",
+    "pattern": "[Verbe forme NAI sans い] + なくちゃ / なきゃ",
+    "badge": "Obligation familière",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "Raccourci familier très courant à l'oral de 〜なければならない (« faut que je... »)."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "もう 行かなくちゃ。",
+        "romaji": "Mou ikanakucha.",
+        "french": "Faut que j'y aille.",
+        "highlight": "行かなくちゃ"
+      }
+    ]
   },
   {
     "id": "n5_g_75",
-    "pattern": "〜まだ 〜ていません",
-    "meaning": "Action pas encore accomplie (ne pas avoir encore fait)",
-    "type": "verb-phrase",
-    "examples": ["n5_g_75_ex1"]
+    "unit": 15,
+    "unit_title": "Expressions d'intention et d'état",
+    "lesson_number": 75,
+    "title": "Forme neutre / familière",
+    "item": "Forme informelle (Plaing Form)",
+    "pattern": "Utilisation des formes dictionnaire, TA, NAI sans desu/masu",
+    "badge": "Registre informel",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "text": "S'utilise avec ses proches, ses amis et sa famille. Remplace です / ます par les formes neutres brutes du verbe ou de l'adjectif."
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "明日 、行く？",
+        "romaji": "Ashita, iku?",
+        "french": "Tu y vas demain ?",
+        "highlight": "行く"
+      },
+      {
+        "japanese": "うん 、行く 。",
+        "romaji": "Un, iku.",
+        "french": "Ouaip, j'y vais.",
+        "highlight": "行く"
+      }
+    ]
   }
 ]
