@@ -488,6 +488,38 @@
 </style>
     
     /* ══════════════════════════════════════════════════
+       GRAMMAR HOME - Cartes en colonne verticale
+    ══════════════════════════════════════════════════ */
+    .grammar-container { display: flex; flex-direction: column; gap: 24px; }
+    
+    .unit-section-collapsible { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    
+    .unit-header-collapsible { padding: 12px 16px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .unit-header-collapsible:hover { background: rgba(0, 201, 167, 0.08); }
+    
+    .unit-title-collapsible { font-size: 12px; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+    .unit-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
+    .unit-arrow.open { transform: rotate(90deg); }
+    
+    .unit-progress { font-size: 10px; color: var(--gray); }
+    
+    .lessons-column { display: none; flex-direction: column; gap: 12px; }
+    .lessons-column.open { display: flex; }
+    
+    .lesson-card-vertical { padding: 12px; background: var(--surface); border: 2px solid rgba(0,201,167,0.3); border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 6px; }
+    .lesson-card-vertical:hover { background: rgba(0, 201, 167, 0.08); border-color: var(--accent); }
+    
+    .card-header-vertical { display: flex; justify-content: space-between; align-items: center; }
+    .lesson-badge-small { font-size: 8px; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; }
+    .status-icon-small { font-size: 14px; }
+    .status-icon-small.favorited { color: #ff6b9d; }
+    
+    .card-item-vertical { font-size: 20px; font-weight: bold; color: #fff; line-height: 1.1; margin: 4px 0; }
+    .card-title-vertical { font-size: 11px; color: var(--gray); font-weight: 400; line-height: 1.3; }
+    .card-description-vertical { font-size: 10px; color: var(--gray); background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; line-height: 1.4; border-left: 3px solid var(--accent); }
+
+    
+    /* ══════════════════════════════════════════════════
        DETAIL PAGE GRAMMAR (Fiche pédagogique)
     ══════════════════════════════════════════════════ */
     .detail-page { display: flex; flex-direction: column; gap: 16px; padding: 12px 0; }

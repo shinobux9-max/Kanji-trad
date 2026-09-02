@@ -1233,6 +1233,23 @@ function showGrammarHome(levelId, data, examples = null) {
     
     grammarHomeData = {levelId, data, examples};
     
+    // Mapping badge → couleur et emoji
+    const badgeColors = {
+        'Copule': { color: '#4ADE80', emoji: '🟢', darkerText: '#0B0D12' },
+        'Copule Négative': { color: '#4ADE80', emoji: '🟢', darkerText: '#0B0D12' },
+        'Copule Passé': { color: '#4ADE80', emoji: '🟢', darkerText: '#0B0D12' },
+        'Verbe': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
+        'Verbe Poli': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
+        'Verbe Négatif': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
+        'Verbe Passé Négatif': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
+        'Particule': { color: '#9D6EFF', emoji: '🟣', darkerText: '#0B0D12' },
+        'Adjectif': { color: '#FBBF24', emoji: '🟠', darkerText: '#0B0D12' },
+    };
+    
+    function getBadgeStyle(badge) {
+        return badgeColors[badge] || { color: '#A7B0C0', emoji: '⚪', darkerText: '#0B0D12' };
+    }
+    
     // Grouper par unité
     const groupedByUnit = {};
     data.forEach(lesson => {
@@ -1254,38 +1271,43 @@ function showGrammarHome(levelId, data, examples = null) {
     
     let html = `<div class="grammar-container">`;
     
-    html += sortedUnits.map((unitKey, idx) => {
+    html += sortedUnits.map((unitKey, unitIdx) => {
         const unit = groupedByUnit[unitKey];
         const tracking = getTracking();
         const unitMastered = unit.lessons.filter(l => tracking[l.id]?.status === 'mastered').length;
         const unitId = `unit-${unitKey}`;
+        const lessonNumber = String(unitIdx + 1).padStart(1, '0');
         
         return `
             <div class="unit-section-collapsible">
                 <div class="unit-header-collapsible" onclick="const grid = document.getElementById('${unitId}'); grid.classList.toggle('open'); this.querySelector('.unit-arrow').classList.toggle('open')">
-                    <div class="unit-title">
+                    <div class="unit-title-collapsible">
                         <span class="unit-arrow">▶</span>
-                        <span class="unit-number">${String(unitKey).padStart(2, '0')} — ${unit.title}</span>
+                        <span>Leçon ${lessonNumber} - ${unit.title}</span>
                     </div>
                     <div class="unit-progress">${unitMastered}/${unit.lessons.length} maîtrisés</div>
                 </div>
                 
-                <div class="lessons-grid" id="${unitId}">
-                    ${unit.lessons.map(lesson => {
+                <div class="lessons-column" id="${unitId}">
+                    ${unit.lessons.map((lesson, cardIdx) => {
                         const status = getItemStatus(lesson.id);
                         const badgeText = lesson.badge || 'Leçon';
                         const itemText = lesson.item || lesson.pattern || 'Formule';
                         const titleText = lesson.title || lesson.meaning || 'Sans titre';
+                        const badgeStyle = getBadgeStyle(badgeText);
+                        const cardNumber = cardIdx + 1;
                         
                         return `
-                            <div class="lesson-card" onclick="showGrammarDetail('${lesson.id}')">
-                                <div class="card-header">
-                                    <span class="lesson-badge">${badgeText}</span>
-                                    ${status === 'mastered' ? '<span class="status-icon">✓</span>' : status === 'favorited' ? '<span class="status-icon favorited">❤</span>' : ''}
+                            <div class="lesson-card-vertical" onclick="showGrammarDetail('${lesson.id}')">
+                                <div class="card-header-vertical">
+                                    <span class="lesson-badge-small" style="background: ${badgeStyle.color}; color: ${badgeStyle.darkerText};">
+                                        ${badgeStyle.emoji} ${badgeText}
+                                    </span>
+                                    ${status === 'mastered' ? '<span class="status-icon-small">✓</span>' : status === 'favorited' ? '<span class="status-icon-small favorited">❤</span>' : ''}
                                 </div>
-                                <div class="card-item">${itemText}</div>
-                                <div class="card-title">${titleText}</div>
-                                ${lesson.sections && lesson.sections[0] ? `<div class="card-description">${lesson.sections[0].text.substring(0, 50)}...</div>` : ''}
+                                <div class="card-item-vertical">${itemText}</div>
+                                <div class="card-title-vertical">${titleText}</div>
+                                ${lesson.sections && lesson.sections[0] ? `<div class="card-description-vertical">${lesson.sections[0].text.substring(0, 50)}...</div>` : ''}
                             </div>
                         `;
                     }).join('')}
