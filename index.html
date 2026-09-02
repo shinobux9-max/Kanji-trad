@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20250903_vocab">
+    <link rel="stylesheet" href="kanji.css?v=20250903_vocab_fix1">
 </head>
 <body>
 
@@ -273,7 +273,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20250903_vocab"></script>
+    <script src="kanji.js?v=20250903_vocab_fix1"></script>
 
     <!-- ── SERVICE WORKER ─────────────────── -->
     <script>
@@ -282,7 +282,7 @@
             // Déterminer le path de base (pour GitHub Pages, c'est /Kanji-trad/)
             const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
             
-            navigator.serviceWorker.register('sw.js?v=20250903_vocab', { scope: basePath })
+            navigator.serviceWorker.register('sw.js?v=20250903_vocab_fix1', { scope: basePath })
                 .then(registration => {
                     console.log('✅ Service Worker registré:', registration);
                     
