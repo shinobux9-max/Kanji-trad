@@ -1287,6 +1287,45 @@ function showVocabDetail(wordId, allWords = []) {
     container.innerHTML = html;
 }
 
+
+// Mapping intelligent : détection de famille par mots-clés
+function getFamilyColor(badgeText) {
+    const text = (badgeText || '').toLowerCase();
+    
+    // Structure : Existence, Démonstratif, Déterminant, Interrogatif, Indéfini, Lieu spatial
+    if (text.match(/copule|existence|démonstratif|déterminant|lieu|spatial/i)) {
+        return { color: '#4ADE80', emoji: '🟢', family: 'Structure' };
+    }
+    
+    // Verbes & Actions
+    if (text.match(/verbe|désir|volonté|requête|obligation|capacité|passe-temps|expérience|action|proposition|invitation/i)) {
+        return { color: '#6EA8FF', emoji: '🔵', family: 'Verbes & Actions' };
+    }
+    
+    // Temps & Chronologie
+    if (text.match(/passé|progressif|chronologie|séquence|conditionnel|temporel|temps/i)) {
+        return { color: '#9D6EFF', emoji: '🟣', family: 'Temps' };
+    }
+    
+    // Relations & Logique
+    if (text.match(/cause|opposition|concession|simultanéité|citation|logique|raison/i)) {
+        return { color: '#FBBF24', emoji: '🟠', family: 'Logique' };
+    }
+    
+    // Modalités
+    if (text.match(/permission|interdiction|changement|don|réception|service|facilité|excès|absence|aide|conseil/i)) {
+        return { color: '#FB7185', emoji: '🟡', family: 'Modalités' };
+    }
+    
+    // Interrogatif / Indéfini / Négatif
+    if (text.match(/interrogatif|indéfini|négatif|question/i)) {
+        return { color: '#4ADE80', emoji: '🟢', family: 'Structure' };
+    }
+    
+    // Défaut
+    return { color: '#A7B0C0', emoji: '⚪', family: 'Autre' };
+}
+
 function showGrammarHome(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
