@@ -220,6 +220,8 @@ let kanaAnimTimeouts = [], fetchCtrl = null;
 let currentCatId = null;    // catégorie affichée
 let currentJLPTLevel = null; // niveau JLPT actuel ('n5', 'n4', etc.)
 let grammarHomeData = null;  // {levelId, data, examples} pour la page d'accueil grammar
+let vocabHomeData = null;    // {levelId, data, examples} pour la page d'accueil vocab
+let currentLevelId = null;   // Pour accès rapide au level actuel
 let quizState = null;       // {indices, shuffled, idx, score, answered, title, sourceType, sourceId}
 let searchOpen = false;
 
@@ -1158,6 +1160,10 @@ function displayVocabList(levelId, data, examples = null) {
         return;
     }
     
+    // Stocker les données pour accès dans showVocabDetail
+    vocabHomeData = {levelId, data, examples};
+    currentLevelId = levelId;
+    
     // Grouper par catégorie
     const grouped = {};
     data.forEach(word => {
@@ -1192,7 +1198,7 @@ function displayVocabList(levelId, data, examples = null) {
                 : '';
             
             return `
-                <div class="word-card">
+                <div class="word-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
                     <div class="word-jp">${word.word}</div>
                     <div class="word-reading">${word.reading}</div>
                     <div class="word-meaning">${word.meanings.join(' • ')}</div>
@@ -1261,6 +1267,74 @@ function getFamilyColor(badgeText) {
     // Défaut
     return { color: '#A7B0C0', emoji: '⚪', family: 'Autre' };
 }
+
+function showVocabDetail(wordId, allWords = []) {
+    const container = document.getElementById('category-content');
+    const word = allWords.find(w => w.id === wordId);
+    
+    if (!word) {
+        container.innerHTML = '<div style="color:var(--gray)">Mot non trouvé</div>';
+        return;
+    }
+    
+    const status = getItemStatus(word.id);
+    const meanings = Array.isArray(word.meanings) ? word.meanings : [word.meanings || 'Sens'];
+    const level = word.level || 'N5';
+    const currentIndex = allWords.findIndex(w => w.id === wordId);
+    const totalWords = allWords.length;
+    
+    const html = `
+        <div class="vocab-detail-page">
+            <!-- HEADER AVEC PROGRESSION -->
+            <div class="vocab-detail-header">
+                <button onclick="displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)" class="back-btn">←</button>
+                <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
+            </div>
+            
+            <!-- BADGE ET FAVORIS -->
+            <div class="vocab-detail-top">
+                <span class="vocab-level-badge">${level}</span>
+                <button class="vocab-favorite-btn ${status === 'favorited' ? 'active' : ''}" onclick="trackItem('${word.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showVocabDetail('${word.id}', vocabHomeData.data)">
+                    ${status === 'favorited' ? '❤' : '🤍'}
+                </button>
+            </div>
+            
+            <!-- WORD MAIN -->
+            <div class="vocab-detail-main-box">
+                <div class="vocab-reading">${word.reading || ''}</div>
+                <div class="vocab-word">${word.word || ''}</div>
+                <div class="vocab-romaji">${word.romaji || ''}</div>
+                <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
+            </div>
+            
+            <!-- MEANINGS -->
+            <div class="vocab-meanings">
+                ${meanings.map(m => `<div class="vocab-meaning-item">${m}</div>`).join('')}
+            </div>
+            
+            <!-- EXEMPLE EN CONTEXTE -->
+            ${word.example ? `
+                <div class="vocab-section-title">Exemple en contexte</div>
+                <div class="vocab-example-box">
+                    <div class="example-jp">${word.example.japanese || ''}</div>
+                    <div class="example-ro">${word.example.romaji || ''}</div>
+                    <div class="example-fr">${word.example.french || ''}</div>
+                    ${word.example.japanese ? `<button class="vocab-speak-btn-example" onclick="speakText('${(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>` : ''}
+                </div>
+            ` : ''}
+            
+            <!-- BOUTON MAÎTRISE -->
+            <div class="vocab-detail-actions">
+                <button class="vocab-master-btn ${status === 'mastered' ? 'active' : ''}" onclick="trackItem('${word.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showVocabDetail('${word.id}', vocabHomeData.data)">
+                    ${status === 'mastered' ? '✓ Maîtrisé' : '✓ Marquer comme maîtrisé'}
+                </button>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
 
 function showGrammarHome(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
