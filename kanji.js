@@ -1204,14 +1204,14 @@ function displayVocabList(levelId, data, examples = null) {
         
         html += `
             <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
-                <div style="padding:12px;background:rgba(0,201,167,0.1);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onclick="this.parentElement.querySelector('[data-words]').style.display = this.parentElement.querySelector('[data-words]').style.display === 'none' ? 'block' : 'none'; this.parentElement.querySelector('[data-arrow]').style.transform = this.parentElement.querySelector('[data-words]').style.display === 'none' ? 'rotate(0deg)' : 'rotate(90deg)'">
+                <div style="padding:12px;background:rgba(0,201,167,0.1);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onclick="this.parentElement.querySelector('[data-words]').style.display = this.parentElement.querySelector('[data-words]').style.display === 'none' ? 'flex' : 'none'; this.parentElement.querySelector('[data-arrow]').style.transform = this.parentElement.querySelector('[data-words]').style.display === 'none' ? 'rotate(0deg)' : 'rotate(90deg)'">
                     <div style="display:flex;align-items:center;gap:8px">
-                        <span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(90deg)">▶</span>
+                        <span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(0deg)">▶</span>
                         <span style="font-size:13px;font-weight:bold">${label}</span>
                         <span style="font-size:11px;color:var(--gray);margin-left:auto">${words.length} mots</span>
                     </div>
                 </div>
-                <div data-words style="padding:12px;display:flex;flex-direction:column;gap:8px">
+                <div data-words style="padding:12px;display:none;flex-direction:column;gap:8px">
                     ${wordCards}
                 </div>
             </div>
@@ -1262,13 +1262,13 @@ function showGrammarHome(levelId, data, examples = null) {
             const typeLabel = GRAMMAR_TYPE_MAP[type] || type;
             const typeMastered = patterns.filter(p => getItemStatus(p.id) === 'mastered').length;
             return `<div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
-                <div style="padding:12px;background:rgba(155,139,255,0.1);border-bottom:1px solid var(--border);cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('[data-arrow]').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(90deg)'">
+                <div style="padding:12px;background:rgba(155,139,255,0.1);border-bottom:1px solid var(--border);cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';this.querySelector('[data-arrow]').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(90deg)'">
                     <div style="display:flex;justify-content:space-between">
-                        <div><span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(90deg)">▶</span> <span style="font-size:13px;font-weight:bold">${typeLabel}</span></div>
+                        <div><span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(0deg)">▶</span> <span style="font-size:13px;font-weight:bold">${typeLabel}</span></div>
                         <div style="font-size:11px;color:var(--gray)">${typeMastered}/${patterns.length}</div>
                     </div>
                 </div>
-                <div style="padding:8px;display:flex;flex-direction:column;gap:6px">
+                <div style="padding:8px;display:none;flex-direction:column;gap:6px">
                     ${patterns.map(p => {
                         const s = getItemStatus(p.id);
                         return `<div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px;cursor:pointer;display:flex;justify-content:space-between" onclick="showGrammarDetail('${p.id}')">
