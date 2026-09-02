@@ -1279,35 +1279,34 @@ function showGrammarHome(levelId, data, examples = null) {
         const lessonNumber = String(unitIdx + 1).padStart(1, '0');
         
         return `
-            <div class="unit-section-collapsible">
-                <div class="unit-header-collapsible" onclick="const grid = document.getElementById('${unitId}'); grid.classList.toggle('open'); this.querySelector('.unit-arrow').classList.toggle('open')">
-                    <div class="unit-title-collapsible">
-                        <span class="unit-arrow">▶</span>
-                        <span>Leçon ${lessonNumber} - ${unit.title}</span>
+            <div class="unit-box-wrapper">
+                <div class="unit-box-header">
+                    <div class="unit-box-title">
+                        <span class="unit-box-arrow">▶</span>
+                        <span>Leçon ${lessonNumber} - ${unit.title.toUpperCase()}</span>
                     </div>
-                    <div class="unit-progress">${unitMastered}/${unit.lessons.length} maîtrisés</div>
+                    <div class="unit-box-counter">${unitMastered}/${unit.lessons.length}</div>
                 </div>
                 
-                <div class="lessons-column" id="${unitId}">
+                <div class="unit-box-content" id="${unitId}">
                     ${unit.lessons.map((lesson, cardIdx) => {
                         const status = getItemStatus(lesson.id);
                         const badgeText = lesson.badge || 'Leçon';
                         const itemText = lesson.item || lesson.pattern || 'Formule';
                         const titleText = lesson.title || lesson.meaning || 'Sans titre';
                         const badgeStyle = getBadgeStyle(badgeText);
-                        const cardNumber = cardIdx + 1;
                         
                         return `
-                            <div class="lesson-card-vertical" onclick="showGrammarDetail('${lesson.id}')">
-                                <div class="card-header-vertical">
-                                    <span class="lesson-badge-small" style="background: ${badgeStyle.color}; color: ${badgeStyle.darkerText};">
+                            <div class="lesson-card-in-box" onclick="showGrammarDetail('${lesson.id}')">
+                                <div class="card-header-in-box">
+                                    <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}; color: ${badgeStyle.darkerText};">
                                         ${badgeStyle.emoji} ${badgeText}
                                     </span>
-                                    ${status === 'mastered' ? '<span class="status-icon-small">✓</span>' : status === 'favorited' ? '<span class="status-icon-small favorited">❤</span>' : ''}
+                                    ${status === 'mastered' ? '<span class="status-icon-in-box">✓</span>' : status === 'favorited' ? '<span class="status-icon-in-box favorited">❤</span>' : ''}
                                 </div>
-                                <div class="card-item-vertical">${itemText}</div>
-                                <div class="card-title-vertical">${titleText}</div>
-                                ${lesson.sections && lesson.sections[0] ? `<div class="card-description-vertical">${lesson.sections[0].text.substring(0, 50)}...</div>` : ''}
+                                <div class="card-item-in-box">${itemText}</div>
+                                <div class="card-title-in-box">${titleText}</div>
+                                ${lesson.sections && lesson.sections[0] ? `<div class="card-description-in-box">${lesson.sections[0].text.substring(0, 50)}...</div>` : ''}
                             </div>
                         `;
                     }).join('')}
@@ -1319,6 +1318,16 @@ function showGrammarHome(levelId, data, examples = null) {
     html += `</div>`;
     
     container.innerHTML = html;
+    
+    // Ajouter les event listeners pour les flèches
+    document.querySelectorAll('.unit-box-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const arrow = this.querySelector('.unit-box-arrow');
+            const content = this.nextElementSibling;
+            arrow.classList.toggle('open');
+            content.classList.toggle('open');
+        });
+    });
 }
 
 function showGrammarDetail(lessonId) {
