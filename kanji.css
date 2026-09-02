@@ -4,8 +4,8 @@
 ══════════════════════════════════════════════════ */
 
 :root {
-        --bg: #0e0e12; --surface: #18181f; --card: #1e1e28; --text: #dde0eb;
-        --accent: #00c9a7; --accent2: #7b61ff; --gray: #6b6e80; --border: #2a2a38;
+        --bg: #0a0a0f; --surface: #151520; --card: #212230; --text: #dde0eb;
+        --accent: #00c9a7; --accent2: #7b61ff; --gray: #6b6e80; --border: #3d3d50;
         --grade-prim: #3ecf8e; --grade-mid: #6c7bff;
     }
     /* --- POLICE JAPONAISE UNIFIÉE ---
@@ -428,4 +428,8 @@
     .quiz-sub-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 16px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--gray); }
     .quiz-examples-btn { padding: 4px 10px; background: var(--card); border: 1px solid var(--border); color: var(--accent); border-radius: 5px; font-size: 11px; cursor: pointer; }
     .back-btn-top { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin: 14px; }
+    /* ── Contraste amélioré pour sections dynamiques Grammar/Vocab ── */
+    [data-words] { background: var(--surface) !important; }
+    [data-patterns] { background: var(--surface) !important; }
+    [data-lessons] { background: var(--surface) !important; }
 </style>
