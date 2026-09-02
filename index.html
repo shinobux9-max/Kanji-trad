@@ -279,7 +279,10 @@
     <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js?v=20240902_contrast', { scope: '/' })
+            // Déterminer le path de base (pour GitHub Pages, c'est /Kanji-trad/)
+            const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
+            
+            navigator.serviceWorker.register('sw.js?v=20240902_contrast', { scope: basePath })
                 .then(registration => {
                     console.log('✅ Service Worker registré:', registration);
                     
@@ -289,7 +292,8 @@
                     }, 60 * 60 * 1000);
                 })
                 .catch(error => {
-                    console.error('❌ Service Worker registration failed:', error);
+                    console.warn('⚠️ Service Worker registration failed:', error.message);
+                    // Le SW n'est pas critique, continuer sans
                 });
         });
     }
