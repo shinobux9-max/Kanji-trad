@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- ── CACHE CONTROL ─────────────────── -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kanji Learner</title>
@@ -270,6 +274,26 @@
 
     <!-- Script principal -->
     <script src="kanji.js?v=20240902_contrast"></script>
+
+    <!-- ── SERVICE WORKER ─────────────────── -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js?v=20240902_contrast', { scope: '/' })
+                .then(registration => {
+                    console.log('✅ Service Worker registré:', registration);
+                    
+                    // Vérifier les mises à jour toutes les heures
+                    setInterval(() => {
+                        registration.update();
+                    }, 60 * 60 * 1000);
+                })
+                .catch(error => {
+                    console.error('❌ Service Worker registration failed:', error);
+                });
+        });
+    }
+    </script>
 
 </body>
 </html>
