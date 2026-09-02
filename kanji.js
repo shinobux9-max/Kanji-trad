@@ -1160,7 +1160,7 @@ function displayVocabList(levelId, data, examples = null) {
         return;
     }
     
-    // Stocker les données pour accès dans showVocabDetail
+    // Stocker les données
     vocabHomeData = {levelId, data, examples};
     currentLevelId = levelId;
     
@@ -1175,101 +1175,51 @@ function displayVocabList(levelId, data, examples = null) {
     // Trier les catégories
     const sortedCats = Object.keys(grouped).sort();
     
-    // Construire l'HTML
-    let html = '<div class="grammar-home-container"><div class="sections-container">';
+    // Construire l'HTML avec boxes
+    let html = `<div class="vocab-container">`;
     
     html += sortedCats.map(cat => {
         const label = VOCAB_CATEGORY_MAP[cat] || `📌 ${cat}`;
         const words = grouped[cat];
-        
-        const wordCards = words.map(word => {
-            // Charger les exemples pour ce mot s'ils existent
-            const wordExamples = examples && examples.vocab && examples.vocab[word.id] ? examples.vocab[word.id] : [];
-            const exHTML = wordExamples.length > 0 
-                ? `<div class="word-example">
-                    ${wordExamples.slice(0, 1).map(ex => `
-                        <div class="word-example-item">
-                            <div class="example-jp">${ex.jp}</div>
-                            <div class="example-ro">${ex.ro}</div>
-                            <div class="example-fr">${ex.fr}</div>
-                        </div>
-                    `).join('')}
-                </div>`
-                : '';
-            
-            return `
-                <div class="word-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
-                    <div class="word-jp">${word.word}</div>
-                    <div class="word-reading">${word.reading}</div>
-                    <div class="word-meaning">${word.meanings.join(' • ')}</div>
-                    <div class="word-type">${word.type}</div>
-                    ${exHTML}
-                </div>
-            `;
-        }).join('');
+        const catId = `vocab-cat-${cat}`;
         
         return `
-            <div class="vocab-section">
-                <div class="vocab-header" onclick="const content = this.nextElementSibling; content.classList.toggle('open'); this.querySelector('.vocab-arrow').classList.toggle('open')">
-                    <div class="vocab-title">
-                        <span class="vocab-arrow">▶</span>
+            <div class="vocab-category-box">
+                <div class="vocab-category-header" onclick="const content = document.getElementById('${catId}'); content.classList.toggle('open'); this.querySelector('.vocab-cat-arrow').classList.toggle('open')">
+                    <div class="vocab-category-title">
+                        <span class="vocab-cat-arrow">▶</span>
                         <span>${label}</span>
                     </div>
-                    <div class="vocab-counter">${words.length}</div>
+                    <div class="vocab-cat-counter">${words.length}</div>
                 </div>
-                <div class="vocab-content">
-                    ${wordCards}
+                
+                <div class="vocab-category-content" id="${catId}">
+                    ${words.map(word => `
+                        <div class="vocab-word-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
+                            <div class="vocab-word-jp">${word.word || ''}</div>
+                            <div class="vocab-word-reading">${word.reading || ''}</div>
+                            <div class="vocab-word-meaning">${Array.isArray(word.meanings) ? word.meanings.join(' • ') : word.meanings || ''}</div>
+                            <div class="vocab-word-type">${word.type || ''}</div>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         `;
     }).join('');
     
-    html += '</div></div>';
+    html += `</div>`;
+    
     container.innerHTML = html;
-}
-/* ══════════════════════════════════════════════════
-   GRAMMAR - PAGE D'ACCUEIL (Design lisible par unité)
-══════════════════════════════════════════════════ */
-// Mapping intelligent : détection de famille par mots-clés
-function getFamilyColor(badgeText) {
-    const text = (badgeText || '').toLowerCase();
-    
-    // Structure : Existence, Démonstratif, Déterminant, Interrogatif, Indéfini, Lieu spatial
-    if (text.match(/copule|existence|démonstratif|déterminant|lieu|spatial/i)) {
-        return { color: '#4ADE80', emoji: '🟢', family: 'Structure' };
-    }
-    
-    // Verbes & Actions : Désir, Volonté, Requête, Obligation, Capacité, Actions diverses, etc.
-    if (text.match(/verbe|désir|volonté|requête|obligation|capacité|passe-temps|expérience|action|proposition|invitation/i)) {
-        return { color: '#6EA8FF', emoji: '🔵', family: 'Verbes & Actions' };
-    }
-    
-    // Temps & Chronologie : Progressif, Passé, Chronologie, Séquence, Conditionnel
-    if (text.match(/passé|progressif|chronologie|séquence|conditionnel|temporel|temps/i)) {
-        return { color: '#9D6EFF', emoji: '🟣', family: 'Temps' };
-    }
-    
-    // Relations & Logique : Causes, Oppositions, Concession, Simultanéité, Citations
-    if (text.match(/cause|opposition|concession|simultanéité|citation|logique|raison/i)) {
-        return { color: '#FBBF24', emoji: '🟠', family: 'Logique' };
-    }
-    
-    // Modalités : Permission, Interdiction, Changements, Dons, Service, Facilité, Excès, etc.
-    if (text.match(/permission|interdiction|changement|don|réception|service|facilité|excès|absence|aide|conseil/i)) {
-        return { color: '#FB7185', emoji: '🟡', family: 'Modalités' };
-    }
-    
-    // Interrogatif / Indéfini / Négatif
-    if (text.match(/interrogatif|indéfini|négatif|question/i)) {
-        return { color: '#4ADE80', emoji: '🟢', family: 'Structure' };
-    }
-    
-    // Défaut
-    return { color: '#A7B0C0', emoji: '⚪', family: 'Autre' };
 }
 
 function showVocabDetail(wordId, allWords = []) {
     const container = document.getElementById('category-content');
+    
+    // Fallback si allWords est vide
+    if (!allWords || allWords.length === 0) {
+        allWords = vocabHomeData?.data || [];
+    }
+    
     const word = allWords.find(w => w.id === wordId);
     
     if (!word) {
@@ -1283,58 +1233,59 @@ function showVocabDetail(wordId, allWords = []) {
     const currentIndex = allWords.findIndex(w => w.id === wordId);
     const totalWords = allWords.length;
     
-    const html = `
-        <div class="vocab-detail-page">
-            <!-- HEADER AVEC PROGRESSION -->
-            <div class="vocab-detail-header">
-                <button onclick="displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)" class="back-btn">←</button>
-                <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
-            </div>
-            
-            <!-- BADGE ET FAVORIS -->
-            <div class="vocab-detail-top">
-                <span class="vocab-level-badge">${level}</span>
-                <button class="vocab-favorite-btn ${status === 'favorited' ? 'active' : ''}" onclick="trackItem('${word.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showVocabDetail('${word.id}', vocabHomeData.data)">
-                    ${status === 'favorited' ? '❤' : '🤍'}
-                </button>
-            </div>
-            
-            <!-- WORD MAIN -->
-            <div class="vocab-detail-main-box">
-                <div class="vocab-reading">${word.reading || ''}</div>
-                <div class="vocab-word">${word.word || ''}</div>
-                <div class="vocab-romaji">${word.romaji || ''}</div>
-                <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
-            </div>
-            
-            <!-- MEANINGS -->
-            <div class="vocab-meanings">
-                ${meanings.map(m => `<div class="vocab-meaning-item">${m}</div>`).join('')}
-            </div>
-            
-            <!-- EXEMPLE EN CONTEXTE -->
-            ${word.example ? `
-                <div class="vocab-section-title">Exemple en contexte</div>
-                <div class="vocab-example-box">
-                    <div class="example-jp">${word.example.japanese || ''}</div>
-                    <div class="example-ro">${word.example.romaji || ''}</div>
-                    <div class="example-fr">${word.example.french || ''}</div>
-                    ${word.example.japanese ? `<button class="vocab-speak-btn-example" onclick="speakText('${(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>` : ''}
-                </div>
-            ` : ''}
-            
-            <!-- BOUTON MAÎTRISE -->
-            <div class="vocab-detail-actions">
-                <button class="vocab-master-btn ${status === 'mastered' ? 'active' : ''}" onclick="trackItem('${word.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showVocabDetail('${word.id}', vocabHomeData.data)">
-                    ${status === 'mastered' ? '✓ Maîtrisé' : '✓ Marquer comme maîtrisé'}
-                </button>
-            </div>
-        </div>
-    `;
+    let html = `<div class="vocab-detail-page">`;
+    
+    // HEADER
+    html += `<div class="vocab-detail-header">
+        <button class="back-btn" onclick="displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)">←</button>
+        <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
+    </div>`;
+    
+    // BADGE + FAVORIS
+    html += `<div class="vocab-detail-top">
+        <span class="vocab-level-badge">${level}</span>
+        <button class="vocab-favorite-btn ${status === 'favorited' ? 'active' : ''}" onclick="trackItem('${word.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showVocabDetail('${word.id}', vocabHomeData.data)">
+            ${status === 'favorited' ? '❤' : '🤍'}
+        </button>
+    </div>`;
+    
+    // WORD BOX
+    html += `<div class="vocab-detail-main-box">
+        <div class="vocab-reading">${word.reading || ''}</div>
+        <div class="vocab-word">${word.word || ''}</div>
+        <div class="vocab-romaji">${word.romaji || ''}</div>
+        <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
+    </div>`;
+    
+    // MEANINGS
+    html += `<div class="vocab-meanings">`;
+    meanings.forEach(m => {
+        html += `<div class="vocab-meaning-item">${m}</div>`;
+    });
+    html += `</div>`;
+    
+    // EXEMPLE
+    if (word.example && word.example.japanese) {
+        html += `<div class="vocab-section-title">Exemple en contexte</div>`;
+        html += `<div class="vocab-example-box">
+            <div class="example-jp">${word.example.japanese || ''}</div>
+            <div class="example-ro">${word.example.romaji || ''}</div>
+            <div class="example-fr">${word.example.french || ''}</div>
+            <button class="vocab-speak-btn-example" onclick="speakText('${(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
+        </div>`;
+    }
+    
+    // BOUTON MAÎTRISE
+    html += `<div class="vocab-detail-actions">
+        <button class="vocab-master-btn ${status === 'mastered' ? 'active' : ''}" onclick="trackItem('${word.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showVocabDetail('${word.id}', vocabHomeData.data)">
+            ${status === 'mastered' ? '✓ Maîtrisé' : '✓ Marquer comme maîtrisé'}
+        </button>
+    </div>`;
+    
+    html += `</div>`;
     
     container.innerHTML = html;
 }
-
 
 function showGrammarHome(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
