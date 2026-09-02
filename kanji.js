@@ -1224,6 +1224,44 @@ function displayVocabList(levelId, data, examples = null) {
 /* ══════════════════════════════════════════════════
    GRAMMAR - PAGE D'ACCUEIL (Design lisible par unité)
 ══════════════════════════════════════════════════ */
+// Mapping intelligent : détection de famille par mots-clés
+function getFamilyColor(badgeText) {
+    const text = (badgeText || '').toLowerCase();
+    
+    // Structure : Existence, Démonstratif, Déterminant, Interrogatif, Indéfini, Lieu spatial
+    if (text.match(/copule|existence|démonstratif|déterminant|lieu|spatial/i)) {
+        return { color: '#4ADE80', emoji: '🟢', family: 'Structure' };
+    }
+    
+    // Verbes & Actions : Désir, Volonté, Requête, Obligation, Capacité, Actions diverses, etc.
+    if (text.match(/verbe|désir|volonté|requête|obligation|capacité|passe-temps|expérience|action|proposition|invitation/i)) {
+        return { color: '#6EA8FF', emoji: '🔵', family: 'Verbes & Actions' };
+    }
+    
+    // Temps & Chronologie : Progressif, Passé, Chronologie, Séquence, Conditionnel
+    if (text.match(/passé|progressif|chronologie|séquence|conditionnel|temporel|temps/i)) {
+        return { color: '#9D6EFF', emoji: '🟣', family: 'Temps' };
+    }
+    
+    // Relations & Logique : Causes, Oppositions, Concession, Simultanéité, Citations
+    if (text.match(/cause|opposition|concession|simultanéité|citation|logique|raison/i)) {
+        return { color: '#FBBF24', emoji: '🟠', family: 'Logique' };
+    }
+    
+    // Modalités : Permission, Interdiction, Changements, Dons, Service, Facilité, Excès, etc.
+    if (text.match(/permission|interdiction|changement|don|réception|service|facilité|excès|absence|aide|conseil/i)) {
+        return { color: '#FB7185', emoji: '🟡', family: 'Modalités' };
+    }
+    
+    // Interrogatif / Indéfini / Négatif
+    if (text.match(/interrogatif|indéfini|négatif|question/i)) {
+        return { color: '#4ADE80', emoji: '🟢', family: 'Structure' };
+    }
+    
+    // Défaut
+    return { color: '#A7B0C0', emoji: '⚪', family: 'Autre' };
+}
+
 function showGrammarHome(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
@@ -1232,23 +1270,6 @@ function showGrammarHome(levelId, data, examples = null) {
     }
     
     grammarHomeData = {levelId, data, examples};
-    
-    // Mapping badge → couleur et emoji
-    const badgeColors = {
-        'Copule': { color: '#4ADE80', emoji: '🟢', darkerText: '#0B0D12' },
-        'Copule Négative': { color: '#4ADE80', emoji: '🟢', darkerText: '#0B0D12' },
-        'Copule Passé': { color: '#4ADE80', emoji: '🟢', darkerText: '#0B0D12' },
-        'Verbe': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
-        'Verbe Poli': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
-        'Verbe Négatif': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
-        'Verbe Passé Négatif': { color: '#6EA8FF', emoji: '🔵', darkerText: '#0B0D12' },
-        'Particule': { color: '#9D6EFF', emoji: '🟣', darkerText: '#0B0D12' },
-        'Adjectif': { color: '#FBBF24', emoji: '🟠', darkerText: '#0B0D12' },
-    };
-    
-    function getBadgeStyle(badge) {
-        return badgeColors[badge] || { color: '#A7B0C0', emoji: '⚪', darkerText: '#0B0D12' };
-    }
     
     // Grouper par unité
     const groupedByUnit = {};
@@ -1294,12 +1315,12 @@ function showGrammarHome(levelId, data, examples = null) {
                         const badgeText = lesson.badge || 'Leçon';
                         const itemText = lesson.item || lesson.pattern || 'Formule';
                         const titleText = lesson.title || lesson.meaning || 'Sans titre';
-                        const badgeStyle = getBadgeStyle(badgeText);
+                        const badgeStyle = getFamilyColor(badgeText);
                         
                         return `
                             <div class="lesson-card-in-box" onclick="showGrammarDetail('${lesson.id}')">
                                 <div class="card-header-in-box">
-                                    <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}; color: ${badgeStyle.darkerText};">
+                                    <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}; color: ${badgeStyle.darkerText || '#0B0D12'};">
                                         ${badgeStyle.emoji} ${badgeText}
                                     </span>
                                     ${status === 'mastered' ? '<span class="status-icon-in-box">✓</span>' : status === 'favorited' ? '<span class="status-icon-in-box favorited">❤</span>' : ''}
