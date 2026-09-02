@@ -448,17 +448,18 @@
     @media (min-width: 768px) { .lessons-grid { grid-template-columns: 1fr 1fr; } }
     @media (min-width: 1200px) { .lessons-grid { grid-template-columns: 1fr 1fr 1fr; } }
     
-    .lesson-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 8px; }
+    .lesson-card { padding: 12px; background: var(--surface); border: 2px solid rgba(0,201,167,0.3); border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 10px; }
     .lesson-card:hover { background: rgba(0, 201, 167, 0.08); border-color: var(--accent); }
     
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-    .lesson-badge { font-size: 9px; color: #fff; background: var(--accent); padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .lesson-badge { font-size: 8px; color: #fff; background: var(--accent); padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; }
     .status-icon { font-size: 16px; }
     .status-icon.favorited { color: #ff6b9d; }
     
-    .card-item { font-size: 28px; font-weight: bold; color: var(--accent); line-height: 1.2; }
-    .card-title { font-size: 13px; color: #fff; font-weight: 500; line-height: 1.3; }
-    .card-description { font-size: 11px; color: var(--gray); line-height: 1.4; }
+    .card-item { font-size: 36px; font-weight: bold; color: #fff; line-height: 1.1; margin: 4px 0; }
+    .card-title { font-size: 12px; color: var(--gray); font-weight: 400; line-height: 1.3; margin-bottom: 8px; }
+    
+    .card-description { font-size: 10px; color: var(--gray); background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; line-height: 1.5; border-left: 3px solid var(--accent); }
     
     .vocab-section { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); background: rgba(24,24,31,0.8); }
     .vocab-header { padding: 12px; background: rgba(0,201,167,0.2); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
