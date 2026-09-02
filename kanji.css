@@ -509,4 +509,70 @@
     .favorite-btn:hover { background: rgba(255,255,255,0.1); }
     .favorite-btn.active { background: rgba(255, 107, 157, 0.2); border-color: #ff6b9d; color: #ff6b9d; }
 
-</style>
+
+/* ══════════════════════════════════════════════════
+   VOCABULARY LIST - Design avec boxes comme Grammaire
+══════════════════════════════════════════════════ */
+.vocab-container { display: flex; flex-direction: column; gap: 20px; }
+
+.vocab-category-box { border: 2px solid rgba(155,139,255,0.3); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
+
+.vocab-category-header { padding: 14px 16px; background: rgba(155,139,255,0.15); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+.vocab-category-header:hover { background: rgba(155,139,255,0.25); }
+
+.vocab-category-title { font-size: 12px; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+.vocab-cat-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
+.vocab-cat-arrow.open { transform: rotate(90deg); }
+
+.vocab-cat-counter { font-size: 10px; color: var(--gray); }
+
+.vocab-category-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
+.vocab-category-content.open { display: flex; }
+
+.vocab-word-card { padding: 10px; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,201,167,0.2); border-left: 3px solid var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; }
+.vocab-word-card:hover { background: rgba(0, 201, 167, 0.08); border-left-color: #35D6C7; }
+
+.vocab-word-jp { font-size: 16px; font-weight: bold; color: #fff; }
+.vocab-word-reading { font-size: 11px; color: var(--accent); }
+.vocab-word-meaning { font-size: 10px; color: var(--gray); line-height: 1.3; }
+.vocab-word-type { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.2px; }
+
+/* ══════════════════════════════════════════════════
+   VOCABULARY DETAIL PAGE
+══════════════════════════════════════════════════ */
+.vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 12px 0; }
+
+.vocab-detail-header { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+.vocab-detail-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.vocab-detail-header .back-btn:hover { background: rgba(0,201,167,0.2); }
+.vocab-progress { margin-left: auto; font-size: 12px; color: var(--gray); }
+
+.vocab-detail-top { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
+.vocab-level-badge { font-size: 9px; color: #fff; background: rgba(0,201,167,0.3); padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; }
+.vocab-favorite-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
+.vocab-favorite-btn:hover { opacity: 0.7; }
+.vocab-favorite-btn.active { color: #ff6b9d; }
+
+.vocab-detail-main-box { padding: 24px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; position: relative; }
+.vocab-reading { font-size: 12px; color: var(--accent); margin-bottom: 8px; }
+.vocab-word { font-size: 56px; color: #fff; font-weight: bold; margin: 12px 0; line-height: 1.2; }
+.vocab-romaji { font-size: 14px; color: var(--gray); margin-bottom: 12px; }
+.vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+.vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
+
+.vocab-meanings { padding: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+.vocab-meaning-item { font-size: 13px; color: #fff; padding: 6px 0; line-height: 1.5; }
+
+.vocab-section-title { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
+
+.vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; }
+.vocab-example-box .example-jp { font-size: 14px; color: #fff; margin-bottom: 6px; font-weight: 500; }
+.vocab-example-box .example-ro { font-size: 11px; color: var(--accent); margin-bottom: 6px; }
+.vocab-example-box .example-fr { font-size: 12px; color: var(--gray); line-height: 1.4; }
+.vocab-speak-btn-example { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 18px; }
+.vocab-speak-btn-example:hover { opacity: 0.7; }
+
+.vocab-detail-actions { padding: 16px; }
+.vocab-master-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 13px; font-weight: 500; }
+.vocab-master-btn:hover { background: rgba(255,255,255,0.1); }
+.vocab-master-btn.active { background: rgba(0,201,167,0.2); border-color: var(--accent); color: var(--accent); }
