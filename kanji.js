@@ -219,6 +219,7 @@ let writer = null, currentChar = null, currentType = null;
 let kanaAnimTimeouts = [], fetchCtrl = null;
 let currentCatId = null;    // catégorie affichée
 let currentJLPTLevel = null; // niveau JLPT actuel ('n5', 'n4', etc.)
+let grammarHomeData = null;  // {levelId, data, examples} pour la page d'accueil grammar
 let quizState = null;       // {indices, shuffled, idx, score, answered, title, sourceType, sourceId}
 let searchOpen = false;
 
@@ -1058,7 +1059,7 @@ async function loadJLPTCategory(levelId, category) {
         } else if (category === 'vocab') {
             displayVocabList(levelId, data, examples);
         } else if (category === 'grammar') {
-            displayGrammarList(levelId, data, examples);
+            showGrammarHome(levelId, data, examples);
         }
         
         // Marquer l'onglet comme actif
@@ -1169,6 +1170,107 @@ function displayVocabList(levelId, data, examples = null) {
     });
     
     html += '</div>';
+    container.innerHTML = html;
+}
+
+/* ══════════════════════════════════════════════════
+   GRAMMAR - PAGE D'ACCUEIL STYLE HIBI
+══════════════════════════════════════════════════ */
+function showGrammarHome(levelId, data, examples = null) {
+    const container = document.getElementById('category-content');
+    if (!Array.isArray(data)) {
+        container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
+        return;
+    }
+    
+    grammarHomeData = {levelId, data, examples};
+    
+    const tracking = getTracking();
+    const mastered = Object.values(tracking).filter(t => t.status === 'mastered').length;
+    const total = data.length;
+    const progress = Math.round((mastered / total) * 100);
+    
+    const grouped = {};
+    data.forEach(pattern => {
+        const type = pattern.type || 'other';
+        if (!grouped[type]) grouped[type] = [];
+        grouped[type].push(pattern);
+    });
+    
+    const sortedTypes = Object.keys(grouped).sort();
+    
+    let html = `<div style="display:flex;flex-direction:column;gap:16px">
+        <div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:13px;color:var(--gray);margin-bottom:8px;text-transform:uppercase">Progression ${levelId.toUpperCase()}</div>
+            <div style="font-size:28px;font-weight:bold;margin-bottom:8px">${mastered}/${total}</div>
+            <div style="background:rgba(0,0,0,0.2);border-radius:4px;height:8px;overflow:hidden">
+                <div style="background:var(--accent);height:100%;width:${progress}%;transition:width 0.3s"></div>
+            </div>
+            <div style="font-size:12px;color:var(--gray);margin-top:8px">${progress}% maîtrisé</div>
+        </div>
+        ${sortedTypes.map(type => {
+            const patterns = grouped[type];
+            const typeLabel = GRAMMAR_TYPE_MAP[type] || type;
+            const typeMastered = patterns.filter(p => getItemStatus(p.id) === 'mastered').length;
+            return `<div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)">
+                <div style="padding:12px;background:rgba(155,139,255,0.1);border-bottom:1px solid var(--border);cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('[data-arrow]').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(90deg)'">
+                    <div style="display:flex;justify-content:space-between">
+                        <div><span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(90deg)">▶</span> <span style="font-size:13px;font-weight:bold">${typeLabel}</span></div>
+                        <div style="font-size:11px;color:var(--gray)">${typeMastered}/${patterns.length}</div>
+                    </div>
+                </div>
+                <div style="padding:8px;display:flex;flex-direction:column;gap:6px">
+                    ${patterns.map(p => {
+                        const s = getItemStatus(p.id);
+                        return `<div style="padding:10px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px;cursor:pointer;display:flex;justify-content:space-between" onclick="showGrammarDetail('${p.id}')">
+                            <div><div style="font-size:12px;font-weight:bold;color:#fff">${p.pattern}</div><div style="font-size:11px;color:var(--gray);margin-top:2px">${p.meaning.substring(0,45)}...</div></div>
+                            <div style="font-size:14px">${s === 'mastered' ? '✓' : s === 'favorited' ? '❤' : ''}</div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>`;
+        }).join('')}
+    </div>`;
+    
+    container.innerHTML = html;
+}
+
+function showGrammarDetail(patternId) {
+    const {levelId, data, examples} = grammarHomeData || {};
+    const container = document.getElementById('category-content');
+    const pattern = data.find(p => p.id === patternId);
+    
+    if (!pattern) {
+        container.innerHTML = '<div style="color:var(--gray)">Pattern non trouvé</div>';
+        return;
+    }
+    
+    const patternExamples = examples && examples.grammar && pattern.examples
+        ? pattern.examples.slice(0, 3).map(exId => ({id: exId, ...examples.grammar[exId]})).filter(ex => ex.jp)
+        : [];
+    
+    const status = getItemStatus(pattern.id);
+    
+    let html = `<div style="display:flex;flex-direction:column;gap:16px">
+        <div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
+            <button onclick="showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:13px;margin-bottom:12px">← Retour</button>
+            <div style="font-size:32px;font-weight:bold;color:var(--accent);margin-bottom:8px">${pattern.pattern}</div>
+            <div style="font-size:16px;color:#fff;line-height:1.4">${pattern.meaning}</div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+                <button onclick="trackItem('${pattern.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'favorited' ? 'rgba(255,56,129,0.2)' : 'rgba(255,255,255,0.05)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">❤ ${status === 'favorited' ? 'Favorisé' : 'Favoriser'}</button>
+                <button onclick="trackItem('${pattern.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'mastered' ? 'rgba(0,201,167,0.2)' : 'rgba(255,255,255,0.05)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">✓ ${status === 'mastered' ? 'Maîtrisé' : 'Marquer maîtrisé'}</button>
+            </div>
+        </div>
+        ${patternExamples.length > 0 ? `<div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:11px;color:var(--gray);text-transform:uppercase;margin-bottom:12px;font-weight:bold">Exemples</div>
+            ${patternExamples.map(ex => `<div style="padding:12px;background:rgba(255,255,255,0.02);border-left:3px solid var(--accent);border-radius:6px;margin-bottom:8px;cursor:pointer" onclick="speakText('${ex.jp.replace(/'/g, "\\'")}')" title="Cliquer pour écouter">
+                <div style="font-size:14px;color:#fff;margin-bottom:4px">${ex.jp}</div>
+                <div style="font-size:11px;color:var(--accent);margin-bottom:4px">${ex.ro}</div>
+                <div style="font-size:12px;color:var(--gray)">${ex.fr}</div>
+            </div>`).join('')}
+        </div>` : ''}
+    </div>`;
+    
     container.innerHTML = html;
 }
 
