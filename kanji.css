@@ -508,4 +508,3 @@
     .favorite-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 13px; }
     .favorite-btn:hover { background: rgba(255,255,255,0.1); }
     .favorite-btn.active { background: rgba(255, 107, 157, 0.2); border-color: #ff6b9d; color: #ff6b9d; }
-
