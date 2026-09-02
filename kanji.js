@@ -1284,40 +1284,75 @@ function showGrammarHome(levelId, data, examples = null) {
     
     container.innerHTML = html;
 }
-function showGrammarDetail(patternId) {
-    const {levelId, data, examples} = grammarHomeData || {};
+function showGrammarDetail(lessonId) {
+    const {levelId, data} = grammarHomeData || {};
     const container = document.getElementById('category-content');
-    const pattern = data.find(p => p.id === patternId);
+    const lesson = data.find(l => l.id === lessonId);
     
-    if (!pattern) {
-        container.innerHTML = '<div style="color:var(--gray)">Pattern non trouvé</div>';
+    if (!lesson) {
+        container.innerHTML = '<div style="color:var(--gray)">Leçon non trouvée</div>';
         return;
     }
     
-    const patternExamples = examples && examples.grammar && pattern.examples
-        ? pattern.examples.slice(0, 3).map(exId => ({id: exId, ...examples.grammar[exId]})).filter(ex => ex.jp)
-        : [];
+    const status = getItemStatus(lesson.id);
     
-    const status = getItemStatus(pattern.id);
+    // Fonction helper pour mettre en avant le highlight dans la phrase
+    const highlightJapanese = (japanese, highlight) => {
+        if (!highlight) return japanese;
+        return japanese.replace(
+            new RegExp(`(${highlight})`, 'g'),
+            '<span class="highlighted-grammar">$1</span>'
+        );
+    };
     
-    let html = `<div style="display:flex;flex-direction:column;gap:16px">
-        <div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
-            <button onclick="showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:13px;margin-bottom:12px">← Retour</button>
-            <div style="font-size:32px;font-weight:bold;color:var(--accent);margin-bottom:8px">${pattern.pattern}</div>
-            <div style="font-size:16px;color:#fff;line-height:1.4">${pattern.meaning}</div>
-            <div style="display:flex;gap:8px;margin-top:12px">
-                <button onclick="trackItem('${pattern.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'favorited' ? 'rgba(255,56,129,0.2)' : 'rgba(255,255,255,0.12)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">❤ ${status === 'favorited' ? 'Favorisé' : 'Favoriser'}</button>
-                <button onclick="trackItem('${pattern.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" style="flex:1;padding:8px;background:${status === 'mastered' ? 'rgba(0,201,167,0.2)' : 'rgba(255,255,255,0.12)'};border:1px solid var(--border);border-radius:6px;color:#fff;cursor:pointer;font-size:12px">✓ ${status === 'mastered' ? 'Maîtrisé' : 'Marquer maîtrisé'}</button>
+    let html = `<div class="grammar-detail-container">
+        <div class="detail-header">
+            <button onclick="showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" class="back-btn">← Retour</button>
+            
+            <div class="detail-info">
+                <div class="lesson-unit">Unité ${lesson.unit} - ${lesson.unit_title}</div>
+                <div class="lesson-badge">${lesson.badge || 'Leçon'}</div>
+                <div class="lesson-item">${lesson.item}</div>
+                <div class="lesson-title">${lesson.title}</div>
+                <div class="lesson-pattern">${lesson.pattern}</div>
+            </div>
+            
+            <div class="detail-actions">
+                <button onclick="trackItem('${lesson.id}', '${status === 'favorited' ? 'null' : 'favorited'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" 
+                    class="action-btn ${status === 'favorited' ? 'active' : ''}">
+                    ❤ ${status === 'favorited' ? 'Favorisé' : 'Favoriser'}
+                </button>
+                <button onclick="trackItem('${lesson.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" 
+                    class="action-btn ${status === 'mastered' ? 'active' : ''}">
+                    ✓ ${status === 'mastered' ? 'Maîtrisé' : 'Maîtrisé'}
+                </button>
             </div>
         </div>
-        ${patternExamples.length > 0 ? `<div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
-            <div style="font-size:11px;color:var(--gray);text-transform:uppercase;margin-bottom:12px;font-weight:bold">Exemples</div>
-            ${patternExamples.map(ex => `<div style="padding:12px;background:rgba(255,255,255,0.08);border-left:3px solid var(--accent);border-radius:6px;margin-bottom:8px;cursor:pointer" onclick="speakText('${ex.jp.replace(/'/g, "\\'")}')" title="Cliquer pour écouter">
-                <div style="font-size:14px;color:#fff;margin-bottom:4px">${ex.jp}</div>
-                <div style="font-size:11px;color:var(--accent);margin-bottom:4px">${ex.ro}</div>
-                <div style="font-size:12px;color:var(--gray)">${ex.fr}</div>
-            </div>`).join('')}
-        </div>` : ''}
+        
+        ${lesson.sections && lesson.sections.length > 0 ? `
+            <div class="detail-sections">
+                ${lesson.sections.map(section => `
+                    <div class="detail-section">
+                        <div class="section-label">${section.label}</div>
+                        <div class="section-text">${section.text}</div>
+                    </div>
+                `).join('')}
+            </div>
+        ` : ''}
+        
+        ${lesson.examples && lesson.examples.length > 0 ? `
+            <div class="detail-examples">
+                <div class="examples-title">EXEMPLES</div>
+                ${lesson.examples.map(example => `
+                    <div class="example-card">
+                        <div class="example-japanese">${highlightJapanese(example.japanese, example.highlight)}</div>
+                        <div class="example-romaji">${example.romaji}</div>
+                        <div class="example-french">${example.french}</div>
+                        <button class="speak-btn" onclick="speakText('${example.japanese.replace(/'/g, "\\'")}')" title="Cliquer pour écouter">🔊</button>
+                    </div>
+                `).join('')}
+            </div>
+        ` : ''}
     </div>`;
     
     container.innerHTML = html;

@@ -455,12 +455,42 @@
     .section-content { padding: 8px; display: none; flex-direction: column; gap: 6px; }
     .section-content.open { display: flex; }
     
-    .pattern-card { padding: 10px; background: rgba(155,139,255,0.12); border: 1px solid rgba(155,139,255,0.2); border-left: 4px solid #9b8bff; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.15s; }
-    .pattern-card:hover { background: rgba(155,139,255,0.18); }
-    .pattern-card-content { flex: 1; }
-    .pattern-name { font-size: 12px; font-weight: bold; color: #fff; }
-    .pattern-desc { font-size: 11px; color: var(--gray); margin-top: 2px; }
-    .pattern-status { font-size: 14px; }
+    .pattern-badge { font-size: 9px; color: var(--accent); background: rgba(0,201,167,0.2); padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 4px; text-transform: uppercase; font-weight: bold; }
+    
+    /* ── DETAIL PAGE GRAMMAR ── */
+    .grammar-detail-container { display: flex; flex-direction: column; gap: 16px; }
+    
+    .detail-header { padding: 16px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); }
+    .back-btn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 13px; margin-bottom: 12px; }
+    
+    .detail-info { margin-bottom: 12px; }
+    .lesson-unit { font-size: 11px; color: var(--gray); text-transform: uppercase; margin-bottom: 4px; }
+    .lesson-badge { font-size: 9px; color: var(--accent); background: rgba(0,201,167,0.2); padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 8px; }
+    .lesson-item { font-size: 32px; font-weight: bold; color: var(--accent); margin-bottom: 4px; }
+    .lesson-title { font-size: 16px; color: #fff; margin-bottom: 8px; line-height: 1.4; }
+    .lesson-pattern { font-size: 14px; color: var(--gray); font-family: monospace; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 4px; }
+    
+    .detail-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .action-btn { flex: 1; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 6px; color: #fff; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+    .action-btn:hover { background: rgba(255,255,255,0.1); }
+    .action-btn.active { background: rgba(0,201,167,0.2); border-color: var(--accent); }
+    
+    .detail-sections { padding: 16px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); }
+    .detail-section { margin-bottom: 12px; }
+    .detail-section:last-child { margin-bottom: 0; }
+    .section-label { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 6px; letter-spacing: 0.5px; }
+    .section-text { font-size: 13px; color: #fff; line-height: 1.6; }
+    
+    .detail-examples { padding: 16px; background: var(--surface); border-radius: 10px; border: 1px solid var(--border); }
+    .examples-title { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .example-card { padding: 12px; background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); border-radius: 6px; margin-bottom: 8px; border: 1px solid rgba(0,201,167,0.2); border-left: 4px solid var(--accent); }
+    .example-japanese { font-size: 14px; color: #fff; margin-bottom: 4px; font-weight: 500; }
+    .example-romaji { font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+    .example-french { font-size: 12px; color: var(--gray); margin-bottom: 8px; }
+    .speak-btn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 16px; padding: 0; }
+    .speak-btn:hover { opacity: 0.7; }
+    
+    .highlighted-grammar { color: var(--accent); font-weight: bold; background: rgba(0,201,167,0.15); padding: 2px 4px; border-radius: 3px; }
     
     .vocab-section { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); background: rgba(24,24,31,0.8); }
     .vocab-header { padding: 12px; background: rgba(0,201,167,0.2); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
