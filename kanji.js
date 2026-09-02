@@ -1221,6 +1221,9 @@ function displayVocabList(levelId, data, examples = null) {
     html += '</div></div>';
     container.innerHTML = html;
 }
+/* ══════════════════════════════════════════════════
+   GRAMMAR - PAGE D'ACCUEIL (Design lisible par unité)
+══════════════════════════════════════════════════ */
 function showGrammarHome(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
@@ -1229,11 +1232,6 @@ function showGrammarHome(levelId, data, examples = null) {
     }
     
     grammarHomeData = {levelId, data, examples};
-    
-    const tracking = getTracking();
-    const mastered = Object.values(tracking).filter(t => t.status === 'mastered').length;
-    const total = data.length;
-    const progress = Math.round((mastered / total) * 100);
     
     // Grouper par unité
     const groupedByUnit = {};
@@ -1254,52 +1252,50 @@ function showGrammarHome(levelId, data, examples = null) {
     const sortedUnits = Object.keys(groupedByUnit)
         .sort((a, b) => Number(a) - Number(b));
     
-    let html = `<div class="grammar-home-container">
-        <div class="progress-card">
-            <div class="progress-label">Progression ${levelId.toUpperCase()}</div>
-            <div class="progress-number">${mastered}/${total}</div>
-            <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-            <div class="progress-text">${progress}% maîtrisé</div>
-        </div>
-        <div class="sections-container">
-            ${sortedUnits.map(unitKey => {
-                const unit = groupedByUnit[unitKey];
-                const unitMastered = unit.lessons.filter(l => getItemStatus(l.id) === 'mastered').length;
+    let html = `<div class="grammar-container">`;
+    
+    html += sortedUnits.map(unitKey => {
+        const unit = groupedByUnit[unitKey];
+        const tracking = getTracking();
+        const unitMastered = unit.lessons.filter(l => tracking[l.id]?.status === 'mastered').length;
+        
+        return `
+            <div class="unit-section">
+                <div class="unit-header">
+                    <div class="unit-title">
+                        <span class="unit-number">${String(unitKey).padStart(2, '0')} — ${unit.title}</span>
+                    </div>
+                    <div class="unit-progress">${unitMastered}/${unit.lessons.length} maîtrisés</div>
+                </div>
                 
-                return `<div class="section-box">
-                    <div class="section-header" onclick="const content = this.nextElementSibling; content.classList.toggle('open'); this.querySelector('.section-arrow').classList.toggle('open')">
-                        <div class="section-title">
-                            <span class="section-arrow">▶</span>
-                            <span>${unit.title}</span>
-                        </div>
-                        <div class="section-counter">${unitMastered}/${unit.lessons.length}</div>
-                    </div>
-                    <div class="section-content">
-                        ${unit.lessons.map(lesson => {
-                            const status = getItemStatus(lesson.id);
-                            const statusIcon = status === 'mastered' ? '✓' : status === 'favorited' ? '❤' : '';
-                            const itemText = lesson.item || lesson.pattern || 'Leçon';
-                            const titleText = lesson.title || lesson.meaning || 'Sans titre';
-                            const badgeText = lesson.badge || 'Leçon';
-                            
-                            return `<div class="pattern-card" onclick="showGrammarDetail('${lesson.id}')">
-                                <div class="pattern-card-content">
-                                    <div class="pattern-badge">${badgeText}</div>
-                                    <div class="pattern-name">${itemText}</div>
-                                    <div class="pattern-desc">${titleText}</div>
+                <div class="lessons-grid">
+                    ${unit.lessons.map(lesson => {
+                        const status = getItemStatus(lesson.id);
+                        const badgeText = lesson.badge || 'Leçon';
+                        const itemText = lesson.item || lesson.pattern || 'Formule';
+                        const titleText = lesson.title || lesson.meaning || 'Sans titre';
+                        
+                        return `
+                            <div class="lesson-card" onclick="showGrammarDetail('${lesson.id}')">
+                                <div class="card-header">
+                                    <span class="lesson-badge">${badgeText}</span>
+                                    ${status === 'mastered' ? '<span class="status-icon">✓</span>' : status === 'favorited' ? '<span class="status-icon favorited">❤</span>' : ''}
                                 </div>
-                                <div class="pattern-status">${statusIcon}</div>
-                            </div>`;
-                        }).join('')}
-                    </div>
-                </div>`;
-            }).join('')}
-        </div>
-    </div>`;
+                                <div class="card-item">${itemText}</div>
+                                <div class="card-title">${titleText}</div>
+                                ${lesson.sections && lesson.sections[0] ? `<div class="card-description">${lesson.sections[0].text.substring(0, 50)}...</div>` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    html += `</div>`;
     
     container.innerHTML = html;
 }
-
 
 function showGrammarDetail(lessonId) {
     const {levelId, data} = grammarHomeData || {};
