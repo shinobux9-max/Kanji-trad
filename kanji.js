@@ -226,6 +226,55 @@ let searchOpen = false;
 const SERIES_SIZE = 20;
 
 /* ══════════════════════════════════════════════════
+   TRACKING & PERSISTENCE (LocalStorage)
+══════════════════════════════════════════════════ */
+const STORAGE_KEY = 'kanji_trad_tracking';
+
+function getTracking() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
+}
+
+function saveTracking(tracking) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tracking));
+}
+
+function trackItem(itemId, status) {
+    const tracking = getTracking();
+    if (!tracking[itemId]) tracking[itemId] = {};
+    
+    if (status === null || status === 'null') {
+        delete tracking[itemId];
+    } else {
+        tracking[itemId].status = status;
+        tracking[itemId].lastUpdate = new Date().toISOString();
+    }
+    
+    saveTracking(tracking);
+    return tracking[itemId];
+}
+
+function getItemStatus(itemId) {
+    return getTracking()[itemId]?.status || null;
+}
+
+/* ══════════════════════════════════════════════════
+   WEB SPEECH API - Prononciation
+══════════════════════════════════════════════════ */
+function speakText(text, lang = 'ja-JP') {
+    if (typeof SpeechSynthesisUtterance !== 'undefined') {
+        const synth = window.speechSynthesis;
+        if (synth.speaking) synth.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.8;
+        utterance.pitch = 1;
+        synth.speak(utterance);
+    }
+}
+
+/* ══════════════════════════════════════════════════
    MAPPING CATÉGORIES : Anglais → Français
 ══════════════════════════════════════════════════ */
 const VOCAB_CATEGORY_MAP = {
