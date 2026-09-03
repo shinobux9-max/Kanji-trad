@@ -1464,14 +1464,32 @@ function showGrammarDetail(lessonId) {
             body += section.paragraphs.map(p => `<div class="section-paragraph">${p}</div>`).join('');
         }
         
-        // Sous-titre optionnel avant une liste
+        // Sous-titre optionnel avant une liste (bloc unique, rétrocompatible)
         if (section.sub_title) {
             body += `<div class="section-sub-title">${section.sub_title}</div>`;
         }
         
-        // Liste de motifs/structures
+        // Liste de motifs/structures (bloc unique, rétrocompatible)
         if (Array.isArray(section.list)) {
             body += `<ul class="section-list">${section.list.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        }
+        
+        // Nouveau : blocks[] pour plusieurs sous-titres+listes distincts dans une même section
+        // (ex: "Groupe 1", "Groupe 2", "Irréguliers" avec leur propre liste chacun)
+        if (Array.isArray(section.blocks)) {
+            body += section.blocks.map(block => {
+                let blockHtml = '';
+                if (block.sub_title) {
+                    blockHtml += `<div class="section-sub-title">${block.sub_title}</div>`;
+                }
+                if (Array.isArray(block.paragraphs)) {
+                    blockHtml += block.paragraphs.map(p => `<div class="section-paragraph">${p}</div>`).join('');
+                }
+                if (Array.isArray(block.list)) {
+                    blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${item}</li>`).join('')}</ul>`;
+                }
+                return blockHtml;
+            }).join('');
         }
         
         return body;

@@ -584,7 +584,11 @@
 .section-paragraph { font-size: 13px; color: #fff; line-height: 1.6; margin-bottom: 10px; }
 .section-paragraph:last-child { margin-bottom: 0; }
 
-.section-sub-title { font-size: 11px; color: var(--accent); font-weight: 600; margin: 14px 0 10px; letter-spacing: 0.2px; text-align: center; text-decoration: underline; text-underline-offset: 4px; }
+.section-sub-title { font-size: 11px; color: var(--accent); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-sub-title:first-child { margin-top: 0; }
+
+/* Bloc groupé (ex: Groupe 1 / Groupe 2 / Irréguliers) : léger décalage + séparateur visuel */
+.section-content-box > .section-sub-title:not(:first-child) { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
 
 .section-list { margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; }
 .section-list li { font-size: 13px; color: #fff; line-height: 1.5; font-family: 'Courier New', monospace; }
