@@ -6,7 +6,7 @@
   "lesson_number": 1,
   "title": "La forme potentielle",
   "item": "〜られる / 〜ことができる",
-  "pattern": "[Verbe potentiel] ou [Verbe au dictionnaire] + ことができる",
+  "pattern": "[Verbe potentiel] ou [Verbe à l'infinitif] + ことができる",
   "badge": "Verbe - Potentiel",
   "sections": [
     {
@@ -45,13 +45,14 @@
     {
       "label": "NUANCE : ことができる",
       "paragraphs": [
-        "ことができる s'utilise avec le verbe au dictionnaire et reste correcte quel que soit le groupe. Elle est plus formelle et neutre que la forme conjuguée, souvent préférée à l'écrit ou dans un contexte poli."
+        "ことができる s'utilise avec le verbe à la forme dictionnaire (infinitif) et reste correcte quel que soit le groupe. Elle est plus formelle et neutre que la forme conjuguée, souvent préférée à l'écrit ou dans un contexte poli.",
+        "Note : la forme potentielle conjuguée privilégie la particule が (日本語が話せる), tandis que ことができる conserve généralement la particule d'origine を (日本語を話すことができる)."
       ],
       "blocks": [
         {
           "sub_title": "Structure",
           "list": [
-            "[Verbe au dictionnaire] + ことができる"
+            "[Verbe à l'infinitif] + ことができる"
           ]
         }
       ]
@@ -59,10 +60,10 @@
   ],
   "examples": [
     {
-      "japanese": "私は日本語が話せる。",
-      "romaji": "Watashi wa nihongo ga hanaseru.",
+      "japanese": "私は日本語を話すことができる。",
+      "romaji": "Watashi wa nihongo o hanasu koto ga dekiru.",
       "french": "Je peux parler japonais.",
-      "highlight": "話せる"
+      "highlight": "話すことができる"
     }
   ]
 },
