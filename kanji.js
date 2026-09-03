@@ -1450,28 +1450,34 @@ function showGrammarDetail(lessonId) {
         );
     };
     
+    // Convertit le markdown **gras** en <span> stylé (gras + couleur accent)
+    const mdBold = (text) => {
+        if (!text) return text || '';
+        return text.replace(/\*\*(.+?)\*\*/g, '<span class="md-bold">$1</span>');
+    };
+    
     // Rendu d'une section : supporte l'ancien format (text) ET le nouveau (paragraphs/sub_title/list)
     const renderSectionBody = (section) => {
         let body = '';
         
         // Ancien format : simple string
         if (section.text) {
-            body += `<div class="section-paragraph">${section.text}</div>`;
+            body += `<div class="section-paragraph">${mdBold(section.text)}</div>`;
         }
         
         // Nouveau format : plusieurs paragraphes
         if (Array.isArray(section.paragraphs)) {
-            body += section.paragraphs.map(p => `<div class="section-paragraph">${p}</div>`).join('');
+            body += section.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
         }
         
         // Sous-titre optionnel avant une liste (bloc unique, rétrocompatible)
         if (section.sub_title) {
-            body += `<div class="section-sub-title">${section.sub_title}</div>`;
+            body += `<div class="section-sub-title">${mdBold(section.sub_title)}</div>`;
         }
         
         // Liste de motifs/structures (bloc unique, rétrocompatible)
         if (Array.isArray(section.list)) {
-            body += `<ul class="section-list">${section.list.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            body += `<ul class="section-list">${section.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
         }
         
         // Nouveau : blocks[] pour plusieurs sous-titres+listes distincts dans une même section
@@ -1480,13 +1486,13 @@ function showGrammarDetail(lessonId) {
             body += section.blocks.map(block => {
                 let blockHtml = '';
                 if (block.sub_title) {
-                    blockHtml += `<div class="section-sub-title">${block.sub_title}</div>`;
+                    blockHtml += `<div class="section-sub-title">${mdBold(block.sub_title)}</div>`;
                 }
                 if (Array.isArray(block.paragraphs)) {
-                    blockHtml += block.paragraphs.map(p => `<div class="section-paragraph">${p}</div>`).join('');
+                    blockHtml += block.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
                 }
                 if (Array.isArray(block.list)) {
-                    blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${item}</li>`).join('')}</ul>`;
+                    blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
                 }
                 return blockHtml;
             }).join('');

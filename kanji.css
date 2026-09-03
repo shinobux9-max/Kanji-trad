@@ -596,3 +596,6 @@
 
 /* Mise en évidence d'un mot/expression au sein d'un paragraphe (usage: <span class="inline-highlight">後で</span> dans le JSON) */
 .inline-highlight { color: var(--accent); font-weight: 600; }
+
+/* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
+.md-bold { color: #FBBF24; font-weight: 700; }
