@@ -49,31 +49,25 @@
     },
     {
         "id": "n4_v_3",
-        "level": "N4",
-        "word": "合う",
-        "reading": "あう",
-        "romaji": "au",
-        "meanings": [
-            "Rencontrer",
-            "aller avec",
-            "convenir",
-            "correspondre"
-        ],
-        "nuance": null,
-        "type": "verbe godan",
-        "group": "u",
-        "category": "action",
-        "kanji_list": [
-            "合"
-        ],
-        "particles": [
-            "に"
-        ],
-        "example": {
-            "japanese": "この 靴 は サイズ が 合い ます 。",
-            "romaji": "kono kutsu wa saizu ga aimasu.",
-            "french": "Ces chaussures sont à ma taille (conviennent).",
-            "highlight": "合う"
+  "level": "N4",
+  "word": "合う",
+  "reading": "あう",
+  "romaji": "au",
+  "meanings": {
+    "primary": "Convenir / Correspondre",
+    "secondary": ["S'ajuster", "Aller ensemble"]
+  },
+  "nuance": "Ne pas confondre avec 会う (rencontrer une personne). S'emploie pour des objets, des tailles ou des situations.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "action",
+  "kanji_list": ["合"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "この 靴 は サイズ が 合い ます 。",
+    "romaji": "kono kutsu wa saizu ga aimasu.",
+    "french": "Ces chaussures sont à ma taille (**conviennent**).",
+    "highlight": "合う"
         }
     },
     {
