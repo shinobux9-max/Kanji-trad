@@ -896,20 +896,6 @@
             "fr": "La structure du bâtiment."
       }
     ],
-    "開": [
-      {
-            "jp": "ドアを開けます。",
-            "ka": "どあ を あけます。",
-            "ro": "doa o akemasu.",
-            "fr": "J'ouvre la porte."
-      },
-      {
-            "jp": "会議を開始する。",
-            "ka": "かいぎ を かいし する。",
-            "ro": "kaigi o kaishi suru.",
-            "fr": "Commencer la réunion."
-      }
-    ],
     "弟": [
       {
             "jp": "弟は学生です。",
@@ -6628,9 +6614,9 @@
       {
         "jp": "引越しをしたので住所変更の届出をする。",
         "ka": "ひっこし を した ので じゅうしょへんこう の とどけで を する。",
-        "ro": "hikkoshi o shita node jūshohenkō no todokede o suru."
-      },
+        "ro": "hikkoshi o shita node jūshohenkō no todokede o suru.",
         "fr": "Faire la déclaration de changement d'adresse suite à un déménagement."
+      }
     ],
     "n4_v_315": [
       {
