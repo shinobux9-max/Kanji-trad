@@ -1,651 +1,921 @@
 [
   {
-    "id": "n5_v_1",
-    "word": "会う",
-    "reading": "あう",
-    "meanings": [
-      "Rencontrer",
-      "Se rencontrer"
-    ],
-    "type": "verb",
-    "category": "action",
-    "example": {
-      "japanese": "明日 友達 に 会います 。",
-      "romaji": "ashita tomodachi ni aimasu.",
-      "french": "Je rencontre un ami demain.",
-      "highlight": "会います"
+"id": "n5_v_1",
+  "level": "N5",
+  "word": "会う",
+  "reading": "あう",
+  "romaji": "au",
+  "meanings": {
+    "primary": "Rencontrer",
+    "secondary": ["Se voir", "Faire la rencontre de"]
+  },
+  "nuance": "S'utilise principalement pour une personne. Ne pas confondre avec 合う (convenir, s'ajuster). S'emploie avec la particule に.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "action",
+  "kanji_list": ["会"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "明日 友達 に 会い ます 。",
+    "romaji": "ashita tomodachi ni aimasu.",
+    "french": "Je **rencontre** un ami demain.",
+    "highlight": "会い ます"
     }
   },
   {
     "id": "n5_v_2",
+    "level": "N5",
     "word": "青い",
     "reading": "あおい",
-    "meanings": [
-      "Bleu"
-    ],
-    "type": "i-adj",
+    "romaji": "aoi",
+    "meanings": {
+      "primary": "Bleu",
+      "secondary": ["Pale", "Vert (pour les fruits ou la verdure selon le contexte)"]
+    },
+    "nuance": "Adjectif en い. S'utilise pour qualifier la couleur bleue d'objets, du ciel ou de la mer.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "color",
+    "kanji_list": ["青"],
+    "particles": [],
     "example": {
       "japanese": "空 が 青い です 。",
       "romaji": "sora ga aoi desu.",
-      "french": "Le ciel est bleu.",
+      "french": "Le ciel est **bleu**.",
       "highlight": "青い"
     }
   },
   {
     "id": "n5_v_3",
+    "level": "N5",
     "word": "赤い",
     "reading": "あかい",
-    "meanings": [
-      "Rouge"
-    ],
-    "type": "i-adj",
+    "romaji": "akai",
+    "meanings": {
+      "primary": "Rouge",
+      "secondary": []
+    },
+    "nuance": "Adjectif en い. S'utilise pour décrire la couleur rouge d'un objet.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "color",
+    "kanji_list": ["赤"],
+    "particles": [],
     "example": {
-      "japanese": "赤い かばん を 買いました 。",
-      "romaji": "akai kaban wo kaimashita.",
-      "french": "J'ai acheté un sac rouge.",
+      "japanese": "赤い かばん を 買い ます 。",
+      "romaji": "akai kaban wo kaimasu.",
+      "french": "J'achète un sac **rouge**.",
       "highlight": "赤い"
     }
   },
   {
     "id": "n5_v_4",
+    "level": "N5",
     "word": "明るい",
     "reading": "あかるい",
-    "meanings": [
-      "Lumineux",
-      "Clair"
-    ],
-    "type": "i-adj",
+    "romaji": "akarui",
+    "meanings": {
+      "primary": "Lumineux",
+      "secondary": ["Clair", "Joyeux (de caractère)"]
+    },
+    "nuance": "Adjectif en い. S'emploie pour une pièce baignée de lumière ou pour qualifier une personne enjouée.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "descriptor",
+    "kanji_list": ["明"],
+    "particles": [],
     "example": {
       "japanese": "この 部屋 は 明るい です 。",
       "romaji": "kono heya wa akarui desu.",
-      "french": "Cette pièce est lumineuse.",
+      "french": "Cette pièce est **lumineuse**.",
       "highlight": "明るい"
     }
   },
   {
     "id": "n5_v_5",
+    "level": "N5",
     "word": "秋",
     "reading": "あき",
-    "meanings": [
-      "Automne"
-    ],
-    "type": "noun",
+    "romaji": "aki",
+    "meanings": {
+      "primary": "Automne",
+      "secondary": []
+    },
+    "nuance": "Nom désignant la saison automnale.",
+    "type": "nom",
+    "group": "noun",
     "category": "nature",
+    "kanji_list": ["秋"],
+    "particles": [],
     "example": {
       "japanese": "日本 の 秋 は きれい です 。",
       "romaji": "nihon no aki wa kirei desu.",
-      "french": "L'automne au Japon est magnifique.",
+      "french": "L'**automne** au Japon est magnifique.",
       "highlight": "秋"
     }
   },
   {
     "id": "n5_v_6",
+    "level": "N5",
     "word": "開ける",
     "reading": "あける",
-    "meanings": [
-      "Ouvrir"
-    ],
-    "type": "verb",
+    "romaji": "akeru",
+    "meanings": {
+      "primary": "Ouvrir",
+      "secondary": ["Déverrouiller"]
+    },
+    "nuance": "Verbe transitif ichidan (groupe 2). S'emploie pour ouvrir une porte, une fenêtre, une boîte, etc.",
+    "type": "verbe ichidan",
+    "group": "ru",
     "category": "action",
+    "kanji_list": ["開"],
+    "particles": ["を"],
     "example": {
-      "japanese": "ドア を 開けて ください 。",
+      "japanese": "ドア を 開け て ください 。",
       "romaji": "doa wo akete kudasai.",
-      "french": "Ouvrez la porte, s'il vous plaît.",
-      "highlight": "開けて"
+      "french": "**Ouvrez** la porte, s'il vous plaît.",
+      "highlight": "開け"
     }
   },
   {
     "id": "n5_v_7",
+    "level": "N5",
     "word": "上げる",
     "reading": "あげる",
-    "meanings": [
-      "Donner",
-      "Monter"
-    ],
-    "type": "verb",
+    "romaji": "ageru",
+    "meanings": {
+      "primary": "Donner",
+      "secondary": ["Offrir", "Lever / Monter"]
+    },
+    "nuance": "Verbe ichidan (groupe 2). S'utilise pour offrir quelque chose à quelqu'un (hors du cercle intime direct ou du don reçu par soi).",
+    "type": "verbe ichidan",
+    "group": "ru",
     "category": "action",
+    "kanji_list": ["上"],
+    "particles": ["に", "を"],
     "example": {
-      "japanese": "先生 に 本 を 上げます 。",
+      "japanese": "先生 に 本 を 上げ ます 。",
       "romaji": "sensei ni hon wo agemasu.",
-      "french": "Je donne un livre au professeur.",
-      "highlight": "上げます"
+      "french": "Je **donne** un livre au professeur.",
+      "highlight": "上げ"
     }
   },
   {
     "id": "n5_v_8",
+    "level": "N5",
     "word": "朝",
     "reading": "あさ",
-    "meanings": [
-      "Matin"
-    ],
-    "type": "noun",
+    "romaji": "asa",
+    "meanings": {
+      "primary": "Matin",
+      "secondary": []
+    },
+    "nuance": "Nom désignant le début de la journée, le matin.",
+    "type": "nom",
+    "group": "noun",
     "category": "time",
+    "kanji_list": ["朝"],
+    "particles": [],
     "example": {
-      "japanese": "毎朝 ６時 に 起きます 。",
+      "japanese": "毎朝 6時 に 起き ます 。",
       "romaji": "maiasa rokuji ni okimasu.",
-      "french": "Je me lève tous les matins à 6 heures.",
-      "highlight": "朝"
+      "french": "Je me lève tous les **matins** à 6 heures.",
+      "highlight": "毎朝"
     }
   },
   {
     "id": "n5_v_9",
+    "level": "N5",
     "word": "朝ご飯",
     "reading": "あさごはん",
-    "meanings": [
-      "Petit-déjeuner"
-    ],
-    "type": "noun",
+    "romaji": "asagohan",
+    "meanings": {
+      "primary": "Petit-déjeuner",
+      "secondary": []
+    },
+    "nuance": "Nom composé de 朝 (matin) et ごはん (riz / repas).",
+    "type": "nom",
+    "group": "noun",
     "category": "food",
+    "kanji_list": ["朝", "飯"],
+    "particles": [],
     "example": {
-      "japanese": "７時 に 朝ご飯 を 食べます 。",
+      "japanese": "7時 に 朝ご飯 を 食べ ます 。",
       "romaji": "shichiji ni asagohan wo tabemasu.",
-      "french": "Je mange le petit-déjeuner à 7 heures.",
+      "french": "Je mange le **petit-déjeuner** à 7 heures.",
       "highlight": "朝ご飯"
     }
   },
   {
     "id": "n5_v_10",
+    "level": "N5",
     "word": "あさって",
     "reading": "あさって",
-    "meanings": [
-      "Après-demain"
-    ],
-    "type": "noun",
+    "romaji": "asatte",
+    "meanings": {
+      "primary": "Après-demain",
+      "secondary": []
+    },
+    "nuance": "Nom de temps indiquant le jour suivant demain.",
+    "type": "nom",
+    "group": "noun",
     "category": "time",
+    "kanji_list": [],
+    "particles": [],
     "example": {
-      "japanese": "あさって テスト が あります 。",
+      "japanese": "あさって テスト が あり ます 。",
       "romaji": "asatte tesuto ga arimasu.",
-      "french": "Il y a un test après-demain.",
+      "french": "Il y a un test **après-demain**.",
       "highlight": "あさって"
     }
   },
   {
     "id": "n5_v_11",
+    "level": "N5",
     "word": "足",
     "reading": "あし",
-    "meanings": [
-      "Pied",
-      "Jambe"
-    ],
-    "type": "noun",
+    "romaji": "ashi",
+    "meanings": {
+      "primary": "Pied",
+      "secondary": ["Jambe"]
+    },
+    "nuance": "Nom désignant à la fois le pied et toute la jambe en japonais.",
+    "type": "nom",
+    "group": "noun",
     "category": "body",
+    "kanji_list": ["足"],
+    "particles": [],
     "example": {
       "japanese": "足 が 痛い です 。",
       "romaji": "ashi ga itai desu.",
-      "french": "J'ai mal à la jambe.",
+      "french": "J'ai mal à la **jambe** (ou au pied).",
       "highlight": "足"
     }
   },
   {
     "id": "n5_v_12",
+    "level": "N5",
     "word": "明日",
     "reading": "あした",
-    "meanings": [
-      "Demain"
-    ],
-    "type": "noun",
+    "romaji": "ashita",
+    "meanings": {
+      "primary": "Demain",
+      "secondary": []
+    },
+    "nuance": "Nom de temps désignant le jour suivant.",
+    "type": "nom",
+    "group": "noun",
     "category": "time",
+    "kanji_list": ["明", "日"],
+    "particles": [],
     "example": {
-      "japanese": "明日 学校 へ 行きます 。",
+      "japanese": "明日 学校 へ 行き ます 。",
       "romaji": "ashita gakkou he ikimasu.",
-      "french": "Je vais à l'école demain.",
+      "french": "Je vais à l'école **demain**.",
       "highlight": "明日"
     }
   },
   {
     "id": "n5_v_13",
+    "level": "N5",
     "word": "遊ぶ",
     "reading": "あそぶ",
-    "meanings": [
-      "Jouer",
-      "S'amuser"
-    ],
-    "type": "verb",
+    "romaji": "asobu",
+    "meanings": {
+      "primary": "Jouer",
+      "secondary": ["S'amuser", "Passer du bon temps"]
+    },
+    "nuance": "Verbe godan (groupe 1). S'utilise pour des activités de loisirs, s'amuser entre amis ou se détendre. Ne s'applique pas aux jeux de compétition sportive (qui utilisent suru). S'emploie avec la particule で (lieu) et と (compagnie).",
+    "type": "verbe godan",
+    "group": "u",
     "category": "action",
+    "kanji_list": ["遊"],
+    "particles": ["で", "と"],
     "example": {
-      "japanese": "公園 で 友達 と 遊ぶ 。",
-      "romaji": "kouen de tomodachi to asobu.",
-      "french": "S'amuser au parc avec des amis.",
-      "highlight": "遊ぶ"
+      "japanese": "公園 で 友達 と 遊び ます 。",
+      "romaji": "kouen de tomodachi to asobimasu.",
+      "french": "Je **m'amuse** au parc avec des amis.",
+      "highlight": "遊び"
     }
   },
   {
     "id": "n5_v_14",
+    "level": "N5",
     "word": "暖かい",
     "reading": "あたたかい",
-    "meanings": [
-      "Chaud (climat)"
-    ],
-    "type": "i-adj",
+    "romaji": "atatakai",
+    "meanings": {
+      "primary": "Chaud",
+      "secondary": ["Doux (pour le climat ou l'atmosphère)"]
+    },
+    "nuance": "Adjectif en い. S'utilise pour une météo douce/clémente ou une température agréable (à ne pas confondre avec 暑い pour la chaleur étouffante ou 熱い pour un objet brûlant).",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "weather",
+    "kanji_list": ["暖"],
+    "particles": [],
     "example": {
       "japanese": "今日 は 暖かい です ね 。",
       "romaji": "kyou wa atatakai desu ne.",
-      "french": "Il fait doux aujourd'hui, n'est-ce pas ?",
+      "french": "Il fait **doux** aujourd'hui, n'est-ce pas ?",
       "highlight": "暖かい"
     }
   },
   {
     "id": "n5_v_15",
+    "level": "N5",
     "word": "頭",
     "reading": "あたま",
-    "meanings": [
-      "Tête"
-    ],
-    "type": "noun",
+    "romaji": "atama",
+    "meanings": {
+      "primary": "Tête",
+      "secondary": ["Esprit", "Intellect"]
+    },
+    "nuance": "Nom désignant la partie supérieure du corps humain.",
+    "type": "nom",
+    "group": "noun",
     "category": "body",
+    "kanji_list": ["頭"],
+    "particles": [],
     "example": {
       "japanese": "頭 が 少し 痛い です 。",
       "romaji": "atama ga sukoshi itai desu.",
-      "french": "J'ai un peu mal à la tête.",
+      "french": "J'ai un peu mal à la **tête**.",
       "highlight": "頭"
     }
   },
   {
     "id": "n5_v_16",
+    "level": "N5",
     "word": "新しい",
     "reading": "あたらしい",
-    "meanings": [
-      "Nouveau"
-    ],
-    "type": "i-adj",
+    "romaji": "atarashii",
+    "meanings": {
+      "primary": "Nouveau",
+      "secondary": ["Neuf"]
+    },
+    "nuance": "Adjectif en い. S'emploie pour qualifier un objet récent ou qui vient d'être acquis.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "descriptor",
+    "kanji_list": ["新"],
+    "particles": [],
     "example": {
-      "japanese": "新しい 車 を 買いました 。",
+      "japanese": "新しい 車 を 買い まし た 。",
       "romaji": "atarashii kuruma wo kaimashita.",
-      "french": "J'ai acheté une nouvelle voiture.",
+      "french": "J'ai acheté une **nouvelle** voiture.",
       "highlight": "新しい"
     }
   },
   {
     "id": "n5_v_17",
+    "level": "N5",
     "word": "あちら",
     "reading": "あちら",
-    "meanings": [
-      "Là-bas (poli)"
-    ],
-    "type": "pronoun",
+    "romaji": "achira",
+    "meanings": {
+      "primary": "Là-bas",
+      "secondary": ["Par là", "Forme polie de あそこ"]
+    },
+    "nuance": "Pronom démonstratif marquant une distance éloignée du locuteur et de l'interlocuteur, version polie de あそこ.",
+    "type": "pronom",
+    "group": "pronoun",
     "category": "direction",
+    "kanji_list": [],
+    "particles": [],
     "example": {
       "japanese": "トイレ は あちら です 。",
       "romaji": "toire wa achira desu.",
-      "french": "Les toilettes sont par là-bas.",
+      "french": "Les toilettes sont par **là-bas**.",
       "highlight": "あちら"
     }
   },
   {
     "id": "n5_v_18",
+    "level": "N5",
     "word": "暑い",
     "reading": "あつい",
-    "meanings": [
-      "Chaud (météo)"
-    ],
-    "type": "i-adj",
+    "romaji": "atsui",
+    "meanings": {
+      "primary": "Chaud",
+      "secondary": ["Lourd (météo)"]
+    },
+    "nuance": "Adjectif en い. S'utilise exclusivement pour la température ambiante, le climat ou la météo.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "weather",
+    "kanji_list": ["暑"],
+    "particles": [],
     "example": {
       "japanese": "夏 は とても 暑い です 。",
       "romaji": "natsu wa totemo atsui desu.",
-      "french": "L'été est très chaud.",
+      "french": "L'été est très **chaud**.",
       "highlight": "暑い"
     }
   },
   {
     "id": "n5_v_19",
+    "level": "N5",
     "word": "熱い",
     "reading": "あつい",
-    "meanings": [
-      "Chaud (objet)"
-    ],
-    "type": "i-adj",
+    "romaji": "atsui",
+    "meanings": {
+      "primary": "Chaud",
+      "secondary": ["Brûlant"]
+    },
+    "nuance": "Adjectif en い. S'utilise exclusivement pour qualifier la température d'un objet, d'un plat ou d'une boisson (à ne pas confondre avec 暑い pour le climat).",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "descriptor",
+    "kanji_list": ["熱"],
+    "particles": [],
     "example": {
       "japanese": "この お茶 は 熱い です 。",
       "romaji": "kono ocha wa atsui desu.",
-      "french": "Ce thé est chaud.",
+      "french": "Ce thé est **chaud**.",
       "highlight": "熱い"
     }
   },
   {
     "id": "n5_v_20",
+    "level": "N5",
     "word": "厚い",
     "reading": "あつい",
-    "meanings": [
-      "Épais"
-    ],
-    "type": "i-adj",
+    "romaji": "atsui",
+    "meanings": {
+      "primary": "Épais",
+      "secondary": ["Volumineux"]
+    },
+    "nuance": "Adjectif en い. S'utilise pour des objets ayant de l'épaisseur (un livre, un vêtement, une planche), par opposition à 薄い (fin/mince).",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "descriptor",
+    "kanji_list": ["厚"],
+    "particles": [],
     "example": {
       "japanese": "この 本 は 厚い です 。",
       "romaji": "kono hon wa atsui desu.",
-      "french": "Ce livre est épais.",
+      "french": "Ce livre est **épais**.",
       "highlight": "厚い"
     }
   },
   {
     "id": "n5_v_21",
+    "level": "N5",
     "word": "後",
     "reading": "あと",
-    "meanings": [
-      "Après",
-      "Plus tard"
-    ],
-    "type": "noun",
+    "romaji": "ato",
+    "meanings": {
+      "primary": "Après",
+      "secondary": ["Plus tard", "La suite"]
+    },
+    "nuance": "Nom ou postposition indiquant la postériorité dans le temps ou l'espace. S'emploie souvent avec la structure [Nom] の後で (après...).",
+    "type": "nom",
+    "group": "noun",
     "category": "time",
+    "kanji_list": ["後"],
+    "particles": ["の"],
     "example": {
-      "japanese": "勉強 の 後 で ご飯 を 食べます 。",
+      "japanese": "勉強 の 後 で ご飯 を 食べ ます 。",
       "romaji": "benkyou no ato de gohan wo tabemasu.",
-      "french": "Je mange après les études.",
+      "french": "Je mange **après** les études.",
       "highlight": "後"
     }
   },
   {
     "id": "n5_v_22",
+    "level": "N5",
     "word": "あなた",
     "reading": "あなた",
-    "meanings": [
-      "Vous",
-      "Tu"
-    ],
-    "type": "pronoun",
+    "romaji": "anata",
+    "meanings": {
+      "primary": "Vous",
+      "secondary": ["Tu"]
+    },
+    "nuance": "Pronom personnel de la 2e personne. Attention : au Japon, on l'utilise peu pour s'adresser directement à quelqu'un qu'on connaît (on préfère l'appeler par son nom/titre). Il est très courant entre conjoints (mon chéri / ma chérie) ou dans les chansons.",
+    "type": "pronom",
+    "group": "pronoun",
     "category": "people",
+    "kanji_list": [],
+    "particles": [],
     "example": {
       "japanese": "あなた の 名前 は 何 です か 。",
       "romaji": "anata no namae wa nan desu ka.",
-      "french": "Quel est votre nom ?",
+      "french": "Quel est **votre** nom ?",
       "highlight": "あなた"
     }
   },
   {
     "id": "n5_v_23",
+    "level": "N5",
     "word": "兄",
     "reading": "あに",
-    "meanings": [
-      "Grand frère (le mien)"
-    ],
-    "type": "noun",
+    "romaji": "ani",
+    "meanings": {
+      "primary": "Grand frère",
+      "secondary": ["Mon frère aîné"]
+    },
+    "nuance": "Nom désignant son propre grand frère (terme humble, utilisé en parlant de sa propre famille à quelqu'un d'autre). Pour parler du frère de quelqu'un d'autre, on utilise お兄さん.",
+    "type": "nom",
+    "group": "noun",
     "category": "family",
+    "kanji_list": ["兄"],
+    "particles": [],
     "example": {
       "japanese": "兄 は 学生 です 。",
       "romaji": "ani wa gakusei desu.",
-      "french": "Mon grand frère est étudiant.",
+      "french": "Mon **grand frère** est étudiant.",
       "highlight": "兄"
     }
   },
   {
     "id": "n5_v_24",
+    "level": "N5",
     "word": "姉",
     "reading": "あね",
-    "meanings": [
-      "Grande sœur (la mienne)"
-    ],
-    "type": "noun",
+    "romaji": "ane",
+    "meanings": {
+      "primary": "Grande sœur",
+      "secondary": ["Ma sœur aînée"]
+    },
+    "nuance": "Nom désignant sa propre grande sœur (terme humble). Pour parler de la sœur de quelqu'un d'autre, on utilise お姉さん.",
+    "type": "nom",
+    "group": "noun",
     "category": "family",
+    "kanji_list": ["姉"],
+    "particles": [],
     "example": {
-      "japanese": "姉 は デパート で 働いています 。",
-      "romaji": "ane wa depaato de hatarakeimasu.",
-      "french": "Ma grande sœur travaille dans un grand magasin.",
+      "japanese": "姉 は デパート で 働い て い ます 。",
+      "romaji": "ane wa depaato de hataraite imasu.",
+      "french": "Ma **grande sœur** travaille dans un grand magasin.",
       "highlight": "姉"
     }
   },
   {
     "id": "n5_v_25",
+    "level": "N5",
     "word": "アパート",
     "reading": "アパート",
-    "meanings": [
-      "Appartement"
-    ],
-    "type": "noun",
+    "romaji": "apaato",
+    "meanings": {
+      "primary": "Appartement",
+      "secondary": ["Logement (souvent en bois ou structure légère par opposition au マンション)"]
+    },
+    "nuance": "Nom en katakana (mot emprunté à l'anglais 'apartment'). Désigne généralement un immeuble résidentiel de type léger ou de taille modeste.",
+    "type": "nom",
+    "group": "noun",
     "category": "place",
+    "kanji_list": [],
+    "particles": ["に"],
     "example": {
-      "japanese": "わたし は アパート に 住んでいます 。",
-      "romaji": "watashi wa apaato ni sundeimashu.",
-      "french": "J'habite dans un appartement.",
+      "japanese": "わたし は アパート に 住ん で い ます 。",
+      "romaji": "watashi wa apaato ni sunde imasu.",
+      "french": "J'habite dans un **appartement**.",
       "highlight": "アパート"
     }
   },
   {
     "id": "n5_v_26",
+    "level": "N5",
     "word": "浴びる",
     "reading": "あびる",
-    "meanings": [
-      "Prendre (une douche)"
-    ],
-    "type": "verb",
+    "romaji": "abiru",
+    "meanings": {
+      "primary": "Prendre (une douche)",
+      "secondary": ["S'arroser", "Baigner dans"]
+    },
+    "nuance": "Verbe ichidan (groupe 2). S'utilise couramment avec シャワーを浴びる pour prendre une douche. S'emploie avec la particule を.",
+    "type": "verbe ichidan",
+    "group": "ru",
     "category": "action",
+    "kanji_list": ["浴"],
+    "particles": ["を"],
     "example": {
-      "japanese": "毎朝 シャワー を 浴びます 。",
+      "japanese": "毎朝 シャワー を 浴び ます 。",
       "romaji": "maiasa shawaa wo abimasu.",
-      "french": "Je prends une douche tous les matins.",
-      "highlight": "浴びます"
+      "french": "Je prends une douche tous les **matins**.",
+      "highlight": "浴び"
     }
   },
   {
     "id": "n5_v_27",
+    "level": "N5",
     "word": "危ない",
     "reading": "あぶない",
-    "meanings": [
-      "Dangereux"
-    ],
-    "type": "i-adj",
+    "romaji": "abunai",
+    "meanings": {
+      "primary": "Dangereux",
+      "secondary": ["Risqué", "Attention ! (exclamation)"]
+    },
+    "nuance": "Adjectif en い. S'utilise pour qualifier une situation ou un endroit qui présente un danger, ou s'écrie seul pour avertir quelqu'un.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "descriptor",
+    "kanji_list": ["危"],
+    "particles": [],
     "example": {
       "japanese": "川 で 泳ぐ の は 危ない です 。",
       "romaji": "kawa de oyogu no wa abunai desu.",
-      "french": "C'est dangereux de nager dans la rivière.",
+      "french": "C'est **dangereux** de nager dans la rivière.",
       "highlight": "危ない"
     }
   },
   {
     "id": "n5_v_28",
+    "level": "N5",
     "word": "甘い",
     "reading": "あまい",
-    "meanings": [
-      "Doux",
-      "Sucré"
-    ],
-    "type": "i-adj",
+    "romaji": "amai",
+    "meanings": {
+      "primary": "Sucré",
+      "secondary": ["Doux (au goût)", "Indulgent"]
+    },
+    "nuance": "Adjectif en い. S'emploie principalement pour décrire un goût sucré, mais peut aussi qualifier une personne trop indulgente.",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "food",
+    "kanji_list": ["甘"],
+    "particles": [],
     "example": {
       "japanese": "この ケーキ は 甘い です 。",
       "romaji": "kono keeki wa amai desu.",
-      "french": "Ce gâteau est sucré.",
+      "french": "Ce gâteau est **sucré**.",
       "highlight": "甘い"
     }
   },
   {
     "id": "n5_v_29",
+    "level": "N5",
     "word": "あまり",
     "reading": "あまり",
-    "meanings": [
-      "Pas tellement"
-    ],
-    "type": "adverb",
+    "romaji": "amari",
+    "meanings": {
+      "primary": "Pas tellement",
+      "secondary": ["Pas beaucoup"]
+    },
+    "nuance": "Adverbe toujours suivi d'une forme verbale ou adjective négative (ex: ~masen). Indique une faible fréquence ou quantité.",
+    "type": "adverbe",
+    "group": "adverb",
     "category": "grammar",
+    "kanji_list": [],
+    "particles": ["は"],
     "example": {
-      "japanese": "テレビ は あまり 見ません 。",
+      "japanese": "テレビ は あまり 見 ませ ん 。",
       "romaji": "terebi wa amari mimasen.",
-      "french": "Je ne regarde pas tellement la télévision.",
+      "french": "Je ne regarde **pas tellement** la télévision.",
       "highlight": "あまり"
     }
   },
   {
     "id": "n5_v_30",
+    "level": "N5",
     "word": "雨",
     "reading": "あめ",
-    "meanings": [
-      "Pluie"
-    ],
-    "type": "noun",
+    "romaji": "ame",
+    "meanings": {
+      "primary": "Pluie",
+      "secondary": []
+    },
+    "nuance": "Nom désignant la pluie. S'associe souvent au verbe 降る (tomber) pour exprimer qu'il pleut (雨が降る).",
+    "type": "nom",
+    "group": "noun",
     "category": "weather",
+    "kanji_list": ["雨"],
+    "particles": ["が"],
     "example": {
-      "japanese": "今日 は 雨 が 降っています 。",
-      "romaji": "kyou wa ame ga futteimasu.",
-      "french": "Il pleut aujourd'hui.",
+      "japanese": "今日 は 雨 が 降っ て い ます 。",
+      "romaji": "kyou wa ame ga futte imasu.",
+      "french": "Il **pleut** aujourd'hui.",
       "highlight": "雨"
     }
   },
   {
     "id": "n5_v_31",
+    "level": "N5",
     "word": "飴",
     "reading": "あめ",
-    "meanings": [
-      "Bonbon"
-    ],
-    "type": "noun",
+    "romaji": "ame",
+    "meanings": {
+      "primary": "Bonbon",
+      "secondary": ["Sucre d'orge"]
+    },
+    "nuance": "Nom désignant un bonbon (souvent dur). Il a la même prononciation que 雨 (pluie), mais l'accentuation ou le contexte permettent de les différencier.",
+    "type": "nom",
+    "group": "noun",
     "category": "food",
+    "kanji_list": ["飴"],
+    "particles": ["を"],
     "example": {
-      "japanese": "子供 に 飴 を あげました 。",
-      "romaji": "kodomo ni ame wo agemashita.",
-      "french": "J'ai donné un bonbon à l'enfant.",
+      "japanese": "子供 に 飴 を 覚え ます 。",
+      "romaji": "kodomo ni ame wo agemasu.",
+      "french": "Je donne un **bonbon** à l'enfant.",
       "highlight": "飴"
     }
   },
   {
     "id": "n5_v_32",
+    "level": "N5",
     "word": "洗う",
     "reading": "あらう",
-    "meanings": [
-      "Laver"
-    ],
-    "type": "verb",
+    "romaji": "arau",
+    "meanings": {
+      "primary": "Laver",
+      "secondary": ["Rincer"]
+    },
+    "nuance": "Verbe godan (groupe 1). S'emploie pour nettoyer à l'eau (les mains, la vaisselle, du linge, des fruits). S'utilise avec la particule を.",
+    "type": "verbe godan",
+    "group": "u",
     "category": "action",
+    "kanji_list": ["洗"],
+    "particles": ["を"],
     "example": {
-      "japanese": "ご飯 の 前 に 手 を 洗います 。",
+      "japanese": "ご飯 の 前 に 手 を 洗い ます 。",
       "romaji": "gohan no mae ni te wo araimasu.",
-      "french": "Je me lave les mains avant le repas.",
-      "highlight": "洗います"
+      "french": "Je me **lave** les mains avant le repas.",
+      "highlight": "洗い"
     }
   },
   {
     "id": "n5_v_33",
+    "level": "N5",
     "word": "ある",
     "reading": "ある",
-    "meanings": [
-      "Avoir",
-      "Exister (inanimé)"
-    ],
-    "type": "verb",
+    "romaji": "aru",
+    "meanings": {
+      "primary": "Exister",
+      "secondary": ["Avoir", "Se trouver (pour les objets inanimés)"]
+    },
+    "nuance": "Verbe godan (groupe 1). S'utilise exclusivement pour les objets inanimés, les plantes, ou pour exprimer la possession (avoir quelque chose). Pour les êtres vivants (humains/animaux), on utilise いる.",
+    "type": "verbe godan",
+    "group": "u",
     "category": "state",
+    "kanji_list": [],
+    "particles": ["が", "に"],
     "example": {
       "japanese": "机 の 上 に 本 が ある 。",
       "romaji": "tsukue no ue ni hon ga aru.",
-      "french": "Il y a un livre sur bureau.",
+      "french": "Il y **a** un livre sur le bureau.",
       "highlight": "ある"
     }
   },
   {
     "id": "n5_v_34",
+    "level": "N5",
     "word": "歩く",
     "reading": "あるく",
-    "meanings": [
-      "Marcher"
-    ],
-    "type": "verb",
+    "romaji": "aruku",
+    "meanings": {
+      "primary": "Marcher",
+      "secondary": ["Se promener à pied"]
+    },
+    "nuance": "Verbe godan (groupe 1). S'emploie pour l'action de se déplacer à pied. S'associe souvent avec des particules de lieu comme で (moyen/lieu) ou まで (jusqu'à).",
+    "type": "verbe godan",
+    "group": "u",
     "category": "action",
+    "kanji_list": ["歩"],
+    "particles": ["まで"],
     "example": {
-      "japanese": "駅 まで 歩いて 行きます 。",
+      "japanese": "駅 まで 歩い て 行き ます 。",
       "romaji": "eki made aruite ikimasu.",
-      "french": "Je vais à la gare à pied.",
-      "highlight": "歩いて"
+      "french": "Je vais à la gare **à pied**.",
+      "highlight": "歩い"
     }
   },
   {
     "id": "n5_v_35",
+    "level": "N5",
     "word": "いい / 良い",
     "reading": "いい / よい",
-    "meanings": [
-      "Bon",
-      "Bien"
-    ],
-    "type": "i-adj",
+    "romaji": "ii / yoi",
+    "meanings": {
+      "primary": "Bon",
+      "secondary": ["Bien", "Chouette", "Bien (pour une situation)"]
+    },
+    "nuance": "Adjectif en い. 'いい' est la forme familière la plus courante à l'oral, tandis que 'よい' est plus formel ou s'utilise dans certaines conjugaisons (ex: よかった).",
+    "type": "adjectif en i",
+    "group": "i",
     "category": "descriptor",
+    "kanji_list": ["良"],
+    "particles": [],
     "example": {
       "japanese": "天気 が いい です ね 。",
       "romaji": "tenki ga ii desu ne.",
-      "french": "Il fait beau temps, n'est-ce pas ?",
+      "french": "Il fait **beau** (bon) temps, n'est-ce pas ?",
       "highlight": "いい"
     }
   },
   {
     "id": "n5_v_36",
+    "level": "N5",
     "word": "いいえ",
     "reading": "いいえ",
-    "meanings": [
-      "Non"
-    ],
+    "romaji": "iie",
+    "meanings": {
+      "primary": "Non",
+      "secondary": ["De rien (pour décliner un remerciement)", "Pas du tout"]
+    },
+    "nuance": "Expression figée de négation. Utilisée pour répondre par la négative à une question ou pour dire 'de rien' lorsqu'on est remercié.",
     "type": "expression",
+    "group": "expression",
     "category": "phrase",
+    "kanji_list": [],
+    "particles": [],
     "example": {
-      "japanese": "いいえ 、 そう で は ありません 。",
+      "japanese": "いいえ 、 そう で は あり ませ ん 。",
       "romaji": "iie, sou de wa arimasen.",
-      "french": "Non, ce n'est pas cela.",
+      "french": "**Non**, ce n'est pas cela.",
       "highlight": "いいえ"
     }
   },
   {
     "id": "n5_v_37",
+    "level": "N5",
     "word": "言う",
     "reading": "いう",
-    "meanings": [
-      "Dire"
-    ],
-    "type": "verb",
+    "romaji": "iu",
+    "meanings": {
+      "primary": "Dire",
+      "secondary": ["Prononcer", "Nommer"]
+    },
+    "nuance": "Verbe godan (groupe 1). S'utilise pour exprimer la parole ou rapporter des propos, souvent suivi de la particule と pour encadrer ce qui est dit.",
+    "type": "verbe godan",
+    "group": "u",
     "category": "communication",
+    "kanji_list": ["言"],
+    "particles": ["と"],
     "example": {
-      "japanese": "「 ありがとう 」 と 言いました 。",
+      "japanese": "「 ありがとう 」 と 言い まし た 。",
       "romaji": "\"arigatou\" to iimashita.",
-      "french": "J'ai dit « merci ».",
-      "highlight": "言いました"
+      "french": "J'ai **dit** « merci ».",
+      "highlight": "言い"
     }
   },
   {
     "id": "n5_v_38",
+    "level": "N5",
     "word": "家",
     "reading": "いえ",
-    "meanings": [
-      "Maison"
-    ],
-    "type": "noun",
+    "romaji": "ie",
+    "meanings": {
+      "primary": "Maison",
+      "secondary": ["Domicile", "Foyer / Famille"]
+    },
+    "nuance": "Nom désignant le bâtiment de sa résidence ou son chez-soi. Peut aussi être lu 'uchi' (うち) selon le contexte familier.",
+    "type": "nom",
+    "group": "noun",
     "category": "place",
+    "kanji_list": ["家"],
+    "particles": ["に", "へ"],
     "example": {
-      "japanese": "５時 に 家 へ 帰ります 。",
+      "japanese": "5時 に 家 へ 帰り ます 。",
       "romaji": "goji ni ie he kaerimasu.",
-      "french": "Je rentre à la maison à 5 heures.",
+      "french": "Je rentre à la **maison** à 5 heures.",
       "highlight": "家"
     }
   },
   {
     "id": "n5_v_39",
+    "level": "N5",
     "word": "行く",
     "reading": "いく",
-    "meanings": [
-      "Aller"
-    ],
-    "type": "verb",
+    "romaji": "iku",
+    "meanings": {
+      "primary": "Aller",
+      "secondary": ["Se rendre"]
+    },
+    "nuance": "Verbe godan (groupe 1). S'emploie pour exprimer un déplacement vers un autre lieu. S'associe fréquemment avec les particules に ou へ pour indiquer la destination.",
+    "type": "verbe godan",
+    "group": "u",
     "category": "movement",
+    "kanji_list": ["行"],
+    "particles": ["に", "へ"],
     "example": {
-      "japanese": "デパート へ 行きます 。",
+      "japanese": "デパート へ 行き ます 。",
       "romaji": "depaato he ikimasu.",
-      "french": "Je vais au grand magasin.",
-      "highlight": "行きます"
+      "french": "Je **vais** au grand magasin.",
+      "highlight": "行き"
     }
   },
   {
     "id": "n5_v_40",
+    "level": "N5",
     "word": "いくつ",
     "reading": "いくつ",
-    "meanings": [
-      "Combien (objets/âge)"
-    ],
-    "type": "interrogative",
+    "romaji": "ikutsu",
+    "meanings": {
+      "primary": "Combien",
+      "secondary": ["Quel âge"]
+    },
+    "nuance": "Mot interrogatif utilisé pour demander la quantité d'objets (généralement sans compteur spécifique) ou l'âge d'une personne.",
+    "type": "interrogatif",
+    "group": "interrogative",
     "category": "question",
+    "kanji_list": [],
+    "particles": ["を"],
     "example": {
-      "japanese": "みかん を いくつ 買いました か 。",
+      "japanese": "みかん を いくつ 買い まし た か 。",
       "romaji": "mikan wo ikutsu kaimashita ka.",
-      "french": "Combien de mandarines avez-vous achetées ?",
+      "french": "**Combien** de mandarines avez-vous achetées ?",
       "highlight": "いくつ"
     }
   },
