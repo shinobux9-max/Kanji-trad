@@ -1293,6 +1293,7 @@ function showVocabDetail(wordId, allWords = []) {
     </div>`;
     
     // MEANINGS — sens premier mis en avant, sens secondaires en dessous
+    html += `<div class="vocab-section-title">Signification</div>`;
     html += `<div class="vocab-meanings">`;
     html += `<div class="vocab-meaning-primary">${mdBold(primaryMeaning)}</div>`;
     secondaryMeanings.forEach(m => {
