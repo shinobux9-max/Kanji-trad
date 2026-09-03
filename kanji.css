@@ -556,12 +556,16 @@
 .vocab-detail-main-box { padding: 24px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; position: relative; }
 .vocab-reading { font-size: 12px; color: var(--accent); margin-bottom: 8px; }
 .vocab-word { font-size: 56px; color: #fff; font-weight: bold; margin: 12px 0; line-height: 1.2; }
-.vocab-romaji { font-size: 14px; color: var(--gray); margin-bottom: 12px; }
+.vocab-romaji { font-size: 14px; color: var(--gray); margin-bottom: 4px; }
+.vocab-type-badge { display: inline-block; margin-top: 8px; font-size: 9px; color: var(--bg); padding: 4px 10px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; }
 .vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; }
 .vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
 
-.vocab-meanings { padding: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; }
-.vocab-meaning-item { font-size: 13px; color: #fff; padding: 6px 0; line-height: 1.5; }
+.vocab-meanings { padding: 14px 12px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+.vocab-meaning-primary { font-size: 17px; color: #fff; font-weight: 600; padding: 4px 0 8px; }
+.vocab-meaning-secondary { font-size: 12px; color: var(--gray); padding: 3px 0; line-height: 1.4; }
+
+.vocab-nuance-box { font-size: 12px; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 12px; line-height: 1.5; }
 
 .vocab-section-title { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
 

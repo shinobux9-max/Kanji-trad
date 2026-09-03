@@ -1233,6 +1233,25 @@ function showVocabDetail(wordId, allWords = []) {
     const currentIndex = allWords.findIndex(w => w.id === wordId);
     const totalWords = allWords.length;
     
+    // Mapping type de mot -> libellé lisible + couleur (indépendant des familles de badges grammaire)
+    const TYPE_LABELS = {
+        verb: { label: 'Verbe', color: '#6EA8FF' },
+        noun: { label: 'Nom', color: '#4ADE80' },
+        adjective: { label: 'Adjectif', color: '#FBBF24' },
+        adverb: { label: 'Adverbe', color: '#38BDF8' },
+        particle: { label: 'Particule', color: '#9D6EFF' },
+        interjection: { label: 'Interjection', color: '#FB7185' },
+        expression: { label: 'Expression', color: '#FB7185' }
+    };
+    const GROUP_LABELS = { godan: 'Groupe 1 (godan)', ichidan: 'Groupe 2 (ichidan)', irregular: 'Irrégulier' };
+    
+    const buildTypeBadge = () => {
+        if (!word.type) return '';
+        const typeInfo = TYPE_LABELS[word.type] || { label: word.type, color: '#A7B0C0' };
+        const groupLabel = word.group && GROUP_LABELS[word.group] ? ` · ${GROUP_LABELS[word.group]}` : '';
+        return `<span class="vocab-type-badge" style="background: ${typeInfo.color};">${typeInfo.label}${groupLabel}</span>`;
+    };
+    
     let html = `<div class="vocab-detail-page">`;
     
     // HEADER
@@ -1254,15 +1273,21 @@ function showVocabDetail(wordId, allWords = []) {
         <div class="vocab-reading">${word.reading || ''}</div>
         <div class="vocab-word">${word.word || ''}</div>
         <div class="vocab-romaji">${word.romaji || ''}</div>
+        ${buildTypeBadge()}
         <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
     </div>`;
     
-    // MEANINGS
+    // MEANINGS — sens premier mis en avant, sens secondaires en dessous
     html += `<div class="vocab-meanings">`;
-    meanings.forEach(m => {
-        html += `<div class="vocab-meaning-item">${m}</div>`;
+    meanings.forEach((m, i) => {
+        html += `<div class="${i === 0 ? 'vocab-meaning-primary' : 'vocab-meaning-secondary'}">${m}</div>`;
     });
     html += `</div>`;
+    
+    // NUANCE (si présente dans le JSON)
+    if (word.nuance) {
+        html += `<div class="vocab-nuance-box">💡 ${word.nuance}</div>`;
+    }
     
     // EXEMPLE
     if (word.example && word.example.japanese) {
