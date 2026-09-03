@@ -1,0 +1,1049 @@
+[
+    {
+        "id": "n4_g_potential",
+        "unit": 1,
+        "unit_title": "La complexification des verbes (voix et potentiel)",
+        "lesson_number": 1,
+        "title": "La forme potentielle (Pouvoir faire)",
+        "item": "〜られる / 〜ことができる",
+        "pattern": "[Verbe Groupe 1 en e + る] / [Verbe Groupe 2 + られる] / [Verbe Irrégulier] ou [Verbe dictionnaire] + ことができる",
+        "badge": "Verbe - Potentiel",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "La forme potentielle permet d'exprimer la capacité ou la possibilité de faire une action.",
+                    "Pour les verbes du groupe 1 (godan), on change la voyelle 'u' en 'e' et on ajoute 'ru'. Pour le groupe 2 (ichidan), on remplace 'ru' par 'rareru'."
+                ],
+                "sub_title": "Structure :",
+                "list": [
+                    "Groupe 1 : ku -> keru, mu -> meru, etc.",
+                    "Groupe 2 : taberu -> taberareru",
+                    "Verbes irréguliers : suru -> dekiru, kuru -> korareru"
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "私は日本語が少し話せる。",
+                "romaji": "Watashi wa nihongo ga sukoshi hanaseru.",
+                "french": "Je peux parler un peu japonais.",
+                "highlight": "話せる"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_passive",
+        "unit": 1,
+        "unit_title": "La complexification des verbes (voix et potentiel)",
+        "lesson_number": 1,
+        "title": "La forme passive (Subir une action)",
+        "item": "〜れる / 〜られる",
+        "pattern": "[Verbe Groupe 1 en a + れる] / [Verbe Groupe 2 + られる]",
+        "badge": "Verbe - Passif",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "La voix passive est utilisée lorsque le sujet subit l'action effectuée par quelqu'un d'autre (marqué par la particule に)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "私は先生にほめられた。",
+                "romaji": "Watashi wa sensei ni homerareta.",
+                "french": "J'ai été félicité par le professeur.",
+                "highlight": "ほめられた"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_causative",
+        "unit": 1,
+        "unit_title": "La complexification des verbes (voix et potentiel)",
+        "lesson_number": 1,
+        "title": "La forme causative (Faire faire / laisser faire)",
+        "item": "〜せる / 〜させる",
+        "pattern": "[Verbe Groupe 1 en a + せる] / [Verbe Groupe 2 + させる]",
+        "badge": "Verbe - Causatif",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "La forme causative exprime le fait de forcer ou de laisser quelqu'un faire une action."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "母は子供に野菜を食べさせた。",
+                "romaji": "Haha wa kodomo ni yasai o tabesaseta.",
+                "french": "La mère a fait manger des légumes à son enfant.",
+                "highlight": "食べさせた"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_causative_passive",
+        "unit": 1,
+        "unit_title": "La complexification des verbes (voix et potentiel)",
+        "lesson_number": 1,
+        "title": "La forme causativo-passive (Être forcé de faire)",
+        "item": "〜させられる",
+        "pattern": "[Verbe Groupe 1 en a + させられる] / [Verbe Groupe 2 + させられる]",
+        "badge": "Verbe - Causatif Passif",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Cette forme combine le causatif et le passif pour exprimer le fait d'être obligé ou contraint de faire quelque chose par quelqu'un d'autre."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "私は嫌々宿題をさせられた。",
+                "romaji": "Watashi wa iyaya shukudai o saserareta.",
+                "french": "J'ai été forcé de faire mes devoirs contre mon gré.",
+                "highlight": "させられた"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_ba",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "La condition (Si...)",
+        "item": "〜ば",
+        "pattern": "[Verbe Groupe 1 en e + ば] / [Verbe Groupe 2 + れば] / [Adjectif-i -> ければ]",
+        "badge": "Condition",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "La particule conditionnelle ば exprime une condition générale (si... alors...). Elle ne s'utilise généralement pas pour exprimer un souhait personnel direct ou un ordre strict."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "安ければ、買いたい。",
+                "romaji": "Yasukereba, kaitai.",
+                "french": "Si c'est bon marché, je veux l'acheter.",
+                "highlight": "安ければ"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_tara",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "La condition / temporalité (Si / Quand...)",
+        "item": "〜たら",
+        "pattern": "[Verbe au passé TA + ら] / [Nom / Adjectif-na + だったら]",
+        "badge": "Condition / Temps",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "~tara est très polyvalent et s'utilise pour exprimer un événement qui se produira ou se réalisera après qu'une première action soit achevée."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "家に着いたら、電話をしてください。",
+                "romaji": "Ie ni tsuitara, denwa o shite kudasai.",
+                "french": "Quand tu seras arrivé à la maison, s'il te plaît, passe un coup de fil.",
+                "highlight": "着いたら"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_nara",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "La condition / cas de figure (Dans le cas où...)",
+        "item": "〜なら",
+        "pattern": "[Nom ou Verbe dictionnaire] + なら",
+        "badge": "Condition",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "~nara est utilisé pour poser un cadre ou un sujet abordé par l'interlocuteur et donner un conseil ou un avis en retour."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "日本に行くなら、京都がおすすめです。",
+                "romaji": "Nihon ni iku nara, kyōto ga osusume desu.",
+                "french": "Si tu vas au Japon, Kyoto est recommandé.",
+                "highlight": "行くなら"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_to",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "La condition consécutive (L'inévitabilité)",
+        "item": "〜と",
+        "pattern": "[Verbe dictionnaire] + と",
+        "badge": "Condition Naturelle",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "~to exprime une suite logique ou naturelle : lorsque l'action A se produit, l'action B s'ensuit inévitablement."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "春になると、桜が咲きます。",
+                "romaji": "Haru ni naru to, sakura ga sakimasu.",
+                "french": "Quand le printemps arrive, les cerisiers fleurissent.",
+                "highlight": "なると"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_aida",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "La simultanéité et l'intervalle (Pendant que...)",
+        "item": "〜間 / 〜間に",
+        "pattern": "[Verbe dictionnaire / en te iru] + 間 / 間に",
+        "badge": "Intervalle Temporel",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "〜間 indique une action qui dure pendant toute la durée d'une autre. 〜間に indique un événement ponctuel qui se produit au cours de cet intervalle."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "留守の間に出光さんが来た。",
+                "romaji": "Rusu no aida ni Idemitsu-san ga kita.",
+                "french": "M. Idemitsu est venu pendant mon absence.",
+                "highlight": "間の間に"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_ato_de",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "Après (faire quelque chose)",
+        "item": "〜後で",
+        "pattern": "[Verbe au passé TA] + 後で / [Nom] + の後で",
+        "badge": "Expression Temporelle",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "La structure verbe en TA + 後で (ato de) permet d'indiquer qu'une action se produit après une autre."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "昼ご飯を食べた後で、30分ほど昼寝をした。",
+                "romaji": "Hirugohan o tabeta ato de, sanjuppun hodo hirune o shita.",
+                "french": "Après avoir déjeuné, j'ai fait une sieste d'une demi-heure.",
+                "highlight": "食べた後で"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_toki",
+        "unit": 2,
+        "unit_title": "Les formes conditionnelles et temporelles",
+        "lesson_number": 2,
+        "title": "Le moment où / lorsque",
+        "item": "〜時",
+        "pattern": "[Verbe / Adjectif / Nom] + 時",
+        "badge": "Temporalité",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "~toki s'utilise pour situer un événement à un moment précis ou lors d'une situation donnée."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "子供の時、よく海で泳いだ。",
+                "romaji": "Kodomo no toki, yoku umi de oyoida.",
+                "french": "Quand j'étais enfant, je nageais souvent dans la mer.",
+                "highlight": "子供の時"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_volitive",
+        "unit": 3,
+        "unit_title": "Les volontés, intentions et essais",
+        "lesson_number": 3,
+        "title": "La forme volontive (Le 'faisons')",
+        "item": "〜よう / 〜おう",
+        "pattern": "[Verbe Groupe 1 en o] + う / [Verbe Groupe 2 + よう]",
+        "badge": "Volontif",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime l'incitation amicale ou l'intention de faire quelque chose (ex: allons, faisons)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "明日は映画を見に行こう。",
+                "romaji": "Ashita wa eiga o ni ikou.",
+                "french": "Allons voir un film demain !",
+                "highlight": "行こう"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_you_to_omou",
+        "unit": 3,
+        "unit_title": "Les volontés, intentions et essais",
+        "lesson_number": 3,
+        "title": "L'intention (Avoir l'intention de...)",
+        "item": "〜ようと思う",
+        "pattern": "[Verbe Volontif] + と思う",
+        "badge": "Intention",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime une intention mûrie ou une décision personnelle prise par le locuteur."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "来年、日本へ留学しようと思う。",
+                "romaji": "Rainen, nihon e ryūgaku shiyou to omou.",
+                "french": "J'ai l'intention d'aller étudier au Japon l'année prochaine.",
+                "highlight": "しようと思う"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_hoshii",
+        "unit": 3,
+        "unit_title": "Les volontés, intentions et essais",
+        "lesson_number": 3,
+        "title": "Le souhait (Vouloir que quelqu'un fasse...)",
+        "item": "〜てほしい",
+        "pattern": "[Nom] + に + [Verbe en te] + ほしい",
+        "badge": "Souhait",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "S'utilise pour exprimer le souhait qu'une autre personne réalise une action pour nous ou en général."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "先生にもっと日本語を教えてほしい。",
+                "romaji": "Sensei ni motto nihongo o oshiete hoshii.",
+                "french": "Je voudrais que le professeur m'apprenne plus de japonais.",
+                "highlight": "教えてほしい"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_tai",
+        "unit": 3,
+        "unit_title": "Les volontés, intentions et essais",
+        "lesson_number": 3,
+        "title": "Le désir d'action (Vouloir faire)",
+        "item": "〜たい / 〜たがる",
+        "pattern": "[Radice du verbe] + たい",
+        "badge": "Désir",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "~tai exprime le souhait personnel du locuteur. Pour les tierces personnes, on utilise ~tagaru."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "冷たいビールが飲みたい。",
+                "romaji": "Tsumetai bīru ga nomitai.",
+                "french": "Je veux boire une bière bien fraîche.",
+                "highlight": "飲みたい"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_miru",
+        "unit": 3,
+        "unit_title": "Les volontés, intentions et essais",
+        "lesson_number": 3,
+        "title": "L'essai (Essayer de faire)",
+        "item": "〜てみる",
+        "pattern": "[Verbe en te] + みる",
+        "badge": "Essai / Expérience",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique que l'on essaie de faire une action pour voir ce que cela donne ou par curiosité."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "この寿司を食べてみてください。",
+                "romaji": "Kono sushi o tabete mite kudasai.",
+                "french": "Essayez de manger ces sushis s'il vous plaît.",
+                "highlight": "食べてみて"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_yotei",
+        "unit": 3,
+        "unit_title": "Les volontés, intentions et essais",
+        "lesson_number": 3,
+        "title": "Le projet (Avoir prévu de...)",
+        "item": "〜予定だ",
+        "pattern": "[Verbe dictionnaire ou Nom + の] + 予定だ",
+        "badge": "Projet / Plan",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique un projet ou un programme établi à l'avance."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "来週、大阪に出張する予定です。",
+                "romaji": "Raishū, Ōsaka ni shucchō suru yotei desu.",
+                "french": "J'ai prévu de faire un voyage d'affaires à Osaka la semaine prochaine.",
+                "highlight": "予定です"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_hazu",
+        "unit": 4,
+        "unit_title": "Les modalités, probabilités et apparences",
+        "lesson_number": 4,
+        "title": "La conjecture (Il est censé / impossible que)",
+        "item": "〜はずだ / はずがない",
+        "pattern": "[Verbe / Adjectif / Nom] + はずだ",
+        "badge": "Probabilité Logique",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime une forte certitude ou une attente logique basée sur des faits."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "彼はもうすぐ来るはずです。",
+                "romaji": "Kare wa mō sugu kuru hazu desu.",
+                "french": "Il est censé arriver d'une minute à l'autre.",
+                "highlight": "はずです"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_kamoshirenai",
+        "unit": 4,
+        "unit_title": "Les modalités, probabilités et apparences",
+        "lesson_number": 4,
+        "title": "L'incertitude (Il se pourrait que...)",
+        "item": "〜かもしれない",
+        "pattern": "[Verbe / Adjectif / Nom] + かもしれない",
+        "badge": "Possibilité",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime une possibilité de l'ordre de 50% ou moins (peut-être que...)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "午後から雨が降かもしれない。",
+                "romaji": "Gogo kara ame ga furu kamoshirenai.",
+                "french": "Il se pourrait qu'il pleuve à partir de cet après-midi.",
+                "highlight": "かもしれない"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_sou_da",
+        "unit": 4,
+        "unit_title": "Les modalités, probabilités et apparences",
+        "lesson_number": 4,
+        "title": "La rumeur ou l'apparence",
+        "item": "〜そうだ",
+        "pattern": "[Radice du verbe / Adjectif sans i] + そうだ",
+        "badge": "Apparence / Rumeur",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Utilisé soit pour l'apparence visuelle (avoir l'air de), soit pour la transmission d'une information (on dit que...)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "このケーキは美味しそうですね。",
+                "romaji": "Kono kēki wa oishisō desu ne.",
+                "french": "Ce gâteau a l'air délicieux, n'est-ce pas ?",
+                "highlight": "美味しそう"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_mitai",
+        "unit": 4,
+        "unit_title": "Les modalités, probabilités et apparences",
+        "lesson_number": 4,
+        "title": "La ressemblance (Comme / On dirait que)",
+        "item": "〜みたいだ",
+        "pattern": "[Nom / Verbe] + みたいだ",
+        "badge": "Ressemblance",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime une ressemblance ou une présomption fondée sur des indices visuels."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "まるで夢みたいだ。",
+                "romaji": "Marude yume mitai da.",
+                "french": "C'est tout comme dans un rêve.",
+                "highlight": "みたいだ"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_rashii",
+        "unit": 4,
+        "unit_title": "Les modalités, probabilités et apparences",
+        "lesson_number": 4,
+        "title": "La présomption objective (Il paraît que)",
+        "item": "〜らしい",
+        "pattern": "[Nom / Verbe] + らしい",
+        "badge": "Présomption",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime une information rapportée ou une conclusion tirée de faits objectifs observés."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "明日は晴れるらしい。",
+                "romaji": "Ashita wa hareru rashii.",
+                "french": "Il paraît qu'il fera beau demain.",
+                "highlight": "らしい"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_give_receive",
+        "unit": 5,
+        "unit_title": "Les services et les interactions (Donner / Recevoir)",
+        "lesson_number": 5,
+        "title": "Donner et recevoir de base",
+        "item": "あげる / くれる / もらう",
+        "pattern": "[A] は [B] に [Objet] を あげる / くれる / もらう",
+        "badge": "Interaction",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Verbes fondamentaux pour exprimer les transferts d'objets ou de services."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "友だちに本をあげた。",
+                "romaji": "Tomodachi ni hon o ageta.",
+                "french": "J'ai donné un livre à mon ami.",
+                "highlight": "あげた"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_ageru",
+        "unit": 5,
+        "unit_title": "Les services et les interactions (Donner / Recevoir)",
+        "lesson_number": 5,
+        "title": "Rendre service",
+        "item": "〜てあげる / 〜てくれる",
+        "pattern": "[Verbe en te] + あげる / くれる",
+        "badge": "Service",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique que l'on rend service à quelqu'un (te ageru) ou que l'on nous rend service (te kureru)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "道教えてあげました。",
+                "romaji": "Michi o oshiete agemashita.",
+                "french": "Je lui ai indiqué le chemin.",
+                "highlight": "教えてあげました"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_morau",
+        "unit": 5,
+        "unit_title": "Les services et les interactions (Donner / Recevoir)",
+        "lesson_number": 5,
+        "title": "Recevoir un service",
+        "item": "〜てもらう / 〜ていただけませんか",
+        "pattern": "[Verbe en te] + もらう",
+        "badge": "Demande polie",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime le fait de recevoir une action favorable d'autrui, ou de demander poliment un service."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "写真を撮っていただけませんか。",
+                "romaji": "Shashin o totte itadakemasen ka.",
+                "french": "Pourriez-vous prendre une photo s'il vous plaît ?",
+                "highlight": "撮っていただけませんか"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_oku",
+        "unit": 6,
+        "unit_title": "Les actions modifiées par la forme en -te",
+        "lesson_number": 6,
+        "title": "L'action préalable (Faire à l'avance)",
+        "item": "〜ておく",
+        "pattern": "[Verbe en te] + おく",
+        "badge": "Action Préparatoire",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique qu'une action est réalisée en prévision d'un événement futur ou pour être prêt."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "旅行の前に、切符を買っておく。",
+                "romaji": "Ryokō no mae ni, kippu o katte oku.",
+                "french": "Avant le voyage, j'achète les billets à l'avance.",
+                "highlight": "買っておく"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_aru",
+        "unit": 6,
+        "unit_title": "Les actions modifiées par la forme en -te",
+        "lesson_number": 6,
+        "title": "L'état résultant intentionnel",
+        "item": "〜てある",
+        "pattern": "[Verbe transitif en te] + ある",
+        "badge": "État Résultant",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique qu'une action intentionnelle a été réalisée par quelqu'un et que le résultat est maintenu."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "黒板に漢字が書いてある。",
+                "romaji": "Kokuban ni kanji ga kaite aru.",
+                "french": "Les kanjis sont écrits sur le tableau noir.",
+                "highlight": "書いてある"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_shimau",
+        "unit": 6,
+        "unit_title": "Les actions modifiées par la forme en -te",
+        "lesson_number": 6,
+        "title": "L'achèvement ou le regret",
+        "item": "〜てしまう",
+        "pattern": "[Verbe en te] + しまう (chaou / chau en oral)",
+        "badge": "Achèvement / Regret",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime soit l'achèvement total d'une action, soit un regret face à une bévue commise par inadvertance."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "宿題を全部やってしまった。",
+                "romaji": "Shukudai o zenbu yatte shimatta.",
+                "french": "J'ai fini tous mes devoirs (en entier).",
+                "highlight": "やってしまった"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_te_iru_tokoro",
+        "unit": 6,
+        "unit_title": "Les actions modifiées par la forme en -te",
+        "lesson_number": 6,
+        "title": "L'action en cours",
+        "item": "〜ているところ",
+        "pattern": "[Verbe en te iru] + ところ",
+        "badge": "Action en direct",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Met l'accent sur le fait que l'action est précisément en train de se dérouler."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "今、昼ご飯を食べているところです。",
+                "romaji": "Ima, hirugohan o tabete iru tokoro desu.",
+                "french": "Je suis précisément en train de déjeuner.",
+                "highlight": "食べているところ"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_yasui_nikui",
+        "unit": 7,
+        "unit_title": "Les qualificatifs, degrés et limites",
+        "lesson_number": 7,
+        "title": "La facilité et la difficulté",
+        "item": "〜やすい / 〜にくい",
+        "pattern": "[Radice du verbe] + やすい / にくい",
+        "badge": "Facilité / Difficulté",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique si une action est facile (~yasui) ou difficile (~nikui) à réaliser."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "このペンはとても書きやすい。",
+                "romaji": "Kono pen wa totemo kakiyasui.",
+                "french": "Ce stylo est très facile à écrire avec.",
+                "highlight": "書きやすい"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_sugiru",
+        "unit": 7,
+        "unit_title": "Les qualificatifs, degrés et limites",
+        "lesson_number": 7,
+        "title": "L'excès (Trop faire / être trop)",
+        "item": "〜すぎる",
+        "pattern": "[Radice verbe ou Adjectif sans i/na] + すぎる",
+        "badge": "Excès",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime l'exagération ou le dépassement d'une limite raisonnable."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "昨夜、お酒を飲みすぎた。",
+                "romaji": "Sakuya, osake o nomisugita.",
+                "french": "Hier soir, j'ai trop bu d'alcool.",
+                "highlight": "飲みすぎた"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_shika_nai",
+        "unit": 7,
+        "unit_title": "Les qualificatifs, degrés et limites",
+        "lesson_number": 7,
+        "title": "La restriction (Seulement / Ne... que)",
+        "item": "〜しかない",
+        "pattern": "[Nom] + しかない + [Verbe négatif]",
+        "badge": "Restriction",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime une restriction stricte (il n'y a que... / on n'a pas d'autre choix que de...)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "お金がないから、歩くしかない。",
+                "romaji": "Okane ga nai kara, aruku shika nai.",
+                "french": "Comme je n'ai pas d'argent, je n'ai d'autre choix que de marcher.",
+                "highlight": "しかない"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_node",
+        "unit": 8,
+        "unit_title": "Les causes, buts et contrastes",
+        "lesson_number": 8,
+        "title": "La cause objective",
+        "item": "〜ので",
+        "pattern": "[Verbe / Adjectif / Nom + な] + ので",
+        "badge": "Cause / Justification",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique une cause objective, un motif poli et naturel, plus doux que ~kara."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "雨が降っているので、出かけません。",
+                "romaji": "Ame ga futte iru node, dekakemasen.",
+                "french": "Comme il pleut, je ne sors pas.",
+                "highlight": "ので"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_tame_ni",
+        "unit": 8,
+        "unit_title": "Les causes, buts et contrastes",
+        "lesson_number": 8,
+        "title": "Le but",
+        "item": "〜ために",
+        "pattern": "[Verbe dictionnaire ou Nom + の] + ために",
+        "badge": "But / Objectif",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime le but poursuivi ou l'objectif d'une action."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "日本語を勉強するために、日本へ来た。",
+                "romaji": "Nihongo o benkyō suru tame ni, nihon e kita.",
+                "french": "Je suis venu au Japon dans le but d'étudier le japonais.",
+                "highlight": "ために"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_noni",
+        "unit": 8,
+        "unit_title": "Les causes, buts et contrastes",
+        "lesson_number": 8,
+        "title": "Le contraste et la concession",
+        "item": "〜のに",
+        "pattern": "[Verbe / Adjectif / Nom + な] + のに",
+        "badge": "Concession",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime un contraste inattendu ou un regret teinté de reproche (alors que... / bien que...)."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "勉強したのに、試験に落ちた。",
+                "romaji": "Benkyō shita noni, shiken ni ochita.",
+                "french": "Bien que j'aie étudié, j'ai raté l'examen.",
+                "highlight": "のに"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_you_ni_naru",
+        "unit": 8,
+        "unit_title": "Les causes, buts et contrastes",
+        "lesson_number": 8,
+        "title": "Le changement d'état",
+        "item": "〜ようになる",
+        "pattern": "[Verbe potentiel ou dictionnaire] + ようになる",
+        "badge": "Évolution",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Exprime l'acquisition progressive d'une nouvelle capacité ou un changement d'habitude."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "漢字が読めるようになりました。",
+                "romaji": "Kanji ga yomeru yō ni narimashita.",
+                "french": "Je suis devenu capable de lire les kanjis.",
+                "highlight": "ようになる"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_shi",
+        "unit": 9,
+        "unit_title": "Les structures de liaison et énumérations",
+        "lesson_number": 9,
+        "title": "L'énumération cumulative",
+        "item": "〜し",
+        "pattern": "[Verbe / Adjectif / Nom + だ] + し、[Verbe / Adjectif] + し",
+        "badge": "Énumération de motifs",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Permet de lier plusieurs raisons ou caractéristiques pour étayer un argument."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "この店は安いうえに、美味しいし。",
+                "romaji": "Kono mise wa yasui ue ni, oishii shi.",
+                "french": "Ce magasin est bon marché et en plus c'est délicieux.",
+                "highlight": "美味しいし"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_tari_tari",
+        "unit": 9,
+        "unit_title": "Les structures de liaison et énumérations",
+        "lesson_number": 9,
+        "title": "Les listes d'actions alternées",
+        "pattern": "[Verbe au passé TA] + り、[Verbe au passé TA] + りする",
+        "item": "〜たり〜たりする",
+        "badge": "Actions alternatives",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Indique une suite d'actions faites tour à tour ou parmi d'autres."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "日曜日は本を読んだり、音楽を聞いたりする。",
+                "romaji": "Nichiyōbi wa hon o yondari, ongaku o kiitari suru.",
+                "french": "Le dimanche, je lis des livres, j'écoute de la musique, etc.",
+                "highlight": "読んだり、音楽を聞いたり"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_no_wa_da",
+        "unit": 10,
+        "unit_title": "Les particules finales, sous-entendus et expressions spéciales",
+        "lesson_number": 10,
+        "title": "L'explication ou la mise en valeur",
+        "item": "〜のは〜だ / 〜んす / 〜のだ",
+        "pattern": "[Proposition] + のは [Élément] だ",
+        "badge": "Explication",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Utilisé pour expliquer une cause, donner des précisions ou mettre en valeur une information."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "日本へ来たのは、アニメが好きだからです。",
+                "romaji": "Nihon e kita no wa, anime ga suki dakara desu.",
+                "french": "Si je suis venu au Japon, c'est parce que j'aime les animes.",
+                "highlight": "来たのは"
+            }
+        ]
+    },
+    {
+        "id": "n4_g_ka_dou_ka",
+        "unit": 10,
+        "unit_title": "Les particules finales, sous-entendus et expressions spéciales",
+        "lesson_number": 10,
+        "title": "Les interrogations indirectes (Si... ou non)",
+        "item": "〜かどうか",
+        "pattern": "[Proposition ou Verbe] + かどうか",
+        "badge": "Interrogation indirecte",
+        "sections": [
+            {
+                "label": "EXPLICATION",
+                "paragraphs": [
+                    "Permet de relier une interrogation binaire (oui/non) à une proposition principale."
+                ]
+            }
+        ],
+        "examples": [
+            {
+                "japanese": "明日雨が降るかどうか分かりません。",
+                "romaji": "Ashita ame ga furu ka dō ka wakarimasen.",
+                "french": "Je ne sais pas si il pleuvra demain ou non.",
+                "highlight": "降るかどうか"
+            }
+        ]
+    }
+]

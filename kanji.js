@@ -1432,6 +1432,7 @@ function showGrammarDetail(lessonId) {
     const lessonNum = lesson.lesson_number ? String(lesson.lesson_number).padStart(2, '0') : '01';
     const unitText = lesson.unit_title || `Unité ${lesson.unit}`;
     const badgeText = lesson.badge || 'Leçon';
+    const levelLabel = lesson.level || (levelId ? levelId.toUpperCase() : 'N5');
     
     // Fonction helper pour surligner
     const highlightText = (text, highlight) => {
@@ -1442,13 +1443,40 @@ function showGrammarDetail(lessonId) {
         );
     };
     
+    // Rendu d'une section : supporte l'ancien format (text) ET le nouveau (paragraphs/sub_title/list)
+    const renderSectionBody = (section) => {
+        let body = '';
+        
+        // Ancien format : simple string
+        if (section.text) {
+            body += `<div class="section-paragraph">${section.text}</div>`;
+        }
+        
+        // Nouveau format : plusieurs paragraphes
+        if (Array.isArray(section.paragraphs)) {
+            body += section.paragraphs.map(p => `<div class="section-paragraph">${p}</div>`).join('');
+        }
+        
+        // Sous-titre optionnel avant une liste
+        if (section.sub_title) {
+            body += `<div class="section-sub-title">${section.sub_title}</div>`;
+        }
+        
+        // Liste de motifs/structures
+        if (Array.isArray(section.list)) {
+            body += `<ul class="section-list">${section.list.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        }
+        
+        return body;
+    };
+    
     let html = `<div class="detail-page">
         <!-- HEADER -->
         <div class="detail-header-top">
             <button onclick="showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)" class="back-btn">←</button>
             <div class="header-info">
                 <div class="lesson-title">Leçon ${lessonNum}</div>
-                <div class="lesson-subtitle">N5 • ${unitText}</div>
+                <div class="lesson-subtitle">${levelLabel} • ${unitText}</div>
             </div>
         </div>
         
@@ -1473,7 +1501,7 @@ function showGrammarDetail(lessonId) {
             <div class="detail-section">
                 <div class="section-label">${section.label || 'Section'}</div>
                 <div class="section-content-box">
-                    ${section.text || ''}
+                    ${renderSectionBody(section)}
                 </div>
             </div>
         `).join('') : ''}
