@@ -576,3 +576,19 @@
 .vocab-master-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 13px; font-weight: 500; }
 .vocab-master-btn:hover { background: rgba(255,255,255,0.1); }
 .vocab-master-btn.active { background: rgba(0,201,167,0.2); border-color: var(--accent); color: var(--accent); }
+
+/* ══════════════════════════════════════════════════
+   GRAMMAR DETAIL - Contenu riche (paragraphes, listes, sous-titres)
+   Compatible N4/N5+ : structure sections[].paragraphs/sub_title/list
+══════════════════════════════════════════════════ */
+.section-paragraph { font-size: 13px; color: #fff; line-height: 1.6; margin-bottom: 10px; }
+.section-paragraph:last-child { margin-bottom: 0; }
+
+.section-sub-title { font-size: 11px; color: var(--accent); font-weight: 600; margin: 14px 0 10px; letter-spacing: 0.2px; text-align: center; text-decoration: underline; text-underline-offset: 4px; }
+
+.section-list { margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; }
+.section-list li { font-size: 13px; color: #fff; line-height: 1.5; font-family: 'Courier New', monospace; }
+.section-list li::marker { color: var(--accent); }
+
+/* Mise en évidence d'un mot/expression au sein d'un paragraphe (usage: <span class="inline-highlight">後で</span> dans le JSON) */
+.inline-highlight { color: var(--accent); font-weight: 600; }
