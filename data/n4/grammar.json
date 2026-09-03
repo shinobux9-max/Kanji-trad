@@ -6,14 +6,14 @@
   "lesson_number": 1,
   "title": "La forme potentielle",
   "item": "〜られる / 〜ことができる",
-  "pattern": "[Verbe potentiel] ou [Verbe à l'infinitif] + ことができる",
+  "pattern": "[Verbe potentiel]  OU  [Verbe à l'infinitif + ことができる]",
   "badge": "Verbe - Potentiel",
   "sections": [
     {
       "label": "EXPLICATION",
       "paragraphs": [
-        "Le potentiel exprime la capacité ou la possibilité, physique ou acquise, de faire une action.",
-        "Il existe deux façons de l'exprimer : une forme verbale conjuguée (plus naturelle à l'oral), ou une structure avec ことができる (plus neutre, souvent utilisée à l'écrit)."
+        "Le potentiel exprime la **capacité** ou la **possibilité** (physique ou acquise) de faire une action.",
+        "Il existe deux façons de l'exprimer : une **forme conjuguée** (plus naturelle à l'oral) ou la structure **ことができる** (plus neutre, fréquente à l'écrit)."
       ]
     },
     {
@@ -22,22 +22,22 @@
         {
           "sub_title": "Groupe 1 (godan) : -u → -eru",
           "list": [
-            "書く (kaku) → 書ける (kakeru)",
-            "話す (hanasu) → 話せる (hanaseru)"
+            "書く (kaku) → **書ける** (kakeru)",
+            "話す (hanasu) → **話せる** (hanaseru)"
           ]
         },
         {
           "sub_title": "Groupe 2 (ichidan) : -ru → -rareru",
           "list": [
-            "食べる (taberu) → 食べられる (taberareru)",
-            "見る (miru) → 見られる (mirareru)"
+            "食べる (taberu) → **食べられる** (taberareru)",
+            "見る (miru) → **見られる** (mirareru)"
           ]
         },
         {
           "sub_title": "Verbes irréguliers",
           "list": [
-            "する → できる",
-            "来る (kuru) → 来られる (korareru)"
+            "する → **できる**",
+            "来る (kuru) → **来られる** (korareru)"
           ]
         }
       ]
@@ -45,14 +45,14 @@
     {
       "label": "NUANCE : ことができる",
       "paragraphs": [
-        "ことができる s'utilise avec le verbe à la forme dictionnaire (infinitif) et reste correcte quel que soit le groupe. Elle est plus formelle et neutre que la forme conjuguée, souvent préférée à l'écrit ou dans un contexte poli.",
-        "Note : la forme potentielle conjuguée privilégie la particule が (日本語が話せる), tandis que ことができる conserve généralement la particule d'origine を (日本語を話すことができる)."
+        "**ことができる** s'utilise toujours avec le verbe à la **forme dictionnaire (infinitif)**, quel que soit son groupe.",
+        "💡 **Particules :** La forme conjuguée privilégie la particule **が** (日本語**が**話せる), tandis que ** sentence/ことができる** conserve généralement la particule **を** (日本語**を**話すことができる)."
       ],
       "blocks": [
         {
           "sub_title": "Structure",
           "list": [
-            "[Verbe à l'infinitif] + ことができる"
+            "[Verbe à l'infinitif] + ** things/ sentence/ことができる**"
           ]
         }
       ]
@@ -60,9 +60,15 @@
   ],
   "examples": [
     {
+      "japanese": "私は日本語が話せる。",
+      "romaji": "Watashi wa nihongo ga hanaseru.",
+      "french": "Je peux parler japonais. (Forme conjuguée - Oral / Naturel)",
+      "highlight": "話せる"
+    },
+    {
       "japanese": "私は日本語を話すことができる。",
       "romaji": "Watashi wa nihongo o hanasu koto ga dekiru.",
-      "french": "Je peux parler japonais.",
+      "french": "Je peux parler japonais. (Structure neutre - Écrit / Formel)",
       "highlight": "話すことができる"
     }
   ]
