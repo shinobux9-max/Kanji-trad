@@ -1391,7 +1391,14 @@ function showGrammarHome(levelId, data, examples = null) {
                                 </div>
                                 <div class="card-item-in-box">${itemText}</div>
                                 <div class="card-title-in-box">${titleText}</div>
-                                ${lesson.sections && lesson.sections[0] ? `<div class="card-description-in-box">${lesson.sections[0].text.substring(0, 50)}...</div>` : ''}
+                                ${(() => {
+                                    const firstSection = lesson.sections && lesson.sections[0];
+                                    if (!firstSection) return '';
+                                    const raw = firstSection.text || (Array.isArray(firstSection.paragraphs) ? firstSection.paragraphs[0] : '') || '';
+                                    const plain = raw.replace(/<[^>]*>/g, ''); // retire le HTML inline (ex: inline-highlight)
+                                    if (!plain) return '';
+                                    return `<div class="card-description-in-box">${plain.substring(0, 50)}...</div>`;
+                                })()}
                             </div>
                         `;
                     }).join('')}
