@@ -4,9 +4,9 @@
 ══════════════════════════════════════════════════ */
 
 :root {
-        --bg: #0a0a0f; --surface: #151520; --card: #212230; --text: #dde0eb;
-        --accent: #00c9a7; --accent2: #7b61ff; --gray: #6b6e80; --border: #3d3d50;
-        --grade-prim: #3ecf8e; --grade-mid: #6c7bff;
+        --bg: #0D1117; --surface: #161B22; --card: #161B22; --text: #F0F6FC;
+        --accent: #00E5FF; --accent-muted: #38BDF8; --accent2: #7b61ff; --gray: #8B949E; --border: #30363D;
+        --grade-prim: #3ecf8e; --grade-mid: #6c7bff; --highlight-warm: #FFD166;
     }
     /* --- POLICE JAPONAISE UNIFIÉE ---
        jis04 sur * garantit le glyphe japonais (八 ouvert) sur TOUS les éléments,
@@ -441,10 +441,10 @@
     ══════════════════════════════════════════════════ */
     .grammar-container { display: flex; flex-direction: column; gap: 20px; }
     
-    .unit-box-wrapper { border: 2px solid rgba(155,139,255,0.3); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
+    .unit-box-wrapper { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
     
-    .unit-box-header { padding: 14px 16px; background: rgba(155,139,255,0.15); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
-    .unit-box-header:hover { background: rgba(155,139,255,0.25); }
+    .unit-box-header { padding: 14px 16px; background: rgba(0,229,255,0.10); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .unit-box-header:hover { background: rgba(0,229,255,0.18); }
     
     .unit-box-title { font-size: 12px; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
     .unit-box-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
@@ -477,23 +477,23 @@
     .lesson-subtitle { font-size: 12px; color: var(--gray); margin-top: 4px; }
     
     .grammar-point-box { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
-    .item-display { font-size: 48px; color: #ff6b9d; font-weight: bold; margin: 12px 0; line-height: 1.2; }
+    .item-display { font-size: 48px; color: var(--accent); font-weight: bold; margin: 12px 0; line-height: 1.2; }
     .item-description { font-size: 14px; color: #fff; font-weight: 500; margin-bottom: 12px; }
     .pattern-box { font-size: 12px; color: var(--gray); background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; }
     
     .action-buttons { display: flex; gap: 8px; }
     .link-btn { flex: 1; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 12px; }
     .link-btn:hover { background: rgba(255,255,255,0.1); }
-    .revise-btn { flex: 1; padding: 12px; background: #ff6b9d; border: none; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; font-weight: bold; }
-    .revise-btn:hover { background: #ff5588; }
-    .revise-btn.active { background: #00c9a7; }
+    .revise-btn { flex: 1; padding: 12px; background: var(--accent); border: none; border-radius: 8px; color: var(--bg); cursor: pointer; font-size: 13px; font-weight: bold; }
+    .revise-btn:hover { background: var(--accent-muted); }
+    .revise-btn.active { background: #3ecf8e; color: var(--bg); }
     
     .detail-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
-    .detail-section .section-label { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
+    .detail-section .section-label { font-size: 11px; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
     .section-content-box { font-size: 13px; color: #fff; line-height: 1.6; }
     
     .examples-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
-    .examples-section .section-label { font-size: 11px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .examples-section .section-label { font-size: 11px; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
     .examples-container { display: flex; flex-direction: column; gap: 12px; }
     .example-item { padding: 12px; background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); border-radius: 6px; position: relative; }
     .example-jp { font-size: 14px; color: #fff; margin-bottom: 4px; font-weight: 500; }
@@ -502,7 +502,7 @@
     .speak-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 18px; }
     .speak-btn:hover { opacity: 0.7; }
     
-    .highlight-grammar { color: #ff6b9d; font-weight: bold; }
+    .highlight-grammar { color: var(--accent); font-weight: bold; }
     
     .favorite-btn-section { padding: 16px; text-align: center; }
     .favorite-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 13px; }
@@ -515,10 +515,10 @@
 ══════════════════════════════════════════════════ */
 .vocab-container { display: flex; flex-direction: column; gap: 20px; }
 
-.vocab-category-box { border: 2px solid rgba(155,139,255,0.3); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
+.vocab-category-box { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
 
-.vocab-category-header { padding: 14px 16px; background: rgba(155,139,255,0.15); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
-.vocab-category-header:hover { background: rgba(155,139,255,0.25); }
+.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+.vocab-category-header:hover { background: rgba(0,229,255,0.18); }
 
 .vocab-category-title { font-size: 12px; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
 .vocab-cat-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
@@ -584,7 +584,7 @@
 .section-paragraph { font-size: 13px; color: #fff; line-height: 1.6; margin-bottom: 10px; }
 .section-paragraph:last-child { margin-bottom: 0; }
 
-.section-sub-title { font-size: 11px; color: var(--accent); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-sub-title { font-size: 11px; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
 .section-sub-title:first-child { margin-top: 0; }
 
 /* Bloc groupé (ex: Groupe 1 / Groupe 2 / Irréguliers) : léger décalage + séparateur visuel */
@@ -598,4 +598,4 @@
 .inline-highlight { color: var(--accent); font-weight: 600; }
 
 /* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
-.md-bold { color: #FBBF24; font-weight: 700; }
+.md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
