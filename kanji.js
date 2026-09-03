@@ -1477,6 +1477,35 @@ function showGrammarDetail(lessonId) {
         return body;
     };
     
+    // Résout les exemples d'une leçon : priorité aux exemples externes (exemples.json, format N4+),
+    // fallback sur lesson.examples embarqué (format N5). Déduit le highlight si absent.
+    const resolveExamples = () => {
+        const externalMap = grammarHomeData?.examples?.grammar;
+        if (externalMap) {
+            const prefix = `${lesson.id}_ex`;
+            const matchedKeys = Object.keys(externalMap)
+                .filter(k => k.startsWith(prefix))
+                .sort((a, b) => (parseInt(a.slice(prefix.length)) || 0) - (parseInt(b.slice(prefix.length)) || 0));
+            
+            if (matchedKeys.length > 0) {
+                const baseItem = (lesson.item || '').replace(/^〜/, '').split(/[\s/]/)[0];
+                return matchedKeys.map(k => {
+                    const ex = externalMap[k];
+                    const japanese = ex.jp || '';
+                    const highlight = baseItem && japanese.includes(baseItem) ? baseItem : '';
+                    return {
+                        japanese,
+                        romaji: ex.ro || '',
+                        french: ex.fr || '',
+                        highlight
+                    };
+                });
+            }
+        }
+        return Array.isArray(lesson.examples) ? lesson.examples : [];
+    };
+    const resolvedExamples = resolveExamples();
+    
     let html = `<div class="detail-page">
         <!-- HEADER -->
         <div class="detail-header-top">
@@ -1514,11 +1543,11 @@ function showGrammarDetail(lessonId) {
         `).join('') : ''}
         
         <!-- EXEMPLES -->
-        ${lesson.examples && Array.isArray(lesson.examples) && lesson.examples.length > 0 ? `
+        ${resolvedExamples.length > 0 ? `
             <div class="examples-section">
                 <div class="section-label">EXEMPLES</div>
                 <div class="examples-container">
-                    ${lesson.examples.map(example => `
+                    ${resolvedExamples.map(example => `
                         <div class="example-item">
                             <div class="example-jp">${highlightText(example.japanese || '', example.highlight || '')}</div>
                             <div class="example-ro">${example.romaji || ''}</div>
