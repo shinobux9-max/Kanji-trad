@@ -1,35 +1,71 @@
 [
   {
-    "id": "n4_g_potential",
-    "unit": 1,
-    "unit_title": "La complexification des verbes (voix et potentiel)",
-    "lesson_number": 1,
-    "title": "La forme potentielle",
-    "item": "〜られる / 〜ことができる",
-    "pattern": "[Verbe Groupe 1 en e + る] / [Verbe Groupe 2 + られる]",
-    "badge": "Verbe - Potentiel",
-    "sections": [
-      {
-        "label": "EXPLICATION",
-        "paragraphs": [
-          "Exprime la capacité ou la possibilité physique ou acquise de faire une action."
-        ],
-        "sub_title": "Structure :",
-        "list": [
-          "Groupe 1 : v. en u -> en e + ru",
-          "Groupe 2 : v. + rareru"
-        ]
-      }
-    ],
-    "examples": [
-      {
-        "japanese": "私は日本語が話せる。",
-        "romaji": "Watashi wa nihongo ga hanaseru.",
-        "french": "Je peux parler japonais.",
-        "highlight": "話せる"
-      }
-    ]
-  },
+  "id": "n4_g_potential",
+  "unit": 1,
+  "unit_title": "La complexification des verbes (voix et potentiel)",
+  "lesson_number": 1,
+  "title": "La forme potentielle",
+  "item": "〜られる / 〜ことができる",
+  "pattern": "[Verbe potentiel] ou [Verbe au dictionnaire] + ことができる",
+  "badge": "Verbe - Potentiel",
+  "sections": [
+    {
+      "label": "EXPLICATION",
+      "paragraphs": [
+        "Le potentiel exprime la capacité ou la possibilité, physique ou acquise, de faire une action.",
+        "Il existe deux façons de l'exprimer : une forme verbale conjuguée (plus naturelle à l'oral), ou une structure avec ことができる (plus neutre, souvent utilisée à l'écrit)."
+      ]
+    },
+    {
+      "label": "FORMATION DU VERBE POTENTIEL",
+      "blocks": [
+        {
+          "sub_title": "Groupe 1 (godan) : -u → -eru",
+          "list": [
+            "書く (kaku) → 書ける (kakeru)",
+            "話す (hanasu) → 話せる (hanaseru)"
+          ]
+        },
+        {
+          "sub_title": "Groupe 2 (ichidan) : -ru → -rareru",
+          "list": [
+            "食べる (taberu) → 食べられる (taberareru)",
+            "見る (miru) → 見られる (mirareru)"
+          ]
+        },
+        {
+          "sub_title": "Verbes irréguliers",
+          "list": [
+            "する → できる",
+            "来る (kuru) → 来られる (korareru)"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "NUANCE : ことができる",
+      "paragraphs": [
+        "ことができる s'utilise avec le verbe au dictionnaire et reste correcte quel que soit le groupe. Elle est plus formelle et neutre que la forme conjuguée, souvent préférée à l'écrit ou dans un contexte poli."
+      ],
+      "blocks": [
+        {
+          "sub_title": "Structure",
+          "list": [
+            "[Verbe au dictionnaire] + ことができる"
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "japanese": "私は日本語が話せる。",
+      "romaji": "Watashi wa nihongo ga hanaseru.",
+      "french": "Je peux parler japonais.",
+      "highlight": "話せる"
+    }
+  ]
+},
   {
     "id": "n4_g_ato_de",
     "unit": 2,
