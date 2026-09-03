@@ -1,35 +1,56 @@
 [
   {
     "id": "n5_g_1",
-    "unit": 1,
-    "unit_title": "Les bases de la phrase",
-    "lesson_number": 1,
-    "title": "Affirmer avec politesse",
-    "item": "です",
-    "pattern": "[Nom / Adj] + です",
-    "badge": "Copule",
-    "sections": [
-      {
-        "label": "EXPLICATION",
-        "text": "です (desu) est l'équivalent du verbe « être ». Il sert à identifier, décrire ou donner des informations sur le sujet tout en apportant une touche de politesse."
-      },
-      {
-        "label": "UTILISATION",
-        "text": "Placez-le simplement après un nom ou un adjectif en fin de phrase. La voyelle 'u' à la fin est presque muette, on le prononce généralement « dess »."
-      }
-    ],
-    "examples": [
-      {
-        "japanese": "Waito-san です。",
-        "romaji": "Waito-san desu.",
-        "french": "Je suis M. White / C'est M. White.",
-        "highlight": "です"
-      },
-      {
-        "japanese": "学生 です。",
-        "romaji": "Gakusei desu.",
-        "french": "Je suis étudiant.",
-        "highlight": "です"
+"unit": 1,
+"unit_title": "Les bases de la phrase",
+"lesson_number": 1,
+"title": "Affirmer avec politesse",
+"item": "です",
+"pattern": "[Nom / Adjectif] + です",
+"badge": "Copule",
+"sections": [
+{
+"label": "EXPLICATION",
+"paragraphs": [
+"**です** (*desu*) est la copule de politesse, l'équivalent du verbe **« être »**.",
+"Il sert à identifier, décrire ou donner un état sur le sujet en fin de phrase tout en apportant une nuance polie (**desu/masu**)."
+]
+},
+{
+"label": "UTILISATION & PRONONCIATION",
+"paragraphs": [
+"S'installe directement après un **nom** ou un **adjectif en -i / -na**.",
+"💡 **Prononciation :** Le **« u »** final est presque muet à l'oral, cela se prononce généralement **« dess »**."
+],
+"blocks": [
+{
+"sub_title": "Structure de base",
+"list": [
+"Nom + **です** (ex: がくせいです)",
+"Adjectif + **です** (ex: たかいです)"
+]
+}
+]
+}
+],
+"examples": [
+{
+"japanese": "がくせいです。",
+"romaji": "Gakusei desu.",
+"french": "Je suis étudiant.",
+"highlight": "です"
+},
+{
+"japanese": "たかいです。",
+"romaji": "Takai desu.",
+"french": "C'est cher.",
+"highlight": "です"
+},
+{
+"japanese": "すきです。",
+"romaji": "Suki desu.",
+"french": "J'aime bien / C'est mon préféré.",
+"highlight": "です"
       }
     ]
   },
