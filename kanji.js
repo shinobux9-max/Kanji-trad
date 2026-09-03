@@ -1198,7 +1198,12 @@ function displayVocabList(levelId, data, examples = null) {
                         <div class="vocab-word-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
                             <div class="vocab-word-jp">${word.word || ''}</div>
                             <div class="vocab-word-reading">${word.reading || ''}</div>
-                            <div class="vocab-word-meaning">${Array.isArray(word.meanings) ? word.meanings.join(' • ') : word.meanings || ''}</div>
+                            <div class="vocab-word-meaning">${(() => {
+                                const m = word.meanings;
+                                if (Array.isArray(m)) return m.join(' • ');
+                                if (m && typeof m === 'object') return m.primary || '';
+                                return m || '';
+                            })()}</div>
                             <div class="vocab-word-type">${word.type || ''}</div>
                         </div>
                     `).join('')}
@@ -1228,28 +1233,38 @@ function showVocabDetail(wordId, allWords = []) {
     }
     
     const status = getItemStatus(word.id);
-    const meanings = Array.isArray(word.meanings) ? word.meanings : [word.meanings || 'Sens'];
     const level = word.level || 'N5';
     const currentIndex = allWords.findIndex(w => w.id === wordId);
     const totalWords = allWords.length;
     
-    // Mapping type de mot -> libellé lisible + couleur (indépendant des familles de badges grammaire)
-    const TYPE_LABELS = {
-        verb: { label: 'Verbe', color: '#6EA8FF' },
-        noun: { label: 'Nom', color: '#4ADE80' },
-        adjective: { label: 'Adjectif', color: '#FBBF24' },
-        adverb: { label: 'Adverbe', color: '#38BDF8' },
-        particle: { label: 'Particule', color: '#9D6EFF' },
-        interjection: { label: 'Interjection', color: '#FB7185' },
-        expression: { label: 'Expression', color: '#FB7185' }
+    // Normalise meanings : supporte l'ancien format (tableau de strings) ET le nouveau ({primary, secondary[]})
+    const normalizeMeanings = () => {
+        const m = word.meanings;
+        if (Array.isArray(m)) return { primary: m[0] || 'Sens', secondary: m.slice(1) };
+        if (m && typeof m === 'object') return { primary: m.primary || 'Sens', secondary: Array.isArray(m.secondary) ? m.secondary : [] };
+        if (typeof m === 'string') return { primary: m, secondary: [] };
+        return { primary: 'Sens', secondary: [] };
     };
-    const GROUP_LABELS = { godan: 'Groupe 1 (godan)', ichidan: 'Groupe 2 (ichidan)', irregular: 'Irrégulier' };
+    const { primary: primaryMeaning, secondary: secondaryMeanings } = normalizeMeanings();
+    
+    // Classification du type par mots-clés (robuste aux variations de formulation : "verb", "verbe godan", "nom"...)
+    const classifyType = (typeRaw) => {
+        if (!typeRaw) return null;
+        const t = typeRaw.toLowerCase();
+        if (t.includes('verb')) return { color: '#6EA8FF' };
+        if (t.includes('nom') || t.includes('noun')) return { color: '#4ADE80' };
+        if (t.includes('adj')) return { color: '#FBBF24' };
+        if (t.includes('adv')) return { color: '#38BDF8' };
+        if (t.includes('partic')) return { color: '#9D6EFF' };
+        if (t.includes('interj') || t.includes('express')) return { color: '#FB7185' };
+        return { color: '#A7B0C0' };
+    };
     
     const buildTypeBadge = () => {
         if (!word.type) return '';
-        const typeInfo = TYPE_LABELS[word.type] || { label: word.type, color: '#A7B0C0' };
-        const groupLabel = word.group && GROUP_LABELS[word.group] ? ` · ${GROUP_LABELS[word.group]}` : '';
-        return `<span class="vocab-type-badge" style="background: ${typeInfo.color};">${typeInfo.label}${groupLabel}</span>`;
+        const info = classifyType(word.type) || { color: '#A7B0C0' };
+        const groupLabel = word.group ? ` · ${word.group}` : '';
+        return `<span class="vocab-type-badge" style="background: ${info.color};">${word.type}${groupLabel}</span>`;
     };
     
     let html = `<div class="vocab-detail-page">`;
@@ -1279,23 +1294,24 @@ function showVocabDetail(wordId, allWords = []) {
     
     // MEANINGS — sens premier mis en avant, sens secondaires en dessous
     html += `<div class="vocab-meanings">`;
-    meanings.forEach((m, i) => {
-        html += `<div class="${i === 0 ? 'vocab-meaning-primary' : 'vocab-meaning-secondary'}">${m}</div>`;
+    html += `<div class="vocab-meaning-primary">${mdBold(primaryMeaning)}</div>`;
+    secondaryMeanings.forEach(m => {
+        html += `<div class="vocab-meaning-secondary">${mdBold(m)}</div>`;
     });
     html += `</div>`;
     
     // NUANCE (si présente dans le JSON)
     if (word.nuance) {
-        html += `<div class="vocab-nuance-box">💡 ${word.nuance}</div>`;
+        html += `<div class="vocab-nuance-box">💡 ${mdBold(word.nuance)}</div>`;
     }
     
     // EXEMPLE
     if (word.example && word.example.japanese) {
         html += `<div class="vocab-section-title">Exemple en contexte</div>`;
         html += `<div class="vocab-example-box">
-            <div class="example-jp">${word.example.japanese || ''}</div>
-            <div class="example-ro">${word.example.romaji || ''}</div>
-            <div class="example-fr">${word.example.french || ''}</div>
+            <div class="example-jp">${mdBold(word.example.japanese || '')}</div>
+            <div class="example-ro">${mdBold(word.example.romaji || '')}</div>
+            <div class="example-fr">${mdBold(word.example.french || '')}</div>
             <button class="vocab-speak-btn-example" onclick="speakText('${(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
         </div>`;
     }
@@ -1314,6 +1330,12 @@ function showVocabDetail(wordId, allWords = []) {
 
 
 // Mapping intelligent : détection de famille par mots-clés
+// Convertit le markdown **gras** en <span> stylé (gras + couleur ambre) — utilisée par Grammaire ET Vocabulaire
+function mdBold(text) {
+    if (!text) return text || '';
+    return text.replace(/\*\*(.+?)\*\*/g, '<span class="md-bold">$1</span>');
+}
+
 function getFamilyColor(badgeText) {
     const text = (badgeText || '').toLowerCase();
     
@@ -1475,11 +1497,7 @@ function showGrammarDetail(lessonId) {
         );
     };
     
-    // Convertit le markdown **gras** en <span> stylé (gras + couleur accent)
-    const mdBold = (text) => {
-        if (!text) return text || '';
-        return text.replace(/\*\*(.+?)\*\*/g, '<span class="md-bold">$1</span>');
-    };
+    // mdBold est maintenant une fonction globale (voir plus haut dans le fichier)
     
     // Rendu d'une section : supporte l'ancien format (text) ET le nouveau (paragraphs/sub_title/list)
     const renderSectionBody = (section) => {
