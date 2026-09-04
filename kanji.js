@@ -221,7 +221,9 @@ let currentCatId = null;    // catégorie affichée
 let currentJLPTLevel = null; // niveau JLPT actuel ('n5', 'n4', etc.)
 let grammarHomeData = null;  // {levelId, data, examples} pour la page d'accueil grammar
 let vocabHomeData = null;    // {levelId, data, examples} pour la page d'accueil vocab
+let kanjiHomeData = null;    // {levelId, chars} pour la page d'accueil kanji
 let currentLevelId = null;   // Pour accès rapide au level actuel
+let kanjiReviewSession = null; // { queue: [char,...], index, results, flipped } — mode flashcard uniquement
 let quizState = null;       // {indices, shuffled, idx, score, answered, title, sourceType, sourceId}
 let searchOpen = false;
 
@@ -1278,6 +1280,11 @@ function displayKanjiList(levelId, data) {
         return;
     }
     
+    kanjiHomeData = { levelId, chars: data.chars };
+    currentLevelId = levelId;
+    
+    const dueCount = countDueItems(data.chars.map(c => ({ id: c })));
+    
     // Créer une grille de kanji cliquables
     const grid = data.chars.map(char => {
         const kanjiData = kanjiDb.find(k => k.char === char);
@@ -1289,9 +1296,161 @@ function displayKanjiList(levelId, data) {
     }).join('');
     
     container.innerHTML = `
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px">
+        <button class="vocab-review-cta" onclick="showKanjiReviewModeSelector()">
+            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+        </button>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:12px">
             ${grid}
         </div>`;
+}
+
+function displayKanjiListFromHome() {
+    if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji');
+}
+
+function getDueKanjiChars() {
+    const chars = kanjiHomeData?.chars || [];
+    return buildDueQueue(chars.map(c => ({ id: c }))).map(item => item.id);
+}
+
+/* ══════════════════════════════════════════════════
+   RÉVISION KANJI — sélecteur de mode + flashcard + 2 tracés (SRS partagé)
+══════════════════════════════════════════════════ */
+function showKanjiReviewModeSelector() {
+    const container = document.getElementById('category-content');
+    const dueChars = getDueKanjiChars();
+    
+    if (dueChars.length === 0) {
+        alert('Rien à réviser pour le moment ! 🎉');
+        return;
+    }
+    
+    container.innerHTML = `
+        <div class="review-mode-selector">
+            <button class="back-btn" onclick="displayKanjiListFromHome()">←</button>
+            <div class="review-mode-title">Choisis ton mode de révision</div>
+            <div class="review-mode-count">${dueChars.length} kanji à revoir</div>
+            
+            <button class="review-mode-btn" onclick="startKanjiFlashcardReview()">
+                <span class="review-mode-icon">🗂️</span>
+                <div><div class="review-mode-name">Flashcard</div><div class="review-mode-desc">Lecture et sens</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="startKanjiTraceReview('trace-easy')">
+                <span class="review-mode-icon">✍️</span>
+                <div><div class="review-mode-name">Tracé normal</div><div class="review-mode-desc">Avec assistance</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="startKanjiTraceReview('trace-hard')">
+                <span class="review-mode-icon">🔥</span>
+                <div><div class="review-mode-name">Tracé difficile</div><div class="review-mode-desc">Sans assistance (hardcore)</div></div>
+            </button>
+        </div>`;
+}
+
+function startKanjiTraceReview(mode) {
+    const dueChars = getDueKanjiChars();
+    if (dueChars.length === 0) return;
+    startStrokeQuiz({ type: 'queue', id: dueChars, mode });
+}
+
+function startKanjiFlashcardReview() {
+    const dueChars = getDueKanjiChars();
+    if (dueChars.length === 0) return;
+    
+    kanjiReviewSession = {
+        queue: dueChars,
+        index: 0,
+        results: { again: 0, hard: 0, good: 0, easy: 0 },
+        flipped: false
+    };
+    renderKanjiReviewScreen();
+}
+
+function renderKanjiReviewScreen() {
+    const container = document.getElementById('category-content');
+    const session = kanjiReviewSession;
+    
+    if (!session || session.index >= session.queue.length) {
+        renderKanjiReviewSummary();
+        return;
+    }
+    
+    const char = session.queue[session.index];
+    const kanjiData = kanjiDb.find(k => k.char === char);
+    const progress = session.index + 1;
+    const total = session.queue.length;
+    const flipped = session.flipped;
+    
+    const meanings = (kanjiData?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+    const onReadings = kanjiData?.on || [];
+    const kunReadings = kanjiData?.kun || [];
+    
+    container.innerHTML = `<div class="review-page">
+        <div class="review-header">
+            <button class="back-btn" onclick="kanjiReviewSession = null; displayKanjiListFromHome()">✕</button>
+            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
+            <div class="review-progress-text">${progress} / ${total}</div>
+        </div>
+        
+        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipKanjiReviewCard()'}">
+            <div class="review-card-front">
+                <div class="review-word" style="font-size:56px;">${char}</div>
+            </div>
+            ${flipped ? `
+                <div class="review-card-back">
+                    ${onReadings.length ? `<div class="review-romaji">On : ${onReadings.slice(0, 3).join('、')}</div>` : ''}
+                    ${kunReadings.length ? `<div class="review-romaji">Kun : ${kunReadings.slice(0, 3).join('、')}</div>` : ''}
+                    <div class="review-meaning">${meanings.slice(0, 3).join(' / ') || '–'}</div>
+                </div>
+            ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+        </div>
+        
+        ${flipped ? `
+            <div class="review-grade-buttons">
+                <button class="grade-btn grade-again" onclick="submitKanjiReviewGrade(0)">Encore</button>
+                <button class="grade-btn grade-hard" onclick="submitKanjiReviewGrade(1)">Difficile</button>
+                <button class="grade-btn grade-good" onclick="submitKanjiReviewGrade(2)">Bien</button>
+                <button class="grade-btn grade-easy" onclick="submitKanjiReviewGrade(3)">Facile</button>
+            </div>
+        ` : ''}
+    </div>`;
+}
+
+function flipKanjiReviewCard() {
+    if (!kanjiReviewSession) return;
+    kanjiReviewSession.flipped = true;
+    renderKanjiReviewScreen();
+}
+
+function submitKanjiReviewGrade(quality) {
+    if (!kanjiReviewSession) return;
+    const char = kanjiReviewSession.queue[kanjiReviewSession.index];
+    gradeReview(char, quality);
+    
+    const labels = ['again', 'hard', 'good', 'easy'];
+    kanjiReviewSession.results[labels[quality]]++;
+    
+    kanjiReviewSession.index++;
+    kanjiReviewSession.flipped = false;
+    renderKanjiReviewScreen();
+}
+
+function renderKanjiReviewSummary() {
+    const container = document.getElementById('category-content');
+    const r = kanjiReviewSession.results;
+    const total = kanjiReviewSession.queue.length;
+    
+    container.innerHTML = `<div class="review-summary">
+        <div class="review-summary-title">Session terminée ! 🎉</div>
+        <div class="review-summary-count">${total} kanji révisé${total > 1 ? 's' : ''}</div>
+        <div class="review-summary-stats">
+            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
+            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
+            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
+            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
+        </div>
+        <button class="revise-btn" style="margin-top:20px;" onclick="kanjiReviewSession = null; displayKanjiListFromHome()">Retour aux kanji</button>
+    </div>`;
+    kanjiReviewSession = null;
 }
 
 /* ══════════════════════════════════════════════════
@@ -1575,22 +1734,68 @@ function renderReviewSummary() {
 /* ══════════════════════════════════════════════════
    ÉCRAN DE RÉVISION GRAMMAIRE (flashcard + SRS, réutilise le même moteur générique)
 ══════════════════════════════════════════════════ */
-let grammarReviewSession = null; // { queue: [lesson,...], index, results, flipped }
+let grammarReviewSession = null; // { queue: [{lesson,type,clozeInfo}], index, results, flipped, answered, selected }
+
+// Génère un trou à combler grammaire : utilise example.highlight (déjà la forme exacte présente dans la phrase)
+function buildGrammarCloze(lesson, pool) {
+    const example = Array.isArray(lesson.examples)
+        ? lesson.examples.find(ex => ex.japanese && ex.highlight && ex.japanese.includes(ex.highlight))
+        : null;
+    if (!example) return null;
+    
+    const correct = example.highlight;
+    const sentence = example.japanese;
+    const blankStart = sentence.indexOf(correct);
+    if (blankStart === -1) return null;
+    
+    // Distracteurs : le highlight d'autres leçons du pool
+    const otherHighlights = pool
+        .filter(l => l.id !== lesson.id)
+        .map(l => {
+            const ex = Array.isArray(l.examples) ? l.examples.find(e => e.highlight) : null;
+            return ex ? ex.highlight : null;
+        })
+        .filter(h => h && h !== correct);
+    
+    const uniqueDistractors = [...new Set(otherHighlights)];
+    if (uniqueDistractors.length < 3) return null;
+    
+    const distractors = shuffleArray(uniqueDistractors).slice(0, 3);
+    const options = shuffleArray([correct, ...distractors]);
+    
+    return {
+        before: sentence.slice(0, blankStart),
+        after: sentence.slice(blankStart + correct.length),
+        correct,
+        french: example.french || '',
+        options
+    };
+}
+
+function prepareGrammarSessionItem(lesson, pool) {
+    const clozeInfo = buildGrammarCloze(lesson, pool);
+    const type = clozeInfo && Math.random() < 0.5 ? 'cloze' : 'flashcard';
+    return { lesson, type, clozeInfo };
+}
 
 function startGrammarReview() {
     const data = grammarHomeData?.data || [];
-    const queue = buildDueQueue(data);
+    const dueLessons = buildDueQueue(data);
     
-    if (queue.length === 0) {
+    if (dueLessons.length === 0) {
         alert('Rien à réviser pour le moment ! 🎉');
         return;
     }
+    
+    const queue = dueLessons.map(l => prepareGrammarSessionItem(l, data));
     
     grammarReviewSession = {
         queue,
         index: 0,
         results: { again: 0, hard: 0, good: 0, easy: 0 },
-        flipped: false
+        flipped: false,
+        answered: false,
+        selected: null
     };
     renderGrammarReviewScreen();
 }
@@ -1604,15 +1809,13 @@ function renderGrammarReviewScreen() {
         return;
     }
     
-    const lesson = session.queue[session.index];
-    const itemText = lesson.item || lesson.pattern || 'Formule';
-    const titleText = lesson.title || lesson.meaning || 'Sans titre';
+    const entry = session.queue[session.index];
     const progress = session.index + 1;
     const total = session.queue.length;
-    const flipped = session.flipped;
     
-    // Premier exemple disponible pour illustrer, si présent
-    const firstExample = Array.isArray(lesson.examples) && lesson.examples.length > 0 ? lesson.examples[0] : null;
+    const bodyHtml = entry.type === 'cloze'
+        ? renderGrammarClozeExercise(entry, session)
+        : renderGrammarFlashcardExercise(entry, session);
     
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
@@ -1620,7 +1823,18 @@ function renderGrammarReviewScreen() {
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
-        
+        ${bodyHtml}
+    </div>`;
+}
+
+function renderGrammarFlashcardExercise(entry, session) {
+    const lesson = entry.lesson;
+    const itemText = lesson.item || lesson.pattern || 'Formule';
+    const titleText = lesson.title || lesson.meaning || 'Sans titre';
+    const flipped = session.flipped;
+    const firstExample = Array.isArray(lesson.examples) && lesson.examples.length > 0 ? lesson.examples[0] : null;
+    
+    return `
         <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipGrammarReviewCard()'}">
             <div class="review-card-front">
                 <div class="review-word" style="font-size:32px;">${itemText}</div>
@@ -1638,7 +1852,6 @@ function renderGrammarReviewScreen() {
                 </div>
             ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
         </div>
-        
         ${flipped ? `
             <div class="review-grade-buttons">
                 <button class="grade-btn grade-again" onclick="submitGrammarReviewGrade(0)">Encore</button>
@@ -1647,7 +1860,36 @@ function renderGrammarReviewScreen() {
                 <button class="grade-btn grade-easy" onclick="submitGrammarReviewGrade(3)">Facile</button>
             </div>
         ` : ''}
-    </div>`;
+    `;
+}
+
+function renderGrammarClozeExercise(entry, session) {
+    const { clozeInfo } = entry;
+    const answered = session.answered;
+    const selected = session.selected;
+    
+    const blankHtml = !answered
+        ? `<span class="cloze-blank">＿＿＿</span>`
+        : `<span class="cloze-blank-filled ${selected === clozeInfo.correct ? 'correct' : 'incorrect'}">${selected}</span>`;
+    
+    return `
+        <div class="review-card review-cloze-card">
+            <div class="review-quiz-instruction">Complète la phrase avec le bon élément grammatical</div>
+            <div class="cloze-sentence">${clozeInfo.before}${blankHtml}${clozeInfo.after}</div>
+            <div class="review-example-fr-only">${mdBold(clozeInfo.french)}</div>
+        </div>
+        <div class="review-options">
+            ${clozeInfo.options.map(opt => {
+                let cls = 'review-option-btn';
+                if (answered) {
+                    if (opt === clozeInfo.correct) cls += ' correct';
+                    else if (opt === selected) cls += ' incorrect';
+                }
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitGrammarQuizAnswer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
+            }).join('')}
+        </div>
+        ${answered ? `<button class="review-continue-btn" onclick="advanceGrammarReviewQueue()">Continuer →</button>` : ''}
+    `;
 }
 
 function flipGrammarReviewCard() {
@@ -1656,17 +1898,41 @@ function flipGrammarReviewCard() {
     renderGrammarReviewScreen();
 }
 
+function submitGrammarQuizAnswer(selected) {
+    if (!grammarReviewSession || grammarReviewSession.answered) return;
+    const session = grammarReviewSession;
+    const entry = session.queue[session.index];
+    const isCorrect = selected === entry.clozeInfo.correct;
+    
+    session.answered = true;
+    session.selected = selected;
+    
+    const quality = isCorrect ? 2 : 0;
+    gradeReview(entry.lesson.id, quality);
+    const labels = ['again', 'hard', 'good', 'easy'];
+    session.results[labels[quality]]++;
+    
+    renderGrammarReviewScreen();
+}
+
+function advanceGrammarReviewQueue() {
+    if (!grammarReviewSession) return;
+    grammarReviewSession.index++;
+    grammarReviewSession.flipped = false;
+    grammarReviewSession.answered = false;
+    grammarReviewSession.selected = null;
+    renderGrammarReviewScreen();
+}
+
 function submitGrammarReviewGrade(quality) {
     if (!grammarReviewSession) return;
-    const lesson = grammarReviewSession.queue[grammarReviewSession.index];
-    gradeReview(lesson.id, quality);
+    const entry = grammarReviewSession.queue[grammarReviewSession.index];
+    gradeReview(entry.lesson.id, quality);
     
     const labels = ['again', 'hard', 'good', 'easy'];
     grammarReviewSession.results[labels[quality]]++;
     
-    grammarReviewSession.index++;
-    grammarReviewSession.flipped = false;
-    renderGrammarReviewScreen();
+    advanceGrammarReviewQueue();
 }
 
 function renderGrammarReviewSummary() {
@@ -3140,6 +3406,11 @@ function startStrokeQuiz({ type, id, mode = 'trace-easy' }) {
         if (!kanji) return;
         indices = [kanjiDb.indexOf(kanji)];
         title = `Pratique : ${kanji.char}`;
+    } else if (type === 'queue') {
+        // id est ici un tableau de caractères (file de révision SRS)
+        indices = id.map(char => kanjiDb.findIndex(k => k.char === char)).filter(i => i !== -1);
+        if (indices.length === 0) return;
+        title = 'Révision';
     } else { return; }
 
     if (sqTimerInterval) clearInterval(sqTimerInterval);
@@ -3411,6 +3682,15 @@ function renderStrokeQuizResults() {
             localStorage.setItem(`trace_${kanji.char}`, pct);
         }
     });
+    
+    // Si la session vient de la file de révision SRS, on nourrit aussi le planning générique
+    if (sourceType === 'queue') {
+        const quality = pct >= 80 ? 3 : pct >= 60 ? 2 : pct >= 40 ? 1 : 0;
+        indices.forEach(idx => {
+            const kanji = kanjiDb[idx];
+            if (kanji) gradeReview(kanji.char, quality);
+        });
+    }
     
     // Re-render dashboard if visible (for single kanji practice)
     if (sourceType === 'single') {
