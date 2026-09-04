@@ -3,10 +3,10 @@
    Stratégie : Network-first pour HTML/JSON, Cache-first pour assets
 ══════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'kanji-trad-v2-20250903';
+const CACHE_NAME = 'kanji-trad-v3-20250904';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/manifest.json'
+  './',
+  './manifest.json'
 ];
 
 /* ══════════════════════════════════════════════════
