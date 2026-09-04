@@ -338,6 +338,70 @@ function countDueItems(items) {
 }
 
 /* ══════════════════════════════════════════════════
+   STREAK (série de jours consécutifs)
+══════════════════════════════════════════════════ */
+const STREAK_KEY = 'kanji_trad_streak';
+
+function getStreakData() {
+    const stored = localStorage.getItem(STREAK_KEY);
+    return stored ? JSON.parse(stored) : { currentStreak: 0, bestStreak: 0, lastActiveDate: null, activityDates: [] };
+}
+
+function saveStreakData(data) {
+    localStorage.setItem(STREAK_KEY, JSON.stringify(data));
+}
+
+function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+}
+
+function daysBetween(dateStrA, dateStrB) {
+    const a = new Date(dateStrA + 'T00:00:00');
+    const b = new Date(dateStrB + 'T00:00:00');
+    return Math.round((b - a) / 86400000);
+}
+
+// À appeler une fois par ouverture d'app : enregistre le jour comme actif et met à jour la série
+function recordDailyActivity() {
+    const streak = getStreakData();
+    const today = todayStr();
+    
+    if (streak.lastActiveDate === today) return streak; // déjà comptabilisé aujourd'hui
+    
+    if (streak.lastActiveDate) {
+        const gap = daysBetween(streak.lastActiveDate, today);
+        if (gap === 1) streak.currentStreak += 1;
+        else if (gap > 1) streak.currentStreak = 1;
+    } else {
+        streak.currentStreak = 1;
+    }
+    
+    streak.bestStreak = Math.max(streak.bestStreak, streak.currentStreak);
+    streak.lastActiveDate = today;
+    
+    if (!streak.activityDates.includes(today)) {
+        streak.activityDates.push(today);
+        streak.activityDates = streak.activityDates.filter(d => daysBetween(d, today) <= 90);
+    }
+    
+    saveStreakData(streak);
+    return streak;
+}
+
+function buildStreakDotsHtml(streak) {
+    const today = new Date();
+    let html = '';
+    for (let i = 27; i >= 0; i--) {
+        const d = new Date(today);
+        d.setDate(d.getDate() - i);
+        const dStr = d.toISOString().slice(0, 10);
+        const active = streak.activityDates.includes(dStr);
+        html += `<div class="dot${active ? ' active' : ''}"></div>`;
+    }
+    return html;
+}
+
+/* ══════════════════════════════════════════════════
    WEB SPEECH API - Prononciation
 ══════════════════════════════════════════════════ */
 function speakText(text, lang = 'ja-JP') {
@@ -1231,24 +1295,86 @@ function displayKanjiList(levelId, data) {
 }
 
 /* ══════════════════════════════════════════════════
-   ÉCRAN DE RÉVISION VOCABULAIRE (flashcard + SRS)
+   ÉCRAN DE RÉVISION VOCABULAIRE (flashcard + QCM + trou à combler + SRS)
 ══════════════════════════════════════════════════ */
-let reviewSession = null; // { queue: [...], index: 0, results: {again,hard,good,easy}, flipped: false }
+let reviewSession = null; // { queue: [{word, type, clozeInfo, qcmInfo}], index, results, flipped, answered, selected }
+
+const COMMON_PARTICLES = ['は', 'が', 'を', 'に', 'で', 'と', 'へ', 'も', 'から', 'まで', 'の'];
+
+function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function getPrimaryMeaning(word) {
+    const m = word.meanings;
+    if (m && typeof m === 'object' && !Array.isArray(m)) return m.primary || 'Sens';
+    if (Array.isArray(m)) return m[0] || 'Sens';
+    return m || 'Sens';
+}
+
+// Génère un exercice "trou à combler" sur une particule, seulement si elle apparaît
+// réellement comme token isolé dans l'exemple (sinon on ne peut pas garantir un exercice correct)
+function buildClozeParticle(word) {
+    const particles = word.particles || [];
+    const jp = (word.example && word.example.japanese) || '';
+    const tokens = jp.split(/\s+/).filter(Boolean);
+    const validParticle = particles.find(p => tokens.includes(p));
+    if (!validParticle) return null;
+    
+    const blankIndex = tokens.indexOf(validParticle);
+    const distractorPool = COMMON_PARTICLES.filter(p => p !== validParticle);
+    const distractors = shuffleArray(distractorPool).slice(0, 3);
+    const options = shuffleArray([validParticle, ...distractors]);
+    
+    return { tokens, blankIndex, correct: validParticle, options };
+}
+
+// Génère un QCM sur le sens du mot, avec 3 distracteurs pris ailleurs dans le pool
+function buildMeaningQCM(word, pool) {
+    const primary = getPrimaryMeaning(word);
+    const others = pool.filter(w => w.id !== word.id && getPrimaryMeaning(w) && getPrimaryMeaning(w) !== primary);
+    if (others.length < 3) return null;
+    
+    const distractors = shuffleArray(others).slice(0, 3).map(getPrimaryMeaning);
+    const options = shuffleArray([primary, ...distractors]);
+    return { correct: primary, options };
+}
+
+function prepareSessionItem(word, pool) {
+    const clozeInfo = buildClozeParticle(word);
+    const qcmInfo = buildMeaningQCM(word, pool);
+    
+    let type = 'flashcard';
+    const r = Math.random();
+    if (clozeInfo && r < 0.35) type = 'cloze';
+    else if (qcmInfo && r < 0.7) type = 'qcm';
+    
+    return { word, type, clozeInfo, qcmInfo };
+}
 
 function startVocabReview() {
     const data = vocabHomeData?.data || [];
-    const queue = buildDueQueue(data);
+    const dueWords = buildDueQueue(data);
     
-    if (queue.length === 0) {
+    if (dueWords.length === 0) {
         alert('Rien à réviser pour le moment ! 🎉');
         return;
     }
+    
+    const queue = dueWords.map(w => prepareSessionItem(w, data));
     
     reviewSession = {
         queue,
         index: 0,
         results: { again: 0, hard: 0, good: 0, easy: 0 },
-        flipped: false
+        flipped: false,
+        answered: false,
+        selected: null
     };
     renderReviewScreen();
 }
@@ -1262,23 +1388,37 @@ function renderReviewScreen() {
         return;
     }
     
-    const word = session.queue[session.index];
-    const meanings = word.meanings;
-    const primaryMeaning = (meanings && typeof meanings === 'object' && !Array.isArray(meanings))
-        ? (meanings.primary || 'Sens')
-        : (Array.isArray(meanings) ? meanings[0] : meanings) || 'Sens';
-    
+    const entry = session.queue[session.index];
+    const { word, type } = entry;
     const progress = session.index + 1;
     const total = session.queue.length;
-    const flipped = session.flipped;
     
-    let html = `<div class="review-page">
+    let bodyHtml = '';
+    if (type === 'cloze') {
+        bodyHtml = renderClozeExercise(entry, session);
+    } else if (type === 'qcm') {
+        bodyHtml = renderQcmExercise(entry, session);
+    } else {
+        bodyHtml = renderFlashcardExercise(entry, session);
+    }
+    
+    container.innerHTML = `<div class="review-page">
         <div class="review-header">
             <button class="back-btn" onclick="reviewSession = null; displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
-        
+        ${bodyHtml}
+    </div>`;
+}
+
+// ── FLASHCARD (rappel libre, auto-évalué par l'utilisateur) ──
+function renderFlashcardExercise(entry, session) {
+    const { word } = entry;
+    const primaryMeaning = getPrimaryMeaning(word);
+    const flipped = session.flipped;
+    
+    return `
         <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipReviewCard()'}">
             <div class="review-card-front">
                 <div class="review-word">${word.word || ''}</div>
@@ -1297,7 +1437,6 @@ function renderReviewScreen() {
                 </div>
             ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
         </div>
-        
         ${flipped ? `
             <div class="review-grade-buttons">
                 <button class="grade-btn grade-again" onclick="submitReviewGrade(0)">Encore</button>
@@ -1306,9 +1445,67 @@ function renderReviewScreen() {
                 <button class="grade-btn grade-easy" onclick="submitReviewGrade(3)">Facile</button>
             </div>
         ` : ''}
-    </div>`;
+    `;
+}
+
+// ── QCM (reconnaissance du sens) ──
+function renderQcmExercise(entry, session) {
+    const { word, qcmInfo } = entry;
+    const answered = session.answered;
+    const selected = session.selected;
     
-    container.innerHTML = html;
+    return `
+        <div class="review-card review-qcm-card">
+            <div class="review-word">${word.word || ''}</div>
+            <div class="review-reading">${word.reading || ''}</div>
+            <div class="review-quiz-instruction">Quel est le sens de ce mot ?</div>
+        </div>
+        <div class="review-options">
+            ${qcmInfo.options.map(opt => {
+                let cls = 'review-option-btn';
+                if (answered) {
+                    if (opt === qcmInfo.correct) cls += ' correct';
+                    else if (opt === selected) cls += ' incorrect';
+                }
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt.replace(/'/g, "\\'")}')">${mdBold(opt)}</button>`;
+            }).join('')}
+        </div>
+        ${answered ? `<button class="review-continue-btn" onclick="advanceReviewQueue()">Continuer →</button>` : ''}
+    `;
+}
+
+// ── CLOZE (trou à combler sur une particule) ──
+function renderClozeExercise(entry, session) {
+    const { word, clozeInfo } = entry;
+    const answered = session.answered;
+    const selected = session.selected;
+    
+    const sentenceHtml = clozeInfo.tokens.map((tok, i) => {
+        if (i !== clozeInfo.blankIndex) return `<span>${tok}</span>`;
+        if (!answered) return `<span class="cloze-blank">＿＿</span>`;
+        const cls = selected === clozeInfo.correct ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
+        return `<span class="${cls}">${selected}</span>`;
+    }).join(' ');
+    
+    return `
+        <div class="review-card review-cloze-card">
+            <div class="review-quiz-instruction">Complète la phrase avec la bonne particule</div>
+            <div class="cloze-sentence">${sentenceHtml}</div>
+            <div class="review-romaji">${word.romaji || ''}</div>
+            <div class="review-example-fr-only">${mdBold((word.example && word.example.french) || '')}</div>
+        </div>
+        <div class="review-options review-options-particles">
+            ${clozeInfo.options.map(opt => {
+                let cls = 'review-option-btn';
+                if (answered) {
+                    if (opt === clozeInfo.correct) cls += ' correct';
+                    else if (opt === selected) cls += ' incorrect';
+                }
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt}')">${opt}</button>`;
+            }).join('')}
+        </div>
+        ${answered ? `<button class="review-continue-btn" onclick="advanceReviewQueue()">Continuer →</button>` : ''}
+    `;
 }
 
 function flipReviewCard() {
@@ -1317,17 +1514,43 @@ function flipReviewCard() {
     renderReviewScreen();
 }
 
+// Réponse à un QCM ou un cloze : note automatiquement selon la justesse
+function submitQuizAnswer(selected) {
+    if (!reviewSession || reviewSession.answered) return;
+    const session = reviewSession;
+    const entry = session.queue[session.index];
+    const correct = entry.type === 'cloze' ? entry.clozeInfo.correct : entry.qcmInfo.correct;
+    const isCorrect = selected === correct;
+    
+    session.answered = true;
+    session.selected = selected;
+    
+    const quality = isCorrect ? 2 : 0; // Bien si juste, Encore si faux
+    gradeReview(entry.word.id, quality);
+    const labels = ['again', 'hard', 'good', 'easy'];
+    session.results[labels[quality]]++;
+    
+    renderReviewScreen();
+}
+
+function advanceReviewQueue() {
+    if (!reviewSession) return;
+    reviewSession.index++;
+    reviewSession.flipped = false;
+    reviewSession.answered = false;
+    reviewSession.selected = null;
+    renderReviewScreen();
+}
+
 function submitReviewGrade(quality) {
     if (!reviewSession) return;
-    const word = reviewSession.queue[reviewSession.index];
-    gradeReview(word.id, quality);
+    const entry = reviewSession.queue[reviewSession.index];
+    gradeReview(entry.word.id, quality);
     
     const labels = ['again', 'hard', 'good', 'easy'];
     reviewSession.results[labels[quality]]++;
     
-    reviewSession.index++;
-    reviewSession.flipped = false;
-    renderReviewScreen();
+    advanceReviewQueue();
 }
 
 function renderReviewSummary() {
@@ -1923,6 +2146,9 @@ function displayGrammarList(levelId, data, examples = null) {
 function showDashboard(isBack = false) {
     // Si ce n'est pas un retour arrière, on enregistre l'état
     if (!isBack) history.pushState({ view: 'dashboard' }, '');
+    
+    const streak = getStreakData();
+    const lastActiveLabel = streak.lastActiveDate === todayStr() ? '今日' : (streak.lastActiveDate || '—');
 
     document.getElementById('main-content').innerHTML = `
         <div class="dash-wrap">
@@ -1934,11 +2160,11 @@ function showDashboard(isBack = false) {
             </div>
             <div class="dash-card">
                 <div class="streak-info">
-                    <div><span class="streak-val">365</span><span class="streak-label">Série actuelle 🔥</span></div>
-                    <div><span class="streak-val">365</span><span class="streak-label">Meilleure série</span></div>
-                    <div><span class="streak-val">今日</span><span class="streak-label">Dernière étude</span></div>
+                    <div><span class="streak-val">${streak.currentStreak}</span><span class="streak-label">Série actuelle 🔥</span></div>
+                    <div><span class="streak-val">${streak.bestStreak}</span><span class="streak-label">Meilleure série</span></div>
+                    <div><span class="streak-val">${lastActiveLabel}</span><span class="streak-label">Dernière étude</span></div>
                 </div>
-                <div class="dots-grid">${Array(28).fill(0).map((_,i)=>`<div class="dot${i===27?' active':''}"></div>`).join('')}</div>
+                <div class="dots-grid">${buildStreakDotsHtml(streak)}</div>
             </div>
             <div class="dash-card">
                 <div class="section-title" style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
@@ -3569,54 +3795,101 @@ function getKanjiMastery(kanjiChar) {
 }
 
 // 1. La fonction de rendu du Dashboard (doit être définie AVANT init)
-function renderDashboard() {
+// Cache des stats vocab/grammaire par niveau, pour éviter de refetch à chaque ouverture du dashboard
+const levelStatsCache = {};
+
+async function getLevelVocabGrammarStats(levelId) {
+    if (levelStatsCache[levelId]) return levelStatsCache[levelId];
+    
+    const tracking = getTracking();
+    const stats = { vocabTotal: 0, vocabMastered: 0, grammarTotal: 0, grammarMastered: 0 };
+    
+    try {
+        const res = await fetch(`./data/${levelId}/vocab.json`);
+        if (res.ok) {
+            const vocab = await res.json();
+            stats.vocabTotal = vocab.length;
+            stats.vocabMastered = vocab.filter(w => tracking[w.id]?.status === 'mastered').length;
+        }
+    } catch (e) { /* niveau pas encore disponible, on garde 0 */ }
+    
+    try {
+        const res = await fetch(`./data/${levelId}/grammar.json`);
+        if (res.ok) {
+            const grammar = await res.json();
+            stats.grammarTotal = grammar.length;
+            stats.grammarMastered = grammar.filter(l => tracking[l.id]?.status === 'mastered').length;
+        }
+    } catch (e) { /* niveau pas encore disponible, on garde 0 */ }
+    
+    levelStatsCache[levelId] = stats;
+    return stats;
+}
+
+function buildProgRow(label, done, total) {
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    return `
+        <div class="prog-item">
+            <div class="prog-info">
+                <span class="prog-name">${label}</span>
+                <span class="prog-stats">${done} / ${total} · ${pct}%</span>
+            </div>
+            <div class="prog-track">
+                <div class="prog-fill" style="width: ${pct}%;"></div>
+            </div>
+        </div>
+    `;
+}
+
+async function renderDashboard() {
     const container = document.getElementById('progression-list');
     if (!container) {
         console.warn("Conteneur 'progression-list' non trouvé dans le DOM.");
         return;
     }
-
-    container.innerHTML = ''; 
+    
+    container.innerHTML = '<div style="color:var(--gray);font-size:12px;padding:8px 0">Chargement des statistiques…</div>';
 
     const jlptLevels = [
-        { jlpt: 5, label: 'N5 - Débutant' },
-        { jlpt: 4, label: 'N4 - Élémentaire' },
-        { jlpt: 3, label: 'N3 - Intermédiaire' },
-        { jlpt: 2, label: 'N2 - Avancé' },
-        { jlpt: 1, label: 'N1 - Expert' }
+        { jlpt: 5, id: 'n5', label: 'N5 - Débutant' },
+        { jlpt: 4, id: 'n4', label: 'N4 - Élémentaire' },
+        { jlpt: 3, id: 'n3', label: 'N3 - Intermédiaire' },
+        { jlpt: 2, id: 'n2', label: 'N2 - Avancé' },
+        { jlpt: 1, id: 'n1', label: 'N1 - Expert' }
     ];
 
-    jlptLevels.forEach(levelDef => {
-        // Get all kanji for this JLPT level
-        const kanjiForLevel = kanjiDb.filter(k => {
-            const jlpt = getJLPTLevel(k.grade);
-            return jlpt === levelDef.jlpt;
-        });
-        const totalInLevel = kanjiForLevel.length;
-        
-        // Calculate average mastery for this level
+    const rowsHtml = await Promise.all(jlptLevels.map(async levelDef => {
+        // Kanji (inchangé, synchrone depuis kanjiDb déjà en mémoire)
+        const kanjiForLevel = kanjiDb.filter(k => getJLPTLevel(k.grade) === levelDef.jlpt);
+        const totalKanji = kanjiForLevel.length;
         const totalMastery = kanjiForLevel.reduce((sum, k) => sum + getKanjiMastery(k.char), 0);
-        const avgMastery = totalInLevel > 0 ? Math.round(totalMastery / totalInLevel) : 0;
-        
-        // Count kanji with any practice (quiz or trace)
-        const practiced = kanjiForLevel.filter(k => {
-            const quiz = localStorage.getItem(`quiz_${k.char}`);
-            const trace = localStorage.getItem(`trace_${k.char}`);
-            return quiz || trace;
+        const avgMastery = totalKanji > 0 ? Math.round(totalMastery / totalKanji) : 0;
+        const practicedKanji = kanjiForLevel.filter(k => {
+            return localStorage.getItem(`quiz_${k.char}`) || localStorage.getItem(`trace_${k.char}`);
         }).length;
-
-        container.innerHTML += `
+        
+        // Vocab + Grammaire (fetch caché)
+        const vg = await getLevelVocabGrammarStats(levelDef.id);
+        
+        const kanjiRow = `
             <div class="prog-item">
                 <div class="prog-info">
                     <span class="prog-name">${levelDef.label}</span>
-                    <span class="prog-stats">${practiced} / ${totalInLevel} · ${avgMastery}%</span>
+                    <span class="prog-stats">${practicedKanji} / ${totalKanji} · ${avgMastery}%</span>
                 </div>
                 <div class="prog-track">
                     <div class="prog-fill" style="width: ${avgMastery}%;"></div>
                 </div>
             </div>
         `;
-    });
+        
+        const vocabRow = vg.vocabTotal > 0 ? buildProgRow(`　🔤 Vocabulaire ${levelDef.label.split(' ')[0]}`, vg.vocabMastered, vg.vocabTotal) : '';
+        const grammarRow = vg.grammarTotal > 0 ? buildProgRow(`　📝 Grammaire ${levelDef.label.split(' ')[0]}`, vg.grammarMastered, vg.grammarTotal) : '';
+        
+        return kanjiRow + vocabRow + grammarRow;
+    }));
+    
+    container.innerHTML = rowsHtml.join('');
 }
 
 // 2. La fonction d'initialisation principale
@@ -3647,6 +3920,9 @@ async function init() {
             console.warn('⚠️ data/mapping.json non trouvé, fallback à structure par défaut');
             jlptMapping = null;
         }
+        
+        // Enregistre l'ouverture de l'app du jour (pour le streak) — idempotent si déjà fait aujourd'hui
+        recordDailyActivity();
 
         let text = await kanjiRes.text();
         text = text.trim();
