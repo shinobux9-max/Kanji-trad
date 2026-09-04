@@ -779,3 +779,37 @@
 .cat-header .back-btn { margin-bottom: 14px; }
 .cat-header-title { font-size: 1.125rem; color: #fff; font-weight: bold; text-align: center; }
 .cat-header-sub { font-size: 0.75rem; color: var(--gray); text-align: center; margin-top: 4px; }
+
+/* ══════════════════════════════════════════════════
+   AMÉLIORATIONS ESTHÉTIQUES DASHBOARD (retours Gemini)
+══════════════════════════════════════════════════ */
+
+/* Cartes plus aérées */
+.dash-card { padding: 20px; border-radius: 18px; }
+.welcome-box { border-radius: 18px; padding: 16px; }
+.dash-review-cta { border-radius: 18px; }
+
+/* Split Nouveaux / À réviser façon Hibi, dans le CTA dashboard */
+.review-cta-split { display: flex; gap: 10px; margin: 14px 0; }
+.review-cta-split-box { flex: 1; background: rgba(255,255,255,0.06); border-radius: 14px; padding: 14px 8px; }
+.review-cta-split-num { font-size: 1.75rem; color: #fff; font-weight: bold; }
+.review-cta-split-label { font-size: 0.6875rem; color: var(--gray); margin-top: 2px; }
+
+/* Niveaux de maîtrise en cartes avec badges circulaires (au lieu de barres plates) */
+.prog-level-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+.prog-level-title { font-size: 0.8125rem; color: #fff; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.3px; }
+.prog-level-items { display: flex; flex-direction: column; gap: 12px; }
+
+.prog-card-item { display: flex; align-items: center; gap: 12px; }
+.prog-circle-badge {
+    flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: conic-gradient(var(--accent) calc(var(--pct) * 1%), rgba(255,255,255,0.08) 0);
+}
+.prog-circle-badge span { background: var(--surface); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; font-weight: bold; color: var(--accent); }
+.prog-card-info { flex: 1; }
+.prog-card-label { font-size: 0.8125rem; color: var(--text); }
+.prog-card-stats { font-size: 0.6875rem; color: var(--gray); margin-top: 1px; }
+
+/* Navbar flottante : effet verre dépoli comme demandé */
+#bottom-nav { background: rgba(21,26,34,0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }

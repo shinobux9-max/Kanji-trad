@@ -339,6 +339,18 @@ function countDueItems(items) {
     return buildDueQueue(items).length;
 }
 
+// Comme buildDueQueue, mais retourne le détail due/nouveaux séparément (pour l'affichage à la Hibi)
+function splitDueAndNew(items) {
+    const now = new Date();
+    let due = 0, fresh = 0;
+    items.forEach(item => {
+        const srs = getSrsInfo(item.id);
+        if (!srs) fresh++;
+        else if (new Date(srs.nextReviewDate) <= now) due++;
+    });
+    return { due, fresh: Math.min(fresh, SRS_NEW_PER_SESSION) };
+}
+
 // Score approximatif 0-100 dérivé du SRS (répétitions + facilité), pour affichage visuel uniquement.
 // Ce n'est PAS un vrai score de rétention scientifique, juste une approximation cohérente.
 function getSrsConfidencePct(itemId) {
@@ -2523,13 +2535,16 @@ function showDashboard(isBack = false) {
     
     const streak = getStreakData();
     const lastActiveLabel = streak.lastActiveDate === todayStr() ? '今日' : (streak.lastActiveDate || '—');
+    
+    const hour = new Date().getHours();
+    const greeting = hour < 5 ? 'Bonne nuit' : hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir';
 
     document.getElementById('main-content').innerHTML = `
         <div class="dash-wrap">
             <div class="welcome-box">
                 <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img" alt="">
                 <div style="font-size:0.8125rem;line-height:1.6">
-                    Bienvenue !<br>Choisissez une catégorie pour commencer.
+                    ${greeting} ! <br>Prêt pour tes révisions ?
                 </div>
             </div>
             <div class="dash-level-overview" id="dashboard-level-overview">
@@ -4674,18 +4689,21 @@ async function getLevelVocabGrammarStats(levelId) {
 // Cumule les cartes dues sur tous les niveaux ayant du vocabulaire déployé
 async function getDashboardDueCount() {
     const levels = ['n5', 'n4', 'n3', 'n2', 'n1'];
-    let total = 0;
+    let total = 0, dueTotal = 0, newTotal = 0;
     let firstLevelWithDue = null;
     
     for (const lvl of levels) {
         const vd = await getLevelVocabData(lvl);
         if (vd && vd.data) {
             const due = countDueItems(vd.data);
+            const split = splitDueAndNew(vd.data);
+            dueTotal += split.due;
+            newTotal += split.fresh;
             total += due;
             if (due > 0 && !firstLevelWithDue) firstLevelWithDue = lvl;
         }
     }
-    return { total, firstLevelWithDue };
+    return { total, dueTotal, newTotal, firstLevelWithDue };
 }
 
 async function renderDashboardLevelOverview() {
@@ -4725,7 +4743,7 @@ async function renderDashboardReviewCta() {
     const el = document.getElementById('dashboard-review-cta');
     if (!el) return;
     
-    const { total, firstLevelWithDue } = await getDashboardDueCount();
+    const { total, dueTotal, newTotal, firstLevelWithDue } = await getDashboardDueCount();
     
     if (total === 0) {
         el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
@@ -4734,9 +4752,17 @@ async function renderDashboardReviewCta() {
     
     el.innerHTML = `
         <div class="review-cta-label">RÉVISER AUJOURD'HUI</div>
-        <div class="review-cta-count">${total}</div>
-        <div class="review-cta-sub">mot${total > 1 ? 's' : ''} à revoir</div>
-        <button class="review-cta-btn" onclick="startDashboardReview('${firstLevelWithDue}')">Commencer →</button>
+        <div class="review-cta-split">
+            <div class="review-cta-split-box">
+                <div class="review-cta-split-num">${newTotal}</div>
+                <div class="review-cta-split-label">Nouveaux</div>
+            </div>
+            <div class="review-cta-split-box">
+                <div class="review-cta-split-num">${dueTotal}</div>
+                <div class="review-cta-split-label">À réviser</div>
+            </div>
+        </div>
+        <button class="review-cta-btn" onclick="startDashboardReview('${firstLevelWithDue}')">Commencer · ${total} items →</button>
     `;
 }
 
@@ -4755,16 +4781,14 @@ async function startDashboardReview(levelId) {
     startVocabReview();
 }
 
-function buildProgRow(label, done, total) {
+function buildProgRow(label, done, total, icon) {
     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
     return `
-        <div class="prog-item">
-            <div class="prog-info">
-                <span class="prog-name">${label}</span>
-                <span class="prog-stats">${done} / ${total} · ${pct}%</span>
-            </div>
-            <div class="prog-track">
-                <div class="prog-fill" style="width: ${pct}%;"></div>
+        <div class="prog-card-item">
+            <div class="prog-circle-badge" style="--pct:${pct}"><span>${pct}%</span></div>
+            <div class="prog-card-info">
+                <div class="prog-card-label">${icon ? icon + ' ' : ''}${label}</div>
+                <div class="prog-card-stats">${done} / ${total}</div>
             </div>
         </div>
     `;
@@ -4800,22 +4824,18 @@ async function renderDashboard() {
         // Vocab + Grammaire (fetch caché)
         const vg = await getLevelVocabGrammarStats(levelDef.id);
         
-        const kanjiRow = `
-            <div class="prog-item">
-                <div class="prog-info">
-                    <span class="prog-name">${levelDef.label}</span>
-                    <span class="prog-stats">${practicedKanji} / ${totalKanji} · ${avgMastery}%</span>
-                </div>
-                <div class="prog-track">
-                    <div class="prog-fill" style="width: ${avgMastery}%;"></div>
+        const kanjiSubRow = buildProgRow('Kanji', practicedKanji, totalKanji, '🔤');
+        const vocabSubRow = vg.vocabTotal > 0 ? buildProgRow('Vocabulaire', vg.vocabMastered, vg.vocabTotal, '📚') : '';
+        const grammarSubRow = vg.grammarTotal > 0 ? buildProgRow('Grammaire', vg.grammarMastered, vg.grammarTotal, '📝') : '';
+        
+        return `
+            <div class="prog-level-card">
+                <div class="prog-level-title">${levelDef.label}</div>
+                <div class="prog-level-items">
+                    ${kanjiSubRow}${vocabSubRow}${grammarSubRow}
                 </div>
             </div>
         `;
-        
-        const vocabRow = vg.vocabTotal > 0 ? buildProgRow(`　🔤 Vocabulaire ${levelDef.label.split(' ')[0]}`, vg.vocabMastered, vg.vocabTotal) : '';
-        const grammarRow = vg.grammarTotal > 0 ? buildProgRow(`　📝 Grammaire ${levelDef.label.split(' ')[0]}`, vg.grammarMastered, vg.grammarTotal) : '';
-        
-        return kanjiRow + vocabRow + grammarRow;
     }));
     
     container.innerHTML = rowsHtml.join('');
