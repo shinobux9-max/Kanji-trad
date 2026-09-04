@@ -671,7 +671,7 @@ function buildReadingChips(k, { maxOn = 4, maxKun = 4, showBadge = true, chipSty
         .map(clean).filter(r => r && !seen.has(r) && seen.add(r))
         .slice(0, maxOn)
         .map(r => `<span class="quiz-reading-chip on-chip" style="display:inline-flex;flex-direction:column;align-items:center;${chipStyle}">
-            ${showBadge ? '<span style="font-size:7px;opacity:0.65;line-height:1;margin-bottom:1px;font-weight:800;letter-spacing:.5px">ON</span>' : ''}
+            ${showBadge ? '<span style="font-size:0.4375rem;opacity:0.65;line-height:1;margin-bottom:1px;font-weight:800;letter-spacing:.5px">ON</span>' : ''}
             <span class="chip-text" style="white-space:nowrap">${r}</span>
         </span>`).join('');
 
@@ -679,7 +679,7 @@ function buildReadingChips(k, { maxOn = 4, maxKun = 4, showBadge = true, chipSty
         .map(clean).filter(r => r && !seen.has(r) && seen.add(r))
         .slice(0, maxKun)
         .map(r => `<span class="quiz-reading-chip kun-chip" style="display:inline-flex;flex-direction:column;align-items:center;${chipStyle}">
-            ${showBadge ? '<span style="font-size:7px;opacity:0.65;line-height:1;margin-bottom:1px;font-weight:800;letter-spacing:.5px">KUN</span>' : ''}
+            ${showBadge ? '<span style="font-size:0.4375rem;opacity:0.65;line-height:1;margin-bottom:1px;font-weight:800;letter-spacing:.5px">KUN</span>' : ''}
             <span class="chip-text" style="white-space:nowrap">${r}</span>
         </span>`).join('');
 
@@ -967,7 +967,7 @@ function renderFolderModalList(char) {
     </div>`;
 
     if (names.length === 0) {
-        html += `<div style="padding:20px;text-align:center;color:var(--gray);font-size:13px">
+        html += `<div style="padding:20px;text-align:center;color:var(--gray);font-size:0.8125rem">
             Aucun dossier encore créé</div>`;
     } else {
         names.forEach(name => {
@@ -1057,7 +1057,7 @@ function renderFoldersPage() {
 
     // Bouton "Créer un dossier vide"
     wrap.innerHTML = `<button onclick="promptCreateEmptyFolder()"
-        style="width:100%;padding:12px;margin-bottom:16px;background:none;border:1px dashed var(--accent);border-radius:10px;color:var(--accent);font-size:13px;cursor:pointer;font-family:inherit;">
+        style="width:100%;padding:12px;margin-bottom:16px;background:none;border:1px dashed var(--accent);border-radius:10px;color:var(--accent);font-size:0.8125rem;cursor:pointer;font-family:inherit;">
         ➕ Créer un dossier vide
     </button>`;
 
@@ -1078,7 +1078,7 @@ function renderFoldersPage() {
                 <span class="folder-card-name">${name}</span>
                 <span class="folder-card-count">${kanjis.length} kanji</span>
             </div>
-            <div class="folder-card-kanjis">${kanjiChips || '<span style="color:var(--gray);font-size:12px">Dossier vide</span>'}</div>
+            <div class="folder-card-kanjis">${kanjiChips || '<span style="color:var(--gray);font-size:0.75rem">Dossier vide</span>'}</div>
             <div class="folder-card-actions">
                 <button class="folder-action-btn" onclick="promptRenameFolder('${safeN}')">✏ Renommer</button>
                 <button class="folder-action-btn" onclick="startFolderQuiz('${safeN}')">⚡ Quiz</button>
@@ -1244,7 +1244,7 @@ async function loadJLPTCategory(levelId, category) {
         }
         
     } catch (e) {
-        container.innerHTML = `<div style="color:#e55;font-size:13px;padding:20px;text-align:center">Erreur : ${e.message}</div>`;
+        container.innerHTML = `<div style="color:#e55;font-size:0.8125rem;padding:20px;text-align:center">Erreur : ${e.message}</div>`;
         console.error('loadJLPTCategory error:', e);
     }
 }
@@ -1266,8 +1266,8 @@ function displayKanjiList(levelId, data) {
         const kanjiData = kanjiDb.find(k => k.char === char);
         if (!kanjiData) return '';
         return `<div onclick="openDetail({char:'${char}'})" style="padding:16px;text-align:center;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;background:var(--surface)" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='var(--surface)'">
-            <div style="font-size:32px;font-weight:bold">${char}</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:6px">${kanjiData.meanings[0] || '–'}</div>
+            <div style="font-size:2rem;font-weight:bold">${char}</div>
+            <div style="font-size:0.6875rem;color:var(--gray);margin-top:6px">${kanjiData.meanings[0] || '–'}</div>
         </div>`;
     }).join('');
     
@@ -1369,7 +1369,7 @@ function renderKanjiReviewScreen() {
         
         <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipKanjiReviewCard()'}">
             <div class="review-card-front">
-                <div class="review-word" style="font-size:56px;">${char}</div>
+                <div class="review-word" style="font-size:3.5rem;">${char}</div>
             </div>
             ${flipped ? `
                 <div class="review-card-back">
@@ -1813,7 +1813,7 @@ function renderGrammarFlashcardExercise(entry, session) {
     return `
         <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipGrammarReviewCard()'}">
             <div class="review-card-front">
-                <div class="review-word" style="font-size:32px;">${itemText}</div>
+                <div class="review-word" style="font-size:2rem;">${itemText}</div>
                 ${flipped ? `<div class="review-reading">${titleText}</div>` : ''}
             </div>
             ${flipped ? `
@@ -2473,22 +2473,22 @@ function displayGrammarList(levelId, data, examples = null) {
             
             const exHTML = patternExamples.length > 0
                 ? `<div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
-                    <div style="font-size:11px;color:var(--gray);margin-bottom:8px;font-weight:bold">Exemples :</div>
+                    <div style="font-size:0.6875rem;color:var(--gray);margin-bottom:8px;font-weight:bold">Exemples :</div>
                     ${patternExamples.map(ex => `
-                        <div style="font-size:11px;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;margin-bottom:6px;line-height:1.4">
-                            <div style="color:#fff;font-size:12px">${ex.jp}</div>
-                            <div style="color:var(--accent);font-size:10px;margin-top:3px">${ex.ro}</div>
-                            <div style="color:var(--gray);font-size:11px;margin-top:3px">${ex.fr}</div>
+                        <div style="font-size:0.6875rem;padding:8px;background:rgba(0,0,0,0.2);border-radius:4px;margin-bottom:6px;line-height:1.4">
+                            <div style="color:#fff;font-size:0.75rem">${ex.jp}</div>
+                            <div style="color:var(--accent);font-size:0.625rem;margin-top:3px">${ex.ro}</div>
+                            <div style="color:var(--gray);font-size:0.6875rem;margin-top:3px">${ex.fr}</div>
                         </div>
                     `).join('')}
                 </div>`
-                : '<div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--gray)">Pas d\'exemples disponibles</div>';
+                : '<div data-examples style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:0.6875rem;color:var(--gray)">Pas d\'exemples disponibles</div>';
             
             return `
                 <div style="padding:12px;background:rgba(255,255,255,0.08);border-left:3px solid #9b8bff;border-radius:6px;cursor:pointer;transition:all 0.15s;user-select:none" onclick="const ex = this.querySelector('[data-examples]'); ex.style.display = ex.style.display === 'none' ? 'block' : 'none'" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-                    <div style="font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:6px">${pattern.pattern}</div>
-                    <div style="font-size:13px;color:#fff;line-height:1.4;margin-bottom:8px">${pattern.meaning}</div>
-                    <div style="font-size:10px;color:var(--gray);opacity:0.6">Cliquez pour voir les exemples →</div>
+                    <div style="font-size:0.875rem;font-weight:bold;color:var(--accent);margin-bottom:6px">${pattern.pattern}</div>
+                    <div style="font-size:0.8125rem;color:#fff;line-height:1.4;margin-bottom:8px">${pattern.meaning}</div>
+                    <div style="font-size:0.625rem;color:var(--gray);opacity:0.6">Cliquez pour voir les exemples →</div>
                     ${exHTML}
                 </div>
             `;
@@ -2499,8 +2499,8 @@ function displayGrammarList(levelId, data, examples = null) {
                 <div style="padding:12px;background:rgba(155,139,255,0.1);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;" onclick="this.parentElement.querySelector('[data-lessons]').style.display = this.parentElement.querySelector('[data-lessons]').style.display === 'none' ? 'block' : 'none'; this.parentElement.querySelector('[data-arrow]').style.transform = this.parentElement.querySelector('[data-lessons]').style.display === 'none' ? 'rotate(0deg)' : 'rotate(90deg)'">
                     <div style="display:flex;align-items:center;gap:8px">
                         <span data-arrow style="display:inline-block;transition:transform 0.2s;transform:rotate(90deg)">▶</span>
-                        <span style="font-size:13px;font-weight:bold">${label}</span>
-                        <span style="font-size:11px;color:var(--gray);margin-left:auto">${patterns.length} leçons</span>
+                        <span style="font-size:0.8125rem;font-weight:bold">${label}</span>
+                        <span style="font-size:0.6875rem;color:var(--gray);margin-left:auto">${patterns.length} leçons</span>
                     </div>
                 </div>
                 <div data-lessons style="padding:12px;display:flex;flex-direction:column;gap:8px">
@@ -2528,15 +2528,15 @@ function showDashboard(isBack = false) {
         <div class="dash-wrap">
             <div class="welcome-box">
                 <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img" alt="">
-                <div style="font-size:13px;line-height:1.6">
+                <div style="font-size:0.8125rem;line-height:1.6">
                     Bienvenue !<br>Choisissez une catégorie pour commencer.
                 </div>
             </div>
             <div class="dash-level-overview" id="dashboard-level-overview">
-                <div style="color:var(--gray);font-size:12px">Chargement…</div>
+                <div style="color:var(--gray);font-size:0.75rem">Chargement…</div>
             </div>
             <div class="dash-card dash-review-cta" id="dashboard-review-cta">
-                <div style="color:var(--gray);font-size:12px">Chargement des révisions…</div>
+                <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
             </div>
             <div class="dash-card">
                 <div class="streak-info">
@@ -2547,7 +2547,7 @@ function showDashboard(isBack = false) {
                 <div class="dots-grid">${buildStreakDotsHtml(streak)}</div>
             </div>
             <div class="dash-card">
-                <div class="section-title" style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
+                <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
                 <div id="progression-list"></div>
             </div>
         </div>`;
@@ -2668,7 +2668,7 @@ async function showApprendreScreen() {
             </div>
             
             <div class="apprendre-hero-card" id="apprendre-review-cta" onclick="startMixedReview()">
-                <div style="color:var(--gray);font-size:12px">Chargement…</div>
+                <div style="color:var(--gray);font-size:0.75rem">Chargement…</div>
             </div>
             
             <div class="apprendre-grid">
@@ -3017,16 +3017,16 @@ function loadCategory(catId, isBack = false) {
                 <div class="series-card-kanji">${firstKanji}</div>
                 <div class="series-card-body">
                     <div class="series-card-num" style="font-weight:bold;">${ser.label}</div>
-                    <div style="font-size:12px; color:var(--gray);">${ser.indices.length} Kanji</div>
+                    <div style="font-size:0.75rem; color:var(--gray);">${ser.indices.length} Kanji</div>
                 </div>
             </div>
-                <div style="color:var(--gray); font-size:14px;">❯</div>
+                <div style="color:var(--gray); font-size:0.875rem;">❯</div>
             </div>
         </div>`;
     }).join('');
 
     document.getElementById('main-content').innerHTML = `
-        <button class="back-btn-top" onclick="showDashboard()" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
+        <button class="back-btn-top" onclick="showDashboard()" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
             ← ACCUEIL
         </button>
         <div class="grade-overview">
@@ -3058,12 +3058,12 @@ function loadSeriesPage(seriesId, isBack = false) {
     document.getElementById('page-title').innerText = `${cat.label} · ${ser.label}`;
 
     document.getElementById('main-content').innerHTML = `
-        <button class="back-btn-top" onclick="loadCategory('${ser.catId}')" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
+        <button class="back-btn-top" onclick="loadCategory('${ser.catId}')" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
             ← LISTE DES SÉRIES
         </button>
         <div class="list-header">
             <div>
-                <div style="font-size:14px;font-weight:bold">${ser.label}</div>
+                <div style="font-size:0.875rem;font-weight:bold">${ser.label}</div>
                 <div class="list-header-info">${cat.label} · ${ser.range} (${ser.indices.length} kanji)</div>
             </div>
             <button class="list-quiz-btn" onclick="showQuizModeModal('series','${seriesId}')">Quiz ▶</button>
@@ -3085,7 +3085,7 @@ function makeKanjiRow(k) {
                 ${k.on.slice(0,3).map(r => `<span class="tag tag-on">${r}</span>`).join('')}
                 ${k.kun.slice(0,2).map(r => `<span class="tag tag-kun">${r.split('.')[0]}</span>`).join('')}
             </div>
-            <div style="font-size:13px;color:var(--gray)">${k.meanings[0] || ''}</div>
+            <div style="font-size:0.8125rem;color:var(--gray)">${k.meanings[0] || ''}</div>
         </div>
         <div class="kanji-row-stroke">${k.strokes}t</div>`;
     return row;
@@ -3410,13 +3410,13 @@ function renderQuizQuestion() {
         const vMeaning = k.meanings.filter(m => !m.toLowerCase().includes('radical')).slice(0,2).join(' · ') || k.meanings[0] || '?';
         const vChips   = buildReadingChips(k, { maxOn: 3, maxKun: 3, showBadge: true });
         promptHtml = `
-            <div style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Sens affiché — Prononcez la lecture</div>
-            <div class="quiz-meaning-big" style="font-size:30px;font-weight:bold;margin-bottom:12px;">${vMeaning}</div>
+            <div style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Sens affiché — Prononcez la lecture</div>
+            <div class="quiz-meaning-big" style="font-size:1.875rem;font-weight:bold;margin-bottom:12px;">${vMeaning}</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:18px;opacity:0.45"
                  title="Lectures possibles (aide — masquée volontairement)">${vChips}</div>
             <button id="mic-btn" class="mic-btn" onclick="startVoiceRecognition()" title="Appuyer pour parler">🎤</button>
-            <div id="vocal-feedback" style="font-size:13px;color:var(--gray);margin-top:16px;min-height:22px;text-align:center;max-width:300px;line-height:1.5;"></div>
-            <button onclick="skipVocalQuestion()" style="margin-top:18px;background:none;border:1px solid var(--border);color:var(--gray);padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit;">→ Passer</button>`;
+            <div id="vocal-feedback" style="font-size:0.8125rem;color:var(--gray);margin-top:16px;min-height:22px;text-align:center;max-width:300px;line-height:1.5;"></div>
+            <button onclick="skipVocalQuestion()" style="margin-top:18px;background:none;border:1px solid var(--border);color:var(--gray);padding:8px 20px;border-radius:8px;font-size:0.75rem;cursor:pointer;font-family:inherit;">→ Passer</button>`;
     } else if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
         // REMPLACÉ PAR LE CONTENEUR ANIMÉ
         promptHtml = `
@@ -3473,7 +3473,7 @@ if (currentMode === 'kanji-to-read' || currentMode === 'kanji-to-mean') {
             charDataLoader: kanjiDataLoader,
             onLoadCharDataError: () => {
                 if (targetDiv) targetDiv.innerHTML =
-                    `<div style="font-size:90px;line-height:160px;text-align:center;color:#fff">${charToDraw}</div>`;
+                    `<div style="font-size:5.625rem;line-height:160px;text-align:center;color:#fff">${charToDraw}</div>`;
             }
         });
         
@@ -3518,7 +3518,7 @@ function revealChoices(currentMode) {
         if (currentMode === 'kanji-to-read') {
             // Toutes les lectures ON + KUN en chips compactes (max 3+3)
             content = `<div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;align-items:flex-start;width:100%">
-                ${buildReadingChips(target, { maxOn: 3, maxKun: 3, showBadge: true, chipStyle: 'padding:3px 6px;font-size:12px;min-width:0' })}
+                ${buildReadingChips(target, { maxOn: 3, maxKun: 3, showBadge: true, chipStyle: 'padding:3px 6px;font-size:0.75rem;min-width:0' })}
             </div>`;
         } else if (currentMode === 'kanji-to-mean') {
             content = target.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || target.meanings[0] || '?';
@@ -3532,7 +3532,7 @@ function revealChoices(currentMode) {
         const isChipMode = currentMode === 'kanji-to-read';
 
         return `<div class="quiz-kanji-choice" data-idx="${ci}" onclick="answerQuiz(this,${ci},${kIdx})"
-            style="${isChipMode ? 'font-size:14px;align-items:center' : `font-size:${content.length > 8 ? '18px' : fontSize}`}">
+            style="${isChipMode ? 'font-size:0.875rem;align-items:center' : `font-size:${content.length > 8 ? '18px' : fontSize}`}">
             ${content}
         </div>`;
     }).join('');
@@ -3819,7 +3819,7 @@ function renderStrokeQuizQuestion() {
 
     const extraHtml = extraMeanings.length
         ? `<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px">
-            ${extraMeanings.map(m => `<span style="font-size:11px;color:var(--gray);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px">${m}</span>`).join('')}
+            ${extraMeanings.map(m => `<span style="font-size:0.6875rem;color:var(--gray);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px">${m}</span>`).join('')}
            </div>` : '';
 
     const readingsChips = buildReadingChips(k, { maxOn: 4, maxKun: 4, showBadge: true });
@@ -3828,7 +3828,7 @@ function renderStrokeQuizQuestion() {
 
     document.getElementById('stroke-quiz-body').innerHTML = `
         <div class="sq-kanji-header">
-            <div class="sq-meaning" style="font-size:22px;font-weight:bold">${mainMeaning}</div>
+            <div class="sq-meaning" style="font-size:1.375rem;font-weight:bold">${mainMeaning}</div>
             ${extraHtml}
             <div class="sq-readings-row" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center">
                 ${readingsChips}
@@ -3839,7 +3839,7 @@ function renderStrokeQuizQuestion() {
             <div class="sq-grid-overlay"></div>
         </div>
         <div class="sq-stroke-tracker" id="sq-stroke-tracker">${strokeDots}</div>
-        <div id="sq-feedback" style="height:22px;margin-top:10px;font-weight:bold;text-align:center;font-size:13px;color:var(--gray)"></div>
+        <div id="sq-feedback" style="height:22px;margin-top:10px;font-weight:bold;text-align:center;font-size:0.8125rem;color:var(--gray)"></div>
         <div class="sq-actions">
             <button class="sq-btn hint" onclick="sqShowHint()">💡 Indice</button>
             <button class="sq-btn skip" onclick="sqSkip()">Passer →</button>
@@ -4312,8 +4312,8 @@ async function renderExemples(char) {
     // 4. Si toujours rien, afficher un message
     if (!liste || liste.length === 0) {
         container.innerHTML = `
-            <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
-            <div style="color:var(--gray);font-size:13px;text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;">Aucun exemple disponible</div>`;
+            <div style="font-size:0.5625rem;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
+            <div style="color:var(--gray);font-size:0.8125rem;text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;">Aucun exemple disponible</div>`;
         return;
     }
 
@@ -4338,7 +4338,7 @@ async function renderExemples(char) {
     }).join('');
 
     container.innerHTML = `
-        <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
+        <div style="font-size:0.5625rem;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
         ${items}`;
 }
 
@@ -4404,8 +4404,8 @@ function openDetail(kanji) {
     // 4. Lectures ON / KUN
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
     document.getElementById('section-kun').style.display = kanji.kun.length ? '' : 'none';
-    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
-    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:14px;padding:4px 10px">${r}</span>`).join('');
+    document.getElementById('d-on').innerHTML  = kanji.on.map(r  => `<span class="tag tag-on"  style="font-size:0.875rem;padding:4px 10px">${r}</span>`).join('');
+    document.getElementById('d-kun').innerHTML = kanji.kun.map(r => `<span class="tag tag-kun" style="font-size:0.875rem;padding:4px 10px">${r}</span>`).join('');
 
     // 5. Boutons : montrer les boutons kanji
     document.getElementById('btn-oral-test').style.display = '';
@@ -4718,7 +4718,7 @@ async function renderDashboardLevelOverview() {
         return;
     }
     
-    el.innerHTML = `<div style="color:var(--gray);font-size:12px">Commence par apprendre du vocabulaire pour voir ta progression ici.</div>`;
+    el.innerHTML = `<div style="color:var(--gray);font-size:0.75rem">Commence par apprendre du vocabulaire pour voir ta progression ici.</div>`;
 }
 
 async function renderDashboardReviewCta() {
@@ -4777,7 +4777,7 @@ async function renderDashboard() {
         return;
     }
     
-    container.innerHTML = '<div style="color:var(--gray);font-size:12px;padding:8px 0">Chargement des statistiques…</div>';
+    container.innerHTML = '<div style="color:var(--gray);font-size:0.75rem;padding:8px 0">Chargement des statistiques…</div>';
 
     const jlptLevels = [
         { jlpt: 5, id: 'n5', label: 'N5 - Débutant' },
@@ -4829,7 +4829,7 @@ async function init() {
     mainContent.innerHTML = `
         <div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
             <div class="spinner"></div>
-            <div style="font-size:13px;color:var(--gray)">Chargement de la base de données…</div>
+            <div style="font-size:0.8125rem;color:var(--gray)">Chargement de la base de données…</div>
         </div>`;
 
     try {
@@ -4920,9 +4920,9 @@ async function init() {
         console.error('Erreur BDD:', e);
         mainContent.innerHTML = `
             <div style="padding:40px 20px;text-align:center;color:var(--gray)">
-                <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+                <div style="font-size:2.5rem;margin-bottom:12px">⚠️</div>
                 <div style="margin-bottom:16px">Impossible de charger la base de données.<br>${e.message}</div>
-                <button onclick="init()" style="padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:8px;font-weight:bold;cursor:pointer;font-size:14px">Réessayer</button>
+                <button onclick="init()" style="padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:8px;font-weight:bold;cursor:pointer;font-size:0.875rem">Réessayer</button>
             </div>`;
     }
 }
