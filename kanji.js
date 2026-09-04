@@ -2189,6 +2189,66 @@ function navDashboard() {
     renderDashboard();
 }
 function navKana() { toggleSidebar(false); loadKanas(); }
+function navNiveaux() { toggleSidebar(false); showNiveauxScreen(); }
+
+/* ══════════════════════════════════════════════════
+   ÉCRAN "NIVEAUX" — cartes pleine largeur avec vraie progression
+══════════════════════════════════════════════════ */
+async function showNiveauxScreen() {
+    history.pushState({ view: 'niveaux' }, '');
+    const mainContent = document.getElementById('main-content');
+    document.getElementById('page-title').innerText = 'Niveaux';
+    
+    if (!jlptMapping) {
+        mainContent.innerHTML = '<div style="padding:20px;color:var(--gray)">Chargement des niveaux…</div>';
+        return;
+    }
+    
+    mainContent.innerHTML = `
+        <div class="niveaux-wrap">
+            <div class="niveaux-header">
+                <div class="niveaux-title-main">Niveaux</div>
+                <div class="niveaux-subtitle-main">Ton vocabulaire par niveau JLPT.</div>
+            </div>
+            <div id="niveaux-list">
+                <div style="padding:20px;text-align:center;color:var(--gray)"><div class="spinner"></div></div>
+            </div>
+        </div>`;
+    
+    const listEl = document.getElementById('niveaux-list');
+    const sortedLevels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
+    
+    const cardsHtml = await Promise.all(sortedLevels.map(async ([levelId, levelData]) => {
+        const vg = await getLevelVocabGrammarStats(levelId);
+        const hasData = vg.vocabTotal > 0;
+        const pct = hasData ? Math.round((vg.vocabMastered / vg.vocabTotal) * 100) : 0;
+        
+        if (!hasData) {
+            return `
+                <div class="niveaux-card locked">
+                    <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                    <div class="niveaux-info">
+                        <div class="niveaux-card-title">${levelData.label_full}</div>
+                        <div class="niveaux-card-sub">${levelData.description}</div>
+                    </div>
+                    <div class="niveaux-soon">Bientôt</div>
+                </div>`;
+        }
+        
+        return `
+            <div class="niveaux-card" onclick="currentJLPTLevel='${levelId}'; showLevelCategorySelector('${levelId}'); loadJLPTCategory('${levelId}','vocab')">
+                <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                <div class="niveaux-info">
+                    <div class="niveaux-card-title">${levelData.label_full}</div>
+                    <div class="niveaux-card-sub">${vg.vocabMastered} / ${vg.vocabTotal} mots</div>
+                    <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
+                </div>
+                <div class="niveaux-pct">${pct}%</div>
+            </div>`;
+    }));
+    
+    listEl.innerHTML = cardsHtml.join('');
+}
 
 /* ── PAGE CATÉGORIE (Version épurée) ────────────────── */
 
