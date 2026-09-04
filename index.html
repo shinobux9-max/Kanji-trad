@@ -22,13 +22,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20250903_bottom_nav_apprendre">
+    <link rel="stylesheet" href="kanji.css?v=20250903_remove_sidebar">
 </head>
 <body>
 
 <!-- ── MAIN TOOLBAR ──────────────────────────────── -->
 <div class="toolbar">
-    <button onclick="toggleSidebar(true)">☰</button>
     <div class="toolbar-title" id="page-title">漢字 Study</div>
     <button onclick="toggleSearch()" id="search-btn" title="Rechercher">🔍</button>
 </div>
@@ -51,19 +50,6 @@
         <div class="big">🔎</div>
         Tapez un kanji, sa signification ou une lecture
     </div>
-</div>
-
-<!-- ── OVERLAY + SIDEBAR ─────────────────────────── -->
-<div id="overlay" onclick="toggleSidebar(false)"></div>
-<div id="sidebar">
-    <div class="sidebar-header">
-        <div class="sidebar-logo">漢字</div>
-    </div>
-    <div class="nav-static" onclick="navDashboard()"><span class="icon">🏠</span> Accueil</div>
-    <div class="nav-static" onclick="navNiveaux()"><span class="icon">📊</span> Niveaux</div>
-    <div class="nav-static" onclick="navKana()"><span class="icon">あ</span> Kana</div>
-    <div class="nav-static" onclick="navFolders()"><span class="icon">📁</span> Mes Dossiers</div>
-    <div id="grade-list"></div>
 </div>
 
 <!-- ── MAIN CONTENT ──────────────────────────────── -->
@@ -274,7 +260,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20250903_bottom_nav_apprendre"></script>
+    <script src="kanji.js?v=20250903_remove_sidebar"></script>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->
     <div id="bottom-nav">
@@ -299,7 +285,7 @@
             // Déterminer le path de base (pour GitHub Pages, c'est /Kanji-trad/)
             const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
             
-            navigator.serviceWorker.register('sw.js?v=20250903_bottom_nav_apprendre', { scope: basePath })
+            navigator.serviceWorker.register('sw.js?v=20250903_remove_sidebar', { scope: basePath })
                 .then(registration => {
                     console.log('✅ Service Worker registré:', registration);
                     

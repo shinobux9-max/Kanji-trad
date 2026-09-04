@@ -1150,12 +1150,15 @@ function startFolderQuiz(folderName) {
    SIDEBAR
 ══════════════════════════════════════════════════ */
 function toggleSidebar(show) {
-    document.getElementById('sidebar').classList.toggle('open', show);
-    document.getElementById('overlay').classList.toggle('show', show);
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    if (sidebar) sidebar.classList.toggle('open', show);
+    if (overlay) overlay.classList.toggle('show', show);
 }
 
 function renderSidebar() {
     const c = document.getElementById('grade-list');
+    if (!c) return; // sidebar retirée de l'interface
     c.innerHTML = '';
 
     // Si le mapping JLPT n'est pas chargé, afficher un message
