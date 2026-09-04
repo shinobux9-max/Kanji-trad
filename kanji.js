@@ -474,8 +474,8 @@ function buildMonthCalendar(streak) {
     return `<div class="cal-grid">${headerHtml}${cellsHtml}</div>`;
 }
 
-async function showProgressionDetail() {
-    history.pushState({ view: 'progression' }, '');
+async function showProgressionDetail(isBack = false) {
+    if (!isBack) history.pushState({ view: 'progression' }, '');
     const streak = getStreakData();
     const stats = getStats();
     
@@ -1294,8 +1294,10 @@ function toggleSidebar(show) {
 // Remplace l'ancien sélecteur à onglets : chaque catégorie a maintenant son propre point d'entrée
 // (Lexique → Vocab, Apprendre → Grammaire, Apprendre → Kanji), donc plus besoin de tabs — juste
 // un en-tête discret avec retour + titre + stats, façon Hibi.
-async function showCategoryDirect(levelId, category) {
+async function showCategoryDirect(levelId, category, isBack = false) {
     if (!jlptMapping || !jlptMapping.levels[levelId]) return;
+    
+    if (!isBack) history.pushState({ view: 'category-direct', levelId, category }, '');
     
     currentJLPTLevel = levelId;
     const levelData = jlptMapping.levels[levelId];
@@ -1333,10 +1335,10 @@ async function showCategoryDirect(levelId, category) {
             </div>
         </div>`;
     
-    loadJLPTCategory(levelId, category);
+    loadJLPTCategory(levelId, category, true);
 }
 
-async function loadJLPTCategory(levelId, category) {
+async function loadJLPTCategory(levelId, category, isBack = false) {
     const container = document.getElementById('category-content');
     if (!container) return;
     
@@ -1368,11 +1370,11 @@ async function loadJLPTCategory(levelId, category) {
         
         // Afficher selon la catégorie
         if (category === 'kanji') {
-            displayKanjiList(levelId, data);
+            displayKanjiList(levelId, data, isBack);
         } else if (category === 'vocab') {
-            displayVocabList(levelId, data, examples);
+            displayVocabList(levelId, data, examples, isBack);
         } else if (category === 'grammar') {
-            showGrammarHome(levelId, data, examples);
+            showGrammarHome(levelId, data, examples, isBack);
         }
         
     } catch (e) {
@@ -1381,12 +1383,14 @@ async function loadJLPTCategory(levelId, category) {
     }
 }
 
-function displayKanjiList(levelId, data) {
+function displayKanjiList(levelId, data, isBack = false) {
     const container = document.getElementById('category-content');
     if (!data.chars || !Array.isArray(data.chars)) {
         container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
         return;
     }
+    
+    if (!isBack) history.pushState({ view: 'kanji-list' }, '');
     
     kanjiHomeData = { levelId, chars: data.chars };
     currentLevelId = levelId;
@@ -1413,7 +1417,7 @@ function displayKanjiList(levelId, data) {
 }
 
 function displayKanjiListFromHome() {
-    if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji');
+    if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true);
 }
 
 function getDueKanjiChars() {
@@ -2065,12 +2069,14 @@ function renderGrammarReviewSummary() {
     grammarReviewSession = null;
 }
 
-function displayVocabList(levelId, data, examples = null) {
+function displayVocabList(levelId, data, examples = null, isBack = false) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
         container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
         return;
     }
+    
+    if (!isBack) history.pushState({ view: 'vocab-list' }, '');
     
     // Stocker les données
     vocabHomeData = {levelId, data, examples};
@@ -2145,7 +2151,7 @@ function displayVocabList(levelId, data, examples = null) {
     container.innerHTML = html;
 }
 
-function showVocabDetail(wordId, allWords = []) {
+function showVocabDetail(wordId, allWords = [], isBack = false) {
     const container = document.getElementById('category-content');
     
     // Fallback si allWords est vide
@@ -2159,6 +2165,8 @@ function showVocabDetail(wordId, allWords = []) {
         container.innerHTML = '<div style="color:var(--gray)">Mot non trouvé</div>';
         return;
     }
+    
+    if (!isBack) history.pushState({ view: 'vocab-detail', wordId }, '');
     
     const status = getItemStatus(word.id);
     const level = word.level || 'N5';
@@ -2306,12 +2314,14 @@ function getFamilyColor(badgeText) {
     return { color: '#A7B0C0', emoji: '⚪', family: 'Autre' };
 }
 
-function showGrammarHome(levelId, data, examples = null) {
+function showGrammarHome(levelId, data, examples = null, isBack = false) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
         container.innerHTML = '<div style="color:var(--gray)">Structure invalide</div>';
         return;
     }
+    
+    if (!isBack) history.pushState({ view: 'grammar-home' }, '');
     
     grammarHomeData = {levelId, data, examples};
     
@@ -2408,7 +2418,7 @@ function showGrammarHome(levelId, data, examples = null) {
     });
 }
 
-function showGrammarDetail(lessonId) {
+function showGrammarDetail(lessonId, isBack = false) {
     const {levelId, data} = grammarHomeData || {};
     const container = document.getElementById('category-content');
     const lesson = data.find(l => l.id === lessonId);
@@ -2417,6 +2427,8 @@ function showGrammarDetail(lessonId) {
         container.innerHTML = '<div style="color:var(--gray)">Leçon non trouvée</div>';
         return;
     }
+    
+    if (!isBack) history.pushState({ view: 'grammar-detail', lessonId }, '');
     
     const status = getItemStatus(lesson.id);
     const itemText = lesson.item || lesson.pattern || 'Formule';
@@ -2715,8 +2727,8 @@ function navNiveaux() { toggleSidebar(false); showNiveauxScreen(); }
 /* ══════════════════════════════════════════════════
    ÉCRAN "NIVEAUX" — cartes pleine largeur avec vraie progression
 ══════════════════════════════════════════════════ */
-async function showNiveauxScreen() {
-    history.pushState({ view: 'niveaux' }, '');
+async function showNiveauxScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'niveaux' }, '');
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Niveaux';
     
@@ -2797,8 +2809,8 @@ function bottomNavGo(target) {
 /* ══════════════════════════════════════════════════
    ÉCRAN "APPRENDRE" (façon Hibi) — hub vers Grammaire / Kanji / Kana + révision mixte
 ══════════════════════════════════════════════════ */
-async function showApprendreScreen() {
-    history.pushState({ view: 'apprendre' }, '');
+async function showApprendreScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'apprendre' }, '');
     document.getElementById('page-title').innerText = 'Apprendre';
     const main = document.getElementById('main-content');
     
@@ -2860,8 +2872,8 @@ async function renderApprendreReviewCta() {
 /* ══════════════════════════════════════════════════
    ÉCRAN "NIVEAUX GRAMMAIRE" (miroir de showNiveauxScreen, pour la grammaire)
 ══════════════════════════════════════════════════ */
-async function showGrammarNiveauxScreen() {
-    history.pushState({ view: 'grammar-niveaux' }, '');
+async function showGrammarNiveauxScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'grammar-niveaux' }, '');
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Grammaire';
     
@@ -2919,8 +2931,8 @@ async function showGrammarNiveauxScreen() {
 /* ══════════════════════════════════════════════════
    ÉCRAN "NIVEAUX KANJI" (miroir, mais données déjà en mémoire via kanjiDb — pas de fetch)
 ══════════════════════════════════════════════════ */
-function showKanjiNiveauxScreen() {
-    history.pushState({ view: 'kanji-niveaux' }, '');
+function showKanjiNiveauxScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'kanji-niveaux' }, '');
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Kanji';
     
@@ -5090,22 +5102,33 @@ async function init() {
 init();
 
 /* ── GESTION DU BOUTON RETOUR SYSTÈME (Android / Navigateur) ── */
+// Registre des écrans "poussables" dans l'historique : associe le nom d'écran stocké dans
+// history.state à la fonction qui sait le rejouer (avec isBack=true pour ne pas re-pousser un état)
+const SCREEN_REGISTRY = {
+    'dashboard': () => { showDashboard(true); renderDashboard(); },
+    'category': (s) => loadCategory(s.id, true),
+    'series': (s) => loadSeriesPage(s.id, true),
+    'niveaux': () => showNiveauxScreen(true),
+    'apprendre': () => showApprendreScreen(true),
+    'grammar-niveaux': () => showGrammarNiveauxScreen(true),
+    'kanji-niveaux': () => showKanjiNiveauxScreen(true),
+    'progression': () => showProgressionDetail(true),
+    'category-direct': (s) => showCategoryDirect(s.levelId, s.category, true),
+    'kanji-list': () => { if (kanjiHomeData) displayKanjiList(kanjiHomeData.levelId, { chars: kanjiHomeData.chars }, true); },
+    'vocab-list': () => { if (vocabHomeData) displayVocabList(vocabHomeData.levelId, vocabHomeData.data, vocabHomeData.examples, true); },
+    'vocab-detail': (s) => { if (vocabHomeData) showVocabDetail(s.wordId, vocabHomeData.data, true); },
+    'grammar-home': () => { if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
+    'grammar-detail': (s) => showGrammarDetail(s.lessonId, true),
+};
+
 window.onpopstate = function(event) {
     // Si l'application n'est pas encore chargée (kanjiDb vide), on ne fait rien
     if (kanjiDb.length === 0) return;
 
-    if (event.state) {
-        const state = event.state;
-        if (state.view === 'dashboard') {
-            showDashboard(true);
-            renderDashboard(); // On relance le rendu des barres de progression
-        } else if (state.view === 'category') {
-            loadCategory(state.id, true);
-        } else if (state.view === 'series') {
-            loadSeriesPage(state.id, true);
-        }
+    if (event.state && SCREEN_REGISTRY[event.state.view]) {
+        SCREEN_REGISTRY[event.state.view](event.state);
     } else {
-        // Si on revient au tout début de l'historique
+        // État inconnu ou tout début de l'historique : retour à l'accueil
         showDashboard(true);
         renderDashboard();
     }
