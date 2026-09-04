@@ -2158,6 +2158,9 @@ function showDashboard(isBack = false) {
                     Bienvenue !<br>Choisissez une catégorie pour commencer.
                 </div>
             </div>
+            <div class="dash-level-overview" id="dashboard-level-overview">
+                <div style="color:var(--gray);font-size:12px">Chargement…</div>
+            </div>
             <div class="dash-card dash-review-cta" id="dashboard-review-cta">
                 <div style="color:var(--gray);font-size:12px">Chargement des révisions…</div>
             </div>
@@ -2176,6 +2179,7 @@ function showDashboard(isBack = false) {
         </div>`;
     // Appel de la fonction de progression si nécessaire ici
     if (typeof renderDashboard === 'function') renderDashboard();
+    renderDashboardLevelOverview();
     renderDashboardReviewCta();
 }
 
@@ -3926,6 +3930,39 @@ async function getDashboardDueCount() {
         }
     }
     return { total, firstLevelWithDue };
+}
+
+async function renderDashboardLevelOverview() {
+    const el = document.getElementById('dashboard-level-overview');
+    if (!el || !jlptMapping) return;
+    
+    // Trouve le premier niveau (dans l'ordre) qui a du vocabulaire déployé — considéré comme le niveau "actif"
+    const sortedLevels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
+    
+    for (const [levelId, levelData] of sortedLevels) {
+        const vg = await getLevelVocabGrammarStats(levelId);
+        if (vg.vocabTotal === 0) continue;
+        
+        const vocabPct = Math.round((vg.vocabMastered / vg.vocabTotal) * 100);
+        const grammarPct = vg.grammarTotal > 0 ? Math.round((vg.grammarMastered / vg.grammarTotal) * 100) : 0;
+        // Moyenne simple des deux composantes disponibles (Kana non inclus, faute de tracking existant)
+        const combinedPct = vg.grammarTotal > 0 ? Math.round((vocabPct + grammarPct) / 2) : vocabPct;
+        
+        el.innerHTML = `
+            <div class="level-overview-top">
+                <span class="level-overview-label">${levelData.label}</span>
+                <div class="level-overview-bar"><div class="level-overview-fill" style="width:${combinedPct}%;background:${levelData.color}"></div></div>
+                <span class="level-overview-pct">${combinedPct}%</span>
+            </div>
+            <div class="level-overview-legend">
+                <span><span class="legend-dot" style="background:${levelData.color}"></span>Vocabulaire ${vocabPct}%</span>
+                ${vg.grammarTotal > 0 ? `<span><span class="legend-dot" style="background:var(--accent-muted)"></span>Grammaire ${grammarPct}%</span>` : ''}
+            </div>
+        `;
+        return;
+    }
+    
+    el.innerHTML = `<div style="color:var(--gray);font-size:12px">Commence par apprendre du vocabulaire pour voir ta progression ici.</div>`;
 }
 
 async function renderDashboardReviewCta() {
