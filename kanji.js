@@ -1159,41 +1159,49 @@ function toggleSidebar(show) {
 /* ══════════════════════════════════════════════════
    LEVEL CATEGORY SELECTOR — Onglets Kanji | Vocab | Grammar
 ══════════════════════════════════════════════════ */
-function showLevelCategorySelector(levelId) {
+// Remplace l'ancien sélecteur à onglets : chaque catégorie a maintenant son propre point d'entrée
+// (Lexique → Vocab, Apprendre → Grammaire, Apprendre → Kanji), donc plus besoin de tabs — juste
+// un en-tête discret avec retour + titre + stats, façon Hibi.
+async function showCategoryDirect(levelId, category) {
     if (!jlptMapping || !jlptMapping.levels[levelId]) return;
     
+    currentJLPTLevel = levelId;
     const levelData = jlptMapping.levels[levelId];
     const mainContent = document.getElementById('main-content');
     
-    // Construire les onglets
-    const tabs = levelData.categories.map(cat => {
-        const catData = jlptMapping.categories[cat];
-        return `<button class="tab-btn" data-category="${cat}" onclick="loadJLPTCategory('${levelId}', '${cat}')" style="flex:1;padding:12px;background:rgba(255,255,255,0.12);border:none;color:var(--gray);font-size:14px;cursor:pointer;transition:all 0.15s;border-bottom:2px solid transparent" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
-            ${catData.icon} ${catData.label}
-        </button>`;
-    }).join('');
+    const catLabels = { kanji: 'Kanji', vocab: 'Vocabulaire', grammar: 'Grammaire' };
+    const catLabel = catLabels[category] || category;
+    const backFn = category === 'vocab' ? 'showNiveauxScreen' : category === 'grammar' ? 'showGrammarNiveauxScreen' : 'showKanjiNiveauxScreen';
+    
+    // Sous-titre : stats réelles si disponibles, sinon la description du niveau
+    let subtitle = levelData.description;
+    if (category === 'vocab' || category === 'grammar') {
+        const vg = await getLevelVocabGrammarStats(levelId);
+        if (category === 'vocab' && vg.vocabTotal > 0) subtitle = `${vg.vocabTotal} mots · ${vg.vocabMastered} maîtrisés`;
+        if (category === 'grammar' && vg.grammarTotal > 0) subtitle = `${vg.grammarTotal} leçons · ${vg.grammarMastered} maîtrisées`;
+    } else if (category === 'kanji') {
+        const jlptNum = parseInt(levelData.label.replace('N', '')) || levelData.order;
+        const kanjiForLevel = kanjiDb.filter(k => getJLPTLevel(k.grade) === jlptNum);
+        const totalKanji = levelData.count || kanjiForLevel.length;
+        subtitle = `${totalKanji} kanji`;
+    }
     
     mainContent.innerHTML = `
-        <div style="display:flex;flex-direction:column;height:100%;gap:0">
-            <div style="padding:16px;border-bottom:1px solid var(--border);background:var(--surface)">
-                <div style="font-size:24px;font-weight:bold;margin-bottom:8px">${levelData.label_full}</div>
-                <div style="font-size:13px;color:var(--gray)">${levelData.description}</div>
+        <div class="cat-header">
+            <button class="back-btn" onclick="${backFn}()">←</button>
+            <div class="cat-header-info">
+                <div class="cat-header-title">${catLabel} ${levelData.label}</div>
+                <div class="cat-header-sub">${subtitle}</div>
             </div>
-            <div style="display:flex;gap:0;border-bottom:1px solid var(--border)">
-                ${tabs}
-            </div>
-            <div id="category-content" style="flex:1;overflow-y:auto;padding:16px">
-                <div style="text-align:center;color:var(--gray);margin-top:40px">
-                    <div class="spinner" style="margin-bottom:16px"></div>
-                    Chargement…
-                </div>
+        </div>
+        <div id="category-content" style="padding:16px">
+            <div style="text-align:center;color:var(--gray);margin-top:40px">
+                <div class="spinner" style="margin-bottom:16px"></div>
+                Chargement…
             </div>
         </div>`;
     
-    // Charger la première catégorie par défaut (kanji)
-    if (levelData.categories.length > 0) {
-        loadJLPTCategory(levelId, levelData.categories[0]);
-    }
+    loadJLPTCategory(levelId, category);
 }
 
 async function loadJLPTCategory(levelId, category) {
@@ -1234,17 +1242,6 @@ async function loadJLPTCategory(levelId, category) {
         } else if (category === 'grammar') {
             showGrammarHome(levelId, data, examples);
         }
-        
-        // Marquer l'onglet comme actif
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            if (btn.dataset.category === category) {
-                btn.style.borderBottomColor = 'var(--accent)';
-                btn.style.color = '#fff';
-            } else {
-                btn.style.borderBottomColor = 'transparent';
-                btn.style.color = 'var(--gray)';
-            }
-        });
         
     } catch (e) {
         container.innerHTML = `<div style="color:#e55;font-size:13px;padding:20px;text-align:center">Erreur : ${e.message}</div>`;
@@ -2618,7 +2615,7 @@ async function showNiveauxScreen() {
         }
         
         return `
-            <div class="niveaux-card" onclick="currentJLPTLevel='${levelId}'; showLevelCategorySelector('${levelId}'); loadJLPTCategory('${levelId}','vocab')">
+            <div class="niveaux-card" onclick="showCategoryDirect('${levelId}','vocab')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -2763,7 +2760,7 @@ async function showGrammarNiveauxScreen() {
         }
         
         return `
-            <div class="niveaux-card" onclick="currentJLPTLevel='${levelId}'; showLevelCategorySelector('${levelId}'); loadJLPTCategory('${levelId}','grammar')">
+            <div class="niveaux-card" onclick="showCategoryDirect('${levelId}','grammar')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -2800,7 +2797,7 @@ function showKanjiNiveauxScreen() {
         const avgMastery = kanjiForLevel.length > 0 ? Math.round(totalMastery / kanjiForLevel.length) : 0;
         
         return `
-            <div class="niveaux-card" onclick="currentJLPTLevel='${levelId}'; showLevelCategorySelector('${levelId}'); loadJLPTCategory('${levelId}','kanji')">
+            <div class="niveaux-card" onclick="showCategoryDirect('${levelId}','kanji')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>

@@ -743,14 +743,14 @@
 /* ══════════════════════════════════════════════════
    BOTTOM NAV BAR (façon Hibi)
 ══════════════════════════════════════════════════ */
-#bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: rgba(14,14,18,0.97); backdrop-filter: blur(10px); border-top: 1px solid var(--border); display: flex; z-index: 950; }
+#bottom-nav { position: fixed; bottom: 14px; left: 14px; right: 14px; height: 60px; background: var(--surface); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); display: flex; z-index: 950; }
 .bnav-btn { flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--gray); cursor: pointer; }
 .bnav-btn.active { color: var(--accent); }
 .bnav-icon { font-size: 20px; }
 .bnav-label { font-size: 9px; }
 
 /* Laisser de la place au-dessus de la barre du bas pour ne pas masquer le contenu */
-.container#main-content { padding-bottom: 72px; }
+.container#main-content { padding-bottom: 96px; }
 
 /* ══════════════════════════════════════════════════
    ÉCRAN "APPRENDRE"
@@ -771,3 +771,11 @@
 .apprendre-card-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
 
 .review-type-tag { align-self: center; font-size: 11px; color: var(--accent-muted); font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ══════════════════════════════════════════════════
+   EN-TÊTE DE CATÉGORIE (Vocabulaire/Grammaire/Kanji N5...) — discret, façon Hibi
+══════════════════════════════════════════════════ */
+.cat-header { padding: 16px 16px 8px; }
+.cat-header .back-btn { margin-bottom: 14px; }
+.cat-header-title { font-size: 18px; color: #fff; font-weight: bold; text-align: center; }
+.cat-header-sub { font-size: 12px; color: var(--gray); text-align: center; margin-top: 4px; }
