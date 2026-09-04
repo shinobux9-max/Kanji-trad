@@ -2139,7 +2139,11 @@ function showVocabDetail(wordId, allWords = []) {
 // Convertit le markdown **gras** en <span> stylé (gras + couleur ambre) — utilisée par Grammaire ET Vocabulaire
 function mdBold(text) {
     if (!text) return text || '';
-    return text.replace(/\*\*(.+?)\*\*/g, '<span class="md-bold">$1</span>');
+    // Gras : **texte** — traité en premier pour ne pas être cassé par la règle italique
+    let result = text.replace(/\*\*(.+?)\*\*/g, '<span class="md-bold">$1</span>');
+    // Italique : *texte* (astérisque simple, convention markdown standard)
+    result = result.replace(/\*(.+?)\*/g, '<em class="md-italic">$1</em>');
+    return result;
 }
 
 function getFamilyColor(badgeText) {

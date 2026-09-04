@@ -580,6 +580,7 @@
 
 /* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
 .md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
+.md-italic { font-style: italic; color: var(--accent-muted); }
 
 /* ══════════════════════════════════════════════════
    RÉVISION SRS — bouton d'entrée + écran de session
