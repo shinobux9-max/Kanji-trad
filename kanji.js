@@ -1156,40 +1156,6 @@ function toggleSidebar(show) {
     if (overlay) overlay.classList.toggle('show', show);
 }
 
-function renderSidebar() {
-    const c = document.getElementById('grade-list');
-    if (!c) return; // sidebar retirée de l'interface
-    c.innerHTML = '';
-
-    // Si le mapping JLPT n'est pas chargé, afficher un message
-    if (!jlptMapping) {
-        c.innerHTML = '<div style="color:var(--gray);font-size:13px;padding:12px">Chargement des niveaux…</div>';
-        return;
-    }
-
-    // Afficher les niveaux JLPT
-    for (const [levelId, levelData] of Object.entries(jlptMapping.levels)) {
-        const item = document.createElement('div');
-        item.className = 'nav-grade-item';
-        
-        item.innerHTML = `
-            <div class="nav-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
-            <div class="nav-grade-text">
-                <div class="main">${levelData.label_full}</div>
-                <div class="sub">${levelData.count} kanji</div>
-            </div>`;
-
-        // Clic : charger le niveau JLPT et afficher le sélecteur de catégories
-        item.onclick = () => {
-            currentJLPTLevel = levelId;
-            showLevelCategorySelector(levelId);
-            toggleSidebar(false);
-        };
-
-        c.appendChild(item);
-    }
-}
-
 /* ══════════════════════════════════════════════════
    LEVEL CATEGORY SELECTOR — Onglets Kanji | Vocab | Grammar
 ══════════════════════════════════════════════════ */
@@ -4943,7 +4909,6 @@ async function init() {
         // Construction des structures internes
         buildCategories();
         buildSeries();
-        renderSidebar();
 
         // Affichage du dashboard : d'abord le HTML (showDashboard),
         // puis les barres de progression (renderDashboard)

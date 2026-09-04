@@ -60,29 +60,6 @@
     .search-hit-meaning { font-size: 14px; color: var(--text); }
     .search-hit-readings { font-size: 11px; color: var(--gray); margin-top: 2px; }
     .search-hit-badge { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: bold; color: white; }
-
-    /* ── SIDEBAR ─────────────────────── */
-    #sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: #141418; z-index: 2000; transition: left 0.28s cubic-bezier(.4,0,.2,1); overflow-y: auto; box-shadow: 8px 0 30px rgba(0,0,0,0.6); }
-    #sidebar.open { left: 0; }
-    #overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 1500; }
-    #overlay.show { display: block; }
-    .sidebar-header { padding: 28px 20px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
-    .sidebar-logo { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .nav-static { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 14px; transition: background 0.15s; }
-    .nav-static:active { background: var(--card); }
-    .nav-static .icon { width: 28px; text-align: center; font-size: 18px; }
-
-    /* Grade nav items */
-    .nav-grade-wrap { border-bottom: 1px solid var(--border); }
-    .nav-grade-item { display: flex; align-items: center; padding: 10px 16px; cursor: pointer; transition: background 0.15s; }
-    .nav-grade-item:active { background: var(--card); }
-    .nav-badge { width: 34px; height: 34px; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; flex-shrink: 0; font-family: 'Syne', sans-serif; }
-    .nav-grade-text { flex: 1; }
-    .nav-grade-text .main { font-size: 13px; font-weight: bold; }
-    .nav-grade-text .sub { font-size: 11px; color: var(--gray); margin-top: 1px; }
-    .nav-chev { color: var(--gray); font-size: 11px; padding: 6px; border-radius: 4px; transition: transform 0.2s, background 0.15s; }
-    .nav-chev:hover { background: var(--card); }
-    .nav-chev.open { transform: rotate(180deg); }
     .nav-submenu { display: none; background: rgba(0,0,0,0.2); }
     .nav-submenu.open { display: block; }
     .nav-sub-item { padding: 9px 16px 9px 62px; font-size: 12px; border-bottom: 1px solid rgba(42,42,56,0.5); cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--gray); transition: background 0.1s, color 0.1s; }
