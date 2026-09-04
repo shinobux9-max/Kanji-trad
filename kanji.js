@@ -314,7 +314,41 @@ function gradeReview(itemId, quality) {
         nextReviewDate: nextReviewDate.toISOString()
     };
     saveSrsInfo(itemId, srsData);
+    recordReviewEvent(quality);
     return srsData;
+}
+
+/* ══════════════════════════════════════════════════
+   STATS PERSISTANTES (réussite globale, sessions, cartes du mois)
+   Alimentées automatiquement à chaque gradeReview(), peu importe le type (vocab/grammaire/kanji/mixte)
+══════════════════════════════════════════════════ */
+const STATS_KEY = 'kanji_trad_stats';
+
+function getStats() {
+    const stored = localStorage.getItem(STATS_KEY);
+    return stored ? JSON.parse(stored) : { totalReviews: 0, successCount: 0, sessionsCount: 0, monthKey: null, monthCount: 0 };
+}
+
+function saveStats(s) {
+    localStorage.setItem(STATS_KEY, JSON.stringify(s));
+}
+
+function recordReviewEvent(quality) {
+    const s = getStats();
+    s.totalReviews++;
+    if (quality >= 2) s.successCount++; // Bien ou Facile = réussite
+    
+    const currentMonthKey = new Date().toISOString().slice(0, 7);
+    if (s.monthKey !== currentMonthKey) { s.monthKey = currentMonthKey; s.monthCount = 0; }
+    s.monthCount++;
+    
+    saveStats(s);
+}
+
+function recordSessionCompleted() {
+    const s = getStats();
+    s.sessionsCount++;
+    saveStats(s);
 }
 
 // Construit la file de révision : cartes dues en priorité, puis un quota de nouvelles cartes
@@ -410,6 +444,92 @@ function recordDailyActivity() {
     
     saveStreakData(streak);
     return streak;
+}
+
+function buildMonthCalendar(streak) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    let startOffset = firstDay.getDay() - 1; // 0=lundi...6=dimanche
+    if (startOffset < 0) startOffset = 6;
+    
+    const dayLabels = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    const headerHtml = dayLabels.map(d => `<div class="cal-day-label">${d}</div>`).join('');
+    
+    let cellsHtml = '';
+    for (let i = 0; i < startOffset; i++) {
+        cellsHtml += `<div class="cal-cell empty"></div>`;
+    }
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isActive = streak.activityDates.includes(dateStr);
+        const isToday = dateStr === todayStr();
+        const cls = `cal-cell${isActive ? ' active' : ''}${isToday ? ' today' : ''}`;
+        cellsHtml += `<div class="${cls}">${isActive ? '❀' : day}</div>`;
+    }
+    
+    return `<div class="cal-grid">${headerHtml}${cellsHtml}</div>`;
+}
+
+async function showProgressionDetail() {
+    history.pushState({ view: 'progression' }, '');
+    const streak = getStreakData();
+    const stats = getStats();
+    
+    // Stats vocab agrégées sur tous les niveaux ayant des données
+    const levels = ['n5', 'n4', 'n3', 'n2', 'n1'];
+    let vocabTotal = 0, vocabMastered = 0;
+    for (const lvl of levels) {
+        const vg = await getLevelVocabGrammarStats(lvl);
+        vocabTotal += vg.vocabTotal;
+        vocabMastered += vg.vocabMastered;
+    }
+    
+    const successPct = stats.totalReviews > 0 ? Math.round((stats.successCount / stats.totalReviews) * 100) : 0;
+    const currentMonthKey = new Date().toISOString().slice(0, 7);
+    const monthCount = stats.monthKey === currentMonthKey ? stats.monthCount : 0;
+    
+    document.getElementById('main-content').innerHTML = `
+        <div class="progression-page">
+            <button class="back-btn" onclick="navDashboard()">←</button>
+            <div class="progression-title">Ta progression</div>
+            <div class="progression-subtitle">${stats.sessionsCount} session${stats.sessionsCount > 1 ? 's' : ''} · ${streak.currentStreak} jour${streak.currentStreak > 1 ? 's' : ''} d'affilée</div>
+            
+            <div class="streak-detail-card">
+                <div class="streak-detail-label">SÉRIE ACTUELLE</div>
+                <div class="streak-detail-row">
+                    <div class="streak-detail-num">${streak.currentStreak}<span class="streak-detail-unit">jours</span></div>
+                    <div class="streak-detail-record">Record : ${streak.bestStreak} jours</div>
+                </div>
+                ${buildMonthCalendar(streak)}
+            </div>
+            
+            <div class="progression-stats-grid">
+                <div class="progression-stat-card">
+                    <div class="progression-stat-icon">📚</div>
+                    <div class="progression-stat-num">${vocabMastered}<span class="progression-stat-total">/${vocabTotal}</span></div>
+                    <div class="progression-stat-label">Mots maîtrisés</div>
+                </div>
+                <div class="progression-stat-card">
+                    <div class="progression-stat-icon">％</div>
+                    <div class="progression-stat-num">${successPct}<span class="progression-stat-total">%</span></div>
+                    <div class="progression-stat-label">Réussite</div>
+                </div>
+                <div class="progression-stat-card">
+                    <div class="progression-stat-icon">🗂️</div>
+                    <div class="progression-stat-num">${stats.sessionsCount}</div>
+                    <div class="progression-stat-label">Sessions</div>
+                </div>
+                <div class="progression-stat-card">
+                    <div class="progression-stat-icon">📅</div>
+                    <div class="progression-stat-num">${monthCount}</div>
+                    <div class="progression-stat-label">Cartes · ce mois</div>
+                </div>
+            </div>
+        </div>`;
 }
 
 function buildStreakDotsHtml(streak) {
@@ -1423,6 +1543,7 @@ function submitKanjiReviewGrade(quality) {
 }
 
 function renderKanjiReviewSummary() {
+    recordSessionCompleted();
     const container = document.getElementById('category-content');
     const r = kanjiReviewSession.results;
     const total = kanjiReviewSession.queue.length;
@@ -1701,6 +1822,7 @@ function submitReviewGrade(quality) {
 }
 
 function renderReviewSummary() {
+    recordSessionCompleted();
     const container = document.getElementById('category-content');
     const r = reviewSession.results;
     const total = reviewSession.queue.length;
@@ -1924,6 +2046,7 @@ function submitGrammarReviewGrade(quality) {
 }
 
 function renderGrammarReviewSummary() {
+    recordSessionCompleted();
     const container = document.getElementById('category-content');
     const r = grammarReviewSession.results;
     const total = grammarReviewSession.queue.length;
@@ -2538,7 +2661,6 @@ function showDashboard(isBack = false) {
     if (!isBack) history.pushState({ view: 'dashboard' }, '');
     
     const streak = getStreakData();
-    const lastActiveLabel = streak.lastActiveDate === todayStr() ? '今日' : (streak.lastActiveDate || '—');
     
     const hour = new Date().getHours();
     const greeting = hour < 5 ? 'Bonne nuit' : hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir';
@@ -2557,13 +2679,14 @@ function showDashboard(isBack = false) {
             <div class="dash-card dash-review-cta" id="dashboard-review-cta">
                 <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
             </div>
-            <div class="dash-card">
-                <div class="streak-info">
-                    <div><span class="streak-val">${streak.currentStreak}</span><span class="streak-label">Série actuelle 🔥</span></div>
-                    <div><span class="streak-val">${streak.bestStreak}</span><span class="streak-label">Meilleure série</span></div>
-                    <div><span class="streak-val">${lastActiveLabel}</span><span class="streak-label">Dernière étude</span></div>
+            <div class="dash-card streak-compact" onclick="showProgressionDetail()">
+                <div class="streak-compact-icon">続</div>
+                <div class="streak-compact-info">
+                    <div class="streak-compact-num">${streak.currentStreak} jour${streak.currentStreak > 1 ? 's' : ''}</div>
+                    <div class="streak-compact-sub">Série en cours</div>
                 </div>
-                <div class="dots-grid">${buildStreakDotsHtml(streak)}</div>
+                <div class="streak-compact-record">Record<br>${streak.bestStreak}j</div>
+                <span class="streak-compact-chevron">›</span>
             </div>
             <div class="dash-card">
                 <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
@@ -2997,6 +3120,7 @@ function submitMixedReviewGrade(quality) {
 }
 
 function renderMixedReviewSummary() {
+    recordSessionCompleted();
     const container = document.getElementById('category-content');
     const r = mixedReviewSession.results;
     const total = mixedReviewSession.queue.length;
@@ -4832,10 +4956,21 @@ async function renderDashboard() {
         const vocabSubRow = vg.vocabTotal > 0 ? buildProgRow('Vocabulaire', vg.vocabMastered, vg.vocabTotal, '📚') : '';
         const grammarSubRow = vg.grammarTotal > 0 ? buildProgRow('Grammaire', vg.grammarMastered, vg.grammarTotal, '📝') : '';
         
+        // % global : moyenne des composantes qui ont des données (kanji toujours dispo, vocab/grammaire si déployés)
+        const parts = [avgMastery];
+        if (vg.vocabTotal > 0) parts.push(Math.round((vg.vocabMastered / vg.vocabTotal) * 100));
+        if (vg.grammarTotal > 0) parts.push(Math.round((vg.grammarMastered / vg.grammarTotal) * 100));
+        const globalPct = Math.round(parts.reduce((a, b) => a + b, 0) / parts.length);
+        
+        const levelKey = `lvl-${levelDef.id}`;
         return `
             <div class="prog-level-card">
-                <div class="prog-level-title">${levelDef.label}</div>
-                <div class="prog-level-items">
+                <div class="prog-level-header" onclick="document.getElementById('${levelKey}').classList.toggle('open'); this.querySelector('.prog-level-arrow').classList.toggle('open')">
+                    <span class="prog-level-arrow">▶</span>
+                    <span class="prog-level-pct">${globalPct}%</span>
+                    <span class="prog-level-title">${levelDef.label}</span>
+                </div>
+                <div class="prog-level-items" id="${levelKey}">
                     ${kanjiSubRow}${vocabSubRow}${grammarSubRow}
                 </div>
             </div>

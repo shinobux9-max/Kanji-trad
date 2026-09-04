@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20250903_md_italic">
+    <link rel="stylesheet" href="kanji.css?v=20250903_progression_kanji_nav">
 </head>
 <body>
 
@@ -260,21 +260,21 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20250903_md_italic"></script>
+    <script src="kanji.js?v=20250903_progression_kanji_nav"></script>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->
     <div id="bottom-nav">
         <button class="bnav-btn" id="bnav-accueil" onclick="bottomNavGo('accueil')">
-            <span class="bnav-icon">🏠</span><span class="bnav-label">Accueil</span>
+            <span class="bnav-kanji">家</span><span class="bnav-label">Accueil</span>
         </button>
         <button class="bnav-btn" id="bnav-recherche" onclick="bottomNavGo('recherche')">
-            <span class="bnav-icon">🔍</span><span class="bnav-label">Recherche</span>
+            <span class="bnav-kanji">探</span><span class="bnav-label">Recherche</span>
         </button>
         <button class="bnav-btn" id="bnav-apprendre" onclick="bottomNavGo('apprendre')">
-            <span class="bnav-icon">📖</span><span class="bnav-label">Apprendre</span>
+            <span class="bnav-kanji">学</span><span class="bnav-label">Apprendre</span>
         </button>
         <button class="bnav-btn" id="bnav-lexique" onclick="bottomNavGo('lexique')">
-            <span class="bnav-icon">📚</span><span class="bnav-label">Lexique</span>
+            <span class="bnav-kanji">語</span><span class="bnav-label">Lexique</span>
         </button>
     </div>
 
@@ -285,7 +285,7 @@
             // Déterminer le path de base (pour GitHub Pages, c'est /Kanji-trad/)
             const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
             
-            navigator.serviceWorker.register('sw.js?v=20250903_md_italic', { scope: basePath })
+            navigator.serviceWorker.register('sw.js?v=20250903_progression_kanji_nav', { scope: basePath })
                 .then(registration => {
                     console.log('✅ Service Worker registré:', registration);
                     
