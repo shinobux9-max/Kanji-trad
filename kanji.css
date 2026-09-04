@@ -603,3 +603,50 @@
 
 /* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
 .md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
+
+/* ══════════════════════════════════════════════════
+   RÉVISION SRS — bouton d'entrée + écran de session
+══════════════════════════════════════════════════ */
+.vocab-review-cta { width: 100%; padding: 14px; background: var(--accent); color: var(--bg); border: none; border-radius: 12px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px; }
+.vocab-review-cta:hover { background: var(--accent-muted); }
+.vocab-review-badge { background: rgba(13,17,23,0.25); padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+
+.review-page { display: flex; flex-direction: column; gap: 20px; padding: 12px 0; align-items: center; }
+
+.review-header { width: 100%; display: flex; align-items: center; gap: 12px; }
+.review-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.review-progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.review-progress-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
+.review-progress-text { font-size: 12px; color: var(--gray); flex-shrink: 0; min-width: 50px; text-align: right; }
+
+.review-card { width: 100%; max-width: 340px; min-height: 280px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; cursor: pointer; text-align: center; gap: 12px; }
+.review-card.flipped { cursor: default; justify-content: flex-start; }
+
+.review-word { font-size: 44px; color: #fff; font-weight: bold; line-height: 1.2; }
+.review-reading { font-size: 14px; color: var(--accent); }
+.review-tap-hint { font-size: 11px; color: var(--gray); margin-top: 16px; }
+
+.review-card-back { display: flex; flex-direction: column; gap: 14px; width: 100%; margin-top: 8px; }
+.review-romaji { font-size: 13px; color: var(--gray); }
+.review-meaning { font-size: 18px; color: #fff; font-weight: 600; }
+.review-example { padding: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; text-align: left; }
+.review-example .example-jp { font-size: 13px; color: #fff; margin-bottom: 4px; }
+.review-example .example-fr { font-size: 12px; color: var(--gray); }
+
+.review-grade-buttons { width: 100%; max-width: 340px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.grade-btn { padding: 12px 4px; border: none; border-radius: 8px; font-size: 11px; font-weight: bold; color: var(--bg); cursor: pointer; }
+.grade-again { background: #FB7185; }
+.grade-hard { background: #FBBF24; }
+.grade-good { background: #38BDF8; }
+.grade-easy { background: #4ADE80; }
+
+.review-summary { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 20px; text-align: center; }
+.review-summary-title { font-size: 22px; color: #fff; font-weight: bold; }
+.review-summary-count { font-size: 13px; color: var(--gray); }
+.review-summary-stats { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; align-self: stretch; }
+.review-stat { font-size: 13px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.review-stat-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.review-stat-dot.again { background: #FB7185; }
+.review-stat-dot.hard { background: #FBBF24; }
+.review-stat-dot.good { background: #38BDF8; }
+.review-stat-dot.easy { background: #4ADE80; }

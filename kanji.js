@@ -261,6 +261,83 @@ function getItemStatus(itemId) {
 }
 
 /* ══════════════════════════════════════════════════
+   SRS (Spaced Repetition System) — SM-2 allégé
+   Stocké dans le même objet que le tracking (clé "srs" par item),
+   donc aucune migration nécessaire : les entrées sans srs sont
+   simplement traitées comme "nouvelles".
+══════════════════════════════════════════════════ */
+const SRS_NEW_PER_SESSION = 10; // nombre max de nouvelles cartes introduites par session de révision
+
+function getSrsInfo(itemId) {
+    return getTracking()[itemId]?.srs || null;
+}
+
+function saveSrsInfo(itemId, srsData) {
+    const tracking = getTracking();
+    if (!tracking[itemId]) tracking[itemId] = {};
+    tracking[itemId].srs = srsData;
+    saveTracking(tracking);
+}
+
+// quality : 0 = Encore (échec), 1 = Difficile, 2 = Bien, 3 = Facile
+function gradeReview(itemId, quality) {
+    const now = new Date();
+    const existing = getSrsInfo(itemId) || { interval: 0, easeFactor: 2.5, repetitions: 0 };
+    let { interval, easeFactor, repetitions } = existing;
+    
+    if (quality === 0) {
+        // Échec : on repart de zéro, ease pénalisée, révision dès demain
+        repetitions = 0;
+        interval = 1;
+        easeFactor = Math.max(1.3, easeFactor - 0.2);
+    } else {
+        repetitions += 1;
+        if (quality === 1) { // Difficile
+            interval = repetitions === 1 ? 1 : Math.round(interval * 1.2);
+            easeFactor = Math.max(1.3, easeFactor - 0.15);
+        } else if (quality === 2) { // Bien
+            interval = repetitions === 1 ? 1 : (repetitions === 2 ? 3 : Math.round(interval * easeFactor));
+        } else { // Facile
+            interval = repetitions === 1 ? 2 : (repetitions === 2 ? 4 : Math.round(interval * easeFactor * 1.3));
+            easeFactor += 0.15;
+        }
+    }
+    
+    const nextReviewDate = new Date(now);
+    nextReviewDate.setDate(nextReviewDate.getDate() + interval);
+    
+    const srsData = {
+        interval, easeFactor, repetitions,
+        lastReviewDate: now.toISOString(),
+        nextReviewDate: nextReviewDate.toISOString()
+    };
+    saveSrsInfo(itemId, srsData);
+    return srsData;
+}
+
+// Construit la file de révision : cartes dues en priorité, puis un quota de nouvelles cartes
+function buildDueQueue(items) {
+    const now = new Date();
+    const due = [];
+    const fresh = [];
+    
+    items.forEach(item => {
+        const srs = getSrsInfo(item.id);
+        if (!srs) {
+            fresh.push(item);
+        } else if (new Date(srs.nextReviewDate) <= now) {
+            due.push(item);
+        }
+    });
+    
+    return [...due, ...fresh.slice(0, SRS_NEW_PER_SESSION)];
+}
+
+function countDueItems(items) {
+    return buildDueQueue(items).length;
+}
+
+/* ══════════════════════════════════════════════════
    WEB SPEECH API - Prononciation
 ══════════════════════════════════════════════════ */
 function speakText(text, lang = 'ja-JP') {
@@ -1153,6 +1230,125 @@ function displayKanjiList(levelId, data) {
         </div>`;
 }
 
+/* ══════════════════════════════════════════════════
+   ÉCRAN DE RÉVISION VOCABULAIRE (flashcard + SRS)
+══════════════════════════════════════════════════ */
+let reviewSession = null; // { queue: [...], index: 0, results: {again,hard,good,easy}, flipped: false }
+
+function startVocabReview() {
+    const data = vocabHomeData?.data || [];
+    const queue = buildDueQueue(data);
+    
+    if (queue.length === 0) {
+        alert('Rien à réviser pour le moment ! 🎉');
+        return;
+    }
+    
+    reviewSession = {
+        queue,
+        index: 0,
+        results: { again: 0, hard: 0, good: 0, easy: 0 },
+        flipped: false
+    };
+    renderReviewScreen();
+}
+
+function renderReviewScreen() {
+    const container = document.getElementById('category-content');
+    const session = reviewSession;
+    
+    if (!session || session.index >= session.queue.length) {
+        renderReviewSummary();
+        return;
+    }
+    
+    const word = session.queue[session.index];
+    const meanings = word.meanings;
+    const primaryMeaning = (meanings && typeof meanings === 'object' && !Array.isArray(meanings))
+        ? (meanings.primary || 'Sens')
+        : (Array.isArray(meanings) ? meanings[0] : meanings) || 'Sens';
+    
+    const progress = session.index + 1;
+    const total = session.queue.length;
+    const flipped = session.flipped;
+    
+    let html = `<div class="review-page">
+        <div class="review-header">
+            <button class="back-btn" onclick="reviewSession = null; displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)">✕</button>
+            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
+            <div class="review-progress-text">${progress} / ${total}</div>
+        </div>
+        
+        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipReviewCard()'}">
+            <div class="review-card-front">
+                <div class="review-word">${word.word || ''}</div>
+                ${flipped ? `<div class="review-reading">${word.reading || ''}</div>` : ''}
+            </div>
+            ${flipped ? `
+                <div class="review-card-back">
+                    <div class="review-romaji">${word.romaji || ''}</div>
+                    <div class="review-meaning">${mdBold(primaryMeaning)}</div>
+                    ${word.example && word.example.japanese ? `
+                        <div class="review-example">
+                            <div class="example-jp">${mdBold(word.example.japanese)}</div>
+                            <div class="example-fr">${mdBold(word.example.french || '')}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+        </div>
+        
+        ${flipped ? `
+            <div class="review-grade-buttons">
+                <button class="grade-btn grade-again" onclick="submitReviewGrade(0)">Encore</button>
+                <button class="grade-btn grade-hard" onclick="submitReviewGrade(1)">Difficile</button>
+                <button class="grade-btn grade-good" onclick="submitReviewGrade(2)">Bien</button>
+                <button class="grade-btn grade-easy" onclick="submitReviewGrade(3)">Facile</button>
+            </div>
+        ` : ''}
+    </div>`;
+    
+    container.innerHTML = html;
+}
+
+function flipReviewCard() {
+    if (!reviewSession) return;
+    reviewSession.flipped = true;
+    renderReviewScreen();
+}
+
+function submitReviewGrade(quality) {
+    if (!reviewSession) return;
+    const word = reviewSession.queue[reviewSession.index];
+    gradeReview(word.id, quality);
+    
+    const labels = ['again', 'hard', 'good', 'easy'];
+    reviewSession.results[labels[quality]]++;
+    
+    reviewSession.index++;
+    reviewSession.flipped = false;
+    renderReviewScreen();
+}
+
+function renderReviewSummary() {
+    const container = document.getElementById('category-content');
+    const r = reviewSession.results;
+    const total = reviewSession.queue.length;
+    
+    container.innerHTML = `<div class="review-summary">
+        <div class="review-summary-title">Session terminée ! 🎉</div>
+        <div class="review-summary-count">${total} carte${total > 1 ? 's' : ''} révisée${total > 1 ? 's' : ''}</div>
+        <div class="review-summary-stats">
+            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
+            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
+            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
+            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
+        </div>
+        <button class="revise-btn" style="margin-top:20px;" onclick="reviewSession = null; displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)">Retour au vocabulaire</button>
+    </div>`;
+    reviewSession = null;
+}
+
 function displayVocabList(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
@@ -1175,8 +1371,14 @@ function displayVocabList(levelId, data, examples = null) {
     // Trier les catégories
     const sortedCats = Object.keys(grouped).sort();
     
+    const dueCount = countDueItems(data);
+    
     // Construire l'HTML avec boxes
     let html = `<div class="vocab-container">`;
+    
+    html += `<button class="vocab-review-cta" onclick="startVocabReview()">
+        🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+    </button>`;
     
     html += sortedCats.map(cat => {
         const label = VOCAB_CATEGORY_MAP[cat] || `📌 ${cat}`;
