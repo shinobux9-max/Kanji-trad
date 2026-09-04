@@ -650,3 +650,40 @@
 .review-stat-dot.hard { background: #FBBF24; }
 .review-stat-dot.good { background: #38BDF8; }
 .review-stat-dot.easy { background: #4ADE80; }
+
+/* ══════════════════════════════════════════════════
+   RÉVISION — Exercices QCM et Trou à combler (cloze)
+══════════════════════════════════════════════════ */
+.review-qcm-card, .review-cloze-card { justify-content: center; gap: 16px; cursor: default; }
+.review-quiz-instruction { font-size: 12px; color: var(--gray); margin-top: 8px; }
+
+.review-options { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 10px; }
+.review-options-particles { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+
+.review-option-btn { padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 14px; cursor: pointer; text-align: left; transition: border-color 0.15s; }
+.review-options-particles .review-option-btn { flex: 1 1 70px; text-align: center; font-size: 16px; font-weight: bold; }
+.review-option-btn:hover:not(:disabled) { border-color: var(--accent); }
+.review-option-btn:disabled { cursor: default; }
+.review-option-btn.correct { background: rgba(74,222,128,0.15); border-color: #4ADE80; color: #4ADE80; font-weight: bold; }
+.review-option-btn.incorrect { background: rgba(251,113,133,0.15); border-color: #FB7185; color: #FB7185; }
+
+.review-continue-btn { width: 100%; max-width: 340px; padding: 14px; background: var(--accent); color: var(--bg); border: none; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; }
+.review-continue-btn:hover { background: var(--accent-muted); }
+
+.cloze-sentence { font-size: 20px; color: #fff; line-height: 1.8; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.cloze-blank { display: inline-block; color: var(--accent); font-weight: bold; }
+.cloze-blank-filled { display: inline-block; font-weight: bold; padding: 0 4px; border-radius: 4px; }
+.cloze-blank-filled.correct { color: #4ADE80; }
+.cloze-blank-filled.incorrect { color: #FB7185; text-decoration: line-through; }
+.review-example-fr-only { font-size: 13px; color: var(--gray); margin-top: 8px; }
+
+/* ══════════════════════════════════════════════════
+   DASHBOARD — CTA "Réviser aujourd'hui"
+══════════════════════════════════════════════════ */
+.dash-review-cta { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.08)); border: 1px solid rgba(0,229,255,0.3); text-align: center; padding: 20px; }
+.review-cta-label { font-size: 11px; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 8px; }
+.review-cta-count { font-size: 40px; color: #fff; font-weight: bold; line-height: 1.1; }
+.review-cta-sub { font-size: 12px; color: var(--gray); margin-bottom: 14px; }
+.review-cta-btn { padding: 12px 24px; background: var(--accent); color: var(--bg); border: none; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; }
+.review-cta-btn:hover { background: var(--accent-muted); }
+.review-cta-empty { font-size: 14px; color: var(--text); padding: 8px 0; }

@@ -2158,6 +2158,9 @@ function showDashboard(isBack = false) {
                     Bienvenue !<br>Choisissez une catégorie pour commencer.
                 </div>
             </div>
+            <div class="dash-card dash-review-cta" id="dashboard-review-cta">
+                <div style="color:var(--gray);font-size:12px">Chargement des révisions…</div>
+            </div>
             <div class="dash-card">
                 <div class="streak-info">
                     <div><span class="streak-val">${streak.currentStreak}</span><span class="streak-label">Série actuelle 🔥</span></div>
@@ -2173,6 +2176,7 @@ function showDashboard(isBack = false) {
         </div>`;
     // Appel de la fonction de progression si nécessaire ici
     if (typeof renderDashboard === 'function') renderDashboard();
+    renderDashboardReviewCta();
 }
 
 /* ══════════════════════════════════════════════════
@@ -3798,20 +3802,41 @@ function getKanjiMastery(kanjiChar) {
 // Cache des stats vocab/grammaire par niveau, pour éviter de refetch à chaque ouverture du dashboard
 const levelStatsCache = {};
 
+// Cache partagé des données brutes vocab (réutilisé par le CTA de révision ET les stats du dashboard)
+const vocabDataCache = {};
+
+async function getLevelVocabData(levelId) {
+    if (levelId in vocabDataCache) return vocabDataCache[levelId];
+    
+    try {
+        const res = await fetch(`./data/${levelId}/vocab.json`);
+        if (!res.ok) { vocabDataCache[levelId] = null; return null; }
+        const data = await res.json();
+        
+        let examples = null;
+        try {
+            const exRes = await fetch(`./data/${levelId}/exemples.json`);
+            if (exRes.ok) examples = await exRes.json();
+        } catch (e) { /* pas d'exemples, tant pis */ }
+        
+        vocabDataCache[levelId] = { data, examples };
+    } catch (e) {
+        vocabDataCache[levelId] = null;
+    }
+    return vocabDataCache[levelId];
+}
+
 async function getLevelVocabGrammarStats(levelId) {
     if (levelStatsCache[levelId]) return levelStatsCache[levelId];
     
     const tracking = getTracking();
     const stats = { vocabTotal: 0, vocabMastered: 0, grammarTotal: 0, grammarMastered: 0 };
     
-    try {
-        const res = await fetch(`./data/${levelId}/vocab.json`);
-        if (res.ok) {
-            const vocab = await res.json();
-            stats.vocabTotal = vocab.length;
-            stats.vocabMastered = vocab.filter(w => tracking[w.id]?.status === 'mastered').length;
-        }
-    } catch (e) { /* niveau pas encore disponible, on garde 0 */ }
+    const vd = await getLevelVocabData(levelId);
+    if (vd && vd.data) {
+        stats.vocabTotal = vd.data.length;
+        stats.vocabMastered = vd.data.filter(w => tracking[w.id]?.status === 'mastered').length;
+    }
     
     try {
         const res = await fetch(`./data/${levelId}/grammar.json`);
@@ -3824,6 +3849,57 @@ async function getLevelVocabGrammarStats(levelId) {
     
     levelStatsCache[levelId] = stats;
     return stats;
+}
+
+// Cumule les cartes dues sur tous les niveaux ayant du vocabulaire déployé
+async function getDashboardDueCount() {
+    const levels = ['n5', 'n4', 'n3', 'n2', 'n1'];
+    let total = 0;
+    let firstLevelWithDue = null;
+    
+    for (const lvl of levels) {
+        const vd = await getLevelVocabData(lvl);
+        if (vd && vd.data) {
+            const due = countDueItems(vd.data);
+            total += due;
+            if (due > 0 && !firstLevelWithDue) firstLevelWithDue = lvl;
+        }
+    }
+    return { total, firstLevelWithDue };
+}
+
+async function renderDashboardReviewCta() {
+    const el = document.getElementById('dashboard-review-cta');
+    if (!el) return;
+    
+    const { total, firstLevelWithDue } = await getDashboardDueCount();
+    
+    if (total === 0) {
+        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
+        return;
+    }
+    
+    el.innerHTML = `
+        <div class="review-cta-label">RÉVISER AUJOURD'HUI</div>
+        <div class="review-cta-count">${total}</div>
+        <div class="review-cta-sub">mot${total > 1 ? 's' : ''} à revoir</div>
+        <button class="review-cta-btn" onclick="startDashboardReview('${firstLevelWithDue}')">Commencer →</button>
+    `;
+}
+
+// Lance une session de révision directement depuis le dashboard (sans passer par les onglets de niveau)
+async function startDashboardReview(levelId) {
+    const vd = await getLevelVocabData(levelId);
+    if (!vd || !vd.data) {
+        alert("Aucune donnée de vocabulaire disponible pour ce niveau.");
+        return;
+    }
+    
+    vocabHomeData = { levelId, data: vd.data, examples: vd.examples };
+    currentLevelId = levelId;
+    
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    startVocabReview();
 }
 
 function buildProgRow(label, done, total) {
