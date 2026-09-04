@@ -339,6 +339,16 @@ function countDueItems(items) {
     return buildDueQueue(items).length;
 }
 
+// Score approximatif 0-100 dérivé du SRS (répétitions + facilité), pour affichage visuel uniquement.
+// Ce n'est PAS un vrai score de rétention scientifique, juste une approximation cohérente.
+function getSrsConfidencePct(itemId) {
+    const srs = getSrsInfo(itemId);
+    if (!srs) return null; // jamais révisé
+    const repScore = Math.min(srs.repetitions * 15, 70);
+    const easeScore = Math.min(Math.max((srs.easeFactor - 1.3) / (2.5 - 1.3), 0), 1) * 30;
+    return Math.min(100, Math.round(repScore + easeScore));
+}
+
 /* ══════════════════════════════════════════════════
    STREAK (série de jours consécutifs)
 ══════════════════════════════════════════════════ */
@@ -2001,19 +2011,29 @@ function displayVocabList(levelId, data, examples = null) {
                 </div>
                 
                 <div class="vocab-category-content" id="${catId}">
-                    ${words.map(word => `
-                        <div class="vocab-word-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
-                            <div class="vocab-word-jp">${word.word || ''}</div>
-                            <div class="vocab-word-reading">${word.reading || ''}</div>
-                            <div class="vocab-word-meaning">${(() => {
-                                const m = word.meanings;
-                                if (Array.isArray(m)) return m.join(' • ');
-                                if (m && typeof m === 'object') return m.primary || '';
-                                return m || '';
-                            })()}</div>
-                            <div class="vocab-word-type">${word.type || ''}</div>
-                        </div>
-                    `).join('')}
+                    ${words.map(word => {
+                        const meaningText = (() => {
+                            const m = word.meanings;
+                            if (Array.isArray(m)) return m.join(' • ');
+                            if (m && typeof m === 'object') return m.primary || '';
+                            return m || '';
+                        })();
+                        const confidence = getSrsConfidencePct(word.id);
+                        return `
+                        <div class="vocab-pill-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
+                            <div class="vocab-pill-badge" style="--pct:${confidence === null ? 0 : confidence}">
+                                <span>${confidence === null ? '–' : confidence}</span>
+                            </div>
+                            <div class="vocab-pill-left">
+                                <div class="vocab-pill-word">${word.word || ''}</div>
+                                <div class="vocab-pill-reading">${word.reading || ''}</div>
+                            </div>
+                            <div class="vocab-pill-right">
+                                <div class="vocab-pill-meaning">${meaningText}</div>
+                                <div class="vocab-pill-romaji">${word.romaji || ''}</div>
+                            </div>
+                        </div>`;
+                    }).join('')}
                 </div>
             </div>
         `;
@@ -2579,6 +2599,7 @@ function navDashboard() {
     document.getElementById('page-title').innerText = '漢字 Study';
     showDashboard();
     renderDashboard();
+    setActiveBottomNav('accueil');
 }
 function navKana() { toggleSidebar(false); loadKanas(); }
 function navNiveaux() { toggleSidebar(false); showNiveauxScreen(); }
@@ -2640,6 +2661,373 @@ async function showNiveauxScreen() {
     }));
     
     listEl.innerHTML = cardsHtml.join('');
+}
+
+/* ══════════════════════════════════════════════════
+   BARRE DE NAVIGATION EN BAS (façon Hibi)
+══════════════════════════════════════════════════ */
+function setActiveBottomNav(key) {
+    ['accueil', 'recherche', 'apprendre', 'lexique'].forEach(k => {
+        const btn = document.getElementById(`bnav-${k}`);
+        if (btn) btn.classList.toggle('active', k === key);
+    });
+}
+
+function bottomNavGo(target) {
+    setActiveBottomNav(target);
+    if (target === 'accueil') {
+        navDashboard();
+    } else if (target === 'recherche') {
+        toggleSearch();
+    } else if (target === 'apprendre') {
+        showApprendreScreen();
+    } else if (target === 'lexique') {
+        showNiveauxScreen();
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   ÉCRAN "APPRENDRE" (façon Hibi) — hub vers Grammaire / Kanji / Kana + révision mixte
+══════════════════════════════════════════════════ */
+async function showApprendreScreen() {
+    history.pushState({ view: 'apprendre' }, '');
+    document.getElementById('page-title').innerText = 'Apprendre';
+    const main = document.getElementById('main-content');
+    
+    main.innerHTML = `
+        <div class="apprendre-wrap">
+            <div class="apprendre-header">
+                <div class="apprendre-title-main">Apprendre</div>
+                <div class="apprendre-subtitle-main">Suis le fil, ou choisis toi-même ci-dessous.</div>
+            </div>
+            
+            <div class="apprendre-hero-card" id="apprendre-review-cta" onclick="startMixedReview()">
+                <div style="color:var(--gray);font-size:12px">Chargement…</div>
+            </div>
+            
+            <div class="apprendre-grid">
+                <div class="apprendre-card" onclick="showGrammarNiveauxScreen()">
+                    <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
+                    <div class="apprendre-card-title">Grammaire</div>
+                    <div class="apprendre-card-sub">Une règle = une fiche</div>
+                </div>
+                <div class="apprendre-card" onclick="showKanjiNiveauxScreen()">
+                    <div class="apprendre-card-icon" style="background:rgba(0,229,255,0.15);color:var(--accent);">字</div>
+                    <div class="apprendre-card-title">Kanji</div>
+                    <div class="apprendre-card-sub">Caractères et tracé</div>
+                </div>
+                <div class="apprendre-card" onclick="navKana()">
+                    <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
+                    <div class="apprendre-card-title">Kana</div>
+                    <div class="apprendre-card-sub">Hiragana & Katakana</div>
+                </div>
+            </div>
+        </div>`;
+    
+    renderApprendreReviewCta();
+}
+
+async function renderApprendreReviewCta() {
+    const el = document.getElementById('apprendre-review-cta');
+    if (!el) return;
+    
+    const queue = await getMixedDueQueue();
+    
+    if (queue.length === 0) {
+        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
+        el.onclick = null;
+        return;
+    }
+    
+    const counts = { vocab: 0, grammar: 0, kanji: 0 };
+    queue.forEach(e => counts[e.type]++);
+    
+    el.innerHTML = `
+        <div class="review-cta-label">RÉVISION DU JOUR</div>
+        <div class="review-cta-count">${queue.length}</div>
+        <div class="review-cta-sub">${counts.vocab} mot${counts.vocab !== 1 ? 's' : ''} · ${counts.grammar} leçon${counts.grammar !== 1 ? 's' : ''} · ${counts.kanji} kanji</div>
+    `;
+}
+
+/* ══════════════════════════════════════════════════
+   ÉCRAN "NIVEAUX GRAMMAIRE" (miroir de showNiveauxScreen, pour la grammaire)
+══════════════════════════════════════════════════ */
+async function showGrammarNiveauxScreen() {
+    history.pushState({ view: 'grammar-niveaux' }, '');
+    const mainContent = document.getElementById('main-content');
+    document.getElementById('page-title').innerText = 'Grammaire';
+    
+    if (!jlptMapping) {
+        mainContent.innerHTML = '<div style="padding:20px;color:var(--gray)">Chargement des niveaux…</div>';
+        return;
+    }
+    
+    mainContent.innerHTML = `
+        <div class="niveaux-wrap">
+            <div class="niveaux-header">
+                <div class="niveaux-title-main">Grammaire</div>
+                <div class="niveaux-subtitle-main">Choisis ton niveau JLPT.</div>
+            </div>
+            <div id="niveaux-list">
+                <div style="padding:20px;text-align:center;color:var(--gray)"><div class="spinner"></div></div>
+            </div>
+        </div>`;
+    
+    const listEl = document.getElementById('niveaux-list');
+    const sortedLevels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
+    
+    const cardsHtml = await Promise.all(sortedLevels.map(async ([levelId, levelData]) => {
+        const vg = await getLevelVocabGrammarStats(levelId);
+        const hasData = vg.grammarTotal > 0;
+        const pct = hasData ? Math.round((vg.grammarMastered / vg.grammarTotal) * 100) : 0;
+        
+        if (!hasData) {
+            return `
+                <div class="niveaux-card locked">
+                    <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                    <div class="niveaux-info">
+                        <div class="niveaux-card-title">${levelData.label_full}</div>
+                        <div class="niveaux-card-sub">${levelData.description}</div>
+                    </div>
+                    <div class="niveaux-soon">Bientôt</div>
+                </div>`;
+        }
+        
+        return `
+            <div class="niveaux-card" onclick="currentJLPTLevel='${levelId}'; showLevelCategorySelector('${levelId}'); loadJLPTCategory('${levelId}','grammar')">
+                <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                <div class="niveaux-info">
+                    <div class="niveaux-card-title">${levelData.label_full}</div>
+                    <div class="niveaux-card-sub">${vg.grammarMastered} / ${vg.grammarTotal} leçons</div>
+                    <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
+                </div>
+                <div class="niveaux-pct">${pct}%</div>
+            </div>`;
+    }));
+    
+    listEl.innerHTML = cardsHtml.join('');
+}
+
+/* ══════════════════════════════════════════════════
+   ÉCRAN "NIVEAUX KANJI" (miroir, mais données déjà en mémoire via kanjiDb — pas de fetch)
+══════════════════════════════════════════════════ */
+function showKanjiNiveauxScreen() {
+    history.pushState({ view: 'kanji-niveaux' }, '');
+    const mainContent = document.getElementById('main-content');
+    document.getElementById('page-title').innerText = 'Kanji';
+    
+    if (!jlptMapping) {
+        mainContent.innerHTML = '<div style="padding:20px;color:var(--gray)">Chargement des niveaux…</div>';
+        return;
+    }
+    
+    const sortedLevels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
+    
+    const cardsHtml = sortedLevels.map(([levelId, levelData]) => {
+        const jlptNum = parseInt(levelData.label.replace('N', '')) || levelData.order;
+        const kanjiForLevel = kanjiDb.filter(k => getJLPTLevel(k.grade) === jlptNum);
+        const totalKanji = levelData.count || kanjiForLevel.length;
+        const totalMastery = kanjiForLevel.reduce((sum, k) => sum + getKanjiMastery(k.char), 0);
+        const avgMastery = kanjiForLevel.length > 0 ? Math.round(totalMastery / kanjiForLevel.length) : 0;
+        
+        return `
+            <div class="niveaux-card" onclick="currentJLPTLevel='${levelId}'; showLevelCategorySelector('${levelId}'); loadJLPTCategory('${levelId}','kanji')">
+                <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                <div class="niveaux-info">
+                    <div class="niveaux-card-title">${levelData.label_full}</div>
+                    <div class="niveaux-card-sub">${totalKanji} kanji · ${avgMastery}% en moyenne</div>
+                    <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${avgMastery}%;background:${levelData.color}"></div></div>
+                </div>
+                <div class="niveaux-pct">${avgMastery}%</div>
+            </div>`;
+    }).join('');
+    
+    mainContent.innerHTML = `
+        <div class="niveaux-wrap">
+            <div class="niveaux-header">
+                <div class="niveaux-title-main">Kanji</div>
+                <div class="niveaux-subtitle-main">Choisis ton niveau JLPT.</div>
+            </div>
+            <div id="niveaux-list">${cardsHtml}</div>
+        </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   RÉVISION MIXTE (Vocab + Grammaire + Kanji-flashcard, mélangés)
+   Les modes tracé kanji restent séparés (accessibles via Kanji → niveau → Réviser)
+══════════════════════════════════════════════════ */
+const grammarDataCache = {};
+const kanjiCharsCache = {};
+
+async function getLevelGrammarData(levelId) {
+    if (levelId in grammarDataCache) return grammarDataCache[levelId];
+    try {
+        const res = await fetch(`./data/${levelId}/grammar.json`);
+        grammarDataCache[levelId] = res.ok ? { data: await res.json() } : null;
+    } catch (e) {
+        grammarDataCache[levelId] = null;
+    }
+    return grammarDataCache[levelId];
+}
+
+async function getLevelKanjiChars(levelId) {
+    if (levelId in kanjiCharsCache) return kanjiCharsCache[levelId];
+    try {
+        const res = await fetch(`./data/${levelId}/kanji.json`);
+        if (!res.ok) { kanjiCharsCache[levelId] = null; return null; }
+        const data = await res.json();
+        kanjiCharsCache[levelId] = Array.isArray(data.chars) ? data.chars : null;
+    } catch (e) {
+        kanjiCharsCache[levelId] = null;
+    }
+    return kanjiCharsCache[levelId];
+}
+
+async function getMixedDueQueue() {
+    const levels = ['n5', 'n4', 'n3', 'n2', 'n1'];
+    let combined = [];
+    
+    for (const lvl of levels) {
+        const vd = await getLevelVocabData(lvl);
+        if (vd && vd.data) {
+            buildDueQueue(vd.data).forEach(w => combined.push({ type: 'vocab', item: w }));
+        }
+        
+        const gd = await getLevelGrammarData(lvl);
+        if (gd && gd.data) {
+            buildDueQueue(gd.data).forEach(l => combined.push({ type: 'grammar', item: l }));
+        }
+        
+        const chars = await getLevelKanjiChars(lvl);
+        if (chars) {
+            buildDueQueue(chars.map(c => ({ id: c }))).forEach(k => combined.push({ type: 'kanji', item: { char: k.id } }));
+        }
+    }
+    
+    return shuffleArray(combined);
+}
+
+let mixedReviewSession = null; // { queue: [{type, item}], index, results, flipped }
+
+async function startMixedReview() {
+    const queue = await getMixedDueQueue();
+    
+    if (queue.length === 0) {
+        alert("Rien à réviser aujourd'hui, tous types confondus ! 🎉");
+        return;
+    }
+    
+    mixedReviewSession = {
+        queue,
+        index: 0,
+        results: { again: 0, hard: 0, good: 0, easy: 0 },
+        flipped: false
+    };
+    
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderMixedReviewScreen();
+}
+
+function renderMixedReviewScreen() {
+    const container = document.getElementById('category-content');
+    const session = mixedReviewSession;
+    
+    if (!session || session.index >= session.queue.length) {
+        renderMixedReviewSummary();
+        return;
+    }
+    
+    const entry = session.queue[session.index];
+    const progress = session.index + 1;
+    const total = session.queue.length;
+    const flipped = session.flipped;
+    
+    let front = '', back = '', typeLabel = '', frontSize = 36;
+    
+    if (entry.type === 'vocab') {
+        const w = entry.item;
+        typeLabel = '📚 Vocabulaire';
+        front = w.word || '';
+        back = `<div class="review-romaji">${w.reading || ''} · ${w.romaji || ''}</div><div class="review-meaning">${mdBold(getPrimaryMeaning(w))}</div>`;
+    } else if (entry.type === 'grammar') {
+        const l = entry.item;
+        typeLabel = '📝 Grammaire';
+        front = l.item || l.pattern || '';
+        frontSize = 28;
+        back = `<div class="review-reading">${l.title || ''}</div><div class="review-romaji">${l.pattern || ''}</div>`;
+    } else if (entry.type === 'kanji') {
+        const char = entry.item.char;
+        const kanjiData = kanjiDb.find(k => k.char === char);
+        typeLabel = '🔤 Kanji';
+        front = char;
+        frontSize = 56;
+        const meanings = (kanjiData?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+        const on = kanjiData?.on || [];
+        const kun = kanjiData?.kun || [];
+        back = `${on.length ? `<div class="review-romaji">On : ${on.slice(0, 3).join('、')}</div>` : ''}${kun.length ? `<div class="review-romaji">Kun : ${kun.slice(0, 3).join('、')}</div>` : ''}<div class="review-meaning">${meanings.slice(0, 3).join(' / ') || '–'}</div>`;
+    }
+    
+    container.innerHTML = `<div class="review-page">
+        <div class="review-header">
+            <button class="back-btn" onclick="mixedReviewSession = null; showApprendreScreen()">✕</button>
+            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
+            <div class="review-progress-text">${progress} / ${total}</div>
+        </div>
+        <div class="review-type-tag">${typeLabel}</div>
+        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipMixedReviewCard()'}">
+            <div class="review-card-front">
+                <div class="review-word" style="font-size:${frontSize}px;">${front}</div>
+            </div>
+            ${flipped ? `<div class="review-card-back">${back}</div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+        </div>
+        ${flipped ? `
+            <div class="review-grade-buttons">
+                <button class="grade-btn grade-again" onclick="submitMixedReviewGrade(0)">Encore</button>
+                <button class="grade-btn grade-hard" onclick="submitMixedReviewGrade(1)">Difficile</button>
+                <button class="grade-btn grade-good" onclick="submitMixedReviewGrade(2)">Bien</button>
+                <button class="grade-btn grade-easy" onclick="submitMixedReviewGrade(3)">Facile</button>
+            </div>
+        ` : ''}
+    </div>`;
+}
+
+function flipMixedReviewCard() {
+    if (!mixedReviewSession) return;
+    mixedReviewSession.flipped = true;
+    renderMixedReviewScreen();
+}
+
+function submitMixedReviewGrade(quality) {
+    if (!mixedReviewSession) return;
+    const entry = mixedReviewSession.queue[mixedReviewSession.index];
+    const id = entry.type === 'kanji' ? entry.item.char : entry.item.id;
+    gradeReview(id, quality);
+    
+    const labels = ['again', 'hard', 'good', 'easy'];
+    mixedReviewSession.results[labels[quality]]++;
+    
+    mixedReviewSession.index++;
+    mixedReviewSession.flipped = false;
+    renderMixedReviewScreen();
+}
+
+function renderMixedReviewSummary() {
+    const container = document.getElementById('category-content');
+    const r = mixedReviewSession.results;
+    const total = mixedReviewSession.queue.length;
+    
+    container.innerHTML = `<div class="review-summary">
+        <div class="review-summary-title">Session terminée ! 🎉</div>
+        <div class="review-summary-count">${total} carte${total > 1 ? 's' : ''} révisée${total > 1 ? 's' : ''} (vocab + grammaire + kanji)</div>
+        <div class="review-summary-stats">
+            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
+            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
+            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
+            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
+        </div>
+        <button class="revise-btn" style="margin-top:20px;" onclick="mixedReviewSession = null; showApprendreScreen()">Retour</button>
+    </div>`;
+    mixedReviewSession = null;
 }
 
 /* ── PAGE CATÉGORIE (Version épurée) ────────────────── */
@@ -4559,6 +4947,7 @@ async function init() {
         document.getElementById('page-title').innerText = '漢字 Study';
         showDashboard();
         renderDashboard();
+        setActiveBottomNav('accueil');
 
         console.log(`✅ ${kanjiDb.length} kanji chargés — ${seriesMap.size} séries créées`);
 
