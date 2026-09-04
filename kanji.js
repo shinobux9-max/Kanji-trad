@@ -1572,6 +1572,122 @@ function renderReviewSummary() {
     reviewSession = null;
 }
 
+/* ══════════════════════════════════════════════════
+   ÉCRAN DE RÉVISION GRAMMAIRE (flashcard + SRS, réutilise le même moteur générique)
+══════════════════════════════════════════════════ */
+let grammarReviewSession = null; // { queue: [lesson,...], index, results, flipped }
+
+function startGrammarReview() {
+    const data = grammarHomeData?.data || [];
+    const queue = buildDueQueue(data);
+    
+    if (queue.length === 0) {
+        alert('Rien à réviser pour le moment ! 🎉');
+        return;
+    }
+    
+    grammarReviewSession = {
+        queue,
+        index: 0,
+        results: { again: 0, hard: 0, good: 0, easy: 0 },
+        flipped: false
+    };
+    renderGrammarReviewScreen();
+}
+
+function renderGrammarReviewScreen() {
+    const container = document.getElementById('category-content');
+    const session = grammarReviewSession;
+    
+    if (!session || session.index >= session.queue.length) {
+        renderGrammarReviewSummary();
+        return;
+    }
+    
+    const lesson = session.queue[session.index];
+    const itemText = lesson.item || lesson.pattern || 'Formule';
+    const titleText = lesson.title || lesson.meaning || 'Sans titre';
+    const progress = session.index + 1;
+    const total = session.queue.length;
+    const flipped = session.flipped;
+    
+    // Premier exemple disponible pour illustrer, si présent
+    const firstExample = Array.isArray(lesson.examples) && lesson.examples.length > 0 ? lesson.examples[0] : null;
+    
+    container.innerHTML = `<div class="review-page">
+        <div class="review-header">
+            <button class="back-btn" onclick="grammarReviewSession = null; showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)">✕</button>
+            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
+            <div class="review-progress-text">${progress} / ${total}</div>
+        </div>
+        
+        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipGrammarReviewCard()'}">
+            <div class="review-card-front">
+                <div class="review-word" style="font-size:32px;">${itemText}</div>
+                ${flipped ? `<div class="review-reading">${titleText}</div>` : ''}
+            </div>
+            ${flipped ? `
+                <div class="review-card-back">
+                    <div class="review-romaji">${lesson.pattern || ''}</div>
+                    ${firstExample ? `
+                        <div class="review-example">
+                            <div class="example-jp">${mdBold(firstExample.japanese || '')}</div>
+                            <div class="example-fr">${mdBold(firstExample.french || '')}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+        </div>
+        
+        ${flipped ? `
+            <div class="review-grade-buttons">
+                <button class="grade-btn grade-again" onclick="submitGrammarReviewGrade(0)">Encore</button>
+                <button class="grade-btn grade-hard" onclick="submitGrammarReviewGrade(1)">Difficile</button>
+                <button class="grade-btn grade-good" onclick="submitGrammarReviewGrade(2)">Bien</button>
+                <button class="grade-btn grade-easy" onclick="submitGrammarReviewGrade(3)">Facile</button>
+            </div>
+        ` : ''}
+    </div>`;
+}
+
+function flipGrammarReviewCard() {
+    if (!grammarReviewSession) return;
+    grammarReviewSession.flipped = true;
+    renderGrammarReviewScreen();
+}
+
+function submitGrammarReviewGrade(quality) {
+    if (!grammarReviewSession) return;
+    const lesson = grammarReviewSession.queue[grammarReviewSession.index];
+    gradeReview(lesson.id, quality);
+    
+    const labels = ['again', 'hard', 'good', 'easy'];
+    grammarReviewSession.results[labels[quality]]++;
+    
+    grammarReviewSession.index++;
+    grammarReviewSession.flipped = false;
+    renderGrammarReviewScreen();
+}
+
+function renderGrammarReviewSummary() {
+    const container = document.getElementById('category-content');
+    const r = grammarReviewSession.results;
+    const total = grammarReviewSession.queue.length;
+    
+    container.innerHTML = `<div class="review-summary">
+        <div class="review-summary-title">Session terminée ! 🎉</div>
+        <div class="review-summary-count">${total} leçon${total > 1 ? 's' : ''} révisée${total > 1 ? 's' : ''}</div>
+        <div class="review-summary-stats">
+            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
+            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
+            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
+            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
+        </div>
+        <button class="revise-btn" style="margin-top:20px;" onclick="grammarReviewSession = null; showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)">Retour à la grammaire</button>
+    </div>`;
+    grammarReviewSession = null;
+}
+
 function displayVocabList(levelId, data, examples = null) {
     const container = document.getElementById('category-content');
     if (!Array.isArray(data)) {
@@ -1827,7 +1943,13 @@ function showGrammarHome(levelId, data, examples = null) {
     const sortedUnits = Object.keys(groupedByUnit)
         .sort((a, b) => Number(a) - Number(b));
     
+    const dueCount = countDueItems(data);
+    
     let html = `<div class="grammar-container">`;
+    
+    html += `<button class="vocab-review-cta" onclick="startGrammarReview()">
+        🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+    </button>`;
     
     html += sortedUnits.map((unitKey, unitIdx) => {
         const unit = groupedByUnit[unitKey];
