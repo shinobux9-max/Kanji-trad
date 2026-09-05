@@ -194,7 +194,7 @@
     .kana-cell.empty { background: transparent; border-color: transparent; cursor: default; }
 
     /* ── DETAIL ──────────────────────── */
-    #detail-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; display: none; flex-direction: column; }
+    #detail-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 3000; display: none; flex-direction: column; }
     .detail-content { flex: 1; overflow-y: auto; padding-top: 56px; }
 
     /* ── Bloc supérieur : 3 colonnes ── */
@@ -254,7 +254,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── QUIZ ────────────────────────── */
-    #quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4000; display: none; flex-direction: column; }
+    #quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4000; display: none; flex-direction: column; }
     .quiz-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); }
     .quiz-top-bar button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: 6px; border-radius: 8px; }
     .quiz-score-ok { display: flex; align-items: center; gap: 5px; background: #0b2e24; border: 1px solid var(--accent); border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9375rem; color: var(--accent); }
@@ -305,7 +305,7 @@
     .qfm-continue-btn:active { opacity: 0.85; }
 
     /* ── STROKE QUIZ ─────────────────── */
-    #stroke-quiz-view { position: fixed; inset: 0; background: var(--bg); z-index: 4500; display: none; flex-direction: column; }
+    #stroke-quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4500; display: none; flex-direction: column; }
     .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: 6px; border-radius: 8px; }
     #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
@@ -502,7 +502,7 @@
 
 .vocab-category-box { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
 
-.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid var(--border); border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
 .vocab-category-header:hover { background: rgba(0,229,255,0.18); }
 
 .vocab-category-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
@@ -884,7 +884,8 @@
 .apprendre-card, .vocab-detail-main-box, .vocab-meanings, .vocab-example-box,
 .vocab-nuance-box, .lesson-card-in-box, .vocab-word-card, .vocab-pill-card,
 .niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
-.review-mode-btn, .cat-header, .review-mode-selector .back-btn {
+.review-mode-btn, .cat-header, .review-mode-selector .back-btn,
+.review-option-btn, .kana-cell, .vocab-category-header, .kanji-grid-cell {
     box-shadow: var(--glow-cyan);
 }
 
@@ -910,3 +911,11 @@
 #ptr-indicator.ready { box-shadow: 0 0 12px rgba(0,229,255,0.4); }
 #ptr-indicator.loading { animation: ptr-spin 0.6s linear infinite; }
 @keyframes ptr-spin { to { transform: translateX(-50%) translateY(60px) rotate(360deg); } }
+
+/* ══════════════════════════════════════════════════
+   CASES DE KANJI (liste par niveau) — nouvelle classe, remplace le style inline
+══════════════════════════════════════════════════ */
+.kanji-grid-cell { padding: 16px; text-align: center; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; background: var(--surface); }
+.kanji-grid-cell:hover { background: rgba(255,255,255,0.08); }
+.kanji-grid-cell .kgc-char { font-size: 2rem; font-weight: bold; }
+.kanji-grid-cell .kgc-meaning { font-size: 0.6875rem; color: var(--gray); margin-top: 6px; }

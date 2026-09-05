@@ -1430,9 +1430,9 @@ function displayKanjiList(levelId, data, isBack = false) {
     const grid = data.chars.map(char => {
         const kanjiData = kanjiDb.find(k => k.char === char);
         if (!kanjiData) return '';
-        return `<div onclick="openDetail({char:'${char}'})" style="padding:16px;text-align:center;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;background:var(--surface)" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='var(--surface)'">
-            <div style="font-size:2rem;font-weight:bold">${char}</div>
-            <div style="font-size:0.6875rem;color:var(--gray);margin-top:6px">${kanjiData.meanings[0] || '–'}</div>
+        return `<div class="kanji-grid-cell" onclick="openDetail({char:'${char}'})">
+            <div class="kgc-char">${char}</div>
+            <div class="kgc-meaning">${kanjiData.meanings[0] || '–'}</div>
         </div>`;
     }).join('');
     
