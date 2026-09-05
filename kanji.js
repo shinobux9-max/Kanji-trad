@@ -2726,9 +2726,10 @@ function showDashboard(isBack = false) {
         <div class="dash-wrap">
             <div class="welcome-box">
                 <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img" alt="">
-                <div style="font-size:0.8125rem;line-height:1.6">
+                <div style="font-size:0.8125rem;line-height:1.6;flex:1;">
                     ${greeting} ! <br>Prêt pour tes révisions ?
                 </div>
+                <button onclick="if(confirm('Vider le cache et recharger l\\'app ?')) forceFullReset()" style="background:none;border:none;color:var(--gray);font-size:1.125rem;cursor:pointer;padding:6px;flex-shrink:0;">🔄</button>
             </div>
             <div class="dash-level-overview" id="dashboard-level-overview">
                 <div style="color:var(--gray);font-size:0.75rem">Chargement…</div>
@@ -2749,9 +2750,6 @@ function showDashboard(isBack = false) {
                 <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
                 <div id="progression-list"></div>
             </div>
-            <button onclick="if(confirm('Vider le cache et recharger l\\'app ?')) forceFullReset()" style="background:none;border:none;color:var(--gray);font-size:0.6875rem;text-decoration:underline;padding:12px;cursor:pointer;">
-                🔄 Vider le cache de l'app
-            </button>
         </div>`;
     // Appel de la fonction de progression si nécessaire ici
     if (typeof renderDashboard === 'function') renderDashboard();
