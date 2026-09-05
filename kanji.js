@@ -878,6 +878,8 @@ function shuffleIndices(arr) {
    RECHERCHE
 ══════════════════════════════════════════════════ */
 // searchOpen already declared above
+let searchJustOpened = false;
+
 function toggleSearch() {
     if (searchOpen) {
         // Déjà ouvert : on passe par history.back() pour garder l'historique cohérent
@@ -886,6 +888,10 @@ function toggleSearch() {
         return;
     }
     searchOpen = true;
+    // Empêche le clic qui VIENT D'OUVRIR la recherche d'être aussi interprété
+    // comme un "clic à l'extérieur" par le listener global (même événement, même bulle)
+    searchJustOpened = true;
+    setTimeout(() => { searchJustOpened = false; }, 0);
     pushModalState('search');
     document.getElementById('search-bar').classList.add('open');
     const main = document.getElementById('main-content');
@@ -911,6 +917,7 @@ function closeSearchOverlay() {
 
 // AJOUT : Fermeture au clic à l'extérieur
 document.addEventListener('click', (e) => {
+    if (searchJustOpened) return;
     const bar = document.getElementById('search-bar');
     if (searchOpen && bar && !bar.contains(e.target) && !e.target.closest('.search-hit')) {
         history.back();
