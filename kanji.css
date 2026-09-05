@@ -428,7 +428,7 @@
     
     .unit-box-wrapper { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
     
-    .unit-box-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid #D4AF37; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .unit-box-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid var(--border); border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
     .unit-box-header:hover { background: rgba(0,229,255,0.18); }
     
     .unit-box-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
@@ -502,7 +502,7 @@
 
 .vocab-category-box { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
 
-.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid #D4AF37; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid var(--border); border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
 .vocab-category-header:hover { background: rgba(0,229,255,0.18); }
 
 .vocab-category-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
