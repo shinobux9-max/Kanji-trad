@@ -2818,7 +2818,7 @@ async function showNiveauxScreen(isBack = false) {
    BARRE DE NAVIGATION EN BAS (façon Hibi)
 ══════════════════════════════════════════════════ */
 function setActiveBottomNav(key) {
-    ['accueil', 'recherche', 'apprendre'].forEach(k => {
+    ['accueil', 'recherche', 'apprendre', 'revisions'].forEach(k => {
         const btn = document.getElementById(`bnav-${k}`);
         if (btn) btn.classList.toggle('active', k === key);
     });
@@ -2832,6 +2832,8 @@ function bottomNavGo(target) {
         toggleSearch();
     } else if (target === 'apprendre') {
         showApprendreScreen();
+    } else if (target === 'revisions') {
+        showRevisionsScreen();
     }
 }
 
@@ -3007,6 +3009,303 @@ function showKanjiNiveauxScreen(isBack = false) {
             <div id="niveaux-list">${cardsHtml}</div>
         </div>`;
 }
+
+/* ══════════════════════════════════════════════════
+   ONGLET "RÉVISIONS" — choix catégorie -> choix niveau/script -> lance direct la révision
+══════════════════════════════════════════════════ */
+async function showRevisionsScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'revisions' }, '');
+    document.getElementById('page-title').innerText = 'Révisions';
+    const main = document.getElementById('main-content');
+
+    main.innerHTML = `
+        <div class="apprendre-wrap">
+            <div class="apprendre-header">
+                <div class="apprendre-title-main">Révisions</div>
+                <div class="apprendre-subtitle-main">Choisis une catégorie à réviser.</div>
+            </div>
+            <div class="apprendre-grid">
+                <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showRevisionLevelPicker('grammar')">
+                    <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
+                    <div class="apprendre-card-title">Grammaire</div>
+                    <div class="apprendre-card-sub">Choisir un niveau</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#FBBF2499; box-shadow:0 0 18px #FBBF2459;" onclick="showRevisionLevelPicker('vocab')">
+                    <div class="apprendre-card-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24;">語</div>
+                    <div class="apprendre-card-title">Vocabulaire</div>
+                    <div class="apprendre-card-sub">Choisir un niveau</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#00E5FF99; box-shadow:0 0 18px #00E5FF59;" onclick="showRevisionLevelPicker('kanji')">
+                    <div class="apprendre-card-icon" style="background:rgba(0,229,255,0.15);color:var(--accent);">字</div>
+                    <div class="apprendre-card-title">Kanji</div>
+                    <div class="apprendre-card-sub">Choisir un niveau</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showRevisionKanaPicker()">
+                    <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
+                    <div class="apprendre-card-title">Kana</div>
+                    <div class="apprendre-card-sub">Hiragana / Katakana</div>
+                </div>
+            </div>
+        </div>`;
+}
+
+async function showRevisionLevelPicker(category, isBack = false) {
+    if (!isBack) history.pushState({ view: 'revision-level-picker', category }, '');
+    document.getElementById('page-title').innerText = 'Révisions';
+    const main = document.getElementById('main-content');
+
+    if (!jlptMapping) {
+        main.innerHTML = '<div style="padding:20px;color:var(--gray)">Chargement des niveaux…</div>';
+        return;
+    }
+
+    const labels = { grammar: 'Grammaire', vocab: 'Vocabulaire', kanji: 'Kanji' };
+
+    main.innerHTML = `
+        <div class="niveaux-wrap">
+            <div class="niveaux-header">
+                <div class="niveaux-title-main">${labels[category]}</div>
+                <div class="niveaux-subtitle-main">Choisis le niveau à réviser.</div>
+            </div>
+            <div id="niveaux-list">
+                <div style="padding:20px;text-align:center;color:var(--gray)"><div class="spinner"></div></div>
+            </div>
+        </div>`;
+
+    const listEl = document.getElementById('niveaux-list');
+    const sortedLevels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
+
+    const cardsHtml = await Promise.all(sortedLevels.map(async ([levelId, levelData]) => {
+        let hasData = false;
+
+        if (category === 'kanji') {
+            hasData = true; // kanjiDb toujours en mémoire, tous les niveaux dispo
+        } else {
+            const vg = await getLevelVocabGrammarStats(levelId);
+            hasData = category === 'vocab' ? vg.vocabTotal > 0 : vg.grammarTotal > 0;
+        }
+
+        if (!hasData) {
+            return `
+                <div class="niveaux-card locked">
+                    <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                    <div class="niveaux-info">
+                        <div class="niveaux-card-title">${levelData.label_full}</div>
+                        <div class="niveaux-card-sub">${levelData.description}</div>
+                    </div>
+                    <div class="niveaux-soon">Bientôt</div>
+                </div>`;
+        }
+
+        return `
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="startRevisionFor('${category}','${levelId}')">
+                <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
+                <div class="niveaux-info">
+                    <div class="niveaux-card-title">${levelData.label_full}</div>
+                    <div class="niveaux-card-sub">Toucher pour réviser</div>
+                    ${buildNiveauxWaveSvg(levelData.color)}
+                </div>
+            </div>`;
+    }));
+
+    listEl.innerHTML = cardsHtml.join('');
+}
+
+async function startRevisionFor(category, levelId) {
+    if (category === 'vocab') {
+        const vd = await getLevelVocabData(levelId);
+        if (!vd || !vd.data) { alert("Aucune donnée disponible pour ce niveau."); return; }
+        vocabHomeData = { levelId, data: vd.data, examples: vd.examples };
+        currentLevelId = levelId;
+        document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+        startVocabReview();
+    } else if (category === 'grammar') {
+        const gd = await getLevelGrammarData(levelId);
+        if (!gd || !gd.data) { alert("Aucune donnée disponible pour ce niveau."); return; }
+        grammarHomeData = { levelId, data: gd.data, examples: null };
+        document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+        startGrammarReview();
+    } else if (category === 'kanji') {
+        const chars = await getLevelKanjiChars(levelId);
+        kanjiHomeData = { levelId, chars: chars || [] };
+        document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+        showKanjiReviewModeSelector();
+    }
+}
+
+/* ── RÉVISION KANA (flashcard fonctionnel ; tracé normal/hardcore à venir) ── */
+function getKanaFlatList(script) {
+    const scripts = script === 'both' ? ['hira', 'kata'] : [script];
+    const list = [];
+    scripts.forEach(s => {
+        (kanaGroups[s] || []).forEach(group => {
+            group.rows.forEach(row => {
+                row.forEach(kana => {
+                    if (kana) list.push({ id: `kana_${kana.c}`, char: kana.c, romaji: kana.r });
+                });
+            });
+        });
+    });
+    return list;
+}
+
+function getDueKanaChars(script) {
+    const list = getKanaFlatList(script);
+    const due = buildDueQueue(list.map(k => ({ id: k.id })));
+    return due.map(item => list.find(k => k.id === item.id)).filter(Boolean);
+}
+
+async function showRevisionKanaPicker(isBack = false) {
+    if (!isBack) history.pushState({ view: 'revision-kana-picker' }, '');
+    document.getElementById('page-title').innerText = 'Révisions';
+    const main = document.getElementById('main-content');
+
+    main.innerHTML = `
+        <div class="niveaux-wrap">
+            <div class="niveaux-header">
+                <div class="niveaux-title-main">Kana</div>
+                <div class="niveaux-subtitle-main">Choisis le syllabaire à réviser.</div>
+            </div>
+            <div id="niveaux-list">
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showKanaRevisionModeSelector('hira')">
+                    <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">あ</div>
+                    <div class="niveaux-info"><div class="niveaux-card-title">Hiragana</div><div class="niveaux-card-sub">Toucher pour réviser</div></div>
+                </div>
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showKanaRevisionModeSelector('kata')">
+                    <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">ア</div>
+                    <div class="niveaux-info"><div class="niveaux-card-title">Katakana</div><div class="niveaux-card-sub">Toucher pour réviser</div></div>
+                </div>
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showKanaRevisionModeSelector('both')">
+                    <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">両</div>
+                    <div class="niveaux-info"><div class="niveaux-card-title">Les deux</div><div class="niveaux-card-sub">Hiragana + Katakana</div></div>
+                </div>
+            </div>
+        </div>`;
+}
+
+function showKanaRevisionModeSelector(script) {
+    const dueKana = getDueKanaChars(script);
+    if (dueKana.length === 0) {
+        alert('Rien à réviser pour le moment ! 🎉');
+        return;
+    }
+
+    pushModalState('kana-mode-selector');
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    document.getElementById('category-content').innerHTML = `
+        <div class="review-mode-selector">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="review-mode-title">Choisis ton mode de révision</div>
+            <div class="review-mode-count">${dueKana.length} kana à revoir</div>
+
+            <button class="review-mode-btn" onclick="startKanaFlashcardReview('${script}')">
+                <span class="review-mode-icon">🗂️</span>
+                <div><div class="review-mode-name">Flashcard</div><div class="review-mode-desc">Lecture romaji</div></div>
+            </button>
+            <button class="review-mode-btn" style="opacity:0.5;cursor:default;" onclick="alert('Bientôt disponible !')">
+                <span class="review-mode-icon">✍️</span>
+                <div><div class="review-mode-name">Tracé normal</div><div class="review-mode-desc">Bientôt disponible</div></div>
+            </button>
+            <button class="review-mode-btn" style="opacity:0.5;cursor:default;" onclick="alert('Bientôt disponible !')">
+                <span class="review-mode-icon">🔥</span>
+                <div><div class="review-mode-name">Tracé difficile</div><div class="review-mode-desc">Bientôt disponible</div></div>
+            </button>
+        </div>`;
+}
+
+let kanaReviewSession = null;
+
+function startKanaFlashcardReview(script) {
+    const dueKana = getDueKanaChars(script);
+    if (dueKana.length === 0) return;
+
+    pushModalState('kana-review-flashcard');
+    kanaReviewSession = {
+        queue: dueKana,
+        index: 0,
+        results: { again: 0, hard: 0, good: 0, easy: 0 },
+        flipped: false
+    };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderKanaReviewScreen();
+}
+
+function renderKanaReviewScreen() {
+    const container = document.getElementById('category-content');
+    const session = kanaReviewSession;
+
+    if (!session || session.index >= session.queue.length) {
+        renderKanaReviewSummary();
+        return;
+    }
+
+    const kana = session.queue[session.index];
+    const progress = session.index + 1;
+    const total = session.queue.length;
+    const flipped = session.flipped;
+
+    container.innerHTML = `<div class="review-page">
+        <div class="review-header">
+            <button class="back-btn" onclick="history.back()">✕</button>
+            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
+            <div class="review-progress-text">${progress} / ${total}</div>
+        </div>
+        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipKanaReviewCard()'}">
+            <div class="review-card-front">
+                <div class="review-word" style="font-size:56px;">${kana.char}</div>
+            </div>
+            ${flipped ? `<div class="review-card-back"><div class="review-meaning">${kana.romaji}</div></div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+        </div>
+        ${flipped ? `
+            <div class="review-grade-buttons">
+                <button class="grade-btn grade-again" onclick="submitKanaReviewGrade(0)">Encore</button>
+                <button class="grade-btn grade-hard" onclick="submitKanaReviewGrade(1)">Difficile</button>
+                <button class="grade-btn grade-good" onclick="submitKanaReviewGrade(2)">Bien</button>
+                <button class="grade-btn grade-easy" onclick="submitKanaReviewGrade(3)">Facile</button>
+            </div>
+        ` : ''}
+    </div>`;
+}
+
+function flipKanaReviewCard() {
+    if (!kanaReviewSession) return;
+    kanaReviewSession.flipped = true;
+    renderKanaReviewScreen();
+}
+
+function submitKanaReviewGrade(quality) {
+    if (!kanaReviewSession) return;
+    const kana = kanaReviewSession.queue[kanaReviewSession.index];
+    gradeReview(kana.id, quality);
+
+    const labels = ['again', 'hard', 'good', 'easy'];
+    kanaReviewSession.results[labels[quality]]++;
+
+    kanaReviewSession.index++;
+    kanaReviewSession.flipped = false;
+    renderKanaReviewScreen();
+}
+
+function renderKanaReviewSummary() {
+    recordSessionCompleted();
+    const container = document.getElementById('category-content');
+    const r = kanaReviewSession.results;
+    const total = kanaReviewSession.queue.length;
+
+    container.innerHTML = `<div class="review-summary">
+        <div class="review-summary-title">Session terminée ! 🎉</div>
+        <div class="review-summary-count">${total} kana révisé${total > 1 ? 's' : ''}</div>
+        <div class="review-summary-stats">
+            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
+            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
+            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
+            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
+        </div>
+        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour</button>
+    </div>`;
+    kanaReviewSession = null;
+}
+
 
 /* ══════════════════════════════════════════════════
    RÉVISION MIXTE (Vocab + Grammaire + Kanji-flashcard, mélangés)
@@ -5212,6 +5511,8 @@ const MODAL_EXIT_REGISTRY = {
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'mixed-review': () => { mixedReviewSession = null; showApprendreScreen(true); },
     'search': () => closeSearchOverlay(),
+    'kana-mode-selector': () => showRevisionKanaPicker(true),
+    'kana-review-flashcard': () => { kanaReviewSession = null; showRevisionKanaPicker(true); },
 };
 
 // À appeler à l'entrée de chaque modal/session : pousse UNE entrée d'historique.
@@ -5239,6 +5540,9 @@ const SCREEN_REGISTRY = {
     'vocab-detail': (s) => { if (vocabHomeData) showVocabDetail(s.wordId, vocabHomeData.data, true); },
     'grammar-home': () => { if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
     'grammar-detail': (s) => showGrammarDetail(s.lessonId, true),
+    'revisions': () => showRevisionsScreen(true),
+    'revision-level-picker': (s) => showRevisionLevelPicker(s.category, true),
+    'revision-kana-picker': () => showRevisionKanaPicker(true),
 };
 
 window.onpopstate = function(event) {
