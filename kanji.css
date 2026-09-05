@@ -687,7 +687,7 @@
 
 #niveaux-list { display: flex; flex-direction: column; gap: 12px; }
 
-.niveaux-card { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; cursor: pointer; transition: border-color 0.15s; }
+.niveaux-card { display: flex; align-items: center; gap: 14px; padding: 16px; background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 14px; cursor: pointer; transition: border-color 0.15s; }
 .niveaux-card:hover { border-color: var(--accent); }
 .niveaux-card.locked { cursor: default; opacity: 0.55; }
 .niveaux-card.locked:hover { border-color: var(--border); }
@@ -808,11 +808,6 @@
 .review-cta-split-num { font-size: 1.75rem; color: #fff; font-weight: bold; }
 .review-cta-split-label { font-size: 0.6875rem; color: var(--gray); margin-top: 2px; }
 
-/* Niveaux de maîtrise en cartes avec badges circulaires (au lieu de barres plates) */
-.prog-level-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
-.prog-level-title { font-size: 0.8125rem; color: #fff; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.3px; }
-.prog-level-items { display: flex; flex-direction: column; gap: 12px; }
-
 .prog-card-item { display: flex; align-items: center; gap: 12px; }
 .prog-circle-badge {
     flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
@@ -830,7 +825,7 @@
 /* ══════════════════════════════════════════════════
    NIVEAUX DE MAÎTRISE — cartes repliables avec % global
 ══════════════════════════════════════════════════ */
-.prog-level-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
+.prog-level-card { background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
 .prog-level-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; user-select: none; }
 .prog-level-arrow { color: var(--gray); font-size: 0.625rem; transition: transform 0.2s; }
 .prog-level-arrow.open { transform: rotate(90deg); }

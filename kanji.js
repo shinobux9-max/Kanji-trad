@@ -4999,11 +4999,12 @@ async function renderDashboard() {
         const globalPct = Math.round(parts.reduce((a, b) => a + b, 0) / parts.length);
         
         const levelKey = `lvl-${levelDef.id}`;
+        const levelColor = jlptMapping?.levels?.[levelDef.id]?.color || 'var(--accent)';
         return `
-            <div class="prog-level-card">
+            <div class="prog-level-card" style="border-color:${levelColor}55; box-shadow:0 0 16px ${levelColor}22;">
                 <div class="prog-level-header" onclick="document.getElementById('${levelKey}').classList.toggle('open'); this.querySelector('.prog-level-arrow').classList.toggle('open')">
                     <span class="prog-level-arrow">▶</span>
-                    <span class="prog-level-pct">${globalPct}%</span>
+                    <span class="prog-level-pct" style="color:${levelColor}">${globalPct}%</span>
                     <span class="prog-level-title">${levelDef.label}</span>
                 </div>
                 <div class="prog-level-items" id="${levelKey}">
