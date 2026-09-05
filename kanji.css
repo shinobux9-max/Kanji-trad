@@ -937,7 +937,7 @@
 /* ══════════════════════════════════════════════════
    HALO PERSONNALISÉ — appliqué à 4 boîtes précises seulement
 ══════════════════════════════════════════════════ */
-.dash-review-cta, .dash-mastery-card, #bottom-nav, .grammar-point-box, .review-card {
+.dash-review-cta, .dash-mastery-card, #bottom-nav, .grammar-point-box, .review-card, .vocab-detail-main-box {
     border: 1px solid #1d4e76;
     box-shadow:
         0 0 13px 3px rgba(29, 78, 118, 1),
