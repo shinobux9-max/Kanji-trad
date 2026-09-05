@@ -502,8 +502,8 @@
 
 .vocab-category-box { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
 
-.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
-.vocab-category-header:hover { background: rgba(0,229,255,0.18); }
+.vocab-category-header { padding: 14px 16px; background: rgba(46, 20, 77, 0.1); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+.vocab-category-header:hover { background: rgba(46, 20, 77, 0.1); }
 
 .vocab-category-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
 .vocab-cat-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
