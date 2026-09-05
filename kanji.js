@@ -912,8 +912,7 @@ function closeSearchOverlay() {
 // AJOUT : Fermeture au clic à l'extérieur
 document.addEventListener('click', (e) => {
     const bar = document.getElementById('search-bar');
-    const results = document.getElementById('search-results');
-    if (searchOpen && bar && !bar.contains(e.target) && (!results || !results.contains(e.target))) {
+    if (searchOpen && bar && !bar.contains(e.target) && !e.target.closest('.search-hit')) {
         history.back();
     }
 });
