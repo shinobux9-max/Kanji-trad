@@ -1437,9 +1437,11 @@ function showKanjiReviewModeSelector() {
         return;
     }
     
+    pushModalState('kanji-review-selector');
+    
     container.innerHTML = `
         <div class="review-mode-selector">
-            <button class="back-btn" onclick="displayKanjiListFromHome()">←</button>
+            <button class="back-btn" onclick="history.back()">←</button>
             <div class="review-mode-title">Choisis ton mode de révision</div>
             <div class="review-mode-count">${dueChars.length} kanji à revoir</div>
             
@@ -1467,6 +1469,8 @@ function startKanjiTraceReview(mode) {
 function startKanjiFlashcardReview() {
     const dueChars = getDueKanjiChars();
     if (dueChars.length === 0) return;
+    
+    pushModalState('kanji-review-flashcard');
     
     kanjiReviewSession = {
         queue: dueChars,
@@ -1498,7 +1502,7 @@ function renderKanjiReviewScreen() {
     
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="kanjiReviewSession = null; displayKanjiListFromHome()">✕</button>
+            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -1561,7 +1565,7 @@ function renderKanjiReviewSummary() {
             <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
             <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
         </div>
-        <button class="revise-btn" style="margin-top:20px;" onclick="kanjiReviewSession = null; displayKanjiListFromHome()">Retour aux kanji</button>
+        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour aux kanji</button>
     </div>`;
     kanjiReviewSession = null;
 }
@@ -1640,6 +1644,8 @@ function startVocabReview() {
     
     const queue = dueWords.map(w => prepareSessionItem(w, data));
     
+    pushModalState('vocab-review');
+    
     reviewSession = {
         queue,
         index: 0,
@@ -1676,7 +1682,7 @@ function renderReviewScreen() {
     
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="reviewSession = null; displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)">✕</button>
+            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -1840,7 +1846,7 @@ function renderReviewSummary() {
             <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
             <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
         </div>
-        <button class="revise-btn" style="margin-top:20px;" onclick="reviewSession = null; displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples)">Retour au vocabulaire</button>
+        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour au vocabulaire</button>
     </div>`;
     reviewSession = null;
 }
@@ -1903,6 +1909,8 @@ function startGrammarReview() {
     
     const queue = dueLessons.map(l => prepareGrammarSessionItem(l, data));
     
+    pushModalState('grammar-review');
+    
     grammarReviewSession = {
         queue,
         index: 0,
@@ -1933,7 +1941,7 @@ function renderGrammarReviewScreen() {
     
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="grammarReviewSession = null; showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)">✕</button>
+            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -2064,7 +2072,7 @@ function renderGrammarReviewSummary() {
             <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
             <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
         </div>
-        <button class="revise-btn" style="margin-top:20px;" onclick="grammarReviewSession = null; showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples)">Retour à la grammaire</button>
+        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour à la grammaire</button>
     </div>`;
     grammarReviewSession = null;
 }
@@ -2200,7 +2208,7 @@ function showVocabDetail(wordId, allWords = [], isBack = false) {
         if (!word.type) return '';
         const info = classifyType(word.type) || { color: '#A7B0C0' };
         const groupLabel = word.group ? ` · ${word.group}` : '';
-        return `<span class="vocab-type-badge" style="background: ${info.color};">${word.type}${groupLabel}</span>`;
+        return `<span class="vocab-type-badge" style="background: ${info.color}22; color: ${info.color}; border: 1px solid ${info.color}66; box-shadow: 0 0 8px ${info.color}33;">${word.type}${groupLabel}</span>`;
     };
     
     let html = `<div class="vocab-detail-page">`;
@@ -2275,6 +2283,14 @@ function mdBold(text) {
     // Italique : *texte* (astérisque simple, convention markdown standard)
     result = result.replace(/\*(.+?)\*/g, '<em class="md-italic">$1</em>');
     return result;
+}
+
+// Petit graphique décoratif en vagues avec point lumineux en bout, coloré selon le niveau
+function buildNiveauxWaveSvg(color) {
+    return `<svg class="niveaux-wave" viewBox="0 0 160 32" preserveAspectRatio="none">
+        <path d="M0,24 Q20,8 40,20 T80,10 T120,18 T158,14" fill="none" stroke="${color}" stroke-width="2" opacity="0.55"/>
+        <circle cx="158" cy="14" r="3.5" fill="${color}" style="filter:drop-shadow(0 0 6px ${color})"/>
+    </svg>`;
 }
 
 function getFamilyColor(badgeText) {
@@ -2380,7 +2396,7 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
                         return `
                             <div class="lesson-card-in-box" onclick="showGrammarDetail('${lesson.id}')">
                                 <div class="card-header-in-box">
-                                    <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}; color: ${badgeStyle.darkerText || '#0B0D12'};">
+                                    <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}22; color: ${badgeStyle.color}; border: 1px solid ${badgeStyle.color}66; box-shadow: 0 0 8px ${badgeStyle.color}33;">
                                         ${badgeStyle.emoji} ${badgeText}
                                     </span>
                                     ${status === 'mastered' ? '<span class="status-icon-in-box">✓</span>' : status === 'favorited' ? '<span class="status-icon-in-box favorited">❤</span>' : ''}
@@ -2769,12 +2785,13 @@ async function showNiveauxScreen(isBack = false) {
         }
         
         return `
-            <div class="niveaux-card" onclick="showCategoryDirect('${levelId}','vocab')">
+            <div class="niveaux-card" style="border-color:${levelData.color}55; box-shadow:0 0 16px ${levelData.color}22;" onclick="showCategoryDirect('${levelId}','vocab')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
                     <div class="niveaux-card-sub">${vg.vocabMastered} / ${vg.vocabTotal} mots</div>
                     <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
+                    ${buildNiveauxWaveSvg(levelData.color)}
                 </div>
                 <div class="niveaux-pct">${pct}%</div>
             </div>`;
@@ -2914,12 +2931,13 @@ async function showGrammarNiveauxScreen(isBack = false) {
         }
         
         return `
-            <div class="niveaux-card" onclick="showCategoryDirect('${levelId}','grammar')">
+            <div class="niveaux-card" style="border-color:${levelData.color}55; box-shadow:0 0 16px ${levelData.color}22;" onclick="showCategoryDirect('${levelId}','grammar')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
                     <div class="niveaux-card-sub">${vg.grammarMastered} / ${vg.grammarTotal} leçons</div>
                     <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
+                    ${buildNiveauxWaveSvg(levelData.color)}
                 </div>
                 <div class="niveaux-pct">${pct}%</div>
             </div>`;
@@ -2951,12 +2969,13 @@ function showKanjiNiveauxScreen(isBack = false) {
         const avgMastery = kanjiForLevel.length > 0 ? Math.round(totalMastery / kanjiForLevel.length) : 0;
         
         return `
-            <div class="niveaux-card" onclick="showCategoryDirect('${levelId}','kanji')">
+            <div class="niveaux-card" style="border-color:${levelData.color}55; box-shadow:0 0 16px ${levelData.color}22;" onclick="showCategoryDirect('${levelId}','kanji')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
                     <div class="niveaux-card-sub">${totalKanji} kanji · ${avgMastery}% en moyenne</div>
                     <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${avgMastery}%;background:${levelData.color}"></div></div>
+                    ${buildNiveauxWaveSvg(levelData.color)}
                 </div>
                 <div class="niveaux-pct">${avgMastery}%</div>
             </div>`;
@@ -3037,6 +3056,8 @@ async function startMixedReview() {
         return;
     }
     
+    pushModalState('mixed-review');
+    
     mixedReviewSession = {
         queue,
         index: 0,
@@ -3089,7 +3110,7 @@ function renderMixedReviewScreen() {
     
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="mixedReviewSession = null; showApprendreScreen()">✕</button>
+            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -3146,7 +3167,7 @@ function renderMixedReviewSummary() {
             <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
             <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
         </div>
-        <button class="revise-btn" style="margin-top:20px;" onclick="mixedReviewSession = null; showApprendreScreen()">Retour</button>
+        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour</button>
     </div>`;
     mixedReviewSession = null;
 }
@@ -3476,6 +3497,7 @@ function startQuiz({ type, id, mode = 'kanji-to-read' }) {
 
     if (quizTimerInterval) clearInterval(quizTimerInterval);
     quizPaused = false;
+    pushModalState('quiz');
 
     // On ajoute le MODE ici
     quizState = {
@@ -3813,7 +3835,7 @@ function renderQuizResults() {
                 <div class="quiz-breakdown-row"><span>Temps</span><strong>${timeStr}</strong></div>
             </div>
             <div class="quiz-btn-row">
-                <button class="quiz-action-btn secondary" onclick="closeQuiz()">Fermer</button>
+                <button class="quiz-action-btn secondary" onclick="history.back()">Fermer</button>
                 <button class="quiz-action-btn primary"
                     onclick="startQuiz({type:'${sourceType}',id:'${sourceId}'})">Rejouer ↺</button>
             </div>
@@ -4511,6 +4533,8 @@ function speakSentence(text) {
 ══════════════════════════════════════════════════ */
 
 function openDetail(kanji) {
+    pushModalState('kanji-detail');
+    
     currentType = 'kanji'; 
     currentChar = kanji.char;
     window.currentKanjiForStroke = kanji.char;
@@ -5102,8 +5126,28 @@ async function init() {
 init();
 
 /* ── GESTION DU BOUTON RETOUR SYSTÈME (Android / Navigateur) ── */
-// Registre des écrans "poussables" dans l'historique : associe le nom d'écran stocké dans
-// history.state à la fonction qui sait le rejouer (avec isBack=true pour ne pas re-pousser un état)
+// Registre des modaux/overlays/sessions : associe un nom à sa fonction de fermeture.
+// Contrairement aux écrans "pleins" (SCREEN_REGISTRY), on ne rejoue pas leur état exact
+// (une session de révision en cours ne se restaure pas carte par carte) — on se contente
+// de les fermer proprement, exactement comme le ferait leur bouton "✕"/Fermer.
+const MODAL_EXIT_REGISTRY = {
+    'vocab-review': () => { reviewSession = null; if (vocabHomeData) displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples, true); },
+    'grammar-review': () => { grammarReviewSession = null; if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
+    'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
+    'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
+    'mixed-review': () => { mixedReviewSession = null; showApprendreScreen(true); },
+};
+
+// À appeler à l'entrée de chaque modal/session : pousse UNE entrée d'historique.
+// La sortie (bouton "✕"/Fermer OU bouton retour matériel) doit systématiquement passer
+// par history.back(), jamais appeler la fonction de fermeture directement — sinon l'entrée
+// pushée ici reste orpheline dans l'historique et le bouton retour suivant ne fait rien d'utile.
+function pushModalState(name) {
+    history.pushState({ view: 'modal', modal: name }, '');
+}
+
+// Registre des écrans "pleins" : associe le nom d'écran stocké dans history.state
+// à la fonction qui sait le rejouer (avec isBack=true pour ne pas re-pousser un état)
 const SCREEN_REGISTRY = {
     'dashboard': () => { showDashboard(true); renderDashboard(); },
     'category': (s) => loadCategory(s.id, true),
@@ -5125,7 +5169,16 @@ window.onpopstate = function(event) {
     // Si l'application n'est pas encore chargée (kanjiDb vide), on ne fait rien
     if (kanjiDb.length === 0) return;
 
-    if (event.state && SCREEN_REGISTRY[event.state.view]) {
+    // Sécurité : fermer systématiquement les overlays plein écran (fiche kanji, quiz, tracé)
+    // quelle que soit la destination — évite qu'un overlay reste orphelin visible après un
+    // retour arrière depuis un enchaînement à plusieurs niveaux (ex: tracé lancé depuis la fiche détail)
+    closeDetail();
+    closeStrokeQuiz();
+    closeQuiz();
+
+    if (event.state && event.state.view === 'modal' && MODAL_EXIT_REGISTRY[event.state.modal]) {
+        MODAL_EXIT_REGISTRY[event.state.modal]();
+    } else if (event.state && SCREEN_REGISTRY[event.state.view]) {
         SCREEN_REGISTRY[event.state.view](event.state);
     } else {
         // État inconnu ou tout début de l'historique : retour à l'accueil

@@ -4,9 +4,10 @@
 ══════════════════════════════════════════════════ */
 
 :root {
-        --bg: #0D1117; --surface: #161B22; --card: #161B22; --text: #F0F6FC;
-        --accent: #00E5FF; --accent-muted: #38BDF8; --accent2: #7b61ff; --gray: #8B949E; --border: #30363D;
+        --bg: #060B18; --surface: #0E1630; --card: #0E1630; --text: #F0F6FC;
+        --accent: #00E5FF; --accent-muted: #38BDF8; --accent2: #7b61ff; --gray: #8B949E; --border: rgba(0,229,255,0.28);
         --grade-prim: #3ecf8e; --grade-mid: #6c7bff; --highlight-warm: #FFD166;
+        --glow-cyan: 0 0 16px rgba(0,229,255,0.12), inset 0 0 24px rgba(0,229,255,0.02);
     }
     /* --- POLICE JAPONAISE UNIFIÉE ---
        jis04 sur * garantit le glyphe japonais (八 ouvert) sur TOUS les éléments,
@@ -14,7 +15,9 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-variant-east-asian: jis04; }
     body {
         font-family: 'Noto Sans JP', sans-serif;
-        margin: 0; background: var(--bg); color: var(--text); overflow: hidden;
+        margin: 0; color: var(--text); overflow: hidden;
+        background: radial-gradient(ellipse at 20% 0%, #0D1A3A 0%, transparent 55%), linear-gradient(180deg, #0A1226 0%, #060B18 60%);
+        background-attachment: fixed;
     }
 
     /* ── TOOLBAR ─────────────────────── */
@@ -669,7 +672,21 @@
 /* ══════════════════════════════════════════════════
    ÉCRAN NIVEAUX — cartes pleine largeur (façon Lexique)
 ══════════════════════════════════════════════════ */
-.niveaux-wrap { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.niveaux-wrap {
+    padding: 16px; display: flex; flex-direction: column; gap: 16px;
+    min-height: 100%;
+    background:
+        radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.55) 50%, transparent),
+        radial-gradient(1px 1px at 78% 15%, rgba(255,255,255,0.4) 50%, transparent),
+        radial-gradient(1px 1px at 40% 55%, rgba(255,255,255,0.45) 50%, transparent),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.35) 50%, transparent),
+        radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,0.4) 50%, transparent),
+        radial-gradient(1px 1px at 60% 92%, rgba(255,255,255,0.3) 50%, transparent),
+        radial-gradient(circle at 15% 92%, rgba(255,140,60,0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 100%, rgba(180,80,220,0.12) 0%, transparent 45%),
+        radial-gradient(circle at 75% 15%, rgba(0,229,255,0.08) 0%, transparent 35%),
+        radial-gradient(circle at 25% 25%, rgba(80,120,255,0.07) 0%, transparent 40%);
+}
 .niveaux-header { margin-bottom: 4px; }
 .niveaux-title-main { font-size: 1.625rem; color: #fff; font-weight: bold; }
 .niveaux-subtitle-main { font-size: 0.8125rem; color: var(--gray); margin-top: 4px; }
@@ -688,6 +705,7 @@
 .niveaux-card-sub { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
 .niveaux-progress-bar { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; margin-top: 8px; overflow: hidden; }
 .niveaux-progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+.niveaux-wave { display: block; width: 100%; height: 20px; margin-top: 4px; }
 
 .niveaux-pct { flex-shrink: 0; font-size: 0.9375rem; color: #fff; font-weight: bold; }
 .niveaux-soon { flex-shrink: 0; font-size: 0.75rem; color: var(--gray); }
@@ -869,3 +887,23 @@
 ══════════════════════════════════════════════════ */
 .bnav-kanji { font-size: 1.375rem; font-weight: bold; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray); transition: all 0.15s; }
 .bnav-btn.active .bnav-kanji { background: rgba(0,229,255,0.18); color: var(--accent); }
+
+/* ══════════════════════════════════════════════════
+   THÈME NAVY GLOW — halo lumineux sur les cartes principales
+══════════════════════════════════════════════════ */
+.dash-card, .prog-level-card, .streak-compact, .streak-detail-card,
+.progression-stat-card, .grammar-point-box, .detail-section, .examples-section,
+.apprendre-card, .vocab-detail-main-box, .vocab-meanings, .vocab-example-box,
+.vocab-nuance-box, .lesson-card-in-box, .vocab-word-card, .vocab-pill-card,
+.niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
+.review-mode-btn, .cat-header, .review-mode-selector .back-btn {
+    box-shadow: var(--glow-cyan);
+}
+
+/* La navbar flottante profite aussi d'un léger halo */
+#bottom-nav { box-shadow: 0 0 20px rgba(0,229,255,0.10), 0 8px 24px rgba(0,0,0,0.4); }
+
+/* CTA principaux : halo plus marqué autour du cyan plein */
+.review-cta-btn, .revise-btn, .vocab-review-cta, .review-continue-btn, .apprendre-hero-card {
+    box-shadow: 0 0 20px rgba(0,229,255,0.35);
+}
