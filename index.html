@@ -71,63 +71,60 @@
     </div>
     <div class="detail-content">
 
-        <!-- ── Bloc 3 colonnes ── -->
-        <div class="detail-top">
+        <!-- ── Carte principale du kanji ── -->
+        <div class="kanji-main-card">
+            <div class="kanji-top-info">
+                <span class="kmc-badge"><b id="d-level">-</b>&nbsp;Niveau</span>
+                <span class="kmc-badge"><b id="d-strokes">-</b>&nbsp;Traits</span>
+                <span class="kmc-badge"><b id="d-mastery">0%</b></span>
+            </div>
 
-            <!-- Gauche : writer + boutons -->
-            <div class="detail-left">
-                <div class="writer-main">
-                    <div id="kanji-writer-target"></div>
-                    <svg id="kana-writer-svg" viewBox="0 0 109 109" xmlns="http://www.w3.org/2000/svg" style="display:none"></svg>
-                    <div class="spinner" id="writer-spinner" style="display:none"></div>
-                </div>
-                <div class="detail-action-row">
+            <div class="kanji-body-grid">
+                <!-- Gauche : boutons d'action -->
+                <div class="card-actions-col">
                     <button class="detail-action-btn replay" onclick="replayAnimation()" title="Revoir le tracé">
-                        <span style="font-size:18px">↩</span>
-                        <span class="btn-label">Replay</span>
+                        <span>↩</span><span class="btn-label">Rejouer</span>
                     </button>
                     <button class="detail-action-btn mic" id="btn-oral-test" onclick="startOralTest(window.currentKanjiForStroke)" title="Test de prononciation">
-                        <span style="font-size:18px">🎤</span>
-                        <span class="btn-label">VOIX</span>
+                        <span>🎤</span><span class="btn-label">Audio</span>
                     </button>
                     <button class="detail-action-btn trace" id="detail-quiz-btn" onclick="launchDetailTrace()" title="S'entraîner au tracé guidé">
-                        <span style="font-size:18px">✍️</span>
-                        <span class="btn-label">Tracé</span>
+                        <span>✍️</span><span class="btn-label">Tracer</span>
                     </button>
                     <button class="detail-action-btn save" id="btn-save-kanji" onclick="openFolderModal(window.currentKanjiForStroke)" title="Enregistrer dans un dossier">
-                        <span style="font-size:18px" id="save-icon">⭐</span>
-                        <span class="btn-label">SAUV.</span>
+                        <span id="save-icon">⭐</span><span class="btn-label">Sauv.</span>
                     </button>
                 </div>
-                <div class="oral-feedback" id="voice-feedback"></div>
-            </div>
 
-            <!-- Milieu : signification + lectures -->
-            <div class="detail-mid">
-                <div class="detail-section-label">Signification</div>
-                <div class="meaning-text" id="d-meaning"></div>
-
-                <div id="section-on" style="display:none">
-                    <div class="detail-section-label" style="margin-top:12px">Lecture ON</div>
-                    <div id="d-on" class="tag-container"></div>
+                <!-- Centre : kanji animé (tracé SVG conservé) -->
+                <div class="kanji-center-col">
+                    <div class="writer-main">
+                        <div id="kanji-writer-target"></div>
+                        <svg id="kana-writer-svg" viewBox="0 0 109 109" xmlns="http://www.w3.org/2000/svg" style="display:none"></svg>
+                        <div class="spinner" id="writer-spinner" style="display:none"></div>
+                    </div>
+                    <div class="oral-feedback" id="voice-feedback"></div>
                 </div>
-                <div id="section-kun" style="display:none">
-                    <div class="detail-section-label" style="margin-top:10px">Lecture KUN</div>
-                    <div id="d-kun" class="tag-container"></div>
-                </div>
-            </div>
 
-            <!-- Droite : 4 stats -->
-            <div class="detail-right">
-                <div class="kanji-stats">
-                    <div class="stat-box"><b id="d-level">-</b>Niveau</div>
-                    <div class="stat-box"><b id="d-strokes">-</b>Traits</div>
-                    <div class="stat-box"><b id="d-romaji" style="font-size:8px">-</b>Rômaji</div>
-                    <div class="stat-box"><b id="d-mastery">0%</b>Progrès</div>
+                <!-- Droite : lectures ON / KUN + romaji -->
+                <div class="card-readings-col">
+                    <div id="section-on" style="display:none">
+                        <div class="detail-section-label">On'yomi</div>
+                        <div id="d-on" class="tag-container"></div>
+                    </div>
+                    <div id="section-kun" style="display:none">
+                        <div class="detail-section-label">Kun'yomi</div>
+                        <div id="d-kun" class="tag-container"></div>
+                    </div>
+                    <div class="detail-section-label" style="margin-top:10px">Rômaji</div>
+                    <div class="kmc-romaji" id="d-romaji">-</div>
                 </div>
             </div>
+        </div>
 
-        </div><!-- /detail-top -->
+        <!-- ── Signification ── -->
+        <div class="detail-section-label" style="margin:16px 16px 6px">Signification</div>
+        <div class="info-card"><div class="meaning-text" id="d-meaning"></div></div>
 
         <!-- ── Ordre des traits ── -->
         <div class="detail-body">

@@ -134,7 +134,7 @@
     .dots-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
     .dot { width: 12px; height: 12px; background: #2a2a38; border-radius: 3px; margin: auto; }
     .dot.active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
-    .welcome-box { display: flex; align-items: center; background: linear-gradient(135deg, #1a2a4000 0%, #1a203000 0%); padding: 14px; border-radius: 12px; margin-bottom: 14px; border: 1px solid #2a3a55; }
+    .welcome-box { display: flex; align-items: center; background: linear-gradient(135deg, #1a2a40 0%, #1a2030 100%); padding: 14px; border-radius: 12px; margin-bottom: 14px; border: 1px solid #2a3a55; }
     .tanuki-img { width: 52px; height: 52px; margin-right: 14px; border-radius: 50%; }
     
     .prog-item { margin-bottom: 16px; }
@@ -197,48 +197,64 @@
     #detail-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 3000; display: none; flex-direction: column; }
     .detail-content { flex: 1; overflow-y: auto; padding-top: 56px; }
 
-    /* ── Bloc supérieur : 3 colonnes ── */
-    .detail-top { display: flex; gap: 14px; padding: 16px 16px 0; align-items: flex-start; }
+    /* ── Carte principale du kanji (gradient + halo, style commun à l'app) ── */
+    .kanji-main-card {
+        margin: 12px 16px 0;
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background:
+            radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+            radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+            #0a1120;
+        box-shadow: var(--glow-cyan), 0 8px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.025);
+    }
+    .kanji-top-info { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .kmc-badge { background: rgba(56,189,248,0.10); border: 1px solid rgba(56,189,248,0.3); color: var(--accent-muted); font-size: 0.6875rem; padding: 4px 10px; border-radius: 8px; font-weight: 700; }
+    .kmc-badge b { font-family: 'Syne', sans-serif; }
 
-    /* Colonne gauche : writer + boutons */
-    .detail-left { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
-    .writer-main { width: 150px; height: 150px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-    .detail-action-row { display: flex; gap: 10px; }
-    .detail-action-btn { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font-size: 1.0625rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1px; transition: border-color 0.15s, background 0.15s; padding: 0; }
-    .detail-action-btn:active { transform: scale(0.92); }
-    .detail-action-btn.replay { border-color: var(--accent);  color: var(--accent); }
-    .detail-action-btn.mic    { border-color: #f5a623;        color: #f5a623; }
+    .kanji-body-grid { display: flex; gap: 12px; align-items: flex-start; }
+
+    /* Colonne gauche : boutons d'action (pilules avec icône + libellé) */
+    .card-actions-col { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+    .detail-action-btn { display: flex; align-items: center; gap: 5px; border-radius: 8px; border: 1px solid var(--border); background: rgba(15,23,42,0.7); color: var(--accent-muted); font-size: 0.6875rem; cursor: pointer; padding: 5px 9px; transition: all 0.15s; white-space: nowrap; }
+    .detail-action-btn:active { transform: scale(0.95); }
+    .detail-action-btn:hover { background: rgba(56,189,248,0.15); }
+    .detail-action-btn.replay { border-color: var(--accent); color: var(--accent); }
+    .detail-action-btn.mic    { border-color: var(--highlight-warm); color: var(--highlight-warm); }
     .detail-action-btn.trace  { border-color: var(--accent2); color: var(--accent2); }
-    .detail-action-btn .btn-label { font-size: 0.4375rem; font-weight: 800; letter-spacing: 0.3px; line-height: 1; text-transform: uppercase; }
-    .detail-action-btn.listening { background: #f5a623 !important; color: #000 !important; border-color: #f5a623 !important; box-shadow: 0 0 14px #f5a623; }
-    .oral-feedback { font-size: 0.625rem; color: var(--gray); text-align: center; min-height: 14px; max-width: 150px; }
+    .detail-action-btn .btn-label { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.2px; }
+    .detail-action-btn.listening { background: var(--highlight-warm) !important; color: #000 !important; border-color: var(--highlight-warm) !important; box-shadow: 0 0 14px var(--highlight-warm); }
+    .detail-action-btn.save.saved { background: rgba(212,175,55,0.15); border-color: #D4AF37; color: #D4AF37; }
+    .oral-feedback { font-size: 0.625rem; color: var(--gray); text-align: center; min-height: 14px; margin-top: 6px; }
 
-    /* Colonne milieu : signification + lectures */
-    .detail-mid { flex: 1; min-width: 0; }
-    .detail-section-label { font-size: 0.5625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 4px; margin-top: 12px; }
+    /* Colonne centrale : le kanji animé */
+    .kanji-center-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+    .writer-main { width: 140px; height: 140px; background: rgba(10,17,32,0.85); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+
+    /* Colonne droite : lectures ON/KUN + romaji */
+    .card-readings-col { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; min-width: 88px; }
+    .kmc-romaji { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+
+    .detail-section-label { font-size: 0.5625rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 4px; margin-top: 10px; }
     .detail-section-label:first-child { margin-top: 0; }
-    .meaning-text { font-size: 1.375rem; color: var(--accent); font-weight: bold; line-height: 1.2; }
+    .meaning-text { font-size: 1.25rem; color: var(--text); font-weight: bold; line-height: 1.3; }
 
-    /* Colonne droite : 4 stats */
-    .detail-right { flex: 1; display: flex; justify-content: flex-end; margin-right: 25px; }
-    .kanji-stats { display: grid; grid-template-columns: repeat(2, 95px); gap: 8px; }
-    .stat-box { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface); border-radius: 10px; padding: 10px 5px; border: 1px solid var(--border); min-height: 30px; text-align: center; }
-    .stat-box b { color: var(--text); font-size: 0.625rem; font-family: 'Syne', sans-serif; margin-bottom: 2px; line-height: 1; }
-    .stat-box span, .stat-box { color: var(--gray); font-size: 0.375rem; text-transform: uppercase; }
+    .info-card { margin: 0 16px 4px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(10,17,32,0.75); backdrop-filter: blur(8px); }
 
     /* --- RESPONSIVE MOBILE --- */
-    @media (max-width: 800px) {
-    .writer-section { flex-direction: column !important; align-items: center; gap: 15px; }
-    .detail-right { margin: 15px 0 0 0 !important; width: 100%; justify-content: center; }
-    .kanji-stats { grid-template-columns: 1fr 1fr !important; width: 100%; max-width: 300px; }
-}
+    @media (max-width: 380px) {
+        .kanji-body-grid { flex-direction: column; align-items: center; }
+        .card-actions-col { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+        .card-readings-col { align-items: center; text-align: center; }
+    }
     /* Sections texte sous le bloc top */
     .detail-body { padding: 0 16px 16px; }
     .section-title { font-size: 0.5625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin: 14px 0 8px; }
     .tag-container { display: flex; gap: 5px; flex-wrap: wrap; }
     .tag { padding: 3px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; }
     .tag-on  { background: #1e3a32; color: #a3d2ca; }
-    .tag-kun { background: #1a2a40; color: #a1c4e0; }
+    .tag-kun { background: rgba(212,175,55,0.15); color: #D4AF37; }
 
     /* ── Stroke Order Guide ── */
     .stroke-guide-row { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none; }
@@ -428,7 +444,7 @@
     
     .unit-box-wrapper { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
     
-    .unit-box-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid var(--border); border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+    .unit-box-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid #D4AF37; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
     .unit-box-header:hover { background: rgba(0,229,255,0.18); }
     
     .unit-box-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
@@ -502,7 +518,7 @@
 
 .vocab-category-box { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
 
-.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid var(--border); border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+.vocab-category-header { padding: 14px 16px; background: rgba(0,229,255,0.10); border: 1px solid #D4AF37; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
 .vocab-category-header:hover { background: rgba(0,229,255,0.18); }
 
 .vocab-category-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
