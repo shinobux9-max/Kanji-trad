@@ -917,6 +917,15 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// AJOUT : sur Android, la 1ère pression du bouton retour ferme le clavier sans déclencher
+// de navigation JS. Si le clavier se ferme (input perd le focus) alors que le champ est vide,
+// on referme aussi la recherche automatiquement — sinon l'écran reste bloqué "ouvert".
+document.getElementById('search-input')?.addEventListener('blur', () => {
+    if (searchOpen && document.getElementById('search-input').value.trim() === '') {
+        setTimeout(() => { if (searchOpen) history.back(); }, 100);
+    }
+});
+
 function showSearchPanel() {
     document.getElementById('search-results').classList.add('open', 'with-bar');
 }
