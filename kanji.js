@@ -2785,7 +2785,7 @@ async function showNiveauxScreen(isBack = false) {
         }
         
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}55; box-shadow:0 0 16px ${levelData.color}22;" onclick="showCategoryDirect('${levelId}','vocab')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','vocab')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -2931,7 +2931,7 @@ async function showGrammarNiveauxScreen(isBack = false) {
         }
         
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}55; box-shadow:0 0 16px ${levelData.color}22;" onclick="showCategoryDirect('${levelId}','grammar')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','grammar')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -2969,7 +2969,7 @@ function showKanjiNiveauxScreen(isBack = false) {
         const avgMastery = kanjiForLevel.length > 0 ? Math.round(totalMastery / kanjiForLevel.length) : 0;
         
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}55; box-shadow:0 0 16px ${levelData.color}22;" onclick="showCategoryDirect('${levelId}','kanji')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','kanji')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
