@@ -926,3 +926,10 @@
 .kanji-grid-cell:hover { background: rgba(255,255,255,0.08); }
 .kanji-grid-cell .kgc-char { font-size: 2rem; font-weight: bold; }
 .kanji-grid-cell .kgc-meaning { font-size: 0.6875rem; color: var(--gray); margin-top: 6px; }
+
+/* ══════════════════════════════════════════════════
+   OPACITÉ RÉDUITE (0.05) — Niveaux, Apprendre/Révisions, carton Niveaux de maîtrise
+══════════════════════════════════════════════════ */
+.niveaux-card, .apprendre-card, .dash-mastery-card {
+    background: rgba(10, 17, 32, 0.05);
+}

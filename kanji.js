@@ -2746,7 +2746,7 @@ function showDashboard(isBack = false) {
                 <div class="streak-compact-record">Record<br>${streak.bestStreak}j</div>
                 <span class="streak-compact-chevron">›</span>
             </div>
-            <div class="dash-card">
+            <div class="dash-card dash-mastery-card">
                 <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
                 <div id="progression-list"></div>
             </div>
