@@ -16,8 +16,13 @@
     body {
         font-family: 'Noto Sans JP', sans-serif;
         margin: 0; color: var(--text); overflow: hidden;
-        background: radial-gradient(ellipse at 20% 0%, #0D1A3A 0%, transparent 55%), linear-gradient(180deg, #0A1226 0%, #060B18 60%);
+        background:
+            linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%),
+            url('images/niveaux-bg.jpg');
+        background-size: cover;
+        background-position: center;
         background-attachment: fixed;
+        background-repeat: no-repeat;
     }
 
     /* ── TOOLBAR ─────────────────────── */
@@ -675,17 +680,6 @@
 .niveaux-wrap {
     padding: 16px; display: flex; flex-direction: column; gap: 16px;
     min-height: 100%;
-    background:
-        radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.55) 50%, transparent),
-        radial-gradient(1px 1px at 78% 15%, rgba(255,255,255,0.4) 50%, transparent),
-        radial-gradient(1px 1px at 40% 55%, rgba(255,255,255,0.45) 50%, transparent),
-        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.35) 50%, transparent),
-        radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,0.4) 50%, transparent),
-        radial-gradient(1px 1px at 60% 92%, rgba(255,255,255,0.3) 50%, transparent),
-        radial-gradient(circle at 15% 92%, rgba(255,140,60,0.12) 0%, transparent 40%),
-        radial-gradient(circle at 85% 100%, rgba(180,80,220,0.12) 0%, transparent 45%),
-        radial-gradient(circle at 75% 15%, rgba(0,229,255,0.08) 0%, transparent 35%),
-        radial-gradient(circle at 25% 25%, rgba(80,120,255,0.07) 0%, transparent 40%);
 }
 .niveaux-header { margin-bottom: 4px; }
 .niveaux-title-main { font-size: 1.625rem; color: #fff; font-weight: bold; }
