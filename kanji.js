@@ -2804,7 +2804,7 @@ async function showNiveauxScreen(isBack = false) {
    BARRE DE NAVIGATION EN BAS (façon Hibi)
 ══════════════════════════════════════════════════ */
 function setActiveBottomNav(key) {
-    ['accueil', 'recherche', 'apprendre', 'lexique'].forEach(k => {
+    ['accueil', 'recherche', 'apprendre'].forEach(k => {
         const btn = document.getElementById(`bnav-${k}`);
         if (btn) btn.classList.toggle('active', k === key);
     });
@@ -2818,8 +2818,6 @@ function bottomNavGo(target) {
         toggleSearch();
     } else if (target === 'apprendre') {
         showApprendreScreen();
-    } else if (target === 'lexique') {
-        showNiveauxScreen();
     }
 }
 
@@ -2843,17 +2841,22 @@ async function showApprendreScreen(isBack = false) {
             </div>
             
             <div class="apprendre-grid">
-                <div class="apprendre-card" onclick="showGrammarNiveauxScreen()">
+                <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">
                     <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
                     <div class="apprendre-card-title">Grammaire</div>
                     <div class="apprendre-card-sub">Une règle = une fiche</div>
                 </div>
-                <div class="apprendre-card" onclick="showKanjiNiveauxScreen()">
+                <div class="apprendre-card" style="border-color:#FBBF2499; box-shadow:0 0 18px #FBBF2459;" onclick="showNiveauxScreen()">
+                    <div class="apprendre-card-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24;">語</div>
+                    <div class="apprendre-card-title">Vocabulaire</div>
+                    <div class="apprendre-card-sub">Mots par niveau JLPT</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#00E5FF99; box-shadow:0 0 18px #00E5FF59;" onclick="showKanjiNiveauxScreen()">
                     <div class="apprendre-card-icon" style="background:rgba(0,229,255,0.15);color:var(--accent);">字</div>
                     <div class="apprendre-card-title">Kanji</div>
                     <div class="apprendre-card-sub">Caractères et tracé</div>
                 </div>
-                <div class="apprendre-card" onclick="navKana()">
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="navKana()">
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana & Katakana</div>
