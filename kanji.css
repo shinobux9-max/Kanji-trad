@@ -824,7 +824,7 @@
 /* ══════════════════════════════════════════════════
    NIVEAUX DE MAÎTRISE — cartes repliables avec % global
 ══════════════════════════════════════════════════ */
-.prog-level-card { background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
+.prog-level-card { background: rgba(6,11,24,0.15); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
 .prog-level-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; user-select: none; }
 .prog-level-arrow { color: var(--gray); font-size: 0.625rem; transition: transform 0.2s; }
 .prog-level-arrow.open { transform: rotate(90deg); }
