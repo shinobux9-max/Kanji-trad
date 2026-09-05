@@ -127,7 +127,7 @@
 
     /* ── DASHBOARD ───────────────────── */
     .dash-wrap { padding: 16px; }
-    .dash-card { background: rgba(14, 22, 48, 0.45); border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); }
+    .dash-card { background: var(--surface); border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); }
     .streak-info { display: flex; justify-content: space-around; text-align: center; margin-bottom: 18px; }
     .streak-val { font-size: 1.375rem; font-weight: bold; display: block; font-family: 'Syne', sans-serif; color: var(--accent); }
     .streak-label { font-size: 0.625rem; color: var(--gray); margin-top: 2px; }
@@ -194,7 +194,7 @@
     .kana-cell.empty { background: transparent; border-color: transparent; cursor: default; }
 
     /* ── DETAIL ──────────────────────── */
-    #detail-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 3000; display: none; flex-direction: column; }
+    #detail-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 3000; display: none; flex-direction: column; }
     .detail-content { flex: 1; overflow-y: auto; padding-top: 56px; }
 
     /* ── Bloc supérieur : 3 colonnes ── */
@@ -254,7 +254,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── QUIZ ────────────────────────── */
-    #quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4000; display: none; flex-direction: column; }
+    #quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4000; display: none; flex-direction: column; }
     .quiz-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); }
     .quiz-top-bar button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: 6px; border-radius: 8px; }
     .quiz-score-ok { display: flex; align-items: center; gap: 5px; background: #0b2e24; border: 1px solid var(--accent); border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9375rem; color: var(--accent); }
@@ -305,7 +305,7 @@
     .qfm-continue-btn:active { opacity: 0.85; }
 
     /* ── STROKE QUIZ ─────────────────── */
-    #stroke-quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4500; display: none; flex-direction: column; }
+    #stroke-quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4500; display: none; flex-direction: column; }
     .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: 6px; border-radius: 8px; }
     #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
@@ -926,3 +926,20 @@
 .kanji-grid-cell:hover { background: rgba(255,255,255,0.08); }
 .kanji-grid-cell .kgc-char { font-size: 2rem; font-weight: bold; }
 .kanji-grid-cell .kgc-meaning { font-size: 0.6875rem; color: var(--gray); margin-top: 6px; }
+
+/* ══════════════════════════════════════════════════
+   OPACITÉ RÉDUITE (0.05) — Niveaux, Apprendre/Révisions, carton Niveaux de maîtrise
+══════════════════════════════════════════════════ */
+.niveaux-card, .apprendre-card, .dash-mastery-card {
+    background: rgba(10, 17, 32, 0.05);
+}
+
+/* ══════════════════════════════════════════════════
+   HALO PERSONNALISÉ — appliqué à 4 boîtes précises seulement
+══════════════════════════════════════════════════ */
+.dash-review-cta, .dash-mastery-card, #bottom-nav, .grammar-point-box, .review-card {
+    border: 1px solid #1d4e76;
+    box-shadow:
+        0 0 13px 3px rgba(29, 78, 118, 1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
