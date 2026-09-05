@@ -18,7 +18,7 @@
         margin: 0; color: var(--text); overflow: hidden;
         background:
             linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%),
-            url('images/niveaux-bg.jpg');
+            url('images/niveaux-bg.png');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
