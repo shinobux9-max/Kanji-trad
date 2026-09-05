@@ -819,7 +819,7 @@
 .prog-card-stats { font-size: 0.6875rem; color: var(--gray); margin-top: 1px; }
 
 /* Navbar flottante : effet verre dépoli comme demandé */
-#bottom-nav { background: rgba(21,26,34,0.10); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+#bottom-nav { background: rgba(21,26,34,0.10); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(px); }
 
 /* ══════════════════════════════════════════════════
    NIVEAUX DE MAÎTRISE — cartes repliables avec % global
