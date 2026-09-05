@@ -2749,6 +2749,9 @@ function showDashboard(isBack = false) {
                 <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
                 <div id="progression-list"></div>
             </div>
+            <button onclick="if(confirm('Vider le cache et recharger l\\'app ?')) forceFullReset()" style="background:none;border:none;color:var(--gray);font-size:0.6875rem;text-decoration:underline;padding:12px;cursor:pointer;">
+                🔄 Vider le cache de l'app
+            </button>
         </div>`;
     // Appel de la fonction de progression si nécessaire ici
     if (typeof renderDashboard === 'function') renderDashboard();
@@ -5349,6 +5352,27 @@ async function renderDashboard() {
 }
 
 // 2. La fonction d'initialisation principale
+// Réinitialisation forcée : désenregistre le Service Worker + vide tous les caches,
+// puis recharge. Utile pour les tests, quand le cache reste bloqué sur une vieille version.
+async function forceFullReset() {
+    try {
+        if (navigator.serviceWorker) {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(regs.map(r => r.unregister()));
+        }
+        const names = await caches.keys();
+        await Promise.all(names.map(n => caches.delete(n)));
+    } catch (e) {
+        console.warn('Erreur pendant la réinitialisation :', e);
+    }
+    location.href = location.pathname; // recharge sans le paramètre ?reset
+}
+
+// Déclenchement via URL (utile sur PC : ajouter ?reset=1 à la fin de l'adresse)
+if (new URLSearchParams(location.search).has('reset')) {
+    forceFullReset();
+}
+
 async function init() {
     const mainContent = document.getElementById('main-content');
     
