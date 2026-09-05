@@ -879,28 +879,42 @@ function shuffleIndices(arr) {
 ══════════════════════════════════════════════════ */
 // searchOpen already declared above
 function toggleSearch() {
-    searchOpen = !searchOpen;
-    document.getElementById('search-bar').classList.toggle('open', searchOpen);
-    // Changement ici : on s'assure que main-content existe pour éviter le plantage
+    if (searchOpen) {
+        // Déjà ouvert : on passe par history.back() pour garder l'historique cohérent
+        // (fermeture réellement effectuée par MODAL_EXIT_REGISTRY['search'] au popstate)
+        history.back();
+        return;
+    }
+    searchOpen = true;
+    pushModalState('search');
+    document.getElementById('search-bar').classList.add('open');
     const main = document.getElementById('main-content');
-    if(main) main.classList.toggle('search-open', searchOpen);
+    if (main) main.classList.add('search-open');
+    setTimeout(() => document.getElementById('search-input').focus(), 220);
+    showSearchPanel();
+}
 
-    if (searchOpen) {
-        setTimeout(() => document.getElementById('search-input').focus(), 220);
-        showSearchPanel();
-    } else {
-        hideSearchPanel();
-        document.getElementById('search-input').value = '';
-        document.getElementById('search-clear').classList.remove('show');
-    }
+// Ferme réellement l'écran de recherche (appelée uniquement par le registre de retour,
+// jamais directement par un clic — pour que bouton retour matériel et clic donnent le même résultat)
+function closeSearchOverlay() {
+    searchOpen = false;
+    const bar = document.getElementById('search-bar');
+    if (bar) bar.classList.remove('open');
+    const main = document.getElementById('main-content');
+    if (main) main.classList.remove('search-open');
+    hideSearchPanel();
+    const input = document.getElementById('search-input');
+    if (input) input.value = '';
+    const clearBtn = document.getElementById('search-clear');
+    if (clearBtn) clearBtn.classList.remove('show');
 }
 
 // AJOUT : Fermeture au clic à l'extérieur
 document.addEventListener('click', (e) => {
     const bar = document.getElementById('search-bar');
-    const btn = document.getElementById('search-btn'); 
-    if (searchOpen && bar && !bar.contains(e.target) && (!btn || !btn.contains(e.target))) {
-        toggleSearch();
+    const results = document.getElementById('search-results');
+    if (searchOpen && bar && !bar.contains(e.target) && (!results || !results.contains(e.target))) {
+        history.back();
     }
 });
 
@@ -953,7 +967,7 @@ function doSearch(query) {
             : '';
         const safeChar = k.char.replace(/'/g, "\\'");
         // Ajout du toggleSearch() ici pour fermer la barre quand on clique sur un résultat
-        return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);hideSearchPanel();toggleSearch()">
+        return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);closeSearchOverlay();">
             <div class="search-hit-char">${k.char}</div>
             <div class="search-hit-info">
                 <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
@@ -5126,6 +5140,63 @@ async function init() {
     }
 }
 
+/* ══════════════════════════════════════════════════
+   PULL-TO-REFRESH — tirer vers le bas en haut de l'écran pour actualiser,
+   comme dans un navigateur classique
+══════════════════════════════════════════════════ */
+(function initPullToRefresh() {
+    const container = document.getElementById('main-content');
+    if (!container) return;
+
+    const PULL_THRESHOLD = 80;
+    let startY = 0;
+    let pulling = false;
+    let indicator = null;
+
+    function ensureIndicator() {
+        if (indicator) return indicator;
+        indicator = document.createElement('div');
+        indicator.id = 'ptr-indicator';
+        indicator.innerText = '↓';
+        document.body.appendChild(indicator);
+        return indicator;
+    }
+
+    container.addEventListener('touchstart', (e) => {
+        pulling = container.scrollTop <= 0;
+        if (pulling) startY = e.touches[0].clientY;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        if (!pulling) return;
+        const deltaY = e.touches[0].clientY - startY;
+        if (deltaY > 0 && container.scrollTop <= 0) {
+            const ind = ensureIndicator();
+            const pull = Math.min(deltaY, PULL_THRESHOLD * 1.5);
+            ind.style.opacity = Math.min(pull / PULL_THRESHOLD, 1);
+            ind.style.transform = `translateX(-50%) translateY(${pull}px) rotate(${pull * 3}deg)`;
+            ind.classList.toggle('ready', pull >= PULL_THRESHOLD);
+            ind.dataset.pull = pull;
+        }
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+        if (!pulling) return;
+        pulling = false;
+        if (indicator) {
+            const pull = parseFloat(indicator.dataset.pull || 0);
+            if (pull >= PULL_THRESHOLD) {
+                indicator.classList.add('loading');
+                indicator.innerText = '↻';
+                setTimeout(() => location.reload(), 300);
+            } else {
+                indicator.style.opacity = 0;
+                indicator.style.transform = 'translateX(-50%) translateY(0)';
+            }
+        }
+    }, { passive: true });
+})();
+
 // Lancement au démarrage
 init();
 
@@ -5140,6 +5211,7 @@ const MODAL_EXIT_REGISTRY = {
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'mixed-review': () => { mixedReviewSession = null; showApprendreScreen(true); },
+    'search': () => closeSearchOverlay(),
 };
 
 // À appeler à l'entrée de chaque modal/session : pousse UNE entrée d'historique.
@@ -5179,6 +5251,7 @@ window.onpopstate = function(event) {
     closeDetail();
     closeStrokeQuiz();
     closeQuiz();
+    if (searchOpen) closeSearchOverlay();
 
     if (event.state && event.state.view === 'modal' && MODAL_EXIT_REGISTRY[event.state.modal]) {
         MODAL_EXIT_REGISTRY[event.state.modal]();

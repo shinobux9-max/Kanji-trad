@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20250905_apprendre_vocab_merge">
+    <link rel="stylesheet" href="kanji.css?v=20250905_search_fix_ptr">
 </head>
 <body>
 
@@ -42,6 +42,7 @@
 <!-- ── SEARCH BAR ────────────────────────────────── -->
 <div id="search-bar">
     <div class="search-wrap">
+        <button class="back-btn" onclick="history.back()" style="flex-shrink:0;">←</button>
         <span>🔍</span>
         <input type="text" id="search-input" placeholder="Kanji, signification, lecture ON/KUN…" autocomplete="off" oninput="doSearch(this.value)">
         
@@ -267,7 +268,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20250905_apprendre_vocab_merge"></script>
+    <script src="kanji.js?v=20250905_search_fix_ptr"></script>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->
     <div id="bottom-nav">
@@ -289,7 +290,7 @@
             // Déterminer le path de base (pour GitHub Pages, c'est /Kanji-trad/)
             const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
             
-            navigator.serviceWorker.register('sw.js?v=20250905_apprendre_vocab_merge', { scope: basePath })
+            navigator.serviceWorker.register('sw.js?v=20250905_search_fix_ptr', { scope: basePath })
                 .then(registration => {
                     console.log('✅ Service Worker registré:', registration);
                     
