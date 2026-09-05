@@ -886,8 +886,14 @@
 .niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
 .review-mode-btn, .cat-header, .review-mode-selector .back-btn,
 .review-option-btn, .kana-cell, .vocab-category-header, .kanji-grid-cell {
-    box-shadow: var(--glow-cyan);
-    background: linear-gradient(145deg, #17223f 0%, #0a0f20 100%);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        #0a1120;
+    box-shadow:
+        var(--glow-cyan),
+        0 8px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
 }
 
 /* La navbar flottante profite aussi d'un léger halo */
