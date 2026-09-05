@@ -6,7 +6,7 @@
       "label_full": "N5 - Débutant",
       "description": "Kanji fondamentaux pour débutants",
       "color": "#56b324",
-      "color_dark": "#0b2e24",
+      "color_dark": "#56b324",
       "count": 103,
       "categories": ["kanji", "vocab", "grammar"],
       "order": 1
