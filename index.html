@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20250905_search_fix_ptr">
+    <link rel="stylesheet" href="kanji.css?v=20260906_kana_trace">
 </head>
 <body>
 
@@ -250,6 +250,24 @@
     </div>
 </div>
 
+<!-- ── KANA TRACE MODE MODAL ──────────────────────── -->
+<div id="kana-trace-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeKanaTraceModal()">
+    <div class="mode-selection-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div class="mode-title" style="margin-bottom:0">Tracer le kana</div>
+            <button onclick="closeKanaTraceModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+        </div>
+        <div class="mode-option" onclick="launchKanaTraceMode('trace-easy')">
+            <span class="mode-icon">✏️</span>
+            <div><div class="mode-opt-title">Tracé guidé</div><div class="mode-opt-sub">Ordre des traits avec aide visuelle</div></div>
+        </div>
+        <div class="mode-option" onclick="launchKanaTraceMode('trace-hard')">
+            <span class="mode-icon">💀</span>
+            <div><div class="mode-opt-title">Tracé Hardcore</div><div class="mode-opt-sub">Sans ombre — de mémoire pure</div></div>
+        </div>
+    </div>
+</div>
+
 <!-- ── QUIZ FEEDBACK MODAL ────────────────────────── -->
 <div id="quiz-feedback-modal">
     <div class="qfm-card" id="qfm-card">
@@ -271,7 +289,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20250905_search_fix_ptr"></script>
+    <script src="kanji.js?v=20260906_kana_trace"></script>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->
     <div id="bottom-nav">
