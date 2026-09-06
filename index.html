@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_apprendre_v2">
+    <link rel="stylesheet" href="kanji.css?v=20260906_search_v2">
 </head>
 <body>
 
@@ -44,19 +44,21 @@
     <div class="search-wrap">
         <button class="back-btn" onclick="history.back()" style="flex-shrink:0;">←</button>
         <span>🔍</span>
-        <input type="text" id="search-input" placeholder="Kanji, signification, lecture ON/KUN…" autocomplete="off" oninput="doSearch(this.value)">
+        <input type="text" id="search-input" placeholder="Mot, kanji, leçon, kana…" autocomplete="off" oninput="debouncedDoSearch(this.value)">
         
         <button id="mic-search-trigger" class="mic-search-btn" title="Recherche vocale">🎤</button>
 
         <button id="search-clear" onclick="clearSearch()">✕</button>
     </div>
+    <div class="search-filter-row" id="search-filter-type"></div>
+    <div class="search-filter-row" id="search-filter-level"></div>
 </div>
 
 <!-- ── SEARCH RESULTS ────────────────────────────── -->
 <div id="search-results">
     <div class="search-empty">
         <div class="big">🔎</div>
-        Tapez un kanji, sa signification ou une lecture
+        Cherchez un mot, une leçon, un kanji ou un kana
     </div>
 </div>
 
@@ -311,7 +313,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_apprendre_v2"></script>
+    <script src="kanji.js?v=20260906_search_v2"></script>
 
     <!-- ── BULK ACTION BAR (sélection en masse) ────────── -->
     <div id="bulk-action-bar" style="display:none;">

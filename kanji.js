@@ -1283,6 +1283,7 @@ function toggleSearch() {
         return;
     }
     searchOpen = true;
+    resetSearchFilters();
     // Empêche le clic qui VIENT D'OUVRIR la recherche d'être aussi interprété
     // comme un "clic à l'extérieur" par le listener global (même événement, même bulle)
     searchJustOpened = true;
@@ -1335,57 +1336,253 @@ function hideSearchPanel() {
     document.getElementById('search-results').classList.remove('open', 'with-bar');
 }
 
+/* ══════════════════════════════════════════════════
+   RECHERCHE UNIFIÉE — vocab, grammaire, kanji, kana
+   ─────────────────────────────────────────────────
+   Filtres remis à "Tout"/"Tous" à chaque ouverture (pas de persistance, comme demandé).
+   Un léger debounce évite de relancer la recherche à chaque frappe sur les niveaux qui
+   nécessitent un fetch réseau (vocab/grammaire non encore en cache).
+══════════════════════════════════════════════════ */
+let searchFilters = { type: 'all', level: 'all' };
+let searchDebounceTimer = null;
+const SEARCH_TYPE_LABELS  = { all: 'Tout', vocab: 'Vocabulaire', grammar: 'Grammaire', kanji: 'Kanji', kana: 'Kana' };
+const SEARCH_RESULTS_CAP  = 25; // par section, pour rester lisible/rapide
+
+function resetSearchFilters() {
+    searchFilters = { type: 'all', level: 'all' };
+    renderSearchFilterPills();
+}
+
+function renderSearchFilterPills() {
+    const typeEl = document.getElementById('search-filter-type');
+    const levelEl = document.getElementById('search-filter-level');
+    if (typeEl) {
+        typeEl.innerHTML = Object.entries(SEARCH_TYPE_LABELS).map(([id, label]) =>
+            `<button class="search-filter-pill${searchFilters.type === id ? ' active' : ''}" onclick="setSearchFilter('type','${id}')">${label}</button>`
+        ).join('');
+    }
+    if (levelEl) {
+        const levels = jlptMapping
+            ? [['all', { label: 'Tous', color: 'var(--accent)' }], ...Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)]
+            : [['all', { label: 'Tous' }], ...ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase() }])];
+        levelEl.innerHTML = levels.map(([id, d]) =>
+            `<button class="search-filter-pill${searchFilters.level === id ? ' active' : ''}" style="${searchFilters.level === id && d.color ? `border-color:${d.color};color:${d.color}` : ''}" onclick="setSearchFilter('level','${id}')">${d.label}</button>`
+        ).join('');
+    }
+}
+
+function setSearchFilter(kind, value) {
+    searchFilters[kind] = value;
+    renderSearchFilterPills();
+    const q = document.getElementById('search-input')?.value || '';
+    if (q.trim()) debouncedDoSearch(q); else clearSearch();
+}
+
+function debouncedDoSearch(query) {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => doSearch(query), 150);
+}
+
 function clearSearch() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('search-clear').classList.remove('show');
-    document.getElementById('search-results').innerHTML =
-        '<div class="search-empty"><div class="big">🔎</div>Tapez un kanji, sa signification ou une lecture</div>';
-    showSearchPanel();
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-clear').classList.remove('show');
+    document.getElementById('search-results').innerHTML =
+        '<div class="search-empty"><div class="big">🔎</div>Cherchez un mot, une leçon, un kanji ou un kana</div>';
+    showSearchPanel();
 }
 
 // Table de conversion kana → romaji pour la recherche
 const KANA_TO_ROMAJI = {"あ":"a","い":"i","う":"u","え":"e","お":"o","か":"ka","き":"ki","く":"ku","け":"ke","こ":"ko","さ":"sa","し":"shi","す":"su","せ":"se","そ":"so","た":"ta","ち":"chi","つ":"tsu","て":"te","と":"to","な":"na","に":"ni","ぬ":"nu","ね":"ne","の":"no","は":"ha","ひ":"hi","ふ":"fu","へ":"he","ほ":"ho","ま":"ma","み":"mi","む":"mu","め":"me","も":"mo","や":"ya","ゆ":"yu","よ":"yo","ら":"ra","り":"ri","る":"ru","れ":"re","ろ":"ro","わ":"wa","を":"wo","ん":"n","が":"ga","ぎ":"gi","ぐ":"gu","げ":"ge","ご":"go","ざ":"za","じ":"ji","ず":"zu","ぜ":"ze","ぞ":"zo","だ":"da","ぢ":"di","づ":"du","で":"de","ど":"do","ば":"ba","び":"bi","ぶ":"bu","べ":"be","ぼ":"bo","ぱ":"pa","ぴ":"pi","ぷ":"pu","ぺ":"pe","ぽ":"po","ア":"a","イ":"i","ウ":"u","エ":"e","オ":"o","カ":"ka","キ":"ki","ク":"ku","ケ":"ke","コ":"ko","サ":"sa","シ":"shi","ス":"su","セ":"se","ソ":"so","タ":"ta","チ":"chi","ツ":"tsu","テ":"te","ト":"to","ナ":"na","ニ":"ni","ヌ":"nu","ネ":"ne","ノ":"no","ハ":"ha","ヒ":"hi","フ":"fu","ヘ":"he","ホ":"ho","マ":"ma","ミ":"mi","ム":"mu","メ":"me","モ":"mo","ヤ":"ya","ユ":"yu","ヨ":"yo","ラ":"ra","リ":"ri","ル":"ru","レ":"re","ロ":"ro","ワ":"wa","ヲ":"wo","ン":"n"};
 function kanaToRomaji(str) { return [...str].map(c => KANA_TO_ROMAJI[c] || c).join(''); }
 
-function doSearch(query) {
-    const q = query.trim().toLowerCase();
-    document.getElementById('search-clear').classList.toggle('show', q.length > 0);
-    if (!q) { clearSearch(); return; }
-    showSearchPanel();
+// ── Recherche par type (chacune retourne un tableau d'items bruts, pas encore rendus) ──
 
-    const hits = kanjiDb.filter(k => {
-        if (k.char === query) return true;
-        if (k.meanings.some(m => m.toLowerCase().includes(q))) return true;
-        if (k.on.some(r  => r.toLowerCase().includes(q))) return true;
-        if (k.kun.some(r => r.replace(/[.\-].*/g,'').toLowerCase().includes(q))) return true;
-        // Recherche romaji (ex: "ichi", "hito", "ka")
-        if (k.on.some(r  => kanaToRomaji(r.toLowerCase()).includes(q))) return true;
-        if (k.kun.some(r => kanaToRomaji(r.replace(/[\.\-].*/g,'')).includes(q))) return true;
+function searchKanjiItems(q, level) {
+    return kanjiDb.filter(k => {
+        if (level !== 'all' && `n${getJLPTLevel(k.grade)}` !== level) return false;
+        if (k.char === q) return true;
+        if (k.meanings.some(m => m.toLowerCase().includes(q))) return true;
+        if (k.on.some(r => r.toLowerCase().includes(q))) return true;
+        if (k.kun.some(r => r.replace(/[.\-].*/g, '').toLowerCase().includes(q))) return true;
+        if (k.on.some(r => kanaToRomaji(r.toLowerCase()).includes(q))) return true;
+        if (k.kun.some(r => kanaToRomaji(r.replace(/[.\-].*/g, '')).includes(q))) return true;
         if (k.romaji && k.romaji.toLowerCase().includes(q)) return true;
         return false;
-    }).slice(0, 60);
+    }).slice(0, SEARCH_RESULTS_CAP);
+}
 
-    const el = document.getElementById('search-results');
-    if (!hits.length) {
-        el.innerHTML = `<div class="search-empty"><div class="big">🙅</div>Aucun résultat pour « ${query} »</div>`;
-        return;
-    }
-    el.innerHTML = hits.map(k => {
-        const cat = [...categories.values()].find(c => c.indices.includes(kanjiMap.get(k.char)));
-        const badge = cat
-            ? `<span class="search-hit-badge" style="background:${cat.color}22;color:${cat.color};border:1px solid ${cat.color}44">${cat.short}</span>`
-            : '';
-        const safeChar = k.char.replace(/'/g, "\\'");
-        // Ajout du toggleSearch() ici pour fermer la barre quand on clique sur un résultat
-        return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);closeSearchOverlay();">
-            <div class="search-hit-char">${k.char}</div>
-            <div class="search-hit-info">
-                <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
-                <div class="search-hit-readings">${[...k.on.slice(0,3), ...k.kun.slice(0,2)].join('  ')}</div>
-            </div>
-            ${badge}
-        </div>`;
-    }).join('');
+// Cherche aussi dans signification/nuance (pas seulement le mot/la lecture) — c'est ce qui
+// manquait le plus : impossible avant de retrouver une fiche vocab à partir de son sens français.
+function searchVocabItems(items, q) {
+    return items.filter(w => {
+        if (w.word && w.word.includes(q)) return true;
+        if (w.reading && w.reading.includes(q)) return true;
+        if (w.romaji && w.romaji.toLowerCase().includes(q)) return true;
+        const m = w.meanings;
+        if (m) {
+            if (typeof m === 'string' && m.toLowerCase().includes(q)) return true;
+            if (m.primary && m.primary.toLowerCase().includes(q)) return true;
+            if (Array.isArray(m.secondary) && m.secondary.some(s => s.toLowerCase().includes(q))) return true;
+        }
+        if (w.nuance && w.nuance.toLowerCase().includes(q)) return true;
+        return false;
+    }).slice(0, SEARCH_RESULTS_CAP);
+}
+
+// Cherche dans le titre/pattern ET dans le contenu des sections (l'explication du cours) —
+// pas seulement le nom de la particule/notion.
+function searchGrammarItems(items, q) {
+    return items.filter(l => {
+        if (l.item && l.item.includes(q)) return true;
+        if (l.pattern && l.pattern.includes(q)) return true;
+        if (l.title && l.title.toLowerCase().includes(q)) return true;
+        if (Array.isArray(l.sections) && l.sections.some(sec =>
+            (sec.text && sec.text.toLowerCase().includes(q)) ||
+            (Array.isArray(sec.paragraphs) && sec.paragraphs.some(p => p.toLowerCase().includes(q)))
+        )) return true;
+        return false;
+    }).slice(0, SEARCH_RESULTS_CAP);
+}
+
+function searchKanaItems(q) {
+    const all = [...getKanaFlatList('hira'), ...getKanaFlatList('kata')];
+    return all.filter(k =>
+        k.char === q || (k.romaji && k.romaji.toLowerCase().includes(q))
+    ).slice(0, SEARCH_RESULTS_CAP);
+}
+
+async function performUnifiedSearch(q, filters) {
+    const results = { kanji: [], vocab: [], grammar: [], kana: [] };
+    const levels = filters.level === 'all' ? ALL_JLPT_LEVELS : [filters.level];
+
+    if (filters.type === 'all' || filters.type === 'kanji') {
+        results.kanji = searchKanjiItems(q, filters.level);
+    }
+    if (filters.type === 'all' || filters.type === 'kana') {
+        // Le kana n'a pas de notion de niveau JLPT propre — toujours cherché tant que le type
+        // sélectionné l'inclut (déjà géré par la condition ci-dessus).
+        results.kana = searchKanaItems(q);
+    }
+    if (filters.type === 'all' || filters.type === 'vocab') {
+        for (const level of levels) {
+            const vd = await getLevelVocabData(level);
+            if (vd && vd.data) results.vocab.push(...searchVocabItems(vd.data, q).map(w => ({ ...w, _level: level })));
+        }
+        results.vocab = results.vocab.slice(0, SEARCH_RESULTS_CAP);
+    }
+    if (filters.type === 'all' || filters.type === 'grammar') {
+        for (const level of levels) {
+            const gd = await getLevelGrammarData(level);
+            if (gd && gd.data) results.grammar.push(...searchGrammarItems(gd.data, q).map(l => ({ ...l, _level: level })));
+        }
+        results.grammar = results.grammar.slice(0, SEARCH_RESULTS_CAP);
+    }
+    return results;
+}
+
+function buildSearchSection(title, itemsHtml) {
+    if (!itemsHtml.length) return '';
+    return `<div class="search-section">
+        <div class="search-section-title">${title} <span class="search-section-count">${itemsHtml.length}</span></div>
+        ${itemsHtml.join('')}
+    </div>`;
+}
+
+function renderSearchResults(results, query) {
+    const el = document.getElementById('search-results');
+    const total = results.kanji.length + results.vocab.length + results.grammar.length + results.kana.length;
+
+    if (total === 0) {
+        el.innerHTML = `<div class="search-empty"><div class="big">🙅</div>Aucun résultat pour « ${query} »</div>`;
+        return;
+    }
+
+    let html = '';
+    html += buildSearchSection('📚 Vocabulaire', results.vocab.map(buildVocabHitHtml));
+    html += buildSearchSection('📝 Grammaire', results.grammar.map(buildGrammarHitHtml));
+    html += buildSearchSection('🔤 Kanji', results.kanji.map(buildKanjiHitHtml));
+    html += buildSearchSection('あ Kana', results.kana.map(buildKanaHitHtml));
+    el.innerHTML = html;
+}
+
+function buildVocabHitHtml(w) {
+    const meaning = (w.meanings && (w.meanings.primary || w.meanings)) || '';
+    const color = (jlptMapping && jlptMapping.levels[w._level]) ? jlptMapping.levels[w._level].color : '#00E5FF';
+    return `<div class="search-hit" onclick="openVocabFromSearch('${w.id}','${w._level}')">
+        <div class="search-hit-char search-hit-char-word">${w.word || ''}</div>
+        <div class="search-hit-info">
+            <div class="search-hit-meaning">${meaning}</div>
+            <div class="search-hit-readings">${w.reading || ''}${w.romaji ? ' · ' + w.romaji : ''}</div>
+        </div>
+        <span class="search-hit-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">${w._level.toUpperCase()}</span>
+    </div>`;
+}
+
+function buildGrammarHitHtml(l) {
+    const color = (jlptMapping && jlptMapping.levels[l._level]) ? jlptMapping.levels[l._level].color : '#00E5FF';
+    return `<div class="search-hit" onclick="openGrammarFromSearch('${l.id}','${l._level}')">
+        <div class="search-hit-char search-hit-char-word">${l.item || l.pattern || ''}</div>
+        <div class="search-hit-info">
+            <div class="search-hit-meaning">${l.title || ''}</div>
+            <div class="search-hit-readings">${l.pattern && l.pattern !== l.item ? l.pattern : ''}</div>
+        </div>
+        <span class="search-hit-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">${l._level.toUpperCase()}</span>
+    </div>`;
+}
+
+function buildKanjiHitHtml(k) {
+    const safeChar = k.char.replace(/'/g, "\\'");
+    const level = getJLPTLevel(k.grade);
+    const color = (jlptMapping && jlptMapping.levels['n' + level]) ? jlptMapping.levels['n' + level].color : '#00E5FF';
+    return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);closeSearchOverlay();">
+        <div class="search-hit-char">${k.char}</div>
+        <div class="search-hit-info">
+            <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
+            <div class="search-hit-readings">${[...k.on.slice(0, 3), ...k.kun.slice(0, 2)].join('  ')}</div>
+        </div>
+        <span class="search-hit-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">N${level}</span>
+    </div>`;
+}
+
+function buildKanaHitHtml(k) {
+    return `<div class="search-hit" onclick='openKanaDetail(${JSON.stringify(k)});closeSearchOverlay();'>
+        <div class="search-hit-char">${k.char}</div>
+        <div class="search-hit-info">
+            <div class="search-hit-meaning">${k.romaji || ''}</div>
+        </div>
+    </div>`;
+}
+
+// Ouvre une fiche vocab "à froid" (sans être passé par la liste de son niveau au préalable) —
+// même principe qu'openDetail() pour le kanji, qui fonctionne déjà ainsi.
+async function openVocabFromSearch(wordId, level) {
+    const vd = await getLevelVocabData(level);
+    if (!vd || !vd.data) return;
+    vocabHomeData = { levelId: level, data: vd.data, examples: vd.examples };
+    closeSearchOverlay();
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    showVocabDetail(wordId, vd.data);
+}
+
+async function openGrammarFromSearch(lessonId, level) {
+    const gd = await getLevelGrammarData(level);
+    if (!gd || !gd.data) return;
+    grammarHomeData = { levelId: level, data: gd.data };
+    closeSearchOverlay();
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    showGrammarDetail(lessonId);
+}
+
+async function doSearch(query) {
+    const q = query.trim().toLowerCase();
+    document.getElementById('search-clear').classList.toggle('show', q.length > 0);
+    if (!q) { clearSearch(); return; }
+    showSearchPanel();
+
+    const results = await performUnifiedSearch(q, searchFilters);
+    // Si l'utilisateur a continué à taper pendant le fetch, on ignore ce résultat périmé
+    if (document.getElementById('search-input').value.trim().toLowerCase() !== q) return;
+    renderSearchResults(results, query);
 }
 
 // LOGIQUE MICRO RECHERCHE — supporte japonais et français
