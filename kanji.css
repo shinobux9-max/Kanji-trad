@@ -18,7 +18,7 @@
         margin: 0; color: var(--text); overflow: hidden;
         background:
             linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%),
-            url('images/niveaux-bg.png');
+            url('images/niveaux-bg.webp');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -194,7 +194,7 @@
     .kana-cell.empty { background: transparent; border-color: transparent; cursor: default; }
 
     /* ── DETAIL ──────────────────────── */
-    #detail-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 3000; display: none; flex-direction: column; }
+    #detail-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.webp'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 3000; display: none; flex-direction: column; }
     .detail-content { flex: 1; overflow-y: auto; padding-top: 56px; }
 
     /* ── Carte principale du kanji (gradient + halo, style commun à l'app) ── */
@@ -276,7 +276,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── QUIZ ────────────────────────── */
-    #quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4000; display: none; flex-direction: column; }
+    #quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.webp'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4000; display: none; flex-direction: column; }
     .quiz-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); }
     .quiz-top-bar button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: 6px; border-radius: 8px; }
     .quiz-score-ok { display: flex; align-items: center; gap: 5px; background: #0b2e24; border: 1px solid var(--accent); border-radius: 8px; padding: 4px 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9375rem; color: var(--accent); }
@@ -327,7 +327,7 @@
     .qfm-continue-btn:active { opacity: 0.85; }
 
     /* ── STROKE QUIZ ─────────────────── */
-    #stroke-quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4500; display: none; flex-direction: column; }
+    #stroke-quiz-view { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('images/niveaux-bg.webp'); background-size: cover; background-position: center; background-attachment: fixed; z-index: 4500; display: none; flex-direction: column; }
     .sq-top-bar { background: var(--surface); height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .sq-top-bar button { background: none; border: none; color: var(--text); font-size: 1.25rem; cursor: pointer; padding: 6px; border-radius: 8px; }
     #stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
@@ -383,9 +383,9 @@
     .mode-title { font-size: 1.0625rem; font-weight: 800; text-align: center; }
 
 /* Fond spécifique au modal fiche (fiche de correction pendant les révisions) — même recette que
-   les grands overlays (#detail-view, #quiz-view...) : dégradé sombre + niveaux-bg.png en dessous */
+   les grands overlays (#detail-view, #quiz-view...) : dégradé sombre + niveaux-bg.webp en dessous */
 #fiche-correction-modal .mode-selection-card {
-    background: linear-gradient(180deg, rgba(6,11,24,0.75) 0%, rgba(6,11,24,0.9) 100%), url('images/niveaux-bg.png');
+    background: linear-gradient(180deg, rgba(6,11,24,0.75) 0%, rgba(6,11,24,0.9) 100%), url('images/niveaux-bg.webp');
     background-size: cover;
     background-position: center;
 }
