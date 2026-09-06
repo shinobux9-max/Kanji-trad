@@ -1098,3 +1098,34 @@
     border: none;
 }
 #bulk-action-bar button:hover { filter: brightness(1.15); }
+
+/* ══════════════════════════════════════════════════
+   ENTRAÎNEMENT LIBRE (point #8)
+══════════════════════════════════════════════════ */
+.free-training-banner {
+    background: rgba(157,110,255,0.12);
+    border: 1px solid rgba(157,110,255,0.35);
+    color: #9D6EFF;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+.free-training-banner.small { font-size: 0.6875rem; padding: 6px 10px; margin-bottom: 10px; width: 100%; max-width: 340px; }
+
+.ft-radio-group { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.ft-radio-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; border-bottom: 1px solid var(--border); }
+.ft-radio-row:last-child { border-bottom: none; }
+.ft-radio-row input[type="radio"] { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--accent); }
+.ft-radio-label { font-weight: bold; font-size: 0.875rem; color: var(--text); }
+.ft-radio-sub { font-size: 0.6875rem; color: var(--gray); }
+
+.ft-radio-pills { flex-direction: row; }
+.ft-radio-pill { flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px 4px; cursor: pointer; border-right: 1px solid var(--border); }
+.ft-radio-pill:last-child { border-right: none; }
+.ft-radio-pill input[type="radio"] { display: none; }
+.ft-radio-pill span { font-weight: bold; font-size: 0.9375rem; color: var(--gray); }
+.ft-radio-pill input[type="radio"]:checked + span { color: var(--accent); }
+
+.ft-grade-buttons { grid-template-columns: repeat(2, 1fr); }

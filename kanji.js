@@ -3729,22 +3729,12 @@ async function startMixedReview() {
     launchMixedReviewSession(queue, 'mixed-review');
 }
 
-function renderMixedReviewScreen() {
-    const container = document.getElementById('category-content');
-    const session = mixedReviewSession;
-    
-    if (!session || session.index >= session.queue.length) {
-        renderMixedReviewSummary();
-        return;
-    }
-    
-    const entry = session.queue[session.index];
-    const progress = session.index + 1;
-    const total = session.queue.length;
-    const flipped = session.flipped;
-    
+// Détermine front/back/typeLabel/frontSize d'une carte à partir de son entrée { type, level, item } —
+// factorisé pour être partagé entre la révision mixte ET l'entraînement libre (même contenu affiché,
+// seuls les boutons de réponse changent selon le contexte).
+function buildCardDisplay(entry) {
     let front = '', back = '', typeLabel = '', frontSize = 36;
-    
+
     if (entry.type === 'vocab') {
         const w = entry.item;
         typeLabel = '📚 Vocabulaire';
@@ -3773,6 +3763,31 @@ function renderMixedReviewScreen() {
         frontSize = 56;
         back = `<div class="review-meaning">${k.romaji || ''}</div>`;
     }
+
+    return { front, back, typeLabel, frontSize };
+}
+
+// Id de tracking d'une entrée { type, item } — même convention que trackItem/gradeReview
+// (kanji : le caractère lui-même ; les autres : item.id déjà au bon format).
+function getEntryTrackingId(entry) {
+    return entry.type === 'kanji' ? entry.item.char : entry.item.id;
+}
+
+function renderMixedReviewScreen() {
+    const container = document.getElementById('category-content');
+    const session = mixedReviewSession;
+    
+    if (!session || session.index >= session.queue.length) {
+        renderMixedReviewSummary();
+        return;
+    }
+    
+    const entry = session.queue[session.index];
+    const progress = session.index + 1;
+    const total = session.queue.length;
+    const flipped = session.flipped;
+    
+    const { front, back, typeLabel, frontSize } = buildCardDisplay(entry);
     
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
@@ -3807,7 +3822,7 @@ function flipMixedReviewCard() {
 function submitMixedReviewGrade(quality) {
     if (!mixedReviewSession) return;
     const entry = mixedReviewSession.queue[mixedReviewSession.index];
-    const id = entry.type === 'kanji' ? entry.item.char : entry.item.id;
+    const id = getEntryTrackingId(entry);
     gradeReview(id, quality);
     
     const labels = ['again', 'hard', 'good', 'easy'];
@@ -6076,15 +6091,281 @@ async function startDashboardReview() {
 // Stub pour l'instant : le corps sera remplacé par le vrai écran de configuration
 // (type × niveau × nombre de questions) à l'étape suivante — la navigation/retour
 // arrière fonctionne déjà correctement dès maintenant.
+/* ══════════════════════════════════════════════════
+   ENTRAÎNEMENT LIBRE (point #8) — V1
+   ─────────────────────────────────────────────────
+   Isolation stricte vis-à-vis du SRS : answerTrainingCard() n'appelle
+   JAMAIS gradeReview(). Stats stockées à part (TRAINING_STATS_KEY).
+   Pool tiré de TOUT le contenu de la sélection (pas seulement dû/nouveau,
+   contrairement à buildReviewQueue) — c'est précisément le but : pouvoir
+   re-feuilleter des cartes déjà maîtrisées sans toucher au planning.
+══════════════════════════════════════════════════ */
+const TRAINING_STATS_KEY = 'kanji_trad_training_stats';
+
+function getTrainingStats() {
+    const stored = localStorage.getItem(TRAINING_STATS_KEY);
+    return stored ? JSON.parse(stored) : { totalSessions: 0, totalAnswered: 0, totalCorrect: 0 };
+}
+function saveTrainingStats(s) { localStorage.setItem(TRAINING_STATS_KEY, JSON.stringify(s)); }
+function recordTrainingSession(correct, total) {
+    const s = getTrainingStats();
+    s.totalSessions++;
+    s.totalAnswered += total;
+    s.totalCorrect += correct;
+    saveTrainingStats(s);
+}
+
 function showFreeTrainingConfig(isBack = false) {
     if (!isBack) history.pushState({ view: 'free-training-config' }, '');
     document.getElementById('page-title').innerText = 'Entraînement libre';
+
+    const typeOptions = [
+        { id: 'all',     label: 'Tout',         sub: 'Vocabulaire + Grammaire + Kanji + Kana' },
+        { id: 'vocab',   label: 'Vocabulaire',  sub: '' },
+        { id: 'grammar', label: 'Grammaire',    sub: '' },
+        { id: 'kanji',   label: 'Kanji',        sub: '' },
+        { id: 'kana',    label: 'Kana',         sub: 'Hiragana / Katakana' }
+    ];
+
     document.getElementById('main-content').innerHTML = `
-        <div style="padding:60px 24px;text-align:center;color:var(--gray)">
-            <div style="font-size:2.5rem;margin-bottom:14px">🏋️</div>
-            <div style="font-weight:bold;color:var(--text);margin-bottom:8px;font-size:1rem">Bientôt disponible</div>
-            <div style="font-size:0.8125rem;line-height:1.5">La configuration de l'entraînement libre arrive dans la prochaine étape.</div>
+        <div style="padding:16px 16px 24px">
+            <div class="free-training-banner">🏋️ Entraînement libre — sans impact sur tes révisions</div>
+
+            <div class="mode-section-label" style="margin-top:14px">— Contenu</div>
+            <div class="ft-radio-group">
+                ${typeOptions.map((o, i) => `
+                    <label class="ft-radio-row">
+                        <input type="radio" name="ft-type" value="${o.id}" ${i === 0 ? 'checked' : ''} onchange="onFreeTrainingTypeChange()">
+                        <span class="ft-radio-label">${o.label}</span>
+                        ${o.sub ? `<span class="ft-radio-sub">${o.sub}</span>` : ''}
+                    </label>
+                `).join('')}
+            </div>
+
+            <div class="mode-section-label" style="margin-top:14px" id="ft-scope-label">— Niveau</div>
+            <div id="ft-scope-options" class="ft-radio-group"></div>
+
+            <div class="mode-section-label" style="margin-top:14px">— Nombre de questions</div>
+            <div class="ft-radio-group ft-radio-pills">
+                ${[10, 20, 50, 0].map(n => `
+                    <label class="ft-radio-pill">
+                        <input type="radio" name="ft-count" value="${n}" ${n === 10 ? 'checked' : ''}>
+                        <span>${n === 0 ? '∞' : n}</span>
+                    </label>
+                `).join('')}
+            </div>
+
+            <button class="review-cta-btn" style="width:100%;margin-top:22px" onclick="startFreeTraining()">Commencer →</button>
         </div>`;
+
+    renderFreeTrainingScopeOptions('all');
+}
+
+function renderFreeTrainingScopeOptions(type) {
+    const label = document.getElementById('ft-scope-label');
+    const container = document.getElementById('ft-scope-options');
+    if (!container || !label) return;
+
+    if (type === 'kana') {
+        label.textContent = '— Script';
+        container.innerHTML = `
+            <label class="ft-radio-row"><input type="radio" name="ft-scope" value="both" checked><span class="ft-radio-label">Les deux</span></label>
+            <label class="ft-radio-row"><input type="radio" name="ft-scope" value="hira"><span class="ft-radio-label">Hiragana</span></label>
+            <label class="ft-radio-row"><input type="radio" name="ft-scope" value="kata"><span class="ft-radio-label">Katakana</span></label>
+        `;
+    } else {
+        label.textContent = '— Niveau';
+        const levels = jlptMapping
+            ? Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)
+            : ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase(), color: '#00E5FF' }]);
+        container.innerHTML = `
+            <label class="ft-radio-row"><input type="radio" name="ft-scope" value="all" checked><span class="ft-radio-label">Tous les niveaux</span></label>
+            ${levels.map(([id, d]) => `<label class="ft-radio-row"><input type="radio" name="ft-scope" value="${id}"><span class="ft-radio-label" style="color:${d.color || 'var(--text)'}">${d.label}</span></label>`).join('')}
+        `;
+    }
+}
+
+function onFreeTrainingTypeChange() {
+    const type = document.querySelector('input[name="ft-type"]:checked')?.value || 'all';
+    renderFreeTrainingScopeOptions(type);
+}
+
+// Pool complet (pas de filtre due/fresh, contrairement à buildReviewQueue) pour un
+// ensemble de types/niveaux/scripts donné. Réutilise les mêmes fonctions de lecture
+// de données que buildReviewQueue pour rester cohérent avec le reste de l'app.
+async function buildTrainingPool({ types, levels, kanaScripts }) {
+    const pool = [];
+    for (const type of types.filter(t => t !== 'kana')) {
+        for (const level of levels) {
+            const items = await getRawItemsForTypeLevel(type, level);
+            items.forEach(it => pool.push(makeQueueEntry(type, level, it, false)));
+        }
+    }
+    if (types.includes('kana')) {
+        for (const script of kanaScripts) {
+            const items = getKanaFlatList(script);
+            items.forEach(it => pool.push(makeQueueEntry('kana', script, it, false)));
+        }
+    }
+    return pool;
+}
+
+async function startFreeTraining() {
+    const type = document.querySelector('input[name="ft-type"]:checked')?.value || 'all';
+    const scope = document.querySelector('input[name="ft-scope"]:checked')?.value || 'all';
+    const countRaw = document.querySelector('input[name="ft-count"]:checked')?.value ?? '10';
+    const targetCount = countRaw === '0' ? null : parseInt(countRaw, 10);
+
+    let types, levels, kanaScripts;
+    if (type === 'kana') {
+        types = ['kana']; levels = [];
+        kanaScripts = scope === 'both' ? ['hira', 'kata'] : [scope];
+    } else if (type === 'all') {
+        types = ['vocab', 'grammar', 'kanji', 'kana'];
+        levels = scope === 'all' ? ALL_JLPT_LEVELS : [scope];
+        kanaScripts = ['hira', 'kata'];
+    } else {
+        types = [type];
+        levels = scope === 'all' ? ALL_JLPT_LEVELS : [scope];
+        kanaScripts = [];
+    }
+
+    const pool = await buildTrainingPool({ types, levels, kanaScripts });
+    if (pool.length === 0) {
+        alert('Aucun contenu disponible pour cette sélection.');
+        return;
+    }
+
+    launchFreeTraining(pool, targetCount, { type, scope, countRaw });
+}
+
+let trainingSession = null;
+
+function launchFreeTraining(pool, targetCount, config) {
+    pushModalState('free-training-session');
+    trainingSession = {
+        pool, config, targetCount,
+        queue: [],
+        index: 0,
+        correct: 0,
+        wrong: 0,
+        mistakes: [],
+        flipped: false
+    };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderTrainingScreen();
+}
+
+// Tire (ou retrouve) la carte courante. En mode fini, s'arrête à targetCount ; en mode
+// infini (targetCount=null), tire indéfiniment jusqu'à ce que l'utilisateur ferme la session.
+// Anti-répétition simple : évite de retirer la même carte que la précédente si le pool > 1.
+function trainingEnsureNextItem() {
+    const s = trainingSession;
+    if (!s) return null;
+    if (s.index < s.queue.length) return s.queue[s.index];
+    if (s.targetCount && s.queue.length >= s.targetCount) return null;
+    if (!s.pool.length) return null;
+
+    let candidate, attempts = 0;
+    do {
+        candidate = s.pool[Math.floor(Math.random() * s.pool.length)];
+        attempts++;
+    } while (s.pool.length > 1 && s.queue.length > 0 &&
+             getEntryTrackingId(candidate) === getEntryTrackingId(s.queue[s.queue.length - 1]) &&
+             attempts < 10);
+
+    s.queue.push(candidate);
+    return candidate;
+}
+
+function renderTrainingScreen() {
+    const container = document.getElementById('category-content');
+    const s = trainingSession;
+    if (!s) return;
+
+    const entry = trainingEnsureNextItem();
+    if (!entry) { renderTrainingResults(); return; }
+
+    const { front, back, typeLabel, frontSize } = buildCardDisplay(entry);
+    const progressText = s.targetCount ? `${s.index + 1} / ${s.targetCount}` : `${s.index + 1}`;
+    const progressFill = s.targetCount ? `<div class="review-progress-fill" style="width:${(s.index / s.targetCount) * 100}%"></div>` : '';
+
+    container.innerHTML = `<div class="review-page">
+        <div class="review-header">
+            <button class="back-btn" onclick="endTrainingSession()">✕</button>
+            <div class="review-progress-bar">${progressFill}</div>
+            <div class="review-progress-text">${progressText}</div>
+        </div>
+        <div class="free-training-banner small">🏋️ Sans impact sur tes révisions</div>
+        <div class="review-type-tag">${typeLabel}</div>
+        <div class="review-card ${s.flipped ? 'flipped' : ''}" onclick="${s.flipped ? '' : 'flipTrainingCard()'}">
+            <div class="review-card-front">
+                <div class="review-word" style="font-size:${frontSize}px;">${front}</div>
+            </div>
+            ${s.flipped ? `<div class="review-card-back">${back}</div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+        </div>
+        ${s.flipped ? `
+            <div class="review-grade-buttons ft-grade-buttons">
+                <button class="grade-btn grade-again" onclick="answerTrainingCard(false)">✘ Incorrect</button>
+                <button class="grade-btn grade-easy" onclick="answerTrainingCard(true)">✔ Correct</button>
+            </div>
+        ` : ''}
+    </div>`;
+}
+
+function flipTrainingCard() {
+    if (!trainingSession) return;
+    trainingSession.flipped = true;
+    renderTrainingScreen();
+}
+
+// answerTrainingCard() n'appelle JAMAIS gradeReview() — c'est tout le principe de l'isolation
+function answerTrainingCard(isCorrect) {
+    const s = trainingSession;
+    if (!s) return;
+    const entry = s.queue[s.index];
+    if (isCorrect) s.correct++;
+    else { s.wrong++; s.mistakes.push(entry); }
+    s.index++;
+    s.flipped = false;
+    renderTrainingScreen();
+}
+
+// Fermer manuellement (utile surtout en mode infini, où il n'y a pas de fin naturelle) —
+// affiche les résultats avec ce qui a été répondu jusqu'ici plutôt que d'abandonner sans rien montrer.
+function endTrainingSession() {
+    if (!trainingSession) return;
+    renderTrainingResults();
+}
+
+function renderTrainingResults() {
+    const s = trainingSession;
+    if (!s) return;
+    const container = document.getElementById('category-content');
+    const total = s.correct + s.wrong;
+    const pct = total > 0 ? Math.round((s.correct / total) * 100) : 0;
+
+    recordTrainingSession(s.correct, total);
+
+    container.innerHTML = `<div class="review-summary">
+        <div class="review-summary-title">Entraînement terminé ! 🏋️</div>
+        <div class="review-summary-count">${total} carte${total > 1 ? 's' : ''} pratiquée${total > 1 ? 's' : ''}</div>
+        <div class="review-summary-stats">
+            <div class="review-stat"><span class="review-stat-dot easy"></span>Correct : ${s.correct}</div>
+            <div class="review-stat"><span class="review-stat-dot again"></span>Incorrect : ${s.wrong}</div>
+            <div class="review-stat">${pct}% de réussite</div>
+        </div>
+        <div class="quiz-btn-row" style="margin-top:20px">
+            <button class="quiz-action-btn secondary" onclick="history.back()">Fermer</button>
+            ${s.mistakes.length > 0 ? `<button class="quiz-action-btn primary" onclick="retrainMistakes()">Refaire mes erreurs (${s.mistakes.length})</button>` : ''}
+        </div>
+    </div>`;
+}
+
+function retrainMistakes() {
+    const s = trainingSession;
+    if (!s || !s.mistakes.length) return;
+    launchFreeTraining([...s.mistakes], s.mistakes.length, s.config);
 }
 
 function buildProgRow(label, done, total, icon) {
@@ -6362,6 +6643,7 @@ const MODAL_EXIT_REGISTRY = {
     'kana-mode-selector': () => showRevisionKanaPicker(true),
     'kana-review-flashcard': () => { kanaReviewSession = null; showRevisionKanaPicker(true); },
     'kana-trace-review': () => showRevisionKanaPicker(true),
+    'free-training-session': () => { trainingSession = null; showFreeTrainingConfig(true); },
 };
 
 // À appeler à l'entrée de chaque modal/session : pousse UNE entrée d'historique.
