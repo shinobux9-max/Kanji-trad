@@ -708,7 +708,41 @@ async function buildReviewQueue({
         queue.push(makeQueueEntry(meta.type, meta.level, item, true));
     });
 
-    return shuffleArray(queue);
+    return prioritizeQueue(queue);
+}
+
+// Nombre de jours de retard d'un item par rapport à son échéance SRS (0 si pas encore dû ou pas
+// de planning du tout — les nouvelles cartes n'ont pas de "retard").
+function getDaysOverdue(itemId) {
+    const srs = getSrsInfo(itemId);
+    if (!srs) return 0;
+    return (Date.now() - new Date(srs.nextReviewDate).getTime()) / 86400000;
+}
+
+const URGENT_OVERDUE_DAYS = 2;
+
+// Palier de priorité d'une entrée { type, level, item, isNew } :
+//   0 = due urgente   (en retard de 2 jours ou plus — le plus grand risque d'oubli)
+//   1 = due normale    (due mais pas encore très en retard)
+//   2 = nouvelle "difficile" (jamais vue, mais déjà présente dans le tracker de faiblesse —
+//       ex: item marqué maîtrisé en masse puis re-raté plus tard, ou reset manuel)
+//   3 = nouvelle normale
+function computeQueuePriorityTier(entry) {
+    const id = getEntryTrackingId(entry);
+    if (!entry.isNew) {
+        return getDaysOverdue(id) >= URGENT_OVERDUE_DAYS ? 0 : 1;
+    }
+    return getWeaknessData()[id] ? 2 : 3;
+}
+
+// Priorisation de la file (point #5 V2) : dues urgentes > dues normales > nouvelles difficiles >
+// nouvelles normales. Le mélange aléatoire reste appliqué, mais uniquement À L'INTÉRIEUR de
+// chaque palier — pas de monotonie (jamais "tout le vocab avant tout le kanji" par exemple),
+// tout en respectant la priorité globale entre paliers.
+function prioritizeQueue(queue) {
+    const tiers = [[], [], [], []];
+    queue.forEach(entry => tiers[computeQueuePriorityTier(entry)].push(entry));
+    return tiers.flatMap(tier => shuffleArray(tier));
 }
 
 // Score approximatif 0-100 dérivé du SRS (répétitions + facilité), pour affichage visuel uniquement.
