@@ -3773,6 +3773,44 @@ function getEntryTrackingId(entry) {
     return entry.type === 'kanji' ? entry.item.char : entry.item.id;
 }
 
+/* ══════════════════════════════════════════════════
+   CORRECTION CONTEXTUELLE (point #9) — mini-fiche accessible
+   depuis le dos d'une carte de révision mixte, une fois retournée.
+   Réutilise buildCardDisplay() : aucune nouvelle logique de contenu,
+   juste un habillage modal par-dessus la session en cours (ne casse
+   pas son état, contrairement à une navigation vers la vraie fiche).
+══════════════════════════════════════════════════ */
+function showFicheCorrectionModal(entry) {
+    if (!entry) return;
+    const { front, back, typeLabel } = buildCardDisplay(entry);
+    const content = document.getElementById('fiche-correction-content');
+    if (!content) return;
+
+    content.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div class="mode-title" style="margin-bottom:0">${typeLabel}</div>
+            <button onclick="closeFicheCorrectionModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+        </div>
+        <div style="text-align:center;padding:8px 0 4px">
+            <div style="font-size:2.25rem;font-weight:bold;color:#fff;margin-bottom:14px">${front}</div>
+            <div style="text-align:left">${back}</div>
+        </div>
+        <button class="quiz-action-btn primary" style="width:100%;margin-top:18px" onclick="closeFicheCorrectionModal()">Compris ✓</button>
+    `;
+
+    const m = document.getElementById('fiche-correction-modal');
+    if (!m) return;
+    m.classList.add('open');
+    m.style.display = 'flex';
+}
+
+function closeFicheCorrectionModal() {
+    const m = document.getElementById('fiche-correction-modal');
+    if (!m) return;
+    m.classList.remove('open');
+    m.style.display = 'none';
+}
+
 function renderMixedReviewScreen() {
     const container = document.getElementById('category-content');
     const session = mixedReviewSession;
@@ -3800,7 +3838,7 @@ function renderMixedReviewScreen() {
             <div class="review-card-front">
                 <div class="review-word" style="font-size:${frontSize}px;">${front}</div>
             </div>
-            ${flipped ? `<div class="review-card-back">${back}</div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+            ${flipped ? `<div class="review-card-back">${back}<button class="fiche-correction-btn" onclick="showFicheCorrectionModal(mixedReviewSession.queue[mixedReviewSession.index])">📖 Voir la fiche</button></div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
         </div>
         ${flipped ? `
             <div class="review-grade-buttons">
@@ -6302,7 +6340,7 @@ function renderTrainingScreen() {
             <div class="review-card-front">
                 <div class="review-word" style="font-size:${frontSize}px;">${front}</div>
             </div>
-            ${s.flipped ? `<div class="review-card-back">${back}</div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+            ${s.flipped ? `<div class="review-card-back">${back}<button class="fiche-correction-btn" onclick="showFicheCorrectionModal(trainingSession.queue[trainingSession.index])">📖 Voir la fiche</button></div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
         </div>
         ${s.flipped ? `
             <div class="review-grade-buttons ft-grade-buttons">

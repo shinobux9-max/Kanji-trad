@@ -1129,3 +1129,17 @@
 .ft-radio-pill input[type="radio"]:checked + span { color: var(--accent); }
 
 .ft-grade-buttons { grid-template-columns: repeat(2, 1fr); }
+
+/* Correction contextuelle (point #9) */
+.fiche-correction-btn {
+    align-self: center;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--accent-muted);
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.fiche-correction-btn:hover { background: rgba(0,229,255,0.08); }

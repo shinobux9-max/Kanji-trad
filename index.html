@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_free_training_v1">
+    <link rel="stylesheet" href="kanji.css?v=20260906_fiche_correction">
 </head>
 <body>
 
@@ -283,6 +283,11 @@
     </div>
 </div>
 
+<!-- ── FICHE CORRECTION MODAL (correction contextuelle en révision) ── -->
+<div id="fiche-correction-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeFicheCorrectionModal()">
+    <div class="mode-selection-card" id="fiche-correction-content"></div>
+</div>
+
 <!-- ── QUIZ FEEDBACK MODAL ────────────────────────── -->
 <div id="quiz-feedback-modal">
     <div class="qfm-card" id="qfm-card">
@@ -304,7 +309,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_free_training_v1"></script>
+    <script src="kanji.js?v=20260906_fiche_correction"></script>
 
     <!-- ── BULK ACTION BAR (sélection en masse) ────────── -->
     <div id="bulk-action-bar" style="display:none;">
