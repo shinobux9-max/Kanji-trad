@@ -944,7 +944,7 @@
 /* ══════════════════════════════════════════════════
    CASES DE KANJI (liste par niveau) — nouvelle classe, remplace le style inline
 ══════════════════════════════════════════════════ */
-.kanji-grid-cell { padding: 16px; text-align: center; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; background: var(--surface); }
+.kanji-grid-cell { padding: 16px; text-align: center; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; }
 .kanji-grid-cell:hover { background: rgba(255,255,255,0.08); }
 .kanji-grid-cell .kgc-char { font-size: 2rem; font-weight: bold; }
 .kanji-grid-cell .kgc-meaning { font-size: 0.6875rem; color: var(--gray); margin-top: 6px; }
