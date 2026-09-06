@@ -6747,8 +6747,8 @@ function saveDailyGoalFromModal() {
 const QUOTA_LEVEL_KEY = 'kanji_trad_quota_level';
 const QUOTA_LEVELS = {
     relax:   { accueil: 3,  apprendre: 6,  label: '🐢 Léger'   },
-    normal:  { accueil: 5,  apprendre: 10, label: '📘 Normal'  },
-    intense: { accueil: 10, apprendre: 20, label: '🚀 Intense' }
+    normal:  { accueil: 20, apprendre: 10, label: '📘 Normal'  },
+    intense: { accueil: 30, apprendre: 20, label: '🚀 Intense' }
 };
 
 function getQuotaLevel() {
