@@ -1143,6 +1143,7 @@
     cursor: pointer;
 }
 .fiche-correction-btn:hover { background: rgba(0,229,255,0.08); }
+.fiche-sub { font-size: 0.8125rem; color: var(--accent); text-align: center; margin-bottom: 10px; }
 
 /* Widget "À renforcer" (point #10) */
 .weakness-list { display: flex; flex-direction: column; gap: 2px; }

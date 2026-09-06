@@ -3833,20 +3833,90 @@ function getEntryLabel(entry) {
    juste un habillage modal par-dessus la session en cours (ne casse
    pas son état, contrairement à une navigation vers la vraie fiche).
 ══════════════════════════════════════════════════ */
+// Contenu détaillé pour la fiche de correction — DÉLIBÉRÉMENT plus riche que buildCardDisplay()
+// (qui ne montre que ce que la carte affiche déjà). Utilise uniquement des données déjà en
+// mémoire sur l'item (pas de nouveau fetch) : les exemples vocab/grammaire sont inline dans
+// les données JSON, contrairement aux exemples kanji qui vivent dans exemples.json à part —
+// on ne les inclut donc pas ici pour rester synchrone et rapide.
+function buildFicheDetailContent(entry) {
+    let title = '', body = '';
+
+    if (entry.type === 'vocab') {
+        const w = entry.item;
+        title = w.word || '';
+        const m = w.meanings;
+        const meaningsArr = Array.isArray(m) ? m : (m && typeof m === 'object' ? [m.primary, ...(m.secondary || [])].filter(Boolean) : [m].filter(Boolean));
+        body = `
+            <div class="fiche-sub">${w.reading || ''}${w.romaji ? ' · ' + w.romaji : ''}</div>
+            <div class="section-paragraph" style="text-align:center">${mdBold(meaningsArr.join(' · ') || '–')}</div>
+            ${w.nuance ? `<div class="vocab-nuance-box" style="margin-top:10px">💡 ${mdBold(w.nuance)}</div>` : ''}
+            ${w.example && w.example.japanese ? `
+                <div class="vocab-example-box" style="margin-top:10px">
+                    <div class="example-jp">${mdBold(w.example.japanese)}</div>
+                    ${w.example.romaji ? `<div class="example-ro">${w.example.romaji}</div>` : ''}
+                    <div class="example-fr">${mdBold(w.example.french || '')}</div>
+                </div>` : ''}
+        `;
+    } else if (entry.type === 'grammar') {
+        const l = entry.item;
+        title = l.item || l.pattern || '';
+        const sectionsHtml = Array.isArray(l.sections) ? l.sections.map(sec => `
+            ${sec.label ? `<div class="section-sub-title">${sec.label}</div>` : ''}
+            ${sec.text ? `<div class="section-paragraph">${mdBold(sec.text)}</div>` : ''}
+            ${Array.isArray(sec.paragraphs) ? sec.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
+        `).join('') : '';
+        const examplesHtml = Array.isArray(l.examples) && l.examples.length ? `
+            <div class="section-sub-title">Exemples</div>
+            ${l.examples.slice(0, 2).map(ex => `
+                <div class="vocab-example-box" style="margin-bottom:8px">
+                    <div class="example-jp">${mdBold(ex.japanese || '')}</div>
+                    <div class="example-fr">${mdBold(ex.french || '')}</div>
+                </div>
+            `).join('')}
+        ` : '';
+        body = `
+            <div class="fiche-sub">${l.title || l.meaning || ''}</div>
+            ${sectionsHtml}
+            ${examplesHtml}
+        `;
+    } else if (entry.type === 'kanji') {
+        const char = entry.item.char;
+        const k = kanjiDb.find(x => x.char === char);
+        title = char;
+        const meanings = (k?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+        body = `
+            <div class="section-paragraph" style="text-align:center">${meanings.join(' / ') || '–'}</div>
+            ${k?.on?.length ? `<div class="section-paragraph"><strong>On'yomi :</strong> ${k.on.join('、')}</div>` : ''}
+            ${k?.kun?.length ? `<div class="section-paragraph"><strong>Kun'yomi :</strong> ${k.kun.join('、')}</div>` : ''}
+            ${k?.strokes ? `<div class="section-paragraph"><strong>Traits :</strong> ${k.strokes}</div>` : ''}
+        `;
+    } else if (entry.type === 'kana') {
+        const k = entry.item;
+        title = k.char || k.c || '';
+        body = `<div class="fiche-sub">${k.romaji || k.r || ''}</div>`;
+    }
+
+    return { title, body };
+}
+
 function showFicheCorrectionModal(entry) {
     if (!entry) return;
-    const { front, back, typeLabel } = buildCardDisplay(entry);
+    const typeLabels = {
+        vocab: '📚 Vocabulaire', grammar: '📝 Grammaire', kanji: '🔤 Kanji',
+        kana: (entry.level === 'kata') ? 'ア Katakana' : 'あ Hiragana'
+    };
+    const { title, body } = buildFicheDetailContent(entry);
     const content = document.getElementById('fiche-correction-content');
     if (!content) return;
 
     content.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-            <div class="mode-title" style="margin-bottom:0">${typeLabel}</div>
+            <div class="mode-title" style="margin-bottom:0">${typeLabels[entry.type] || ''}</div>
             <button onclick="closeFicheCorrectionModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
         </div>
         <div style="text-align:center;padding:8px 0 4px">
-            <div style="font-size:2.25rem;font-weight:bold;color:#fff;margin-bottom:14px">${front}</div>
-            <div style="text-align:left">${back}</div>
+            <div style="font-size:2.25rem;font-weight:bold;color:#fff;margin-bottom:8px">${title}</div>
+            <div style="text-align:left">${body}</div>
         </div>
         <button class="quiz-action-btn primary" style="width:100%;margin-top:18px" onclick="closeFicheCorrectionModal()">Compris ✓</button>
     `;
