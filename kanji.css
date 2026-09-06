@@ -1154,3 +1154,10 @@
 .weakness-count { flex-shrink: 0; font-size: 0.6875rem; color: #FB7185; font-weight: bold; background: rgba(251,113,133,0.12); padding: 2px 8px; border-radius: 8px; }
 .weakness-train-btn { width: 100%; margin-top: 12px; padding: 10px; background: rgba(157,110,255,0.12); border: 1px solid rgba(157,110,255,0.35); color: #9D6EFF; font-size: 0.75rem; font-weight: bold; border-radius: 10px; cursor: pointer; }
 .weakness-train-btn:hover { background: rgba(157,110,255,0.2); }
+
+/* Détail carte par carte, mode Test blanc uniquement (point #1 du V2) */
+.ft-results-detail { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 2px; margin-top: 16px; max-height: 240px; overflow-y: auto; text-align: left; }
+.ft-result-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 0.8125rem; }
+.ft-result-row.ok { color: #4ADE80; background: rgba(74,222,128,0.06); }
+.ft-result-row.wrong { color: #FB7185; background: rgba(251,113,133,0.06); }
+.ft-result-row span:last-child { color: var(--text); font-weight: 500; }

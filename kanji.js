@@ -6396,10 +6396,60 @@ function showFreeTrainingConfig(isBack = false) {
                 `).join('')}
             </div>
 
+            <div class="mode-section-label" style="margin-top:14px">— Mode</div>
+            <div class="ft-radio-group">
+                <label class="ft-radio-row">
+                    <input type="radio" name="ft-mode" value="normal" checked onchange="onFreeTrainingModeChange()">
+                    <span class="ft-radio-label">Entraînement</span>
+                    <span class="ft-radio-sub">Corrige à chaque carte</span>
+                </label>
+                <label class="ft-radio-row">
+                    <input type="radio" name="ft-mode" value="blank" onchange="onFreeTrainingModeChange()">
+                    <span class="ft-radio-label">Test blanc</span>
+                    <span class="ft-radio-sub">Pas de fiche, résultats détaillés à la fin</span>
+                </label>
+                <label class="ft-radio-row">
+                    <input type="radio" name="ft-mode" value="chrono" onchange="onFreeTrainingModeChange()">
+                    <span class="ft-radio-label">Chrono</span>
+                    <span class="ft-radio-sub">Le plus de cartes possible dans le temps imparti</span>
+                </label>
+                <label class="ft-radio-row">
+                    <input type="radio" name="ft-mode" value="loop" onchange="onFreeTrainingModeChange()">
+                    <span class="ft-radio-label">Boucle</span>
+                    <span class="ft-radio-sub">Les cartes ratées reviennent dans la session</span>
+                </label>
+            </div>
+
+            <div id="ft-chrono-duration-wrap" style="display:none">
+                <div class="mode-section-label" style="margin-top:14px">— Durée</div>
+                <div class="ft-radio-group ft-radio-pills">
+                    <label class="ft-radio-pill"><input type="radio" name="ft-chrono-duration" value="60" checked><span>1 min</span></label>
+                    <label class="ft-radio-pill"><input type="radio" name="ft-chrono-duration" value="180"><span>3 min</span></label>
+                    <label class="ft-radio-pill"><input type="radio" name="ft-chrono-duration" value="300"><span>5 min</span></label>
+                </div>
+            </div>
+
+            <div class="mode-section-label" style="margin-top:14px">— Filtres</div>
+            <div class="ft-radio-group">
+                <label class="ft-radio-row"><input type="checkbox" id="ft-filter-never-seen"><span class="ft-radio-label">Uniquement les cartes jamais vues</span></label>
+            </div>
+
+            <div class="mode-section-label" style="margin-top:14px">— Ordre</div>
+            <div class="ft-radio-group ft-radio-pills">
+                <label class="ft-radio-pill"><input type="radio" name="ft-order" value="random" checked><span>Aléatoire</span></label>
+                <label class="ft-radio-pill"><input type="radio" name="ft-order" value="sequential"><span>Séquentiel</span></label>
+            </div>
+
             <button class="review-cta-btn" style="width:100%;margin-top:22px" onclick="startFreeTraining()">Commencer →</button>
         </div>`;
 
     renderFreeTrainingScopeOptions('all');
+}
+
+function onFreeTrainingModeChange() {
+    const mode = document.querySelector('input[name="ft-mode"]:checked')?.value || 'normal';
+    const wrap = document.getElementById('ft-chrono-duration-wrap');
+    if (wrap) wrap.style.display = (mode === 'chrono') ? '' : 'none';
 }
 
 function renderFreeTrainingScopeOptions(type) {
@@ -6455,7 +6505,14 @@ async function startFreeTraining() {
     const type = document.querySelector('input[name="ft-type"]:checked')?.value || 'all';
     const scope = document.querySelector('input[name="ft-scope"]:checked')?.value || 'all';
     const countRaw = document.querySelector('input[name="ft-count"]:checked')?.value ?? '10';
-    const targetCount = countRaw === '0' ? null : parseInt(countRaw, 10);
+    const mode = document.querySelector('input[name="ft-mode"]:checked')?.value || 'normal';
+    const chronoDuration = parseInt(document.querySelector('input[name="ft-chrono-duration"]:checked')?.value || '60', 10);
+    const order = document.querySelector('input[name="ft-order"]:checked')?.value || 'random';
+    const neverSeenOnly = document.getElementById('ft-filter-never-seen')?.checked || false;
+
+    let targetCount = countRaw === '0' ? null : parseInt(countRaw, 10);
+    // Chrono s'arrête sur le temps écoulé, pas sur un compte de cartes -> toujours en file "infinie"
+    if (mode === 'chrono') targetCount = null;
 
     let types, levels, kanaScripts;
     if (type === 'kana') {
@@ -6471,35 +6528,65 @@ async function startFreeTraining() {
         kanaScripts = [];
     }
 
-    const pool = await buildTrainingPool({ types, levels, kanaScripts });
+    let pool = await buildTrainingPool({ types, levels, kanaScripts });
+    if (neverSeenOnly) {
+        pool = pool.filter(entry => !getSrsInfo(getEntryTrackingId(entry)));
+    }
     if (pool.length === 0) {
         alert('Aucun contenu disponible pour cette sélection.');
         return;
     }
 
-    launchFreeTraining(pool, targetCount, { type, scope, countRaw });
+    launchFreeTraining(pool, targetCount, {
+        type, scope, countRaw, mode, order, neverSeenOnly,
+        chronoDuration: mode === 'chrono' ? chronoDuration : null
+    });
 }
 
 let trainingSession = null;
+let trainingChronoInterval = null;
 
 function launchFreeTraining(pool, targetCount, config) {
     pushModalState('free-training-session');
+    if (trainingChronoInterval) { clearInterval(trainingChronoInterval); trainingChronoInterval = null; }
+
+    const mode = (config && config.mode) || 'normal';
+    const order = (config && config.order) || 'random';
+
     trainingSession = {
-        pool, config, targetCount,
+        pool, config, targetCount, mode, order,
         queue: [],
         index: 0,
+        seqCursor: 0,
         correct: 0,
         wrong: 0,
         mistakes: [],
-        flipped: false
+        flipped: false,
+        chronoRemaining: (config && config.chronoDuration) || null
     };
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+
+    if (mode === 'chrono' && trainingSession.chronoRemaining) {
+        trainingChronoInterval = setInterval(() => {
+            if (!trainingSession) { clearInterval(trainingChronoInterval); trainingChronoInterval = null; return; }
+            trainingSession.chronoRemaining--;
+            if (trainingSession.chronoRemaining <= 0) {
+                clearInterval(trainingChronoInterval);
+                trainingChronoInterval = null;
+                endTrainingSession();
+            } else {
+                renderTrainingScreen();
+            }
+        }, 1000);
+    }
+
     renderTrainingScreen();
 }
 
 // Tire (ou retrouve) la carte courante. En mode fini, s'arrête à targetCount ; en mode
-// infini (targetCount=null), tire indéfiniment jusqu'à ce que l'utilisateur ferme la session.
-// Anti-répétition simple : évite de retirer la même carte que la précédente si le pool > 1.
+// infini (targetCount=null), tire indéfiniment jusqu'à ce que l'utilisateur ferme la session
+// (ou que le chrono expire). Ordre "aléatoire" : anti-répétition simple (jamais 2x la même
+// carte d'affilée). Ordre "séquentiel" : parcourt le pool dans son ordre naturel, en boucle.
 function trainingEnsureNextItem() {
     const s = trainingSession;
     if (!s) return null;
@@ -6507,13 +6594,19 @@ function trainingEnsureNextItem() {
     if (s.targetCount && s.queue.length >= s.targetCount) return null;
     if (!s.pool.length) return null;
 
-    let candidate, attempts = 0;
-    do {
-        candidate = s.pool[Math.floor(Math.random() * s.pool.length)];
-        attempts++;
-    } while (s.pool.length > 1 && s.queue.length > 0 &&
-             getEntryTrackingId(candidate) === getEntryTrackingId(s.queue[s.queue.length - 1]) &&
-             attempts < 10);
+    let candidate;
+    if (s.order === 'sequential') {
+        candidate = s.pool[s.seqCursor % s.pool.length];
+        s.seqCursor++;
+    } else {
+        let attempts = 0;
+        do {
+            candidate = s.pool[Math.floor(Math.random() * s.pool.length)];
+            attempts++;
+        } while (s.pool.length > 1 && s.queue.length > 0 &&
+                 getEntryTrackingId(candidate) === getEntryTrackingId(s.queue[s.queue.length - 1]) &&
+                 attempts < 10);
+    }
 
     s.queue.push(candidate);
     return candidate;
@@ -6523,13 +6616,42 @@ function renderTrainingScreen() {
     const container = document.getElementById('category-content');
     const s = trainingSession;
     if (!s) return;
+    if (!container) {
+        // L'utilisateur a quitté via la bottom-nav (toujours cliquable, pas de cleanup automatique) :
+        // le conteneur de session n'existe plus, on arrête le minuteur au lieu de planter dessus.
+        if (trainingChronoInterval) { clearInterval(trainingChronoInterval); trainingChronoInterval = null; }
+        trainingSession = null;
+        return;
+    }
 
     const entry = trainingEnsureNextItem();
     if (!entry) { renderTrainingResults(); return; }
 
     const { front, back, typeLabel, frontSize } = buildCardDisplay(entry);
-    const progressText = s.targetCount ? `${s.index + 1} / ${s.targetCount}` : `${s.index + 1}`;
-    const progressFill = s.targetCount ? `<div class="review-progress-fill" style="width:${(s.index / s.targetCount) * 100}%"></div>` : '';
+
+    let progressText, progressFill;
+    if (s.mode === 'chrono') {
+        const total = (s.config && s.config.chronoDuration) || 60;
+        const elapsed = total - s.chronoRemaining;
+        const m = Math.floor(s.chronoRemaining / 60), sec = s.chronoRemaining % 60;
+        progressText = `⏱ ${m}:${String(sec).padStart(2, '0')}`;
+        progressFill = `<div class="review-progress-fill" style="width:${(elapsed / total) * 100}%"></div>`;
+    } else {
+        progressText = s.targetCount ? `${s.index + 1} / ${s.targetCount}` : `${s.index + 1}`;
+        progressFill = s.targetCount ? `<div class="review-progress-fill" style="width:${(s.index / s.targetCount) * 100}%"></div>` : '';
+    }
+
+    const modeBanner = {
+        normal: '🏋️ Sans impact sur tes révisions',
+        blank:  '📝 Mode Test — résultats détaillés à la fin',
+        chrono: '⏱ Mode Chrono — sans impact sur tes révisions',
+        loop:   '🔁 Mode Boucle — les cartes ratées reviennent'
+    }[s.mode] || '🏋️ Sans impact sur tes révisions';
+
+    // En Test blanc, pas de fiche accessible pendant la question : on garde les conditions d'examen
+    const ficheBtn = (s.mode !== 'blank')
+        ? `<button class="fiche-correction-btn" onclick="showFicheCorrectionModal(trainingSession.queue[trainingSession.index])">📖 Voir la fiche</button>`
+        : '';
 
     container.innerHTML = `<div class="review-page">
         <div class="review-header">
@@ -6537,13 +6659,13 @@ function renderTrainingScreen() {
             <div class="review-progress-bar">${progressFill}</div>
             <div class="review-progress-text">${progressText}</div>
         </div>
-        <div class="free-training-banner small">🏋️ Sans impact sur tes révisions</div>
+        <div class="free-training-banner small">${modeBanner}</div>
         <div class="review-type-tag">${typeLabel}</div>
         <div class="review-card ${s.flipped ? 'flipped' : ''}" onclick="${s.flipped ? '' : 'flipTrainingCard()'}">
             <div class="review-card-front">
                 <div class="review-word" style="font-size:${frontSize}px;">${front}</div>
             </div>
-            ${s.flipped ? `<div class="review-card-back">${back}<button class="fiche-correction-btn" onclick="showFicheCorrectionModal(trainingSession.queue[trainingSession.index])">📖 Voir la fiche</button></div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
+            ${s.flipped ? `<div class="review-card-back">${back}${ficheBtn}</div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
         </div>
         ${s.flipped ? `
             <div class="review-grade-buttons ft-grade-buttons">
@@ -6560,20 +6682,28 @@ function flipTrainingCard() {
     renderTrainingScreen();
 }
 
-// answerTrainingCard() n'appelle JAMAIS gradeReview() — c'est tout le principe de l'isolation
+// answerTrainingCard() n'appelle JAMAIS gradeReview() — c'est tout le principe de l'isolation.
+// Mode Boucle : une carte ratée est remise dans le pool, donc repiochable plus tard dans la
+// MÊME session (l'anti-répétition immédiate de trainingEnsureNextItem empêche qu'elle revienne
+// littéralement à la question suivante).
 function answerTrainingCard(isCorrect) {
     const s = trainingSession;
     if (!s) return;
     const entry = s.queue[s.index];
-    if (isCorrect) s.correct++;
-    else { s.wrong++; s.mistakes.push(entry); }
+    if (isCorrect) {
+        s.correct++;
+    } else {
+        s.wrong++;
+        s.mistakes.push(entry);
+        if (s.mode === 'loop') s.pool.push(entry);
+    }
     s.index++;
     s.flipped = false;
     renderTrainingScreen();
 }
 
-// Fermer manuellement (utile surtout en mode infini, où il n'y a pas de fin naturelle) —
-// affiche les résultats avec ce qui a été répondu jusqu'ici plutôt que d'abandonner sans rien montrer.
+// Fermer manuellement (utile surtout en mode infini/chrono, où il n'y a pas de fin naturelle par
+// compte de cartes) — affiche les résultats avec ce qui a été répondu jusqu'ici.
 function endTrainingSession() {
     if (!trainingSession) return;
     renderTrainingResults();
@@ -6582,11 +6712,27 @@ function endTrainingSession() {
 function renderTrainingResults() {
     const s = trainingSession;
     if (!s) return;
+    if (trainingChronoInterval) { clearInterval(trainingChronoInterval); trainingChronoInterval = null; }
+
     const container = document.getElementById('category-content');
+    if (!container) { trainingSession = null; return; }
     const total = s.correct + s.wrong;
     const pct = total > 0 ? Math.round((s.correct / total) * 100) : 0;
 
     recordTrainingSession(s.correct, total);
+
+    // Test blanc : détail carte par carte, seulement révélé maintenant (c'est tout le principe du mode)
+    const detailHtml = (s.mode === 'blank' && s.queue.length > 0) ? `
+        <div class="ft-results-detail">
+            ${s.queue.slice(0, s.index).map(entry => {
+                const isWrong = s.mistakes.includes(entry);
+                return `<div class="ft-result-row ${isWrong ? 'wrong' : 'ok'}">
+                    <span>${isWrong ? '✘' : '✔'}</span>
+                    <span>${getEntryLabel(entry)}</span>
+                </div>`;
+            }).join('')}
+        </div>
+    ` : '';
 
     container.innerHTML = `<div class="review-summary">
         <div class="review-summary-title">Entraînement terminé ! 🏋️</div>
@@ -6596,6 +6742,7 @@ function renderTrainingResults() {
             <div class="review-stat"><span class="review-stat-dot again"></span>Incorrect : ${s.wrong}</div>
             <div class="review-stat">${pct}% de réussite</div>
         </div>
+        ${detailHtml}
         <div class="quiz-btn-row" style="margin-top:20px">
             <button class="quiz-action-btn secondary" onclick="history.back()">Fermer</button>
             ${s.mistakes.length > 0 ? `<button class="quiz-action-btn primary" onclick="retrainMistakes()">Refaire mes erreurs (${s.mistakes.length})</button>` : ''}
@@ -6884,7 +7031,11 @@ const MODAL_EXIT_REGISTRY = {
     'kana-mode-selector': () => showRevisionKanaPicker(true),
     'kana-review-flashcard': () => { kanaReviewSession = null; showRevisionKanaPicker(true); },
     'kana-trace-review': () => showRevisionKanaPicker(true),
-    'free-training-session': () => { trainingSession = null; showFreeTrainingConfig(true); },
+    'free-training-session': () => {
+        if (trainingChronoInterval) { clearInterval(trainingChronoInterval); trainingChronoInterval = null; }
+        trainingSession = null;
+        showFreeTrainingConfig(true);
+    },
 };
 
 // À appeler à l'entrée de chaque modal/session : pousse UNE entrée d'historique.
