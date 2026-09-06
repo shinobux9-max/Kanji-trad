@@ -478,6 +478,19 @@ function updateWeaknessTracking(itemId, quality, meta) {
     saveWeaknessData(data);
 }
 
+// Score de priorité pondéré (point #3 V2) — remplace le tri simple "juste consecutiveFails"
+// du V1. Trois signaux combinés :
+//  - consecutiveFails (poids fort) : la répétition immédiate de l'échec est le signal le plus fiable
+//  - totalFails (poids faible) : un problème chronique compte un peu, même s'il n'est pas récent
+//  - récence (décroissance linéaire sur 14 jours) : un échec d'hier doit primer sur un échec
+//    d'il y a 3 semaines à consecutiveFails égal — sans ça, une vieille faiblesse jamais retravaillée
+//    resterait accrochée en haut du widget indéfiniment.
+function computeWeaknessPriority(rec) {
+    const daysSince = (Date.now() - new Date(rec.lastFailDate).getTime()) / 86400000;
+    const recencyFactor = Math.max(0, 1 - daysSince / 14);
+    return (rec.consecutiveFails || 0) * 5 + (rec.totalFails || 0) * 1 + recencyFactor * 8;
+}
+
 /* ══════════════════════════════════════════════════
    STATS PERSISTANTES (réussite globale, sessions, cartes du mois)
    Alimentées automatiquement à chaque gradeReview(), peu importe le type (vocab/grammaire/kanji/mixte)
@@ -6350,7 +6363,12 @@ async function openWeaknessItem(itemId) {
 // actuellement faibles — réutilise entièrement le moteur du point #8, aucune nouvelle mécanique.
 async function trainWeaknessItems() {
     const data = getWeaknessData();
-    const ids = Object.keys(data);
+    // Mêmes 5 notions que celles affichées dans le widget, dans le même ordre de priorité —
+    // sinon le bouton "S'entraîner sur ces X notions" ne correspondrait pas à ce qui est montré.
+    const ids = Object.entries(data)
+        .sort((a, b) => computeWeaknessPriority(b[1]) - computeWeaknessPriority(a[1]))
+        .slice(0, 5)
+        .map(([id]) => id);
     if (ids.length === 0) return;
 
     const pool = [];
@@ -6368,7 +6386,7 @@ async function renderWeaknessWidget() {
 
     const data = getWeaknessData();
     const entries = Object.entries(data)
-        .sort((a, b) => b[1].consecutiveFails - a[1].consecutiveFails || new Date(b[1].lastFailDate) - new Date(a[1].lastFailDate))
+        .sort((a, b) => computeWeaknessPriority(b[1]) - computeWeaknessPriority(a[1]))
         .slice(0, 5);
 
     if (entries.length === 0) {
