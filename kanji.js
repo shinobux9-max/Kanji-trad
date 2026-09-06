@@ -3087,13 +3087,13 @@ function showKanjiNiveauxScreen(isBack = false) {
 ══════════════════════════════════════════════════ */
 async function showRevisionsScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'revisions' }, '');
-    document.getElementById('page-title').innerText = 'Révisions';
+    document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
     main.innerHTML = `
         <div class="apprendre-wrap">
             <div class="apprendre-header">
-                <div class="apprendre-title-main">Révisions</div>
+                <div class="apprendre-title-main">Réviser</div>
                 <div class="apprendre-subtitle-main">Choisis une catégorie à réviser.</div>
             </div>
             <div class="apprendre-grid">
@@ -3123,7 +3123,7 @@ async function showRevisionsScreen(isBack = false) {
 
 async function showRevisionLevelPicker(category, isBack = false) {
     if (!isBack) history.pushState({ view: 'revision-level-picker', category }, '');
-    document.getElementById('page-title').innerText = 'Révisions';
+    document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
     if (!jlptMapping) {
@@ -3229,7 +3229,7 @@ function getDueKanaChars(script) {
 
 async function showRevisionKanaPicker(isBack = false) {
     if (!isBack) history.pushState({ view: 'revision-kana-picker' }, '');
-    document.getElementById('page-title').innerText = 'Révisions';
+    document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
     main.innerHTML = `
@@ -3274,13 +3274,13 @@ function showKanaRevisionModeSelector(script) {
                 <span class="review-mode-icon">🗂️</span>
                 <div><div class="review-mode-name">Flashcard</div><div class="review-mode-desc">Lecture romaji</div></div>
             </button>
-            <button class="review-mode-btn" style="opacity:0.5;cursor:default;" onclick="alert('Bientôt disponible !')">
+            <button class="review-mode-btn" onclick="startKanaTraceReview('${script}','trace-easy')">
                 <span class="review-mode-icon">✍️</span>
-                <div><div class="review-mode-name">Tracé normal</div><div class="review-mode-desc">Bientôt disponible</div></div>
+                <div><div class="review-mode-name">Tracé normal</div><div class="review-mode-desc">Ordre des traits avec aide visuelle</div></div>
             </button>
-            <button class="review-mode-btn" style="opacity:0.5;cursor:default;" onclick="alert('Bientôt disponible !')">
+            <button class="review-mode-btn" onclick="startKanaTraceReview('${script}','trace-hard')">
                 <span class="review-mode-icon">🔥</span>
-                <div><div class="review-mode-name">Tracé difficile</div><div class="review-mode-desc">Bientôt disponible</div></div>
+                <div><div class="review-mode-name">Tracé difficile</div><div class="review-mode-desc">Sans ombre — de mémoire pure</div></div>
             </button>
         </div>`;
 }
@@ -4259,14 +4259,12 @@ function createStrokeWriter(elementId, character, isHardcore, loaderOptions = {}
         return null;
     }
 
-    // dataLoader/onDataError personnalisables (ex: tracé kana) — comportement kanji inchangé par défaut
-    const { dataLoader = kanjiDataLoader, onDataError = sqSkip } = loaderOptions;
+    // dataLoader/onDataError/dimensions personnalisables (ex: tracé kana yōon) — comportement kanji inchangé par défaut
+    const { dataLoader = kanjiDataLoader, onDataError = sqSkip, width = 280, height = 280, padding = 24 } = loaderOptions;
 
     // 1. Définition des options de base (communes aux deux modes)
     const baseOptions = {
-        width:    280,
-        height:   280,
-        padding:  24,
+        width, height, padding,
         drawingWidth:     8,
         // renderer canvas par défaut (fiable pour le tracé tactile mobile)
         charDataLoader: dataLoader,
@@ -4784,19 +4782,22 @@ function renderKanaGrid(type) {
 /* ══════════════════════════════════════════════════
    TRACÉ KANA (normal + hardcore)
    ─────────────────────────────────────────────────
-   Réutilise le même overlay #stroke-quiz-view / #stroke-quiz-body
-   que le tracé kanji, mais avec un état dédié (kanaTraceState /
-   kanaTraceWriter) car un kana se pratique seul (pas de file
-   d'indices comme kanjiDb). closeStrokeQuiz() nettoie les deux.
+   Réutilise le même overlay #stroke-quiz-view / #stroke-quiz-body que le
+   tracé kanji, avec un état dédié (kanaTraceState / kanaTraceWriter).
+   Supporte : un kana seul (depuis la fiche détail) OU une file de kana
+   dus en révision (comme kanjiDb en mode 'queue'), ET les combinaisons
+   yōon (2 code points, ex. きゃ) tracées séquentiellement dans deux
+   writers positionnés comme dans animateKanaChar (grand + petit coin).
+   closeStrokeQuiz() nettoie systématiquement cet état (bouton retour).
 ══════════════════════════════════════════════════ */
-let kanaTraceState        = null;
-let kanaTraceWriter       = null;
+let kanaTraceState         = null;
+let kanaTraceWriter        = null; // writer du sous-caractère actif (1 seul à la fois, même en yōon)
 let kanaTraceTimerInterval = null;
-let kanaTracePaused       = false;
-let _kanaTraceSource      = null; // kana en attente de choix de mode (modal)
+let kanaTracePaused        = false;
+let _kanaTraceSource       = null; // { queue, sourceType } en attente de choix de mode (modal)
 
 function showKanaTraceModal(kana) {
-    _kanaTraceSource = kana;
+    _kanaTraceSource = { queue: [kana], sourceType: 'single' };
     const m = document.getElementById('kana-trace-modal');
     if (!m) return;
     m.classList.add('open');
@@ -4811,28 +4812,39 @@ function closeKanaTraceModal() {
 }
 
 function launchKanaTraceMode(mode) {
-    const kana = _kanaTraceSource;
+    const source = _kanaTraceSource;
     closeKanaTraceModal();
-    if (!kana) return;
-    startKanaTraceQuiz(kana, mode);
+    if (!source || !source.queue || !source.queue.length) return;
+    startKanaTraceQuiz(source.queue, mode, source.sourceType);
 }
 
-function startKanaTraceQuiz(kana, mode = 'trace-easy') {
+// Entrée depuis l'onglet Révisions → Kana → mode "Tracé normal"/"Tracé difficile"
+function startKanaTraceReview(script, mode) {
+    const dueKana = getDueKanaChars(script);
+    if (dueKana.length === 0) { alert('Rien à réviser pour le moment ! 🎉'); return; }
+    pushModalState('kana-trace-review');
+    const queue = dueKana.map(k => ({ c: k.char, r: k.romaji, id: k.id }));
+    startKanaTraceQuiz(queue, mode, 'queue');
+}
+
+function startKanaTraceQuiz(kanaOrQueue, mode = 'trace-easy', sourceType = 'single') {
+    const queue = Array.isArray(kanaOrQueue) ? kanaOrQueue : [kanaOrQueue];
+    if (!queue.length) return;
+
     if (kanaTraceTimerInterval) clearInterval(kanaTraceTimerInterval);
     kanaTracePaused = false;
 
     kanaTraceState = {
-        kana, mode,
-        mistakes: 0,
+        queue, idx: 0, mode, sourceType,
+        correct: 0, wrong: 0,
         elapsedSec: 0
     };
 
     document.getElementById('sq-correct').textContent   = '0';
-    document.getElementById('sq-wrong').textContent      = '0';
-    document.getElementById('sq-timer').textContent      = '0:00';
-    document.getElementById('sq-counter').textContent    = '1 / 1';
-    document.getElementById('sq-score-sub').textContent  = '';
-    document.getElementById('sq-prog-bar').style.width    = '0%';
+    document.getElementById('sq-wrong').textContent     = '0';
+    document.getElementById('sq-timer').textContent     = '0:00';
+    document.getElementById('sq-score-sub').textContent = '';
+    document.getElementById('sq-prog-bar').style.width  = '0%';
     document.getElementById('stroke-quiz-view').style.display = 'flex';
 
     kanaTraceTimerInterval = setInterval(() => {
@@ -4849,24 +4861,38 @@ function startKanaTraceQuiz(kana, mode = 'trace-easy') {
 
 function renderKanaTraceQuestion() {
     if (!kanaTraceState) return;
-    const qs   = kanaTraceState;
-    const kana = qs.kana;
-    const isHardcore = (qs.mode === 'trace-hard');
+    const qs = kanaTraceState;
+    if (qs.idx >= qs.queue.length) { renderKanaTraceResults(); return; }
 
     if (qs._nextTimer) { clearTimeout(qs._nextTimer); qs._nextTimer = null; }
     if (kanaTraceWriter) { try { kanaTraceWriter.cancelQuiz(); } catch(_) {} kanaTraceWriter = null; }
 
+    const kana       = qs.queue[qs.idx];
+    const isHardcore = (qs.mode === 'trace-hard');
+    const chars      = [...kana.c];
+    const isMulti    = chars.length > 1; // yōon : 2 code points à tracer l'un après l'autre
+
     const scriptLabel = (kana.c.codePointAt(0) >= 0x30A0) ? 'Katakana' : 'Hiragana';
+
+    document.getElementById('sq-prog-bar').style.width = (qs.idx / qs.queue.length * 100).toFixed(1) + '%';
+    document.getElementById('sq-counter').textContent  = `${qs.idx + 1} / ${qs.queue.length}`;
+
+    const canvasHtml = isMulti
+        ? `<div class="sq-canvas-wrap multi" id="sq-canvas-wrap" style="touch-action:none;">
+               <div class="sq-writer-target main pending"  id="sq-writer-target-0"></div>
+               <div class="sq-writer-target small pending" id="sq-writer-target-1"></div>
+           </div>`
+        : `<div class="sq-canvas-wrap" id="sq-canvas-wrap" style="touch-action:none;">
+               <div id="sq-writer-target"></div>
+               <div class="sq-grid-overlay"></div>
+           </div>`;
 
     document.getElementById('stroke-quiz-body').innerHTML = `
         <div class="sq-kanji-header">
             <div class="sq-meaning" style="font-size:1.375rem;font-weight:bold">${kana.r}</div>
-            <div style="font-size:0.75rem;color:var(--gray);margin-top:4px">${scriptLabel}</div>
+            <div style="font-size:0.75rem;color:var(--gray);margin-top:4px">${scriptLabel}${isMulti ? ' · Yōon (2 traits séquentiels)' : ''}</div>
         </div>
-        <div class="sq-canvas-wrap" id="sq-canvas-wrap" style="touch-action:none;">
-            <div id="sq-writer-target"></div>
-            <div class="sq-grid-overlay"></div>
-        </div>
+        ${canvasHtml}
         <div id="sq-feedback" style="height:22px;margin-top:10px;font-weight:bold;text-align:center;font-size:0.8125rem;color:var(--gray)"></div>
         <div class="sq-actions">
             <button class="sq-btn hint" onclick="kanaTraceHint()">💡 Indice</button>
@@ -4876,96 +4902,131 @@ function renderKanaTraceQuestion() {
     // Même délai d'une frame que pour le tracé kanji : laisser le DOM se stabiliser
     // avant d'initialiser HanziWriter (évite le bug "élément invisible")
     requestAnimationFrame(() => {
-        if (!kanaTraceState) return;
-
-        kanaTraceWriter = createStrokeWriter('sq-writer-target', kana.c, isHardcore, {
-            dataLoader: kanaDataLoader,
-            onDataError: kanaTraceSkip
-        });
-        if (!kanaTraceWriter) { kanaTraceSkip(); return; }
+        if (!kanaTraceState || kanaTraceState.idx !== qs.idx) return;
 
         const sqBody = document.getElementById('stroke-quiz-body');
         if (sqBody) sqBody.classList.add('tracing');
 
-        requestAnimationFrame(() => {
-            const target = document.getElementById('sq-writer-target');
-            if (!target) return;
-            target.style.touchAction = 'none';
-            target.querySelectorAll('*').forEach(el => { el.style.touchAction = 'none'; });
-            target.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
-        });
+        let subIdx        = 0;
+        let itemMistakes  = 0;
+        let subStrokesDone = 0;
+        let lastStrokeTimer = null;
+        let _subCompleted   = false;
+        let _itemCompleted  = false;
 
-        let strokesDone     = 0;
-        let lastStrokeTimer  = null;
-        let _quizCompleted   = false;
+        const lockScroll = (targetId) => {
+            requestAnimationFrame(() => {
+                const target = document.getElementById(targetId);
+                if (!target) return;
+                target.style.touchAction = 'none';
+                target.querySelectorAll('*').forEach(el => { el.style.touchAction = 'none'; });
+                target.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+            });
+        };
 
-        const triggerComplete = (totalMistakes) => {
-            if (_quizCompleted) return;
-            _quizCompleted = true;
+        const finishItem = (totalMistakes) => {
+            if (_itemCompleted) return;
+            _itemCompleted = true;
             if (lastStrokeTimer) { clearTimeout(lastStrokeTimer); lastStrokeTimer = null; }
             if (!kanaTraceState) return;
 
             const sqBody2 = document.getElementById('stroke-quiz-body');
             if (sqBody2) sqBody2.classList.remove('tracing');
 
-            const totalErrors = (totalMistakes != null) ? totalMistakes : qs.mistakes;
-            const isClean = totalErrors === 0;
+            const isClean = totalMistakes === 0;
+            if (isClean) { qs.correct++; markMastered(kana.c); }
+            else           qs.wrong++;
+            document.getElementById('sq-correct').textContent = qs.correct;
+            document.getElementById('sq-wrong').textContent   = qs.wrong;
 
-            if (isClean) { document.getElementById('sq-correct').textContent = '1'; markMastered(kana.c); }
-            else           document.getElementById('sq-wrong').textContent   = '1';
-            document.getElementById('sq-prog-bar').style.width = '100%';
+            // File de révision : nourrit le planning SRS comme la flashcard kana
+            if (kana.id) {
+                const quality = totalMistakes === 0 ? 3 : totalMistakes <= 2 ? 2 : totalMistakes <= 4 ? 1 : 0;
+                gradeReview(kana.id, quality);
+            }
 
             const fb = document.getElementById('sq-feedback');
             if (fb) {
                 fb.style.color = isClean ? 'var(--accent)' : '#e55';
-                fb.textContent = isClean ? '✔ Parfait !' : `Terminé — ${totalErrors} erreur${totalErrors > 1 ? 's' : ''}`;
+                fb.textContent = isClean ? '✔ Parfait !' : `Terminé — ${totalMistakes} erreur${totalMistakes > 1 ? 's' : ''}`;
             }
 
             qs._nextTimer = setTimeout(() => {
                 qs._nextTimer = null;
                 if (!kanaTraceState) return;
-                renderKanaTraceResults(isClean, totalErrors);
+                kanaTraceState.idx++;
+                renderKanaTraceQuestion();
             }, 1100);
         };
 
-        const quizCallbacks = {
-            onMistake() {
-                qs.mistakes++;
-                const wrap = document.getElementById('sq-canvas-wrap');
-                if (wrap) { wrap.classList.add('flash-err'); setTimeout(() => wrap.classList.remove('flash-err'), 350); }
-                const fb = document.getElementById('sq-feedback');
-                if (fb) { fb.style.color = '#e55'; fb.textContent = isHardcore ? 'Mauvais tracé !' : 'Mauvais tracé, regarde l\'aide…'; }
-            },
-            onCorrectStroke(strokeData) {
-                strokesDone++;
-                const wrap = document.getElementById('sq-canvas-wrap');
-                if (wrap) { wrap.classList.add('flash-ok'); setTimeout(() => wrap.classList.remove('flash-ok'), 350); }
-                const fb = document.getElementById('sq-feedback');
-                if (fb) { fb.style.color = 'var(--accent)'; fb.textContent = 'Bien !';
-                    setTimeout(() => { if (fb && fb.textContent === 'Bien !') fb.textContent = ''; }, 800); }
+        const startSub = () => {
+            if (subIdx >= chars.length) { finishItem(itemMistakes); return; }
+            _subCompleted   = false;
+            subStrokesDone  = 0;
 
-                // strokesRemaining fourni par HanziWriter : pas besoin de connaître
-                // le nombre total de traits du kana à l'avance (contrairement au kanji,
-                // qui le lit dans kanjiDb — les kana n'ont pas cette donnée statique).
-                if (strokeData && strokeData.strokesRemaining === 0) {
-                    if (lastStrokeTimer) clearTimeout(lastStrokeTimer);
-                    lastStrokeTimer = setTimeout(() => {
-                        lastStrokeTimer = null;
-                        triggerComplete(qs.mistakes);
-                    }, 700);
-                }
-            },
-            onComplete(summary) {
-                const totalMistakes = (summary && typeof summary.totalMistakes !== 'undefined')
-                    ? summary.totalMistakes : qs.mistakes;
-                triggerComplete(totalMistakes);
+            const targetId = isMulti ? `sq-writer-target-${subIdx}` : 'sq-writer-target';
+            if (isMulti) {
+                const prevTarget = subIdx > 0 ? document.getElementById(`sq-writer-target-${subIdx - 1}`) : null;
+                if (prevTarget) { prevTarget.classList.remove('pending'); prevTarget.classList.add('sub-done'); }
+                const curTarget = document.getElementById(targetId);
+                if (curTarget) curTarget.classList.remove('pending');
             }
-        };
-        qs._quizCallbacks   = quizCallbacks;
-        qs._isHardcore      = isHardcore;
-        qs._strokesDoneRef  = () => strokesDone;
 
-        kanaTraceWriter.quiz(quizCallbacks);
+            // Le premier sous-caractère (ou l'unique, hors yōon) garde la taille pleine ;
+            // le second (petit modificateur yōon) est rendu plus petit, comme dans animateKanaChar
+            const dims = isMulti
+                ? (subIdx === 0 ? { width: 190, height: 190, padding: 16 } : { width: 108, height: 108, padding: 8 })
+                : {};
+
+            kanaTraceWriter = createStrokeWriter(targetId, chars[subIdx], isHardcore, {
+                dataLoader:  kanaDataLoader,
+                onDataError: kanaTraceSkip,
+                ...dims
+            });
+            if (!kanaTraceWriter) { kanaTraceSkip(); return; }
+            lockScroll(targetId);
+
+            const advanceSub = () => {
+                if (_subCompleted) return;
+                _subCompleted = true;
+                if (lastStrokeTimer) { clearTimeout(lastStrokeTimer); lastStrokeTimer = null; }
+                subIdx++;
+                startSub();
+            };
+
+            const subCallbacks = {
+                onMistake() {
+                    itemMistakes++;
+                    const wrap = document.getElementById('sq-canvas-wrap');
+                    if (wrap) { wrap.classList.add('flash-err'); setTimeout(() => wrap.classList.remove('flash-err'), 350); }
+                    const fb = document.getElementById('sq-feedback');
+                    if (fb) { fb.style.color = '#e55'; fb.textContent = isHardcore ? 'Mauvais tracé !' : 'Mauvais tracé, regarde l\'aide…'; }
+                },
+                onCorrectStroke(strokeData) {
+                    subStrokesDone++;
+                    const wrap = document.getElementById('sq-canvas-wrap');
+                    if (wrap) { wrap.classList.add('flash-ok'); setTimeout(() => wrap.classList.remove('flash-ok'), 350); }
+                    const fb = document.getElementById('sq-feedback');
+                    if (fb) { fb.style.color = 'var(--accent)'; fb.textContent = 'Bien !';
+                        setTimeout(() => { if (fb && fb.textContent === 'Bien !') fb.textContent = ''; }, 800); }
+
+                    // strokesRemaining fourni par HanziWriter : pas besoin de connaître le
+                    // nombre total de traits à l'avance (contrairement au kanji qui le lit
+                    // dans kanjiDb — les kana n'ont pas cette donnée statique).
+                    if (strokeData && strokeData.strokesRemaining === 0) {
+                        lastStrokeTimer = setTimeout(advanceSub, (isMulti && subIdx < chars.length - 1) ? 350 : 700);
+                    }
+                },
+                onComplete() { advanceSub(); }
+            };
+            qs._quizCallbacks  = subCallbacks;
+            qs._isHardcore     = isHardcore;
+            qs._strokesDoneRef = () => subStrokesDone;
+
+            kanaTraceWriter.quiz(subCallbacks);
+        };
+
+        startSub();
     });
 }
 
@@ -4974,7 +5035,6 @@ function kanaTraceHint() {
     const qs = kanaTraceState;
     const strokesDone = qs._strokesDoneRef ? qs._strokesDoneRef() : 0;
 
-    qs.mistakes++;
     const fb = document.getElementById('sq-feedback');
     if (fb) { fb.style.color = '#f5a623'; fb.textContent = `💡 Indice — trait ${strokesDone + 1}`; }
 
@@ -4996,28 +5056,43 @@ function kanaTraceHint() {
     });
 }
 
+// Passe l'item courant (kana entier, y compris ses 2 traits en yōon) et avance dans la file
 function kanaTraceSkip() {
     if (!kanaTraceState) return;
-    if (kanaTraceState._nextTimer) { clearTimeout(kanaTraceState._nextTimer); kanaTraceState._nextTimer = null; }
+    const qs = kanaTraceState;
+    if (qs._nextTimer) { clearTimeout(qs._nextTimer); qs._nextTimer = null; }
     if (kanaTraceWriter) { try { kanaTraceWriter.cancelQuiz(); } catch(_) {} kanaTraceWriter = null; }
     const sqBody = document.getElementById('stroke-quiz-body');
     if (sqBody) sqBody.classList.remove('tracing');
-    document.getElementById('sq-wrong').textContent = '1';
-    renderKanaTraceResults(false, null, true);
+
+    qs.wrong++;
+    document.getElementById('sq-wrong').textContent = qs.wrong;
+
+    const kana = qs.queue[qs.idx];
+    if (kana && kana.id) gradeReview(kana.id, 0);
+
+    qs.idx++;
+    renderKanaTraceQuestion();
 }
 
-function renderKanaTraceResults(isClean, totalErrors, skipped = false) {
+function renderKanaTraceResults() {
     if (kanaTraceTimerInterval) { clearInterval(kanaTraceTimerInterval); kanaTraceTimerInterval = null; }
     if (!kanaTraceState) return;
     document.getElementById('sq-prog-bar').style.width = '100%';
 
-    const kana  = kanaTraceState.kana;
-    const errs  = totalErrors || 0;
-    const pct   = skipped ? 0 : (isClean ? 100 : Math.max(20, 100 - errs * 20));
-    const emoji = skipped ? '⏭️' : pct >= 100 ? '🎉' : pct >= 60 ? '👍' : pct >= 40 ? '💪' : '😅';
-    const msg   = skipped ? 'Passé' : pct >= 100 ? 'Parfait !' : pct >= 60 ? 'Bien joué !' : pct >= 40 ? 'Continuez !' : 'À réviser…';
-    const elapsedSec = kanaTraceState.elapsedSec;
+    const qs = kanaTraceState;
+    const { correct, wrong, queue, sourceType, elapsedSec } = qs;
+    const total = queue.length;
+    const pct   = Math.round(correct / total * 100);
+    const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : pct >= 40 ? '💪' : '😅';
+    const msg   = pct >= 80 ? 'Excellent !' : pct >= 60 ? 'Bien joué !' : pct >= 40 ? 'Continuez !' : 'À réviser…';
     const m = Math.floor(elapsedSec / 60), s = elapsedSec % 60;
+
+    if (sourceType === 'queue') recordSessionCompleted();
+
+    const singleRow = (total === 1)
+        ? `<div class="quiz-breakdown-row"><span>Kana</span><strong>${queue[0].c} (${queue[0].r})</strong></div>`
+        : '';
 
     document.getElementById('stroke-quiz-body').innerHTML = `
         <div class="quiz-results" style="padding-top:40px">
@@ -5025,13 +5100,15 @@ function renderKanaTraceResults(isClean, totalErrors, skipped = false) {
             <div class="quiz-score-big">${pct}%</div>
             <div class="quiz-score-label">${msg}</div>
             <div class="quiz-breakdown">
-                <div class="quiz-breakdown-row"><span>Kana</span><strong>${kana.c} (${kana.r})</strong></div>
-                <div class="quiz-breakdown-row"><span>✘ Erreurs</span><strong style="color:#e55">${errs}</strong></div>
+                ${singleRow}
+                <div class="quiz-breakdown-row"><span>✔ Sans erreur</span><strong style="color:var(--accent)">${correct}</strong></div>
+                <div class="quiz-breakdown-row"><span>✘ Avec erreurs</span><strong style="color:#e55">${wrong}</strong></div>
+                <div class="quiz-breakdown-row"><span>Total</span><strong>${total}</strong></div>
                 <div class="quiz-breakdown-row"><span>Temps</span><strong>${m}:${String(s).padStart(2,'0')}</strong></div>
             </div>
             <div class="quiz-btn-row">
                 <button class="quiz-action-btn secondary" onclick="closeStrokeQuiz()">Fermer</button>
-                <button class="quiz-action-btn primary" onclick="startKanaTraceQuiz(kanaTraceState.kana, kanaTraceState.mode)">Rejouer ↺</button>
+                <button class="quiz-action-btn primary" onclick="startKanaTraceQuiz(kanaTraceState.queue, kanaTraceState.mode, '${sourceType}')">Rejouer ↺</button>
             </div>
         </div>`;
 }
@@ -5295,10 +5372,8 @@ function openKanaDetail(kana) {
     window.currentKanaForStroke = kana;
     const dqb = document.getElementById('detail-quiz-btn');
     if (dqb) {
-        // Le tracé HanziWriter ne gère qu'un seul caractère à la fois : les yoon (2 code points,
-        // ex. きゃ) restent hors-scope, comme pour animateKanaChar() qui les traite à part.
-        dqb.style.display = isYoon ? 'none' : '';
-        dqb.title = isYoon ? 'Tracé indisponible pour les combinaisons yōon' : "S'entraîner au tracé guidé";
+        dqb.style.display = '';
+        dqb.title = "S'entraîner au tracé guidé";
     }
     const bsk = document.getElementById('btn-save-kanji');
     if (bsk) bsk.style.display = 'none';
@@ -5887,6 +5962,7 @@ const MODAL_EXIT_REGISTRY = {
     'search': () => closeSearchOverlay(),
     'kana-mode-selector': () => showRevisionKanaPicker(true),
     'kana-review-flashcard': () => { kanaReviewSession = null; showRevisionKanaPicker(true); },
+    'kana-trace-review': () => showRevisionKanaPicker(true),
 };
 
 // À appeler à l'entrée de chaque modal/session : pousse UNE entrée d'historique.

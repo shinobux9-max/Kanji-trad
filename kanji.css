@@ -423,6 +423,17 @@
     .sq-btn { padding: 10px 20px; border-radius: 8px; border: none; font-weight: bold; font-size: 0.8125rem; cursor: pointer; font-family: inherit; }
     .sq-btn.hint { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
     .sq-btn.skip { background: var(--surface); border: 1px solid #e55; color: #e55; }
+
+    /* Tracé yōon (2 code points séquentiels, ex. きゃ) : deux writers dans le même canvas-wrap,
+       positionnés comme dans animateKanaChar (grand en haut-gauche, petit modificateur en bas-droite) */
+    .sq-canvas-wrap.multi { position: relative; }
+    .sq-writer-target { background: #1a1a2e !important; border-radius: 16px; border: 2px solid var(--border); touch-action: none; transition: opacity 0.25s, border-color 0.25s; }
+    .sq-writer-target svg { touch-action: none; user-select: none; -webkit-user-select: none; }
+    .sq-writer-target svg * { touch-action: none; }
+    .sq-writer-target.main  { position: absolute; top: 0; left: 0; width: 190px; height: 190px; }
+    .sq-writer-target.small { position: absolute; right: 0; bottom: 0; width: 108px; height: 108px; }
+    .sq-writer-target.pending  { opacity: 0.3; pointer-events: none; }
+    .sq-writer-target.sub-done { border-color: var(--accent); }
     .sq-sub-bar { display: flex; justify-content: space-between; padding: 6px 16px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0.75rem; color: var(--gray); }
     .flash-ok  { animation: flashGreen 0.35s ease; }
     .flash-err { animation: flashRed   0.35s ease; }
