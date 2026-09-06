@@ -1,56 +1,56 @@
 [
-{
+  {
     "id": "n5_g_1",
-"unit": 1,
-"unit_title": "Les bases de la phrase",
-"lesson_number": 1,
-"title": "Affirmer avec politesse",
-"item": "です",
-"pattern": "[Nom / Adjectif] + です",
-"badge": "Copule",
-"sections": [
-{
-"label": "EXPLICATION",
-"paragraphs": [
-"**です** (*desu*) est la copule de politesse, l'équivalent du verbe **« être »**.",
-"Il sert à identifier, décrire ou donner un état sur le sujet en fin de phrase tout en apportant une nuance polie (**desu/masu**)."
-]
-},
-{
-"label": "UTILISATION & PRONONCIATION",
-"paragraphs": [
-"S'installe directement après un **nom** ou un **adjectif en -i / -na**.",
-"💡 **Prononciation :** Le **« u »** final est presque muet à l'oral, cela se prononce généralement **« dess »**."
-],
-"blocks": [
-{
-"sub_title": "Structure de base",
-"list": [
-"Nom + **です** (ex: がくせいです)",
-"Adjectif + **です** (ex: たかいです)"
-]
-}
-]
-}
-],
-"examples": [
-{
-"japanese": "がくせいです。",
-"romaji": "Gakusei desu.",
-"french": "Je suis étudiant.",
-"highlight": "です"
-},
-{
-"japanese": "たかいです。",
-"romaji": "Takai desu.",
-"french": "C'est cher.",
-"highlight": "です"
-},
-{
-"japanese": "すきです。",
-"romaji": "Suki desu.",
-"french": "J'aime bien / C'est mon préféré.",
-"highlight": "です"
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 1,
+    "title": "Affirmer avec politesse",
+    "item": "です",
+    "pattern": "[Nom / Adjectif] + です",
+    "badge": "Copule",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "**です** (*desu*) est la copule de politesse, l'équivalent du verbe **« être »**.",
+          "Il sert à identifier, décrire ou donner un état sur le sujet en fin de phrase tout en apportant une nuance polie (**desu/masu**)."
+        ]
+      },
+      {
+        "label": "UTILISATION & PRONONCIATION",
+        "paragraphs": [
+          "S'installe directement après un **nom** ou un **adjectif en -i / -na**.",
+          "💡 **Prononciation :** Le **« u »** final est presque muet à l'oral, cela se prononce généralement **« dess »**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Nom + **です** (ex: がくせいです)",
+              "Adjectif + **です** (ex: たかいです)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "がくせいです。",
+        "romaji": "Gakusei desu.",
+        "french": "Je suis étudiant.",
+        "highlight": "です"
+      },
+      {
+        "japanese": "たかいです。",
+        "romaji": "Takai desu.",
+        "french": "C'est cher.",
+        "highlight": "です"
+      },
+      {
+        "japanese": "すきです。",
+        "romaji": "Suki desu.",
+        "french": "J'aime bien / C'est mon préféré.",
+        "highlight": "です"
       }
     ],
     "confusions": [
@@ -66,1461 +66,1460 @@
     ]
   },
   {
-  "id": "n5_g_2",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 2,
-  "title": "Nier poliment",
-  "item": "ではありません / じゃないです",
-  "pattern": "[Nom / Adjectif en -na] + ではありません / じゃないです",
-  "badge": "Copule - Négatif",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "C'est la forme **négative** de **です**. Elle sert à dire **« ce n'est pas »** ou **« je ne suis pas »**.",
-        "Attention : cette structure s'applique aux **noms** et aux **adjectifs en -na**, mais **pas aux adjectifs en -i** (qui ont leur propre négation en *-kunai desu*)."
-      ]
-    },
-    {
-      "label": "NUANCE & REGISTRE",
-      "paragraphs": [
-        "**ではありません** (*dewa arimasen*) : Formel, très poli, idéal à l'écrit ou en contexte professionnel.",
-        "**じゃないです** (*janai desu*) : Plus neutre et courant, parfait pour le quotidien à l'oral.",
-        "💡 **Prononciation :** Dans **ではありません**, le **は** se prononce **« wa »**."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Écrit / Formel : Nom + **ではありません**",
-            "Oral / Courant : Nom + **じゃないです**"
-          ]
-        }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "パンではありません。",
-      "romaji": "Pan dewa arimasen.",
-      "french": "Ce n'est pas du pain. (Formel / Écrit)",
-      "highlight": "ではありません"
-    },
-    {
-      "japanese": "せんせいじゃないです。",
-      "romaji": "Sensei janai desu.",
-      "french": "Je ne suis pas professeur. (Courant / Oral)",
-      "highlight": "じゃないです"
-    },
-    {
-      "japanese": "ひまじゃないです。",
-      "romaji": "Hima janai desu.",
-      "french": "Je ne suis pas libre. (Adjectif en -na)",
-      "highlight": "じゃないです"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Adjectifs en -i",
-      "explanation": "On ne peut pas utiliser **ではありません** ou **じゃないです** directement après un adjectif en -i pour le nier. Les adjectifs en -i modifient leur propre terminaison en *-kunai desu*.",
-      "wrong_example": {
-        "japanese": "たかいではありません。",
-        "correct_japanese": "たかくないです。",
-        "french": "Ce n'est pas cher."
+    "id": "n5_g_2",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 2,
+    "title": "Nier poliment",
+    "item": "ではありません / じゃないです",
+    "pattern": "[Nom / Adjectif en -na] + ではありません / じゃないです",
+    "badge": "Copule - Négatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "C'est la forme **négative** de **です**. Elle sert à dire **« ce n'est pas »** ou **« je ne suis pas »**.",
+          "Attention : cette structure s'applique aux **noms** et aux **adjectifs en -na**, mais **pas aux adjectifs en -i** (qui ont leur propre négation en *-kunai desu*)."
+        ]
+      },
+      {
+        "label": "NUANCE & REGISTRE",
+        "paragraphs": [
+          "**ではありません** (*dewa arimasen*) : Formel, très poli, idéal à l'écrit ou en contexte professionnel.",
+          "**じゃないです** (*janai desu*) : Plus neutre et courant, parfait pour le quotidien à l'oral.",
+          "💡 **Prononciation :** Dans **ではありません**, le **は** se prononce **« wa »**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Écrit / Formel : Nom + **ではありません**",
+              "Oral / Courant : Nom + **じゃないです**"
+            ]
+          }
+        ]
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_3",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 3,
-  "title": "Parler au passé",
-  "item": "でした",
-  "pattern": "[Nom / Adjectif en -na] + でした",
-  "badge": "Copule - Passé",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "**でした** (*deshita*) est le **passé poli** de **です**. Il s'utilise pour indiquer un état, une qualité ou une identité passée (**« c'était »** / **« j'étais »**).",
-        "Attention : cette forme s'utilise avec les **noms** et les **adjectifs en -na**. Les adjectifs en -i font leur passé en *-katta desu*."
-      ]
-    },
-    {
-      "label": "UTILISATION",
-      "paragraphs": [
-        "Se place directement après le nom ou l'adjectif en -na.",
-        "💡 **Prononciation :** Le **« i »** au milieu de *deshita* est très discret à l'oral (prononcé presque « desh-ta »)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Nom + **でした** (ex: あめでした)",
-            "Adjectif en -na + **でした** (ex: しずかでした)"
-          ]
-        }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "がくせいでした。",
-      "romaji": "Gakusei deshita.",
-      "french": "J'étais étudiant.",
-      "highlight": "でした"
-    },
-    {
-      "japanese": "あめでした。",
-      "romaji": "Ame deshita.",
-      "french": "C'était de la pluie / Il pleuvait.",
-      "highlight": "でした"
-    },
-    {
-      "japanese": "しずかでした。",
-      "romaji": "Shizuka deshita.",
-      "french": "C'était calme.",
-      "highlight": "でした"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Passé des adjectifs en -i",
-      "explanation": "Les adjectifs en -i ne prennent pas **でした** au passé, ils modifient leur terminaison en *-katta desu*.",
-      "wrong_example": {
-        "japanese": "たかいでした。",
-        "correct_japanese": "たかかったです。",
-        "french": "C'était cher."
+    ],
+    "examples": [
+      {
+        "japanese": "パンではありません。",
+        "romaji": "Pan dewa arimasen.",
+        "french": "Ce n'est pas du pain. (Formel / Écrit)",
+        "highlight": "ではありません"
+      },
+      {
+        "japanese": "せんせいじゃないです。",
+        "romaji": "Sensei janai desu.",
+        "french": "Je ne suis pas professeur. (Courant / Oral)",
+        "highlight": "じゃないです"
+      },
+      {
+        "japanese": "ひまじゃないです。",
+        "romaji": "Hima janai desu.",
+        "french": "Je ne suis pas libre. (Adjectif en -na)",
+        "highlight": "じゃないです"
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_4",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 4,
-  "title": "Exprimer une action au présent ou au futur",
-  "item": "〜ます",
-  "pattern": "[Radical du verbe] + ます",
-  "badge": "Verbe - Présent / Futur",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La forme en **〜ます** (*masu*) s'attache au radical du verbe pour exprimer une **action présente**, une **habitude** ou un **événement futur**.",
-        "C'est la forme verbale de base pour s'exprimer avec **politesse** au quotidien."
-      ]
-    },
-    {
-      "label": "UTILISATION & PRONONCIATION",
-      "paragraphs": [
-        "En japonais, le même temps couvre à la fois le **présent** et le **futur** ; c'est le contexte ou un indicateur de temps (*demain*, *tous les jours*) qui précise le moment.",
-        "💡 **Prononciation :** Le **« u »** final est très discret à l'oral, cela se prononce généralement **« mass »**."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Groupe 1 (godan) : -u → -i + **ます** (ex: いきます)",
-            "Groupe 2 (ichidan) : -ru → + **ます** (ex: たべます)",
-            "Irréguliers : する → **します** / くる → **きます**"
-          ]
+    ],
+    "confusions": [
+      {
+        "with": "Adjectifs en -i",
+        "explanation": "On ne peut pas utiliser **ではありません** ou **じゃないです** directement après un adjectif en -i pour le nier. Les adjectifs en -i modifient leur propre terminaison en *-kunai desu*.",
+        "wrong_example": {
+          "japanese": "たかいではありません。",
+          "correct_japanese": "たかくないです。",
+          "french": "Ce n'est pas cher."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "みずをのみます。",
-      "romaji": "Mizu o nomimasu.",
-      "french": "Je bois de l'eau / Je boirai de l'eau.",
-      "highlight": "のみます"
-    },
-    {
-      "japanese": "あしたいきます。",
-      "romaji": "Ashita ikimasu.",
-      "french": "J'irai demain.",
-      "highlight": "いきます"
-    },
-    {
-      "japanese": "まいにちべんきょうします。",
-      "romaji": "Mainichi benkyou shimasu.",
-      "french": "J'étudie tous les jours.",
-      "highlight": "します"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Passé en 〜ました",
-      "explanation": "La forme en **〜ます** exprime le présent ou le futur. Pour parler d'une action passée, il faut utiliser la terminaison **〜ました**.",
-      "wrong_example": {
-        "japanese": "きのうりんごを食べます。",
-        "correct_japanese": "きのうりんごを食べました。",
-        "french": "J'ai mangé une pomme hier."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_5",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 5,
-  "title": "Nier une action",
-  "item": "〜ません",
-  "pattern": "[Radical du verbe] + ません",
-  "badge": "Verbe - Négatif",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La forme en **〜ません** (*masen*) est la **forme négative polie** des verbes.",
-        "Elle remplace la terminaison **〜ます** pour exprimer le fait que l'on ne fait pas ou ne fera pas une action au **présent** ou au **futur**."
-      ]
-    },
-    {
-      "label": "FORMATION & UTILISATION",
-      "paragraphs": [
-        "La construction est identique à la forme en **〜ます** : il suffit de remplacer la terminaison **〜ます** par **〜ません** sur le radical du verbe."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Présent / Futur affirmatif : Radical + **ます** (ex: たべます)",
-            "Présent / Futur négatif : Radical + **ません** (ex: たべません)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_3",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 3,
+    "title": "Parler au passé",
+    "item": "でした",
+    "pattern": "[Nom / Adjectif en -na] + でした",
+    "badge": "Copule - Passé",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "**でした** (*deshita*) est le **passé poli** de **です**. Il s'utilise pour indiquer un état, une qualité ou une identité passée (**« c'était »** / **« j'étais »**).",
+          "Attention : cette forme s'utilise avec les **noms** et les **adjectifs en -na**. Les adjectifs en -i font leur passé en *-katta desu*."
+        ]
+      },
+      {
+        "label": "UTILISATION",
+        "paragraphs": [
+          "Se place directement après le nom ou l'adjectif en -na.",
+          "💡 **Prononciation :** Le **« i »** au milieu de *deshita* est très discret à l'oral (prononcé presque « desh-ta »)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Nom + **でした** (ex: あめでした)",
+              "Adjectif en -na + **でした** (ex: しずかでした)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "がくせいでした。",
+        "romaji": "Gakusei deshita.",
+        "french": "J'étais étudiant.",
+        "highlight": "でした"
+      },
+      {
+        "japanese": "あめでした。",
+        "romaji": "Ame deshita.",
+        "french": "C'était de la pluie / Il pleuvait.",
+        "highlight": "でした"
+      },
+      {
+        "japanese": "しずかでした。",
+        "romaji": "Shizuka deshita.",
+        "french": "C'était calme.",
+        "highlight": "でした"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Passé des adjectifs en -i",
+        "explanation": "Les adjectifs en -i ne prennent pas **でした** au passé, ils modifient leur terminaison en *-katta desu*.",
+        "wrong_example": {
+          "japanese": "たかいでした。",
+          "correct_japanese": "たかかったです。",
+          "french": "C'était cher."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "にくをたべません。",
-      "romaji": "Niku o tabemasen.",
-      "french": "Je ne mange pas de viande.",
-      "highlight": "たべません"
-    },
-    {
-      "japanese": "きょうはどこへもいきません。",
-      "romaji": "Kyou wa doko e mo ikimasen.",
-      "french": "Je ne vais nulle part aujourd'hui.",
-      "highlight": "いきません"
-    },
-    {
-      "japanese": "おさけをのみません。",
-      "romaji": "Osake o nomimasen.",
-      "french": "Je ne bois pas d'alcool.",
-      "highlight": "のみません"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Forme affirmative en 〜ます",
-      "explanation": "**〜ません** sert uniquement à nier une action. On ne peut pas l'associer à une terminaison affirmative.",
-      "wrong_example": {
-        "japanese": "おちゃを飲みませんます。",
-        "correct_japanese": "おちゃを飲みません。",
-        "french": "Je ne bois pas de thé."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_6",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 6,
-  "title": "Action accomplie dans le passé",
-  "item": "〜ました",
-  "pattern": "[Radical du verbe] + ました",
-  "badge": "Verbe - Passé",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La forme en **〜ました** (*mashita*) est le **passé affirmatif poli** des verbes.",
-        "Elle remplace la terminaison **〜ます** pour indiquer qu'une action a été accomplie ou complétée dans le passé."
-      ]
-    },
-    {
-      "label": "FORMATION & PRONONCIATION",
-      "paragraphs": [
-        "Il suffit de remplacer **〜ます** par **〜ました** sur le radical du verbe.",
-        "💡 **Prononciation :** Le **« i »** au milieu de *mashita* est très discret à l'oral (prononcé presque « mash-ta »)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Présent / Futur : Radical + **ます** (ex: よみます)",
-            "Passé affirmatif : Radical + **ました** (ex: よみました)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_4",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 4,
+    "title": "Exprimer une action au présent ou au futur",
+    "item": "〜ます",
+    "pattern": "[Radical du verbe] + ます",
+    "badge": "Verbe - Présent / Futur",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La forme en **〜ます** (*masu*) s'attache au radical du verbe pour exprimer une **action présente**, une **habitude** ou un **événement futur**.",
+          "C'est la forme verbale de base pour s'exprimer avec **politesse** au quotidien."
+        ]
+      },
+      {
+        "label": "UTILISATION & PRONONCIATION",
+        "paragraphs": [
+          "En japonais, le même temps couvre à la fois le **présent** et le **futur** ; c'est le contexte ou un indicateur de temps (*demain*, *tous les jours*) qui précise le moment.",
+          "💡 **Prononciation :** Le **« u »** final est très discret à l'oral, cela se prononce généralement **« mass »**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Groupe 1 (godan) : -u → -i + **ます** (ex: いきます)",
+              "Groupe 2 (ichidan) : -ru → + **ます** (ex: たべます)",
+              "Irréguliers : する → **します** / くる → **きます**"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "みずをのみます。",
+        "romaji": "Mizu o nomimasu.",
+        "french": "Je bois de l'eau / Je boirai de l'eau.",
+        "highlight": "のみます"
+      },
+      {
+        "japanese": "あしたいきます。",
+        "romaji": "Ashita ikimasu.",
+        "french": "J'irai demain.",
+        "highlight": "いきます"
+      },
+      {
+        "japanese": "まいにちべんきょうします。",
+        "romaji": "Mainichi benkyou shimasu.",
+        "french": "J'étudie tous les jours.",
+        "highlight": "します"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Passé en 〜ました",
+        "explanation": "La forme en **〜ます** exprime le présent ou le futur. Pour parler d'une action passée, il faut utiliser la terminaison **〜ました**.",
+        "wrong_example": {
+          "japanese": "きのうりんごを食べます。",
+          "correct_japanese": "きのうりんごを食べました。",
+          "french": "J'ai mangé une pomme hier."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "ほんをよみました。",
-      "romaji": "Hon o yomimashita.",
-      "french": "J'ai lu un livre.",
-      "highlight": "よみました"
-    },
-    {
-      "japanese": "きのうあさごはんをたべました。",
-      "romaji": "Kinou asagohan o tabemashita.",
-      "french": "Hier, j'ai mangé le petit-déjeuner.",
-      "highlight": "たべました"
-    },
-    {
-      "japanese": "ともだちとあいました。",
-      "romaji": "Tomodachi to aimashita.",
-      "french": "J'ai rencontré un ami.",
-      "highlight": "あいました"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Présent / Futur en 〜ます",
-      "explanation": "La terminaison **〜ました** exprime une action passée. Pour une action habituelle ou future, on utilise **〜ます**.",
-      "wrong_example": {
-        "japanese": "あしたえきにいきました。",
-        "correct_japanese": "あしたえきに行きます。",
-        "french": "J'irai à la gare demain."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_7",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 7,
-  "title": "Action non accomplie au passé",
-  "item": "〜ませんでした",
-  "pattern": "[Radical du verbe] + ませんでした",
-  "badge": "Verbe - Passé Négatif",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La forme en **〜ませんでした** (*masen deshita*) est le **passé négatif poli** des verbes.",
-        "Elle combine la négation (**〜ません**) et le passé (**でした**) pour indiquer qu'une action **n'a pas eu lieu** dans le passé."
-      ]
-    },
-    {
-      "label": "FORMATION & PRONONCIATION",
-      "paragraphs": [
-        "Il suffit d'ajouter **〜でした** après la forme négative en **〜ません**.",
-        "💡 **Prononciation :** Le **« i »** de *deshita* est très discret à l'oral (prononcé presque « masen desh-ta »)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Présent / Futur négatif : Radical + **ません** (ex: べんきょうしません)",
-            "Passé négatif : Radical + **ませんでした** (ex: べんきょうしませんでした)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_5",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 5,
+    "title": "Nier une action",
+    "item": "〜ません",
+    "pattern": "[Radical du verbe] + ません",
+    "badge": "Verbe - Négatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La forme en **〜ません** (*masen*) est la **forme négative polie** des verbes.",
+          "Elle remplace la terminaison **〜ます** pour exprimer le fait que l'on ne fait pas ou ne fera pas une action au **présent** ou au **futur**."
+        ]
+      },
+      {
+        "label": "FORMATION & UTILISATION",
+        "paragraphs": [
+          "La construction est identique à la forme en **〜ます** : il suffit de remplacer la terminaison **〜ます** par **〜ません** sur le radical du verbe."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Présent / Futur affirmatif : Radical + **ます** (ex: たべます)",
+              "Présent / Futur négatif : Radical + **ません** (ex: たべません)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "にくをたべません。",
+        "romaji": "Niku o tabemasen.",
+        "french": "Je ne mange pas de viande.",
+        "highlight": "たべません"
+      },
+      {
+        "japanese": "きょうはどこへもいきません。",
+        "romaji": "Kyou wa doko e mo ikimasen.",
+        "french": "Je ne vais nulle part aujourd'hui.",
+        "highlight": "いきません"
+      },
+      {
+        "japanese": "おさけをのみません。",
+        "romaji": "Osake o nomimasen.",
+        "french": "Je ne bois pas d'alcool.",
+        "highlight": "のみません"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Forme affirmative en 〜ます",
+        "explanation": "**〜ません** sert uniquement à nier une action. On ne peut pas l'associer à une terminaison affirmative.",
+        "wrong_example": {
+          "japanese": "おちゃを飲みませんます。",
+          "correct_japanese": "おちゃを飲みません。",
+          "french": "Je ne bois pas de thé."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "きのうはべんきょうしませんでした。",
-      "romaji": "Kinou wa benkyou shimasen deshita.",
-      "french": "Hier, je n'ai pas étudié.",
-      "highlight": "べんきょうしませんでした"
-    },
-    {
-      "japanese": "けさはなにもたべませんでした。",
-      "romaji": "Kesa wa nani mo tabemasen deshita.",
-      "french": "Ce matin, je n'ai rien mangé.",
-      "highlight": "たべませんでした"
-    },
-    {
-      "japanese": "テレビをみませんでした。",
-      "romaji": "Terebi o mimasen deshita.",
-      "french": "Je n'ai pas regardé la télévision.",
-      "highlight": "みませんでした"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Passé affirmatif en 〜ました",
-      "explanation": "**〜ませんでした** indique que l'action n'a pas été faite. Ne pas confondre avec **〜ました** qui indique qu'elle a bien été accomplie.",
-      "wrong_example": {
-        "japanese": "きのうパンをたべませんでした。",
-        "correct_japanese": "きのうパンを食べました。",
-        "french": "Hier, j'ai mangé du pain."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_8",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 8,
-  "title": "Poser le thème de la phrase",
-  "item": "は",
-  "pattern": "[Nom] + は",
-  "badge": "Particule - Thème",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **は** sert à introduire le **thème principal** de la phrase. Elle correspond au français **« En ce qui concerne... »** ou **« Quant à... »**.",
-        "Elle indique sur quoi porte l'information qui va suivre dans le reste de la phrase."
-      ]
-    },
-    {
-      "label": "UTILISATION & PRONONCIATION",
-      "paragraphs": [
-        "Elle se place immédiatement après le nom ou le pronom qu'elle met en évidence.",
-        "💡 **Prononciation :** Lorsqu'elle agit comme particule grammaticale, la lettre **は** (normalement lue *ha*) se prononce obligatoirement **« wa »**."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "[Thème] + **は** + [Information sur le thème]",
-            "Exemple : わたし + **は** + がくせいです (En ce qui me concerne, je suis étudiant)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_6",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 6,
+    "title": "Action accomplie dans le passé",
+    "item": "〜ました",
+    "pattern": "[Radical du verbe] + ました",
+    "badge": "Verbe - Passé",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La forme en **〜ました** (*mashita*) est le **passé affirmatif poli** des verbes.",
+          "Elle remplace la terminaison **〜ます** pour indiquer qu'une action a été accomplie ou complétée dans le passé."
+        ]
+      },
+      {
+        "label": "FORMATION & PRONONCIATION",
+        "paragraphs": [
+          "Il suffit de remplacer **〜ます** par **〜ました** sur le radical du verbe.",
+          "💡 **Prononciation :** Le **« i »** au milieu de *mashita* est très discret à l'oral (prononcé presque « mash-ta »)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Présent / Futur : Radical + **ます** (ex: よみます)",
+              "Passé affirmatif : Radical + **ました** (ex: よみました)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "ほんをよみました。",
+        "romaji": "Hon o yomimashita.",
+        "french": "J'ai lu un livre.",
+        "highlight": "よみました"
+      },
+      {
+        "japanese": "きのうあさごはんをたべました。",
+        "romaji": "Kinou asagohan o tabemashita.",
+        "french": "Hier, j'ai mangé le petit-déjeuner.",
+        "highlight": "たべました"
+      },
+      {
+        "japanese": "ともだちとあいました。",
+        "romaji": "Tomodachi to aimashita.",
+        "french": "J'ai rencontré un ami.",
+        "highlight": "あいました"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Présent / Futur en 〜ます",
+        "explanation": "La terminaison **〜ました** exprime une action passée. Pour une action habituelle ou future, on utilise **〜ます**.",
+        "wrong_example": {
+          "japanese": "あしたえきにいきました。",
+          "correct_japanese": "あしたえきに行きます。",
+          "french": "J'irai à la gare demain."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "わたしはマイクです。",
-      "romaji": "Watashi wa Maiku desu.",
-      "french": "Je suis Mike. (Quant à moi, c'est Mike)",
-      "highlight": "は"
-    },
-    {
-      "japanese": "きょうはいいてんきです。",
-      "romaji": "Kyou wa ii tenki desu.",
-      "french": "Aujourd'hui, il fait beau.",
-      "highlight": "は"
-    },
-    {
-      "japanese": "このほんはたかいです。",
-      "romaji": "Kono hon wa takai desu.",
-      "french": "Ce livre est cher.",
-      "highlight": "は"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule sujet が",
-      "explanation": "**は** pose le thème général de la phrase (« quant à »), tandis que **が** pointe précisément le sujet grammatical pour répondre à « qui ? » ou « quoi ? ».",
-      "wrong_example": {
-        "japanese": "だれはきましたか。",
-        "correct_japanese": "だれがきましたか。",
-        "french": "Qui est venu ?"
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_9",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 9,
-  "title": "Identifier le sujet précis",
-  "item": "が",
-  "pattern": "[Nom] + が",
-  "badge": "Particule - Sujet",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **が** (*ga*) désigne le **sujet grammatical précis** de la phrase.",
-        "Contrairement à **は** qui pose le thème général (« Quant à... »), **が** met un coup de projecteur sur l'élément qui la précède pour répondre à la question **« Qui ? »** ou **« Quoi ? »**."
-      ]
-    },
-    {
-      "label": "UTILISATION & EMPLOIS CLÉS",
-      "paragraphs": [
-        "Elle est indispensable avec les verbes d'existence (**います / あります**), les verbes de capacité, ou lorsqu'on décrit une perception/état."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Cas d'usage principaux",
-          "list": [
-            "Existence : [Nom] + **が** + あります / います",
-            "Capacité / Goût : [Nom] + **が** + すきです / できます",
-            "Identification : Réponse à un mot interrogatif (*だれが...*)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_7",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 7,
+    "title": "Action non accomplie au passé",
+    "item": "〜ませんでした",
+    "pattern": "[Radical du verbe] + ませんでした",
+    "badge": "Verbe - Passé Négatif",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La forme en **〜ませんでした** (*masen deshita*) est le **passé négatif poli** des verbes.",
+          "Elle combine la négation (**〜ません**) et le passé (**でした**) pour indiquer qu'une action **n'a pas eu lieu** dans le passé."
+        ]
+      },
+      {
+        "label": "FORMATION & PRONONCIATION",
+        "paragraphs": [
+          "Il suffit d'ajouter **〜でした** après la forme négative en **〜ません**.",
+          "💡 **Prononciation :** Le **« i »** de *deshita* est très discret à l'oral (prononcé presque « masen desh-ta »)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Présent / Futur négatif : Radical + **ません** (ex: べんきょうしません)",
+              "Passé négatif : Radical + **ませんでした** (ex: べんきょうしませんでした)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "きのうはべんきょうしませんでした。",
+        "romaji": "Kinou wa benkyou shimasen deshita.",
+        "french": "Hier, je n'ai pas étudié.",
+        "highlight": "べんきょうしませんでした"
+      },
+      {
+        "japanese": "けさはなにもたべませんでした。",
+        "romaji": "Kesa wa nani mo tabemasen deshita.",
+        "french": "Ce matin, je n'ai rien mangé.",
+        "highlight": "たべませんでした"
+      },
+      {
+        "japanese": "テレビをみませんでした。",
+        "romaji": "Terebi o mimasen deshita.",
+        "french": "Je n'ai pas regardé la télévision.",
+        "highlight": "みませんでした"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Passé affirmatif en 〜ました",
+        "explanation": "**〜ませんでした** indique que l'action n'a pas été faite. Ne pas confondre avec **〜ました** qui indique qu'elle a bien été accomplie.",
+        "wrong_example": {
+          "japanese": "きのうパンをたべませんでした。",
+          "correct_japanese": "きのうパンを食べました。",
+          "french": "Hier, j'ai mangé du pain."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "ねこがいます。",
-      "romaji": "Neko ga imasu.",
-      "french": "Il y a un chat.",
-      "highlight": "が"
-    },
-    {
-      "japanese": "にほんごがすきです。",
-      "romaji": "Nihongo ga suki desu.",
-      "french": "J'aime le japonais.",
-      "highlight": "が"
-    },
-    {
-      "japanese": "だれがきましたか。",
-      "romaji": "Dare ga kimashita ka.",
-      "french": "Qui est venu ?",
-      "highlight": "が"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule de thème は",
-      "explanation": "Avec les verbes d'existence (comme *imasu* ou *arimasus*) ou pour exprimer un goût (*suki desu*), on utilise la particule **が** pour marquer l'élément concerné, et non **は**.",
-      "wrong_example": {
-        "japanese": "ねこはいます。",
-        "correct_japanese": "ねこがいます。",
-        "french": "Il y a un chat."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_10",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 10,
-  "title": "Désigner l'objet direct d'une action",
-  "item": "を",
-  "pattern": "[Nom] + を + [Verbe d'action]",
-  "badge": "Particule - COD",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **を** marque le **complément d'objet direct (COD)** de la phrase.",
-        "Elle indique l'élément qui subit directement l'action du verbe (ce que l'on mange, ce que l'on lit, ce que l'on achète...)."
-      ]
-    },
-    {
-      "label": "UTILISATION & PRONONCIATION",
-      "paragraphs": [
-        "Elle se place obligatoirement entre le nom (objet) et le verbe transitif.",
-        "💡 **Prononciation :** Même si elle s'écrit **を** (wo), elle se prononce toujours **« o »** en japonais moderne."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "[Objet] + **を** + [Verbe d'action]",
-            "Exemple : みず (eau) + **を** + のみます (boire)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_8",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 8,
+    "title": "Poser le thème de la phrase",
+    "item": "は",
+    "pattern": "[Nom] + は",
+    "badge": "Particule - Thème",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **は** sert à introduire le **thème principal** de la phrase. Elle correspond au français **« En ce qui concerne... »** ou **« Quant à... »**.",
+          "Elle indique sur quoi porte l'information qui va suivre dans le reste de la phrase."
+        ]
+      },
+      {
+        "label": "UTILISATION & PRONONCIATION",
+        "paragraphs": [
+          "Elle se place immédiatement après le nom ou le pronom qu'elle met en évidence.",
+          "💡 **Prononciation :** Lorsqu'elle agit comme particule grammaticale, la lettre **は** (normalement lue *ha*) se prononce obligatoirement **« wa »**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "[Thème] + **は** + [Information sur le thème]",
+              "Exemple : わたし + **は** + がくせいです (En ce qui me concerne, je suis étudiant)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "わたしはマイクです。",
+        "romaji": "Watashi wa Maiku desu.",
+        "french": "Je suis Mike. (Quant à moi, c'est Mike)",
+        "highlight": "は"
+      },
+      {
+        "japanese": "きょうはいいてんきです。",
+        "romaji": "Kyou wa ii tenki desu.",
+        "french": "Aujourd'hui, il fait beau.",
+        "highlight": "は"
+      },
+      {
+        "japanese": "このほんはたかいです。",
+        "romaji": "Kono hon wa takai desu.",
+        "french": "Ce livre est cher.",
+        "highlight": "は"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule sujet が",
+        "explanation": "**は** pose le thème général de la phrase (« quant à »), tandis que **が** pointe précisément le sujet grammatical pour répondre à « qui ? » ou « quoi ? ».",
+        "wrong_example": {
+          "japanese": "だれはきましたか。",
+          "correct_japanese": "だれがきましたか。",
+          "french": "Qui est venu ?"
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "りんごをたべます。",
-      "romaji": "Ringo o tabemasu.",
-      "french": "Je mange une pomme.",
-      "highlight": "を"
-    },
-    {
-      "japanese": "ほんをよみます。",
-      "romaji": "Hon o yomimasu.",
-      "french": "Je lis un livre.",
-      "highlight": "を"
-    },
-    {
-      "japanese": "おちゃをのみますか。",
-      "romaji": "Ocha o nomimasu ka.",
-      "french": "Bois-tu du thé ?",
-      "highlight": "を"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule de lieu で ou に",
-      "explanation": "La particule **を** indique l'objet direct d'une action, et non le lieu où elle se déroule ou la destination.",
-      "wrong_example": {
-        "japanese": "公園をいきます。",
-        "correct_japanese": "公園に行きます。",
-        "french": "Je vais au parc."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_11",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 11,
-  "title": "Cible, destination et temps précis",
-  "item": "に",
-  "pattern": "[Lieu / Temps / Personne] + に",
-  "badge": "Particule - Cible & Temps",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **に** (*ni*) indique un **point d'aboutissement** ou une **cible précise**.",
-        "Elle possède trois usages principaux au niveau N5 : la destination d'un déplacement, un moment précis dans le temps, et la présence/localisation d'un objet ou d'une personne."
-      ]
-    },
-    {
-      "label": "UTILISATION & CAS D'USAGE",
-      "paragraphs": [
-        "S'utilise après un nom de lieu, une heure chiffrée ou une personne cible.",
-        "💡 **Règle pour le temps :** On met **に** après une heure ou un jour précis (ex: *7-ji ni*), mais **jamais** après des mots temporels relatifs comme *aujourd'hui*, *demain* ou *tous les jours*."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Usages principaux",
-          "list": [
-            "Destination : Lieu + **に** + 行きます / 来ます / 帰ります",
-            "Heure précise : Temps chiffré + **に** + Verbe",
-            "Localisation : Lieu + **に** + あります / います"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_9",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 9,
+    "title": "Identifier le sujet précis",
+    "item": "が",
+    "pattern": "[Nom] + が",
+    "badge": "Particule - Sujet",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **が** (*ga*) désigne le **sujet grammatical précis** de la phrase.",
+          "Contrairement à **は** qui pose le thème général (« Quant à... »), **が** met un coup de projecteur sur l'élément qui la précède pour répondre à la question **« Qui ? »** ou **« Quoi ? »**."
+        ]
+      },
+      {
+        "label": "UTILISATION & EMPLOIS CLÉS",
+        "paragraphs": [
+          "Elle est indispensable avec les verbes d'existence (**います / あります**), les verbes de capacité, ou lorsqu'on décrit une perception/état."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Cas d'usage principaux",
+            "list": [
+              "Existence : [Nom] + **が** + あります / います",
+              "Capacité / Goût : [Nom] + **が** + すきです / できます",
+              "Identification : Réponse à un mot interrogatif (*だれが...*)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "ねこがいます。",
+        "romaji": "Neko ga imasu.",
+        "french": "Il y a un chat.",
+        "highlight": "が"
+      },
+      {
+        "japanese": "にほんごがすきです。",
+        "romaji": "Nihongo ga suki desu.",
+        "french": "J'aime le japonais.",
+        "highlight": "が"
+      },
+      {
+        "japanese": "だれがきましたか。",
+        "romaji": "Dare ga kimashita ka.",
+        "french": "Qui est venu ?",
+        "highlight": "が"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule de thème は",
+        "explanation": "Avec les verbes d'existence (comme *imasu* ou *arimasus*) ou pour exprimer un goût (*suki desu*), on utilise la particule **が** pour marquer l'élément concerné, et non **は**.",
+        "wrong_example": {
+          "japanese": "ねこはいます。",
+          "correct_japanese": "ねこがいます。",
+          "french": "Il y a un chat."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "しちじにおきます。",
-      "romaji": "Shichiji ni okimasu.",
-      "french": "Je me réveille à 7 heures.",
-      "highlight": "に"
-    },
-    {
-      "japanese": "にほんに行きます。",
-      "romaji": "Nihon ni ikimasu.",
-      "french": "Je vais au Japon.",
-      "highlight": "に"
-    },
-    {
-      "japanese": "へやにねこがいます。",
-      "romaji": "Heya ni neko ga imasu.",
-      "french": "Il y a un chat dans la chambre.",
-      "highlight": "に"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Mots temporels relatifs",
-      "explanation": "On n'ajoute pas **に** après des mots comme *kyou* (aujourd'hui) ou *ashita* (demain).",
-      "wrong_example": {
-        "japanese": "あしたに来ます。",
-        "correct_japanese": "あした来ます。",
-        "french": "Je viendrai demain."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_12",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 12,
-  "title": "Lieu d'action et moyen utilisé",
-  "item": "で",
-  "pattern": "[Lieu / Moyen / Outil] + で",
-  "badge": "Particule - Lieu & Moyen",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **で** (*de*) possède deux fonctions majeures : marquer le **lieu où se déroule une action** et indiquer le **moyen ou l'outil** utilisé pour accomplir cette action.",
-        "Elle répond aux questions **« Où ? »** (cadre de l'action) et **« Comment / Avec quoi ? »**."
-      ]
-    },
-    {
-      "label": "UTILISATION & CAS D'USAGE",
-      "paragraphs": [
-        "Se place juste après le nom de lieu ou le nom d'instrument/moyen de transport.",
-        "💡 **Nuance :** Ne pas confondre le lieu d'action (**で**) avec la destination (**に**). On court *dans* un parc (**で**), mais on va *au* parc (**に**)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Usages principaux",
-          "list": [
-            "Lieu d'action : Lieu + **で** + Verbe d'action",
-            "Moyen de transport : Transport + **で** + 行きます",
-            "Outil / Langue : Outil + **で** + Verbe (ex: にほんごで)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_10",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 10,
+    "title": "Désigner l'objet direct d'une action",
+    "item": "を",
+    "pattern": "[Nom] + を + [Verbe d'action]",
+    "badge": "Particule - COD",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **を** marque le **complément d'objet direct (COD)** de la phrase.",
+          "Elle indique l'élément qui subit directement l'action du verbe (ce que l'on mange, ce que l'on lit, ce que l'on achète...)."
+        ]
+      },
+      {
+        "label": "UTILISATION & PRONONCIATION",
+        "paragraphs": [
+          "Elle se place obligatoirement entre le nom (objet) et le verbe transitif.",
+          "💡 **Prononciation :** Même si elle s'écrit **を** (wo), elle se prononce toujours **« o »** en japonais moderne."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "[Objet] + **を** + [Verbe d'action]",
+              "Exemple : みず (eau) + **を** + のみます (boire)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "りんごをたべます。",
+        "romaji": "Ringo o tabemasu.",
+        "french": "Je mange une pomme.",
+        "highlight": "を"
+      },
+      {
+        "japanese": "ほんをよみます。",
+        "romaji": "Hon o yomimasu.",
+        "french": "Je lis un livre.",
+        "highlight": "を"
+      },
+      {
+        "japanese": "おちゃをのみますか。",
+        "romaji": "Ocha o nomimasu ka.",
+        "french": "Bois-tu du thé ?",
+        "highlight": "を"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule de lieu で ou に",
+        "explanation": "La particule **を** indique l'objet direct d'une action, et non le lieu où elle se déroule ou la destination.",
+        "wrong_example": {
+          "japanese": "公園をいきます。",
+          "correct_japanese": "公園に行きます。",
+          "french": "Je vais au parc."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "レストランでたべます。",
-      "romaji": "Resutoran de tabemasu.",
-      "french": "Je mange au restaurant.",
-      "highlight": "で"
-    },
-    {
-      "japanese": "バスでいきます。",
-      "romaji": "Basu de ikimasu.",
-      "french": "J'y vais en bus.",
-      "highlight": "で"
-    },
-    {
-      "japanese": "はしでたべます。",
-      "romaji": "Hashi de tabemasu.",
-      "french": "Je mange avec des baguettes.",
-      "highlight": "で"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Destination en に",
-      "explanation": "Pour indiquer le lieu où l'on se rend (destination), on utilise **に** ou **へ**, et non **で** (qui indique le lieu où se déroule une action active).",
-      "wrong_example": {
-        "japanese": "学校でいきます。",
-        "correct_japanese": "学校に行きます。",
-        "french": "Je vais à l'école."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_13",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 13,
-  "title": "Indiquer une direction générale",
-  "item": "へ",
-  "pattern": "[Lieu] + へ + [Verbe de déplacement]",
-  "badge": "Particule - Direction",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **へ** indique la **direction** ou le **mouvement** vers un lieu (équivalent de **« vers »** ou **« en direction de »**).",
-        "Contrairement à **に** qui met l'accent sur la destination finale, **へ** insiste sur le **cap ou le déplacement** en lui-même."
-      ]
-    },
-    {
-      "label": "UTILISATION & PRONONCIATION",
-      "paragraphs": [
-        "Elle s'emploie principalement avec des verbes de mouvement comme **いきます** (*aller*), **きます** (*venir*) ou **かえります** (*rentrer*).",
-        "💡 **Prononciation :** Lorsqu'elle est utilisée comme particule grammaticale, la lettre **へ** (normalement lue *he*) se prononce obligatoirement **« e »**."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "[Lieu] + **へ** + 行きます / 来ます / 帰ります",
-            "Exemple : とうきょう + **へ** + いきます"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_11",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 11,
+    "title": "Cible, destination et temps précis",
+    "item": "に",
+    "pattern": "[Lieu / Temps / Personne] + に",
+    "badge": "Particule - Cible & Temps",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **に** (*ni*) indique un **point d'aboutissement** ou une **cible précise**.",
+          "Elle possède trois usages principaux au niveau N5 : la destination d'un déplacement, un moment précis dans le temps, et la présence/localisation d'un objet ou d'une personne."
+        ]
+      },
+      {
+        "label": "UTILISATION & CAS D'USAGE",
+        "paragraphs": [
+          "S'utilise après un nom de lieu, une heure chiffrée ou une personne cible.",
+          "💡 **Règle pour le temps :** On met **に** après une heure ou un jour précis (ex: *7-ji ni*), mais **jamais** après des mots temporels relatifs comme *aujourd'hui*, *demain* ou *tous les jours*."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Usages principaux",
+            "list": [
+              "Destination : Lieu + **に** + 行きます / 来ます / 帰ります",
+              "Heure précise : Temps chiffré + **に** + Verbe",
+              "Localisation : Lieu + **に** + あります / います"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "しちじにおきます。",
+        "romaji": "Shichiji ni okimasu.",
+        "french": "Je me réveille à 7 heures.",
+        "highlight": "に"
+      },
+      {
+        "japanese": "にほんに行きます。",
+        "romaji": "Nihon ni ikimasu.",
+        "french": "Je vais au Japon.",
+        "highlight": "に"
+      },
+      {
+        "japanese": "へやにねこがいます。",
+        "romaji": "Heya ni neko ga imasu.",
+        "french": "Il y a un chat dans la chambre.",
+        "highlight": "に"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Mots temporels relatifs",
+        "explanation": "On n'ajoute pas **に** après des mots comme *kyou* (aujourd'hui) ou *ashita* (demain).",
+        "wrong_example": {
+          "japanese": "あしたに来ます。",
+          "correct_japanese": "あした来ます。",
+          "french": "Je viendrai demain."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "とうきょうへいきます。",
-      "romaji": "Toukyou e ikimasu.",
-      "french": "Je vais à Tokyo / Je pars en direction de Tokyo.",
-      "highlight": "へ"
-    },
-    {
-      "japanese": "うちへかえります。",
-      "romaji": "Uchi e kaerimasu.",
-      "french": "Je rentre à la maison.",
-      "highlight": "へ"
-    },
-    {
-      "japanese": "どこへいきますか。",
-      "romaji": "Doko e ikimasu ka.",
-      "french": "Où vas-tu ?",
-      "highlight": "へ"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule de temps ou d'objet",
-      "explanation": "La particule **へ** s'utilise exclusivement avec des verbes de mouvement pour indiquer une direction, jamais pour un objet direct ou une heure.",
-      "wrong_example": {
-        "japanese": "りんごへ食べます。",
-        "correct_japanese": "りんごをたべます。",
-        "french": "Je mange une pomme."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_14",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 14,
-  "title": "Accompagnement et énumération complète",
-  "item": "と",
-  "pattern": "[Nom] + と + [Nom / Verbe]",
-  "badge": "Particule - Association",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **と** (*to*) remplit deux rôles majeurs : l'**énumération exhaustive** (« et ») et l'**accompagnement** (« avec »).",
-        "Lorsqu'elle relie des noms, elle indique que la liste est complète (contrairement à *ya* qui sous-entend une liste incomplète)."
-      ]
-    },
-    {
-      "label": "UTILISATION & CAS D'USAGE",
-      "paragraphs": [
-        "Elle se place entre deux noms pour les relier, ou après une personne pour indiquer un partenaire d'action."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Usages principaux",
-          "list": [
-            "Énumération complète : Nom A + **と** + Nom B (« A et B »)",
-            "Accompagnement : Personne + **と** + Verbe (« avec [Personne] »)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_12",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 12,
+    "title": "Lieu d'action et moyen utilisé",
+    "item": "で",
+    "pattern": "[Lieu / Moyen / Outil] + で",
+    "badge": "Particule - Lieu & Moyen",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **で** (*de*) possède deux fonctions majeures : marquer le **lieu où se déroule une action** et indiquer le **moyen ou l'outil** utilisé pour accomplir cette action.",
+          "Elle répond aux questions **« Où ? »** (cadre de l'action) et **« Comment / Avec quoi ? »**."
+        ]
+      },
+      {
+        "label": "UTILISATION & CAS D'USAGE",
+        "paragraphs": [
+          "Se place juste après le nom de lieu ou le nom d'instrument/moyen de transport.",
+          "💡 **Nuance :** Ne pas confondre le lieu d'action (**で**) avec la destination (**に**). On court *dans* un parc (**で**), mais on va *au* parc (**に**)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Usages principaux",
+            "list": [
+              "Lieu d'action : Lieu + **で** + Verbe d'action",
+              "Moyen de transport : Transport + **で** + 行きます",
+              "Outil / Langue : Outil + **で** + Verbe (ex: にほんごで)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "レストランでたべます。",
+        "romaji": "Resutoran de tabemasu.",
+        "french": "Je mange au restaurant.",
+        "highlight": "で"
+      },
+      {
+        "japanese": "バスでいきます。",
+        "romaji": "Basu de ikimasu.",
+        "french": "J'y vais en bus.",
+        "highlight": "で"
+      },
+      {
+        "japanese": "はしでたべます。",
+        "romaji": "Hashi de tabemasu.",
+        "french": "Je mange avec des baguettes.",
+        "highlight": "で"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Destination en に",
+        "explanation": "Pour indiquer le lieu où l'on se rend (destination), on utilise **に** ou **へ**, et non **で** (qui indique le lieu où se déroule une action active).",
+        "wrong_example": {
+          "japanese": "学校でいきます。",
+          "correct_japanese": "学校に行きます。",
+          "french": "Je vais à l'école."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "ともだちとはなします。",
-      "romaji": "Tomodachi to hanashimasu.",
-      "french": "Je parle avec un ami.",
-      "highlight": "と"
-    },
-    {
-      "japanese": "パンとたまごをかいました。",
-      "romaji": "Pan to tamago o kaimashita.",
-      "french": "J'ai acheté du pain et des œufs.",
-      "highlight": "と"
-    },
-    {
-      "japanese": "かぞくとにほんへいきます。",
-      "romaji": "Kazoku to Nihon e ikimasu.",
-      "french": "Je vais au Japon avec ma famille.",
-      "highlight": "と"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Énumération incomplète (や)",
-      "explanation": "La particule **と** indique une liste exhaustive et fermée (« et »). Pour faire une liste non exhaustive (« entre autres », « et des trucs comme... »), on utilise **や**.",
-      "wrong_example": {
-        "japanese": "パンやたまごをかいました。",
-        "correct_japanese": "パンとたまごをかいました。",
-        "french": "J'ai acheté du pain et des œufs (uniquement ces deux-là)."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_15",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 15,
-  "title": "Inclusion et similitude",
-  "item": "も",
-  "pattern": "[Nom] + も",
-  "badge": "Particule - Inclusion",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **も** (*mo*) signifie **« aussi »**, **« également »** ou **« non plus »** dans une phrase négative.",
-        "Elle sert à indiquer qu'un élément partage la même caractéristique ou réalise la même action qu'un autre déjà mentionné."
-      ]
-    },
-    {
-      "label": "RÈGLE D'UTILISATION",
-      "paragraphs": [
-        "**も** **remplace** directement les particules **は**, **が** et **を**.",
-        "💡 En revanche, elle se place **après** d'autres particules comme **に**, **で** ou **と** (ex: *ni mo*, *de mo*)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Remplacement de particules",
-          "list": [
-            "わたし**は** がくせいです → わたし**も** がくせいです",
-            "みず**を** のみます → おちゃ**も** のみます"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_13",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 13,
+    "title": "Indiquer une direction générale",
+    "item": "へ",
+    "pattern": "[Lieu] + へ + [Verbe de déplacement]",
+    "badge": "Particule - Direction",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **へ** indique la **direction** ou le **mouvement** vers un lieu (équivalent de **« vers »** ou **« en direction de »**).",
+          "Contrairement à **に** qui met l'accent sur la destination finale, **へ** insiste sur le **cap ou le déplacement** en lui-même."
+        ]
+      },
+      {
+        "label": "UTILISATION & PRONONCIATION",
+        "paragraphs": [
+          "Elle s'emploie principalement avec des verbes de mouvement comme **いきます** (*aller*), **きます** (*venir*) ou **かえります** (*rentrer*).",
+          "💡 **Prononciation :** Lorsqu'elle est utilisée comme particule grammaticale, la lettre **へ** (normalement lue *he*) se prononce obligatoirement **« e »**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "[Lieu] + **へ** + 行きます / 来ます / 帰ります",
+              "Exemple : とうきょう + **へ** + いきます"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "とうきょうへいきます。",
+        "romaji": "Toukyou e ikimasu.",
+        "french": "Je vais à Tokyo / Je pars en direction de Tokyo.",
+        "highlight": "へ"
+      },
+      {
+        "japanese": "うちへかえります。",
+        "romaji": "Uchi e kaerimasu.",
+        "french": "Je rentre à la maison.",
+        "highlight": "へ"
+      },
+      {
+        "japanese": "どこへいきますか。",
+        "romaji": "Doko e ikimasu ka.",
+        "french": "Où vas-tu ?",
+        "highlight": "へ"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule de temps ou d'objet",
+        "explanation": "La particule **へ** s'utilise exclusivement avec des verbes de mouvement pour indiquer une direction, jamais pour un objet direct ou une heure.",
+        "wrong_example": {
+          "japanese": "りんごへ食べます。",
+          "correct_japanese": "りんごをたべます。",
+          "french": "Je mange une pomme."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "わたしもがくせいです。",
-      "romaji": "Watashi mo gakusei desu.",
-      "french": "Moi aussi, je suis étudiant.",
-      "highlight": "も"
-    },
-    {
-      "japanese": "これもおねがいします。",
-      "romaji": "Kore mo onegaishimasu.",
-      "french": "Ceci aussi, s'il vous plaît.",
-      "highlight": "も"
-    },
-    {
-      "japanese": "きょうはどこへもいきません。",
-      "romaji": "Kyou wa doko e mo ikimasen.",
-      "french": "Aujourd'hui, je ne vais nulle part (non plus).",
-      "highlight": "も"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particules de thème ou d'objet (は, が, を)",
-      "explanation": "Contrairement à d'autres particules qui se cumulent, **も** vient se substituer totalement à **は**, **が** et **を** au lieu de s'y ajouter.",
-      "wrong_example": {
-        "japanese": "私もは学生です。",
-        "correct_japanese": "私も学生です。",
-        "french": "Moi aussi, je suis étudiant."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_16",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 16,
-  "title": "Possession et lien entre les mots",
-  "item": "の",
-  "pattern": "[Nom A] + の + [Nom B]",
-  "badge": "Particule - Lien & Possession",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **の** (*no*) relie deux noms entre eux. Le premier nom (**Nom A**) vient modifier, préciser ou caractériser le second (**Nom B**).",
-        "Elle sert principalement à exprimer la **possession** (mon, ton, de...), l'**appartenance**, l'**origine** ou la **catégorie**."
-      ]
-    },
-    {
-      "label": "UTILISATION & ORDRE DES MOTS",
-      "paragraphs": [
-        "En japonais, le déterminant se place **toujours avant** le nom déterminé : **[Possesseur / Précision] + の + [Objet / Élément principal]**.",
-        "💡 **Astuce :** Vous pouvez la traduire selon le contexte par **« de »** ou la comparer au **'s** en anglais."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Usages principaux",
-          "list": [
-            "Possession : わたし**の** ほん (Mon livre)",
-            "Spécialité / Domaine : にほんご**の** せんせい (Professeur de japonais)",
-            "Origine / Marque : にほん**の** くるま (Voiture japonaise)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_14",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 14,
+    "title": "Accompagnement et énumération complète",
+    "item": "と",
+    "pattern": "[Nom] + と + [Nom / Verbe]",
+    "badge": "Particule - Association",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **と** (*to*) remplit deux rôles majeurs : l'**énumération exhaustive** (« et ») et l'**accompagnement** (« avec »).",
+          "Lorsqu'elle relie des noms, elle indique que la liste est complète (contrairement à *ya* qui sous-entend une liste incomplète)."
+        ]
+      },
+      {
+        "label": "UTILISATION & CAS D'USAGE",
+        "paragraphs": [
+          "Elle se place entre deux noms pour les relier, ou après une personne pour indiquer un partenaire d'action."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Usages principaux",
+            "list": [
+              "Énumération complète : Nom A + **と** + Nom B (« A et B »)",
+              "Accompagnement : Personne + **と** + Verbe (« avec [Personne] »)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "ともだちとはなします。",
+        "romaji": "Tomodachi to hanashimasu.",
+        "french": "Je parle avec un ami.",
+        "highlight": "と"
+      },
+      {
+        "japanese": "パンとたまごをかいました。",
+        "romaji": "Pan to tamago o kaimashita.",
+        "french": "J'ai acheté du pain et des œufs.",
+        "highlight": "と"
+      },
+      {
+        "japanese": "かぞくとにほんへいきます。",
+        "romaji": "Kazoku to Nihon e ikimasu.",
+        "french": "Je vais au Japon avec ma famille.",
+        "highlight": "と"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Énumération incomplète (や)",
+        "explanation": "La particule **と** indique une liste exhaustive et fermée (« et »). Pour faire une liste non exhaustive (« entre autres », « et des trucs comme... »), on utilise **や**.",
+        "wrong_example": {
+          "japanese": "パンやたまごをかいました。",
+          "correct_japanese": "パンとたまごをかいました。",
+          "french": "J'ai acheté du pain et des œufs (uniquement ces deux-là)."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "わたしのほんです。",
-      "romaji": "Watashi no hon desu.",
-      "french": "C'est mon livre.",
-      "highlight": "の"
-    },
-    {
-      "japanese": "にほんごのせんせい。",
-      "romaji": "Nihongo no sensei.",
-      "french": "Un professeur de japonais.",
-      "highlight": "の"
-    },
-    {
-      "japanese": "これはだれの傘ですか。",
-      "romaji": "Kore wa dare no kasa desu ka.",
-      "french": "À qui est ce parapluie ?",
-      "highlight": "の"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Ordre des mots en français",
-      "explanation": "Attention à ne pas inverser les rôles : le propriétaire ou le sujet général se place *avant* **の**, et l'objet possédé ou principal se place *après*.",
-      "wrong_example": {
-        "japanese": "本私のものです。",
-        "correct_japanese": "私の本です。",
-        "french": "C'est mon livre."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_17",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 17,
-  "title": "Poser une question",
-  "item": "か",
-  "pattern": "[Phrase] + か",
-  "badge": "Particule - Question",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **か** (*ka*) se place à la toute fin d'une phrase pour la transformer instantanément en **question**.",
-        "Elle joue le rôle d'un **point d'interrogation vocal**. En japonais formel, l'ordre des mots dans la phrase ne change pas quand on pose une question."
-      ]
-    },
-    {
-      "label": "UTILISATION & INTONATION",
-      "paragraphs": [
-        "S'ajoute directement après la forme polie (**です** ou **〜ます**).",
-        "💡 **Intonation :** La phrase se termine généralement par une légère intonation montante sur la particule **か**."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Affirmation : わたしは がくせいです (Je suis étudiant)",
-            "Question : わたしは がくせいです**か** (Suis-je étudiant ?)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_15",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 15,
+    "title": "Inclusion et similitude",
+    "item": "も",
+    "pattern": "[Nom] + も",
+    "badge": "Particule - Inclusion",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **も** (*mo*) signifie **« aussi »**, **« également »** ou **« non plus »** dans une phrase négative.",
+          "Elle sert à indiquer qu'un élément partage la même caractéristique ou réalise la même action qu'un autre déjà mentionné."
+        ]
+      },
+      {
+        "label": "RÈGLE D'UTILISATION",
+        "paragraphs": [
+          "**も** **remplace** directement les particules **は**, **が** et **を**.",
+          "💡 En revanche, elle se place **après** d'autres particules comme **に**, **で** ou **と** (ex: *ni mo*, *de mo*)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Remplacement de particules",
+            "list": [
+              "わたし**は** がくせいです → わたし**も** がくせいです",
+              "みず**を** のみます → おちゃ**も** のみます"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "わたしもがくせいです。",
+        "romaji": "Watashi mo gakusei desu.",
+        "french": "Moi aussi, je suis étudiant.",
+        "highlight": "も"
+      },
+      {
+        "japanese": "これもおねがいします。",
+        "romaji": "Kore mo onegaishimasu.",
+        "french": "Ceci aussi, s'il vous plaît.",
+        "highlight": "も"
+      },
+      {
+        "japanese": "きょうはどこへもいきません。",
+        "romaji": "Kyou wa doko e mo ikimasen.",
+        "french": "Aujourd'hui, je ne vais nulle part (non plus).",
+        "highlight": "も"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particules de thème ou d'objet (は, が, を)",
+        "explanation": "Contrairement à d'autres particules qui se cumulent, **も** vient se substituer totalement à **は**, **が** et **を** au lieu de s'y ajouter.",
+        "wrong_example": {
+          "japanese": "私もは学生です。",
+          "correct_japanese": "私も学生です。",
+          "french": "Moi aussi, je suis étudiant."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "げんきですか。",
-      "romaji": "Genki desu ka.",
-      "french": "Comment vas-tu ? / Allez-vous bien ?",
-      "highlight": "か"
-    },
-    {
-      "japanese": "これはおいしいですか。",
-      "romaji": "Kore wa oishii desu ka.",
-      "french": "Est-ce que c'est bon ?",
-      "highlight": "か"
-    },
-    {
-      "japanese": "あしたがいしゃへいきますか。",
-      "romaji": "Ashita gaisha e ikimasu ka.",
-      "french": "Vas-tu au travail demain ?",
-      "highlight": "か"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Inversion de l'ordre des mots (comme en français ou anglais)",
-      "explanation": "En japonais, la phrase affirmative conserve exactement la même structure syntaxique ; il suffit d'ajouter **か** à la fin sans inverser le sujet et le verbe.",
-      "wrong_example": {
-        "japanese": "ですか元気？",
-        "correct_japanese": "元気ですか。",
-        "french": "Vas-tu bien ?"
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_18",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 18,
-  "title": "Demander confirmation",
-  "item": "ね",
-  "pattern": "[Phrase] + ね",
-  "badge": "Particule - Accord & Confirmation",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule de fin de phrase **ね** (*ne*) s'utilise pour **chercher l'accord** ou la **confirmation** de l'interlocuteur.",
-        "Elle équivaut au français **« n'est-ce pas ? »**, **« hein ? »** ou **« non ? »**, et permet d'adoucir le discours tout en créant une connexion sociale."
-      ]
-    },
-    {
-      "label": "UTILISATION & INTONATION",
-      "paragraphs": [
-        "Elle se place à la toute fin de la phrase, après la forme finale du verbe ou de l'adjectif (ou après **です**).",
-        "💡 **Intonation :** Une intonation légère et traînante renforce la recherche de connivence ou la sympathie envers l'interlocuteur."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Affirmation simple : いいてんきです (Il fait beau)",
-            "Recherche d'accord : いいてんきです**ね** (Il fait beau, n'est-ce pas ?)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_16",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 16,
+    "title": "Possession et lien entre les mots",
+    "item": "の",
+    "pattern": "[Nom A] + の + [Nom B]",
+    "badge": "Particule - Lien & Possession",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **の** (*no*) relie deux noms entre eux. Le premier nom (**Nom A**) vient modifier, préciser ou caractériser le second (**Nom B**).",
+          "Elle sert principalement à exprimer la **possession** (mon, ton, de...), l'**appartenance**, l'**origine** ou la **catégorie**."
+        ]
+      },
+      {
+        "label": "UTILISATION & ORDRE DES MOTS",
+        "paragraphs": [
+          "En japonais, le déterminant se place **toujours avant** le nom déterminé : **[Possesseur / Précision] + の + [Objet / Élément principal]**.",
+          "💡 **Astuce :** Vous pouvez la traduire selon le contexte par **« de »** ou la comparer au **'s** en anglais."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Usages principaux",
+            "list": [
+              "Possession : わたし**の** ほん (Mon livre)",
+              "Spécialité / Domaine : にほんご**の** せんせい (Professeur de japonais)",
+              "Origine / Marque : にほん**の** くるま (Voiture japonaise)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "わたしのほんです。",
+        "romaji": "Watashi no hon desu.",
+        "french": "C'est mon livre.",
+        "highlight": "の"
+      },
+      {
+        "japanese": "にほんごのせんせい。",
+        "romaji": "Nihongo no sensei.",
+        "french": "Un professeur de japonais.",
+        "highlight": "の"
+      },
+      {
+        "japanese": "これはだれの傘ですか。",
+        "romaji": "Kore wa dare no kasa desu ka.",
+        "french": "À qui est ce parapluie ?",
+        "highlight": "の"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Ordre des mots en français",
+        "explanation": "Attention à ne pas inverser les rôles : le propriétaire ou le sujet général se place *avant* **の**, et l'objet possédé ou principal se place *après*.",
+        "wrong_example": {
+          "japanese": "本私のものです。",
+          "correct_japanese": "私の本です。",
+          "french": "C'est mon livre."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "いいてんきですね。",
-      "romaji": "Ii tenki desu ne.",
-      "french": "Il fait beau, n'est-ce pas ?",
-      "highlight": "ね"
-    },
-    {
-      "japanese": "このラーメンはおいしいですね。",
-      "romaji": "Kono ramen wa oishii desu ne.",
-      "french": "Ces ramen sont délicieux, non ?",
-      "highlight": "ね"
-    },
-    {
-      "japanese": "あしたはやすみですね。",
-      "romaji": "Ashita wa yasumi desu ne.",
-      "french": "Demain c'est congé, n'est-ce pas ?",
-      "highlight": "ね"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule d'assurance よ",
-      "explanation": "Contrairement à **ね** qui cherche à valider un avis partagé avec l'interlocuteur, **よ** sert à affirmer un fait ou transmettre une information nouvelle.",
-      "wrong_example": {
-        "japanese": "あしたはやすみですよね。",
-        "correct_japanese": "あしたはやすみですね。",
-        "french": "Demain c'est congé, n'est-ce pas ?"
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_19",
-  "unit": 2,
-  "unit_title": "Les particules fondamentales",
-  "lesson_number": 19,
-  "title": "Informer ou affirmer avec assurance",
-  "item": "よ",
-  "pattern": "[Phrase] + よ",
-  "badge": "Particule - Information & Assurance",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule de fin de phrase **よ** (*yo*) s'utilse pour **apporter une nouvelle information** à l'interlocuteur ou pour **exprimer une certitude** avec assurance.",
-        "Elle équivaut souvent à des expressions comme **« je t'assure que... »**, **« tu sais »** ou **« attention ! »**."
-      ]
-    },
-    {
-      "label": "UTILISATION & INTONATION",
-      "paragraphs": [
-        "Elle se place à la toute fin de la phrase, après la forme finale du verbe, du nom ou de l'adjectif (ou après **です**).",
-        "💡 **Nuance :** Contrairement à **ね** qui cherche l'accord, **よ** apporte une donnée que l'autre personne est censée ignorer ou oublier."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Affirmation simple : おいしいです (C'est délicieux)",
-            "Information / Assurance : おいしいです**よ** (C'est délicieux, je t'assure !)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_17",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 17,
+    "title": "Poser une question",
+    "item": "か",
+    "pattern": "[Phrase] + か",
+    "badge": "Particule - Question",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **か** (*ka*) se place à la toute fin d'une phrase pour la transformer instantanément en **question**.",
+          "Elle joue le rôle d'un **point d'interrogation vocal**. En japonais formel, l'ordre des mots dans la phrase ne change pas quand on pose une question."
+        ]
+      },
+      {
+        "label": "UTILISATION & INTONATION",
+        "paragraphs": [
+          "S'ajoute directement après la forme polie (**です** ou **〜ます**).",
+          "💡 **Intonation :** La phrase se termine généralement par une légère intonation montante sur la particule **か**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Affirmation : わたしは がくせいです (Je suis étudiant)",
+              "Question : わたしは がくせいです**か** (Suis-je étudiant ?)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "げんきですか。",
+        "romaji": "Genki desu ka.",
+        "french": "Comment vas-tu ? / Allez-vous bien ?",
+        "highlight": "か"
+      },
+      {
+        "japanese": "これはおいしいですか。",
+        "romaji": "Kore wa oishii desu ka.",
+        "french": "Est-ce que c'est bon ?",
+        "highlight": "か"
+      },
+      {
+        "japanese": "あしたがいしゃへいきますか。",
+        "romaji": "Ashita gaisha e ikimasu ka.",
+        "french": "Vas-tu au travail demain ?",
+        "highlight": "か"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Inversion de l'ordre des mots (comme en français ou anglais)",
+        "explanation": "En japonais, la phrase affirmative conserve exactement la même structure syntaxique ; il suffit d'ajouter **か** à la fin sans inverser le sujet et le verbe.",
+        "wrong_example": {
+          "japanese": "ですか元気？",
+          "correct_japanese": "元気ですか。",
+          "french": "Vas-tu bien ?"
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "おいしいですよ。",
-      "romaji": "Oishii desu yo.",
-      "french": "C'est délicieux, je te l'assure !",
-      "highlight": "よ"
-    },
-    {
-      "japanese": "あしたはやすみですよ。",
-      "romaji": "Ashita wa yasumi desu yo.",
-      "french": "Demain c'est congé, tu sais !",
-      "highlight": "よ"
-    },
-    {
-      "japanese": "バスが来ましたよ。",
-      "romaji": "Basu ga kimashita yo.",
-      "french": "Le bus est arrivé (attention / regarde) !",
-      "highlight": "よ"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule de confirmation ね",
-      "explanation": "Utiliser **よ** impose une information à l'autre, alors que **ね** sollicite son accord. Ne pas utiliser **よ** quand on demande l'avis de quelqu'un.",
-      "wrong_example": {
-        "japanese": "きれいですね。",
-        "correct_japanese": "きれいですよ。",
-        "french": "C'est magnifique, je t'assure !"
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_20",
-  "unit": 3,
-  "unit_title": "Origine, limites et comparaisons",
-  "lesson_number": 20,
-  "title": "Point de départ ou raison",
-  "item": "から",
-  "pattern": "[Lieu / Temps / Proposition] + から",
-  "badge": "Particule - Origine & Cause",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **から** (*kara*) possède deux valeurs principales au niveau N5 : le **point de départ** (spatial ou temporel : **« depuis »**, **« de »**, **« à partir de »**) et la **cause** ou **raison** (**« parce que »**, **« car »**).",
-        "Elle permet d'indiquer l'origine d'un trajet, le début d'un créneau horaire, ou d'expliquer la raison d'un fait."
-      ]
-    },
-    {
-      "label": "UTILISATION & STRUCTURES",
-      "paragraphs": [
-        "Placée après un nom de lieu ou de temps, elle indique le point de départ.",
-        "Placée après une proposition complète (phrase complète terminée par **です** ou **〜ます**), elle exprime la cause."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Usages principaux",
-          "list": [
-            "Origine / Départ : Nom (Lieu/Temps) + **から** (ex: くじから)",
-            "Cause / Raison : [Phrase (Raison)] + **から**、[Phrase (Conséquence)]"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_18",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 18,
+    "title": "Demander confirmation",
+    "item": "ね",
+    "pattern": "[Phrase] + ね",
+    "badge": "Particule - Accord & Confirmation",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule de fin de phrase **ね** (*ne*) s'utilise pour **chercher l'accord** ou la **confirmation** de l'interlocuteur.",
+          "Elle équivaut au français **« n'est-ce pas ? »**, **« hein ? »** ou **« non ? »**, et permet d'adoucir le discours tout en créant une connexion sociale."
+        ]
+      },
+      {
+        "label": "UTILISATION & INTONATION",
+        "paragraphs": [
+          "Elle se place à la toute fin de la phrase, après la forme finale du verbe ou de l'adjectif (ou après **です**).",
+          "💡 **Intonation :** Une intonation légère et traînante renforce la recherche de connivence ou la sympathie envers l'interlocuteur."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Affirmation simple : いいてんきです (Il fait beau)",
+              "Recherche d'accord : いいてんきです**ね** (Il fait beau, n'est-ce pas ?)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "いいてんきですね。",
+        "romaji": "Ii tenki desu ne.",
+        "french": "Il fait beau, n'est-ce pas ?",
+        "highlight": "ね"
+      },
+      {
+        "japanese": "このラーメンはおいしいですね。",
+        "romaji": "Kono ramen wa oishii desu ne.",
+        "french": "Ces ramen sont délicieux, non ?",
+        "highlight": "ね"
+      },
+      {
+        "japanese": "あしたはやすみですね。",
+        "romaji": "Ashita wa yasumi desu ne.",
+        "french": "Demain c'est congé, n'est-ce pas ?",
+        "highlight": "ね"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule d'assurance よ",
+        "explanation": "Contrairement à **ね** qui cherche à valider un avis partagé avec l'interlocuteur, **よ** sert à affirmer un fait ou transmettre une information nouvelle.",
+        "wrong_example": {
+          "japanese": "あしたはやすみですよね。",
+          "correct_japanese": "あしたはやすみですね。",
+          "french": "Demain c'est congé, n'est-ce pas ?"
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "くじからです。",
-      "romaji": "Kuji kara desu.",
-      "french": "C'est à partir de 9 heures.",
-      "highlight": "から"
-    },
-    {
-      "japanese": "フランスからきました。",
-      "romaji": "Furansu kara kimashita.",
-      "french": "Je viens de France.",
-      "highlight": "から"
-    },
-    {
-      "japanese": "あついですから、みずをのみます。",
-      "romaji": "Atsui desu kara, mizu o nomimasu.",
-      "french": "Comme il fait chaud, je bois de l'eau.",
-      "highlight": "から"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Particule de destination/limite まで",
-      "explanation": "**から** indique le point de départ (« depuis / à partir de »), tandis que **まで** indique la limite ou la destination finale (« jusqu'à »).",
-      "wrong_example": {
-        "japanese": "9時まで会社に行きます。",
-        "correct_japanese": "9時から会社に行きます。",
-        "french": "Je vais au travail à partir de 9 heures."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_21",
-  "unit": 3,
-  "unit_title": "Origine, limites et comparaisons",
-  "lesson_number": 21,
-  "title": "Fixer une limite spatiale ou temporelle",
-  "item": "まで",
-  "pattern": "[Lieu / Temps] + まで",
-  "badge": "Particule - Limite & Terminus",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **まで** (*made*) indique le **terminus**, la **limite spatiale** ou la **fin d'un intervalle de temps** (équivalent de **« jusqu'à »**).",
-        "Elle montre le point final atteint par un mouvement, une durée ou une activité."
-      ]
-    },
-    {
-      "label": "UTILISATION & COMBINAISON",
-      "paragraphs": [
-        "Elle se place juste après un nom de lieu ou une heure / un jour de la semaine.",
-        "💡 **Association courante :** Elle s'associe très fréquemment avec la particule **から** pour former la structure **〜から 〜まで** (**« de... jusqu'à... »**)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structures de base",
-          "list": [
-            "Limite simple : [Temps / Lieu] + **まで** (ex: ごじまで)",
-            "Intervalle complet : [Départ] + **から** + [Arrivée] + **まで** (ex: 9じから 5じまで)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_19",
+    "unit": 2,
+    "unit_title": "Les particules fondamentales",
+    "lesson_number": 19,
+    "title": "Informer ou affirmer avec assurance",
+    "item": "よ",
+    "pattern": "[Phrase] + よ",
+    "badge": "Particule - Information & Assurance",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule de fin de phrase **よ** (*yo*) s'utilse pour **apporter une nouvelle information** à l'interlocuteur ou pour **exprimer une certitude** avec assurance.",
+          "Elle équivaut souvent à des expressions comme **« je t'assure que... »**, **« tu sais »** ou **« attention ! »**."
+        ]
+      },
+      {
+        "label": "UTILISATION & INTONATION",
+        "paragraphs": [
+          "Elle se place à la toute fin de la phrase, après la forme finale du verbe, du nom ou de l'adjectif (ou après **です**).",
+          "💡 **Nuance :** Contrairement à **ね** qui cherche l'accord, **よ** apporte une donnée que l'autre personne est censée ignorer ou oublier."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Affirmation simple : おいしいです (C'est délicieux)",
+              "Information / Assurance : おいしいです**よ** (C'est délicieux, je t'assure !)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "おいしいですよ。",
+        "romaji": "Oishii desu yo.",
+        "french": "C'est délicieux, je te l'assure !",
+        "highlight": "よ"
+      },
+      {
+        "japanese": "あしたはやすみですよ。",
+        "romaji": "Ashita wa yasumi desu yo.",
+        "french": "Demain c'est congé, tu sais !",
+        "highlight": "よ"
+      },
+      {
+        "japanese": "バスが来ましたよ。",
+        "romaji": "Basu ga kimashita yo.",
+        "french": "Le bus est arrivé (attention / regarde) !",
+        "highlight": "よ"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule de confirmation ね",
+        "explanation": "Utiliser **よ** impose une information à l'autre, alors que **ね** sollicite son accord. Ne pas utiliser **よ** quand on demande l'avis de quelqu'un.",
+        "wrong_example": {
+          "japanese": "きれいですね。",
+          "correct_japanese": "きれいですよ。",
+          "french": "C'est magnifique, je t'assure !"
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "ごじまではたらきます。",
-      "romaji": "Goji made hatarakimasu.",
-      "french": "Je travaille jusqu'à 5 heures.",
-      "highlight": "まで"
-    },
-    {
-      "japanese": "とうきょうまでいきます。",
-      "romaji": "Toukyou made ikimasu.",
-      "french": "Je vais jusqu'à Tokyo.",
-      "highlight": "まで"
-    },
-    {
-      "japanese": "くじからごじまでべんきょうします。",
-      "romaji": "Kuji kara goji made benkyou shimasu.",
-      "french": "J'étudie de 9 heures à 5 heures.",
-      "highlight": "まで"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Point de départ から",
-      "explanation": "**まで** indique la limite finale ou le terminus (« jusqu'à »), tandis que **から** marque le point de départ (« depuis / à partir de »).",
-      "wrong_example": {
-        "japanese": "5時まで会社を出ます。",
-        "correct_japanese": "5時に会社を出ます。",
-        "french": "Je quitte l'entreprise à 5 heures."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_22",
-  "unit": 3,
-  "unit_title": "Origine, limites et comparaisons",
-  "lesson_number": 22,
-  "title": "Exprimer un point de comparaison",
-  "item": "より",
-  "pattern": "[Nom A] は [Nom B] より [Adjectif] です",
-  "badge": "Particule - Comparaison",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **より** (*yori*) sert à introduire l'**élément de référence** dans une phrase comparative.",
-        "Elle correspond au français **« plus... que [Nom B] »** ou **« par rapport à [Nom B] »**."
-      ]
-    },
-    {
-      "label": "UTILISATION & STRUCTURE",
-      "paragraphs": [
-        "Elle se place juste après le mot auquel on compare le sujet principal de la phrase.",
-        "💡 **Astuce :** L'élément suivi de **より** est toujours celui qui sert de standard de comparaison (l'objet « de base »)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "[Sujet] + **は** + [Élément comparé] + **より** + [Adjectif] + **です**",
-            "Exemple : しんかんせん**は** バス**より** はやいです (Le Shinkansen est plus rapide que le bus)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_20",
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 20,
+    "title": "Point de départ ou raison",
+    "item": "から",
+    "pattern": "[Lieu / Temps / Proposition] + から",
+    "badge": "Particule - Origine & Cause",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **から** (*kara*) possède deux valeurs principales au niveau N5 : le **point de départ** (spatial ou temporel : **« depuis »**, **« de »**, **« à partir de »**) et la **cause** ou **raison** (**« parce que »**, **« car »**).",
+          "Elle permet d'indiquer l'origine d'un trajet, le début d'un créneau horaire, ou d'expliquer la raison d'un fait."
+        ]
+      },
+      {
+        "label": "UTILISATION & STRUCTURES",
+        "paragraphs": [
+          "Placée après un nom de lieu ou de temps, elle indique le point de départ.",
+          "Placée après une proposition complète (phrase complète terminée par **です** ou **〜ます**), elle exprime la cause."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Usages principaux",
+            "list": [
+              "Origine / Départ : Nom (Lieu/Temps) + **から** (ex: くじから)",
+              "Cause / Raison : [Phrase (Raison)] + **から**、[Phrase (Conséquence)]"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "くじからです。",
+        "romaji": "Kuji kara desu.",
+        "french": "C'est à partir de 9 heures.",
+        "highlight": "から"
+      },
+      {
+        "japanese": "フランスからきました。",
+        "romaji": "Furansu kara kimashita.",
+        "french": "Je viens de France.",
+        "highlight": "から"
+      },
+      {
+        "japanese": "あついですから、みずをのみます。",
+        "romaji": "Atsui desu kara, mizu o nomimasu.",
+        "french": "Comme il fait chaud, je bois de l'eau.",
+        "highlight": "から"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Particule de destination/limite まで",
+        "explanation": "**から** indique le point de départ (« depuis / à partir de »), tandis que **まで** indique la limite ou la destination finale (« jusqu'à »).",
+        "wrong_example": {
+          "japanese": "9時まで会社に行きます。",
+          "correct_japanese": "9時から会社に行きます。",
+          "french": "Je vais au travail à partir de 9 heures."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "しんかんせんはバスよりはやいです。",
-      "romaji": "Shinkansen wa basu yori hayai desu.",
-      "french": "Le Shinkansen est plus rapide que le bus.",
-      "highlight": "より"
-    },
-    {
-      "japanese": "きょうはきのうよりあついです。",
-      "romaji": "Kyou wa kinou yori atsui desu.",
-      "french": "Aujourd'hui, il fait plus chaud qu'hier.",
-      "highlight": "より"
-    },
-    {
-      "japanese": "りんごはみかんよりおおきいです。",
-      "romaji": "Ringo wa mikan yori ookii desu.",
-      "french": "La pomme est plus grande que la mandarine.",
-      "highlight": "より"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Inversion des rôles comparatifs",
-      "explanation": "Attention à ne pas placer **より** sur le sujet principal : c'est l'élément comparé (le « que... ») qui prend la particule **より**.",
-      "wrong_example": {
-        "japanese": "よりバス新幹線は早いです。",
-        "correct_japanese": "新幹線はバスより早いです。",
-        "french": "Le Shinkansen est plus rapide que le bus."
       }
-    }
-  ]
-},
-{
-  "id": "n5_g_23",
-  "unit": 3,
-  "unit_title": "Origine, limites et comparaisons",
-  "lesson_number": 23,
-  "title": "Exprimer la restriction",
-  "item": "だけ",
-  "pattern": "[Nom / Nombre] + だけ",
-  "badge": "Particule - Restriction",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "La particule **だけ** (*dake*) sert à exprimer une **limite** ou une **restriction**.",
-        "Elle équivaut au français **« seulement »**, **« uniquement »** ou **« juste »**."
-      ]
-    },
-    {
-      "label": "UTILISATION & COMBINAISON",
-      "paragraphs": [
-        "Elle se place juste après le nom ou la quantité qu'elle vient restreindre.",
-        "💡 **Remplacement de particules :** **だけ** remplace généralement **を** et **が**. En revanche, elle peut s'accoler à d'autres particules comme **に** ou **で** (ex: *ni dake*, *de dake*)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Avec un nom : みず + **だけ** + のみます (Je bois seulement de l'eau)",
-            "Avec une quantité : ひとつ + **だけ** + あります (Il y en a seulement un)"
-          ]
+    ]
+  },
+  {
+    "id": "n5_g_21",
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 21,
+    "title": "Fixer une limite spatiale ou temporelle",
+    "item": "まで",
+    "pattern": "[Lieu / Temps] + まで",
+    "badge": "Particule - Limite & Terminus",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **まで** (*made*) indique le **terminus**, la **limite spatiale** ou la **fin d'un intervalle de temps** (équivalent de **« jusqu'à »**).",
+          "Elle montre le point final atteint par un mouvement, une durée ou une activité."
+        ]
+      },
+      {
+        "label": "UTILISATION & COMBINAISON",
+        "paragraphs": [
+          "Elle se place juste après un nom de lieu ou une heure / un jour de la semaine.",
+          "💡 **Association courante :** Elle s'associe très fréquemment avec la particule **から** pour former la structure **〜から 〜まで** (**« de... jusqu'à... »**)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structures de base",
+            "list": [
+              "Limite simple : [Temps / Lieu] + **まで** (ex: ごじまで)",
+              "Intervalle complet : [Départ] + **から** + [Arrivée] + **まで** (ex: 9じから 5じまで)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "ごじまではたらきます。",
+        "romaji": "Goji made hatarakimasu.",
+        "french": "Je travaille jusqu'à 5 heures.",
+        "highlight": "まで"
+      },
+      {
+        "japanese": "とうきょうまでいきます。",
+        "romaji": "Toukyou made ikimasu.",
+        "french": "Je vais jusqu'à Tokyo.",
+        "highlight": "まで"
+      },
+      {
+        "japanese": "くじからごじまでべんきょうします。",
+        "romaji": "Kuji kara goji made benkyou shimasu.",
+        "french": "J'étudie de 9 heures à 5 heures.",
+        "highlight": "まで"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Point de départ から",
+        "explanation": "**まで** indique la limite finale ou le terminus (« jusqu'à »), tandis que **から** marque le point de départ (« depuis / à partir de »).",
+        "wrong_example": {
+          "japanese": "5時まで会社を出ます。",
+          "correct_japanese": "5時に会社を出ます。",
+          "french": "Je quitte l'entreprise à 5 heures."
         }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "みずだけのみます。",
-      "romaji": "Mizu dake nomimasu.",
-      "french": "Je bois seulement de l'eau.",
-      "highlight": "だけ"
-    },
-    {
-      "japanese": "ひとつだけあります。",
-      "romaji": "Hitotsu dake arimasu.",
-      "french": "Il y en a seulement un.",
-      "highlight": "だけ"
-    },
-    {
-      "japanese": "たなかさんだけがきました。",
-      "romaji": "Tanaka-san dake ga kimashita.",
-      "french": "Seul M. Tanaka est venu.",
-      "highlight": "だけ"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "Cumul avec を ou が",
-      "explanation": "Tout comme **も**, la particule **だけ** se substitue totalement aux particules **を** et **が** au lieu de s'y ajouter.",
-      "wrong_example": {
-        "japanese": "水をだけ飲みます。",
-        "correct_japanese": "水だけ飲みます。",
-        "french": "Je bois seulement de l'eau."
       }
-    }
-  ]
-},
-[
+    ]
+  },
+  {
+    "id": "n5_g_22",
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 22,
+    "title": "Exprimer un point de comparaison",
+    "item": "より",
+    "pattern": "[Nom A] は [Nom B] より [Adjectif] です",
+    "badge": "Particule - Comparaison",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **より** (*yori*) sert à introduire l'**élément de référence** dans une phrase comparative.",
+          "Elle correspond au français **« plus... que [Nom B] »** ou **« par rapport à [Nom B] »**."
+        ]
+      },
+      {
+        "label": "UTILISATION & STRUCTURE",
+        "paragraphs": [
+          "Elle se place juste après le mot auquel on compare le sujet principal de la phrase.",
+          "💡 **Astuce :** L'élément suivi de **より** est toujours celui qui sert de standard de comparaison (l'objet « de base »)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "[Sujet] + **は** + [Élément comparé] + **より** + [Adjectif] + **です**",
+              "Exemple : しんかんせん**は** バス**より** はやいです (Le Shinkansen est plus rapide que le bus)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "しんかんせんはバスよりはやいです。",
+        "romaji": "Shinkansen wa basu yori hayai desu.",
+        "french": "Le Shinkansen est plus rapide que le bus.",
+        "highlight": "より"
+      },
+      {
+        "japanese": "きょうはきのうよりあついです。",
+        "romaji": "Kyou wa kinou yori atsui desu.",
+        "french": "Aujourd'hui, il fait plus chaud qu'hier.",
+        "highlight": "より"
+      },
+      {
+        "japanese": "りんごはみかんよりおおきいです。",
+        "romaji": "Ringo wa mikan yori ookii desu.",
+        "french": "La pomme est plus grande que la mandarine.",
+        "highlight": "より"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Inversion des rôles comparatifs",
+        "explanation": "Attention à ne pas placer **より** sur le sujet principal : c'est l'élément comparé (le « que... ») qui prend la particule **より**.",
+        "wrong_example": {
+          "japanese": "よりバス新幹線は早いです。",
+          "correct_japanese": "新幹線はバスより早いです。",
+          "french": "Le Shinkansen est plus rapide que le bus."
+        }
+      }
+    ]
+  },
+  {
+    "id": "n5_g_23",
+    "unit": 3,
+    "unit_title": "Origine, limites et comparaisons",
+    "lesson_number": 23,
+    "title": "Exprimer la restriction",
+    "item": "だけ",
+    "pattern": "[Nom / Nombre] + だけ",
+    "badge": "Particule - Restriction",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "La particule **だけ** (*dake*) sert à exprimer une **limite** ou une **restriction**.",
+          "Elle équivaut au français **« seulement »**, **« uniquement »** ou **« juste »**."
+        ]
+      },
+      {
+        "label": "UTILISATION & COMBINAISON",
+        "paragraphs": [
+          "Elle se place juste après le nom ou la quantité qu'elle vient restreindre.",
+          "💡 **Remplacement de particules :** **だけ** remplace généralement **を** et **が**. En revanche, elle peut s'accoler à d'autres particules comme **に** ou **で** (ex: *ni dake*, *de dake*)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Avec un nom : みず + **だけ** + のみます (Je bois seulement de l'eau)",
+              "Avec une quantité : ひとつ + **だけ** + あります (Il y en a seulement un)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "みずだけのみます。",
+        "romaji": "Mizu dake nomimasu.",
+        "french": "Je bois seulement de l'eau.",
+        "highlight": "だけ"
+      },
+      {
+        "japanese": "ひとつだけあります。",
+        "romaji": "Hitotsu dake arimasu.",
+        "french": "Il y en a seulement un.",
+        "highlight": "だけ"
+      },
+      {
+        "japanese": "たなかさんだけがきました。",
+        "romaji": "Tanaka-san dake ga kimashita.",
+        "french": "Seul M. Tanaka est venu.",
+        "highlight": "だけ"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Cumul avec を ou が",
+        "explanation": "Tout comme **も**, la particule **だけ** se substitue totalement aux particules **を** et **が** au lieu de s'y ajouter.",
+        "wrong_example": {
+          "japanese": "水をだけ飲みます。",
+          "correct_japanese": "水だけ飲みます。",
+          "french": "Je bois seulement de l'eau."
+        }
+      }
+    ]
+  },
   {
     "id": "n5_g_24",
     "unit": 3,
@@ -1719,9 +1718,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_27",
     "unit": 3,
@@ -1919,9 +1916,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_30",
     "unit": 4,
@@ -2119,9 +2114,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_33",
     "unit": 5,
@@ -2321,9 +2314,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_36",
     "unit": 6,
@@ -2524,9 +2515,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_39",
     "unit": 6,
@@ -2593,9 +2582,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_40",
     "unit": 7,
@@ -2796,9 +2783,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_43",
     "unit": 8,
@@ -2999,9 +2984,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_46",
     "unit": 9,
@@ -3200,9 +3183,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_49",
     "unit": 9,
@@ -3403,9 +3384,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_52",
     "unit": 10,
@@ -3607,9 +3586,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_55",
     "unit": 11,
@@ -3813,9 +3790,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_58",
     "unit": 11,
@@ -4019,9 +3994,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_61",
     "unit": 12,
@@ -4224,9 +4197,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_64",
     "unit": 13,
@@ -4429,9 +4400,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_67",
     "unit": 14,
@@ -4635,9 +4604,7 @@
         }
       }
     ]
-  }
-],
-[
+  },
   {
     "id": "n5_g_70",
     "unit": 14,
@@ -4838,9 +4805,8 @@
         }
       }
     ]
-  }
-],
-{
+  },
+  {
     "id": "n5_g_73",
     "unit": 15,
     "unit_title": "Expressions d'intention et d'état",

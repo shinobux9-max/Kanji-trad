@@ -2367,12 +2367,17 @@ function renderGrammarClozeExercise(entry, session) {
         ? `<span class="cloze-blank">＿＿＿</span>`
         : `<span class="cloze-blank-filled ${selected === clozeInfo.correct ? 'correct' : 'incorrect'}">${selected}</span>`;
 
-    // Point #2 V2 : si la réponse est fausse ET que la leçon documente cette confusion précise
-    // (champ optionnel "confusions" dans grammar.json), on l'affiche juste sous les options.
+    // Affiche les confusions documentées sur la leçon dès qu'une réponse est fausse — le champ
+    // "with" contient en pratique des descriptions riches (ex: "Particule d'assurance よ"), pas
+    // forcément le texte exact de la mauvaise réponse cliquée. On tente d'abord une correspondance
+    // exacte (utile si un jour une entrée est écrite sous forme courte), sinon on affiche la
+    // première confusion documentée : c'est un point de vigilance pertinent pour la leçon dans
+    // tous les cas, peu importe laquelle des options a été cliquée par erreur.
     const isWrong = answered && selected !== clozeInfo.correct;
-    const confusion = (isWrong && Array.isArray(lesson.confusions))
-        ? lesson.confusions.find(c => c.with === selected)
-        : null;
+    let confusion = null;
+    if (isWrong && Array.isArray(lesson.confusions) && lesson.confusions.length) {
+        confusion = lesson.confusions.find(c => c.with === selected) || lesson.confusions[0];
+    }
     
     return `
         <div class="review-card review-cloze-card">
@@ -2401,7 +2406,7 @@ function renderGrammarClozeExercise(entry, session) {
 function buildConfusionBoxHtml(confusion) {
     return `
         <div class="confusion-box">
-            <div class="confusion-box-title">💡 Pourquoi pas « ${confusion.with} » ?</div>
+            <div class="confusion-box-title">💡 Point de vigilance : ${confusion.with}</div>
             <div class="confusion-box-text">${mdBold(confusion.explanation || '')}</div>
             ${confusion.wrong_example ? `
                 <div class="confusion-example-row wrong"><span>✘</span><span>${mdBold(confusion.wrong_example.japanese || '')}</span></div>
@@ -3926,10 +3931,14 @@ function buildFicheDetailContent(entry) {
                 </div>
             `).join('')}
         ` : '';
+        const confusionsHtml = Array.isArray(l.confusions) && l.confusions.length
+            ? l.confusions.map(c => buildConfusionBoxHtml(c)).join('')
+            : '';
         body = `
             <div class="fiche-sub">${l.title || l.meaning || ''}</div>
             ${sectionsHtml}
             ${examplesHtml}
+            ${confusionsHtml}
         `;
     } else if (entry.type === 'kanji') {
         const char = entry.item.char;
