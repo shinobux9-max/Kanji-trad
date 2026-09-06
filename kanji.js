@@ -401,7 +401,11 @@ function saveSrsInfo(itemId, srsData) {
 }
 
 // quality : 0 = Encore (échec), 1 = Difficile, 2 = Bien, 3 = Facile
-function gradeReview(itemId, quality) {
+// quality : 0 = Encore (échec), 1 = Difficile, 2 = Bien, 3 = Facile
+// meta (optionnel) : { type, label } — utilisé uniquement pour le widget "À renforcer"
+// (point #10), n'affecte jamais le calcul SRS lui-même. Rétrocompatible : un appel sans
+// meta fonctionne exactement comme avant.
+function gradeReview(itemId, quality, meta = null) {
     const now = new Date();
     const existing = getSrsInfo(itemId) || { interval: 0, easeFactor: 2.5, repetitions: 0 };
     let { interval, easeFactor, repetitions } = existing;
@@ -434,7 +438,44 @@ function gradeReview(itemId, quality) {
     };
     saveSrsInfo(itemId, srsData);
     recordReviewEvent(quality);
+    updateWeaknessTracking(itemId, quality, meta);
     return srsData;
+}
+
+/* ══════════════════════════════════════════════════
+   FAIBLESSES — indépendant du SRS (point #10, widget "À renforcer")
+   ─────────────────────────────────────────────────
+   Répond à une question différente du SRS : pas "quand revoir cette carte ?"
+   mais "qu'est-ce qui pose problème EN CE MOMENT ?". Une carte peut être
+   parfaitement planifiée dans 15 jours par le SRS tout en ayant été ratée
+   plusieurs fois récemment — les deux systèmes coexistent sans se mélanger.
+   V1 volontairement simple : compteur d'échecs consécutifs, remis à zéro
+   (l'item disparaît du widget) dès la première réussite suivante.
+══════════════════════════════════════════════════ */
+const WEAKNESS_KEY = 'kanji_trad_weakness';
+
+function getWeaknessData() {
+    const stored = localStorage.getItem(WEAKNESS_KEY);
+    return stored ? JSON.parse(stored) : {};
+}
+function saveWeaknessData(d) { localStorage.setItem(WEAKNESS_KEY, JSON.stringify(d)); }
+
+function updateWeaknessTracking(itemId, quality, meta) {
+    const data = getWeaknessData();
+    if (quality === 0) {
+        const existing = data[itemId] || { consecutiveFails: 0, totalFails: 0 };
+        data[itemId] = {
+            consecutiveFails: existing.consecutiveFails + 1,
+            totalFails: (existing.totalFails || 0) + 1,
+            lastFailDate: new Date().toISOString(),
+            type: (meta && meta.type) || existing.type || 'vocab',
+            label: (meta && meta.label) || existing.label || itemId
+        };
+    } else if (data[itemId]) {
+        // Première réussite après un échec : on considère la notion consolidée, elle sort du widget.
+        delete data[itemId];
+    }
+    saveWeaknessData(data);
 }
 
 /* ══════════════════════════════════════════════════
@@ -1859,7 +1900,7 @@ function flipKanjiReviewCard() {
 function submitKanjiReviewGrade(quality) {
     if (!kanjiReviewSession) return;
     const char = kanjiReviewSession.queue[kanjiReviewSession.index];
-    gradeReview(char, quality);
+    gradeReview(char, quality, { type: 'kanji', label: char });
     
     const labels = ['again', 'hard', 'good', 'easy'];
     kanjiReviewSession.results[labels[quality]]++;
@@ -2123,7 +2164,7 @@ function submitQuizAnswer(selected) {
     session.selected = selected;
     
     const quality = isCorrect ? 2 : 0; // Bien si juste, Encore si faux
-    gradeReview(entry.word.id, quality);
+    gradeReview(entry.word.id, quality, { type: 'vocab', label: entry.word.word });
     const labels = ['again', 'hard', 'good', 'easy'];
     session.results[labels[quality]]++;
     
@@ -2142,7 +2183,7 @@ function advanceReviewQueue() {
 function submitReviewGrade(quality) {
     if (!reviewSession) return;
     const entry = reviewSession.queue[reviewSession.index];
-    gradeReview(entry.word.id, quality);
+    gradeReview(entry.word.id, quality, { type: 'vocab', label: entry.word.word });
     
     const labels = ['again', 'hard', 'good', 'easy'];
     reviewSession.results[labels[quality]]++;
@@ -2349,7 +2390,7 @@ function submitGrammarQuizAnswer(selected) {
     session.selected = selected;
     
     const quality = isCorrect ? 2 : 0;
-    gradeReview(entry.lesson.id, quality);
+    gradeReview(entry.lesson.id, quality, { type: 'grammar', label: entry.lesson.item || entry.lesson.pattern });
     const labels = ['again', 'hard', 'good', 'easy'];
     session.results[labels[quality]]++;
     
@@ -2368,7 +2409,7 @@ function advanceGrammarReviewQueue() {
 function submitGrammarReviewGrade(quality) {
     if (!grammarReviewSession) return;
     const entry = grammarReviewSession.queue[grammarReviewSession.index];
-    gradeReview(entry.lesson.id, quality);
+    gradeReview(entry.lesson.id, quality, { type: 'grammar', label: entry.lesson.item || entry.lesson.pattern });
     
     const labels = ['again', 'hard', 'good', 'easy'];
     grammarReviewSession.results[labels[quality]]++;
@@ -3078,6 +3119,7 @@ function showDashboard(isBack = false) {
                 </div>
                 ${buildWeekStreakHtml(streak)}
             </div>
+            <div class="dash-card weakness-widget" id="dashboard-weakness-widget" style="display:none;"></div>
             <div class="dash-card dash-mastery-card">
                 <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
                 <div id="progression-list"></div>
@@ -3085,6 +3127,7 @@ function showDashboard(isBack = false) {
         </div>`;
     // Appel de la fonction de progression si nécessaire ici
     if (typeof renderDashboard === 'function') renderDashboard();
+    renderWeaknessWidget();
     renderDashboardReviewCta();
 }
 
@@ -3631,7 +3674,7 @@ function flipKanaReviewCard() {
 function submitKanaReviewGrade(quality) {
     if (!kanaReviewSession) return;
     const kana = kanaReviewSession.queue[kanaReviewSession.index];
-    gradeReview(kana.id, quality);
+    gradeReview(kana.id, quality, { type: 'kana', label: kana.char });
 
     const labels = ['again', 'hard', 'good', 'easy'];
     kanaReviewSession.results[labels[quality]]++;
@@ -3773,6 +3816,16 @@ function getEntryTrackingId(entry) {
     return entry.type === 'kanji' ? entry.item.char : entry.item.id;
 }
 
+// Libellé court et lisible d'une entrée générique { type, item } — utilisé par le widget
+// "À renforcer" pour afficher quelque chose de compréhensible sans avoir à tout re-résoudre.
+function getEntryLabel(entry) {
+    if (entry.type === 'vocab')   return entry.item.word || entry.item.id;
+    if (entry.type === 'grammar') return entry.item.item || entry.item.pattern || entry.item.id;
+    if (entry.type === 'kanji')   return entry.item.char;
+    if (entry.type === 'kana')    return entry.item.char || entry.item.c;
+    return '';
+}
+
 /* ══════════════════════════════════════════════════
    CORRECTION CONTEXTUELLE (point #9) — mini-fiche accessible
    depuis le dos d'une carte de révision mixte, une fois retournée.
@@ -3861,7 +3914,7 @@ function submitMixedReviewGrade(quality) {
     if (!mixedReviewSession) return;
     const entry = mixedReviewSession.queue[mixedReviewSession.index];
     const id = getEntryTrackingId(entry);
-    gradeReview(id, quality);
+    gradeReview(id, quality, { type: entry.type, label: getEntryLabel(entry) });
     
     const labels = ['again', 'hard', 'good', 'easy'];
     mixedReviewSession.results[labels[quality]]++;
@@ -4948,7 +5001,7 @@ function renderStrokeQuizResults() {
         const quality = pct >= 80 ? 3 : pct >= 60 ? 2 : pct >= 40 ? 1 : 0;
         indices.forEach(idx => {
             const kanji = kanjiDb[idx];
-            if (kanji) gradeReview(kanji.char, quality);
+            if (kanji) gradeReview(kanji.char, quality, { type: 'kanji', label: kanji.char });
         });
     }
     
@@ -5297,7 +5350,7 @@ function renderKanaTraceQuestion() {
             // File de révision : nourrit le planning SRS comme la flashcard kana
             if (kana.id) {
                 const quality = totalMistakes === 0 ? 3 : totalMistakes <= 2 ? 2 : totalMistakes <= 4 ? 1 : 0;
-                gradeReview(kana.id, quality);
+                gradeReview(kana.id, quality, { type: 'kana', label: kana.c });
             }
 
             const fb = document.getElementById('sq-feedback');
@@ -5424,7 +5477,7 @@ function kanaTraceSkip() {
     document.getElementById('sq-wrong').textContent = qs.wrong;
 
     const kana = qs.queue[qs.idx];
-    if (kana && kana.id) gradeReview(kana.id, 0);
+    if (kana && kana.id) gradeReview(kana.id, 0, { type: 'kana', label: kana.c });
 
     qs.idx++;
     renderKanaTraceQuestion();
@@ -6151,6 +6204,86 @@ function recordTrainingSession(correct, total) {
     s.totalAnswered += total;
     s.totalCorrect += correct;
     saveTrainingStats(s);
+}
+
+// Reconstruit une entrée { type, level, item } complète à partir d'un id + son enregistrement
+// de faiblesse (qui ne connaît que le type, pas le niveau) — recherche parmi les niveaux/scripts
+// disponibles. Coût raisonnable : appelé seulement au clic sur le widget, jamais en boucle de rendu.
+async function resolveWeaknessEntry(itemId, rec) {
+    const type = rec.type;
+    if (type === 'kana') {
+        for (const script of ALL_KANA_SCRIPTS) {
+            const found = getKanaFlatList(script).find(it => it.id === itemId);
+            if (found) return { type: 'kana', level: script, item: found };
+        }
+        return null;
+    }
+    if (type === 'kanji') {
+        const kanjiData = kanjiDb.find(k => k.char === itemId);
+        return kanjiData ? { type: 'kanji', level: null, item: { char: itemId } } : null;
+    }
+    for (const level of ALL_JLPT_LEVELS) {
+        const items = await getRawItemsForTypeLevel(type, level);
+        const found = items.find(it => it.id === itemId);
+        if (found) return { type, level, item: found };
+    }
+    return null;
+}
+
+async function openWeaknessItem(itemId) {
+    const rec = getWeaknessData()[itemId];
+    if (!rec) return;
+    const entry = await resolveWeaknessEntry(itemId, rec);
+    if (!entry) { alert('Cette fiche est introuvable (contenu peut-être modifié depuis).'); return; }
+    showFicheCorrectionModal(entry);
+}
+
+// Lance directement une session d'Entraînement libre (isolée du SRS) sur toutes les notions
+// actuellement faibles — réutilise entièrement le moteur du point #8, aucune nouvelle mécanique.
+async function trainWeaknessItems() {
+    const data = getWeaknessData();
+    const ids = Object.keys(data);
+    if (ids.length === 0) return;
+
+    const pool = [];
+    for (const id of ids) {
+        const entry = await resolveWeaknessEntry(id, data[id]);
+        if (entry) pool.push(entry);
+    }
+    if (pool.length === 0) { alert('Aucune fiche disponible pour ces notions.'); return; }
+    launchFreeTraining(pool, pool.length, { type: 'weakness', scope: 'weakness', countRaw: String(pool.length) });
+}
+
+async function renderWeaknessWidget() {
+    const el = document.getElementById('dashboard-weakness-widget');
+    if (!el) return;
+
+    const data = getWeaknessData();
+    const entries = Object.entries(data)
+        .sort((a, b) => b[1].consecutiveFails - a[1].consecutiveFails || new Date(b[1].lastFailDate) - new Date(a[1].lastFailDate))
+        .slice(0, 5);
+
+    if (entries.length === 0) {
+        el.style.display = 'none'; // pas de carte vide qui ne sert à rien
+        return;
+    }
+    el.style.display = '';
+
+    const typeIcons = { vocab: '📚', grammar: '📝', kanji: '🔤', kana: 'あ' };
+
+    el.innerHTML = `
+        <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">🧠 À renforcer</div>
+        <div class="weakness-list">
+            ${entries.map(([id, rec]) => `
+                <div class="weakness-row" onclick="openWeaknessItem('${id.replace(/'/g, "\\'")}')">
+                    <span class="weakness-icon">${typeIcons[rec.type] || '❓'}</span>
+                    <span class="weakness-label">${rec.label}</span>
+                    <span class="weakness-count">${rec.consecutiveFails}×</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="weakness-train-btn" onclick="trainWeaknessItems()">🎯 S'entraîner sur ${entries.length > 1 ? `ces ${entries.length} notions` : 'cette notion'}</button>
+    `;
 }
 
 function showFreeTrainingConfig(isBack = false) {

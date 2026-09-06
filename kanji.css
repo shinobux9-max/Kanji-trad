@@ -1143,3 +1143,13 @@
     cursor: pointer;
 }
 .fiche-correction-btn:hover { background: rgba(0,229,255,0.08); }
+
+/* Widget "À renforcer" (point #10) */
+.weakness-list { display: flex; flex-direction: column; gap: 2px; }
+.weakness-row { display: flex; align-items: center; gap: 10px; padding: 8px 4px; cursor: pointer; border-radius: 8px; }
+.weakness-row:hover { background: rgba(255,255,255,0.04); }
+.weakness-icon { flex-shrink: 0; font-size: 0.9375rem; }
+.weakness-label { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.weakness-count { flex-shrink: 0; font-size: 0.6875rem; color: #FB7185; font-weight: bold; background: rgba(251,113,133,0.12); padding: 2px 8px; border-radius: 8px; }
+.weakness-train-btn { width: 100%; margin-top: 12px; padding: 10px; background: rgba(157,110,255,0.12); border: 1px solid rgba(157,110,255,0.35); color: #9D6EFF; font-size: 0.75rem; font-weight: bold; border-radius: 10px; cursor: pointer; }
+.weakness-train-btn:hover { background: rgba(157,110,255,0.2); }
