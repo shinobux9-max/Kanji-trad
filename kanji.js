@@ -3989,7 +3989,6 @@ function buildFicheDetailContent(entry) {
 
         body = `
             <div class="kfiche-card">
-                <div class="kfiche-grid-dots">${'<span></span>'.repeat(8)}</div>
                 <div class="kfiche-center">
                     <div class="kfiche-char">${char}</div>
                     ${primaryMeaning ? `<div class="kfiche-subtext">${primaryMeaning}</div>` : ''}
