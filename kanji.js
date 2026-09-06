@@ -1326,6 +1326,7 @@ document.addEventListener('click', (e) => {
 // de navigation JS. Si le clavier se ferme (input perd le focus) alors que le champ est vide,
 // on referme aussi la recherche automatiquement — sinon l'écran reste bloqué "ouvert".
 document.getElementById('search-input')?.addEventListener('blur', () => {
+    if (searchFilterJustClicked) return;
     if (searchOpen && document.getElementById('search-input').value.trim() === '') {
         setTimeout(() => { if (searchOpen) history.back(); }, 100);
     }
@@ -1389,7 +1390,14 @@ function renderSearchFilterPills() {
     }
 }
 
+let searchFilterJustClicked = false;
+
 function toggleSearchFilter(kind, value) {
+    // Taper un filtre fait perdre le focus au champ de recherche (blur), ce qui déclenchait à
+    // tort la fermeture automatique prévue pour le bouton retour Android sur champ vide.
+    searchFilterJustClicked = true;
+    setTimeout(() => { searchFilterJustClicked = false; }, 250);
+
     const key = kind === 'type' ? 'types' : 'levels';
     if (value === 'all') {
         searchFilters[key].clear();
