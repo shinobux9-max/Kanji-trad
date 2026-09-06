@@ -2283,19 +2283,64 @@ function buildMeaningQCM(word, pool) {
     return { correct: primary, options };
 }
 
-function prepareSessionItem(word, pool) {
+function prepareSessionItem(word, pool, forceMode = null) {
     const clozeInfo = buildClozeParticle(word);
     const qcmInfo = buildMeaningQCM(word, pool);
     
     let type = 'flashcard';
-    const r = Math.random();
-    if (clozeInfo && r < 0.35) type = 'cloze';
-    else if (qcmInfo && r < 0.7) type = 'qcm';
+    if (forceMode === 'flashcard') {
+        type = 'flashcard';
+    } else if (forceMode === 'quiz') {
+        // Force un exercice actif (trous en priorité, sinon QCM) ; repli flashcard seulement
+        // si le mot n'a ni particule ni distracteurs suffisants pour générer l'un ou l'autre.
+        type = clozeInfo ? 'cloze' : (qcmInfo ? 'qcm' : 'flashcard');
+    } else {
+        const r = Math.random();
+        if (clozeInfo && r < 0.35) type = 'cloze';
+        else if (qcmInfo && r < 0.7) type = 'qcm';
+    }
     
     return { word, type, clozeInfo, qcmInfo };
 }
 
-function startVocabReview() {
+function showVocabReviewModeSelector() {
+    const container = document.getElementById('category-content');
+    const data = vocabHomeData?.data || [];
+    const dueWords = buildDueQueue(data);
+
+    if (dueWords.length === 0) {
+        alert('Rien à réviser pour le moment ! 🎉');
+        return;
+    }
+
+    pushModalState('vocab-review-selector');
+
+    container.innerHTML = `
+        <div class="review-mode-selector">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="review-mode-title">Choisis ton mode de révision</div>
+            <div class="review-mode-count">${dueWords.length} mot${dueWords.length > 1 ? 's' : ''} à revoir</div>
+
+            <button class="review-mode-btn" onclick="startVocabReview()">
+                <span class="review-mode-icon">🎲</span>
+                <div><div class="review-mode-name">Mixte</div><div class="review-mode-desc">Flashcard, trous et QCM mélangés</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="startVocabReview('flashcard')">
+                <span class="review-mode-icon">🗂️</span>
+                <div><div class="review-mode-name">Flashcard</div><div class="review-mode-desc">Lecture et sens, auto-évalué</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="startVocabReview('quiz')">
+                <span class="review-mode-icon">✍️</span>
+                <div><div class="review-mode-name">Quiz actif</div><div class="review-mode-desc">Trous et QCM uniquement</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="showFreeTrainingConfig(false, {type:'vocab', level: vocabHomeData?.levelId})">
+                <span class="review-mode-icon">🏋️</span>
+                <div><div class="review-mode-name">Entraînement libre</div><div class="review-mode-desc">Configurable, sans impact sur le SRS</div></div>
+            </button>
+        </div>`;
+}
+
+function startVocabReview(forceMode = null) {
     const data = vocabHomeData?.data || [];
     const dueWords = buildDueQueue(data);
     
@@ -2304,7 +2349,7 @@ function startVocabReview() {
         return;
     }
     
-    const queue = dueWords.map(w => prepareSessionItem(w, data));
+    const queue = dueWords.map(w => prepareSessionItem(w, data, forceMode));
     
     pushModalState('vocab-review');
     
@@ -2592,13 +2637,53 @@ function buildGrammarCloze(lesson, pool) {
     };
 }
 
-function prepareGrammarSessionItem(lesson, pool) {
+function prepareGrammarSessionItem(lesson, pool, forceMode = null) {
     const clozeInfo = buildGrammarCloze(lesson, pool);
-    const type = clozeInfo && Math.random() < 0.5 ? 'cloze' : 'flashcard';
+    let type;
+    if (forceMode === 'flashcard') type = 'flashcard';
+    else if (forceMode === 'quiz') type = clozeInfo ? 'cloze' : 'flashcard'; // repli si pas de cloze possible
+    else type = clozeInfo && Math.random() < 0.5 ? 'cloze' : 'flashcard';
     return { lesson, type, clozeInfo };
 }
 
-function startGrammarReview() {
+function showGrammarReviewModeSelector() {
+    const container = document.getElementById('category-content');
+    const data = grammarHomeData?.data || [];
+    const dueLessons = buildDueQueue(data);
+
+    if (dueLessons.length === 0) {
+        alert('Rien à réviser pour le moment ! 🎉');
+        return;
+    }
+
+    pushModalState('grammar-review-selector');
+
+    container.innerHTML = `
+        <div class="review-mode-selector">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="review-mode-title">Choisis ton mode de révision</div>
+            <div class="review-mode-count">${dueLessons.length} leçon${dueLessons.length > 1 ? 's' : ''} à revoir</div>
+
+            <button class="review-mode-btn" onclick="startGrammarReview()">
+                <span class="review-mode-icon">🎲</span>
+                <div><div class="review-mode-name">Mixte</div><div class="review-mode-desc">Flashcard et trous mélangés</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="startGrammarReview('flashcard')">
+                <span class="review-mode-icon">🗂️</span>
+                <div><div class="review-mode-name">Flashcard</div><div class="review-mode-desc">Cours et exemples, auto-évalué</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="startGrammarReview('quiz')">
+                <span class="review-mode-icon">✍️</span>
+                <div><div class="review-mode-name">Quiz actif</div><div class="review-mode-desc">Trous uniquement</div></div>
+            </button>
+            <button class="review-mode-btn" onclick="showFreeTrainingConfig(false, {type:'grammar', level: grammarHomeData?.levelId})">
+                <span class="review-mode-icon">🏋️</span>
+                <div><div class="review-mode-name">Entraînement libre</div><div class="review-mode-desc">Configurable, sans impact sur le SRS</div></div>
+            </button>
+        </div>`;
+}
+
+function startGrammarReview(forceMode = null) {
     const data = grammarHomeData?.data || [];
     const dueLessons = buildDueQueue(data);
     
@@ -2607,7 +2692,7 @@ function startGrammarReview() {
         return;
     }
     
-    const queue = dueLessons.map(l => prepareGrammarSessionItem(l, data));
+    const queue = dueLessons.map(l => prepareGrammarSessionItem(l, data, forceMode));
     
     pushModalState('grammar-review');
     
@@ -2840,7 +2925,7 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
     let html = `<div class="vocab-container">`;
     
     html += `<div style="display:flex;gap:8px">
-        <button class="vocab-review-cta" style="flex:1" onclick="startVocabReview()">
+        <button class="vocab-review-cta" style="flex:1" onclick="showVocabReviewModeSelector()">
             🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
         </button>
         ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => displayVocabList('${levelId}', vocabHomeData.data, vocabHomeData.examples, true), () => vocabHomeData.data.map(w => w.id))">☑ Sélectionner</button>` : ''}
@@ -3122,7 +3207,7 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
     let html = `<div class="grammar-container">`;
     
     html += `<div style="display:flex;gap:8px">
-        <button class="vocab-review-cta" style="flex:1" onclick="startGrammarReview()">
+        <button class="vocab-review-cta" style="flex:1" onclick="showGrammarReviewModeSelector()">
             🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
         </button>
         ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => showGrammarHome('${levelId}', grammarHomeData.data, grammarHomeData.examples, true), () => grammarHomeData.data.map(l => l.id))">☑ Sélectionner</button>` : ''}
@@ -6860,9 +6945,10 @@ async function renderWeaknessWidget() {
     `;
 }
 
-function showFreeTrainingConfig(isBack = false) {
+function showFreeTrainingConfig(isBack = false, preset = null) {
     if (!isBack) history.pushState({ view: 'free-training-config' }, '');
     document.getElementById('page-title').innerText = 'Entraînement libre';
+    const presetType = preset?.type || 'all';
 
     const typeOptions = [
         { id: 'all',     label: 'Tout',         sub: 'Vocabulaire + Grammaire + Kanji + Kana' },
@@ -6878,9 +6964,9 @@ function showFreeTrainingConfig(isBack = false) {
 
             <div class="mode-section-label" style="margin-top:14px">— Contenu</div>
             <div class="ft-radio-group">
-                ${typeOptions.map((o, i) => `
+                ${typeOptions.map((o) => `
                     <label class="ft-radio-row">
-                        <input type="radio" name="ft-type" value="${o.id}" ${i === 0 ? 'checked' : ''} onchange="onFreeTrainingTypeChange()">
+                        <input type="radio" name="ft-type" value="${o.id}" ${o.id === presetType ? 'checked' : ''} onchange="onFreeTrainingTypeChange()">
                         <span class="ft-radio-label">${o.label}</span>
                         ${o.sub ? `<span class="ft-radio-sub">${o.sub}</span>` : ''}
                     </label>
@@ -6947,7 +7033,7 @@ function showFreeTrainingConfig(isBack = false) {
             <button class="review-cta-btn" style="width:100%;margin-top:22px" onclick="startFreeTraining()">Commencer →</button>
         </div>`;
 
-    renderFreeTrainingScopeOptions('all');
+    renderFreeTrainingScopeOptions(presetType, preset?.level);
 }
 
 function onFreeTrainingModeChange() {
@@ -6956,7 +7042,7 @@ function onFreeTrainingModeChange() {
     if (wrap) wrap.style.display = (mode === 'chrono') ? '' : 'none';
 }
 
-function renderFreeTrainingScopeOptions(type) {
+function renderFreeTrainingScopeOptions(type, presetLevel = null) {
     const label = document.getElementById('ft-scope-label');
     const container = document.getElementById('ft-scope-options');
     if (!container || !label) return;
@@ -6973,9 +7059,10 @@ function renderFreeTrainingScopeOptions(type) {
         const levels = jlptMapping
             ? Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)
             : ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase(), color: '#00E5FF' }]);
+        const preset = presetLevel && levels.some(([id]) => id === presetLevel) ? presetLevel : 'all';
         container.innerHTML = `
-            <label class="ft-radio-row"><input type="radio" name="ft-scope" value="all" checked><span class="ft-radio-label">Tous les niveaux</span></label>
-            ${levels.map(([id, d]) => `<label class="ft-radio-row"><input type="radio" name="ft-scope" value="${id}"><span class="ft-radio-label" style="color:${d.color || 'var(--text)'}">${d.label}</span></label>`).join('')}
+            <label class="ft-radio-row"><input type="radio" name="ft-scope" value="all" ${preset === 'all' ? 'checked' : ''}><span class="ft-radio-label">Tous les niveaux</span></label>
+            ${levels.map(([id, d]) => `<label class="ft-radio-row"><input type="radio" name="ft-scope" value="${id}" ${preset === id ? 'checked' : ''}><span class="ft-radio-label" style="color:${d.color || 'var(--text)'}">${d.label}</span></label>`).join('')}
         `;
     }
 }
@@ -7657,7 +7744,9 @@ init();
 // de les fermer proprement, exactement comme le ferait leur bouton "✕"/Fermer.
 const MODAL_EXIT_REGISTRY = {
     'vocab-review': () => { reviewSession = null; if (vocabHomeData) displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples, true); },
+    'vocab-review-selector': () => { if (vocabHomeData) displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples, true); },
     'grammar-review': () => { grammarReviewSession = null; if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
+    'grammar-review-selector': () => { if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'apprendre-discovery': () => { mixedReviewSession = null; showApprendreScreen(true); },
