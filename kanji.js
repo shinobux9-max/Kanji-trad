@@ -287,6 +287,9 @@ function trackItem(itemId, status) {
     }
     
     saveTracking(tracking);
+    // Le cache de "Niveaux de maîtrise" (accueil) doit être invalidé à chaque changement de statut,
+    // sinon il reste figé sur les valeurs calculées lors du tout premier chargement de la page.
+    for (const key in levelStatsCache) delete levelStatsCache[key];
     return tracking[itemId];
 }
 
