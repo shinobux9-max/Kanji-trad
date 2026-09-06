@@ -4875,9 +4875,10 @@ async function renderExemples(char) {
             ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${ex.ro}</div>`
             : '';
         return `<div onclick="speakSentence('${safe}')"
-            style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);transition:background 0.15s"
+            style="position:relative;background:rgba(255,255,255,0.03);padding:14px 40px 14px 14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);transition:background 0.15s"
             onmouseenter="this.style.background='rgba(255,255,255,0.06)'"
             onmouseleave="this.style.background='rgba(255,255,255,0.03)'">
+            <span style="position:absolute;top:12px;right:12px;font-size:1rem;opacity:0.7">🔊</span>
             <div style="font-size:1.1rem;color:#fff;margin-bottom:5px;line-height:1.4">${ex.jp}</div>
             ${kanaLine}${romajiLine}
             <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${ex.fr}</div>
