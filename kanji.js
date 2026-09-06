@@ -3984,16 +3984,15 @@ function buildFicheDetailContent(entry) {
         const level = k ? getJLPTLevel(k.grade) : null;
         const onTags = (k?.on || []).map(r => `<span class="tag tag-on">${r}</span>`).join('');
         const kunTags = (k?.kun || []).map(r => `<span class="tag tag-kun">${r}</span>`).join('');
-        const romajiAll = [...(k?.wk_on || []), ...(k?.wk_kun || [])];
-        const romajiText = romajiAll.length ? romajiAll.join(', ') : '';
         const meanings = (k?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+        const primaryMeaning = meanings[0] || '';
 
         body = `
             <div class="kfiche-card">
                 <div class="kfiche-grid-dots">${'<span></span>'.repeat(8)}</div>
                 <div class="kfiche-center">
                     <div class="kfiche-char">${char}</div>
-                    ${romajiText ? `<div class="kfiche-subtext">${romajiText}</div>` : ''}
+                    ${primaryMeaning ? `<div class="kfiche-subtext">${primaryMeaning}</div>` : ''}
                 </div>
                 <div class="kfiche-badges">
                     ${level ? `<span class="kfiche-badge-level">N${level} Niveau</span>` : ''}
@@ -4001,10 +4000,9 @@ function buildFicheDetailContent(entry) {
                 </div>
             </div>
             <div class="kfiche-readings-card">
-                ${meanings.length ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">SIGNIFICATION</div><div class="kfiche-romaji-text" style="font-size:0.9375rem;color:#fff">${meanings.join(' / ')}</div></div>` : ''}
                 ${onTags ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">ON'YOMI</div><div class="tag-container">${onTags}</div></div>` : ''}
                 ${kunTags ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">KUN'YOMI</div><div class="tag-container">${kunTags}</div></div>` : ''}
-                ${romajiText ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">RÔMAJI</div><div class="kfiche-romaji-text">${romajiText}</div></div>` : ''}
+                ${meanings.length > 1 ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">AUTRES SENS</div><div class="kfiche-romaji-text">${meanings.slice(1).join(' / ')}</div></div>` : ''}
             </div>
         `;
     } else if (entry.type === 'kana') {
@@ -4019,7 +4017,7 @@ function buildFicheDetailContent(entry) {
 function showFicheCorrectionModal(entry) {
     if (!entry) return;
     const typeLabels = {
-        vocab: '📚 Vocabulaire', grammar: '📝 Grammaire', kanji: '🔤 Kanji',
+        vocab: '📚 Vocabulaire', grammar: '📝 Grammaire', kanji: 'Détail du Kanji',
         kana: (entry.level === 'kata') ? 'ア Katakana' : 'あ Hiragana'
     };
     const { title, body } = buildFicheDetailContent(entry);
@@ -4027,9 +4025,9 @@ function showFicheCorrectionModal(entry) {
     if (!content) return;
 
     content.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:16px">
             <div class="mode-title" style="margin-bottom:0">${typeLabels[entry.type] || ''}</div>
-            <button onclick="closeFicheCorrectionModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+            <button onclick="closeFicheCorrectionModal()" style="position:absolute;right:0;background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
         </div>
         <div style="text-align:center;padding:8px 0 4px">
             ${title ? `<div style="font-size:2.25rem;font-weight:bold;color:#fff;margin-bottom:8px">${title}</div>` : ''}
