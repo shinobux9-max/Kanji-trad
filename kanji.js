@@ -6734,7 +6734,19 @@ async function buildTrainingPool({ types, levels, kanaScripts }) {
     for (const type of types.filter(t => t !== 'kana')) {
         for (const level of levels) {
             const items = await getRawItemsForTypeLevel(type, level);
-            items.forEach(it => pool.push(makeQueueEntry(type, level, it, false)));
+            items.forEach(it => {
+                const entry = makeQueueEntry(type, level, it, false);
+                // Variété d'exercices (cloze/QCM/flashcard), comme en révision normale — sans ça
+                // l'entraînement libre ne montrait jamais que des flashcards classiques.
+                if (type === 'vocab') {
+                    const prepared = prepareSessionItem(it, items);
+                    entry.exercise = { type: prepared.type, clozeInfo: prepared.clozeInfo, qcmInfo: prepared.qcmInfo };
+                } else if (type === 'grammar') {
+                    const prepared = prepareGrammarSessionItem(it, items);
+                    entry.exercise = { type: prepared.type, clozeInfo: prepared.clozeInfo };
+                }
+                pool.push(entry);
+            });
         }
     }
     if (types.includes('kana')) {
@@ -6807,6 +6819,8 @@ function launchFreeTraining(pool, targetCount, config) {
         wrong: 0,
         mistakes: [],
         flipped: false,
+        quizAnswered: false,
+        quizSelected: null,
         chronoRemaining: (config && config.chronoDuration) || null
     };
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
@@ -6898,13 +6912,25 @@ function renderTrainingScreen() {
         ? `<button class="fiche-correction-btn" onclick="showFicheCorrectionModal(trainingSession.queue[trainingSession.index])">📖 Voir la fiche</button>`
         : '';
 
-    container.innerHTML = `<div class="review-page">
+    const headerHtml = `
         <div class="review-header">
             <button class="back-btn" onclick="endTrainingSession()">✕</button>
             <div class="review-progress-bar">${progressFill}</div>
             <div class="review-progress-text">${progressText}</div>
         </div>
-        <div class="free-training-banner small">${modeBanner}</div>
+        <div class="free-training-banner small">${modeBanner}</div>`;
+
+    // Variété d'exercices (point corrigé : vocab/grammaire ne montraient jamais que des
+    // flashcards en entraînement libre) — cloze/QCM utilisent leur propre écran interactif,
+    // le reste (kanji, kana, flashcard) garde le flip-card classique ci-dessous.
+    const exercise = entry.exercise;
+    if (exercise && (exercise.type === 'cloze' || exercise.type === 'qcm')) {
+        renderTrainingQuizExercise(container, headerHtml, entry, exercise);
+        return;
+    }
+
+    container.innerHTML = `<div class="review-page">
+        ${headerHtml}
         <div class="review-type-tag">${typeLabel}</div>
         <div class="review-card ${s.flipped ? 'flipped' : ''}" onclick="${s.flipped ? '' : 'flipTrainingCard()'}">
             <div class="review-card-front">
@@ -6919,6 +6945,100 @@ function renderTrainingScreen() {
             </div>
         ` : ''}
     </div>`;
+}
+
+// Rendu de l'exercice cloze (particule à trous, vocab/grammaire) ou QCM (sens du mot, vocab) en
+// entraînement libre — auto-noté au clic, comme en révision normale, contrairement au flip-card
+// qui demande une auto-évaluation manuelle.
+function renderTrainingQuizExercise(container, headerHtml, entry, exercise) {
+    const s = trainingSession;
+    const answered = s.quizAnswered;
+    const selected = s.quizSelected;
+    let bodyHtml = '';
+
+    if (exercise.type === 'cloze') {
+        const word = entry.item;
+        const clozeInfo = exercise.clozeInfo;
+        const sentenceHtml = clozeInfo.tokens.map((tok, i) => {
+            if (i !== clozeInfo.blankIndex) return `<span>${tok}</span>`;
+            if (!answered) return `<span class="cloze-blank">＿＿</span>`;
+            const cls = selected === clozeInfo.correct ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
+            return `<span class="${cls}">${selected}</span>`;
+        }).join(' ');
+        bodyHtml = `
+            <div class="review-card review-cloze-card">
+                <div class="review-quiz-instruction">Complète la phrase avec la bonne particule</div>
+                <div class="cloze-sentence">${sentenceHtml}</div>
+                <div class="review-romaji">${word.romaji || ''}</div>
+                <div class="review-example-fr-only">${mdBold((word.example && word.example.french) || '')}</div>
+            </div>
+            <div class="review-options review-options-particles">
+                ${clozeInfo.options.map(opt => {
+                    let cls = 'review-option-btn';
+                    if (answered) { if (opt === clozeInfo.correct) cls += ' correct'; else if (opt === selected) cls += ' incorrect'; }
+                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitTrainingQuizAnswer('${opt}')">${opt}</button>`;
+                }).join('')}
+            </div>
+            ${(answered && selected !== clozeInfo.correct && word.nuance) ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>` : ''}
+        `;
+    } else { // qcm (vocab uniquement)
+        const word = entry.item;
+        const qcmInfo = exercise.qcmInfo;
+        bodyHtml = `
+            <div class="review-card review-qcm-card">
+                <div class="review-word">${word.word || ''}</div>
+                <div class="review-reading">${word.reading || ''}</div>
+                <div class="review-quiz-instruction">Quel est le sens de ce mot ?</div>
+            </div>
+            <div class="review-options">
+                ${qcmInfo.options.map(opt => {
+                    let cls = 'review-option-btn';
+                    if (answered) { if (opt === qcmInfo.correct) cls += ' correct'; else if (opt === selected) cls += ' incorrect'; }
+                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitTrainingQuizAnswer('${opt.replace(/'/g, "\\'")}')">${mdBold(opt)}</button>`;
+                }).join('')}
+            </div>
+        `;
+    }
+
+    container.innerHTML = `<div class="review-page">
+        ${headerHtml}
+        ${bodyHtml}
+        ${answered ? `<button class="review-continue-btn" onclick="advanceTrainingQuiz()">Continuer →</button>` : ''}
+    </div>`;
+}
+
+function submitTrainingQuizAnswer(selected) {
+    const s = trainingSession;
+    if (!s || s.quizAnswered) return;
+    const entry = s.queue[s.index];
+    const exercise = entry.exercise;
+    if (!exercise) return;
+    const correct = exercise.type === 'cloze' ? exercise.clozeInfo.correct : exercise.qcmInfo.correct;
+    const isCorrect = selected === correct;
+
+    s.quizAnswered = true;
+    s.quizSelected = selected;
+
+    if (isCorrect) {
+        s.correct++;
+    } else {
+        s.wrong++;
+        s.mistakes.push(entry);
+        if (s.mode === 'loop') s.pool.push(entry);
+    }
+    if (s.config && s.config.type === 'weakness') {
+        updateWeaknessTracking(getEntryTrackingId(entry), isCorrect ? 2 : 0, { type: entry.type, label: getEntryLabel(entry) });
+    }
+    renderTrainingScreen();
+}
+
+function advanceTrainingQuiz() {
+    const s = trainingSession;
+    if (!s) return;
+    s.index++;
+    s.quizAnswered = false;
+    s.quizSelected = null;
+    renderTrainingScreen();
 }
 
 function flipTrainingCard() {
@@ -6953,6 +7073,8 @@ function answerTrainingCard(isCorrect) {
     }
     s.index++;
     s.flipped = false;
+    s.quizAnswered = false;
+    s.quizSelected = null;
     renderTrainingScreen();
 }
 
