@@ -1315,7 +1315,9 @@ function closeSearchOverlay() {
 document.addEventListener('click', (e) => {
     if (searchJustOpened) return;
     const bar = document.getElementById('search-bar');
-    if (searchOpen && bar && !bar.contains(e.target) && !e.target.closest('.search-hit')) {
+    // .closest() fonctionne même sur un nœud détaché (reconstruit par renderSearchFilterPills
+    // pendant ce même clic) car il remonte via parentElement, encore intact en mémoire.
+    if (searchOpen && bar && !bar.contains(e.target) && !e.target.closest('.search-hit') && !e.target.closest('.search-filter-pill')) {
         history.back();
     }
 });
@@ -1343,13 +1345,21 @@ function hideSearchPanel() {
    Un léger debounce évite de relancer la recherche à chaque frappe sur les niveaux qui
    nécessitent un fetch réseau (vocab/grammaire non encore en cache).
 ══════════════════════════════════════════════════ */
-let searchFilters = { type: 'all', level: 'all' };
+// Sélection multiple : un Set vide = "Tout"/"Tous" (aucune restriction). Cocher un type/niveau
+// précis désélectionne implicitement "Tout" ; décocher le dernier élément précis y revient.
+let searchFilters = { types: new Set(), levels: new Set() };
 let searchDebounceTimer = null;
-const SEARCH_TYPE_LABELS  = { all: 'Tout', vocab: 'Vocabulaire', grammar: 'Grammaire', kanji: 'Kanji', kana: 'Kana' };
+// Mêmes couleurs et caractères que les cartes de l'onglet Apprendre, pour une identité visuelle cohérente
+const SEARCH_TYPE_STYLE = {
+    vocab:   { label: 'Vocabulaire', color: '#FBBF24', char: '語' },
+    grammar: { label: 'Grammaire',   color: '#4ADE80', char: '文' },
+    kanji:   { label: 'Kanji',       color: '#00E5FF', char: '字' },
+    kana:    { label: 'Kana',        color: '#9D6EFF', char: 'あ' }
+};
 const SEARCH_RESULTS_CAP  = 25; // par section, pour rester lisible/rapide
 
 function resetSearchFilters() {
-    searchFilters = { type: 'all', level: 'all' };
+    searchFilters = { types: new Set(), levels: new Set() };
     renderSearchFilterPills();
 }
 
@@ -1357,22 +1367,37 @@ function renderSearchFilterPills() {
     const typeEl = document.getElementById('search-filter-type');
     const levelEl = document.getElementById('search-filter-level');
     if (typeEl) {
-        typeEl.innerHTML = Object.entries(SEARCH_TYPE_LABELS).map(([id, label]) =>
-            `<button class="search-filter-pill${searchFilters.type === id ? ' active' : ''}" onclick="setSearchFilter('type','${id}')">${label}</button>`
-        ).join('');
+        const allActive = searchFilters.types.size === 0;
+        let html = `<button class="search-filter-pill${allActive ? ' active' : ''}" onclick="toggleSearchFilter('type','all')">Tout</button>`;
+        html += Object.entries(SEARCH_TYPE_STYLE).map(([id, s]) => {
+            const active = searchFilters.types.has(id);
+            return `<button class="search-filter-pill${active ? ' active' : ''}" style="${active ? `border-color:${s.color};color:${s.color}` : ''}" onclick="toggleSearchFilter('type','${id}')">${s.label}</button>`;
+        }).join('');
+        typeEl.innerHTML = html;
     }
     if (levelEl) {
+        const allActive = searchFilters.levels.size === 0;
         const levels = jlptMapping
-            ? [['all', { label: 'Tous', color: 'var(--accent)' }], ...Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)]
-            : [['all', { label: 'Tous' }], ...ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase() }])];
-        levelEl.innerHTML = levels.map(([id, d]) =>
-            `<button class="search-filter-pill${searchFilters.level === id ? ' active' : ''}" style="${searchFilters.level === id && d.color ? `border-color:${d.color};color:${d.color}` : ''}" onclick="setSearchFilter('level','${id}')">${d.label}</button>`
-        ).join('');
+            ? Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)
+            : ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase() }]);
+        let html = `<button class="search-filter-pill${allActive ? ' active' : ''}" onclick="toggleSearchFilter('level','all')">Tous</button>`;
+        html += levels.map(([id, d]) => {
+            const active = searchFilters.levels.has(id);
+            return `<button class="search-filter-pill${active ? ' active' : ''}" style="${active && d.color ? `border-color:${d.color};color:${d.color}` : ''}" onclick="toggleSearchFilter('level','${id}')">${d.label}</button>`;
+        }).join('');
+        levelEl.innerHTML = html;
     }
 }
 
-function setSearchFilter(kind, value) {
-    searchFilters[kind] = value;
+function toggleSearchFilter(kind, value) {
+    const key = kind === 'type' ? 'types' : 'levels';
+    if (value === 'all') {
+        searchFilters[key].clear();
+    } else if (searchFilters[key].has(value)) {
+        searchFilters[key].delete(value);
+    } else {
+        searchFilters[key].add(value);
+    }
     renderSearchFilterPills();
     const q = document.getElementById('search-input')?.value || '';
     if (q.trim()) debouncedDoSearch(q); else clearSearch();
@@ -1397,9 +1422,9 @@ function kanaToRomaji(str) { return [...str].map(c => KANA_TO_ROMAJI[c] || c).jo
 
 // ── Recherche par type (chacune retourne un tableau d'items bruts, pas encore rendus) ──
 
-function searchKanjiItems(q, level) {
+function searchKanjiItems(q, levels) {
     return kanjiDb.filter(k => {
-        if (level !== 'all' && `n${getJLPTLevel(k.grade)}` !== level) return false;
+        if (!levels.includes(`n${getJLPTLevel(k.grade)}`)) return false;
         if (k.char === q) return true;
         if (k.meanings.some(m => m.toLowerCase().includes(q))) return true;
         if (k.on.some(r => r.toLowerCase().includes(q))) return true;
@@ -1453,24 +1478,25 @@ function searchKanaItems(q) {
 
 async function performUnifiedSearch(q, filters) {
     const results = { kanji: [], vocab: [], grammar: [], kana: [] };
-    const levels = filters.level === 'all' ? ALL_JLPT_LEVELS : [filters.level];
+    const activeTypes = filters.types.size ? filters.types : new Set(['vocab', 'grammar', 'kanji', 'kana']);
+    const levels = filters.levels.size ? [...filters.levels] : ALL_JLPT_LEVELS;
 
-    if (filters.type === 'all' || filters.type === 'kanji') {
-        results.kanji = searchKanjiItems(q, filters.level);
+    if (activeTypes.has('kanji')) {
+        results.kanji = searchKanjiItems(q, levels);
     }
-    if (filters.type === 'all' || filters.type === 'kana') {
+    if (activeTypes.has('kana')) {
         // Le kana n'a pas de notion de niveau JLPT propre — toujours cherché tant que le type
-        // sélectionné l'inclut (déjà géré par la condition ci-dessus).
+        // sélectionné l'inclut (déjà géré par la condition ci-dessus), peu importe le filtre niveau.
         results.kana = searchKanaItems(q);
     }
-    if (filters.type === 'all' || filters.type === 'vocab') {
+    if (activeTypes.has('vocab')) {
         for (const level of levels) {
             const vd = await getLevelVocabData(level);
             if (vd && vd.data) results.vocab.push(...searchVocabItems(vd.data, q).map(w => ({ ...w, _level: level })));
         }
         results.vocab = results.vocab.slice(0, SEARCH_RESULTS_CAP);
     }
-    if (filters.type === 'all' || filters.type === 'grammar') {
+    if (activeTypes.has('grammar')) {
         for (const level of levels) {
             const gd = await getLevelGrammarData(level);
             if (gd && gd.data) results.grammar.push(...searchGrammarItems(gd.data, q).map(l => ({ ...l, _level: level })));
@@ -1480,10 +1506,14 @@ async function performUnifiedSearch(q, filters) {
     return results;
 }
 
-function buildSearchSection(title, itemsHtml) {
+function buildSearchSection(type, itemsHtml) {
     if (!itemsHtml.length) return '';
+    const s = SEARCH_TYPE_STYLE[type];
     return `<div class="search-section">
-        <div class="search-section-title">${title} <span class="search-section-count">${itemsHtml.length}</span></div>
+        <div class="search-section-title">
+            <span class="search-section-icon" style="background:${s.color}22;color:${s.color}">${s.char}</span>
+            ${s.label} <span class="search-section-count">${itemsHtml.length}</span>
+        </div>
         ${itemsHtml.join('')}
     </div>`;
 }
@@ -1498,55 +1528,59 @@ function renderSearchResults(results, query) {
     }
 
     let html = '';
-    html += buildSearchSection('📚 Vocabulaire', results.vocab.map(buildVocabHitHtml));
-    html += buildSearchSection('📝 Grammaire', results.grammar.map(buildGrammarHitHtml));
-    html += buildSearchSection('🔤 Kanji', results.kanji.map(buildKanjiHitHtml));
-    html += buildSearchSection('あ Kana', results.kana.map(buildKanaHitHtml));
+    html += buildSearchSection('vocab', results.vocab.map(buildVocabHitHtml));
+    html += buildSearchSection('grammar', results.grammar.map(buildGrammarHitHtml));
+    html += buildSearchSection('kanji', results.kanji.map(buildKanjiHitHtml));
+    html += buildSearchSection('kana', results.kana.map(buildKanaHitHtml));
     el.innerHTML = html;
 }
 
 function buildVocabHitHtml(w) {
     const meaning = (w.meanings && (w.meanings.primary || w.meanings)) || '';
-    const color = (jlptMapping && jlptMapping.levels[w._level]) ? jlptMapping.levels[w._level].color : '#00E5FF';
+    const typeColor = SEARCH_TYPE_STYLE.vocab.color;
+    const levelColor = (jlptMapping && jlptMapping.levels[w._level]) ? jlptMapping.levels[w._level].color : typeColor;
     return `<div class="search-hit" onclick="openVocabFromSearch('${w.id}','${w._level}')">
-        <div class="search-hit-char search-hit-char-word">${w.word || ''}</div>
+        <div class="search-hit-char-word" style="color:${typeColor}">${w.word || ''}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${meaning}</div>
             <div class="search-hit-readings">${w.reading || ''}${w.romaji ? ' · ' + w.romaji : ''}</div>
         </div>
-        <span class="search-hit-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">${w._level.toUpperCase()}</span>
+        <span class="search-hit-badge" style="background:${levelColor}22;color:${levelColor};border:1px solid ${levelColor}44">${w._level.toUpperCase()}</span>
     </div>`;
 }
 
 function buildGrammarHitHtml(l) {
-    const color = (jlptMapping && jlptMapping.levels[l._level]) ? jlptMapping.levels[l._level].color : '#00E5FF';
+    const typeColor = SEARCH_TYPE_STYLE.grammar.color;
+    const levelColor = (jlptMapping && jlptMapping.levels[l._level]) ? jlptMapping.levels[l._level].color : typeColor;
     return `<div class="search-hit" onclick="openGrammarFromSearch('${l.id}','${l._level}')">
-        <div class="search-hit-char search-hit-char-word">${l.item || l.pattern || ''}</div>
+        <div class="search-hit-char-word" style="color:${typeColor}">${l.item || l.pattern || ''}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${l.title || ''}</div>
             <div class="search-hit-readings">${l.pattern && l.pattern !== l.item ? l.pattern : ''}</div>
         </div>
-        <span class="search-hit-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">${l._level.toUpperCase()}</span>
+        <span class="search-hit-badge" style="background:${levelColor}22;color:${levelColor};border:1px solid ${levelColor}44">${l._level.toUpperCase()}</span>
     </div>`;
 }
 
 function buildKanjiHitHtml(k) {
     const safeChar = k.char.replace(/'/g, "\\'");
     const level = getJLPTLevel(k.grade);
-    const color = (jlptMapping && jlptMapping.levels['n' + level]) ? jlptMapping.levels['n' + level].color : '#00E5FF';
+    const typeColor = SEARCH_TYPE_STYLE.kanji.color;
+    const levelColor = (jlptMapping && jlptMapping.levels['n' + level]) ? jlptMapping.levels['n' + level].color : typeColor;
     return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);closeSearchOverlay();">
-        <div class="search-hit-char">${k.char}</div>
+        <div class="search-hit-char" style="color:${typeColor}">${k.char}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
             <div class="search-hit-readings">${[...k.on.slice(0, 3), ...k.kun.slice(0, 2)].join('  ')}</div>
         </div>
-        <span class="search-hit-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">N${level}</span>
+        <span class="search-hit-badge" style="background:${levelColor}22;color:${levelColor};border:1px solid ${levelColor}44">N${level}</span>
     </div>`;
 }
 
 function buildKanaHitHtml(k) {
+    const typeColor = SEARCH_TYPE_STYLE.kana.color;
     return `<div class="search-hit" onclick='openKanaDetail(${JSON.stringify(k)});closeSearchOverlay();'>
-        <div class="search-hit-char">${k.char}</div>
+        <div class="search-hit-char" style="color:${typeColor}">${k.char}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${k.romaji || ''}</div>
         </div>
