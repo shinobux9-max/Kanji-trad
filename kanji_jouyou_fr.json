@@ -335,6 +335,22 @@
     "wk_radicaux": ["Orteil", "Sol"],
     "romaji": "jou, shou, shan, ue, uwa, kami, a, nobo"
   },
+  "味": {
+    "traits": 8,
+    "classe": 3,
+    "frequence": 348,
+    "jlpt_ancien": 3,
+    "jlpt_nouveau": 4,
+    "sens": ["Goût", "Saveur"],
+    "lectures_on": ["ミ"],
+    "lectures_kun": ["あじ", "あじ.わう"],
+    "wk_niveau": 6,
+    "wk_sens": ["Goût"],
+    "wk_lectures_on": ["ミ"],
+    "wk_lectures_kun": ["!あじ"],
+    "wk_radicaux": ["Bouoche", "Arbre"],
+    "romaji": "mi, aji, ajiwau"
+},
   "下": {
     "traits": 3,
     "classe": 1,
