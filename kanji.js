@@ -417,6 +417,134 @@ function splitDueAndNew(items) {
     return { due, fresh: Math.min(fresh, SRS_NEW_PER_SESSION) };
 }
 
+/* ══════════════════════════════════════════════════
+   buildReviewQueue() — constructeur de file CENTRALISÉ
+   ─────────────────────────────────────────────────
+   Contrairement à buildDueQueue() (limite "10 nouvelles" appliquée
+   PAR combinaison type×niveau, utilisée par la révision ciblée de
+   l'onglet "Réviser" — comportement volontairement inchangé), cette
+   fonction applique un quota de nouvelles cartes GLOBAL sur toute la
+   session, réparti en tour de rôle entre les combinaisons sélectionnées.
+   Utilisée pour les sessions qui mélangent plusieurs types/niveaux
+   (bouton "Aujourd'hui" de l'accueil, onglet "Apprendre").
+
+   Ne modifie ni ne remplace buildDueQueue() : les deux coexistent,
+   chacune pour son cas d'usage.
+══════════════════════════════════════════════════ */
+
+// Sépare due/fresh SANS plafonner les nouvelles (le plafonnement se fait
+// globalement plus loin, contrairement à buildDueQueue qui plafonne ici même)
+function splitDueAndFreshRaw(items) {
+    const now = new Date();
+    const due = [];
+    const fresh = [];
+    items.forEach(item => {
+        const srs = getSrsInfo(item.id);
+        if (!srs) fresh.push(item);
+        else if (new Date(srs.nextReviewDate) <= now) due.push(item);
+    });
+    return { due, fresh };
+}
+
+// Récupère les items bruts (forme attendue par buildDueQueue : au moins un champ .id)
+// pour un type de contenu et un niveau JLPT donnés. Kana volontairement absent pour
+// l'instant (roadmap : intégration séparée), mais la fonction est prête à l'accueillir.
+async function getRawItemsForTypeLevel(type, level) {
+    if (type === 'vocab') {
+        const vd = await getLevelVocabData(level);
+        return (vd && vd.data) ? vd.data : [];
+    }
+    if (type === 'grammar') {
+        const gd = await getLevelGrammarData(level);
+        return (gd && gd.data) ? gd.data : [];
+    }
+    if (type === 'kanji') {
+        const chars = await getLevelKanjiChars(level);
+        return chars ? chars.map(c => ({ id: c })) : [];
+    }
+    return [];
+}
+
+// Répartit un quota de nouvelles cartes en tour de rôle entre plusieurs pools
+// (buckets = [{ key, pool: [...] }]) — pure, sans effet de bord, testée isolément.
+function distributeNewQuota(buckets, quota) {
+    const picked = [];
+    const pools = buckets.map(b => ({ key: b.key, pool: [...b.pool] }));
+    let remaining = quota;
+    while (remaining > 0 && pools.some(p => p.pool.length)) {
+        for (const p of pools) {
+            if (remaining <= 0) break;
+            if (p.pool.length) {
+                picked.push({ key: p.key, item: p.pool.shift() });
+                remaining--;
+            }
+        }
+    }
+    return picked;
+}
+
+// Reconstruit la forme d'entrée de file attendue par les écrans de révision
+// mixte existants ({ type, item }) — le kanji est normalisé en { char } comme
+// le fait déjà getMixedDueQueue().
+function makeQueueEntry(type, level, rawItem) {
+    if (type === 'kanji') return { type, level, item: { char: rawItem.id } };
+    return { type, level, item: rawItem };
+}
+
+/**
+ * buildReviewQueue({ types, levels, includeDue, newLimit, excludeMastered })
+ * - types   : sous-ensemble de ['vocab','grammar','kanji'] (kana à venir)
+ * - levels  : sous-ensemble de ['n5','n4','n3','n2','n1']
+ * - includeDue : si false, ignore les cartes dues (par défaut true — elles ne sont
+ *   jamais plafonnées, quel que soit newLimit)
+ * - newLimit : nombre MAXIMUM de nouvelles cartes pour TOUTE la session (pas par
+ *   combinaison type×niveau), réparties en tour de rôle
+ * - excludeMastered : si true, ignore les items déjà marqués "mastered" via trackItem
+ *   (préparé pour le futur filtre "Aujourd'hui" — non utilisé par défaut, donc aucun
+ *   appelant existant n'est affecté)
+ * Retourne un tableau mélangé de { type, level, item }.
+ */
+async function buildReviewQueue({
+    types = ['vocab', 'grammar', 'kanji'],
+    levels = ['n5', 'n4', 'n3', 'n2', 'n1'],
+    includeDue = true,
+    newLimit = SRS_NEW_PER_SESSION,
+    excludeMastered = false
+} = {}) {
+    const buckets = [];
+
+    for (const level of levels) {
+        for (const type of types) {
+            let items = await getRawItemsForTypeLevel(type, level);
+            if (!items.length) continue;
+            if (excludeMastered) {
+                items = items.filter(it => getItemStatus(it.id) !== 'mastered');
+            }
+            const { due, fresh } = splitDueAndFreshRaw(items);
+            if (due.length || fresh.length) buckets.push({ type, level, due, fresh });
+        }
+    }
+
+    const queue = [];
+
+    // Cartes dues : toutes incluses, jamais plafonnées
+    if (includeDue) {
+        buckets.forEach(b => b.due.forEach(rawItem => queue.push(makeQueueEntry(b.type, b.level, rawItem))));
+    }
+
+    // Nouvelles cartes : quota global réparti en tour de rôle entre les combinaisons concernées
+    const freshBuckets = buckets.filter(b => b.fresh.length).map(b => ({ key: `${b.type}_${b.level}`, pool: b.fresh }));
+    const freshBucketMeta = {};
+    buckets.forEach(b => { freshBucketMeta[`${b.type}_${b.level}`] = { type: b.type, level: b.level }; });
+
+    distributeNewQuota(freshBuckets, newLimit).forEach(({ key, item }) => {
+        const meta = freshBucketMeta[key];
+        queue.push(makeQueueEntry(meta.type, meta.level, item));
+    });
+
+    return shuffleArray(queue);
+}
+
 // Score approximatif 0-100 dérivé du SRS (répétitions + facilité), pour affichage visuel uniquement.
 // Ce n'est PAS un vrai score de rétention scientifique, juste une approximation cohérente.
 function getSrsConfidencePct(itemId) {
