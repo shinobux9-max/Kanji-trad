@@ -1162,6 +1162,33 @@
 .ft-result-row.wrong { color: #FB7185; background: rgba(251,113,133,0.06); }
 .ft-result-row span:last-child { color: var(--text); font-weight: 500; }
 
+/* Fiche kanji en révision, façon maquette dédiée (carte décorative + carte de lectures) */
+.kfiche-card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 150px;
+    margin-bottom: 14px;
+}
+.kfiche-grid-dots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; opacity: 0.25; }
+.kfiche-grid-dots span { width: 12px; height: 12px; border: 1px dashed var(--accent-muted); border-radius: 50%; display: block; }
+.kfiche-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.kfiche-char { font-size: 3.5rem; color: var(--accent); text-shadow: 0 0 15px rgba(0,229,255,0.6); font-weight: bold; line-height: 1; margin-bottom: 6px; }
+.kfiche-subtext { color: var(--text); font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
+.kfiche-badges { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; margin-left: auto; }
+.kfiche-badge-level { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 16px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
+.kfiche-badge-strokes { background: transparent; border: 1px solid var(--border); color: var(--gray); padding: 4px 12px; border-radius: 16px; font-size: 0.75rem; white-space: nowrap; }
+.kfiche-readings-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.kfiche-reading-section { margin-bottom: 12px; }
+.kfiche-reading-section:last-child { margin-bottom: 0; }
+.kfiche-reading-label { font-size: 0.625rem; font-weight: 700; color: var(--accent-muted); letter-spacing: 1px; margin-bottom: 6px; }
+.kfiche-romaji-text { color: var(--text); font-size: 0.8125rem; margin-top: 4px; }
+
 /* Explication contextuelle sur confusion (point #2 V2) — repose sur grammar.json > confusions[] */
 .confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; }
 .confusion-box-title { font-size: 0.8125rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }

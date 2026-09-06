@@ -3980,15 +3980,32 @@ function buildFicheDetailContent(entry) {
     } else if (entry.type === 'kanji') {
         const char = entry.item.char;
         const k = kanjiDb.find(x => x.char === char);
-        title = char;
-        const meanings = (k?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+        title = ''; // le caractère vit dans la carte décorative ci-dessous, pas dans le titre générique
+        const level = k ? getJLPTLevel(k.grade) : null;
         const onTags = (k?.on || []).map(r => `<span class="tag tag-on">${r}</span>`).join('');
         const kunTags = (k?.kun || []).map(r => `<span class="tag tag-kun">${r}</span>`).join('');
+        const romajiAll = [...(k?.wk_on || []), ...(k?.wk_kun || [])];
+        const romajiText = romajiAll.length ? romajiAll.join(', ') : '';
+        const meanings = (k?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+
         body = `
-            <div class="section-paragraph" style="text-align:center">${meanings.join(' / ') || '–'}</div>
-            ${onTags ? `<div class="fiche-sub" style="margin:12px 0 4px">On'yomi</div><div class="tag-container" style="justify-content:center">${onTags}</div>` : ''}
-            ${kunTags ? `<div class="fiche-sub" style="margin:12px 0 4px">Kun'yomi</div><div class="tag-container" style="justify-content:center">${kunTags}</div>` : ''}
-            ${k?.strokes ? `<div class="section-paragraph" style="margin-top:12px;text-align:center"><strong>Traits :</strong> ${k.strokes}</div>` : ''}
+            <div class="kfiche-card">
+                <div class="kfiche-grid-dots">${'<span></span>'.repeat(8)}</div>
+                <div class="kfiche-center">
+                    <div class="kfiche-char">${char}</div>
+                    ${romajiText ? `<div class="kfiche-subtext">${romajiText}</div>` : ''}
+                </div>
+                <div class="kfiche-badges">
+                    ${level ? `<span class="kfiche-badge-level">N${level} Niveau</span>` : ''}
+                    ${k?.strokes ? `<span class="kfiche-badge-strokes">${k.strokes} Traits</span>` : ''}
+                </div>
+            </div>
+            <div class="kfiche-readings-card">
+                ${meanings.length ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">SIGNIFICATION</div><div class="kfiche-romaji-text" style="font-size:0.9375rem;color:#fff">${meanings.join(' / ')}</div></div>` : ''}
+                ${onTags ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">ON'YOMI</div><div class="tag-container">${onTags}</div></div>` : ''}
+                ${kunTags ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">KUN'YOMI</div><div class="tag-container">${kunTags}</div></div>` : ''}
+                ${romajiText ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">RÔMAJI</div><div class="kfiche-romaji-text">${romajiText}</div></div>` : ''}
+            </div>
         `;
     } else if (entry.type === 'kana') {
         const k = entry.item;
@@ -4015,7 +4032,7 @@ function showFicheCorrectionModal(entry) {
             <button onclick="closeFicheCorrectionModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
         </div>
         <div style="text-align:center;padding:8px 0 4px">
-            <div style="font-size:2.25rem;font-weight:bold;color:#fff;margin-bottom:8px">${title}</div>
+            ${title ? `<div style="font-size:2.25rem;font-weight:bold;color:#fff;margin-bottom:8px">${title}</div>` : ''}
             <div style="text-align:left">${body}</div>
         </div>
         <button class="quiz-action-btn primary" style="width:100%;margin-top:18px" onclick="closeFicheCorrectionModal()">Compris ✓</button>
