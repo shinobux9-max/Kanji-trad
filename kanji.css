@@ -1186,6 +1186,7 @@
 .kfiche-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; text-align: center; }
 .kfiche-char { font-size: 3.5rem; color: var(--accent); text-shadow: 0 0 15px rgba(0,229,255,0.6); font-weight: bold; line-height: 1; margin-bottom: 6px; }
 .kfiche-subtext { color: var(--text); font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
+.kfiche-subtext-secondary { color: var(--gray); font-size: 0.6875rem; font-weight: 400; margin-top: 2px; white-space: normal; max-width: 220px; }
 .kfiche-badges { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
 .kfiche-badge-level { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 16px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
 .kfiche-badge-strokes { background: transparent; border: 1px solid var(--border); color: var(--gray); padding: 4px 12px; border-radius: 16px; font-size: 0.75rem; white-space: nowrap; }

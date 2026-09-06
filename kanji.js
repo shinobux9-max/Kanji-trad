@@ -3992,6 +3992,7 @@ function buildFicheDetailContent(entry) {
                 <div class="kfiche-center">
                     <div class="kfiche-char">${char}</div>
                     ${primaryMeaning ? `<div class="kfiche-subtext">${primaryMeaning}</div>` : ''}
+                    ${meanings.length > 1 ? `<div class="kfiche-subtext kfiche-subtext-secondary">${meanings.slice(1).join(', ')}</div>` : ''}
                 </div>
                 <div class="kfiche-badges">
                     ${level ? `<span class="kfiche-badge-level">N${level} Niveau</span>` : ''}
@@ -4001,7 +4002,7 @@ function buildFicheDetailContent(entry) {
             <div class="kfiche-readings-card">
                 ${onTags ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">ON'YOMI</div><div class="tag-container">${onTags}</div></div>` : ''}
                 ${kunTags ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">KUN'YOMI</div><div class="tag-container">${kunTags}</div></div>` : ''}
-                ${meanings.length > 1 ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">AUTRES SENS</div><div class="kfiche-romaji-text">${meanings.slice(1).join(' / ')}</div></div>` : ''}
+                ${(k?.romaji && k.romaji !== '–') ? `<div class="kfiche-reading-section"><div class="kfiche-reading-label">RÔMAJI</div><div class="kfiche-romaji-text">${k.romaji}</div></div>` : ''}
             </div>
         `;
     } else if (entry.type === 'kana') {
