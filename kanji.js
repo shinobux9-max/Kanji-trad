@@ -5716,8 +5716,91 @@ async function getLevelVocabGrammarStats(levelId) {
 // Quota global de 5 nouvelles cartes pour le bouton "Aujourd'hui" de l'accueil —
 // volontairement plus bas que l'onglet "Apprendre" (10) : l'accueil est pensé comme
 // un point d'entrée rapide/quotidien, "Apprendre" comme une session plus complète.
+/* ══════════════════════════════════════════════════
+   OBJECTIF DU JOUR — niveaux JLPT inclus dans le bouton "Aujourd'hui"
+   ─────────────────────────────────────────────────
+   Réglage persistant (localStorage), pas redemandé à chaque session.
+   Par défaut (rien de sauvegardé) : tous les niveaux, comme avant —
+   personne n'est surpris par un changement de comportement silencieux.
+   Le script kana viendra s'ajouter ici une fois le point #7 fait
+   (intégration du kana dans buildReviewQueue).
+══════════════════════════════════════════════════ */
+const DAILY_GOAL_KEY   = 'kanji_trad_daily_goal';
+const ALL_JLPT_LEVELS  = ['n5', 'n4', 'n3', 'n2', 'n1'];
+
+function getDailyGoalLevels() {
+    try {
+        const stored = localStorage.getItem(DAILY_GOAL_KEY);
+        if (!stored) return [...ALL_JLPT_LEVELS];
+        const parsed = JSON.parse(stored);
+        return (Array.isArray(parsed) && parsed.length) ? parsed : [...ALL_JLPT_LEVELS];
+    } catch (e) {
+        return [...ALL_JLPT_LEVELS];
+    }
+}
+
+function saveDailyGoalLevels(levels) {
+    localStorage.setItem(DAILY_GOAL_KEY, JSON.stringify(levels));
+}
+
+// Libellé court affiché sur la carte accueil, ex: "N5, N4"
+function formatDailyGoalLabel() {
+    const levels = getDailyGoalLevels();
+    if (!jlptMapping) return levels.map(l => l.toUpperCase()).join(', ');
+    return levels
+        .slice()
+        .sort((a, b) => (jlptMapping.levels[a]?.order ?? 0) - (jlptMapping.levels[b]?.order ?? 0))
+        .map(l => jlptMapping.levels[l]?.label || l.toUpperCase())
+        .join(', ');
+}
+
+function renderDailyGoalModalContent() {
+    const container = document.getElementById('daily-goal-levels-list');
+    if (!container) return;
+    const current = getDailyGoalLevels();
+    const levels = jlptMapping
+        ? Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)
+        : ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase(), label_full: '', color: '#00E5FF' }]);
+
+    container.innerHTML = levels.map(([levelId, levelData]) => `
+        <label class="daily-goal-row">
+            <input type="checkbox" class="daily-goal-checkbox" value="${levelId}"
+                ${current.includes(levelId) ? 'checked' : ''}
+                style="accent-color:${levelData.color || 'var(--accent)'}">
+            <span class="daily-goal-row-label" style="color:${levelData.color || 'var(--text)'}">${levelData.label || levelId.toUpperCase()}</span>
+            <span class="daily-goal-row-sub">${levelData.label_full || ''}</span>
+        </label>
+    `).join('');
+}
+
+function showDailyGoalModal() {
+    renderDailyGoalModalContent();
+    const m = document.getElementById('daily-goal-modal');
+    if (!m) return;
+    m.classList.add('open');
+    m.style.display = 'flex';
+}
+
+function closeDailyGoalModal() {
+    const m = document.getElementById('daily-goal-modal');
+    if (!m) return;
+    m.classList.remove('open');
+    m.style.display = 'none';
+}
+
+function saveDailyGoalFromModal() {
+    const checked = [...document.querySelectorAll('.daily-goal-checkbox:checked')].map(el => el.value);
+    if (checked.length === 0) {
+        alert('Choisis au moins un niveau.');
+        return;
+    }
+    saveDailyGoalLevels(checked);
+    closeDailyGoalModal();
+    renderDashboardReviewCta(); // rafraîchit la carte accueil avec le nouvel objectif
+}
+
 async function getDashboardDueCount() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: 5 });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5 });
     const newTotal = queue.filter(e => e.isNew).length;
     const dueTotal = queue.length - newTotal;
     return { total: queue.length, dueTotal, newTotal };
@@ -5761,14 +5844,16 @@ async function renderDashboardReviewCta() {
     if (!el) return;
     
     const { total, dueTotal, newTotal } = await getDashboardDueCount();
+    const goalLine = `<div class="review-cta-goal-link" onclick="showDailyGoalModal()">🎯 Objectif : ${formatDailyGoalLabel()} · Modifier</div>`;
     
     if (total === 0) {
-        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
+        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>${goalLine}`;
         return;
     }
     
     el.innerHTML = `
         <div class="review-cta-label">RÉVISER AUJOURD'HUI</div>
+        ${goalLine}
         <div class="review-cta-split">
             <div class="review-cta-split-box">
                 <div class="review-cta-split-num">${newTotal}</div>
@@ -5788,7 +5873,7 @@ async function renderDashboardReviewCta() {
 // ne lançait que le vocabulaire du premier niveau en retard). Réutilise le mécanisme
 // de session mixte partagé avec l'onglet "Apprendre" (launchMixedReviewSession).
 async function startDashboardReview() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: 5 });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5 });
     launchMixedReviewSession(queue, 'mixed-review-dashboard');
 }
 
