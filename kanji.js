@@ -369,7 +369,6 @@ function applyBulkMastery() {
     if (count === 0) { alert('Aucun élément sélectionné.'); return; }
     bulkSelectedIds.forEach(id => trackItem(id, 'mastered'));
     exitBulkSelectMode();
-    alert(`${count} élément${count > 1 ? 's' : ''} marqué${count > 1 ? 's' : ''} comme maîtrisé${count > 1 ? 's' : ''} ✓`);
 }
 
 function updateBulkActionBar() {
@@ -1851,6 +1850,7 @@ function startKanjiFlashcardReview() {
         results: { again: 0, hard: 0, good: 0, easy: 0 },
         flipped: false
     };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderKanjiReviewScreen();
 }
 
@@ -2027,6 +2027,7 @@ function startVocabReview() {
         answered: false,
         selected: null
     };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderReviewScreen();
 }
 
@@ -2155,6 +2156,7 @@ function renderClozeExercise(entry, session) {
                 return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt}')">${opt}</button>`;
             }).join('')}
         </div>
+        ${(answered && selected !== clozeInfo.correct && word.nuance) ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>` : ''}
         ${answered ? `<button class="review-continue-btn" onclick="advanceReviewQueue()">Continuer →</button>` : ''}
     `;
 }
@@ -2292,6 +2294,7 @@ function startGrammarReview() {
         answered: false,
         selected: null
     };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderGrammarReviewScreen();
 }
 
@@ -3945,11 +3948,13 @@ function buildFicheDetailContent(entry) {
         const k = kanjiDb.find(x => x.char === char);
         title = char;
         const meanings = (k?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
+        const onTags = (k?.on || []).map(r => `<span class="tag tag-on">${r}</span>`).join('');
+        const kunTags = (k?.kun || []).map(r => `<span class="tag tag-kun">${r}</span>`).join('');
         body = `
             <div class="section-paragraph" style="text-align:center">${meanings.join(' / ') || '–'}</div>
-            ${k?.on?.length ? `<div class="section-paragraph"><strong>On'yomi :</strong> ${k.on.join('、')}</div>` : ''}
-            ${k?.kun?.length ? `<div class="section-paragraph"><strong>Kun'yomi :</strong> ${k.kun.join('、')}</div>` : ''}
-            ${k?.strokes ? `<div class="section-paragraph"><strong>Traits :</strong> ${k.strokes}</div>` : ''}
+            ${onTags ? `<div class="fiche-sub" style="margin:12px 0 4px">On'yomi</div><div class="tag-container" style="justify-content:center">${onTags}</div>` : ''}
+            ${kunTags ? `<div class="fiche-sub" style="margin:12px 0 4px">Kun'yomi</div><div class="tag-container" style="justify-content:center">${kunTags}</div>` : ''}
+            ${k?.strokes ? `<div class="section-paragraph" style="margin-top:12px;text-align:center"><strong>Traits :</strong> ${k.strokes}</div>` : ''}
         `;
     } else if (entry.type === 'kana') {
         const k = entry.item;
@@ -6824,6 +6829,12 @@ function flipTrainingCard() {
 // Mode Boucle : une carte ratée est remise dans le pool, donc repiochable plus tard dans la
 // MÊME session (l'anti-répétition immédiate de trainingEnsureNextItem empêche qu'elle revienne
 // littéralement à la question suivante).
+// answerTrainingCard() n'appelle JAMAIS gradeReview() — c'est tout le principe de l'isolation.
+// Exception ciblée : si la session vient du widget "À renforcer" (config.type === 'weakness'),
+// la réponse met à jour le tracker de faiblesse — sinon s'entraîner dessus ne ferait jamais
+// disparaître un item du widget, même à 100% de réussite, ce qui viderait le bouton "S'entraîner"
+// de son utilité. Le SRS, lui, reste toujours intact : seul updateWeaknessTracking est appelé,
+// jamais gradeReview.
 function answerTrainingCard(isCorrect) {
     const s = trainingSession;
     if (!s) return;
@@ -6834,6 +6845,9 @@ function answerTrainingCard(isCorrect) {
         s.wrong++;
         s.mistakes.push(entry);
         if (s.mode === 'loop') s.pool.push(entry);
+    }
+    if (s.config && s.config.type === 'weakness') {
+        updateWeaknessTracking(getEntryTrackingId(entry), isCorrect ? 2 : 0, { type: entry.type, label: getEntryLabel(entry) });
     }
     s.index++;
     s.flipped = false;
