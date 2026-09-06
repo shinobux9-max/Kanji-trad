@@ -459,6 +459,18 @@ function getWeaknessData() {
 }
 function saveWeaknessData(d) { localStorage.setItem(WEAKNESS_KEY, JSON.stringify(d)); }
 
+// Point #6 V2 — Relearning intra-session : une carte ratée ("Encore") réapparaît quelques
+// questions plus tard dans LA MÊME session, en plus (pas à la place) de sa reprogrammation SRS
+// normale via gradeReview(). N'affecte que l'affichage de la session — si la carte revient et
+// est notée à nouveau, gradeReview() est rappelée normalement, comme pour n'importe quelle
+// notation (pas de cas spécial : le second passage est un vrai second essai, pas une simple relecture).
+function scheduleRelearning(session, entry) {
+    if (!session || !session.queue) return;
+    const gap = 3 + Math.floor(Math.random() * 4); // réapparaît 3 à 6 questions plus tard
+    const insertAt = Math.min(session.index + 1 + gap, session.queue.length);
+    session.queue.splice(insertAt, 0, entry);
+}
+
 function updateWeaknessTracking(itemId, quality, meta) {
     const data = getWeaknessData();
     if (quality === 0) {
@@ -1948,6 +1960,7 @@ function submitKanjiReviewGrade(quality) {
     if (!kanjiReviewSession) return;
     const char = kanjiReviewSession.queue[kanjiReviewSession.index];
     gradeReview(char, quality, { type: 'kanji', label: char });
+    if (quality === 0) scheduleRelearning(kanjiReviewSession, char);
     
     const labels = ['again', 'hard', 'good', 'easy'];
     kanjiReviewSession.results[labels[quality]]++;
@@ -2236,6 +2249,7 @@ async function submitQuizAnswer(selected) {
     
     const quality = isCorrect ? 2 : 0; // Bien si juste, Encore si faux
     gradeReview(entry.word.id, quality, { type: 'vocab', label: entry.word.word });
+    if (!isCorrect) scheduleRelearning(session, entry);
     const labels = ['again', 'hard', 'good', 'easy'];
     session.results[labels[quality]]++;
     
@@ -2267,6 +2281,7 @@ function submitReviewGrade(quality) {
     if (!reviewSession) return;
     const entry = reviewSession.queue[reviewSession.index];
     gradeReview(entry.word.id, quality, { type: 'vocab', label: entry.word.word });
+    if (quality === 0) scheduleRelearning(reviewSession, entry);
     
     const labels = ['again', 'hard', 'good', 'easy'];
     reviewSession.results[labels[quality]]++;
@@ -2505,6 +2520,7 @@ function submitGrammarQuizAnswer(selected) {
     
     const quality = isCorrect ? 2 : 0;
     gradeReview(entry.lesson.id, quality, { type: 'grammar', label: entry.lesson.item || entry.lesson.pattern });
+    if (!isCorrect) scheduleRelearning(session, entry);
     const labels = ['again', 'hard', 'good', 'easy'];
     session.results[labels[quality]]++;
     
@@ -2524,6 +2540,7 @@ function submitGrammarReviewGrade(quality) {
     if (!grammarReviewSession) return;
     const entry = grammarReviewSession.queue[grammarReviewSession.index];
     gradeReview(entry.lesson.id, quality, { type: 'grammar', label: entry.lesson.item || entry.lesson.pattern });
+    if (quality === 0) scheduleRelearning(grammarReviewSession, entry);
     
     const labels = ['again', 'hard', 'good', 'easy'];
     grammarReviewSession.results[labels[quality]]++;
@@ -3802,6 +3819,7 @@ function submitKanaReviewGrade(quality) {
     if (!kanaReviewSession) return;
     const kana = kanaReviewSession.queue[kanaReviewSession.index];
     gradeReview(kana.id, quality, { type: 'kana', label: kana.char });
+    if (quality === 0) scheduleRelearning(kanaReviewSession, kana);
 
     const labels = ['again', 'hard', 'good', 'easy'];
     kanaReviewSession.results[labels[quality]]++;
@@ -4134,6 +4152,7 @@ function submitMixedReviewGrade(quality) {
     const entry = mixedReviewSession.queue[mixedReviewSession.index];
     const id = getEntryTrackingId(entry);
     gradeReview(id, quality, { type: entry.type, label: getEntryLabel(entry) });
+    if (quality === 0) scheduleRelearning(mixedReviewSession, entry);
     
     const labels = ['again', 'hard', 'good', 'easy'];
     mixedReviewSession.results[labels[quality]]++;
