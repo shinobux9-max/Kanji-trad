@@ -2156,7 +2156,13 @@ function renderClozeExercise(entry, session) {
                 return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt}')">${opt}</button>`;
             }).join('')}
         </div>
-        ${(answered && selected !== clozeInfo.correct && word.nuance) ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>` : ''}
+        ${(answered && selected !== clozeInfo.correct) ? (
+            entry.relatedGrammarEntry
+                ? `<button class="fiche-correction-btn" style="margin-top:14px" onclick="showFicheCorrectionModal(reviewSession.queue[reviewSession.index].relatedGrammarEntry)">📖 Voir la leçon : ${clozeInfo.correct}</button>`
+                : (entry.relatedGrammarEntry === null && word.nuance)
+                    ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>`
+                    : ''
+        ) : ''}
         ${answered ? `<button class="review-continue-btn" onclick="advanceReviewQueue()">Continuer →</button>` : ''}
     `;
 }
@@ -2168,7 +2174,23 @@ function flipReviewCard() {
 }
 
 // Réponse à un QCM ou un cloze : note automatiquement selon la justesse
-function submitQuizAnswer(selected) {
+// Cherche une leçon de grammaire dont "item" correspond exactement à la particule/notion donnée
+// (une particule a généralement sa propre leçon dédiée dans grammar.json). Utilisé pour lier le
+// quiz à trous du vocabulaire à la vraie fiche grammaire, plutôt qu'à la simple nuance du mot.
+// Résultat mis en cache implicitement via getLevelGrammarData (déjà caché par niveau).
+async function findGrammarLessonForItem(itemText) {
+    if (!itemText) return null;
+    for (const level of ALL_JLPT_LEVELS) {
+        const gd = await getLevelGrammarData(level);
+        if (gd && gd.data) {
+            const found = gd.data.find(l => l.item === itemText);
+            if (found) return { type: 'grammar', level, item: found };
+        }
+    }
+    return null;
+}
+
+async function submitQuizAnswer(selected) {
     if (!reviewSession || reviewSession.answered) return;
     const session = reviewSession;
     const entry = session.queue[session.index];
@@ -2183,7 +2205,19 @@ function submitQuizAnswer(selected) {
     const labels = ['again', 'hard', 'good', 'easy'];
     session.results[labels[quality]]++;
     
-    renderReviewScreen();
+    renderReviewScreen(); // affichage immédiat (couleurs correct/incorrect), sans attendre la recherche ci-dessous
+
+    // Cloze raté : recherche (async, mise en cache par niveau) de la leçon grammaire liée à la
+    // bonne particule, pour proposer "Voir la leçon" plutôt que la simple nuance du mot.
+    if (entry.type === 'cloze' && !isCorrect && entry.relatedGrammarEntry === undefined) {
+        const found = await findGrammarLessonForItem(entry.clozeInfo.correct);
+        entry.relatedGrammarEntry = found || null;
+        // Re-render seulement si on est toujours sur la même question (l'utilisateur n'a pas
+        // déjà cliqué "Continuer" pendant la recherche)
+        if (reviewSession === session && session.queue[session.index] === entry) {
+            renderReviewScreen();
+        }
+    }
 }
 
 function advanceReviewQueue() {
