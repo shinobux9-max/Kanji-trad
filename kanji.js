@@ -580,13 +580,14 @@ function makeQueueEntry(type, level, rawItem, isNew) {
 }
 
 /**
- * buildReviewQueue({ types, levels, includeDue, newLimit, excludeMastered })
- * - types   : sous-ensemble de ['vocab','grammar','kanji'] (kana à venir)
+ * buildReviewQueue({ types, levels, includeDue, newLimit, excludeMastered, includeKana, kanaScripts })
+ * - types   : sous-ensemble de ['vocab','grammar','kanji']
  * - levels  : sous-ensemble de ['n5','n4','n3','n2','n1']
  * - includeDue : si false, ignore les cartes dues (par défaut true — elles ne sont
  *   jamais plafonnées, quel que soit newLimit)
  * - newLimit : nombre MAXIMUM de nouvelles cartes pour TOUTE la session (pas par
- *   combinaison type×niveau), réparties en tour de rôle
+ *   combinaison type×niveau), réparties en tour de rôle — le kana y participe comme
+ *   une combinaison de plus (pas de quota séparé)
  * - excludeMastered : si true, retire les items marqués "mastered" (trackItem) du
  *   pool des NOUVELLES cartes uniquement — jamais des cartes dues. Le SRS reste seul
  *   juge de ce qui est "dû" : un item maîtrisé à la main (ex: validation en masse,
@@ -594,6 +595,9 @@ function makeQueueEntry(type, level, rawItem, isNew) {
  *   dans le pool "nouveau" — c'est ce cas précis qu'on exclut. Mais si un item a déjà
  *   un planning SRS et que son intervalle est expiré, il reste "dû" et s'affiche quand
  *   même, même marqué maîtrisé — le SRS a le dernier mot sur ce qui doit être revu.
+ * - includeKana : si true, ajoute le kana à la file (par défaut false — comportement
+ *   inchangé pour tous les appelants existants, ex: onglet "Apprendre")
+ * - kanaScripts : sous-ensemble de ['hira','kata'], ignoré si includeKana=false
  * Retourne un tableau mélangé de { type, level, item }.
  */
 async function buildReviewQueue({
@@ -601,7 +605,9 @@ async function buildReviewQueue({
     levels = ['n5', 'n4', 'n3', 'n2', 'n1'],
     includeDue = true,
     newLimit = SRS_NEW_PER_SESSION,
-    excludeMastered = false
+    excludeMastered = false,
+    includeKana = false,
+    kanaScripts = ['hira', 'kata']
 } = {}) {
     const buckets = [];
 
@@ -614,6 +620,21 @@ async function buildReviewQueue({
                 fresh = fresh.filter(it => getItemStatus(it.id) !== 'mastered');
             }
             if (due.length || fresh.length) buckets.push({ type, level, due, fresh });
+        }
+    }
+
+    // Kana : axe "script" (hiragana/katakana) plutôt que niveau JLPT, donc traité à part
+    // du double-boucle ci-dessus. getKanaFlatList() retourne déjà des items {id, char, romaji}
+    // avec id au format 'kana_'+caractère — directement compatible avec trackItem/gradeReview.
+    if (includeKana) {
+        for (const script of kanaScripts) {
+            const items = getKanaFlatList(script);
+            if (!items.length) continue;
+            let { due, fresh } = splitDueAndFreshRaw(items);
+            if (excludeMastered) {
+                fresh = fresh.filter(it => getItemStatus(it.id) !== 'mastered');
+            }
+            if (due.length || fresh.length) buckets.push({ type: 'kana', level: script, due, fresh });
         }
     }
 
@@ -3712,6 +3733,12 @@ function renderMixedReviewScreen() {
         const on = kanjiData?.on || [];
         const kun = kanjiData?.kun || [];
         back = `${on.length ? `<div class="review-romaji">On : ${on.slice(0, 3).join('、')}</div>` : ''}${kun.length ? `<div class="review-romaji">Kun : ${kun.slice(0, 3).join('、')}</div>` : ''}<div class="review-meaning">${meanings.slice(0, 3).join(' / ') || '–'}</div>`;
+    } else if (entry.type === 'kana') {
+        const k = entry.item;
+        typeLabel = (entry.level === 'kata') ? 'ア Katakana' : 'あ Hiragana';
+        front = k.char || '';
+        frontSize = 56;
+        back = `<div class="review-meaning">${k.romaji || ''}</div>`;
     }
     
     container.innerHTML = `<div class="review-page">
@@ -3763,10 +3790,13 @@ function renderMixedReviewSummary() {
     const container = document.getElementById('category-content');
     const r = mixedReviewSession.results;
     const total = mixedReviewSession.queue.length;
+    const typesPresent = [...new Set(mixedReviewSession.queue.map(e => e.type))];
+    const typeLabels = { vocab: 'vocab', grammar: 'grammaire', kanji: 'kanji', kana: 'kana' };
+    const typesText = typesPresent.map(t => typeLabels[t] || t).join(' + ');
     
     container.innerHTML = `<div class="review-summary">
         <div class="review-summary-title">Session terminée ! 🎉</div>
-        <div class="review-summary-count">${total} carte${total > 1 ? 's' : ''} révisée${total > 1 ? 's' : ''} (vocab + grammaire + kanji)</div>
+        <div class="review-summary-count">${total} carte${total > 1 ? 's' : ''} révisée${total > 1 ? 's' : ''}${typesText ? ` (${typesText})` : ''}</div>
         <div class="review-summary-stats">
             <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
             <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
@@ -5838,16 +5868,20 @@ async function getLevelVocabGrammarStats(levelId) {
 // volontairement plus bas que l'onglet "Apprendre" (10) : l'accueil est pensé comme
 // un point d'entrée rapide/quotidien, "Apprendre" comme une session plus complète.
 /* ══════════════════════════════════════════════════
-   OBJECTIF DU JOUR — niveaux JLPT inclus dans le bouton "Aujourd'hui"
+   OBJECTIF DU JOUR — niveaux JLPT + scripts kana inclus dans "Aujourd'hui"
    ─────────────────────────────────────────────────
    Réglage persistant (localStorage), pas redemandé à chaque session.
-   Par défaut (rien de sauvegardé) : tous les niveaux, comme avant —
-   personne n'est surpris par un changement de comportement silencieux.
-   Le script kana viendra s'ajouter ici une fois le point #7 fait
-   (intégration du kana dans buildReviewQueue).
+   Par défaut (rien de sauvegardé) : tous les niveaux ET tout le kana,
+   comme avant — personne n'est surpris par un changement de comportement
+   silencieux. Contrairement aux niveaux JLPT (au moins un requis, sinon
+   plus rien à réviser n'a de sens), le kana peut être désélectionné
+   entièrement — légitime si l'utilisateur le considère acquis.
 ══════════════════════════════════════════════════ */
-const DAILY_GOAL_KEY   = 'kanji_trad_daily_goal';
-const ALL_JLPT_LEVELS  = ['n5', 'n4', 'n3', 'n2', 'n1'];
+const DAILY_GOAL_KEY       = 'kanji_trad_daily_goal';
+const DAILY_GOAL_KANA_KEY  = 'kanji_trad_daily_goal_kana';
+const ALL_JLPT_LEVELS      = ['n5', 'n4', 'n3', 'n2', 'n1'];
+const ALL_KANA_SCRIPTS     = ['hira', 'kata'];
+const KANA_SCRIPT_LABELS   = { hira: 'Hiragana', kata: 'Katakana' };
 
 function getDailyGoalLevels() {
     try {
@@ -5864,34 +5898,71 @@ function saveDailyGoalLevels(levels) {
     localStorage.setItem(DAILY_GOAL_KEY, JSON.stringify(levels));
 }
 
-// Libellé court affiché sur la carte accueil, ex: "N5, N4"
+// Contrairement aux niveaux JLPT, un tableau vide est une valeur légitime ici
+// (l'utilisateur ne veut aucun kana dans "Aujourd'hui") — pas de fallback sur "tout"
+// si une valeur a déjà été explicitement sauvegardée, même vide.
+function getDailyGoalKanaScripts() {
+    try {
+        const stored = localStorage.getItem(DAILY_GOAL_KANA_KEY);
+        if (stored === null) return [...ALL_KANA_SCRIPTS];
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed : [...ALL_KANA_SCRIPTS];
+    } catch (e) {
+        return [...ALL_KANA_SCRIPTS];
+    }
+}
+
+function saveDailyGoalKanaScripts(scripts) {
+    localStorage.setItem(DAILY_GOAL_KANA_KEY, JSON.stringify(scripts));
+}
+
+// Libellé court affiché sur la carte accueil, ex: "N5, N4 · Hiragana, Katakana"
 function formatDailyGoalLabel() {
     const levels = getDailyGoalLevels();
-    if (!jlptMapping) return levels.map(l => l.toUpperCase()).join(', ');
-    return levels
-        .slice()
-        .sort((a, b) => (jlptMapping.levels[a]?.order ?? 0) - (jlptMapping.levels[b]?.order ?? 0))
-        .map(l => jlptMapping.levels[l]?.label || l.toUpperCase())
-        .join(', ');
+    const levelsLabel = jlptMapping
+        ? levels.slice().sort((a, b) => (jlptMapping.levels[a]?.order ?? 0) - (jlptMapping.levels[b]?.order ?? 0))
+                .map(l => jlptMapping.levels[l]?.label || l.toUpperCase()).join(', ')
+        : levels.map(l => l.toUpperCase()).join(', ');
+
+    const kanaScripts = getDailyGoalKanaScripts();
+    const kanaLabel = kanaScripts.length
+        ? kanaScripts.map(s => KANA_SCRIPT_LABELS[s] || s).join(', ')
+        : null;
+
+    return kanaLabel ? `${levelsLabel} · ${kanaLabel}` : levelsLabel;
 }
 
 function renderDailyGoalModalContent() {
-    const container = document.getElementById('daily-goal-levels-list');
-    if (!container) return;
-    const current = getDailyGoalLevels();
+    const levelsContainer = document.getElementById('daily-goal-levels-list');
+    const kanaContainer = document.getElementById('daily-goal-kana-list');
+    if (!levelsContainer) return;
+
+    const currentLevels = getDailyGoalLevels();
     const levels = jlptMapping
         ? Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order)
         : ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase(), label_full: '', color: '#00E5FF' }]);
 
-    container.innerHTML = levels.map(([levelId, levelData]) => `
+    levelsContainer.innerHTML = levels.map(([levelId, levelData]) => `
         <label class="daily-goal-row">
             <input type="checkbox" class="daily-goal-checkbox" value="${levelId}"
-                ${current.includes(levelId) ? 'checked' : ''}
+                ${currentLevels.includes(levelId) ? 'checked' : ''}
                 style="accent-color:${levelData.color || 'var(--accent)'}">
             <span class="daily-goal-row-label" style="color:${levelData.color || 'var(--text)'}">${levelData.label || levelId.toUpperCase()}</span>
             <span class="daily-goal-row-sub">${levelData.label_full || ''}</span>
         </label>
     `).join('');
+
+    if (kanaContainer) {
+        const currentKana = getDailyGoalKanaScripts();
+        kanaContainer.innerHTML = ALL_KANA_SCRIPTS.map(script => `
+            <label class="daily-goal-row">
+                <input type="checkbox" class="daily-goal-kana-checkbox" value="${script}"
+                    ${currentKana.includes(script) ? 'checked' : ''}
+                    style="accent-color:#9D6EFF">
+                <span class="daily-goal-row-label" style="color:#9D6EFF">${KANA_SCRIPT_LABELS[script]}</span>
+            </label>
+        `).join('');
+    }
 }
 
 function showDailyGoalModal() {
@@ -5910,18 +5981,21 @@ function closeDailyGoalModal() {
 }
 
 function saveDailyGoalFromModal() {
-    const checked = [...document.querySelectorAll('.daily-goal-checkbox:checked')].map(el => el.value);
-    if (checked.length === 0) {
+    const checkedLevels = [...document.querySelectorAll('.daily-goal-checkbox:checked')].map(el => el.value);
+    if (checkedLevels.length === 0) {
         alert('Choisis au moins un niveau.');
         return;
     }
-    saveDailyGoalLevels(checked);
+    const checkedKana = [...document.querySelectorAll('.daily-goal-kana-checkbox:checked')].map(el => el.value);
+
+    saveDailyGoalLevels(checkedLevels);
+    saveDailyGoalKanaScripts(checkedKana);
     closeDailyGoalModal();
     renderDashboardReviewCta(); // rafraîchit la carte accueil avec le nouvel objectif
 }
 
 async function getDashboardDueCount() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
     const newTotal = queue.filter(e => e.isNew).length;
     const dueTotal = queue.length - newTotal;
     return { total: queue.length, dueTotal, newTotal };
@@ -5994,7 +6068,7 @@ async function renderDashboardReviewCta() {
 // ne lançait que le vocabulaire du premier niveau en retard). Réutilise le mécanisme
 // de session mixte partagé avec l'onglet "Apprendre" (launchMixedReviewSession).
 async function startDashboardReview() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
     launchMixedReviewSession(queue, 'mixed-review-dashboard');
 }
 
