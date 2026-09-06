@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_vocab_kanji_chips">
+    <link rel="stylesheet" href="kanji.css?v=20260906_quota_config">
 </head>
 <body>
 
@@ -272,13 +272,15 @@
 <div id="daily-goal-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeDailyGoalModal()">
     <div class="mode-selection-card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-            <div class="mode-title" style="margin-bottom:0">Objectif du jour</div>
+            <div class="mode-title" style="margin-bottom:0">Réglages des révisions</div>
             <button onclick="closeDailyGoalModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
         </div>
         <div class="mode-section-label">— Niveaux JLPT à inclure dans "Aujourd'hui"</div>
         <div id="daily-goal-levels-list"></div>
         <div class="mode-section-label" style="margin-top:14px">— Kana à inclure (optionnel)</div>
         <div id="daily-goal-kana-list"></div>
+        <div class="mode-section-label" style="margin-top:14px">— Intensité (nouvelles cartes)</div>
+        <div id="quota-level-options" class="ft-radio-group ft-radio-pills"></div>
         <button class="quiz-action-btn primary" style="width:100%;margin-top:16px" onclick="saveDailyGoalFromModal()">Valider</button>
     </div>
 </div>
@@ -309,7 +311,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_weighted_priority"></script>
+    <script src="kanji.js?v=20260906_quota_config"></script>
 
     <!-- ── BULK ACTION BAR (sélection en masse) ────────── -->
     <div id="bulk-action-bar" style="display:none;">

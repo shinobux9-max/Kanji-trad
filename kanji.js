@@ -3791,7 +3791,8 @@ async function getLevelKanjiChars(levelId) {
 // pour toute la session mixte (avant : 10 par combinaison type×niveau, ce qui
 // pouvait aller jusqu'à 150 nouvelles cartes d'un coup). Voir buildReviewQueue().
 async function getMixedDueQueue() {
-    return buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: 10 });
+    const quota = QUOTA_LEVELS[getQuotaLevel()].apprendre;
+    return buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: quota });
 }
 
 let mixedReviewSession = null; // { queue: [{type, item}], index, results, flipped }
@@ -6227,6 +6228,7 @@ function renderDailyGoalModalContent() {
 
 function showDailyGoalModal() {
     renderDailyGoalModalContent();
+    renderQuotaLevelOptions();
     const m = document.getElementById('daily-goal-modal');
     if (!m) return;
     m.classList.add('open');
@@ -6247,15 +6249,84 @@ function saveDailyGoalFromModal() {
         return;
     }
     const checkedKana = [...document.querySelectorAll('.daily-goal-kana-checkbox:checked')].map(el => el.value);
+    const quotaLevel = document.querySelector('input[name="quota-level"]:checked')?.value || 'normal';
 
     saveDailyGoalLevels(checkedLevels);
     saveDailyGoalKanaScripts(checkedKana);
+    saveQuotaLevel(quotaLevel);
     closeDailyGoalModal();
     renderDashboardReviewCta(); // rafraîchit la carte accueil avec le nouvel objectif
 }
 
+/* ══════════════════════════════════════════════════
+   QUOTA CONFIGURABLE + QUOTA JOURNALIER (point #4 V2)
+   ─────────────────────────────────────────────────
+   Deux mécanismes distincts qui se combinent uniquement sur l'accueil ("Aujourd'hui") :
+   - Le NIVEAU choisi (Léger/Normal/Intense) fixe la base — pour Accueil ET Apprendre,
+     en gardant l'écart volontaire entre les deux (Accueil reste toujours < Apprendre).
+   - Le quota JOURNALIER ne s'applique qu'à l'Accueil : au-delà de la base choisie, plus
+     aucune nouvelle carte n'est proposée par ce bouton avant le lendemain — peu importe
+     combien de fois on relance une session "Aujourd'hui" dans la même journée. Les cartes
+     DUES restent illimitées, comme partout ailleurs. L'onglet Apprendre n'a pas de plafond
+     journalier (cohérent avec sa vocation "session plus complète", pas "check quotidien").
+══════════════════════════════════════════════════ */
+const QUOTA_LEVEL_KEY = 'kanji_trad_quota_level';
+const QUOTA_LEVELS = {
+    relax:   { accueil: 3,  apprendre: 6,  label: '🐢 Léger'   },
+    normal:  { accueil: 5,  apprendre: 10, label: '📘 Normal'  },
+    intense: { accueil: 10, apprendre: 20, label: '🚀 Intense' }
+};
+
+function getQuotaLevel() {
+    const stored = localStorage.getItem(QUOTA_LEVEL_KEY);
+    return (stored && QUOTA_LEVELS[stored]) ? stored : 'normal';
+}
+function saveQuotaLevel(level) {
+    if (QUOTA_LEVELS[level]) localStorage.setItem(QUOTA_LEVEL_KEY, level);
+}
+
+const DAILY_NEW_USAGE_KEY = 'kanji_trad_daily_new_usage';
+
+// Nombre de nouvelles cartes déjà proposées AUJOURD'HUI via le bouton Accueil (remis à zéro
+// silencieusement dès que la date change, pas besoin de job de nettoyage).
+function getDailyNewCardsUsedToday() {
+    const stored = localStorage.getItem(DAILY_NEW_USAGE_KEY);
+    if (!stored) return 0;
+    try {
+        const parsed = JSON.parse(stored);
+        return parsed.date === todayStr() ? (parsed.count || 0) : 0;
+    } catch (e) {
+        return 0;
+    }
+}
+function addDailyNewCardsUsed(n) {
+    if (n <= 0) return;
+    const current = getDailyNewCardsUsedToday();
+    localStorage.setItem(DAILY_NEW_USAGE_KEY, JSON.stringify({ date: todayStr(), count: current + n }));
+}
+
+// Quota effectif restant pour l'accueil aujourd'hui = base choisie moins ce qui a déjà été
+// consommé depuis minuit, jamais négatif.
+function getAccueilEffectiveNewLimit() {
+    const base = QUOTA_LEVELS[getQuotaLevel()].accueil;
+    const used = getDailyNewCardsUsedToday();
+    return Math.max(0, base - used);
+}
+
+function renderQuotaLevelOptions() {
+    const container = document.getElementById('quota-level-options');
+    if (!container) return;
+    const current = getQuotaLevel();
+    container.innerHTML = Object.entries(QUOTA_LEVELS).map(([id, def]) => `
+        <label class="ft-radio-pill">
+            <input type="radio" name="quota-level" value="${id}" ${id === current ? 'checked' : ''}>
+            <span>${def.label}</span>
+        </label>
+    `).join('');
+}
+
 async function getDashboardDueCount() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: getAccueilEffectiveNewLimit(), excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
     const newTotal = queue.filter(e => e.isNew).length;
     const dueTotal = queue.length - newTotal;
     return { total: queue.length, dueTotal, newTotal };
@@ -6295,7 +6366,9 @@ async function renderDashboardReviewCta() {
 // ne lançait que le vocabulaire du premier niveau en retard). Réutilise le mécanisme
 // de session mixte partagé avec l'onglet "Apprendre" (launchMixedReviewSession).
 async function startDashboardReview() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: getAccueilEffectiveNewLimit(), excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
+    const newCount = queue.filter(e => e.isNew).length;
+    if (newCount > 0) addDailyNewCardsUsed(newCount);
     launchMixedReviewSession(queue, 'mixed-review-dashboard');
 }
 
