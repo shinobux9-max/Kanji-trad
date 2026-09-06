@@ -1459,7 +1459,6 @@ function updateSaveBtnState(char) {
 
 // ── Page "Mes Dossiers" ─────────────────────────
 function navFolders() {
-    toggleSidebar(false);
     document.getElementById('page-title').innerText = '📁 Mes Dossiers';
     renderFoldersPage();
 }
@@ -1578,13 +1577,6 @@ function startFolderQuiz(folderName) {
 /* ══════════════════════════════════════════════════
    SIDEBAR
 ══════════════════════════════════════════════════ */
-function toggleSidebar(show) {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    if (sidebar) sidebar.classList.toggle('open', show);
-    if (overlay) overlay.classList.toggle('show', show);
-}
-
 /* ══════════════════════════════════════════════════
    LEVEL CATEGORY SELECTOR — Onglets Kanji | Vocab | Grammar
 ══════════════════════════════════════════════════ */
@@ -3042,14 +3034,13 @@ function showDashboard(isBack = false) {
    NAVIGATION
 ══════════════════════════════════════════════════ */
 function navDashboard() {
-    toggleSidebar(false);
     document.getElementById('page-title').innerText = '漢字 Study';
     showDashboard();
     renderDashboard();
     setActiveBottomNav('accueil');
 }
-function navKana() { toggleSidebar(false); loadKanas(); }
-function navNiveaux() { toggleSidebar(false); showNiveauxScreen(); }
+function navKana() { loadKanas(); }
+function navNiveaux() { showNiveauxScreen(); }
 
 /* ══════════════════════════════════════════════════
    ÉCRAN "NIVEAUX" — cartes pleine largeur avec vraie progression
@@ -3786,7 +3777,6 @@ function renderMixedReviewSummary() {
 /* ── PAGE CATÉGORIE (Version épurée) ────────────────── */
 
 function loadCategory(catId, isBack = false) {
-    toggleSidebar(false);
     const cat = categories.get(catId);
     if (!cat) return;
     
@@ -3834,7 +3824,6 @@ function loadCategory(catId, isBack = false) {
 
 /* ── PAGE SÉRIE (Avec Bouton Retour) ──────────────── */
 function loadSeriesPage(seriesId, isBack = false) {
-    toggleSidebar(false);
     const ser = seriesMap.get(seriesId);
     if (!ser) return;
 
