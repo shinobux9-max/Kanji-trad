@@ -233,8 +233,14 @@
     .writer-main { width: 140px; height: 140px; background: rgba(10,17,32,0.85); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
 
     /* Colonne droite : lectures ON/KUN + romaji */
-    .card-readings-col { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; min-width: 88px; }
+    /* Colonne droite : niveau / traits / statut de maîtrise */
+    .card-stats-col { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; min-width: 88px; }
+    .kmc-badge.mastery-badge { background: rgba(255,255,255,0.05); border-color: var(--border); color: var(--gray); text-align: center; }
+    .kmc-badge.mastery-badge.mastered { background: rgba(74,222,128,0.15); border-color: #4ADE80; color: #4ADE80; }
     .kmc-romaji { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+
+    /* Boîte des lectures ON/KUN + rômaji, entre la carte kanji et Signification */
+    .readings-box { margin: 12px 16px 0; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(10,17,32,0.75); backdrop-filter: blur(8px); }
 
     .detail-section-label { font-size: 0.5625rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 4px; margin-top: 10px; }
     .detail-section-label:first-child { margin-top: 0; }
@@ -246,7 +252,7 @@
     @media (max-width: 380px) {
         .kanji-body-grid { flex-direction: column; align-items: center; }
         .card-actions-col { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-        .card-readings-col { align-items: center; text-align: center; }
+        .card-stats-col { align-items: center; text-align: center; }
     }
     /* Sections texte sous le bloc top */
     .detail-body { padding: 0 16px 16px; }
@@ -461,7 +467,7 @@
     
     .card-header-in-box { display: flex; justify-content: space-between; align-items: center; }
     .lesson-badge-in-box { font-size: 0.4375rem; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.2px; white-space: nowrap; }
-    .status-icon-in-box { font-size: 0.75rem; }
+    .status-icon-in-box { font-size: 0.75rem; color: #4ADE80; }
     .status-icon-in-box.favorited { color: #ff6b9d; }
     
     .card-item-in-box { font-size: 1.125rem; font-weight: bold; color: #fff; line-height: 1.1; margin: 2px 0; }
@@ -958,4 +964,25 @@
     box-shadow:
         0 0 13px 3px rgba(29, 78, 118, 1),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ══════════════════════════════════════════════════
+   INDICATEUR DE MAÎTRISE — badge ✔ vert partagé (kanji, vocab, kana)
+══════════════════════════════════════════════════ */
+.mastered-check {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #4ADE80;
+    color: #0a1120;
+    font-size: 0.5625rem;
+    font-weight: 900;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 6px rgba(74,222,128,0.6);
+    z-index: 2;
 }

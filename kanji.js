@@ -188,8 +188,8 @@ function startOralTest(kanjiChar) {
         if (isCorrect) {
             if (fb) { fb.style.color = 'var(--accent)'; fb.textContent = `✔ Correct ! « ${displayed} »`; }
             localStorage.setItem('mastered_' + kanjiChar, 'true');
-            const dm = document.getElementById('d-mastery');
-            if (dm) dm.innerText = '✔';
+            trackItem(kanjiChar, 'mastered');
+            refreshMasteryUI();
         } else {
             const hint = getAllValidReadings(kanjiData).slice(0,3)
                 .map(r => toHira(r.replace(/[.\-].*/, ''))).join(', ');
@@ -241,6 +241,38 @@ function getTracking() {
 
 function saveTracking(tracking) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tracking));
+}
+
+// Identifiant de suivi pour la fiche détail actuellement ouverte (kanji ou kana)
+function getDetailTrackingId() {
+    if (currentType === 'kana') return 'kana_' + currentChar;
+    return currentChar; // kanji : le caractère lui-même sert d'id
+}
+
+// Met à jour le badge + le bouton de maîtrise de la fiche détail actuellement affichée
+function refreshMasteryUI() {
+    const itemId = getDetailTrackingId();
+    const status = getItemStatus(itemId);
+    const mastered = status === 'mastered';
+
+    const badge = document.getElementById('d-mastery-badge');
+    if (badge) {
+        badge.textContent = mastered ? '✔ Maîtrisé' : 'Non maîtrisé';
+        badge.classList.toggle('mastered', mastered);
+    }
+    const btn = document.getElementById('detail-master-btn');
+    if (btn) {
+        btn.textContent = mastered ? '✓ Maîtrisé' : '✓ Marquer comme maîtrisé';
+        btn.classList.toggle('active', mastered);
+    }
+}
+
+// Bascule la maîtrise de l'élément actuellement affiché dans la fiche détail (kanji ou kana)
+function toggleDetailMastery() {
+    const itemId = getDetailTrackingId();
+    const isMastered = getItemStatus(itemId) === 'mastered';
+    trackItem(itemId, isMastered ? 'null' : 'mastered');
+    refreshMasteryUI();
 }
 
 function trackItem(itemId, status) {
@@ -1430,7 +1462,9 @@ function displayKanjiList(levelId, data, isBack = false) {
     const grid = data.chars.map(char => {
         const kanjiData = kanjiDb.find(k => k.char === char);
         if (!kanjiData) return '';
-        return `<div class="kanji-grid-cell" onclick="openDetail({char:'${char}'})">
+        const isMastered = getItemStatus(char) === 'mastered';
+        return `<div class="kanji-grid-cell" onclick="openDetail({char:'${char}'})" style="position:relative;">
+            ${isMastered ? '<span class="mastered-check">✔</span>' : ''}
             <div class="kgc-char">${char}</div>
             <div class="kgc-meaning">${kanjiData.meanings[0] || '–'}</div>
         </div>`;
@@ -2163,8 +2197,10 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
                             return m || '';
                         })();
                         const confidence = getSrsConfidencePct(word.id);
+                        const isMastered = getItemStatus(word.id) === 'mastered';
                         return `
-                        <div class="vocab-pill-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)">
+                        <div class="vocab-pill-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)" style="position:relative;">
+                            ${isMastered ? '<span class="mastered-check">✔</span>' : ''}
                             <div class="vocab-pill-badge" style="--pct:${confidence === null ? 0 : confidence}">
                                 <span>${confidence === null ? '–' : confidence}</span>
                             </div>
@@ -4701,8 +4737,10 @@ function renderKanaGrid(type) {
                     cell.className = 'kana-cell empty';
                 } else {
                     const isYoon = [...kana.c].length > 1;
+                    const isKanaMastered = getItemStatus('kana_' + kana.c) === 'mastered';
                     cell.className = 'kana-cell';
-                    cell.innerHTML = `<span class="kana-char${isYoon?' yoon':''}">${kana.c}</span><span class="kana-rom">${kana.r}</span>`;
+                    cell.style.position = 'relative';
+                    cell.innerHTML = `${isKanaMastered ? '<span class="mastered-check">✔</span>' : ''}<span class="kana-char${isYoon?' yoon':''}">${kana.c}</span><span class="kana-rom">${kana.r}</span>`;
                     cell.onclick = () => openKanaDetail(kana);
                 }
                 grid.appendChild(cell);
@@ -4908,9 +4946,8 @@ function openDetail(kanji) {
     document.getElementById('d-strokes').innerText = kanji.strokes;
     document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
 
-    // Maîtrise depuis localStorage
-    const mastered = localStorage.getItem('mastered_' + kanji.char);
-    document.getElementById('d-mastery').innerText = mastered ? '✔' : '0%';
+    // Maîtrise (système unifié, partagé avec vocab/grammaire)
+    refreshMasteryUI();
 
     // 4. Lectures ON / KUN
     document.getElementById('section-on').style.display  = kanji.on.length  ? '' : 'none';
@@ -4961,7 +4998,7 @@ function openKanaDetail(kana) {
     document.getElementById('detail-char-title').innerText = kana.c;
     document.getElementById('d-level').innerText  = label;
     document.getElementById('d-romaji').innerText = kana.r;
-    document.getElementById('d-mastery').innerText = '–';
+    refreshMasteryUI();
     document.getElementById('section-on').style.display  = 'none';
     document.getElementById('section-kun').style.display = 'none';
     document.getElementById('voice-feedback').textContent = '';

@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20250905_search_fix_ptr">
+    <link rel="stylesheet" href="kanji.css?v=20250906_mastery_system_unified">
 </head>
 <body>
 
@@ -73,12 +73,6 @@
 
         <!-- ── Carte principale du kanji ── -->
         <div class="kanji-main-card">
-            <div class="kanji-top-info">
-                <span class="kmc-badge"><b id="d-level">-</b>&nbsp;Niveau</span>
-                <span class="kmc-badge"><b id="d-strokes">-</b>&nbsp;Traits</span>
-                <span class="kmc-badge"><b id="d-mastery">0%</b></span>
-            </div>
-
             <div class="kanji-body-grid">
                 <!-- Gauche : boutons d'action -->
                 <div class="card-actions-col">
@@ -96,7 +90,7 @@
                     </button>
                 </div>
 
-                <!-- Centre : kanji animé (tracé SVG conservé) -->
+                <!-- Centre : kanji animé, centré dans sa boîte -->
                 <div class="kanji-center-col">
                     <div class="writer-main">
                         <div id="kanji-writer-target"></div>
@@ -106,20 +100,27 @@
                     <div class="oral-feedback" id="voice-feedback"></div>
                 </div>
 
-                <!-- Droite : lectures ON / KUN + romaji -->
-                <div class="card-readings-col">
-                    <div id="section-on" style="display:none">
-                        <div class="detail-section-label">On'yomi</div>
-                        <div id="d-on" class="tag-container"></div>
-                    </div>
-                    <div id="section-kun" style="display:none">
-                        <div class="detail-section-label">Kun'yomi</div>
-                        <div id="d-kun" class="tag-container"></div>
-                    </div>
-                    <div class="detail-section-label" style="margin-top:10px">Rômaji</div>
-                    <div class="kmc-romaji" id="d-romaji">-</div>
+                <!-- Droite : niveau, traits, statut de maîtrise -->
+                <div class="card-stats-col">
+                    <span class="kmc-badge"><b id="d-level">-</b>&nbsp;Niveau</span>
+                    <span class="kmc-badge"><b id="d-strokes">-</b>&nbsp;Traits</span>
+                    <span class="kmc-badge mastery-badge" id="d-mastery-badge">Non maîtrisé</span>
                 </div>
             </div>
+        </div>
+
+        <!-- ── Lectures ── -->
+        <div class="readings-box" id="readings-box">
+            <div id="section-on" style="display:none">
+                <div class="detail-section-label">On'yomi</div>
+                <div id="d-on" class="tag-container"></div>
+            </div>
+            <div id="section-kun" style="display:none">
+                <div class="detail-section-label">Kun'yomi</div>
+                <div id="d-kun" class="tag-container"></div>
+            </div>
+            <div class="detail-section-label" style="margin-top:8px">Rômaji</div>
+            <div class="kmc-romaji" id="d-romaji">-</div>
         </div>
 
         <!-- ── Signification ── -->
@@ -134,6 +135,11 @@
 
         <!-- ── Exemples ── -->
         <div class="examples-wrap" id="exemples-container"></div>
+
+        <!-- ── Maîtrise ── -->
+        <div class="vocab-detail-actions">
+            <button class="vocab-master-btn" id="detail-master-btn" onclick="toggleDetailMastery()">✓ Marquer comme maîtrisé</button>
+        </div>
 
     </div>
 </div>
@@ -265,7 +271,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20250905_search_fix_ptr"></script>
+    <script src="kanji.js?v=20250906_mastery_system_unified"></script>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->
     <div id="bottom-nav">
@@ -290,7 +296,7 @@
             // Déterminer le path de base (pour GitHub Pages, c'est /Kanji-trad/)
             const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
             
-            navigator.serviceWorker.register('sw.js?v=20250905_search_fix_ptr', { scope: basePath })
+            navigator.serviceWorker.register('sw.js?v=20250906_mastery_system_unified', { scope: basePath })
                 .then(registration => {
                     console.log('✅ Service Worker registré:', registration);
                     
