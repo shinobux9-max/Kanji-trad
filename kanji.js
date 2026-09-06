@@ -324,9 +324,30 @@ function isBulkSelected(id) {
 function handleListItemClick(el, id, openFn) {
     if (bulkSelectMode) {
         toggleItemMasteryLive(id);
-        if (bulkSelectRerender) bulkSelectRerender();
+        // Mise à jour directe de la carte tapée plutôt qu'un rafraîchissement complet de
+        // l'écran (bulkSelectRerender) : celui-ci reconstruit tout le HTML et referme donc
+        // les catégories/unités actuellement dépliées — gênant si on valide plusieurs fiches
+        // d'affilée dans la même catégorie.
+        updateMasteryBadgeInPlace(el, id);
     } else {
         openFn();
+    }
+}
+
+// Ajoute ou retire le badge ✔ sur la carte tapée, sans reconstruire tout l'écran
+function updateMasteryBadgeInPlace(el, id) {
+    if (!el) return;
+    const isMastered = getItemStatus(id) === 'mastered';
+    let badge = el.querySelector('.mastered-check');
+    if (isMastered) {
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'mastered-check';
+            badge.textContent = '✔';
+            el.prepend(badge);
+        }
+    } else if (badge) {
+        badge.remove();
     }
 }
 
@@ -1969,7 +1990,7 @@ async function showCategoryDirect(levelId, category, isBack = false) {
     
     mainContent.innerHTML = `
         <div class="cat-header">
-            <button class="back-btn" onclick="${backFn}()">←</button>
+            <button class="back-btn" onclick="closeAllOverlaysAndSessions(); ${backFn}()">←</button>
             <div class="cat-header-info">
                 <div class="cat-header-title">${catLabel} ${levelData.label}</div>
                 <div class="cat-header-sub">${subtitle}</div>
