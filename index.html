@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_daily_goal">
+    <link rel="stylesheet" href="kanji.css?v=20260906_bulk_mastery">
 </head>
 <body>
 
@@ -302,7 +302,15 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_daily_goal"></script>
+    <script src="kanji.js?v=20260906_bulk_mastery"></script>
+
+    <!-- ── BULK ACTION BAR (sélection en masse) ────────── -->
+    <div id="bulk-action-bar" style="display:none;">
+        <span id="bulk-select-count">0 sélectionné</span>
+        <button onclick="bulkSelectAllCurrent()">Tout sélectionner</button>
+        <button class="primary" onclick="applyBulkMastery()">✓ Valider maîtrisé</button>
+        <button onclick="exitBulkSelectMode()">Annuler</button>
+    </div>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->
     <div id="bottom-nav">

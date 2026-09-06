@@ -295,6 +295,93 @@ function getItemStatus(itemId) {
 }
 
 /* ══════════════════════════════════════════════════
+   SÉLECTION EN MASSE — validation rapide de maîtrise
+   ─────────────────────────────────────────────────
+   Mécanisme générique réutilisé par les 4 listes (vocab, grammaire,
+   kanji, kana) : mode sélection activable depuis chaque liste, tap sur
+   une carte pour la (dé)sélectionner, "Tout sélectionner" pour couvrir
+   le cas "valider toute la catégorie" (les deux idées de l'utilisateur
+   se rejoignent : "tout" n'est qu'un raccourci de la sélection).
+   Les ids stockés sont directement les ids trackItem (word.id, lesson.id,
+   caractère kanji, ou 'kana_'+caractère) — aucun préfixe de type nécessaire
+   car une session de sélection ne mélange jamais plusieurs listes.
+══════════════════════════════════════════════════ */
+let bulkSelectMode      = false;
+let bulkSelectedIds     = new Set();
+let bulkSelectRerender  = null; // () => void — redessine l'écran courant dans son état actuel
+let bulkSelectAllIdsFn  = null; // () => [ids...] — tous les ids sélectionnables de l'écran courant
+
+function isBulkSelected(id) {
+    return bulkSelectMode && bulkSelectedIds.has(id);
+}
+
+// À appeler dans le onclick de chaque carte, à la place de l'ouverture directe de la fiche
+function handleListItemClick(el, id, openFn) {
+    if (bulkSelectMode) {
+        toggleBulkSelection(el, id);
+    } else {
+        openFn();
+    }
+}
+
+function toggleBulkSelection(el, id) {
+    if (bulkSelectedIds.has(id)) {
+        bulkSelectedIds.delete(id);
+        if (el) el.classList.remove('bulk-selected');
+    } else {
+        bulkSelectedIds.add(id);
+        if (el) el.classList.add('bulk-selected');
+    }
+    updateBulkActionBar();
+}
+
+// rerenderFn : redessine l'écran courant (permet à "Tout sélectionner" et à la sortie
+// du mode de rafraîchir l'affichage sans dupliquer la logique de rendu de chaque liste)
+// allIdsFn : retourne tous les ids de la liste courante, pour "Tout sélectionner"
+function enterBulkSelectMode(rerenderFn, allIdsFn) {
+    bulkSelectMode     = true;
+    bulkSelectedIds    = new Set();
+    bulkSelectRerender = rerenderFn;
+    bulkSelectAllIdsFn = allIdsFn;
+    rerenderFn();
+    updateBulkActionBar();
+}
+
+function exitBulkSelectMode() {
+    bulkSelectMode  = false;
+    bulkSelectedIds = new Set();
+    const fn = bulkSelectRerender;
+    bulkSelectRerender = null;
+    bulkSelectAllIdsFn = null;
+    if (fn) fn();
+    updateBulkActionBar();
+}
+
+function bulkSelectAllCurrent() {
+    if (!bulkSelectAllIdsFn) return;
+    bulkSelectAllIdsFn().forEach(id => bulkSelectedIds.add(id));
+    if (bulkSelectRerender) bulkSelectRerender();
+    updateBulkActionBar();
+}
+
+function applyBulkMastery() {
+    const count = bulkSelectedIds.size;
+    if (count === 0) { alert('Aucun élément sélectionné.'); return; }
+    bulkSelectedIds.forEach(id => trackItem(id, 'mastered'));
+    exitBulkSelectMode();
+    alert(`${count} élément${count > 1 ? 's' : ''} marqué${count > 1 ? 's' : ''} comme maîtrisé${count > 1 ? 's' : ''} ✓`);
+}
+
+function updateBulkActionBar() {
+    const bar = document.getElementById('bulk-action-bar');
+    if (!bar) return;
+    if (!bulkSelectMode) { bar.style.display = 'none'; return; }
+    bar.style.display = 'flex';
+    const countEl = document.getElementById('bulk-select-count');
+    if (countEl) countEl.textContent = `${bulkSelectedIds.size} sélectionné${bulkSelectedIds.size > 1 ? 's' : ''}`;
+}
+
+/* ══════════════════════════════════════════════════
    SRS (Spaced Repetition System) — SM-2 allégé
    Stocké dans le même objet que le tracking (clé "srs" par item),
    donc aucune migration nécessaire : les entrées sans srs sont
@@ -1612,7 +1699,7 @@ function displayKanjiList(levelId, data, isBack = false) {
         const kanjiData = kanjiDb.find(k => k.char === char);
         if (!kanjiData) return '';
         const isMastered = getItemStatus(char) === 'mastered';
-        return `<div class="kanji-grid-cell" onclick="openDetail({char:'${char}'})" style="position:relative;">
+        return `<div class="kanji-grid-cell ${isBulkSelected(char) ? 'bulk-selected' : ''}" onclick="handleListItemClick(this, '${char}', () => openDetail({char:'${char}'}))" style="position:relative;">
             ${isMastered ? '<span class="mastered-check">✔</span>' : ''}
             <div class="kgc-char">${char}</div>
             <div class="kgc-meaning">${kanjiData.meanings[0] || '–'}</div>
@@ -1620,9 +1707,12 @@ function displayKanjiList(levelId, data, isBack = false) {
     }).join('');
     
     container.innerHTML = `
-        <button class="vocab-review-cta" onclick="showKanjiReviewModeSelector()">
-            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-        </button>
+        <div style="display:flex;gap:8px">
+            <button class="vocab-review-cta" style="flex:1" onclick="showKanjiReviewModeSelector()">
+                🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+            </button>
+            ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => displayKanjiList('${levelId}', {chars: kanjiHomeData.chars}, true), () => kanjiHomeData.chars)">☑ Sélectionner</button>` : ''}
+        </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:12px">
             ${grid}
         </div>`;
@@ -2318,9 +2408,12 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
     // Construire l'HTML avec boxes
     let html = `<div class="vocab-container">`;
     
-    html += `<button class="vocab-review-cta" onclick="startVocabReview()">
-        🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-    </button>`;
+    html += `<div style="display:flex;gap:8px">
+        <button class="vocab-review-cta" style="flex:1" onclick="startVocabReview()">
+            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+        </button>
+        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => displayVocabList('${levelId}', vocabHomeData.data, vocabHomeData.examples, true), () => vocabHomeData.data.map(w => w.id))">☑ Sélectionner</button>` : ''}
+    </div>`;
     
     html += sortedCats.map(cat => {
         const label = VOCAB_CATEGORY_MAP[cat] || `📌 ${cat}`;
@@ -2348,7 +2441,7 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
                         const confidence = getSrsConfidencePct(word.id);
                         const isMastered = getItemStatus(word.id) === 'mastered';
                         return `
-                        <div class="vocab-pill-card" onclick="showVocabDetail('${word.id}', vocabHomeData.data)" style="position:relative;">
+                        <div class="vocab-pill-card ${isBulkSelected(word.id) ? 'bulk-selected' : ''}" onclick="handleListItemClick(this, '${word.id}', () => showVocabDetail('${word.id}', vocabHomeData.data))" style="position:relative;">
                             ${isMastered ? '<span class="mastered-check">✔</span>' : ''}
                             <div class="vocab-pill-badge" style="--pct:${confidence === null ? 0 : confidence}">
                                 <span>${confidence === null ? '–' : confidence}</span>
@@ -2578,9 +2671,12 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
     
     let html = `<div class="grammar-container">`;
     
-    html += `<button class="vocab-review-cta" onclick="startGrammarReview()">
-        🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-    </button>`;
+    html += `<div style="display:flex;gap:8px">
+        <button class="vocab-review-cta" style="flex:1" onclick="startGrammarReview()">
+            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+        </button>
+        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => showGrammarHome('${levelId}', grammarHomeData.data, grammarHomeData.examples, true), () => grammarHomeData.data.map(l => l.id))">☑ Sélectionner</button>` : ''}
+    </div>`;
     
     html += sortedUnits.map((unitKey, unitIdx) => {
         const unit = groupedByUnit[unitKey];
@@ -2608,7 +2704,7 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
                         const badgeStyle = getFamilyColor(badgeText);
                         
                         return `
-                            <div class="lesson-card-in-box" onclick="showGrammarDetail('${lesson.id}')">
+                            <div class="lesson-card-in-box ${isBulkSelected(lesson.id) ? 'bulk-selected' : ''}" onclick="handleListItemClick(this, '${lesson.id}', () => showGrammarDetail('${lesson.id}'))">
                                 <div class="card-header-in-box">
                                     <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}22; color: ${badgeStyle.color}; border: 1px solid ${badgeStyle.color}66; box-shadow: 0 0 8px ${badgeStyle.color}33;">
                                         ${badgeStyle.emoji} ${badgeText}
@@ -3027,6 +3123,15 @@ function setActiveBottomNav(key) {
 
 function bottomNavGo(target) {
     setActiveBottomNav(target);
+    // Même sécurité que dans onpopstate : changer d'onglet ne doit jamais laisser
+    // le mode sélection en masse actif en arrière-plan sur le nouvel écran.
+    if (bulkSelectMode) {
+        bulkSelectMode     = false;
+        bulkSelectedIds    = new Set();
+        bulkSelectRerender = null;
+        bulkSelectAllIdsFn = null;
+        updateBulkActionBar();
+    }
     if (target === 'accueil') {
         navDashboard();
     } else if (target === 'recherche') {
@@ -4850,20 +4955,42 @@ const kanaGroups = {
     ]
 };
 
+let currentKanaTabType = 'hira'; // suivi de l'onglet actif, utile pour "Tout sélectionner" et le retour en mode normal
+
 function loadKanas() {
     document.getElementById('page-title').innerText = 'Kana';
+    renderKanaScreen('hira');
+}
+
+// Redessine l'écran complet (onglets + bouton Sélectionner + grille) — nécessaire pour que
+// le bouton Sélectionner disparaisse/réapparaisse correctement selon bulkSelectMode.
+function renderKanaScreen(type) {
+    currentKanaTabType = type;
     document.getElementById('main-content').innerHTML = `
         <div class="kana-tabs">
-            <div class="kana-tab active" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
-            <div class="kana-tab"        id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>
+            <div class="kana-tab ${type === 'hira' ? 'active' : ''}" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
+            <div class="kana-tab ${type === 'kata' ? 'active' : ''}" id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>
+            ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => renderKanaScreen(currentKanaTabType), () => getAllKanaIdsForTab(currentKanaTabType))">☑ Sélectionner</button>` : ''}
         </div>
         <div id="kana-grid-container" style="padding:12px"></div>`;
-    renderKanaGrid('hira');
-}
-function switchKanaTab(type) {
-    document.getElementById('tab-hira').classList.toggle('active', type==='hira');
-    document.getElementById('tab-kata').classList.toggle('active', type==='kata');
     renderKanaGrid(type);
+}
+
+function switchKanaTab(type) {
+    renderKanaScreen(type);
+}
+
+// Tous les ids trackItem ('kana_'+char) des kana non-vides de l'onglet donné, yōon inclus
+function getAllKanaIdsForTab(type) {
+    const ids = [];
+    for (const group of kanaGroups[type]) {
+        for (const row of group.rows) {
+            for (const kana of row) {
+                if (kana) ids.push('kana_' + kana.c);
+            }
+        }
+    }
+    return ids;
 }
 function renderKanaGrid(type) {
     const container = document.getElementById('kana-grid-container');
@@ -4884,11 +5011,12 @@ function renderKanaGrid(type) {
                     cell.className = 'kana-cell empty';
                 } else {
                     const isYoon = [...kana.c].length > 1;
-                    const isKanaMastered = getItemStatus('kana_' + kana.c) === 'mastered';
-                    cell.className = 'kana-cell';
+                    const kanaId = 'kana_' + kana.c;
+                    const isKanaMastered = getItemStatus(kanaId) === 'mastered';
+                    cell.className = 'kana-cell' + (isBulkSelected(kanaId) ? ' bulk-selected' : '');
                     cell.style.position = 'relative';
                     cell.innerHTML = `${isKanaMastered ? '<span class="mastered-check">✔</span>' : ''}<span class="kana-char${isYoon?' yoon':''}">${kana.c}</span><span class="kana-rom">${kana.r}</span>`;
-                    cell.onclick = () => openKanaDetail(kana);
+                    cell.onclick = () => handleListItemClick(cell, kanaId, () => openKanaDetail(kana));
                 }
                 grid.appendChild(cell);
             }
@@ -6195,6 +6323,18 @@ window.onpopstate = function(event) {
     closeStrokeQuiz();
     closeQuiz();
     if (searchOpen) closeSearchOverlay();
+    // Le mode sélection en masse ne pousse pas d'état d'historique propre (ce n'est pas un
+    // modal, juste un mode d'affichage in-place) : sans ce nettoyage, un retour arrière pendant
+    // une sélection laisserait la barre d'action flottante et le mode clic-pour-sélectionner
+    // actifs sur l'écran suivant. Pas d'appel au rerenderFn ici : l'écran de destination va de
+    // toute façon se redessiner lui-même via SCREEN_REGISTRY ou le fallback dashboard.
+    if (bulkSelectMode) {
+        bulkSelectMode     = false;
+        bulkSelectedIds    = new Set();
+        bulkSelectRerender = null;
+        bulkSelectAllIdsFn = null;
+        updateBulkActionBar();
+    }
 
     if (event.state && event.state.view === 'modal' && MODAL_EXIT_REGISTRY[event.state.modal]) {
         MODAL_EXIT_REGISTRY[event.state.modal]();
