@@ -1540,7 +1540,7 @@ function buildVocabHitHtml(w) {
     const typeColor = SEARCH_TYPE_STYLE.vocab.color;
     const levelColor = (jlptMapping && jlptMapping.levels[w._level]) ? jlptMapping.levels[w._level].color : typeColor;
     return `<div class="search-hit" onclick="openVocabFromSearch('${w.id}','${w._level}')">
-        <div class="search-hit-char-word" style="color:${typeColor}">${w.word || ''}</div>
+        <div class="search-hit-char-word" style="color:${typeColor};background:${typeColor}18;border:1px solid ${typeColor}40">${w.word || ''}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${meaning}</div>
             <div class="search-hit-readings">${w.reading || ''}${w.romaji ? ' · ' + w.romaji : ''}</div>
@@ -1553,7 +1553,7 @@ function buildGrammarHitHtml(l) {
     const typeColor = SEARCH_TYPE_STYLE.grammar.color;
     const levelColor = (jlptMapping && jlptMapping.levels[l._level]) ? jlptMapping.levels[l._level].color : typeColor;
     return `<div class="search-hit" onclick="openGrammarFromSearch('${l.id}','${l._level}')">
-        <div class="search-hit-char-word" style="color:${typeColor}">${l.item || l.pattern || ''}</div>
+        <div class="search-hit-char-word" style="color:${typeColor};background:${typeColor}18;border:1px solid ${typeColor}40">${l.item || l.pattern || ''}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${l.title || ''}</div>
             <div class="search-hit-readings">${l.pattern && l.pattern !== l.item ? l.pattern : ''}</div>
@@ -1568,7 +1568,7 @@ function buildKanjiHitHtml(k) {
     const typeColor = SEARCH_TYPE_STYLE.kanji.color;
     const levelColor = (jlptMapping && jlptMapping.levels['n' + level]) ? jlptMapping.levels['n' + level].color : typeColor;
     return `<div class="search-hit" onclick="openDetail(kanjiDb[kanjiMap.get('${safeChar}')]);closeSearchOverlay();">
-        <div class="search-hit-char" style="color:${typeColor}">${k.char}</div>
+        <div class="search-hit-char" style="color:${typeColor};background:${typeColor}18;border:1px solid ${typeColor}40">${k.char}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${k.meanings[0]}${k.meanings[1] ? ' · ' + k.meanings[1] : ''}</div>
             <div class="search-hit-readings">${[...k.on.slice(0, 3), ...k.kun.slice(0, 2)].join('  ')}</div>
@@ -1580,7 +1580,7 @@ function buildKanjiHitHtml(k) {
 function buildKanaHitHtml(k) {
     const typeColor = SEARCH_TYPE_STYLE.kana.color;
     return `<div class="search-hit" onclick='openKanaDetail(${JSON.stringify(k)});closeSearchOverlay();'>
-        <div class="search-hit-char" style="color:${typeColor}">${k.char}</div>
+        <div class="search-hit-char" style="color:${typeColor};background:${typeColor}18;border:1px solid ${typeColor}40">${k.char}</div>
         <div class="search-hit-info">
             <div class="search-hit-meaning">${k.romaji || ''}</div>
         </div>
