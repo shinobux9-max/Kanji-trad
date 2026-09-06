@@ -485,10 +485,11 @@ function distributeNewQuota(buckets, quota) {
 
 // Reconstruit la forme d'entrée de file attendue par les écrans de révision
 // mixte existants ({ type, item }) — le kanji est normalisé en { char } comme
-// le fait déjà getMixedDueQueue().
-function makeQueueEntry(type, level, rawItem) {
-    if (type === 'kanji') return { type, level, item: { char: rawItem.id } };
-    return { type, level, item: rawItem };
+// le fait déjà getMixedDueQueue(). isNew distingue une carte due (déjà vue,
+// planning SRS) d'une carte neuve (jamais vue, prélevée sur le quota global).
+function makeQueueEntry(type, level, rawItem, isNew) {
+    if (type === 'kanji') return { type, level, item: { char: rawItem.id }, isNew };
+    return { type, level, item: rawItem, isNew };
 }
 
 /**
@@ -529,7 +530,7 @@ async function buildReviewQueue({
 
     // Cartes dues : toutes incluses, jamais plafonnées
     if (includeDue) {
-        buckets.forEach(b => b.due.forEach(rawItem => queue.push(makeQueueEntry(b.type, b.level, rawItem))));
+        buckets.forEach(b => b.due.forEach(rawItem => queue.push(makeQueueEntry(b.type, b.level, rawItem, false))));
     }
 
     // Nouvelles cartes : quota global réparti en tour de rôle entre les combinaisons concernées
@@ -539,7 +540,7 @@ async function buildReviewQueue({
 
     distributeNewQuota(freshBuckets, newLimit).forEach(({ key, item }) => {
         const meta = freshBucketMeta[key];
-        queue.push(makeQueueEntry(meta.type, meta.level, item));
+        queue.push(makeQueueEntry(meta.type, meta.level, item, true));
     });
 
     return shuffleArray(queue);
@@ -3538,51 +3539,40 @@ async function getLevelKanjiChars(levelId) {
     return kanjiCharsCache[levelId];
 }
 
+// Utilisée par l'onglet "Apprendre" (carte héro) — quota GLOBAL de 10 nouvelles
+// pour toute la session mixte (avant : 10 par combinaison type×niveau, ce qui
+// pouvait aller jusqu'à 150 nouvelles cartes d'un coup). Voir buildReviewQueue().
 async function getMixedDueQueue() {
-    const levels = ['n5', 'n4', 'n3', 'n2', 'n1'];
-    let combined = [];
-    
-    for (const lvl of levels) {
-        const vd = await getLevelVocabData(lvl);
-        if (vd && vd.data) {
-            buildDueQueue(vd.data).forEach(w => combined.push({ type: 'vocab', item: w }));
-        }
-        
-        const gd = await getLevelGrammarData(lvl);
-        if (gd && gd.data) {
-            buildDueQueue(gd.data).forEach(l => combined.push({ type: 'grammar', item: l }));
-        }
-        
-        const chars = await getLevelKanjiChars(lvl);
-        if (chars) {
-            buildDueQueue(chars.map(c => ({ id: c }))).forEach(k => combined.push({ type: 'kanji', item: { char: k.id } }));
-        }
-    }
-    
-    return shuffleArray(combined);
+    return buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: 10 });
 }
 
 let mixedReviewSession = null; // { queue: [{type, item}], index, results, flipped }
 
-async function startMixedReview() {
-    const queue = await getMixedDueQueue();
-    
+// Partagé entre l'onglet "Apprendre" et le bouton "Réviser aujourd'hui" de l'accueil :
+// les deux lancent le même mécanisme de session mixte, seule la file en entrée et le
+// nom d'état modal (donc la destination du bouton retour) diffèrent.
+function launchMixedReviewSession(queue, exitState = 'mixed-review') {
     if (queue.length === 0) {
         alert("Rien à réviser aujourd'hui, tous types confondus ! 🎉");
         return;
     }
-    
-    pushModalState('mixed-review');
-    
+
+    pushModalState(exitState);
+
     mixedReviewSession = {
         queue,
         index: 0,
         results: { again: 0, hard: 0, good: 0, easy: 0 },
         flipped: false
     };
-    
+
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderMixedReviewScreen();
+}
+
+async function startMixedReview() {
+    const queue = await getMixedDueQueue();
+    launchMixedReviewSession(queue, 'mixed-review');
 }
 
 function renderMixedReviewScreen() {
@@ -5723,23 +5713,14 @@ async function getLevelVocabGrammarStats(levelId) {
 }
 
 // Cumule les cartes dues sur tous les niveaux ayant du vocabulaire déployé
+// Quota global de 5 nouvelles cartes pour le bouton "Aujourd'hui" de l'accueil —
+// volontairement plus bas que l'onglet "Apprendre" (10) : l'accueil est pensé comme
+// un point d'entrée rapide/quotidien, "Apprendre" comme une session plus complète.
 async function getDashboardDueCount() {
-    const levels = ['n5', 'n4', 'n3', 'n2', 'n1'];
-    let total = 0, dueTotal = 0, newTotal = 0;
-    let firstLevelWithDue = null;
-    
-    for (const lvl of levels) {
-        const vd = await getLevelVocabData(lvl);
-        if (vd && vd.data) {
-            const due = countDueItems(vd.data);
-            const split = splitDueAndNew(vd.data);
-            dueTotal += split.due;
-            newTotal += split.fresh;
-            total += due;
-            if (due > 0 && !firstLevelWithDue) firstLevelWithDue = lvl;
-        }
-    }
-    return { total, dueTotal, newTotal, firstLevelWithDue };
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: 5 });
+    const newTotal = queue.filter(e => e.isNew).length;
+    const dueTotal = queue.length - newTotal;
+    return { total: queue.length, dueTotal, newTotal };
 }
 
 async function renderDashboardLevelOverview() {
@@ -5779,7 +5760,7 @@ async function renderDashboardReviewCta() {
     const el = document.getElementById('dashboard-review-cta');
     if (!el) return;
     
-    const { total, dueTotal, newTotal, firstLevelWithDue } = await getDashboardDueCount();
+    const { total, dueTotal, newTotal } = await getDashboardDueCount();
     
     if (total === 0) {
         el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
@@ -5798,23 +5779,17 @@ async function renderDashboardReviewCta() {
                 <div class="review-cta-split-label">À réviser</div>
             </div>
         </div>
-        <button class="review-cta-btn" onclick="startDashboardReview('${firstLevelWithDue}')">Commencer · ${total} items →</button>
+        <button class="review-cta-btn" onclick="startDashboardReview()">Commencer · ${total} items →</button>
     `;
 }
 
-// Lance une session de révision directement depuis le dashboard (sans passer par les onglets de niveau)
-async function startDashboardReview(levelId) {
-    const vd = await getLevelVocabData(levelId);
-    if (!vd || !vd.data) {
-        alert("Aucune donnée de vocabulaire disponible pour ce niveau.");
-        return;
-    }
-    
-    vocabHomeData = { levelId, data: vd.data, examples: vd.examples };
-    currentLevelId = levelId;
-    
-    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
-    startVocabReview();
+// Lance directement depuis l'accueil la MÊME file que celle annoncée par le bouton
+// (fini le décalage : avant, le chiffre comptait tous les niveaux mais la session
+// ne lançait que le vocabulaire du premier niveau en retard). Réutilise le mécanisme
+// de session mixte partagé avec l'onglet "Apprendre" (launchMixedReviewSession).
+async function startDashboardReview() {
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: 5 });
+    launchMixedReviewSession(queue, 'mixed-review-dashboard');
 }
 
 function buildProgRow(label, done, total, icon) {
@@ -6087,6 +6062,7 @@ const MODAL_EXIT_REGISTRY = {
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'mixed-review': () => { mixedReviewSession = null; showApprendreScreen(true); },
+    'mixed-review-dashboard': () => { mixedReviewSession = null; showDashboard(true); renderDashboard(); },
     'search': () => closeSearchOverlay(),
     'kana-mode-selector': () => showRevisionKanaPicker(true),
     'kana-review-flashcard': () => { kanaReviewSession = null; showRevisionKanaPicker(true); },
