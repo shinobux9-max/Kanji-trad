@@ -1161,3 +1161,19 @@
 .ft-result-row.ok { color: #4ADE80; background: rgba(74,222,128,0.06); }
 .ft-result-row.wrong { color: #FB7185; background: rgba(251,113,133,0.06); }
 .ft-result-row span:last-child { color: var(--text); font-weight: 500; }
+
+/* Explication contextuelle sur confusion (point #2 V2) — repose sur grammar.json > confusions[] */
+.confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; }
+.confusion-box-title { font-size: 0.8125rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
+.confusion-box-text { font-size: 0.8125rem; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
+.confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; padding: 4px 0; }
+.confusion-example-row.wrong { color: #FB7185; }
+.confusion-example-row.ok { color: #4ADE80; }
+.confusion-example-fr { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+
+/* Kanji d'un mot, cliquables (exploite kanji_list déjà présent dans vocab.json) */
+.vocab-kanji-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.vocab-kanji-chip { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; cursor: pointer; transition: border-color 0.15s; }
+.vocab-kanji-chip:hover { border-color: var(--accent); }
+.vocab-kanji-chip-char { font-size: 1.375rem; font-weight: bold; color: var(--accent); }
+.vocab-kanji-chip-meaning { font-size: 0.75rem; color: var(--gray); }

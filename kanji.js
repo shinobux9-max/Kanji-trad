@@ -2346,13 +2346,20 @@ function renderGrammarFlashcardExercise(entry, session) {
 }
 
 function renderGrammarClozeExercise(entry, session) {
-    const { clozeInfo } = entry;
+    const { clozeInfo, lesson } = entry;
     const answered = session.answered;
     const selected = session.selected;
     
     const blankHtml = !answered
         ? `<span class="cloze-blank">＿＿＿</span>`
         : `<span class="cloze-blank-filled ${selected === clozeInfo.correct ? 'correct' : 'incorrect'}">${selected}</span>`;
+
+    // Point #2 V2 : si la réponse est fausse ET que la leçon documente cette confusion précise
+    // (champ optionnel "confusions" dans grammar.json), on l'affiche juste sous les options.
+    const isWrong = answered && selected !== clozeInfo.correct;
+    const confusion = (isWrong && Array.isArray(lesson.confusions))
+        ? lesson.confusions.find(c => c.with === selected)
+        : null;
     
     return `
         <div class="review-card review-cloze-card">
@@ -2370,7 +2377,25 @@ function renderGrammarClozeExercise(entry, session) {
                 return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitGrammarQuizAnswer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
             }).join('')}
         </div>
+        ${confusion ? buildConfusionBoxHtml(confusion) : ''}
         ${answered ? `<button class="review-continue-btn" onclick="advanceGrammarReviewQueue()">Continuer →</button>` : ''}
+    `;
+}
+
+// Contenu de l'encadré "pourquoi c'est faux" — repose entièrement sur le champ optionnel
+// confusions[] de grammar.json (voir modèle communiqué : { with, explanation, wrong_example? }).
+// wrong_example est facultatif, on s'en passe proprement si absent.
+function buildConfusionBoxHtml(confusion) {
+    return `
+        <div class="confusion-box">
+            <div class="confusion-box-title">💡 Pourquoi pas « ${confusion.with} » ?</div>
+            <div class="confusion-box-text">${mdBold(confusion.explanation || '')}</div>
+            ${confusion.wrong_example ? `
+                <div class="confusion-example-row wrong"><span>✘</span><span>${mdBold(confusion.wrong_example.japanese || '')}</span></div>
+                <div class="confusion-example-row ok"><span>✔</span><span>${mdBold(confusion.wrong_example.correct_japanese || '')}</span></div>
+                ${confusion.wrong_example.french ? `<div class="confusion-example-fr">${mdBold(confusion.wrong_example.french)}</div>` : ''}
+            ` : ''}
+        </div>
     `;
 }
 
@@ -2624,6 +2649,25 @@ function showVocabDetail(wordId, allWords = [], isBack = false) {
             <div class="example-fr">${mdBold(word.example.french || '')}</div>
             <button class="vocab-speak-btn-example" onclick="speakText('${(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
         </div>`;
+    }
+    
+    // KANJI DE CE MOT (kanji_list) — cliquables, ouvrent la fiche kanji en superposition
+    if (Array.isArray(word.kanji_list) && word.kanji_list.length) {
+        const chips = word.kanji_list
+            .map(char => {
+                const k = kanjiDb.find(kd => kd.char === char);
+                if (!k) return '';
+                const meaning = (k.meanings || []).find(m => !m.toLowerCase().includes('radical')) || k.meanings?.[0] || '';
+                return `<div class="vocab-kanji-chip" onclick="openDetail({char:'${char}'})">
+                    <span class="vocab-kanji-chip-char">${char}</span>
+                    <span class="vocab-kanji-chip-meaning">${meaning}</span>
+                </div>`;
+            })
+            .join('');
+        if (chips) {
+            html += `<div class="vocab-section-title">Kanji de ce mot</div>`;
+            html += `<div class="vocab-kanji-chips">${chips}</div>`;
+        }
     }
     
     // BOUTON MAÎTRISE
@@ -3215,15 +3259,9 @@ function setActiveBottomNav(key) {
 
 function bottomNavGo(target) {
     setActiveBottomNav(target);
-    // Même sécurité que dans onpopstate : changer d'onglet ne doit jamais laisser
-    // le mode sélection en masse actif en arrière-plan sur le nouvel écran.
-    if (bulkSelectMode) {
-        bulkSelectMode     = false;
-        bulkSelectedIds    = new Set();
-        bulkSelectRerender = null;
-        bulkSelectAllIdsFn = null;
-        updateBulkActionBar();
-    }
+    // Changer d'onglet ne doit jamais laisser une session/overlay actif en arrière-plan sur
+    // le nouvel écran — la bottom-nav reste cliquable même par-dessus une session en cours.
+    closeAllOverlaysAndSessions();
     if (target === 'accueil') {
         navDashboard();
     } else if (target === 'recherche') {
@@ -7069,22 +7107,22 @@ const SCREEN_REGISTRY = {
     'revision-kana-picker': () => showRevisionKanaPicker(true),
 };
 
-window.onpopstate = function(event) {
-    // Si l'application n'est pas encore chargée (kanjiDb vide), on ne fait rien
-    if (kanjiDb.length === 0) return;
-
-    // Sécurité : fermer systématiquement les overlays plein écran (fiche kanji, quiz, tracé)
-    // quelle que soit la destination — évite qu'un overlay reste orphelin visible après un
-    // retour arrière depuis un enchaînement à plusieurs niveaux (ex: tracé lancé depuis la fiche détail)
+// Sécurité partagée : ferme systématiquement tous les overlays plein écran (fiche, quiz, tracé)
+// ET annule toute session de révision "légère" en cours (vocab/grammaire/kana/mixte/kanji/
+// entraînement libre) quelle que soit la façon dont l'utilisateur quitte l'écran — bouton retour
+// matériel (via onpopstate) OU bottom-nav (qui reste cliquable en permanence, même par-dessus une
+// session active, puisqu'elle est en position fixe et ne passe jamais par l'historique).
+// Sans ce filet commun, quitter une session via la bottom-nav laisse son état orphelin en mémoire —
+// inoffensif la plupart du temps, mais potentiellement plantant pour l'Entraînement libre en mode
+// Chrono (le minuteur continuerait de tourner et d'essayer d'écrire dans un conteneur disparu).
+function closeAllOverlaysAndSessions() {
     closeDetail();
     closeStrokeQuiz();
     closeQuiz();
     if (searchOpen) closeSearchOverlay();
-    // Le mode sélection en masse ne pousse pas d'état d'historique propre (ce n'est pas un
-    // modal, juste un mode d'affichage in-place) : sans ce nettoyage, un retour arrière pendant
-    // une sélection laisserait la barre d'action flottante et le mode clic-pour-sélectionner
-    // actifs sur l'écran suivant. Pas d'appel au rerenderFn ici : l'écran de destination va de
-    // toute façon se redessiner lui-même via SCREEN_REGISTRY ou le fallback dashboard.
+
+    // Le mode sélection en masse ne pousse pas d'état d'historique propre (pas un modal, juste
+    // un mode d'affichage in-place) : sans ce nettoyage, il resterait actif sur l'écran suivant.
     if (bulkSelectMode) {
         bulkSelectMode     = false;
         bulkSelectedIds    = new Set();
@@ -7092,6 +7130,21 @@ window.onpopstate = function(event) {
         bulkSelectAllIdsFn = null;
         updateBulkActionBar();
     }
+
+    reviewSession = null;
+    grammarReviewSession = null;
+    kanaReviewSession = null;
+    mixedReviewSession = null;
+    kanjiReviewSession = null;
+    if (trainingChronoInterval) { clearInterval(trainingChronoInterval); trainingChronoInterval = null; }
+    trainingSession = null;
+}
+
+window.onpopstate = function(event) {
+    // Si l'application n'est pas encore chargée (kanjiDb vide), on ne fait rien
+    if (kanjiDb.length === 0) return;
+
+    closeAllOverlaysAndSessions();
 
     if (event.state && event.state.view === 'modal' && MODAL_EXIT_REGISTRY[event.state.modal]) {
         MODAL_EXIT_REGISTRY[event.state.modal]();
