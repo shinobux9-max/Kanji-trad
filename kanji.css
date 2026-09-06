@@ -877,8 +877,8 @@
 .review-cta-split-label { font-size: 0.6875rem; color: var(--gray); margin-top: 2px; }
 
 /* Objectif du jour (accueil) */
-.review-cta-goal-link { font-size: 0.6875rem; color: var(--gray); cursor: pointer; margin-bottom: 10px; text-decoration: underline; text-decoration-style: dotted; }
-.review-cta-goal-link:hover { color: var(--text); }
+/* Objectif du jour : anciennement un lien dans la carte Réviser aujourd'hui, maintenant sa
+   propre boîte "⚙ Choisis ton niveau" (réutilise .free-training-card) */
 .daily-goal-row { display: flex; align-items: center; gap: 10px; padding: 10px 4px; cursor: pointer; border-bottom: 1px solid var(--border); }
 .daily-goal-row:last-child { border-bottom: none; }
 .daily-goal-row input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; }

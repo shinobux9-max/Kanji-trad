@@ -1391,13 +1391,23 @@ function renderSearchFilterPills() {
 }
 
 let searchFilterJustClicked = false;
+let searchFilterFlagTimer = null;
+
+// Le blur du champ de recherche se déclenche AU MOMENT du appui (mousedown/touchstart),
+// avant même que l'événement "click" du bouton ne soit traité — poser le drapeau dans le
+// gestionnaire de clic (comme la 1ère tentative) arrivait donc toujours trop tard. On le
+// pose ici, au tout premier contact, pour qu'il soit déjà actif quand le blur se produit.
+function markSearchFilterInteraction(e) {
+    if (e.target.closest('.search-filter-pill')) {
+        searchFilterJustClicked = true;
+        clearTimeout(searchFilterFlagTimer);
+        searchFilterFlagTimer = setTimeout(() => { searchFilterJustClicked = false; }, 300);
+    }
+}
+document.getElementById('search-bar')?.addEventListener('mousedown', markSearchFilterInteraction);
+document.getElementById('search-bar')?.addEventListener('touchstart', markSearchFilterInteraction, { passive: true });
 
 function toggleSearchFilter(kind, value) {
-    // Taper un filtre fait perdre le focus au champ de recherche (blur), ce qui déclenchait à
-    // tort la fermeture automatique prévue pour le bouton retour Android sur champ vide.
-    searchFilterJustClicked = true;
-    setTimeout(() => { searchFilterJustClicked = false; }, 250);
-
     const key = kind === 'type' ? 'types' : 'levels';
     if (value === 'all') {
         searchFilters[key].clear();
@@ -2924,11 +2934,10 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
     // Construire l'HTML avec boxes
     let html = `<div class="vocab-container">`;
     
+    // Le bouton "Réviser" a été retiré d'ici : la révision de ce niveau se fait désormais
+    // exclusivement via l'onglet "Réviser" (bottom-nav), qui propose en plus un choix de mode.
     html += `<div style="display:flex;gap:8px">
-        <button class="vocab-review-cta" style="flex:1" onclick="showVocabReviewModeSelector()">
-            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-        </button>
-        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => displayVocabList('${levelId}', vocabHomeData.data, vocabHomeData.examples, true), () => vocabHomeData.data.map(w => w.id))">☑ Sélectionner</button>` : ''}
+        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(() => displayVocabList('${levelId}', vocabHomeData.data, vocabHomeData.examples, true), () => vocabHomeData.data.map(w => w.id))">☑ Sélectionner</button>` : ''}
     </div>`;
     
     html += sortedCats.map(cat => {
@@ -3206,11 +3215,10 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
     
     let html = `<div class="grammar-container">`;
     
+    // Le bouton "Réviser" a été retiré d'ici : la révision de ce niveau se fait désormais
+    // exclusivement via l'onglet "Réviser" (bottom-nav), qui propose en plus un choix de mode.
     html += `<div style="display:flex;gap:8px">
-        <button class="vocab-review-cta" style="flex:1" onclick="showGrammarReviewModeSelector()">
-            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-        </button>
-        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => showGrammarHome('${levelId}', grammarHomeData.data, grammarHomeData.examples, true), () => grammarHomeData.data.map(l => l.id))">☑ Sélectionner</button>` : ''}
+        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(() => showGrammarHome('${levelId}', grammarHomeData.data, grammarHomeData.examples, true), () => grammarHomeData.data.map(l => l.id))">☑ Sélectionner</button>` : ''}
     </div>`;
     
     html += sortedUnits.map((unitKey, unitIdx) => {
@@ -3574,16 +3582,16 @@ function showDashboard(isBack = false) {
                 </div>
                 <button onclick="if(confirm('Vider le cache et recharger l\\'app ?')) forceFullReset()" style="background:none;border:none;color:var(--gray);font-size:1.125rem;cursor:pointer;padding:6px;flex-shrink:0;">🔄</button>
             </div>
-            <div class="dash-card dash-review-cta" id="dashboard-review-cta">
-                <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
-            </div>
-            <div class="dash-card free-training-card" onclick="showFreeTrainingConfig()">
-                <div class="free-training-icon">復</div>
+            <div class="dash-card free-training-card" id="dashboard-goal-cta" onclick="showDailyGoalModal()">
+                <div class="free-training-icon" style="background:rgba(0,229,255,0.14);color:var(--accent)">⚙</div>
                 <div class="free-training-info">
-                    <div class="free-training-title">Entraînement libre <span class="free-training-badge">LIBRE</span></div>
-                    <div class="free-training-sub">Feuillette tes mots vus · sans effet sur tes révisions</div>
+                    <div class="free-training-title">Choisis ton niveau</div>
+                    <div class="free-training-sub" id="dashboard-goal-sub">${formatDailyGoalLabel()}</div>
                 </div>
                 <span class="free-training-chevron">→</span>
+            </div>
+            <div class="dash-card dash-review-cta" id="dashboard-review-cta">
+                <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
             </div>
             <div class="dash-card streak-week-card" onclick="showProgressionDetail()">
                 <div class="streak-week-header">
@@ -3920,6 +3928,14 @@ async function showRevisionsScreen(isBack = false) {
                 <div class="apprendre-title-main">Réviser</div>
                 <div class="apprendre-subtitle-main">Choisis une catégorie à réviser.</div>
             </div>
+            <div class="dash-card free-training-card" onclick="showFreeTrainingConfig()">
+                <div class="free-training-icon">復</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">Entraînement libre <span class="free-training-badge">LIBRE</span></div>
+                    <div class="free-training-sub">Feuillette tes mots vus · sans effet sur tes révisions</div>
+                </div>
+                <span class="free-training-chevron">→</span>
+            </div>
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showRevisionLevelPicker('grammar')">
                     <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
@@ -4014,13 +4030,13 @@ async function startRevisionFor(category, levelId) {
         vocabHomeData = { levelId, data: vd.data, examples: vd.examples };
         currentLevelId = levelId;
         document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
-        startVocabReview();
+        showVocabReviewModeSelector();
     } else if (category === 'grammar') {
         const gd = await getLevelGrammarData(levelId);
         if (!gd || !gd.data) { alert("Aucune donnée disponible pour ce niveau."); return; }
         grammarHomeData = { levelId, data: gd.data, examples: null };
         document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
-        startGrammarReview();
+        showGrammarReviewModeSelector();
     } else if (category === 'kanji') {
         const chars = await getLevelKanjiChars(levelId);
         kanjiHomeData = { levelId, chars: chars || [] };
@@ -6715,7 +6731,9 @@ function saveDailyGoalFromModal() {
     saveDailyGoalKanaScripts(checkedKana);
     saveQuotaLevel(quotaLevel);
     closeDailyGoalModal();
-    renderDashboardReviewCta(); // rafraîchit la carte accueil avec le nouvel objectif
+    const goalSubEl = document.getElementById('dashboard-goal-sub');
+    if (goalSubEl) goalSubEl.textContent = formatDailyGoalLabel();
+    renderDashboardReviewCta(); // recalcule le compte de révisions du jour avec le nouvel objectif
 }
 
 /* ══════════════════════════════════════════════════
@@ -6797,16 +6815,14 @@ async function renderDashboardReviewCta() {
     if (!el) return;
     
     const { total, dueTotal, newTotal } = await getDashboardDueCount();
-    const goalLine = `<div class="review-cta-goal-link" onclick="showDailyGoalModal()">🎯 Objectif : ${formatDailyGoalLabel()} · Modifier</div>`;
     
     if (total === 0) {
-        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>${goalLine}`;
+        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
         return;
     }
     
     el.innerHTML = `
         <div class="review-cta-label">RÉVISER AUJOURD'HUI</div>
-        ${goalLine}
         <div class="review-cta-split">
             <div class="review-cta-split-box">
                 <div class="review-cta-split-num">${newTotal}</div>
@@ -7743,10 +7759,10 @@ init();
 // (une session de révision en cours ne se restaure pas carte par carte) — on se contente
 // de les fermer proprement, exactement comme le ferait leur bouton "✕"/Fermer.
 const MODAL_EXIT_REGISTRY = {
-    'vocab-review': () => { reviewSession = null; if (vocabHomeData) displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples, true); },
-    'vocab-review-selector': () => { if (vocabHomeData) displayVocabList(currentLevelId, vocabHomeData.data, vocabHomeData.examples, true); },
-    'grammar-review': () => { grammarReviewSession = null; if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
-    'grammar-review-selector': () => { if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
+    'vocab-review': () => { reviewSession = null; showRevisionLevelPicker('vocab', true); },
+    'vocab-review-selector': () => showRevisionLevelPicker('vocab', true),
+    'grammar-review': () => { grammarReviewSession = null; showRevisionLevelPicker('grammar', true); },
+    'grammar-review-selector': () => showRevisionLevelPicker('grammar', true),
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'apprendre-discovery': () => { mixedReviewSession = null; showApprendreScreen(true); },
