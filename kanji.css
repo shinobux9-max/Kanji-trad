@@ -688,11 +688,11 @@
 .review-example .example-fr { font-size: 0.75rem; color: var(--gray); }
 
 .review-grade-buttons { width: 100%; max-width: 340px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.grade-btn { padding: 12px 4px; border: none; border-radius: 8px; font-size: 0.6875rem; font-weight: bold; color: var(--bg); cursor: pointer; }
-.grade-again { background: #FB7185; }
-.grade-hard { background: #FBBF24; }
-.grade-good { background: #38BDF8; }
-.grade-easy { background: #4ADE80; }
+.grade-btn { padding: 12px 4px; border-radius: 10px; font-size: 0.6875rem; font-weight: bold; cursor: pointer; background: transparent; border: 1px solid; }
+.grade-again { background: rgba(251,113,133,0.12); border-color: rgba(251,113,133,0.4); color: #FB7185; box-shadow: 0 0 10px rgba(251,113,133,0.25); }
+.grade-hard  { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.4); color: #FBBF24; box-shadow: 0 0 10px rgba(251,191,36,0.25); }
+.grade-good  { background: rgba(56,189,248,0.12); border-color: rgba(56,189,248,0.4); color: #38BDF8; box-shadow: 0 0 10px rgba(56,189,248,0.25); }
+.grade-easy  { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.4); color: #4ADE80; box-shadow: 0 0 10px rgba(74,222,128,0.25); }
 
 .review-summary { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 20px; text-align: center; }
 .review-summary-title { font-size: 1.375rem; color: #fff; font-weight: bold; }
@@ -735,7 +735,7 @@
    DASHBOARD — CTA "Réviser aujourd'hui"
 ══════════════════════════════════════════════════ */
 .dash-review-cta { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.08)); border: 1px solid rgba(0,229,255,0.3); text-align: center; padding: 14px; }
-.review-cta-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 8px; }
+.review-cta-label { font-size: 0.6875rem; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 8px; }
 .review-cta-count { font-size: 2.5rem; color: #fff; font-weight: bold; line-height: 1.1; }
 .review-cta-sub { font-size: 0.75rem; color: var(--gray); margin-bottom: 14px; }
 .review-cta-btn { padding: 12px 24px; background: var(--accent); color: var(--bg); border: none; border-radius: 10px; font-weight: bold; font-size: 0.875rem; cursor: pointer; }
@@ -906,7 +906,16 @@
 .prog-card-stats { font-size: 0.6875rem; color: var(--gray); margin-top: 1px; }
 
 /* Navbar flottante : effet verre dépoli comme demandé */
-#bottom-nav { background: rgba(14,18,28,0.97); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+#bottom-nav {
+    background:
+        linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.85) 100%),
+        url('images/niveaux-bg.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed, fixed;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
 
 /* ══════════════════════════════════════════════════
    NIVEAUX DE MAÎTRISE — cartes repliables avec % global
@@ -944,9 +953,9 @@
 .streak-week-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .streak-week-icon-box { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: rgba(0,229,255,0.12); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; font-weight: bold; }
 .streak-week-title-block { flex: 1; }
-.streak-week-label { font-size: 0.625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
+.streak-week-label { font-size: 0.625rem; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
 .streak-week-num { font-size: 0.9375rem; color: #fff; font-weight: bold; margin-top: 1px; }
-.streak-week-record { font-size: 0.625rem; color: var(--gray); text-align: right; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.5px; }
+.streak-week-record { font-size: 0.625rem; color: var(--text); text-align: right; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.5px; }
 .streak-week-row { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; }
 .streak-week-row::before { content: ''; position: absolute; top: 50%; left: 20px; right: 20px; border-top: 1px dashed var(--border); z-index: 0; }
 .streak-week-dot { position: relative; z-index: 1; width: 26px; height: 26px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--gray); }
