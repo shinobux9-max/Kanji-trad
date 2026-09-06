@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_glow_polish">
+    <link rel="stylesheet" href="kanji.css?v=20260906_mastery_toggle">
 </head>
 <body>
 
@@ -313,14 +313,12 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_glow_polish"></script>
+    <script src="kanji.js?v=20260906_mastery_toggle"></script>
 
-    <!-- ── BULK ACTION BAR (sélection en masse) ────────── -->
+    <!-- ── BULK ACTION BAR (mode maîtrise rapide) ────────── -->
     <div id="bulk-action-bar" style="display:none;">
-        <span id="bulk-select-count">0 sélectionné</span>
-        <button onclick="bulkSelectAllCurrent()">Tout sélectionner</button>
-        <button class="primary" onclick="applyBulkMastery()">✓ Valider maîtrisé</button>
-        <button onclick="exitBulkSelectMode()">Annuler</button>
+        <span id="bulk-select-count">Touche une fiche pour (dé)valider sa maîtrise</span>
+        <button class="primary" onclick="exitBulkSelectMode()">Valider</button>
     </div>
 
     <!-- ── BOTTOM NAV BAR (façon Hibi) ─────────────────── -->

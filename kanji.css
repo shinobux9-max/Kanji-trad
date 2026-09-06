@@ -508,7 +508,7 @@
     .unit-box-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
     .unit-box-content.open { display: flex; }
     
-    .lesson-card-in-box { padding: 10px; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,201,167,0.2); border-left: 3px solid var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; }
+    .lesson-card-in-box { padding: 10px; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,201,167,0.2); border-left: 3px solid var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; position: relative; }
     .lesson-card-in-box:hover { background: rgba(0, 201, 167, 0.08); border-left-color: #35D6C7; }
     
     .card-header-in-box { display: flex; justify-content: space-between; align-items: center; }
@@ -1132,12 +1132,11 @@
 #bulk-action-bar #bulk-select-count {
     font-size: 0.75rem;
     color: var(--gray);
-    flex-shrink: 0;
-    margin-right: 2px;
+    flex: 1;
 }
 #bulk-action-bar button {
-    flex: 1;
-    padding: 10px 8px;
+    flex-shrink: 0;
+    padding: 10px 24px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -1152,6 +1151,10 @@
     border: none;
 }
 #bulk-action-bar button:hover { filter: brightness(1.15); }
+
+/* Cases à cocher de catégorie (validation/annulation en masse d'un groupe entier) */
+.bulk-cat-checkbox { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+.bulk-cat-row-standalone { display: flex; align-items: center; gap: 10px; padding: 10px 4px; margin-top: 4px; font-size: 0.8125rem; color: var(--text); font-weight: bold; cursor: pointer; }
 
 /* ══════════════════════════════════════════════════
    ENTRAÎNEMENT LIBRE (point #8)

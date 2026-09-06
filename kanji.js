@@ -300,87 +300,69 @@ function getItemStatus(itemId) {
 /* ══════════════════════════════════════════════════
    SÉLECTION EN MASSE — validation rapide de maîtrise
    ─────────────────────────────────────────────────
-   Mécanisme générique réutilisé par les 4 listes (vocab, grammaire,
-   kanji, kana) : mode sélection activable depuis chaque liste, tap sur
-   une carte pour la (dé)sélectionner, "Tout sélectionner" pour couvrir
-   le cas "valider toute la catégorie" (les deux idées de l'utilisateur
-   se rejoignent : "tout" n'est qu'un raccourci de la sélection).
-   Les ids stockés sont directement les ids trackItem (word.id, lesson.id,
-   caractère kanji, ou 'kana_'+caractère) — aucun préfixe de type nécessaire
-   car une session de sélection ne mélange jamais plusieurs listes.
+   Mode "tap pour basculer" : dans une des 4 listes (vocab, grammaire, kanji,
+   kana), taper une fiche bascule IMMÉDIATEMENT son statut maîtrisé (retire
+   la maîtrise si elle l'était déjà, l'ajoute sinon) — plus de sélection en
+   attente à valider après coup. Le bouton "Valider" du bandeau du bas ne
+   fait donc que fermer le mode (les écritures ont déjà eu lieu au fil des taps).
+   Une case à cocher par catégorie (vocab/grammaire/kana) permet de basculer
+   un groupe entier d'un coup, en plus du tap fiche par fiche.
+   Les ids utilisés sont directement les ids trackItem (word.id, lesson.id,
+   caractère kanji, ou 'kana_'+caractère).
 ══════════════════════════════════════════════════ */
 let bulkSelectMode      = false;
-let bulkSelectedIds     = new Set();
 let bulkSelectRerender  = null; // () => void — redessine l'écran courant dans son état actuel
-let bulkSelectAllIdsFn  = null; // () => [ids...] — tous les ids sélectionnables de l'écran courant
 
+// Conservée pour compatibilité de lecture visuelle : en pratique le badge ✔ (mastered-check)
+// déjà présent sur chaque carte suffit à montrer l'état, donc cette fonction ne sert plus
+// qu'à un éventuel style additionnel si besoin plus tard.
 function isBulkSelected(id) {
-    return bulkSelectMode && bulkSelectedIds.has(id);
+    return false;
 }
 
 // À appeler dans le onclick de chaque carte, à la place de l'ouverture directe de la fiche
 function handleListItemClick(el, id, openFn) {
     if (bulkSelectMode) {
-        toggleBulkSelection(el, id);
+        toggleItemMasteryLive(id);
+        if (bulkSelectRerender) bulkSelectRerender();
     } else {
         openFn();
     }
 }
 
-function toggleBulkSelection(el, id) {
-    if (bulkSelectedIds.has(id)) {
-        bulkSelectedIds.delete(id);
-        if (el) el.classList.remove('bulk-selected');
-    } else {
-        bulkSelectedIds.add(id);
-        if (el) el.classList.add('bulk-selected');
-    }
-    updateBulkActionBar();
+// Bascule immédiate de la maîtrise d'un seul item
+function toggleItemMasteryLive(id) {
+    const isMastered = getItemStatus(id) === 'mastered';
+    trackItem(id, isMastered ? 'null' : 'mastered');
 }
 
-// rerenderFn : redessine l'écran courant (permet à "Tout sélectionner" et à la sortie
-// du mode de rafraîchir l'affichage sans dupliquer la logique de rendu de chaque liste)
-// allIdsFn : retourne tous les ids de la liste courante, pour "Tout sélectionner"
-function enterBulkSelectMode(rerenderFn, allIdsFn) {
+// Bascule un groupe entier via sa case à cocher : si elle vient d'être cochée, tout le groupe
+// est marqué maîtrisé ; si elle vient d'être décochée, tout le groupe perd sa maîtrise.
+function toggleCategoryMasteryLive(checkboxEl, ids) {
+    const status = checkboxEl.checked ? 'mastered' : 'null';
+    ids.forEach(id => trackItem(id, status));
+    if (bulkSelectRerender) bulkSelectRerender();
+}
+
+function enterBulkSelectMode(rerenderFn) {
     bulkSelectMode     = true;
-    bulkSelectedIds    = new Set();
     bulkSelectRerender = rerenderFn;
-    bulkSelectAllIdsFn = allIdsFn;
     rerenderFn();
     updateBulkActionBar();
 }
 
 function exitBulkSelectMode() {
-    bulkSelectMode  = false;
-    bulkSelectedIds = new Set();
+    bulkSelectMode     = false;
     const fn = bulkSelectRerender;
     bulkSelectRerender = null;
-    bulkSelectAllIdsFn = null;
     if (fn) fn();
     updateBulkActionBar();
-}
-
-function bulkSelectAllCurrent() {
-    if (!bulkSelectAllIdsFn) return;
-    bulkSelectAllIdsFn().forEach(id => bulkSelectedIds.add(id));
-    if (bulkSelectRerender) bulkSelectRerender();
-    updateBulkActionBar();
-}
-
-function applyBulkMastery() {
-    const count = bulkSelectedIds.size;
-    if (count === 0) { alert('Aucun élément sélectionné.'); return; }
-    bulkSelectedIds.forEach(id => trackItem(id, 'mastered'));
-    exitBulkSelectMode();
 }
 
 function updateBulkActionBar() {
     const bar = document.getElementById('bulk-action-bar');
     if (!bar) return;
-    if (!bulkSelectMode) { bar.style.display = 'none'; return; }
-    bar.style.display = 'flex';
-    const countEl = document.getElementById('bulk-select-count');
-    if (countEl) countEl.textContent = `${bulkSelectedIds.size} sélectionné${bulkSelectedIds.size > 1 ? 's' : ''}`;
+    bar.style.display = bulkSelectMode ? 'flex' : 'none';
 }
 
 /* ══════════════════════════════════════════════════
@@ -2079,8 +2061,13 @@ function displayKanjiList(levelId, data, isBack = false) {
             <button class="vocab-review-cta" style="flex:1" onclick="showKanjiReviewModeSelector()">
                 🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
             </button>
-            ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => displayKanjiList('${levelId}', {chars: kanjiHomeData.chars}, true), () => kanjiHomeData.chars)">☑ Sélectionner</button>` : ''}
+            ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => displayKanjiList('${levelId}', {chars: kanjiHomeData.chars}, true))">☑ Sélectionner</button>` : ''}
         </div>
+        ${bulkSelectMode ? `
+        <label class="bulk-cat-row-standalone">
+            <input type="checkbox" class="bulk-cat-checkbox" onclick='toggleCategoryMasteryLive(this, ${JSON.stringify(data.chars)})' ${data.chars.every(c => getItemStatus(c) === 'mastered') ? 'checked' : ''}>
+            <span>Tout ce niveau</span>
+        </label>` : ''}
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:12px">
             ${grid}
         </div>`;
@@ -2937,7 +2924,7 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
     // Le bouton "Réviser" a été retiré d'ici : la révision de ce niveau se fait désormais
     // exclusivement via l'onglet "Réviser" (bottom-nav), qui propose en plus un choix de mode.
     html += `<div style="display:flex;gap:8px">
-        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(() => displayVocabList('${levelId}', vocabHomeData.data, vocabHomeData.examples, true), () => vocabHomeData.data.map(w => w.id))">☑ Sélectionner</button>` : ''}
+        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(() => displayVocabList('${levelId}', vocabHomeData.data, vocabHomeData.examples, true))">☑ Sélectionner</button>` : ''}
     </div>`;
     
     html += sortedCats.map(cat => {
@@ -2949,6 +2936,7 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
             <div class="vocab-category-box">
                 <div class="vocab-category-header" onclick="const content = document.getElementById('${catId}'); content.classList.toggle('open'); this.querySelector('.vocab-cat-arrow').classList.toggle('open')">
                     <div class="vocab-category-title">
+                        ${bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(words.map(w => w.id))})' ${words.every(w => getItemStatus(w.id) === 'mastered') ? 'checked' : ''}>` : ''}
                         <span class="vocab-cat-arrow">▶</span>
                         <span>${label}</span>
                     </div>
@@ -3218,7 +3206,7 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
     // Le bouton "Réviser" a été retiré d'ici : la révision de ce niveau se fait désormais
     // exclusivement via l'onglet "Réviser" (bottom-nav), qui propose en plus un choix de mode.
     html += `<div style="display:flex;gap:8px">
-        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(() => showGrammarHome('${levelId}', grammarHomeData.data, grammarHomeData.examples, true), () => grammarHomeData.data.map(l => l.id))">☑ Sélectionner</button>` : ''}
+        ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(() => showGrammarHome('${levelId}', grammarHomeData.data, grammarHomeData.examples, true))">☑ Sélectionner</button>` : ''}
     </div>`;
     
     html += sortedUnits.map((unitKey, unitIdx) => {
@@ -3232,6 +3220,7 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
             <div class="unit-box-wrapper">
                 <div class="unit-box-header">
                     <div class="unit-box-title">
+                        ${bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(unit.lessons.map(l => l.id))})' ${unit.lessons.every(l => getItemStatus(l.id) === 'mastered') ? 'checked' : ''}>` : ''}
                         <span class="unit-box-arrow">▶</span>
                         <span>Leçon ${lessonNumber} - ${unit.title.toUpperCase()}</span>
                     </div>
@@ -3252,8 +3241,9 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
                                     <span class="lesson-badge-in-box" style="background: ${badgeStyle.color}22; color: ${badgeStyle.color}; border: 1px solid ${badgeStyle.color}66; box-shadow: 0 0 8px ${badgeStyle.color}33;">
                                         ${badgeStyle.emoji} ${badgeText}
                                     </span>
-                                    ${status === 'mastered' ? '<span class="status-icon-in-box">✓</span>' : status === 'favorited' ? '<span class="status-icon-in-box favorited">❤</span>' : ''}
+                                    ${status === 'favorited' ? '<span class="status-icon-in-box favorited">❤</span>' : ''}
                                 </div>
+                                ${status === 'mastered' ? '<span class="mastered-check">✔</span>' : ''}
                                 <div class="card-item-in-box">${itemText}</div>
                                 <div class="card-title-in-box">${titleText}</div>
                                 ${(() => {
@@ -5730,7 +5720,7 @@ function renderKanaScreen(type) {
         <div class="kana-tabs">
             <div class="kana-tab ${type === 'hira' ? 'active' : ''}" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
             <div class="kana-tab ${type === 'kata' ? 'active' : ''}" id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>
-            ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => renderKanaScreen(currentKanaTabType), () => getAllKanaIdsForTab(currentKanaTabType))">☑ Sélectionner</button>` : ''}
+            ${!bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(() => renderKanaScreen(currentKanaTabType))">☑ Sélectionner</button>` : ''}
         </div>
         <div id="kana-grid-container" style="padding:12px"></div>`;
     renderKanaGrid(type);
@@ -5740,18 +5730,6 @@ function switchKanaTab(type) {
     renderKanaScreen(type);
 }
 
-// Tous les ids trackItem ('kana_'+char) des kana non-vides de l'onglet donné, yōon inclus
-function getAllKanaIdsForTab(type) {
-    const ids = [];
-    for (const group of kanaGroups[type]) {
-        for (const row of group.rows) {
-            for (const kana of row) {
-                if (kana) ids.push('kana_' + kana.c);
-            }
-        }
-    }
-    return ids;
-}
 function renderKanaGrid(type) {
     const container = document.getElementById('kana-grid-container');
     container.innerHTML = '';
@@ -5759,7 +5737,25 @@ function renderKanaGrid(type) {
         if (group.title) {
             const h = document.createElement('div');
             h.className = 'kana-section-title';
-            h.textContent = group.title;
+            if (bulkSelectMode) {
+                const groupIds = [];
+                group.rows.forEach(row => row.forEach(k => { if (k) groupIds.push('kana_' + k.c); }));
+                const allMastered = groupIds.length > 0 && groupIds.every(id => getItemStatus(id) === 'mastered');
+                h.style.display = 'flex';
+                h.style.alignItems = 'center';
+                h.style.gap = '8px';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'bulk-cat-checkbox';
+                checkbox.checked = allMastered;
+                checkbox.onclick = (e) => { e.stopPropagation(); toggleCategoryMasteryLive(checkbox, groupIds); };
+                const span = document.createElement('span');
+                span.textContent = group.title;
+                h.appendChild(checkbox);
+                h.appendChild(span);
+            } else {
+                h.textContent = group.title;
+            }
             container.appendChild(h);
         }
         const grid = document.createElement('div');
@@ -5773,7 +5769,7 @@ function renderKanaGrid(type) {
                     const isYoon = [...kana.c].length > 1;
                     const kanaId = 'kana_' + kana.c;
                     const isKanaMastered = getItemStatus(kanaId) === 'mastered';
-                    cell.className = 'kana-cell' + (isBulkSelected(kanaId) ? ' bulk-selected' : '');
+                    cell.className = 'kana-cell';
                     cell.style.position = 'relative';
                     cell.innerHTML = `${isKanaMastered ? '<span class="mastered-check">✔</span>' : ''}<span class="kana-char${isYoon?' yoon':''}">${kana.c}</span><span class="kana-rom">${kana.r}</span>`;
                     cell.onclick = () => handleListItemClick(cell, kanaId, () => openKanaDetail(kana));
@@ -7827,9 +7823,7 @@ function closeAllOverlaysAndSessions() {
     // un mode d'affichage in-place) : sans ce nettoyage, il resterait actif sur l'écran suivant.
     if (bulkSelectMode) {
         bulkSelectMode     = false;
-        bulkSelectedIds    = new Set();
         bulkSelectRerender = null;
-        bulkSelectAllIdsFn = null;
         updateBulkActionBar();
     }
 
