@@ -587,9 +587,13 @@ function makeQueueEntry(type, level, rawItem, isNew) {
  *   jamais plafonnées, quel que soit newLimit)
  * - newLimit : nombre MAXIMUM de nouvelles cartes pour TOUTE la session (pas par
  *   combinaison type×niveau), réparties en tour de rôle
- * - excludeMastered : si true, ignore les items déjà marqués "mastered" via trackItem
- *   (préparé pour le futur filtre "Aujourd'hui" — non utilisé par défaut, donc aucun
- *   appelant existant n'est affecté)
+ * - excludeMastered : si true, retire les items marqués "mastered" (trackItem) du
+ *   pool des NOUVELLES cartes uniquement — jamais des cartes dues. Le SRS reste seul
+ *   juge de ce qui est "dû" : un item maîtrisé à la main (ex: validation en masse,
+ *   qui ne passe jamais par gradeReview) n'a pas de planning SRS et tomberait sinon
+ *   dans le pool "nouveau" — c'est ce cas précis qu'on exclut. Mais si un item a déjà
+ *   un planning SRS et que son intervalle est expiré, il reste "dû" et s'affiche quand
+ *   même, même marqué maîtrisé — le SRS a le dernier mot sur ce qui doit être revu.
  * Retourne un tableau mélangé de { type, level, item }.
  */
 async function buildReviewQueue({
@@ -603,19 +607,19 @@ async function buildReviewQueue({
 
     for (const level of levels) {
         for (const type of types) {
-            let items = await getRawItemsForTypeLevel(type, level);
+            const items = await getRawItemsForTypeLevel(type, level);
             if (!items.length) continue;
+            let { due, fresh } = splitDueAndFreshRaw(items);
             if (excludeMastered) {
-                items = items.filter(it => getItemStatus(it.id) !== 'mastered');
+                fresh = fresh.filter(it => getItemStatus(it.id) !== 'mastered');
             }
-            const { due, fresh } = splitDueAndFreshRaw(items);
             if (due.length || fresh.length) buckets.push({ type, level, due, fresh });
         }
     }
 
     const queue = [];
 
-    // Cartes dues : toutes incluses, jamais plafonnées
+    // Cartes dues : toutes incluses, jamais plafonnées (ni filtrées par mastered)
     if (includeDue) {
         buckets.forEach(b => b.due.forEach(rawItem => queue.push(makeQueueEntry(b.type, b.level, rawItem, false))));
     }
@@ -5917,7 +5921,7 @@ function saveDailyGoalFromModal() {
 }
 
 async function getDashboardDueCount() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5 });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true });
     const newTotal = queue.filter(e => e.isNew).length;
     const dueTotal = queue.length - newTotal;
     return { total: queue.length, dueTotal, newTotal };
@@ -5990,7 +5994,7 @@ async function renderDashboardReviewCta() {
 // ne lançait que le vocabulaire du premier niveau en retard). Réutilise le mécanisme
 // de session mixte partagé avec l'onglet "Apprendre" (launchMixedReviewSession).
 async function startDashboardReview() {
-    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5 });
+    const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: 5, excludeMastered: true });
     launchMixedReviewSession(queue, 'mixed-review-dashboard');
 }
 
