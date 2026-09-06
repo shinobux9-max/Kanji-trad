@@ -3397,8 +3397,11 @@ async function showApprendreScreen(isBack = false) {
                 <div class="apprendre-subtitle-main">Suis le fil, ou choisis toi-même ci-dessous.</div>
             </div>
             
-            <div class="apprendre-hero-card" id="apprendre-review-cta" onclick="startMixedReview()">
-                <div style="color:var(--gray);font-size:0.75rem">Chargement…</div>
+            <div class="apprendre-progress-section">
+                <div class="apprendre-section-label">Progression par niveau</div>
+                <div id="apprendre-progress-list">
+                    <div style="color:var(--gray);font-size:0.75rem;padding:12px 4px">Chargement…</div>
+                </div>
             </div>
             
             <div class="apprendre-grid">
@@ -3425,29 +3428,53 @@ async function showApprendreScreen(isBack = false) {
             </div>
         </div>`;
     
-    renderApprendreReviewCta();
+    renderApprendreProgressList();
 }
 
-async function renderApprendreReviewCta() {
-    const el = document.getElementById('apprendre-review-cta');
-    if (!el) return;
-    
-    const queue = await getMixedDueQueue();
-    
+async function renderApprendreProgressList() {
+    const el = document.getElementById('apprendre-progress-list');
+    if (!el || !jlptMapping) return;
+
+    const levels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
+    const rows = await Promise.all(levels.map(async ([levelId, levelData]) => {
+        const stats = await getLevelVocabGrammarStats(levelId);
+        const total = stats.vocabTotal + stats.grammarTotal;
+        const mastered = stats.vocabMastered + stats.grammarMastered;
+        const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+        const available = total > 0;
+
+        return `
+            <div class="apprendre-level-row${available ? '' : ' locked'}" ${available ? `onclick="startLevelDiscovery('${levelId}')"` : ''}>
+                <div class="apprendre-level-badge" style="color:${levelData.color}">${levelData.label}</div>
+                <div class="apprendre-level-info">
+                    <div class="apprendre-level-bar"><div class="apprendre-level-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
+                    <div class="apprendre-level-status">${available ? `${pct}% maîtrisé` : '🔒 Pas encore disponible'}</div>
+                </div>
+                ${available ? `<span class="apprendre-level-chevron">›</span>` : ''}
+            </div>
+        `;
+    }));
+
+    el.innerHTML = rows.join('');
+}
+
+// "Apprendre" répond à "qu'est-ce qu'il me reste à découvrir ?" — contrairement à "Réviser" et
+// au bouton "Aujourd'hui" de l'accueil qui répondent à "qu'est-ce que je dois revoir ?". On ne
+// pioche donc QUE des items jamais vus (includeDue:false), mélange vocab+grammaire+kanji,
+// réutilise entièrement le mécanisme de session mixte déjà existant.
+async function startLevelDiscovery(levelId) {
+    const quota = QUOTA_LEVELS[getQuotaLevel()].apprendre; // réutilise le réglage Intensité existant
+    const queue = await buildReviewQueue({
+        types: ['vocab', 'grammar', 'kanji'],
+        levels: [levelId],
+        includeDue: false,
+        newLimit: quota
+    });
     if (queue.length === 0) {
-        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
-        el.onclick = null;
+        alert('Rien de nouveau à découvrir pour ce niveau pour le moment ! 🎉');
         return;
     }
-    
-    const counts = { vocab: 0, grammar: 0, kanji: 0 };
-    queue.forEach(e => counts[e.type]++);
-    
-    el.innerHTML = `
-        <div class="review-cta-label">RÉVISION DU JOUR</div>
-        <div class="review-cta-count">${queue.length}</div>
-        <div class="review-cta-sub">${counts.vocab} mot${counts.vocab !== 1 ? 's' : ''} · ${counts.grammar} leçon${counts.grammar !== 1 ? 's' : ''} · ${counts.kanji} kanji</div>
-    `;
+    launchMixedReviewSession(queue, 'apprendre-discovery');
 }
 
 /* ══════════════════════════════════════════════════
@@ -3887,17 +3914,12 @@ async function getLevelKanjiChars(levelId) {
 // Utilisée par l'onglet "Apprendre" (carte héro) — quota GLOBAL de 10 nouvelles
 // pour toute la session mixte (avant : 10 par combinaison type×niveau, ce qui
 // pouvait aller jusqu'à 150 nouvelles cartes d'un coup). Voir buildReviewQueue().
-async function getMixedDueQueue() {
-    const quota = QUOTA_LEVELS[getQuotaLevel()].apprendre;
-    return buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: ['n5', 'n4', 'n3', 'n2', 'n1'], newLimit: quota });
-}
-
 let mixedReviewSession = null; // { queue: [{type, item}], index, results, flipped }
 
 // Partagé entre l'onglet "Apprendre" et le bouton "Réviser aujourd'hui" de l'accueil :
 // les deux lancent le même mécanisme de session mixte, seule la file en entrée et le
 // nom d'état modal (donc la destination du bouton retour) diffèrent.
-function launchMixedReviewSession(queue, exitState = 'mixed-review') {
+function launchMixedReviewSession(queue, exitState = 'apprendre-discovery') {
     if (queue.length === 0) {
         alert("Rien à réviser aujourd'hui, tous types confondus ! 🎉");
         return;
@@ -3914,11 +3936,6 @@ function launchMixedReviewSession(queue, exitState = 'mixed-review') {
 
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderMixedReviewScreen();
-}
-
-async function startMixedReview() {
-    const queue = await getMixedDueQueue();
-    launchMixedReviewSession(queue, 'mixed-review');
 }
 
 // Détermine front/back/typeLabel/frontSize d'une carte à partir de son entrée { type, level, item } —
@@ -7404,7 +7421,7 @@ const MODAL_EXIT_REGISTRY = {
     'grammar-review': () => { grammarReviewSession = null; if (grammarHomeData) showGrammarHome(grammarHomeData.levelId, grammarHomeData.data, grammarHomeData.examples, true); },
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
-    'mixed-review': () => { mixedReviewSession = null; showApprendreScreen(true); },
+    'apprendre-discovery': () => { mixedReviewSession = null; showApprendreScreen(true); },
     'mixed-review-dashboard': () => { mixedReviewSession = null; showDashboard(true); renderDashboard(); },
     'search': () => closeSearchOverlay(),
     'kana-mode-selector': () => showRevisionKanaPicker(true),
