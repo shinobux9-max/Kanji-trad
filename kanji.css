@@ -699,7 +699,7 @@
 /* ══════════════════════════════════════════════════
    DASHBOARD — CTA "Réviser aujourd'hui"
 ══════════════════════════════════════════════════ */
-.dash-review-cta { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.08)); border: 1px solid rgba(0,229,255,0.3); text-align: center; padding: 20px; }
+.dash-review-cta { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.08)); border: 1px solid rgba(0,229,255,0.3); text-align: center; padding: 14px; }
 .review-cta-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 8px; }
 .review-cta-count { font-size: 2.5rem; color: #fff; font-weight: bold; line-height: 1.1; }
 .review-cta-sub { font-size: 0.75rem; color: var(--gray); margin-bottom: 14px; }
@@ -832,11 +832,11 @@
 /* Cartes plus aérées */
 .dash-card { padding: 20px; border-radius: 18px; }
 .welcome-box { border-radius: 18px; padding: 16px; }
-.dash-review-cta { border-radius: 18px; }
+.dash-review-cta { border-radius: 18px; padding: 14px; }
 
 /* Split Nouveaux / À réviser façon Hibi, dans le CTA dashboard */
-.review-cta-split { display: flex; gap: 10px; margin: 14px 0; }
-.review-cta-split-box { flex: 1; background: rgba(255,255,255,0.06); border-radius: 14px; padding: 14px 8px; }
+.review-cta-split { display: flex; gap: 10px; margin: 10px 0; }
+.review-cta-split-box { flex: 1; background: rgba(255,255,255,0.06); border-radius: 14px; padding: 10px 8px; }
 .review-cta-split-num { font-size: 1.75rem; color: #fff; font-weight: bold; }
 .review-cta-split-label { font-size: 0.6875rem; color: var(--gray); margin-top: 2px; }
 
@@ -885,6 +885,32 @@
 .streak-compact-sub { font-size: 0.6875rem; color: var(--gray); margin-top: 1px; }
 .streak-compact-record { font-size: 0.6875rem; color: var(--gray); text-align: right; line-height: 1.3; }
 .streak-compact-chevron { color: var(--gray); font-size: 1.125rem; }
+
+/* Carte "Entraînement libre" façon Hibi — ligne cliquable simple, entre Réviser aujourd'hui et Série en cours */
+.free-training-card { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.free-training-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: rgba(157,110,255,0.14); color: #9D6EFF; display: flex; align-items: center; justify-content: center; font-size: 1.125rem; font-weight: bold; }
+.free-training-info { flex: 1; }
+.free-training-title { font-size: 0.875rem; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+.free-training-badge { font-size: 0.5625rem; font-weight: 900; letter-spacing: 0.5px; color: #9D6EFF; background: rgba(157,110,255,0.16); border: 1px solid rgba(157,110,255,0.4); border-radius: 5px; padding: 2px 6px; }
+.free-training-sub { font-size: 0.6875rem; color: var(--gray); margin-top: 2px; }
+.free-training-chevron { color: var(--gray); font-size: 1.125rem; }
+
+/* Carte "Série en cours" avec vue hebdomadaire façon Hibi (points reliés L-M-M-J-V-S-D) */
+.streak-week-card { cursor: pointer; }
+.streak-week-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.streak-week-icon-box { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: rgba(0,229,255,0.12); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; font-weight: bold; }
+.streak-week-title-block { flex: 1; }
+.streak-week-label { font-size: 0.625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
+.streak-week-num { font-size: 0.9375rem; color: #fff; font-weight: bold; margin-top: 1px; }
+.streak-week-record { font-size: 0.625rem; color: var(--gray); text-align: right; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.5px; }
+.streak-week-row { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; }
+.streak-week-row::before { content: ''; position: absolute; top: 50%; left: 20px; right: 20px; border-top: 1px dashed var(--border); z-index: 0; }
+.streak-week-dot { position: relative; z-index: 1; width: 26px; height: 26px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--gray); }
+.streak-week-dot.active { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: 0 0 8px rgba(0,229,255,0.5); }
+.streak-week-dot.today:not(.active) { border-color: var(--accent); border-width: 2px; color: var(--accent); }
+.streak-week-labels { display: flex; padding: 0 6px; margin-top: 4px; }
+.streak-week-labels span { flex: 1; text-align: center; font-size: 0.625rem; color: var(--gray); }
+.streak-week-labels span.today { color: var(--accent); font-weight: bold; }
 
 .progression-page { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
 .progression-page .back-btn { margin-bottom: 4px; }

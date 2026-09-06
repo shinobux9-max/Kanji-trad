@@ -3011,6 +3011,33 @@ function displayGrammarList(levelId, data, examples = null) {
 /* ══════════════════════════════════════════════════
    DASHBOARD
 ══════════════════════════════════════════════════ */
+// Vue hebdomadaire façon Hibi : points reliés L-M-M-J-V-S-D, semaine courante (lundi→dimanche)
+function buildWeekStreakHtml(streak) {
+    const dayLabels = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    const now = new Date();
+    const dow = now.getDay(); // 0=dimanche...6=samedi
+    const mondayOffset = (dow === 0) ? 6 : dow - 1;
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - mondayOffset);
+
+    const cells = [];
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        cells.push({
+            label: dayLabels[i],
+            active: streak.activityDates.includes(dateStr),
+            today: dateStr === todayStr()
+        });
+    }
+
+    const dots = cells.map(c => `<div class="streak-week-dot${c.active ? ' active' : ''}${c.today ? ' today' : ''}">❀</div>`).join('');
+    const labels = cells.map(c => `<span${c.today ? ' class="today"' : ''}>${c.label}</span>`).join('');
+
+    return `<div class="streak-week-row">${dots}</div><div class="streak-week-labels">${labels}</div>`;
+}
+
 function showDashboard(isBack = false) {
     // Si ce n'est pas un retour arrière, on enregistre l'état
     if (!isBack) history.pushState({ view: 'dashboard' }, '');
@@ -3035,14 +3062,24 @@ function showDashboard(isBack = false) {
             <div class="dash-card dash-review-cta" id="dashboard-review-cta">
                 <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
             </div>
-            <div class="dash-card streak-compact" onclick="showProgressionDetail()">
-                <div class="streak-compact-icon">続</div>
-                <div class="streak-compact-info">
-                    <div class="streak-compact-num">${streak.currentStreak} jour${streak.currentStreak > 1 ? 's' : ''}</div>
-                    <div class="streak-compact-sub">Série en cours</div>
+            <div class="dash-card free-training-card" onclick="showFreeTrainingConfig()">
+                <div class="free-training-icon">復</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">Entraînement libre <span class="free-training-badge">LIBRE</span></div>
+                    <div class="free-training-sub">Feuillette tes mots vus · sans effet sur tes révisions</div>
                 </div>
-                <div class="streak-compact-record">Record<br>${streak.bestStreak}j</div>
-                <span class="streak-compact-chevron">›</span>
+                <span class="free-training-chevron">→</span>
+            </div>
+            <div class="dash-card streak-week-card" onclick="showProgressionDetail()">
+                <div class="streak-week-header">
+                    <div class="streak-week-icon-box">続</div>
+                    <div class="streak-week-title-block">
+                        <div class="streak-week-label">Série en cours</div>
+                        <div class="streak-week-num">${streak.currentStreak} jour${streak.currentStreak > 1 ? 's' : ''}</div>
+                    </div>
+                    <div class="streak-week-record">Record<br>${streak.bestStreak}j</div>
+                </div>
+                ${buildWeekStreakHtml(streak)}
             </div>
             <div class="dash-card dash-mastery-card">
                 <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
@@ -6072,6 +6109,21 @@ async function startDashboardReview() {
     launchMixedReviewSession(queue, 'mixed-review-dashboard');
 }
 
+// Point d'entrée navigable pour l'Entraînement libre (point #8 de la roadmap).
+// Stub pour l'instant : le corps sera remplacé par le vrai écran de configuration
+// (type × niveau × nombre de questions) à l'étape suivante — la navigation/retour
+// arrière fonctionne déjà correctement dès maintenant.
+function showFreeTrainingConfig(isBack = false) {
+    if (!isBack) history.pushState({ view: 'free-training-config' }, '');
+    document.getElementById('page-title').innerText = 'Entraînement libre';
+    document.getElementById('main-content').innerHTML = `
+        <div style="padding:60px 24px;text-align:center;color:var(--gray)">
+            <div style="font-size:2.5rem;margin-bottom:14px">🏋️</div>
+            <div style="font-weight:bold;color:var(--text);margin-bottom:8px;font-size:1rem">Bientôt disponible</div>
+            <div style="font-size:0.8125rem;line-height:1.5">La configuration de l'entraînement libre arrive dans la prochaine étape.</div>
+        </div>`;
+}
+
 function buildProgRow(label, done, total, icon) {
     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
     return `
@@ -6361,6 +6413,7 @@ function pushModalState(name) {
 // à la fonction qui sait le rejouer (avec isBack=true pour ne pas re-pousser un état)
 const SCREEN_REGISTRY = {
     'dashboard': () => { showDashboard(true); renderDashboard(); },
+    'free-training-config': () => showFreeTrainingConfig(true),
     'category': (s) => loadCategory(s.id, true),
     'series': (s) => loadSeriesPage(s.id, true),
     'niveaux': () => showNiveauxScreen(true),
