@@ -4291,7 +4291,7 @@ let mixedReviewSession = null; // { queue: [{type, item}], index, results, flipp
 // Partagé entre l'onglet "Apprendre" et le bouton "Réviser aujourd'hui" de l'accueil :
 // les deux lancent le même mécanisme de session mixte, seule la file en entrée et le
 // nom d'état modal (donc la destination du bouton retour) diffèrent.
-function launchMixedReviewSession(queue, exitState = 'apprendre-discovery') {
+function launchMixedReviewSession(queue, exitState = 'apprendre-discovery', trackDailyQuota = false) {
     if (queue.length === 0) {
         alert("Rien à réviser aujourd'hui, tous types confondus ! 🎉");
         return;
@@ -4303,7 +4303,11 @@ function launchMixedReviewSession(queue, exitState = 'apprendre-discovery') {
         queue,
         index: 0,
         results: { again: 0, hard: 0, good: 0, easy: 0 },
-        flipped: false
+        flipped: false,
+        trackDailyQuota // true uniquement pour "Réviser aujourd'hui" (accueil) — crédite le quota
+                         // journalier carte par carte au fur et à mesure de la notation, pas
+                         // d'un coup au lancement (sinon quitter en cours de session faisait
+                         // croire à tort que tout avait déjà été vu)
     };
 
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
@@ -4550,6 +4554,10 @@ function submitMixedReviewGrade(quality) {
     const id = getEntryTrackingId(entry);
     gradeReview(id, quality, { type: entry.type, label: getEntryLabel(entry) });
     if (quality === 0) scheduleRelearning(mixedReviewSession, entry);
+    if (mixedReviewSession.trackDailyQuota && entry.isNew && !entry._dailyCredited) {
+        addDailyNewCardsUsed(1);
+        entry._dailyCredited = true;
+    }
     
     const labels = ['again', 'hard', 'good', 'easy'];
     mixedReviewSession.results[labels[quality]]++;
@@ -6934,9 +6942,7 @@ async function renderDashboardReviewCta() {
 // de session mixte partagé avec l'onglet "Apprendre" (launchMixedReviewSession).
 async function startDashboardReview() {
     const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: getAccueilEffectiveNewLimit(), excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
-    const newCount = queue.filter(e => e.isNew).length;
-    if (newCount > 0) addDailyNewCardsUsed(newCount);
-    launchMixedReviewSession(queue, 'mixed-review-dashboard');
+    launchMixedReviewSession(queue, 'mixed-review-dashboard', true);
 }
 
 // Point d'entrée navigable pour l'Entraînement libre (point #8 de la roadmap).
