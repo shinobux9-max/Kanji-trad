@@ -4008,12 +4008,12 @@ function renderLessonEnd() {
     return `
         <div style="text-align:center;padding:20px 0">
             <div style="font-size:3rem;margin-bottom:10px">${passed ? '🎉' : '💪'}</div>
-            <div style="font-size:1.25rem;font-weight:bold;color:#fff;margin-bottom:4px">${passed ? 'Leçon terminée !' : 'Presque !'}</div>
-            <div style="font-size:0.875rem;color:var(--gray);margin-bottom:20px">${l.title}</div>
-            <div style="display:inline-block;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:10px 20px;color:#4ADE80;font-size:0.875rem;margin-bottom:20px">${score} / ${totalEx} bonnes réponses</div>
+            <div style="font-size:1.5rem;font-weight:bold;color:#fff;margin-bottom:6px">${passed ? 'Leçon terminée !' : 'Presque !'}</div>
+            <div style="font-size:1.0625rem;color:var(--gray);margin-bottom:20px">${l.title}</div>
+            <div style="display:inline-block;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:12px 22px;color:#4ADE80;font-size:1.0625rem;margin-bottom:20px">${score} / ${totalEx} bonnes réponses</div>
             ${passed
-                ? `<div style="font-size:0.75rem;color:var(--gray);margin-bottom:24px">📅 Première révision programmée pour demain, dans "Réviser"</div>`
-                : `<div style="font-size:0.75rem;color:var(--gray);margin-bottom:24px">🧠 Cette notion a été ajoutée à "À renforcer" — pas de souci, tu la reverras</div>`}
+                ? `<div style="font-size:0.9375rem;color:var(--gray);margin-bottom:24px;line-height:1.5">📅 Première révision programmée pour demain, dans "Réviser"</div>`
+                : `<div style="font-size:0.9375rem;color:var(--gray);margin-bottom:24px;line-height:1.5">🧠 Cette notion a été ajoutée à "À renforcer" — pas de souci, tu la reverras</div>`}
         </div>
         <button class="review-continue-btn" onclick="exitLessonFlow()">Retour à Apprendre</button>
         <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
