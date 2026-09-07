@@ -6445,6 +6445,12 @@ function openDetail(kanji) {
 
 function openKanaDetail(kana) {
     currentType = 'kana'; currentChar = kana.c;
+    // Le kana n'a pas de "mots qui l'utilisent" (contrairement au kanji) — on vide cette section
+    // qui pourrait sinon garder le contenu résiduel d'un kanji visité juste avant (même overlay partagé).
+    const linkedTitle = document.getElementById('linked-vocab-title');
+    const linkedContainer = document.getElementById('linked-vocab-container');
+    if (linkedTitle) linkedTitle.style.display = 'none';
+    if (linkedContainer) linkedContainer.innerHTML = '';
     const code = kana.c.codePointAt(0);
     const label = (code >= 0x3040 && code <= 0x309F) ? 'Hiragana' : 'Katakana';
     const isYoon = [...kana.c].length > 1, isSokuon = kana.c === 'っ' || kana.c === 'ッ';
