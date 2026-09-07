@@ -4016,7 +4016,7 @@ function renderLessonEnd() {
                 : `<div style="font-size:0.9375rem;color:var(--gray);margin-bottom:24px;line-height:1.5">🧠 Cette notion a été ajoutée à "À renforcer" — pas de souci, tu la reverras</div>`}
         </div>
         <button class="review-continue-btn" onclick="exitLessonFlow()">Retour à Apprendre</button>
-        <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
+        <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
     `;
 }
 
