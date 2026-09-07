@@ -3906,7 +3906,7 @@ function renderLessonIntro() {
         <div class="fiche-title-card">
             <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">${l.unit_title || ''}</div>
             <div class="fiche-title-main">${l.title || ''}</div>
-            <div style="font-size:2rem;color:#fff;margin:14px 0 6px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
+            <div style="font-size:2rem;color:var(--accent);margin:14px 0 6px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
             <div class="fiche-title-reading">${l.badge || ''}</div>
             ${l.pattern ? `<div style="margin-top:14px;padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;font-family:monospace;color:var(--accent);font-size:0.8125rem">${l.pattern}</div>` : ''}
         </div>
