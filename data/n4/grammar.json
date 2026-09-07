@@ -1,78 +1,90 @@
 [
+  [
   {
-  "id": "n4_g_potential",
-  "unit": 1,
-  "unit_title": "La complexification des verbes (voix et potentiel)",
-  "lesson_number": 1,
-  "title": "La forme potentielle",
-  "item": "〜られる / 〜ことができる",
-  "pattern": "[Verbe potentiel]  OU  [Verbe à l'infinitif + ことができる]",
-  "badge": "Verbe - Potentiel",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "Le potentiel exprime la **capacité** ou la **possibilité** (physique ou acquise) de faire une action.",
-        "Il existe deux façons de l'exprimer : une **forme conjuguée** (plus naturelle à l'oral) ou la structure **ことができる** (plus neutre, fréquente à l'écrit)."
-      ]
-    },
-    {
-      "label": "FORMATION DU VERBE POTENTIEL",
-      "blocks": [
-        {
-          "sub_title": "Groupe 1 (godan) : -u → -eru",
-          "list": [
-            "書く (kaku) → **書ける** (kakeru)",
-            "話す (hanasu) → **話せる** (hanaseru)"
-          ]
-        },
-        {
-          "sub_title": "Groupe 2 (ichidan) : -ru → -rareru",
-          "list": [
-            "食べる (taberu) → **食べられる** (taberareru)",
-            "見る (miru) → **見られる** (mirareru)"
-          ]
-        },
-        {
-          "sub_title": "Verbes irréguliers",
-          "list": [
-            "する → **できる**",
-            "来る (kuru) → **来られる** (korareru)"
-          ]
+    "id": "n4_g_potential",
+    "unit": 1,
+    "unit_title": "La complexification des verbes (voix et potentiel)",
+    "lesson_number": 1,
+    "title": "La forme potentielle",
+    "item": "〜られる / 〜ことができる",
+    "pattern": "[Verbe potentiel]   OU   [Verbe à l'infinitif + ことができる]",
+    "badge": "Verbe - Potentiel",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "Le potentiel exprime la **capacité** ou la **possibilité** (physique ou acquise) de faire une action.",
+          "Il existe deux façons de l'exprimer : une **forme conjuguée** (plus naturelle à l'oral) ou la structure **ことができる** (plus neutre, fréquente à l'écrit)."
+        ]
+      },
+      {
+        "label": "FORMATION DU VERBE POTENTIEL",
+        "blocks": [
+          {
+            "sub_title": "Groupe 1 (godan) : -u → -eru",
+            "list": [
+              "書く (kaku) → **書ける** (kakeru)",
+              "話す (hanasu) → **話せる** (hanaseru)"
+            ]
+          },
+          {
+            "sub_title": "Groupe 2 (ichidan) : -ru → -rareru",
+            "list": [
+              "食べる (taberu) → **食べられる** (taberareru)",
+              "見る (miru) → **見られる** (mirareru)"
+            ]
+          },
+          {
+            "sub_title": "Verbes irréguliers",
+            "list": [
+              "する → **できる**",
+              "来る (kuru) → **来られる** (korareru)"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "NUANCE : ことができる",
+        "paragraphs": [
+          "**ことができる** s'utilise toujours avec le verbe à la **forme dictionnaire (infinitif)**, quel que soit son groupe.",
+          "💡 **Particules :** La forme conjuguée privilégie la particule **が** (日本語**が**話せる), tandis que **ことができる** conserve généralement la particule **を** (日本語**を**話すことができる)."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure",
+            "list": [
+              "[Verbe à l'infinitif] + **ことができる**"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "私は日本語が話せる。",
+        "romaji": "Watashi wa nihongo ga hanaseru.",
+        "french": "Je peux parler japonais. (Forme conjuguée - Oral / Naturel)",
+        "highlight": "話せる"
+      },
+      {
+        "japanese": "私は日本語を話すことができる。",
+        "romaji": "Watashi wa nihongo o hanasu koto ga dekiru.",
+        "french": "Je peux parler japonais. (Structure neutre - Écrit / Formel)",
+        "highlight": "話すことができる"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Conserver la particule を avec le verbe potentiel conjugué",
+        "explanation": "Avec la forme potentielle conjuguée (ex: *hanaseru*), l'objet direct prend généralement la particule **が** à la place de **を**.",
+        "wrong_example": {
+          "japanese": "日本語を話せる。",
+          "correct_japanese": "日本語が話せる。",
+          "french": "Je peux parler japonais."
         }
-      ]
-    },
-    {
-      "label": "NUANCE : ことができる",
-      "paragraphs": [
-        "**ことができる** s'utilise toujours avec le verbe à la **forme dictionnaire (infinitif)**, quel que soit son groupe.",
-        "💡 **Particules :** La forme conjuguée privilégie la particule **が** (日本語**が**話せる), tandis que **ことができる** conserve généralement la particule **を** (日本語**を**話すことができる)."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure",
-          "list": [
-            "[Verbe à l'infinitif] + **ことができる**"
-          ]
-        }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "私は日本語が話せる。",
-      "romaji": "Watashi wa nihongo ga hanaseru.",
-      "french": "Je peux parler japonais. (Forme conjuguée - Oral / Naturel)",
-      "highlight": "話せる"
-    },
-    {
-      "japanese": "私は日本語を話すことができる。",
-      "romaji": "Watashi wa nihongo o hanasu koto ga dekiru.",
-      "french": "Je peux parler japonais. (Structure neutre - Écrit / Formel)",
-      "highlight": "話すことができる"
-    }
-  ]
-},
+      }
+    ]
+  },
   {
     "id": "n4_g_ato_de",
     "unit": 2,
@@ -101,6 +113,17 @@
         "romaji": "Hirugohan o tabeta ato de, hirune o shita.",
         "french": "Après avoir déjeuné, j'ai fait une sieste.",
         "highlight": "食べた後で"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Utiliser la forme dictionnaire du verbe au lieu du passé (TA) avant 後で",
+        "explanation": "Pour exprimer « après avoir fait », on emploie impérativement le verbe au **passé (forme TA)**. La forme dictionnaire devant 後で altérerait le sens temporel.",
+        "wrong_example": {
+          "japanese": "食べる後で、寝ます。",
+          "correct_japanese": "食べた後で、寝ます。",
+          "french": "Je vais dormir après avoir mangé."
+        }
       }
     ]
   },
@@ -132,8 +155,21 @@
         "french": "J'ai l'intention d'aller étudier au Japon l'année prochaine.",
         "highlight": "しようと思う"
       }
+    ],
+    "confusions": [
+      {
+        "with": "Confondre 〜ようと思う avec 〜つもりだ pour l'immédiateté ou la force de l'intention",
+        "explanation": "**〜ようと思う** exprime une intention mûrie mais qui peut encore être une réflexion personnelle douce, tandis que **〜つもりだ** marque un projet ou une décision un peu plus arrêtée et concrète.",
+        "wrong_example": {
+          "japanese": "明日、絶対にそれをしようと思う。（pour un ordre ou un engagement formel absolu）",
+          "correct_japanese": "明日、それをやるつもりだ。",
+          "french": "J'ai bien l'intention de le faire demain."
+        }
+      }
     ]
-  },
+  }
+],
+[
   {
     "id": "n4_g_kamoshirenai",
     "unit": 4,
@@ -161,6 +197,17 @@
         "romaji": "Gogo kara ame ga furu kamoshirenai.",
         "french": "Il se pourrait qu'il pleuve cet après-midi.",
         "highlight": "かもしれない"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Maintenir la copule 'da' ou 'desu' avant かもしれない pour les noms et adjectifs en -na",
+        "explanation": "Pour les noms et les adjectifs en *-na*, on ajoute **かもしれない** directement ou en conservant simplement un *da* optionnel en style familier, mais on ne met jamais la forme polie *desu* juste avant.",
+        "wrong_example": {
+          "japanese": "雨かもしれない。（correct） / 雨ですかもしれない。（incorrect）",
+          "correct_japanese": "雨かもしれない。",
+          "french": "C'est peut-être de la pluie."
+        }
       }
     ]
   },
@@ -192,6 +239,17 @@
         "french": "J'ai reçu l'aide de mon ami.",
         "highlight": "手伝ってもらった"
       }
+    ],
+    "confusions": [
+      {
+        "with": "Confondre la particule qui désigne la personne qui rend service avec 〜てもらう",
+        "explanation": "La personne qui effectue le service est marquée par la particule **に** (ou から), et non par la particule *wa* ou *o* pour l'agent.",
+        "wrong_example": {
+          "japanese": "友だちを手伝ってもらった。（incorrect pour désigner l'ami qui aide）",
+          "correct_japanese": "友だちに手伝ってもらった。",
+          "french": "Je me suis fait aider par mon ami."
+        }
+      }
     ]
   },
   {
@@ -222,8 +280,21 @@
         "french": "J'achète les billets à l'avance.",
         "highlight": "買っておく"
       }
+    ],
+    "confusions": [
+      {
+        "with": "Confondre l'action préalable 〜ておく avec une simple action continue en 〜ている",
+        "explanation": "**〜ておく** implique une préparation ou une anticipation pour le futur (« faire en amont »), alors que *〜ている* décrit une action en train de se dérouler ou un état persistant.",
+        "wrong_example": {
+          "japanese": "ホテルを予約している。（lorsqu'on veut insister sur le fait qu'on a pris la peine de réserver à l'avance en prévision du voyage）",
+          "correct_japanese": "ホテルを予約しておく。",
+          "french": "Je réserve l'hôtel à l'avance (en prévision)."
+        }
+      }
     ]
-  },
+  }
+],
+[
   {
     "id": "n4_g_sugiru",
     "unit": 7,
@@ -251,6 +322,17 @@
         "romaji": "Sakuya, osake o nomisugita.",
         "french": "Hier soir, j'ai trop bu d'alcool.",
         "highlight": "飲みすぎた"
+      }
+    ],
+    "confusions": [
+      {
+        "with": "Maintenir la voyelle finale 'i' des adjectifs en -i ou la copule 'na' des adjectifs en -na avant すぎる",
+        "explanation": "Pour attacher **すぎる**, on supprime le **い** d'un adjectif en *-i* (ex: *takai* ➔ *takasugiru*) et on retire le **な** d'un adjectif en *-na* (ex: *genki* ➔ *genkisugiru*).",
+        "wrong_example": {
+          "japanese": "高すぎる。（correct） / 高いすぎる。（incorrect）",
+          "correct_japanese": "高すぎる。",
+          "french": "C'est trop cher."
+        }
       }
     ]
   },
@@ -282,6 +364,17 @@
         "french": "Comme il pleut, je ne sors pas.",
         "highlight": "ので"
       }
+    ],
+    "confusions": [
+      {
+        "with": "Utiliser だ (da) au lieu de な (na) pour les noms et adjectifs en -na avant ので",
+        "explanation": "Devant **ので**, les noms et les adjectifs en *-na* prennent la particule **な** à la place de la copule *da* (ex: *byouki na node*).",
+        "wrong_example": {
+          "japanese": "病気なので、休みます。（correct） / 病気だなので、休みます。（incorrect）",
+          "correct_japanese": "病気なので、休みます。",
+          "french": "Comme je suis malade, je m'absente."
+        }
+      }
     ]
   },
   {
@@ -312,8 +405,21 @@
         "french": "Ce magasin est bon marché et en plus c'est délicieux.",
         "highlight": "美味しいし"
       }
+    ],
+    "confusions": [
+      {
+        "with": "Confondre 〜し avec la simple conjonction 〜て pour énumérer des raisons",
+        "explanation": "**〜し** s'emploie spécifiquement pour lister des arguments ou des motivations qui justifient une conclusion globale, tandis que la forme en *-te* sert à enchaîner des actions ou des états chronologiques.",
+        "wrong_example": {
+          "japanese": "安いし、美味しいから、ここに行こう。（redondant avec -kara）",
+          "correct_japanese": "安くて美味しいし、ここに行こう。",
+          "french": "C'est bon marché et c'est bon, allons ici."
+        }
+      }
     ]
-  },
+  }
+],
+[
   {
     "id": "n4_g_ka_dou_ka",
     "unit": 10,
@@ -342,6 +448,18 @@
         "french": "Je ne sais pas s'il pleuvra demain ou non.",
         "highlight": "降るかどうか"
       }
+    ],
+    "confusions": [
+      {
+        "with": "Confondre une question fermée avec かどうか et une question ouverte utilisant des mots interrogatifs (nani, dare, doko...)",
+        "explanation": "**〜かどうか** s'utilise uniquement pour les interrogations oui/non (vrai ou faux). Pour les questions contenant un mot interrogatif comme *quoi* ou *où*, on emploie directement le mot interrogatif suivi de *ka* sans *dou ka*.",
+        "wrong_example": {
+          "japanese": "どこに行くかどうか知っていますか。（lorsqu'on demande précisément où quelqu'un va）",
+          "correct_japanese": "どこに行くか知っていますか。",
+          "french": "Savez-vous où il va ?"
+        }
+      }
     ]
   }
+]
 ]
