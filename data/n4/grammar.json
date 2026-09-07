@@ -97,21 +97,47 @@
       {
         "label": "EXPLICATION",
         "paragraphs": [
-          "La structure verbe en TA + 後で permet d'indiquer qu'une action se produit après une autre."
+          "La structure verbe en TA + 後で (ato de) permet d’indiquer qu’une action se produit après une autre.",
+          "La structure verbe en TE + から (kara) permet également d'exprimer une succession d'actions. Cependant, avec 後で, la seconde action se produit immédiatement après la première. Il y a même parfois une connotation d'habitude.",
+          "En revanche, avec から, les deux actions ne se suivent pas nécessairement de façon immédiate. On indique plutôt un point de départ pour réaliser une action. On exprime alors un enchaînement logique des actions."
         ],
         "sub_title": "La structure est la suivante :",
         "list": [
           "vTa + 後で",
           "Nom + の後で"
         ]
+      },
+      {
+        "label": "NUANCE : 後で vs 後に",
+        "paragraphs": [
+          "Il est possible de remplacer 後で (ato de) par 後に (ato ni). Alors que 後で se réfère à un moment général, vague ou imprécis, 後に quant à lui marque un point précis dans le temps."
+        ]
       }
     ],
     "examples": [
       {
-        "japanese": "昼ご飯を食べた後で、昼寝をした。",
-        "romaji": "Hirugohan o tabeta ato de, hirune o shita.",
-        "french": "Après avoir déjeuné, j'ai fait une sieste.",
+        "japanese": "昼ご飯を食べた後で、30分ほど昼寝をした。",
+        "romaji": "Hirugohan o tabeta ato de, sanjuppun hodo hirune o shita.",
+        "french": "Après avoir déjeuné, j’ai fait une sieste d’une demi-heure.",
         "highlight": "食べた後で"
+      },
+      {
+        "japanese": "お酒を飲んだ後で、運転してはダメですよ！",
+        "romaji": "Osake o nonda ato de, unten shite wa dame desu yo !",
+        "french": "Ne conduisez pas après avoir bu de l’alcool !",
+        "highlight": "飲んだ後で"
+      },
+      {
+        "japanese": "宿題の後で、友達と遊びに行きます。",
+        "romaji": "Shukudai no ato de, tomodachi to asobi ni ikimasu.",
+        "french": "Après les devoirs, je vais aller jouer avec mes amis.",
+        "highlight": "宿題の後で"
+      },
+      {
+        "japanese": "秋の後に冬が来る。",
+        "romaji": "Aki no ato ni fuyu ga kuru.",
+        "french": "L’hiver arrive après l’automne.",
+        "highlight": "後に"
       }
     ],
     "confusions": [
@@ -125,7 +151,7 @@
         }
       }
     ]
-  },
+},
   {
     "id": "n4_g_you_to_omou",
     "unit": 3,
