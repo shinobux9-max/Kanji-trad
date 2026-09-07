@@ -7378,7 +7378,7 @@ function getDailyGoalLevels() {
         const stored = localStorage.getItem(DAILY_GOAL_KEY);
         if (!stored) return [...ALL_JLPT_LEVELS];
         const parsed = JSON.parse(stored);
-        return (Array.isArray(parsed) && parsed.length) ? parsed : [...ALL_JLPT_LEVELS];
+        return Array.isArray(parsed) ? parsed : [...ALL_JLPT_LEVELS];
     } catch (e) {
         return [...ALL_JLPT_LEVELS];
     }
@@ -7407,20 +7407,6 @@ function saveDailyGoalKanaScripts(scripts) {
 }
 
 // Libellé court affiché sur la carte accueil, ex: "N5, N4 · Hiragana, Katakana"
-function formatDailyGoalLabel() {
-    const levels = getDailyGoalLevels();
-    const levelsLabel = jlptMapping
-        ? levels.slice().sort((a, b) => (jlptMapping.levels[a]?.order ?? 0) - (jlptMapping.levels[b]?.order ?? 0))
-                .map(l => jlptMapping.levels[l]?.label || l.toUpperCase()).join(', ')
-        : levels.map(l => l.toUpperCase()).join(', ');
-
-    const kanaScripts = getDailyGoalKanaScripts();
-    const kanaLabel = kanaScripts.length
-        ? kanaScripts.map(s => KANA_SCRIPT_LABELS[s] || s).join(', ')
-        : null;
-
-    return kanaLabel ? `${levelsLabel} · ${kanaLabel}` : levelsLabel;
-}
 
 function renderDailyGoalModalContent() {
     const levelsContainer = document.getElementById('daily-goal-levels-list');
@@ -7473,11 +7459,11 @@ function closeDailyGoalModal() {
 
 function saveDailyGoalFromModal() {
     const checkedLevels = [...document.querySelectorAll('.daily-goal-checkbox:checked')].map(el => el.value);
-    if (checkedLevels.length === 0) {
-        alert('Choisis au moins un niveau.');
+    const checkedKana = [...document.querySelectorAll('.daily-goal-kana-checkbox:checked')].map(el => el.value);
+    if (checkedLevels.length === 0 && checkedKana.length === 0) {
+        alert('Choisis au moins un niveau ou un script de kana.');
         return;
     }
-    const checkedKana = [...document.querySelectorAll('.daily-goal-kana-checkbox:checked')].map(el => el.value);
     const quotaLevel = document.querySelector('input[name="quota-level"]:checked')?.value || 'normal';
 
     saveDailyGoalLevels(checkedLevels);
@@ -7485,7 +7471,7 @@ function saveDailyGoalFromModal() {
     saveQuotaLevel(quotaLevel);
     closeDailyGoalModal();
     const goalSubEl = document.getElementById('dashboard-goal-sub');
-    if (goalSubEl) goalSubEl.textContent = formatDailyGoalLabel();
+    if (goalSubEl) goalSubEl.textContent = 'Règle ton niveau de carte';
     renderDashboardReviewCta(); // recalcule le compte de révisions du jour avec le nouvel objectif
 }
 
@@ -7571,7 +7557,7 @@ async function renderDashboardReviewCta() {
     const goalRow = `
         <div class="dash-goal-row" onclick="showDailyGoalModal()">
             <span class="dash-goal-icon">⚙</span>
-            <span class="dash-goal-text" id="dashboard-goal-sub">${formatDailyGoalLabel()}</span>
+            <span class="dash-goal-text" id="dashboard-goal-sub">Règle ton niveau de carte</span>
             <span class="dash-goal-chevron">→</span>
         </div>
     `;
