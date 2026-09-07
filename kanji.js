@@ -1982,10 +1982,8 @@ async function showCategoryDirect(levelId, category, isBack = false) {
         if (category === 'vocab' && vg.vocabTotal > 0) subtitle = `${vg.vocabTotal} mots · ${vg.vocabMastered} maîtrisés`;
         if (category === 'grammar' && vg.grammarTotal > 0) subtitle = `${vg.grammarTotal} leçons · ${vg.grammarMastered} maîtrisées`;
     } else if (category === 'kanji') {
-        const jlptNum = parseInt(levelData.label.replace('N', '')) || levelData.order;
-        const kanjiForLevel = kanjiDb.filter(k => getJLPTLevel(k.grade) === jlptNum);
-        const totalKanji = levelData.count || kanjiForLevel.length;
-        subtitle = `${totalKanji} kanji`;
+        const chars = await getLevelKanjiChars(levelId);
+        subtitle = `${chars ? chars.length : 0} kanji`;
     }
     
     mainContent.innerHTML = `
@@ -3886,7 +3884,7 @@ async function showGrammarNiveauxScreen(isBack = false) {
 /* ══════════════════════════════════════════════════
    ÉCRAN "NIVEAUX KANJI" (miroir, mais données déjà en mémoire via kanjiDb — pas de fetch)
 ══════════════════════════════════════════════════ */
-function showKanjiNiveauxScreen(isBack = false) {
+async function showKanjiNiveauxScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'kanji-niveaux' }, '');
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Kanji';
@@ -3898,12 +3896,11 @@ function showKanjiNiveauxScreen(isBack = false) {
     
     const sortedLevels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
     
-    const cardsHtml = sortedLevels.map(([levelId, levelData]) => {
-        const jlptNum = parseInt(levelData.label.replace('N', '')) || levelData.order;
-        const kanjiForLevel = kanjiDb.filter(k => getJLPTLevel(k.grade) === jlptNum);
-        const totalKanji = levelData.count || kanjiForLevel.length;
-        const totalMastery = kanjiForLevel.reduce((sum, k) => sum + getKanjiMastery(k.char), 0);
-        const avgMastery = kanjiForLevel.length > 0 ? Math.round(totalMastery / kanjiForLevel.length) : 0;
+    const cardsHtml = (await Promise.all(sortedLevels.map(async ([levelId, levelData]) => {
+        const chars = await getLevelKanjiChars(levelId) || [];
+        const totalKanji = chars.length;
+        const totalMastery = chars.reduce((sum, c) => sum + getKanjiMastery(c), 0);
+        const avgMastery = chars.length > 0 ? Math.round(totalMastery / chars.length) : 0;
         
         return `
             <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','kanji')">
@@ -3916,7 +3913,7 @@ function showKanjiNiveauxScreen(isBack = false) {
                 </div>
                 <div class="niveaux-pct">${avgMastery}%</div>
             </div>`;
-    }).join('');
+    }))).join('');
     
     mainContent.innerHTML = `
         <div class="niveaux-wrap">
@@ -7624,13 +7621,14 @@ async function renderDashboard() {
     ];
 
     const rowsHtml = await Promise.all(jlptLevels.map(async levelDef => {
-        // Kanji (inchangé, synchrone depuis kanjiDb déjà en mémoire)
-        const kanjiForLevel = kanjiDb.filter(k => getJLPTLevel(k.grade) === levelDef.jlpt);
-        const totalKanji = kanjiForLevel.length;
-        const totalMastery = kanjiForLevel.reduce((sum, k) => sum + getKanjiMastery(k.char), 0);
+        // Kanji : lit maintenant la vraie liste triée par niveau (data/nX/kanji.json), pas un
+        // filtrage par grade sur le gros kanji_jouyou_fr.json (qui donnait un tout autre chiffre)
+        const chars = await getLevelKanjiChars(levelDef.id) || [];
+        const totalKanji = chars.length;
+        const totalMastery = chars.reduce((sum, c) => sum + getKanjiMastery(c), 0);
         const avgMastery = totalKanji > 0 ? Math.round(totalMastery / totalKanji) : 0;
-        const practicedKanji = kanjiForLevel.filter(k => {
-            return localStorage.getItem(`quiz_${k.char}`) || localStorage.getItem(`trace_${k.char}`);
+        const practicedKanji = chars.filter(c => {
+            return localStorage.getItem(`quiz_${c}`) || localStorage.getItem(`trace_${c}`);
         }).length;
         
         // Vocab + Grammaire (fetch caché)
