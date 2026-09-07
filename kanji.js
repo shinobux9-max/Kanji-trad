@@ -2021,7 +2021,7 @@ async function loadJLPTCategory(levelId, category, isBack = false) {
             throw new Error(`Fichier non trouvé : ${url}`);
         }
         
-        const data = await res.json();
+        const data = flattenIfNested(await res.json());
         
         // Charger aussi les exemples si c'est vocab ou grammar
         let examples = null;
@@ -4241,11 +4241,29 @@ function renderKanaReviewSummary() {
 const grammarDataCache = {};
 const kanjiCharsCache = {};
 
+// Aplatit défensivement une liste imbriquée par erreur — piège classique quand un lot de
+// leçons/mots collé depuis Gemini est inséré comme UN SEUL élément (une liste imbriquée) au
+// lieu d'être éclaté dans le tableau principal. Rend l'app robuste à cette faute de frappe une
+// fois pour toutes, plutôt que de devoir la détecter et la corriger manuellement à chaque
+// nouveau niveau (déjà rencontré sur le N5 puis le N4).
+function flattenIfNested(arr) {
+    if (!Array.isArray(arr)) return arr;
+    const hasNested = arr.some(x => Array.isArray(x));
+    if (!hasNested) return arr;
+    const flat = [];
+    for (const x of arr) {
+        if (Array.isArray(x)) flat.push(...x);
+        else flat.push(x);
+    }
+    console.warn(`⚠️ Structure imbriquée détectée et aplatie automatiquement (${arr.length} → ${flat.length} éléments)`);
+    return flat;
+}
+
 async function getLevelGrammarData(levelId) {
     if (levelId in grammarDataCache) return grammarDataCache[levelId];
     try {
         const res = await fetch(`./data/${levelId}/grammar.json`, { cache: 'no-store' });
-        grammarDataCache[levelId] = res.ok ? { data: await res.json() } : null;
+        grammarDataCache[levelId] = res.ok ? { data: flattenIfNested(await res.json()) } : null;
     } catch (e) {
         grammarDataCache[levelId] = null;
     }
@@ -4258,7 +4276,7 @@ async function getLevelKanjiChars(levelId) {
         const res = await fetch(`./data/${levelId}/kanji.json`, { cache: 'no-store' });
         if (!res.ok) { kanjiCharsCache[levelId] = null; return null; }
         const data = await res.json();
-        kanjiCharsCache[levelId] = Array.isArray(data.chars) ? data.chars : null;
+        kanjiCharsCache[levelId] = Array.isArray(data.chars) ? flattenIfNested(data.chars) : null;
     } catch (e) {
         kanjiCharsCache[levelId] = null;
     }
@@ -6627,7 +6645,7 @@ async function getLevelVocabData(levelId) {
     try {
         const res = await fetch(`./data/${levelId}/vocab.json`, { cache: 'no-store' });
         if (!res.ok) { vocabDataCache[levelId] = null; return null; }
-        const data = await res.json();
+        const data = flattenIfNested(await res.json());
         
         let examples = null;
         try {
