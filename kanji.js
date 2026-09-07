@@ -1441,6 +1441,57 @@ function clearSearch() {
 const KANA_TO_ROMAJI = {"あ":"a","い":"i","う":"u","え":"e","お":"o","か":"ka","き":"ki","く":"ku","け":"ke","こ":"ko","さ":"sa","し":"shi","す":"su","せ":"se","そ":"so","た":"ta","ち":"chi","つ":"tsu","て":"te","と":"to","な":"na","に":"ni","ぬ":"nu","ね":"ne","の":"no","は":"ha","ひ":"hi","ふ":"fu","へ":"he","ほ":"ho","ま":"ma","み":"mi","む":"mu","め":"me","も":"mo","や":"ya","ゆ":"yu","よ":"yo","ら":"ra","り":"ri","る":"ru","れ":"re","ろ":"ro","わ":"wa","を":"wo","ん":"n","が":"ga","ぎ":"gi","ぐ":"gu","げ":"ge","ご":"go","ざ":"za","じ":"ji","ず":"zu","ぜ":"ze","ぞ":"zo","だ":"da","ぢ":"di","づ":"du","で":"de","ど":"do","ば":"ba","び":"bi","ぶ":"bu","べ":"be","ぼ":"bo","ぱ":"pa","ぴ":"pi","ぷ":"pu","ぺ":"pe","ぽ":"po","ア":"a","イ":"i","ウ":"u","エ":"e","オ":"o","カ":"ka","キ":"ki","ク":"ku","ケ":"ke","コ":"ko","サ":"sa","シ":"shi","ス":"su","セ":"se","ソ":"so","タ":"ta","チ":"chi","ツ":"tsu","テ":"te","ト":"to","ナ":"na","ニ":"ni","ヌ":"nu","ネ":"ne","ノ":"no","ハ":"ha","ヒ":"hi","フ":"fu","ヘ":"he","ホ":"ho","マ":"ma","ミ":"mi","ム":"mu","メ":"me","モ":"mo","ヤ":"ya","ユ":"yu","ヨ":"yo","ラ":"ra","リ":"ri","ル":"ru","レ":"re","ロ":"ro","ワ":"wa","ヲ":"wo","ン":"n"};
 function kanaToRomaji(str) { return [...str].map(c => KANA_TO_ROMAJI[c] || c).join(''); }
 
+const SMALL_Y_TO_ROMAJI = { "ゃ": "ya", "ゅ": "yu", "ょ": "yo", "ャ": "ya", "ュ": "yu", "ョ": "yo" };
+// Ces bases perdent le "y" dans la combinaison yōon (しょ -> sho, pas shyo)
+const YOON_NO_Y_BASES = new Set(['し', 'じ', 'ち', 'ぢ', 'シ', 'ジ', 'チ', 'ヂ']);
+
+// Convertisseur romaji précis (contrairement à kanaToRomaji ci-dessus, plus basique) : gère la
+// gémination (っ double la consonne suivante), l'allongement katakana (ー répète la voyelle
+// précédente) et les combinaisons yōon (きゃ -> kya, pas ki+ya). Utilisé pour l'item des fiches
+// grammaire — jamais pour du texte contenant du kanji (voir getItemRomaji ci-dessous).
+function kanaToRomajiPrecise(str) {
+    const chars = [...str];
+    let result = '';
+    let i = 0;
+    while (i < chars.length) {
+        const c = chars[i];
+        if (c === 'っ' || c === 'ッ') {
+            const nextRomaji = KANA_TO_ROMAJI[chars[i + 1]];
+            if (nextRomaji && /^[bcdfghjklmnpqrstvwz]/.test(nextRomaji)) result += nextRomaji[0];
+            i++; continue;
+        }
+        if (c === 'ー') {
+            const lastVowel = result.slice(-1);
+            if ('aiueo'.includes(lastVowel)) result += lastVowel;
+            i++; continue;
+        }
+        if (c === 'ん' || c === 'ン') { result += 'n'; i++; continue; }
+        const next = chars[i + 1];
+        if (next && SMALL_Y_TO_ROMAJI[next] && KANA_TO_ROMAJI[c]) {
+            const base = KANA_TO_ROMAJI[c].slice(0, -1);
+            const yPart = YOON_NO_Y_BASES.has(c) ? SMALL_Y_TO_ROMAJI[next].slice(1) : SMALL_Y_TO_ROMAJI[next];
+            result += base + yPart;
+            i += 2; continue;
+        }
+        result += KANA_TO_ROMAJI[c] || c;
+        i++;
+    }
+    return result;
+}
+
+function hasKanjiChar(str) { return /[\u4e00-\u9faf]/.test(str); }
+
+// Romaji de l'item d'une leçon de grammaire — vide (pas de romaji affiché) si l'item contient
+// du kanji, car deviner sa lecture sans dictionnaire contextuel donnerait un résultat non fiable.
+// Ne garde que la première forme si plusieurs alternatives sont séparées par "/", et retire le
+// préfixe 〜.
+function getItemRomaji(item) {
+    if (!item) return '';
+    const first = item.split('/')[0].trim().replace(/^〜/, '');
+    if (!first || hasKanjiChar(first)) return '';
+    return kanaToRomajiPrecise(first);
+}
+
 // ── Recherche par type (chacune retourne un tableau d'items bruts, pas encore rendus) ──
 
 function searchKanjiItems(q, levels) {
@@ -3427,6 +3478,7 @@ function showGrammarDetail(lessonId, isBack = false) {
         <div class="grammar-point-box">
             <div class="section-label">POINT DE GRAMMAIRE</div>
             <div class="item-display">${itemText}</div>
+            ${getItemRomaji(itemText) ? `<div class="item-romaji">${getItemRomaji(itemText)}</div>` : ''}
             <div class="item-description">${titleText}</div>
             <div class="pattern-box">${highlightText(patternText, itemText)}</div>
         </div>
@@ -4117,7 +4169,8 @@ function renderLessonIntro() {
         <div class="fiche-title-card">
             <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">${l.unit_title || ''}</div>
             <div class="fiche-title-main">${l.title || ''}</div>
-            <div style="font-size:2rem;color:var(--accent);margin:14px 0 6px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
+            <div style="font-size:2rem;color:var(--accent);margin:14px 0 4px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
+            ${getItemRomaji(l.item) ? `<div style="font-size:0.8125rem;color:var(--gray);margin-bottom:6px">${getItemRomaji(l.item)}</div>` : ''}
             <div class="fiche-title-reading">${l.badge || ''}</div>
             ${l.pattern ? `<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,0.3);border-radius:8px;font-family:monospace;color:var(--gray);font-size:0.8125rem">${l.pattern}</div>` : ''}
         </div>
