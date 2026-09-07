@@ -3807,6 +3807,120 @@ async function showApprendreScreen(isBack = false) {
 ══════════════════════════════════════════════════ */
 let lessonSession = null; // { lesson, steps, index, exAnswered, exSelected, exCorrectCount }
 
+/* ══════════════════════════════════════════════════
+   ONBOARDING "COMMENÇONS L'APPRENTISSAGE" — 5 slides d'introduction, affichées une seule fois
+   avant la toute première leçon. Système léger et séparé de lessonSession (pas d'exercices, pas
+   de SRS) pour ne pas fragiliser la logique de leçon réelle.
+══════════════════════════════════════════════════ */
+const LESSON_ONBOARDING_KEY = 'kanji_trad_lesson_onboarding_seen';
+function hasSeenLessonOnboarding() {
+    try { return localStorage.getItem(LESSON_ONBOARDING_KEY) === '1'; } catch (e) { return true; }
+}
+function markLessonOnboardingSeen() {
+    try { localStorage.setItem(LESSON_ONBOARDING_KEY, '1'); } catch (e) {}
+}
+
+const LESSON_ONBOARDING_SLIDES = [
+    {
+        emoji: '🌸', title: 'Avant de commencer...',
+        body: [
+            "Félicitations pour avoir franchi le pas ! Le japonais est une langue fascinante, mais elle obéit à des logiques différentes du français.",
+            "Pas de panique : ce module d'apprentissage est conçu pour vous guider pas à pas, à votre rythme."
+        ],
+        cta: 'Continuer'
+    },
+    {
+        emoji: '📝', title: "Comment s'écrit le japonais ?",
+        body: [
+            "Le japonais utilise trois systèmes d'écriture mélangés :",
+            "1. Les **Hiraganas** : L'alphabet phonétique de base (pour la grammaire et les terminaisons).",
+            "2. Les **Katakanas** : L'autre alphabet phonétique, réservé aux mots d'origine étrangère.",
+            "3. Les **Kanjis** : Les caractères d'origine chinoise, qui portent le sens principal des mots (comme 学生 pour « étudiant »)."
+        ],
+        cta: 'Le piège à éviter'
+    },
+    {
+        emoji: '🚫', title: "Le piège de l'alphabet latin",
+        body: [
+            "Pour bien apprendre le japonais, commencez par maîtriser les syllabaires de base (hiragana et katakana) sans passer par la romanisation (romaji).",
+            "Arrêtez d'utiliser l'alphabet latin pour lire le japonais afin de ne pas bloquer votre progression naturelle."
+        ],
+        cta: 'Les bases indispensables'
+    },
+    {
+        emoji: '⏳', title: 'Kanas et régularité',
+        body: [
+            "**Apprendre les Kanas** : Mémorisez les 46 hiraganas et les 46 katakanas en priorité. Cela prend environ deux semaines en y consacrant 15 minutes par jour.",
+            "En langues, 10 minutes par jour valent infiniment mieux que 2 heures une fois par semaine. Laissez l'algorithme SRS faire son travail au quotidien."
+        ],
+        cta: 'Dernier conseil'
+    },
+    {
+        emoji: '🎧', title: 'Les clés sur le long terme',
+        body: [
+            "**Pratiquer la répétition** : Utilisez les cartes mémorielles pour ancrer durablement le vocabulaire.",
+            "**S'immerger au quotidien** : Regardez des animes, écoutez des podcasts ou lisez des mangas originaux pour habituer votre oreille.",
+            "**Aborder les Kanji progressivement** : Ne surchargez pas vos débuts, apprenez-les pas à pas une fois les bases acquises."
+        ],
+        cta: "C'est parti !"
+    }
+];
+
+let onboardingIndex = 0;
+
+function showLessonOnboarding() {
+    pushModalState('lesson-onboarding');
+    onboardingIndex = 0;
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderOnboardingSlide();
+}
+
+function renderOnboardingSlide() {
+    const container = document.getElementById('category-content');
+    if (!container) return;
+    const slide = LESSON_ONBOARDING_SLIDES[onboardingIndex];
+    const total = LESSON_ONBOARDING_SLIDES.length;
+    const pct = total > 1 ? Math.round((onboardingIndex / (total - 1)) * 100) : 0;
+
+    container.innerHTML = `
+        <div class="review-page lesson-slide-anim">
+            <div class="review-header">
+                <button class="back-btn" onclick="skipLessonOnboarding()">✕</button>
+                <div class="review-progress-bar"><div class="review-progress-fill" style="width:${pct}%"></div></div>
+                <div class="review-progress-text">${onboardingIndex + 1}/${total}</div>
+            </div>
+            <div style="text-align:center;padding:24px 0 16px">
+                <div style="font-size:3rem;margin-bottom:14px">${slide.emoji}</div>
+                <div style="font-size:1.375rem;font-weight:bold;color:#fff">${slide.title}</div>
+            </div>
+            <div class="fiche-title-card" style="text-align:left;padding:20px">
+                ${slide.body.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('')}
+            </div>
+            <button class="review-continue-btn" style="margin-top:20px" onclick="advanceOnboarding()">${slide.cta} (${onboardingIndex + 1}/${total})</button>
+        </div>
+    `;
+}
+
+function advanceOnboarding() {
+    onboardingIndex++;
+    if (onboardingIndex >= LESSON_ONBOARDING_SLIDES.length) {
+        finishLessonOnboarding();
+    } else {
+        renderOnboardingSlide();
+    }
+}
+
+function skipLessonOnboarding() {
+    markLessonOnboardingSeen();
+    history.back();
+}
+
+// Fin de l'introduction : marque comme vue, puis enchaîne directement sur la vraie leçon
+function finishLessonOnboarding() {
+    markLessonOnboardingSeen();
+    startGrammarLessonFlowActual();
+}
+
 const LESSON_PROGRESS_KEY = 'kanji_trad_lesson_progress';
 
 // Sauvegarde légère (id leçon + position + score en cours) — les étapes elles-mêmes sont
@@ -3915,7 +4029,17 @@ function buildLessonSteps(lesson) {
     return steps;
 }
 
+// Point d'entrée public : montre l'introduction 5 slides une seule fois (première utilisation),
+// puis enchaîne directement sur la vraie leçon. Les appels suivants sautent l'introduction.
 async function startGrammarLessonFlow() {
+    if (!hasSeenLessonOnboarding()) {
+        showLessonOnboarding();
+        return;
+    }
+    await startGrammarLessonFlowActual();
+}
+
+async function startGrammarLessonFlowActual() {
     // Reprend une leçon interrompue si elle existe encore, sur SON niveau sauvegardé — sinon
     // détermine dynamiquement quel niveau propose actuellement du contenu neuf (N5 d'abord).
     const saved = getSavedLessonProgress();
@@ -8349,6 +8473,7 @@ const MODAL_EXIT_REGISTRY = {
     'grammar-review': () => { grammarReviewSession = null; showRevisionLevelPicker('grammar', true); },
     'grammar-review-selector': () => showRevisionLevelPicker('grammar', true),
     'grammar-lesson-flow': () => { lessonSession = null; showApprendreScreen(true); },
+    'lesson-onboarding': () => showApprendreScreen(true),
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'apprendre-discovery': () => { mixedReviewSession = null; showApprendreScreen(true); },
