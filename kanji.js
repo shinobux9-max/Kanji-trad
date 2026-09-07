@@ -4078,6 +4078,9 @@ function renderLessonEnd() {
     const score = s.exCorrectCount;
     const passed = s.lessonPassed;
 
+    const levelData = grammarDataCache[s.level || 'n5'];
+    const nextLesson = levelData && levelData.data ? findNextLessonToLearn(levelData.data) : null;
+
     return `
         <div style="text-align:center;padding:20px 0">
             <div style="font-size:3rem;margin-bottom:10px">${passed ? '🎉' : '💪'}</div>
@@ -4088,9 +4091,38 @@ function renderLessonEnd() {
                 ? `<div style="font-size:0.9375rem;color:var(--gray);margin-bottom:24px;line-height:1.5">📅 Première révision programmée pour demain, dans "Réviser"</div>`
                 : `<div style="font-size:0.9375rem;color:var(--gray);margin-bottom:24px;line-height:1.5">🧠 Cette notion a été ajoutée à "À renforcer" — pas de souci, tu la reverras</div>`}
         </div>
-        <button class="review-continue-btn" onclick="exitLessonFlow()">Retour à Apprendre</button>
+        ${nextLesson ? `
+            <div class="fiche-title-card" style="margin-bottom:14px">
+                <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Prochaine leçon</div>
+                <div style="font-size:1.375rem;color:var(--accent);font-weight:bold;font-family:'Noto Sans JP',sans-serif">${nextLesson.item || ''}</div>
+                <div style="font-size:0.9375rem;color:#fff;margin-top:4px">${nextLesson.title || ''}</div>
+            </div>
+            <button class="review-continue-btn" onclick="continueToNextLesson()">Continuer →</button>
+            <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px" onclick="exitLessonFlow()">Retour à Apprendre</button>
+        ` : `
+            <button class="review-continue-btn" onclick="exitLessonFlow()">Retour à Apprendre</button>
+        `}
         <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
     `;
+}
+
+// Enchaîne directement sur la leçon suivante, sans repasser par l'écran Apprendre
+function continueToNextLesson() {
+    const level = lessonSession?.level || 'n5';
+    const levelData = grammarDataCache[level];
+    const nextLesson = levelData && levelData.data ? findNextLessonToLearn(levelData.data) : null;
+    if (!nextLesson) { exitLessonFlow(); return; }
+    lessonSession = {
+        lesson: nextLesson,
+        level,
+        steps: buildLessonSteps(nextLesson),
+        index: 0,
+        exAnswered: false,
+        exSelected: null,
+        exCorrectCount: 0
+    };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderLessonStep();
 }
 
 function submitLessonExercise(selected) {
