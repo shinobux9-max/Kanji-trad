@@ -5011,20 +5011,6 @@
       "fr": "On entend le chant (la voix) des oiseaux."
     }
   ],
-  "弟": [
-    {
-      "jp": "私には弟が二人います。",
-      "ka": "わたし には おとうと が ふたり います。",
-      "ro": "Watashi ni wa otōto ga futari imasu.",
-      "fr": "J'ai deux petits frères."
-    },
-    {
-      "jp": "兄弟（きょうだい）はいますか？",
-      "ka": "きょうだい は います か？",
-      "ro": "Kyōdai wa imasu ka?",
-      "fr": "As-tu des frères et sœurs ?"
-    }
-  ],
   "形": [
     {
       "jp": "このクッキーは星の形です。",
@@ -9599,20 +9585,6 @@
       "ka": "かせい たんさ。",
       "ro": "Kasei tansa.",
       "fr": "L'exploration de Mars (l'étoile de feu)."
-    }
-  ],
-  "昨": [
-    {
-      "jp": "昨日（きのう）は雨だった。",
-      "ka": "きのう は あめ だった。",
-      "ro": "Kinō wa ame datta.",
-      "fr": "Hier, il pleuvait."
-    },
-    {
-      "jp": "昨（さく）年（ねん）の出来事。",
-      "ka": "さくねん の できごと。",
-      "ro": "Sakunen no dekigoto.",
-      "fr": "Un événement de l'année dernière."
     }
   ],
 "昭": [
@@ -19409,20 +19381,6 @@
       "ka": "ふね に とま を かぶせる。",
       "ro": "Fune ni toma o kabuseru.",
       "fr": "Recouvrir le bateau d'un tapis de paille (tapis tissé)."
-    }
-  ],
-  "英": [
-    {
-      "jp": "英（えい）語（ご）を勉強する。",
-      "ka": "えいご を べんきょう する。",
-      "ro": "Eigo o benkyō suru.",
-      "fr": "Étudier l'anglais."
-    },
-    {
-      "jp": "英（えい）雄（ゆう）が誕生する。",
-      "ka": "えいゆう が たんじょう する。",
-      "ro": "Eiyū ga tanjō suru.",
-      "fr": "Un héros est né."
     }
   ],
   "苳": [

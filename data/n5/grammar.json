@@ -1,66 +1,74 @@
 [
   {
-    "id": "n5_g_1",
-    "unit": 1,
-    "unit_title": "Les bases de la phrase",
-    "lesson_number": 1,
-    "title": "Affirmer avec politesse",
-    "item": "です",
-    "pattern": "[Nom / Adjectif] + です",
-    "badge": "Copule",
-    "sections": [
-      {
-        "label": "EXPLICATION",
-        "paragraphs": [
-          "**です** (*desu*) est la copule de politesse, l'équivalent du verbe **« être »**.",
-          "Il sert à identifier, décrire ou donner un état sur le sujet en fin de phrase tout en apportant une nuance polie (**desu/masu**)."
-        ]
-      },
-      {
-        "label": "UTILISATION & PRONONCIATION",
-        "paragraphs": [
-          "S'installe directement après un **nom** ou un **adjectif en -i / -na**.",
-          "💡 **Prononciation :** Le **« u »** final est presque muet à l'oral, cela se prononce généralement **« dess »**."
-        ],
-        "blocks": [
-          {
-            "sub_title": "Structure de base",
-            "list": [
-              "Nom + **です** (ex: (*がくせいです)*)",
-              "Adjectif + **です** (ex: (*たかいです)*)"
-            ]
-          }
-        ]
-      }
-    ],
-    "examples": [
-      {
-        "japanese": "がくせいです。",
-        "romaji": "Gakusei desu.",
-        "french": "Je suis étudiant.",
-        "highlight": "です"
-      },
-      {
-        "japanese": "たかいです。",
-        "romaji": "Takai desu.",
-        "french": "C'est cher.",
-        "highlight": "です"
-      },
-      {
-        "japanese": "すきです。",
-        "romaji": "Suki desu.",
-        "french": "J'aime bien / C'est mon préféré.",
-        "highlight": "です"
-      }
-    ],
-    "confusions": [
-      {
-        "with": "Verbes d'action",
-        "explanation": "**です** s'utilise uniquement pour l'état, l'identité ou la description (équivalent de « être »), mais ne peut pas remplacer un verbe d'action en fin de phrase.",
-        "wrong_example": {
-          "japanese": "りんごを食べますです。",
-          "correct_japanese": "りんごを食べます。",
-          "french": "Je mange une pomme."
+  "id": "n5_g_1",
+  "unit": 1,
+  "unit_title": "Les bases de la phrase",
+  "lesson_number": 1,
+  "title": "Affirmer avec politesse",
+  "item": "です",
+  "pattern": "[Nom / Adjectif] + です",
+  "badge": "Copule",
+  "sections": [
+    {
+      "label": "EXPLICATION",
+      "paragraphs": [
+        "**です** (*desu*) est la copule de politesse en japonais. Bien qu'on le traduise souvent par le verbe **« être »**, son rôle précis est d'affirmer, d'identifier ou de qualifier l'état du sujet en fin de phrase.",
+        "Il confère un ton poli et courtois (registre *desu/masu*), indispensable dans la vie de tous les jours."
+      ]
+    },
+    {
+      "label": "UTILISATION & PRONONCIATION",
+      "paragraphs": [
+        "Il s'installe directement après un **nom** (pour dire ce qu'on est ou ce que c'est) ou après un **adjectif** (pour exprimer un état ou une qualité).",
+        "💡 **Prononciation :** Le **« u »** final est assourdi (presque muet) à l'oral. On prononce généralement **« dess »**."
+      ],
+      "blocks": [
+        {
+          "sub_title": "Structure de base",
+          "list": [
+            "Nom + **です** (ex: <ruby>学生<rt>がくせい</rt></ruby>です - *gakusei desu*)",
+            "Adjectif + **です** (ex: <ruby>高<rt>たか</rt></ruby>いです - *takai desu*)"
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "japanese": "<ruby>学生<rt>がくせい</rt></ruby>です。",
+      "romaji": "Gakusei desu.",
+      "french": "Je suis étudiant. (ou : C'est un étudiant)",
+      "highlight": "です"
+    },
+    {
+      "japanese": "<ruby>日本<rt>にほん</rt></ruby><ruby>人<rt>じん</rt></ruby>です。",
+      "romaji": "Nihonjin desu.",
+      "french": "Je suis japonais(e).",
+      "highlight": "です"
+    },
+    {
+      "japanese": "<ruby>高<rt>たか</rt></ruby>いです。",
+      "romaji": "Takai desu.",
+      "french": "C'est cher. / C'est haut.",
+      "highlight": "です"
+    },
+    {
+      "japanese": "すきです。",
+      "romaji": "Suki desu.",
+      "french": "J'aime / C'est apprécié.",
+      "highlight": "です"
+    }
+  ],
+  "confusions": [
+    {
+      "with": "L'accumulation avec les verbes d'action (-masu)",
+      "explanation": "**です** est une copule d'état, pas un verbe d'action. On ne le colle jamais directement à la suite d'un verbe conjugué en *-masu*, car le verbe se suffit à lui-même pour exprimer l'action et la politesse.",
+      "wrong_example": {
+        "japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt></ruby>べますです。",
+        "romaji": "Ringo o tabemasu desu. (Incorrect)",
+        "correct_japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt>べます。",
+        "correct_romaji": "Ringo o tabemasu. (Correct)",
+        "french": "Je mange une pomme."
         }
       }
     ]
