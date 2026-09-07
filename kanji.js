@@ -3767,6 +3767,8 @@ async function showApprendreScreen(isBack = false) {
                 <span class="free-training-chevron">→</span>
             </div>
             
+            <div class="explore-lessons-link" onclick="showExploreLessonsScreen()">🔎 Explorer les leçons N5</div>
+            
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">
                     <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
@@ -4104,6 +4106,79 @@ function renderLessonEnd() {
         `}
         <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
     `;
+}
+
+// ── ÉCRAN "EXPLORER LES LEÇONS" — choix libre, sans verrouillage (le parcours linéaire par
+// défaut reste "Commençons l'apprentissage" ; cet écran sert justement à s'en écarter) ──
+async function showExploreLessonsScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'explore-lessons' }, '');
+    document.getElementById('page-title').innerText = 'Explorer les leçons';
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+        <div style="padding:16px">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="apprendre-title-main" style="margin-top:10px">Explorer les leçons</div>
+            <div class="apprendre-subtitle-main" style="margin-bottom:16px">N5 · Grammaire</div>
+            <div id="explore-lessons-list"><div style="color:var(--gray);font-size:0.75rem;text-align:center;padding:20px">Chargement…</div></div>
+        </div>
+    `;
+    const data = await getLevelGrammarData('n5');
+    renderExploreLessonsList(data && data.data ? data.data : []);
+}
+
+function renderExploreLessonsList(lessons) {
+    const el = document.getElementById('explore-lessons-list');
+    if (!el) return;
+    if (!lessons.length) {
+        el.innerHTML = `<div style="color:var(--gray);font-size:0.75rem;text-align:center;padding:20px">Aucune leçon disponible.</div>`;
+        return;
+    }
+    const saved = getSavedLessonProgress();
+    const sorted = [...lessons].sort((a, b) => (a.lesson_number || 0) - (b.lesson_number || 0));
+    el.innerHTML = sorted.map(l => {
+        const isInProgress = !!(saved && saved.lessonId === l.id);
+        const isDone = !isInProgress && !!getSrsInfo(l.id);
+        const icon = isInProgress ? '🔵' : (isDone ? '✔' : '⚪');
+        const statusText = isInProgress ? 'En cours' : (isDone ? 'Terminée' : 'À découvrir');
+        const statusColor = isInProgress ? 'var(--accent)' : (isDone ? '#4ADE80' : 'var(--gray)');
+        const safeId = l.id.replace(/'/g, "\\'");
+        return `
+            <div class="explore-lesson-row" onclick="startSpecificGrammarLesson('${safeId}')">
+                <span class="explore-lesson-icon" style="color:${statusColor}">${icon}</span>
+                <div class="explore-lesson-info">
+                    <div class="explore-lesson-item">${l.item || ''}</div>
+                    <div class="explore-lesson-title">${l.title || ''}</div>
+                </div>
+                <span class="explore-lesson-status" style="color:${statusColor}">${statusText}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+// Démarre (ou reprend, si c'est la leçon en cours) une leçon précise choisie depuis l'exploration
+// libre — contrairement à startGrammarLessonFlow(), ignore l'ordre linéaire imposé.
+async function startSpecificGrammarLesson(lessonId) {
+    const data = await getLevelGrammarData('n5');
+    if (!data || !data.data) return;
+    const lesson = data.data.find(l => l.id === lessonId);
+    if (!lesson) return;
+
+    const saved = getSavedLessonProgress();
+    const resume = saved && saved.lessonId === lessonId;
+
+    pushModalState('grammar-lesson-flow');
+    const steps = buildLessonSteps(lesson);
+    lessonSession = {
+        lesson,
+        level: 'n5',
+        steps,
+        index: resume ? Math.min(saved.index, steps.length - 1) : 0,
+        exAnswered: false,
+        exSelected: null,
+        exCorrectCount: resume ? (saved.exCorrectCount || 0) : 0
+    };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderLessonStep();
 }
 
 // Enchaîne directement sur la leçon suivante, sans repasser par l'écran Apprendre
@@ -8248,6 +8323,7 @@ const SCREEN_REGISTRY = {
     'series': (s) => loadSeriesPage(s.id, true),
     'niveaux': () => showNiveauxScreen(true),
     'apprendre': () => showApprendreScreen(true),
+    'explore-lessons': () => showExploreLessonsScreen(true),
     'grammar-niveaux': () => showGrammarNiveauxScreen(true),
     'kanji-niveaux': () => showKanjiNiveauxScreen(true),
     'progression': () => showProgressionDetail(true),

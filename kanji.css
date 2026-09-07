@@ -645,6 +645,18 @@
 .lesson-floating-text { text-align: center; font-size: 1.1875rem; line-height: 1.85; color: #fff; }
 .lesson-tap-hint { text-align: center; font-size: 0.75rem; color: var(--gray); margin-top: 20px; opacity: 0.7; }
 
+/* Lien d'accès à Explorer les leçons */
+.explore-lessons-link { text-align: center; font-size: 0.8125rem; color: var(--accent-muted); padding: 4px 0 4px; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; }
+
+/* Écran Explorer les leçons */
+.explore-lesson-row { display: flex; align-items: center; gap: 12px; background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.15s; }
+.explore-lesson-row:hover { border-color: var(--accent); }
+.explore-lesson-icon { flex-shrink: 0; font-size: 1.125rem; width: 24px; text-align: center; }
+.explore-lesson-info { flex: 1; min-width: 0; }
+.explore-lesson-item { font-family: 'Noto Sans JP', sans-serif; font-size: 0.9375rem; color: #fff; font-weight: bold; }
+.explore-lesson-title { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+.explore-lesson-status { flex-shrink: 0; font-size: 0.6875rem; font-weight: bold; }
+
 /* Animation d'entrée à chaque changement d'étape du parcours de leçon */
 @keyframes lessonSlideIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 .lesson-slide-anim { animation: lessonSlideIn 0.5s ease; }
