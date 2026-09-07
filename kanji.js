@@ -2015,7 +2015,7 @@ async function loadJLPTCategory(levelId, category, isBack = false) {
         
         // Charger le fichier JSON correspondant
         const url = `./data/${levelId}/${category}.json`;
-        const res = await fetch(url);
+        const res = await fetch(url, { cache: 'no-store' });
         
         if (!res.ok) {
             throw new Error(`Fichier non trouvé : ${url}`);
