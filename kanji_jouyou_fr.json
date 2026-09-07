@@ -479,22 +479,6 @@
     "wk_radicaux": ["Vingt", "Huit"],
     "romaji": "kyou, tomo"
   },
-  "弟": {
-    "traits": 7,
-    "classe": 2,
-    "frequence": 1232,
-    "jlpt_ancien": 3,
-    "jlpt_nouveau": 4,
-    "sens": ["Petit frère"],
-    "lectures_on": ["ダイ", "テイ", "デ"],
-    "lectures_kun": ["おとうと"],
-    "wk_niveau": 6,
-    "wk_sens": ["Petit frère"],
-    "wk_lectures_on": ["ダイ"],
-    "wk_lectures_kun": ["!おとうと"],
-    "wk_radicaux": ["Cornes", "Arc"],
-    "romaji": "dai, tei, de, otouto"
-  },
   "国": {
     "traits": 8,
     "classe": 2,
@@ -734,22 +718,6 @@
     "wk_lectures_kun": ["!こ"],
     "wk_radicaux": ["Enfant"],
     "romaji": "shi, su, tsu, ko, ne"
-  },
-  "英": {
-    "traits": 8,
-    "classe": 4,
-    "frequence": 343,
-    "jlpt_ancien": 3,
-    "jlpt_nouveau": 4,
-    "sens": ["Angleterre", "Héros", "Excellent"],
-    "lectures_on": ["エイ"],
-    "lectures_kun": ["はなぶさ"],
-    "wk_niveau": 9,
-    "wk_sens": ["Angleterre", "Anglais"],
-    "wk_lectures_on": ["エイ"],
-    "wk_lectures_kun": [],
-    "wk_radicaux": ["Herbe", "Centre"],
-    "romaji": "ei, hanabusa"
   },
   "小": {
     "traits": 3,
@@ -11013,22 +10981,6 @@
     "wk_lectures_kun": ["ほし"],
     "wk_radicaux": ["Soleil", "Naissance"],
     "romaji": "sei, shou, hoshi, boshi"
-  },
-  "昨": {
-    "traits": 9,
-    "classe": 4,
-    "frequence": 213,
-    "jlpt_ancien": 3,
-    "jlpt_nouveau": 4,
-    "sens": ["Hier", "Précédent"],
-    "lectures_on": ["サク"],
-    "lectures_kun": [],
-    "wk_niveau": 9,
-    "wk_sens": ["Précédent", "Hier"],
-    "wk_lectures_on": ["サク"],
-    "wk_lectures_kun": [],
-    "wk_radicaux": ["Soleil", "Construction"],
-    "romaji": "saku"
   },
   "昭": {
     "traits": 9,
