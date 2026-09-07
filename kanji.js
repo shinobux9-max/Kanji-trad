@@ -3005,6 +3005,9 @@ function displayVocabList(levelId, data, examples = null, isBack = false) {
 }
 
 function showVocabDetail(wordId, allWords = [], isBack = false) {
+    // Retire l'ancien bandeau "Vocabulaire" (cat-header) qui restait affiché au-dessus : la fiche
+    // a déjà sa propre en-tête complète (retour + progression) juste en dessous.
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     const container = document.getElementById('category-content');
     
     // Fallback si allWords est vide
@@ -3348,6 +3351,9 @@ function renderSectionBody(section) {
 
 function showGrammarDetail(lessonId, isBack = false) {
     const {levelId, data} = grammarHomeData || {};
+    // Retire l'ancien bandeau "Grammaire" (cat-header) qui restait affiché au-dessus : la fiche
+    // a déjà sa propre en-tête complète (retour + niveau/unité) juste en dessous.
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     const container = document.getElementById('category-content');
     const lesson = data.find(l => l.id === lessonId);
     
@@ -3457,6 +3463,14 @@ function showGrammarDetail(lessonId, isBack = false) {
                         </div>
                     `).join('')}
                 </div>
+            </div>
+        ` : ''}
+        
+        <!-- POINTS DE VIGILANCE -->
+        ${Array.isArray(lesson.confusions) && lesson.confusions.length ? `
+            <div class="examples-section">
+                <div class="section-label">POINTS DE VIGILANCE</div>
+                ${lesson.confusions.map(c => buildConfusionBoxHtml(c)).join('')}
             </div>
         ` : ''}
         
