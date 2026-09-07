@@ -3302,6 +3302,50 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
     });
 }
 
+// Rendu du corps d'une section de leçon grammaire : supporte tous les formats rencontrés
+// (ancien : text simple ; nouveau : paragraphs[] ; sous-titre+liste unique ; blocks[] pour
+// plusieurs sous-titres+listes distincts dans une même section, ex "Groupe 1"/"Groupe 2").
+// Fonction globale partagée entre la vraie fiche détail (showGrammarDetail) et la modale
+// "voir la fiche" pendant les révisions (buildFicheDetailContent) — un seul endroit à mettre
+// à jour si un nouveau format de section apparaît.
+function renderSectionBody(section) {
+    let body = '';
+
+    if (section.text) {
+        body += `<div class="section-paragraph">${mdBold(section.text)}</div>`;
+    }
+
+    if (Array.isArray(section.paragraphs)) {
+        body += section.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
+    }
+
+    if (section.sub_title) {
+        body += `<div class="section-sub-title">${mdBold(section.sub_title)}</div>`;
+    }
+
+    if (Array.isArray(section.list)) {
+        body += `<ul class="section-list">${section.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
+    }
+
+    if (Array.isArray(section.blocks)) {
+        body += section.blocks.map(block => {
+            let blockHtml = '';
+            if (block.sub_title) {
+                blockHtml += `<div class="section-sub-title">${mdBold(block.sub_title)}</div>`;
+            }
+            if (Array.isArray(block.paragraphs)) {
+                blockHtml += block.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
+            }
+            if (Array.isArray(block.list)) {
+                blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
+            }
+            return blockHtml;
+        }).join('');
+    }
+
+    return body;
+}
+
 function showGrammarDetail(lessonId, isBack = false) {
     const {levelId, data} = grammarHomeData || {};
     const container = document.getElementById('category-content');
@@ -3332,52 +3376,7 @@ function showGrammarDetail(lessonId, isBack = false) {
         );
     };
     
-    // mdBold est maintenant une fonction globale (voir plus haut dans le fichier)
-    
-    // Rendu d'une section : supporte l'ancien format (text) ET le nouveau (paragraphs/sub_title/list)
-    const renderSectionBody = (section) => {
-        let body = '';
-        
-        // Ancien format : simple string
-        if (section.text) {
-            body += `<div class="section-paragraph">${mdBold(section.text)}</div>`;
-        }
-        
-        // Nouveau format : plusieurs paragraphes
-        if (Array.isArray(section.paragraphs)) {
-            body += section.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
-        }
-        
-        // Sous-titre optionnel avant une liste (bloc unique, rétrocompatible)
-        if (section.sub_title) {
-            body += `<div class="section-sub-title">${mdBold(section.sub_title)}</div>`;
-        }
-        
-        // Liste de motifs/structures (bloc unique, rétrocompatible)
-        if (Array.isArray(section.list)) {
-            body += `<ul class="section-list">${section.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
-        }
-        
-        // Nouveau : blocks[] pour plusieurs sous-titres+listes distincts dans une même section
-        // (ex: "Groupe 1", "Groupe 2", "Irréguliers" avec leur propre liste chacun)
-        if (Array.isArray(section.blocks)) {
-            body += section.blocks.map(block => {
-                let blockHtml = '';
-                if (block.sub_title) {
-                    blockHtml += `<div class="section-sub-title">${mdBold(block.sub_title)}</div>`;
-                }
-                if (Array.isArray(block.paragraphs)) {
-                    blockHtml += block.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
-                }
-                if (Array.isArray(block.list)) {
-                    blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
-                }
-                return blockHtml;
-            }).join('');
-        }
-        
-        return body;
-    };
+    // mdBold et renderSectionBody sont maintenant des fonctions globales (voir plus haut dans le fichier)
     
     // Résout les exemples d'une leçon : priorité aux exemples externes (exemples.json, format N4+),
     // fallback sur lesson.examples embarqué (format N5). Déduit le highlight si absent.
@@ -4386,8 +4385,7 @@ function buildFicheDetailContent(entry) {
         title = ''; // le motif vit dans sa propre boîte ci-dessous, pas dans le titre générique
         const sectionsHtml = Array.isArray(l.sections) ? l.sections.map(sec => `
             ${sec.label ? `<div class="section-sub-title">${sec.label}</div>` : ''}
-            ${sec.text ? `<div class="section-paragraph">${mdBold(sec.text)}</div>` : ''}
-            ${Array.isArray(sec.paragraphs) ? sec.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
+            ${renderSectionBody(sec)}
         `).join('') : '';
         const examplesHtml = Array.isArray(l.examples) && l.examples.length ? `
             <div class="section-sub-title">Exemples</div>
