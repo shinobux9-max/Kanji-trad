@@ -2130,6 +2130,7 @@
     "lesson_number": 33,
     "title": "Exprimer ses désirs",
     "item": "欲しい",
+    "item_romaji": "hoshii",
     "pattern": "[Nom] + が + 欲しいです",
     "badge": "Adjectif - Désir d'objet",
     "sections": [
@@ -2866,6 +2867,7 @@
     "lesson_number": 44,
     "title": "Parler de ses loisirs",
     "item": "〜趣味は〜ことです",
+    "item_romaji": "〜shumi wa 〜koto desu",
     "pattern": "しゅみ は [Verbe forme dictionnaire] + ことです",
     "badge": "Structure - Passe-temps",
     "sections": [
@@ -3535,6 +3537,7 @@
     "lesson_number": 54,
     "title": "Citer des paroles ou des pensées",
     "item": "〜と（言う / 思う）",
+    "item_romaji": "〜to (ii / omou)",
     "pattern": "[Proposition forme neutre] + と 思います / 言いました",
     "badge": "Structure - Citation & Opinion",
     "sections": [
@@ -3806,6 +3809,7 @@
     "lesson_number": 58,
     "title": "Exprimer la position spatiale",
     "item": "上 / 下 / 前 / 後ろ / 中 / 隣",
+    "item_romaji": "ue / shita / mae/ ushiro / naka / tonari",
     "pattern": "[Nom A] + の + [Position] + に / で",
     "badge": "Structure - Mots de position",
     "sections": [
@@ -3942,6 +3946,7 @@
     "lesson_number": 60,
     "title": "Pronoms indéfinis (Quelque chose / Quelqu'un)",
     "item": "何か / 誰か / どこか",
+    "item_romaji": "nanika / dareka / dokoka",
     "pattern": "[何 / 誰 / どこ / いつ] + か",
     "badge": "Structure - Pronoms indéfinis",
     "sections": [
@@ -4010,6 +4015,7 @@
     "lesson_number": 61,
     "title": "Négation totale",
     "item": "何も / 誰も / どこも",
+    "item_romaji": "nanimo / daremo / dokomo",
     "pattern": "[何 / 誰 / どこ / いつ] + も + [Verbe négatif]",
     "badge": "Structure - Négation absolue",
     "sections": [
@@ -4821,6 +4827,7 @@
     "lesson_number": 73,
     "title": "Exprimer la possession d'un objet",
     "item": "〜を持っている",
+    "item_romaji": "〜o motte iru",
     "pattern": "[Objet] + を 持って います / 持って いる",
     "badge": "Structure - Possession & État",
     "sections": [

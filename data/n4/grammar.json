@@ -91,6 +91,7 @@
     "lesson_number": 2,
     "title": "Après (faire quelque chose)",
     "item": "〜後で",
+    "item_romaji": "ato de",
     "pattern": "[Verbe au passé TA] + 後で / [Nom] + の後で",
     "badge": "Expression Temporelle",
     "sections": [
@@ -159,6 +160,7 @@
     "lesson_number": 3,
     "title": "L'intention",
     "item": "〜ようと思う",
+    "item_romaji": "〜you to omou",
     "pattern": "[Verbe Volontif] + と思う",
     "badge": "Intention",
     "sections": [
