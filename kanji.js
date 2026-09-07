@@ -3750,6 +3750,8 @@ async function showApprendreScreen(isBack = false) {
     document.getElementById('page-title').innerText = 'Apprendre';
     const main = document.getElementById('main-content');
     const savedLessonProgress = getSavedLessonProgress();
+    const activeLevel = savedLessonProgress ? savedLessonProgress.level : await findActiveLearningLevel();
+    const activeLevelLabel = activeLevel ? activeLevel.toUpperCase() : '';
     
     main.innerHTML = `
         <div class="apprendre-wrap">
@@ -3762,12 +3764,12 @@ async function showApprendreScreen(isBack = false) {
                 <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${savedLessonProgress ? '▶' : '📚'}</div>
                 <div class="free-training-info">
                     <div class="free-training-title">${savedLessonProgress ? 'Continuer ma leçon' : "Commençons l'apprentissage"}</div>
-                    <div class="free-training-sub">${savedLessonProgress ? "Reprends là où tu t'es arrêté · N5 Grammaire" : 'Une nouvelle notion vous attend · N5 Grammaire'}</div>
+                    <div class="free-training-sub">${savedLessonProgress ? `Reprends là où tu t'es arrêté · ${activeLevelLabel} Grammaire` : `Une nouvelle notion vous attend · ${activeLevelLabel} Grammaire`}</div>
                 </div>
                 <span class="free-training-chevron">→</span>
             </div>
             
-            <div class="explore-lessons-link" onclick="showExploreLessonsScreen()">🔎 Explorer les leçons N5</div>
+            <div class="explore-lessons-link" onclick="showExploreLessonsScreen()">🔎 Explorer les leçons</div>
             
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">
@@ -3840,6 +3842,24 @@ function findNextLessonToLearn(lessons) {
     return sorted.find(l => !getSrsInfo(l.id)) || null;
 }
 
+// Détermine quel niveau JLPT propose actuellement une leçon jamais commencée (N5 d'abord, puis
+// N4, N3... une fois le niveau précédent épuisé). afterLevel permet de chercher STRICTEMENT
+// après un niveau donné (utilisé par continueToNextLesson quand le niveau courant est épuisé).
+async function findActiveLearningLevel(afterLevel = null) {
+    let searching = !afterLevel;
+    for (const levelId of ALL_JLPT_LEVELS) {
+        if (!searching) {
+            if (levelId === afterLevel) searching = true;
+            continue;
+        }
+        const data = await getLevelGrammarData(levelId);
+        if (data && data.data && data.data.length && findNextLessonToLearn(data.data)) {
+            return levelId;
+        }
+    }
+    return null;
+}
+
 // Construit les 3 exercices de fin : jusqu'à 2 cloze sur des exemples différents de LA leçon
 // (distracteurs = particules courantes), puis 1 exercice basé sur la confusion documentée
 // ("laquelle de ces phrases est correcte ?") si elle existe — teste la distinction, pas
@@ -3896,34 +3916,37 @@ function buildLessonSteps(lesson) {
 }
 
 async function startGrammarLessonFlow() {
-    const data = await getLevelGrammarData('n5');
-    if (!data || !data.data || !data.data.length) {
-        alert("Aucune leçon de grammaire disponible pour le moment.");
-        return;
+    // Reprend une leçon interrompue si elle existe encore, sur SON niveau sauvegardé — sinon
+    // détermine dynamiquement quel niveau propose actuellement du contenu neuf (N5 d'abord).
+    const saved = getSavedLessonProgress();
+    let level, lesson, resumeIndex = 0, resumeScore = 0;
+
+    if (saved && saved.lessonId) {
+        const savedData = await getLevelGrammarData(saved.level);
+        const savedLesson = savedData && savedData.data ? savedData.data.find(l => l.id === saved.lessonId) : null;
+        if (savedLesson) {
+            level = saved.level;
+            lesson = savedLesson;
+            resumeIndex = saved.index;
+            resumeScore = saved.exCorrectCount || 0;
+        }
     }
 
-    // Reprend une leçon interrompue si elle existe encore, sinon repart sur la prochaine
-    // jamais commencée — évite de tout recommencer à zéro après une fermeture de l'app.
-    const saved = getSavedLessonProgress();
-    let lesson = saved && saved.level === 'n5' ? data.data.find(l => l.id === saved.lessonId) : null;
-    let resumeIndex = 0;
-    let resumeScore = 0;
-    if (lesson) {
-        resumeIndex = saved.index;
-        resumeScore = saved.exCorrectCount || 0;
-    } else {
-        lesson = findNextLessonToLearn(data.data);
-        if (!lesson) {
-            alert("Tu as déjà commencé toutes les leçons de grammaire N5 ! 🎉 Direction Réviser pour les consolider.");
+    if (!lesson) {
+        level = await findActiveLearningLevel();
+        if (!level) {
+            alert("Tu as déjà commencé toutes les leçons de grammaire disponibles ! 🎉 Direction Réviser pour les consolider.");
             return;
         }
+        const data = await getLevelGrammarData(level);
+        lesson = findNextLessonToLearn(data.data);
     }
 
     pushModalState('grammar-lesson-flow');
     const steps = buildLessonSteps(lesson);
     lessonSession = {
         lesson,
-        level: 'n5',
+        level,
         steps,
         index: Math.min(resumeIndex, steps.length - 1),
         exAnswered: false,
@@ -4080,8 +4103,9 @@ function renderLessonEnd() {
     const score = s.exCorrectCount;
     const passed = s.lessonPassed;
 
-    const levelData = grammarDataCache[s.level || 'n5'];
-    const nextLesson = levelData && levelData.data ? findNextLessonToLearn(levelData.data) : null;
+    const preview = s.nextLessonPreview;
+    const nextLesson = preview ? preview.lesson : null;
+    const levelChanged = preview && preview.level !== s.level;
 
     return `
         <div style="text-align:center;padding:20px 0">
@@ -4095,7 +4119,7 @@ function renderLessonEnd() {
         </div>
         ${nextLesson ? `
             <div class="fiche-title-card" style="margin-bottom:14px">
-                <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Prochaine leçon</div>
+                <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">${levelChanged ? `🎊 Niveau suivant débloqué — ${preview.level.toUpperCase()}` : 'Prochaine leçon'}</div>
                 <div style="font-size:1.375rem;color:var(--accent);font-weight:bold;font-family:'Noto Sans JP',sans-serif">${nextLesson.item || ''}</div>
                 <div style="font-size:0.9375rem;color:#fff;margin-top:4px">${nextLesson.title || ''}</div>
             </div>
@@ -4110,23 +4134,43 @@ function renderLessonEnd() {
 
 // ── ÉCRAN "EXPLORER LES LEÇONS" — choix libre, sans verrouillage (le parcours linéaire par
 // défaut reste "Commençons l'apprentissage" ; cet écran sert justement à s'en écarter) ──
-async function showExploreLessonsScreen(isBack = false) {
+async function showExploreLessonsScreen(isBack = false, initialLevel = null) {
     if (!isBack) history.pushState({ view: 'explore-lessons' }, '');
     document.getElementById('page-title').innerText = 'Explorer les leçons';
     const main = document.getElementById('main-content');
+    const level = initialLevel || await findActiveLearningLevel() || 'n5';
     main.innerHTML = `
         <div style="padding:16px">
             <button class="back-btn" onclick="history.back()">←</button>
             <div class="apprendre-title-main" style="margin-top:10px">Explorer les leçons</div>
-            <div class="apprendre-subtitle-main" style="margin-bottom:16px">N5 · Grammaire</div>
+            <div id="explore-level-tabs" class="ft-radio-group ft-radio-pills" style="margin:14px 0"></div>
             <div id="explore-lessons-list"><div style="color:var(--gray);font-size:0.75rem;text-align:center;padding:20px">Chargement…</div></div>
         </div>
     `;
-    const data = await getLevelGrammarData('n5');
-    renderExploreLessonsList(data && data.data ? data.data : []);
+    await renderExploreLevelTabs(level);
+    const data = await getLevelGrammarData(level);
+    renderExploreLessonsList(data && data.data ? data.data : [], level);
 }
 
-function renderExploreLessonsList(lessons) {
+// N'affiche que les niveaux ayant réellement du contenu grammaire (évite de proposer N3/N2/N1
+// tant qu'ils sont vides)
+async function renderExploreLevelTabs(activeLevel) {
+    const el = document.getElementById('explore-level-tabs');
+    if (!el) return;
+    const available = [];
+    for (const lv of ALL_JLPT_LEVELS) {
+        const data = await getLevelGrammarData(lv);
+        if (data && data.data && data.data.length) available.push(lv);
+    }
+    el.innerHTML = available.map(lv => `
+        <label class="ft-radio-pill">
+            <input type="radio" name="explore-level" ${lv === activeLevel ? 'checked' : ''} onclick="showExploreLessonsScreen(true, '${lv}')">
+            <span>${lv.toUpperCase()}</span>
+        </label>
+    `).join('');
+}
+
+function renderExploreLessonsList(lessons, level) {
     const el = document.getElementById('explore-lessons-list');
     if (!el) return;
     if (!lessons.length) {
@@ -4143,7 +4187,7 @@ function renderExploreLessonsList(lessons) {
         const statusColor = isInProgress ? 'var(--accent)' : (isDone ? '#4ADE80' : 'var(--gray)');
         const safeId = l.id.replace(/'/g, "\\'");
         return `
-            <div class="explore-lesson-row" onclick="startSpecificGrammarLesson('${safeId}')">
+            <div class="explore-lesson-row" onclick="startSpecificGrammarLesson('${safeId}', '${level}')">
                 <span class="explore-lesson-icon" style="color:${statusColor}">${icon}</span>
                 <div class="explore-lesson-info">
                     <div class="explore-lesson-item">${l.item || ''}</div>
@@ -4157,8 +4201,8 @@ function renderExploreLessonsList(lessons) {
 
 // Démarre (ou reprend, si c'est la leçon en cours) une leçon précise choisie depuis l'exploration
 // libre — contrairement à startGrammarLessonFlow(), ignore l'ordre linéaire imposé.
-async function startSpecificGrammarLesson(lessonId) {
-    const data = await getLevelGrammarData('n5');
+async function startSpecificGrammarLesson(lessonId, level) {
+    const data = await getLevelGrammarData(level);
     if (!data || !data.data) return;
     const lesson = data.data.find(l => l.id === lessonId);
     if (!lesson) return;
@@ -4170,7 +4214,7 @@ async function startSpecificGrammarLesson(lessonId) {
     const steps = buildLessonSteps(lesson);
     lessonSession = {
         lesson,
-        level: 'n5',
+        level,
         steps,
         index: resume ? Math.min(saved.index, steps.length - 1) : 0,
         exAnswered: false,
@@ -4183,14 +4227,13 @@ async function startSpecificGrammarLesson(lessonId) {
 
 // Enchaîne directement sur la leçon suivante, sans repasser par l'écran Apprendre
 function continueToNextLesson() {
-    const level = lessonSession?.level || 'n5';
-    const levelData = grammarDataCache[level];
-    const nextLesson = levelData && levelData.data ? findNextLessonToLearn(levelData.data) : null;
-    if (!nextLesson) { exitLessonFlow(); return; }
+    const s = lessonSession;
+    const preview = s?.nextLessonPreview;
+    if (!preview) { exitLessonFlow(); return; }
     lessonSession = {
-        lesson: nextLesson,
-        level,
-        steps: buildLessonSteps(nextLesson),
+        lesson: preview.lesson,
+        level: preview.level,
+        steps: buildLessonSteps(preview.lesson),
         index: 0,
         exAnswered: false,
         exSelected: null,
@@ -4214,7 +4257,7 @@ function submitLessonExercise(selected) {
 
 // Applique la transition SRS une seule fois, au moment précis où on atteint l'écran de fin —
 // jamais pendant le rendu (qui peut être rappelé plusieurs fois pour la même étape).
-function applyLessonCompletion() {
+async function applyLessonCompletion() {
     const s = lessonSession;
     const l = s.lesson;
     const totalEx = s.steps.filter(st => st.type === 'exercise').length;
@@ -4227,9 +4270,24 @@ function applyLessonCompletion() {
         updateWeaknessTracking(l.id, 0, { type: 'grammar', label: l.item || l.pattern });
     }
     s.lessonPassed = passed;
+
+    // Précalcule l'aperçu de la prochaine leçon (y compris bascule automatique vers le niveau
+    // suivant si celui-ci est épuisé) — une seule fois ici, pour un rendu de fin synchrone.
+    let levelData = grammarDataCache[s.level];
+    let nextLesson = levelData && levelData.data ? findNextLessonToLearn(levelData.data) : null;
+    let nextLevel = s.level;
+    if (!nextLesson) {
+        const nextLevelId = await findActiveLearningLevel(s.level);
+        if (nextLevelId) {
+            nextLevel = nextLevelId;
+            const data = await getLevelGrammarData(nextLevelId);
+            nextLesson = data && data.data ? findNextLessonToLearn(data.data) : null;
+        }
+    }
+    s.nextLessonPreview = nextLesson ? { level: nextLevel, lesson: nextLesson } : null;
 }
 
-function advanceLessonStep() {
+async function advanceLessonStep() {
     const s = lessonSession;
     if (!s) return;
     s.index++;
@@ -4237,8 +4295,8 @@ function advanceLessonStep() {
     s.exSelected = null;
     const nextStep = s.steps[s.index];
     if (nextStep && nextStep.type === 'end' && !s.srsApplied) {
-        applyLessonCompletion();
         s.srsApplied = true;
+        await applyLessonCompletion();
     }
     renderLessonStep();
 }
