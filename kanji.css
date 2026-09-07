@@ -624,7 +624,7 @@
 .vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
 .vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
 
-.vocab-nuance-box { font-size: 0.75rem; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 12px; line-height: 1.5; }
+.vocab-nuance-box { font-size: 0.9375rem; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 14px; line-height: 1.6; }
 
 .vocab-section-title { font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
 
@@ -726,12 +726,12 @@
    RÉVISION — Exercices QCM et Trou à combler (cloze)
 ══════════════════════════════════════════════════ */
 .review-qcm-card, .review-cloze-card { justify-content: center; gap: 16px; cursor: default; }
-.review-quiz-instruction { font-size: 0.75rem; color: var(--gray); margin-top: 8px; }
+.review-quiz-instruction { font-size: 0.9375rem; color: var(--gray); margin-top: 8px; }
 
 .review-options { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 10px; }
 .review-options-particles { flex-direction: row; flex-wrap: wrap; justify-content: center; }
 
-.review-option-btn { padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 0.9375rem; line-height: 1.6; cursor: pointer; text-align: left; transition: border-color 0.15s; }
+.review-option-btn { padding: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 1.0625rem; line-height: 1.6; cursor: pointer; text-align: left; transition: border-color 0.15s; }
 .review-options-particles .review-option-btn { flex: 1 1 70px; text-align: center; font-size: 1rem; font-weight: bold; }
 .review-option-btn:hover:not(:disabled) { border-color: var(--accent); }
 .review-option-btn:disabled { cursor: default; }
