@@ -3749,6 +3749,7 @@ async function showApprendreScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'apprendre' }, '');
     document.getElementById('page-title').innerText = 'Apprendre';
     const main = document.getElementById('main-content');
+    const savedLessonProgress = getSavedLessonProgress();
     
     main.innerHTML = `
         <div class="apprendre-wrap">
@@ -3758,10 +3759,10 @@ async function showApprendreScreen(isBack = false) {
             </div>
             
             <div class="dash-card free-training-card" onclick="startGrammarLessonFlow()">
-                <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">📚</div>
+                <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${savedLessonProgress ? '▶' : '📚'}</div>
                 <div class="free-training-info">
-                    <div class="free-training-title">Commençons l'apprentissage</div>
-                    <div class="free-training-sub">Une nouvelle notion vous attend · N5 Grammaire</div>
+                    <div class="free-training-title">${savedLessonProgress ? 'Continuer ma leçon' : "Commençons l'apprentissage"}</div>
+                    <div class="free-training-sub">${savedLessonProgress ? "Reprends là où tu t'es arrêté · N5 Grammaire" : 'Une nouvelle notion vous attend · N5 Grammaire'}</div>
                 </div>
                 <span class="free-training-chevron">→</span>
             </div>
@@ -3801,6 +3802,34 @@ async function showApprendreScreen(isBack = false) {
    ne pénalise pas le SRS : ça alimente juste le tracker de faiblesse existant.
 ══════════════════════════════════════════════════ */
 let lessonSession = null; // { lesson, steps, index, exAnswered, exSelected, exCorrectCount }
+
+const LESSON_PROGRESS_KEY = 'kanji_trad_lesson_progress';
+
+// Sauvegarde légère (id leçon + position + score en cours) — les étapes elles-mêmes sont
+// reconstruites à la volée via buildLessonSteps() au retour, pas besoin de tout sérialiser.
+function saveLessonProgress() {
+    const s = lessonSession;
+    if (!s) return;
+    try {
+        localStorage.setItem(LESSON_PROGRESS_KEY, JSON.stringify({
+            lessonId: s.lesson.id,
+            level: s.level || 'n5',
+            index: s.index,
+            exCorrectCount: s.exCorrectCount
+        }));
+    } catch (e) { /* stockage plein ou indisponible : tant pis, pas bloquant */ }
+}
+
+function clearLessonProgress() {
+    try { localStorage.removeItem(LESSON_PROGRESS_KEY); } catch (e) {}
+}
+
+function getSavedLessonProgress() {
+    try {
+        const raw = localStorage.getItem(LESSON_PROGRESS_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+}
 
 // Prochaine leçon jamais commencée (aucune info SRS), dans l'ordre lesson_number croissant.
 // null si tout le niveau a déjà été entamé au moins une fois.
@@ -3858,19 +3887,34 @@ async function startGrammarLessonFlow() {
         alert("Aucune leçon de grammaire disponible pour le moment.");
         return;
     }
-    const lesson = findNextLessonToLearn(data.data);
-    if (!lesson) {
-        alert("Tu as déjà commencé toutes les leçons de grammaire N5 ! 🎉 Direction Réviser pour les consolider.");
-        return;
+
+    // Reprend une leçon interrompue si elle existe encore, sinon repart sur la prochaine
+    // jamais commencée — évite de tout recommencer à zéro après une fermeture de l'app.
+    const saved = getSavedLessonProgress();
+    let lesson = saved && saved.level === 'n5' ? data.data.find(l => l.id === saved.lessonId) : null;
+    let resumeIndex = 0;
+    let resumeScore = 0;
+    if (lesson) {
+        resumeIndex = saved.index;
+        resumeScore = saved.exCorrectCount || 0;
+    } else {
+        lesson = findNextLessonToLearn(data.data);
+        if (!lesson) {
+            alert("Tu as déjà commencé toutes les leçons de grammaire N5 ! 🎉 Direction Réviser pour les consolider.");
+            return;
+        }
     }
+
     pushModalState('grammar-lesson-flow');
+    const steps = buildLessonSteps(lesson);
     lessonSession = {
         lesson,
-        steps: buildLessonSteps(lesson),
-        index: 0,
+        level: 'n5',
+        steps,
+        index: Math.min(resumeIndex, steps.length - 1),
         exAnswered: false,
         exSelected: null,
-        exCorrectCount: 0
+        exCorrectCount: resumeScore
     };
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderLessonStep();
@@ -3881,6 +3925,7 @@ function renderLessonStep() {
     if (!container || !lessonSession) return;
     const s = lessonSession;
     const step = s.steps[s.index];
+    if (step.type === 'end') clearLessonProgress(); else saveLessonProgress();
     const pct = s.steps.length > 1 ? Math.round((s.index / (s.steps.length - 1)) * 100) : 0;
 
     const header = `
