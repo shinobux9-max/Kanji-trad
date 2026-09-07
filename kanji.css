@@ -555,7 +555,7 @@
     .examples-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
     .examples-container { display: flex; flex-direction: column; gap: 12px; }
     .example-item { padding: 12px; background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); border-radius: 6px; position: relative; }
-    .example-jp { font-size: 0.875rem; color: #fff; margin-bottom: 4px; font-weight: 500; }
+    .example-jp { font-size: 1rem; color: #fff; margin-bottom: 4px; font-weight: 500; line-height: 1.6; }
     .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 4px; }
     .example-fr { font-size: 0.75rem; color: var(--gray); }
     .speak-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 1.125rem; }
@@ -629,7 +629,7 @@
 .vocab-section-title { font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
 
 .vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; }
-.vocab-example-box .example-jp { font-size: 0.875rem; color: #fff; margin-bottom: 6px; font-weight: 500; }
+.vocab-example-box .example-jp { font-size: 1rem; color: #fff; margin-bottom: 6px; font-weight: 500; line-height: 1.6; }
 .vocab-example-box .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 6px; }
 .vocab-example-box .example-fr { font-size: 0.75rem; color: var(--gray); line-height: 1.4; }
 
@@ -665,7 +665,7 @@
 .section-content-box > .section-sub-title:not(:first-child) { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
 
 .section-list { margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; }
-.section-list li { font-size: 0.8125rem; color: #fff; line-height: 1.5; font-family: 'Courier New', monospace; }
+.section-list li { font-size: 0.9375rem; color: #fff; line-height: 1.9; font-family: 'Courier New', monospace; }
 .section-list li::marker { color: var(--accent); }
 
 /* Mise en évidence d'un mot/expression au sein d'un paragraphe (usage: <span class="inline-highlight">後で</span> dans le JSON) */
@@ -731,7 +731,7 @@
 .review-options { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 10px; }
 .review-options-particles { flex-direction: row; flex-wrap: wrap; justify-content: center; }
 
-.review-option-btn { padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 0.875rem; cursor: pointer; text-align: left; transition: border-color 0.15s; }
+.review-option-btn { padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 0.9375rem; line-height: 1.6; cursor: pointer; text-align: left; transition: border-color 0.15s; }
 .review-options-particles .review-option-btn { flex: 1 1 70px; text-align: center; font-size: 1rem; font-weight: bold; }
 .review-option-btn:hover:not(:disabled) { border-color: var(--accent); }
 .review-option-btn:disabled { cursor: default; }
@@ -1262,7 +1262,7 @@
 .confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; }
 .confusion-box-title { font-size: 0.8125rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
 .confusion-box-text { font-size: 0.8125rem; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
-.confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; padding: 4px 0; }
+.confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 0.9375rem; line-height: 1.6; padding: 4px 0; }
 .confusion-example-row.wrong { color: #FB7185; }
 .confusion-example-row.ok { color: #4ADE80; }
 .confusion-example-fr { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
@@ -1270,7 +1270,7 @@
 
 /* Furigana natif (<ruby>/<rt>) — utilisé dans les leçons et fiches enrichies */
 ruby { ruby-align: center; }
-rt { font-size: 0.55em; color: var(--accent-muted); font-weight: normal; user-select: none; }
+rt { font-size: 0.62em; color: var(--accent-muted); font-weight: normal; user-select: none; }
 
 /* Kanji d'un mot, cliquables (exploite kanji_list déjà présent dans vocab.json) */
 .vocab-kanji-chips { display: flex; flex-wrap: wrap; gap: 8px; }
