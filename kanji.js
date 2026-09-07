@@ -1481,11 +1481,11 @@ function kanaToRomajiPrecise(str) {
 
 function hasKanjiChar(str) { return /[\u4e00-\u9faf]/.test(str); }
 
-// Romaji de l'item d'une leçon de grammaire — vide (pas de romaji affiché) si l'item contient
-// du kanji, car deviner sa lecture sans dictionnaire contextuel donnerait un résultat non fiable.
-// Ne garde que la première forme si plusieurs alternatives sont séparées par "/", et retire le
-// préfixe 〜.
-function getItemRomaji(item) {
+// Romaji de l'item d'une leçon de grammaire — utilise item_romaji si le champ existe (ajouté
+// manuellement pour les items contenant du kanji, non convertibles automatiquement), sinon génère
+// automatiquement pour les items en kana pur. Vide si ni l'un ni l'autre n'est disponible.
+function getItemRomaji(item, explicitRomaji) {
+    if (explicitRomaji) return explicitRomaji;
     if (!item) return '';
     const first = item.split('/')[0].trim().replace(/^〜/, '');
     if (!first || hasKanjiChar(first)) return '';
@@ -3478,7 +3478,7 @@ function showGrammarDetail(lessonId, isBack = false) {
         <div class="grammar-point-box">
             <div class="section-label">POINT DE GRAMMAIRE</div>
             <div class="item-display">${itemText}</div>
-            ${getItemRomaji(itemText) ? `<div class="item-romaji">${getItemRomaji(itemText)}</div>` : ''}
+            ${getItemRomaji(itemText, lesson.item_romaji) ? `<div class="item-romaji">${getItemRomaji(itemText, lesson.item_romaji)}</div>` : ''}
             <div class="item-description">${titleText}</div>
             <div class="pattern-box">${highlightText(patternText, itemText)}</div>
         </div>
@@ -4170,7 +4170,7 @@ function renderLessonIntro() {
             <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">${l.unit_title || ''}</div>
             <div class="fiche-title-main">${l.title || ''}</div>
             <div style="font-size:2rem;color:var(--accent);margin:14px 0 4px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
-            ${getItemRomaji(l.item) ? `<div style="font-size:0.8125rem;color:var(--gray);margin-bottom:6px">${getItemRomaji(l.item)}</div>` : ''}
+            ${getItemRomaji(l.item, l.item_romaji) ? `<div style="font-size:0.8125rem;color:var(--gray);margin-bottom:6px">${getItemRomaji(l.item, l.item_romaji)}</div>` : ''}
             <div class="fiche-title-reading">${l.badge || ''}</div>
             ${l.pattern ? `<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,0.3);border-radius:8px;font-family:monospace;color:var(--gray);font-size:0.8125rem">${l.pattern}</div>` : ''}
         </div>
