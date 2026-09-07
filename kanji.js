@@ -3485,7 +3485,7 @@ function showGrammarDetail(lessonId, isBack = false) {
         
         <!-- BOUTONS ACTIONS -->
         <div class="action-buttons">
-            <button class="link-btn">⏵ Revoir le cours animé</button>
+            <button class="link-btn" onclick="startSpecificGrammarLesson('${lesson.id}', '${levelId}')">⏵ Revoir le cours animé</button>
             <button class="revise-btn ${status === 'mastered' ? 'active' : ''}" onclick="trackItem('${lesson.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarDetail('${lesson.id}')">
                 ${status === 'mastered' ? '✓ Maîtrisé' : '✓ Marquer comme maîtrisé'}
             </button>
