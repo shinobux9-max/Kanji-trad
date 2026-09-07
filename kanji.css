@@ -629,9 +629,9 @@
 .vocab-section-title { font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
 
 .vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; text-align: center; }
-.vocab-example-box .example-jp { font-size: 1.1875rem; color: #fff; margin-bottom: 8px; font-weight: 500; line-height: 1.7; }
-.vocab-example-box .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 6px; }
-.vocab-example-box .example-fr { font-size: 0.75rem; color: var(--gray); line-height: 1.4; }
+.vocab-example-box .example-jp { font-size: 1.375rem; color: #fff; margin-bottom: 8px; font-weight: 500; line-height: 1.7; }
+.vocab-example-box .example-ro { font-size: 0.8125rem; color: var(--accent); margin-bottom: 6px; }
+.vocab-example-box .example-fr { font-size: 0.875rem; color: var(--gray); line-height: 1.4; }
 
 /* Micro-interactions du parcours "Commençons l'apprentissage" */
 .lesson-tap-reveal { background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); border-radius: 10px; padding: 12px; margin: 14px 0; cursor: pointer; }
@@ -1260,13 +1260,13 @@
 
 /* Explication contextuelle sur confusion (point #2 V2) — repose sur grammar.json > confusions[] */
 .confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; }
-.confusion-box-title { font-size: 0.8125rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
-.confusion-box-text { font-size: 0.8125rem; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
-.confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 0.9375rem; line-height: 1.6; padding: 4px 0; }
+.confusion-box-title { font-size: 0.9375rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
+.confusion-box-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+.confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; line-height: 1.7; padding: 4px 0; }
 .confusion-example-row.wrong { color: #FB7185; }
 .confusion-example-row.ok { color: #4ADE80; }
-.confusion-example-fr { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
-.confusion-example-romaji { font-size: 0.6875rem; color: var(--gray); margin: 2px 0 4px 22px; font-style: italic; }
+.confusion-example-fr { font-size: 0.875rem; color: var(--gray); margin-top: 4px; }
+.confusion-example-romaji { font-size: 0.8125rem; color: var(--gray); margin: 2px 0 4px 22px; font-style: italic; }
 
 /* Furigana natif (<ruby>/<rt>) — utilisé dans les leçons et fiches enrichies */
 ruby { ruby-align: center; }
