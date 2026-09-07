@@ -26,8 +26,8 @@
           {
             "sub_title": "Structure de base",
             "list": [
-              "Nom + **です** (ex: がくせいです)",
-              "Adjectif + **です** (ex: たかいです)"
+              "Nom + **です** (ex: (*がくせいです)*)",
+              "Adjectif + **です** (ex: (*たかいです)*)"
             ]
           }
         ]
