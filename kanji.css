@@ -640,14 +640,14 @@
 .lesson-example-hint { font-size: 0.6875rem; color: var(--gray); text-align: center; margin-top: 8px; }
 
 /* Texte flottant centré, un paragraphe à la fois (au lieu d'un mur de texte d'un coup) */
+.lesson-tap-advance { cursor: pointer; min-height: calc(100vh - 220px); display: flex; flex-direction: column; justify-content: center; }
 .lesson-floating-text-wrap { display: flex; align-items: center; justify-content: center; min-height: 160px; padding: 30px 12px; cursor: pointer; }
 .lesson-floating-text { text-align: center; font-size: 1.1875rem; line-height: 1.85; color: #fff; }
-.lesson-tap-advance { cursor: pointer; min-height: calc(100vh - 220px); display: flex; flex-direction: column; justify-content: center; }
 .lesson-tap-hint { text-align: center; font-size: 0.75rem; color: var(--gray); margin-top: 20px; opacity: 0.7; }
 
 /* Animation d'entrée à chaque changement d'étape du parcours de leçon */
-@keyframes lessonSlideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-.lesson-slide-anim { animation: lessonSlideIn 0.35s ease; }
+@keyframes lessonSlideIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.lesson-slide-anim { animation: lessonSlideIn 0.5s ease; }
 .vocab-speak-btn-example { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 1.125rem; }
 .vocab-speak-btn-example:hover { opacity: 0.7; }
 
@@ -660,7 +660,7 @@
    GRAMMAR DETAIL - Contenu riche (paragraphes, listes, sous-titres)
    Compatible N4/N5+ : structure sections[].paragraphs/sub_title/list
 ══════════════════════════════════════════════════ */
-.section-paragraph { font-size: 0.8125rem; color: #fff; line-height: 1.6; margin-bottom: 10px; }
+.section-paragraph { font-size: 0.9375rem; color: #fff; line-height: 1.8; margin-bottom: 10px; }
 .section-paragraph:last-child { margin-bottom: 0; }
 
 .section-sub-title { font-size: 0.6875rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
