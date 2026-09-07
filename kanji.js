@@ -3979,44 +3979,52 @@ function renderLessonIntro() {
 
 function renderLessonParagraph(step) {
     return `
-        ${step.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:6px">${step.label}</div>` : ''}
-        <div class="lesson-floating-text">${mdBold(step.text || '')}</div>
-        <button class="review-continue-btn" onclick="advanceLessonStep()">Suivant →</button>
+        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+            ${step.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:6px">${step.label}</div>` : ''}
+            <div class="lesson-floating-text-wrap"><div class="lesson-floating-text">${mdBold(step.text || '')}</div></div>
+            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
+        </div>
     `;
 }
 
 function renderLessonStructure(step) {
     return `
-        <div class="fiche-title-card" style="text-align:left;padding:18px">
-            ${step.sub_title ? `<div class="section-sub-title">${mdBold(step.sub_title)}</div>` : ''}
-            ${Array.isArray(step.paragraphs) ? step.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
-            ${Array.isArray(step.list) && step.list.length ? `<ul class="section-list">${step.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>` : ''}
+        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+            <div class="fiche-title-card" style="text-align:left;padding:18px">
+                ${step.sub_title ? `<div class="section-sub-title">${mdBold(step.sub_title)}</div>` : ''}
+                ${Array.isArray(step.paragraphs) ? step.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
+                ${Array.isArray(step.list) && step.list.length ? `<ul class="section-list">${step.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>` : ''}
+            </div>
+            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
         </div>
-        <button class="review-continue-btn" onclick="advanceLessonStep()">Suivant →</button>
     `;
 }
 
 function renderLessonExample(step) {
     const ex = step.example;
     return `
-        <div class="section-sub-title" style="text-align:center;margin-bottom:10px">Exemple</div>
-        <div class="vocab-example-box lesson-example-reveal" onclick="this.classList.toggle('open')" style="cursor:pointer">
-            <div class="example-jp">${mdBold(ex.japanese || '')}</div>
-            <div class="lesson-example-hidden">
-                ${ex.romaji ? `<div class="example-ro">${ex.romaji}</div>` : ''}
-                <div class="example-fr">${mdBold(ex.french || '')}</div>
+        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+            <div class="section-sub-title" style="text-align:center;margin-bottom:10px">Exemple</div>
+            <div class="vocab-example-box lesson-example-reveal" onclick="event.stopPropagation(); this.classList.toggle('open')" style="cursor:pointer">
+                <div class="example-jp">${mdBold(ex.japanese || '')}</div>
+                <div class="lesson-example-hidden">
+                    ${ex.romaji ? `<div class="example-ro">${ex.romaji}</div>` : ''}
+                    <div class="example-fr">${mdBold(ex.french || '')}</div>
+                </div>
+                <div class="lesson-example-hint">👆 Touche pour voir la traduction</div>
             </div>
-            <div class="lesson-example-hint">👆 Touche pour voir la traduction</div>
+            <div class="lesson-tap-hint" style="margin-top:16px">👆 Touche l'écran (hors de la carte) pour continuer</div>
         </div>
-        <button class="review-continue-btn" onclick="advanceLessonStep()" style="margin-top:16px">Suivant →</button>
     `;
 }
 
 function renderLessonConfusion(step) {
     return `
-        <div class="section-sub-title" style="text-align:center;margin-bottom:10px">⚠️ Dernière règle d'or avant de t'entraîner</div>
-        ${buildConfusionBoxHtml(step.confusion)}
-        <button class="review-continue-btn" onclick="advanceLessonStep()" style="margin-top:16px">Je suis prêt →</button>
+        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+            <div class="section-sub-title" style="text-align:center;margin-bottom:10px">⚠️ Dernière règle d'or avant de t'entraîner</div>
+            ${buildConfusionBoxHtml(step.confusion)}
+            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
+        </div>
     `;
 }
 
