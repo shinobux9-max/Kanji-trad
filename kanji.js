@@ -3741,13 +3741,6 @@ async function showApprendreScreen(isBack = false) {
                 <div class="apprendre-subtitle-main">Suis le fil, ou choisis toi-même ci-dessous.</div>
             </div>
             
-            <div class="apprendre-progress-section">
-                <div class="apprendre-section-label">Progression par niveau</div>
-                <div id="apprendre-progress-list">
-                    <div style="color:var(--gray);font-size:0.75rem;padding:12px 4px">Chargement…</div>
-                </div>
-            </div>
-            
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">
                     <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
@@ -3771,54 +3764,6 @@ async function showApprendreScreen(isBack = false) {
                 </div>
             </div>
         </div>`;
-    
-    renderApprendreProgressList();
-}
-
-async function renderApprendreProgressList() {
-    const el = document.getElementById('apprendre-progress-list');
-    if (!el || !jlptMapping) return;
-
-    const levels = Object.entries(jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
-    const rows = await Promise.all(levels.map(async ([levelId, levelData]) => {
-        const stats = await getLevelVocabGrammarStats(levelId);
-        const total = stats.vocabTotal + stats.grammarTotal;
-        const mastered = stats.vocabMastered + stats.grammarMastered;
-        const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
-        const available = total > 0;
-
-        return `
-            <div class="apprendre-level-row${available ? '' : ' locked'}" ${available ? `onclick="startLevelDiscovery('${levelId}')"` : ''}>
-                <div class="apprendre-level-badge" style="color:${levelData.color}">${levelData.label}</div>
-                <div class="apprendre-level-info">
-                    <div class="apprendre-level-bar"><div class="apprendre-level-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
-                    <div class="apprendre-level-status">${available ? `${pct}% maîtrisé` : '🔒 Pas encore disponible'}</div>
-                </div>
-                ${available ? `<span class="apprendre-level-chevron">›</span>` : ''}
-            </div>
-        `;
-    }));
-
-    el.innerHTML = rows.join('');
-}
-
-// "Apprendre" répond à "qu'est-ce qu'il me reste à découvrir ?" — contrairement à "Réviser" et
-// au bouton "Aujourd'hui" de l'accueil qui répondent à "qu'est-ce que je dois revoir ?". On ne
-// pioche donc QUE des items jamais vus (includeDue:false), mélange vocab+grammaire+kanji,
-// réutilise entièrement le mécanisme de session mixte déjà existant.
-async function startLevelDiscovery(levelId) {
-    const quota = QUOTA_LEVELS[getQuotaLevel()].apprendre; // réutilise le réglage Intensité existant
-    const queue = await buildReviewQueue({
-        types: ['vocab', 'grammar', 'kanji'],
-        levels: [levelId],
-        includeDue: false,
-        newLimit: quota
-    });
-    if (queue.length === 0) {
-        alert('Rien de nouveau à découvrir pour ce niveau pour le moment ! 🎉');
-        return;
-    }
-    launchMixedReviewSession(queue, 'apprendre-discovery');
 }
 
 /* ══════════════════════════════════════════════════
