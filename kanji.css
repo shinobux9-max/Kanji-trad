@@ -1266,6 +1266,11 @@
 .confusion-example-row.wrong { color: #FB7185; }
 .confusion-example-row.ok { color: #4ADE80; }
 .confusion-example-fr { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+.confusion-example-romaji { font-size: 0.6875rem; color: var(--gray); margin: 2px 0 4px 22px; font-style: italic; }
+
+/* Furigana natif (<ruby>/<rt>) — utilisé dans les leçons et fiches enrichies */
+ruby { ruby-align: center; }
+rt { font-size: 0.55em; color: var(--accent-muted); font-weight: normal; user-select: none; }
 
 /* Kanji d'un mot, cliquables (exploite kanji_list déjà présent dans vocab.json) */
 .vocab-kanji-chips { display: flex; flex-wrap: wrap; gap: 8px; }

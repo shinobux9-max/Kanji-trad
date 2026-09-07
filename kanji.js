@@ -2843,7 +2843,9 @@ function buildConfusionBoxHtml(confusion) {
             <div class="confusion-box-text">${mdBold(confusion.explanation || '')}</div>
             ${confusion.wrong_example ? `
                 <div class="confusion-example-row wrong"><span>✘</span><span>${mdBold(confusion.wrong_example.japanese || '')}</span></div>
+                ${confusion.wrong_example.romaji ? `<div class="confusion-example-romaji">${confusion.wrong_example.romaji}</div>` : ''}
                 <div class="confusion-example-row ok"><span>✔</span><span>${mdBold(confusion.wrong_example.correct_japanese || '')}</span></div>
+                ${confusion.wrong_example.correct_romaji ? `<div class="confusion-example-romaji">${confusion.wrong_example.correct_romaji}</div>` : ''}
                 ${confusion.wrong_example.french ? `<div class="confusion-example-fr">${mdBold(confusion.wrong_example.french)}</div>` : ''}
             ` : ''}
         </div>
