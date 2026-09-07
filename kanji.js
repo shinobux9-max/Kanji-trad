@@ -3620,7 +3620,7 @@ function showDashboard(isBack = false) {
             </div>
             <div class="dash-card weakness-widget" id="dashboard-weakness-widget" style="display:none;"></div>
             <div class="dash-card dash-mastery-card">
-                <div class="section-title" style="font-size:0.6875rem;color:var(--text);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Niveaux de maîtrise</div>
+                <div class="section-title" style="font-size:0.6875rem;color:var(--text);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Progression</div>
                 <div id="progression-list"></div>
             </div>
         </div>`;
@@ -6913,18 +6913,18 @@ async function renderDashboardReviewCta() {
     }
     
     el.innerHTML = `
-        <div class="review-cta-label">RÉVISER AUJOURD'HUI</div>
+        <div class="review-cta-label">CARTES DU JOUR À RÉVISER</div>
         <div class="review-cta-split">
             <div class="review-cta-split-box">
                 <div class="review-cta-split-num">${newTotal}</div>
-                <div class="review-cta-split-label">Nouveaux</div>
+                <div class="review-cta-split-label">Nouvelles</div>
             </div>
             <div class="review-cta-split-box">
                 <div class="review-cta-split-num">${dueTotal}</div>
                 <div class="review-cta-split-label">À réviser</div>
             </div>
         </div>
-        <button class="review-cta-btn" onclick="startDashboardReview()">Commencer · ${total} items →</button>
+        <button class="review-cta-btn" onclick="startDashboardReview()">Commencer · ${total} Cartes →</button>
     `;
 }
 
