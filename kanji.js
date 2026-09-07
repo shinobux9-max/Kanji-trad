@@ -2135,6 +2135,10 @@ function showKanjiReviewModeSelector() {
                 <span class="review-mode-icon">🔥</span>
                 <div><div class="review-mode-name">Tracé difficile</div><div class="review-mode-desc">Sans assistance (hardcore)</div></div>
             </button>
+            <button class="review-mode-btn" onclick="showFreeTrainingConfig(false, {type:'kanji', level: kanjiHomeData?.levelId})">
+                <span class="review-mode-icon">🏋️</span>
+                <div><div class="review-mode-name">Entraînement libre</div><div class="review-mode-desc">Configurable, sans impact sur le SRS</div></div>
+            </button>
         </div>`;
 }
 
@@ -4360,12 +4364,15 @@ function buildFicheDetailContent(entry) {
 
     if (entry.type === 'vocab') {
         const w = entry.item;
-        title = w.word || '';
+        title = ''; // le mot vit dans sa propre boîte ci-dessous, pas dans le titre générique
         const m = w.meanings;
         const meaningsArr = Array.isArray(m) ? m : (m && typeof m === 'object' ? [m.primary, ...(m.secondary || [])].filter(Boolean) : [m].filter(Boolean));
         body = `
-            <div class="fiche-sub">${w.reading || ''}${w.romaji ? ' · ' + w.romaji : ''}</div>
-            <div class="section-paragraph" style="text-align:center">${mdBold(meaningsArr.join(' · ') || '–')}</div>
+            <div class="fiche-title-card">
+                <div class="fiche-title-main">${w.word || ''}</div>
+                ${(w.reading || w.romaji) ? `<div class="fiche-title-reading">${w.reading || ''}${w.romaji ? ' · ' + w.romaji : ''}</div>` : ''}
+                <div class="fiche-title-meaning">${mdBold(meaningsArr.join(' · ') || '–')}</div>
+            </div>
             ${w.nuance ? `<div class="vocab-nuance-box" style="margin-top:10px">💡 ${mdBold(w.nuance)}</div>` : ''}
             ${w.example && w.example.japanese ? `
                 <div class="vocab-example-box" style="margin-top:10px">
@@ -4376,7 +4383,7 @@ function buildFicheDetailContent(entry) {
         `;
     } else if (entry.type === 'grammar') {
         const l = entry.item;
-        title = l.item || l.pattern || '';
+        title = ''; // le motif vit dans sa propre boîte ci-dessous, pas dans le titre générique
         const sectionsHtml = Array.isArray(l.sections) ? l.sections.map(sec => `
             ${sec.label ? `<div class="section-sub-title">${sec.label}</div>` : ''}
             ${sec.text ? `<div class="section-paragraph">${mdBold(sec.text)}</div>` : ''}
@@ -4395,7 +4402,10 @@ function buildFicheDetailContent(entry) {
             ? l.confusions.map(c => buildConfusionBoxHtml(c)).join('')
             : '';
         body = `
-            <div class="fiche-sub">${l.title || l.meaning || ''}</div>
+            <div class="fiche-title-card">
+                <div class="fiche-title-main">${l.item || l.pattern || ''}</div>
+                ${(l.title || l.meaning) ? `<div class="fiche-title-meaning">${l.title || l.meaning || ''}</div>` : ''}
+            </div>
             ${sectionsHtml}
             ${examplesHtml}
             ${confusionsHtml}
@@ -6205,6 +6215,47 @@ async function animateKanaChar(char) {
    FONCTIONS GLOBALES : EXEMPLES & AUDIO
 ══════════════════════════════════════════════════ */
 
+// Mots de vocabulaire utilisant ce kanji (lien symétrique aux puces kanji cliquables déjà
+// présentes sur la fiche vocab). Cherche d'abord dans le niveau du kanji lui-même (le plus
+// pertinent), puis élargit aux autres niveaux si rien n'y est trouvé.
+async function renderLinkedVocab(char) {
+    const title = document.getElementById('linked-vocab-title');
+    const container = document.getElementById('linked-vocab-container');
+    if (!title || !container) return;
+
+    const k = kanjiDb.find(x => x.char === char);
+    const level = k ? getJLPTLevel(k.grade) : null;
+    const levelId = level ? `n${level}` : null;
+    const levelsToSearch = levelId ? [levelId, ...ALL_JLPT_LEVELS.filter(l => l !== levelId)] : ALL_JLPT_LEVELS;
+
+    let matches = [];
+    for (const lv of levelsToSearch) {
+        const vd = await getLevelVocabData(lv);
+        if (vd && vd.data) {
+            const hits = vd.data.filter(w => Array.isArray(w.kanji_list) && w.kanji_list.includes(char));
+            matches.push(...hits.map(w => ({ ...w, _level: lv })));
+        }
+        if (matches.length >= 8) break;
+    }
+    matches = matches.slice(0, 8);
+
+    if (matches.length === 0) {
+        title.style.display = 'none';
+        container.innerHTML = '';
+        return;
+    }
+
+    title.style.display = '';
+    container.innerHTML = matches.map(w => {
+        const meaning = (w.meanings && (w.meanings.primary || w.meanings)) || '';
+        return `
+        <div class="linked-vocab-chip" onclick="openVocabFromSearch('${w.id}','${w._level}')">
+            <span class="linked-vocab-word">${w.word}</span>
+            <span class="linked-vocab-meaning">${meaning}</span>
+        </div>`;
+    }).join('');
+}
+
 async function renderExemples(char) {
     const container = document.getElementById('exemples-container');
     if (!container) return;
@@ -6372,7 +6423,8 @@ function openDetail(kanji) {
     // même si le fetch KanjiVG échoue (catch sur le reject de la promesse)
     renderStrokeGuide(kanji.char)
         .then(() => renderExemples(kanji.char))
-        .catch(() => renderExemples(kanji.char));
+        .catch(() => renderExemples(kanji.char))
+        .finally(() => renderLinkedVocab(kanji.char));
 }
 
 function openKanaDetail(kana) {
@@ -6995,6 +7047,7 @@ function showFreeTrainingConfig(isBack = false, preset = null) {
         <div style="padding:16px 16px 24px">
             <div class="free-training-banner">🏋️ Entraînement libre — sans impact sur tes révisions</div>
 
+            ${presetType === 'all' ? `
             <div class="mode-section-label" style="margin-top:14px">— Contenu</div>
             <div class="ft-radio-group">
                 ${typeOptions.map((o) => `
@@ -7005,6 +7058,7 @@ function showFreeTrainingConfig(isBack = false, preset = null) {
                     </label>
                 `).join('')}
             </div>
+            ` : `<input type="radio" name="ft-type" value="${presetType}" checked style="display:none">`}
 
             <div class="mode-section-label" style="margin-top:14px" id="ft-scope-label">— Niveau</div>
             <div id="ft-scope-options" class="ft-radio-group"></div>
