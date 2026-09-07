@@ -632,6 +632,17 @@
 .vocab-example-box .example-jp { font-size: 0.875rem; color: #fff; margin-bottom: 6px; font-weight: 500; }
 .vocab-example-box .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 6px; }
 .vocab-example-box .example-fr { font-size: 0.75rem; color: var(--gray); line-height: 1.4; }
+
+/* Micro-interactions du parcours "Commençons l'apprentissage" */
+.lesson-tap-reveal { background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); border-radius: 10px; padding: 12px; margin: 14px 0; cursor: pointer; }
+.lesson-tap-reveal-prompt { font-size: 0.8125rem; color: var(--accent-muted); text-align: center; }
+.lesson-tap-reveal-content { display: none; text-align: center; color: #fff; font-size: 0.875rem; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); }
+.lesson-tap-reveal.open .lesson-tap-reveal-content { display: block; }
+.lesson-tap-reveal.open .lesson-tap-reveal-prompt { display: none; }
+.lesson-example-hidden { display: none; }
+.lesson-example-reveal.open .lesson-example-hidden { display: block; }
+.lesson-example-reveal.open .lesson-example-hint { display: none; }
+.lesson-example-hint { font-size: 0.6875rem; color: var(--gray); text-align: center; margin-top: 8px; }
 .vocab-speak-btn-example { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 1.125rem; }
 .vocab-speak-btn-example:hover { opacity: 0.7; }
 

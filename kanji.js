@@ -3741,6 +3741,15 @@ async function showApprendreScreen(isBack = false) {
                 <div class="apprendre-subtitle-main">Suis le fil, ou choisis toi-même ci-dessous.</div>
             </div>
             
+            <div class="dash-card free-training-card" onclick="startGrammarLessonFlow()">
+                <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">📚</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">Commençons l'apprentissage</div>
+                    <div class="free-training-sub">Une nouvelle notion vous attend · N5 Grammaire</div>
+                </div>
+                <span class="free-training-chevron">→</span>
+            </div>
+            
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">
                     <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
@@ -3764,6 +3773,286 @@ async function showApprendreScreen(isBack = false) {
                 </div>
             </div>
         </div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   "COMMENÇONS L'APPRENTISSAGE" — MVP1 (grammaire uniquement, ordre linéaire imposé)
+   ─────────────────────────────────────────────────
+   Parcours : intro → sections (une à la fois) → exemples (un à la fois) → confusion
+   (dernière "règle d'or" juste avant les exercices) → 3 exercices → fin.
+   La leçon entre dans le SRS normal seulement à la fin (gradeReview), jamais avant —
+   Apprendre et Réviser restent bien deux mécaniques séparées. Un échec aux exercices
+   ne pénalise pas le SRS : ça alimente juste le tracker de faiblesse existant.
+══════════════════════════════════════════════════ */
+let lessonSession = null; // { lesson, steps, index, exAnswered, exSelected, exCorrectCount }
+
+// Prochaine leçon jamais commencée (aucune info SRS), dans l'ordre lesson_number croissant.
+// null si tout le niveau a déjà été entamé au moins une fois.
+function findNextLessonToLearn(lessons) {
+    const sorted = [...lessons].sort((a, b) => (a.lesson_number || 0) - (b.lesson_number || 0));
+    return sorted.find(l => !getSrsInfo(l.id)) || null;
+}
+
+// Construit les 3 exercices de fin : jusqu'à 2 cloze sur des exemples différents de LA leçon
+// (distracteurs = particules courantes), puis 1 exercice basé sur la confusion documentée
+// ("laquelle de ces phrases est correcte ?") si elle existe — teste la distinction, pas
+// seulement la mémorisation, comme suggéré.
+function buildLessonExercises(lesson) {
+    const exercises = [];
+    const usableExamples = (lesson.examples || []).filter(ex => ex.highlight && ex.japanese && ex.japanese.includes(ex.highlight));
+
+    usableExamples.slice(0, 2).forEach(ex => {
+        const correct = ex.highlight;
+        const distractorPool = COMMON_PARTICLES.filter(p => p !== correct);
+        const options = shuffleArray([correct, ...shuffleArray(distractorPool).slice(0, 2)]);
+        exercises.push({ type: 'cloze', sentence: ex.japanese, correct, options, french: ex.french });
+    });
+
+    if (Array.isArray(lesson.confusions) && lesson.confusions.length && lesson.confusions[0].wrong_example) {
+        const c = lesson.confusions[0];
+        exercises.push({
+            type: 'confusion-check',
+            optionA: c.wrong_example.japanese,
+            optionB: c.wrong_example.correct_japanese,
+            french: c.wrong_example.french,
+            explanation: c.explanation
+        });
+    }
+
+    return exercises.slice(0, 3);
+}
+
+function buildLessonSteps(lesson) {
+    const steps = [{ type: 'intro' }];
+    (lesson.sections || []).forEach(sec => steps.push({ type: 'section', section: sec }));
+    (lesson.examples || []).forEach(ex => steps.push({ type: 'example', example: ex }));
+    if (Array.isArray(lesson.confusions) && lesson.confusions.length) {
+        steps.push({ type: 'confusion', confusion: lesson.confusions[0] });
+    }
+    buildLessonExercises(lesson).forEach(ex => steps.push({ type: 'exercise', exercise: ex }));
+    steps.push({ type: 'end' });
+    return steps;
+}
+
+async function startGrammarLessonFlow() {
+    const data = await getLevelGrammarData('n5');
+    if (!data || !data.data || !data.data.length) {
+        alert("Aucune leçon de grammaire disponible pour le moment.");
+        return;
+    }
+    const lesson = findNextLessonToLearn(data.data);
+    if (!lesson) {
+        alert("Tu as déjà commencé toutes les leçons de grammaire N5 ! 🎉 Direction Réviser pour les consolider.");
+        return;
+    }
+    pushModalState('grammar-lesson-flow');
+    lessonSession = {
+        lesson,
+        steps: buildLessonSteps(lesson),
+        index: 0,
+        exAnswered: false,
+        exSelected: null,
+        exCorrectCount: 0
+    };
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    renderLessonStep();
+}
+
+function renderLessonStep() {
+    const container = document.getElementById('category-content');
+    if (!container || !lessonSession) return;
+    const s = lessonSession;
+    const step = s.steps[s.index];
+    const pct = s.steps.length > 1 ? Math.round((s.index / (s.steps.length - 1)) * 100) : 0;
+
+    const header = `
+        <div class="review-header">
+            <button class="back-btn" onclick="exitLessonFlow()">✕</button>
+            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${pct}%"></div></div>
+            <div class="review-progress-text">${s.index + 1}/${s.steps.length}</div>
+        </div>
+    `;
+
+    let body = '';
+    if (step.type === 'intro') body = renderLessonIntro();
+    else if (step.type === 'section') body = renderLessonSection(step);
+    else if (step.type === 'example') body = renderLessonExample(step);
+    else if (step.type === 'confusion') body = renderLessonConfusion(step);
+    else if (step.type === 'exercise') body = renderLessonExercise(step);
+    else if (step.type === 'end') body = renderLessonEnd();
+
+    container.innerHTML = `<div class="review-page">${step.type === 'end' ? '' : header}${body}</div>`;
+}
+
+function renderLessonIntro() {
+    const l = lessonSession.lesson;
+    return `
+        <div class="fiche-title-card">
+            <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">${l.unit_title || ''}</div>
+            <div class="fiche-title-main">${l.title || ''}</div>
+            <div style="font-size:2rem;color:#fff;margin:14px 0 6px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
+            <div class="fiche-title-reading">${l.badge || ''}</div>
+            ${l.pattern ? `<div style="margin-top:14px;padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;font-family:monospace;color:var(--accent);font-size:0.8125rem">${l.pattern}</div>` : ''}
+        </div>
+        <div style="text-align:center;color:var(--gray);font-size:0.75rem;margin:16px 0">⏱ 3-5 min · Nouvelle notion</div>
+        <button class="review-continue-btn" onclick="advanceLessonStep()">Commencer →</button>
+    `;
+}
+
+function renderLessonSection(step) {
+    const l = lessonSession.lesson;
+    const sec = step.section;
+    return `
+        ${sec.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:10px">${sec.label}</div>` : ''}
+        <div class="fiche-title-card" style="text-align:left;padding:18px">
+            ${renderSectionBody(sec)}
+        </div>
+        <div class="lesson-tap-reveal" onclick="this.classList.toggle('open')">
+            <div class="lesson-tap-reveal-prompt">👆 Touche pour revoir <strong>${l.item}</strong></div>
+            <div class="lesson-tap-reveal-content">${l.item} — ${l.badge || l.title}</div>
+        </div>
+        <button class="review-continue-btn" onclick="advanceLessonStep()">Suivant →</button>
+    `;
+}
+
+function renderLessonExample(step) {
+    const ex = step.example;
+    return `
+        <div class="section-sub-title" style="text-align:center;margin-bottom:10px">Exemple</div>
+        <div class="vocab-example-box lesson-example-reveal" onclick="this.classList.toggle('open')" style="cursor:pointer">
+            <div class="example-jp">${mdBold(ex.japanese || '')}</div>
+            <div class="lesson-example-hidden">
+                ${ex.romaji ? `<div class="example-ro">${ex.romaji}</div>` : ''}
+                <div class="example-fr">${mdBold(ex.french || '')}</div>
+            </div>
+            <div class="lesson-example-hint">👆 Touche pour voir la traduction</div>
+        </div>
+        <button class="review-continue-btn" onclick="advanceLessonStep()" style="margin-top:16px">Suivant →</button>
+    `;
+}
+
+function renderLessonConfusion(step) {
+    return `
+        <div class="section-sub-title" style="text-align:center;margin-bottom:10px">⚠️ Dernière règle d'or avant de t'entraîner</div>
+        ${buildConfusionBoxHtml(step.confusion)}
+        <button class="review-continue-btn" onclick="advanceLessonStep()" style="margin-top:16px">Je suis prêt →</button>
+    `;
+}
+
+function renderLessonExercise(step) {
+    const s = lessonSession;
+    const ex = step.exercise;
+    const answered = s.exAnswered;
+    const selected = s.exSelected;
+    let bodyHtml;
+
+    if (ex.type === 'cloze') {
+        const displayedSentence = answered
+            ? ex.sentence.replace(ex.correct, `<span class="cloze-blank-filled ${selected === ex.correct ? 'correct' : 'incorrect'}">${selected}</span>`)
+            : ex.sentence.replace(ex.correct, '<span class="cloze-blank">＿＿</span>');
+        bodyHtml = `
+            <div class="review-card review-cloze-card">
+                <div class="review-quiz-instruction">Complète la phrase</div>
+                <div class="cloze-sentence">${displayedSentence}</div>
+                <div class="review-example-fr-only">${mdBold(ex.french || '')}</div>
+            </div>
+            <div class="review-options review-options-particles">
+                ${ex.options.map(opt => {
+                    let cls = 'review-option-btn';
+                    if (answered) { if (opt === ex.correct) cls += ' correct'; else if (opt === selected) cls += ' incorrect'; }
+                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('${opt}')">${opt}</button>`;
+                }).join('')}
+            </div>
+        `;
+    } else { // confusion-check : B est toujours la bonne réponse (correct_japanese)
+        bodyHtml = `
+            <div class="review-card"><div class="review-quiz-instruction">Laquelle de ces phrases est correcte ?</div></div>
+            <div class="review-options" style="display:flex;flex-direction:column;gap:10px">
+                <button class="review-option-btn ${answered && selected === 'A' ? 'incorrect' : ''}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('A')" style="text-align:left">${ex.optionA}</button>
+                <button class="review-option-btn ${answered ? 'correct' : ''}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('B')" style="text-align:left">${ex.optionB}</button>
+            </div>
+            ${answered ? `<div class="vocab-nuance-box" style="margin-top:14px">💡 ${mdBold(ex.explanation || '')}</div>` : ''}
+        `;
+    }
+
+    return `
+        <div class="section-sub-title" style="text-align:center;margin-bottom:10px">Entraîne-toi</div>
+        ${bodyHtml}
+        ${answered ? `<button class="review-continue-btn" onclick="advanceLessonStep()" style="margin-top:16px">Continuer →</button>` : ''}
+    `;
+}
+
+function renderLessonEnd() {
+    const s = lessonSession;
+    const l = s.lesson;
+    const totalEx = s.steps.filter(st => st.type === 'exercise').length;
+    const score = s.exCorrectCount;
+    const passed = s.lessonPassed;
+
+    return `
+        <div style="text-align:center;padding:20px 0">
+            <div style="font-size:3rem;margin-bottom:10px">${passed ? '🎉' : '💪'}</div>
+            <div style="font-size:1.25rem;font-weight:bold;color:#fff;margin-bottom:4px">${passed ? 'Leçon terminée !' : 'Presque !'}</div>
+            <div style="font-size:0.875rem;color:var(--gray);margin-bottom:20px">${l.title}</div>
+            <div style="display:inline-block;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:10px 20px;color:#4ADE80;font-size:0.875rem;margin-bottom:20px">${score} / ${totalEx} bonnes réponses</div>
+            ${passed
+                ? `<div style="font-size:0.75rem;color:var(--gray);margin-bottom:24px">📅 Première révision programmée pour demain, dans "Réviser"</div>`
+                : `<div style="font-size:0.75rem;color:var(--gray);margin-bottom:24px">🧠 Cette notion a été ajoutée à "À renforcer" — pas de souci, tu la reverras</div>`}
+        </div>
+        <button class="review-continue-btn" onclick="exitLessonFlow()">Retour à Apprendre</button>
+        <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
+    `;
+}
+
+function submitLessonExercise(selected) {
+    const s = lessonSession;
+    if (!s || s.exAnswered) return;
+    const step = s.steps[s.index];
+    const ex = step.exercise;
+    const isCorrect = ex.type === 'cloze' ? selected === ex.correct : selected === 'B';
+    s.exAnswered = true;
+    s.exSelected = selected;
+    if (isCorrect) s.exCorrectCount++;
+    renderLessonStep();
+}
+
+// Applique la transition SRS une seule fois, au moment précis où on atteint l'écran de fin —
+// jamais pendant le rendu (qui peut être rappelé plusieurs fois pour la même étape).
+function applyLessonCompletion() {
+    const s = lessonSession;
+    const l = s.lesson;
+    const totalEx = s.steps.filter(st => st.type === 'exercise').length;
+    const score = s.exCorrectCount;
+    const passed = totalEx === 0 || score >= Math.ceil(totalEx / 2);
+    if (passed) {
+        const quality = score === totalEx ? 2 : 1; // Bien si sans faute, Difficile sinon (mais validé)
+        gradeReview(l.id, quality, { type: 'grammar', label: l.item || l.pattern });
+    } else {
+        updateWeaknessTracking(l.id, 0, { type: 'grammar', label: l.item || l.pattern });
+    }
+    s.lessonPassed = passed;
+}
+
+function advanceLessonStep() {
+    const s = lessonSession;
+    if (!s) return;
+    s.index++;
+    s.exAnswered = false;
+    s.exSelected = null;
+    const nextStep = s.steps[s.index];
+    if (nextStep && nextStep.type === 'end' && !s.srsApplied) {
+        applyLessonCompletion();
+        s.srsApplied = true;
+    }
+    renderLessonStep();
+}
+
+function exitLessonFlow() {
+    history.back();
+}
+
+function startFreeTrainingFromLesson() {
+    showFreeTrainingConfig(false, { type: 'grammar', level: 'n5' });
 }
 
 /* ══════════════════════════════════════════════════
@@ -7805,6 +8094,7 @@ const MODAL_EXIT_REGISTRY = {
     'vocab-review-selector': () => showRevisionLevelPicker('vocab', true),
     'grammar-review': () => { grammarReviewSession = null; showRevisionLevelPicker('grammar', true); },
     'grammar-review-selector': () => showRevisionLevelPicker('grammar', true),
+    'grammar-lesson-flow': () => { lessonSession = null; showApprendreScreen(true); },
     'kanji-review-selector': () => { if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { kanjiReviewSession = null; if (kanjiHomeData) loadJLPTCategory(kanjiHomeData.levelId, 'kanji', true); },
     'apprendre-discovery': () => { mixedReviewSession = null; showApprendreScreen(true); },
