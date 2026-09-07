@@ -3826,10 +3826,12 @@ function buildLessonExercises(lesson) {
 
     if (Array.isArray(lesson.confusions) && lesson.confusions.length && lesson.confusions[0].wrong_example) {
         const c = lesson.confusions[0];
+        const correctFirst = Math.random() < 0.5; // évite que la bonne réponse soit toujours en position B
         exercises.push({
             type: 'confusion-check',
-            optionA: c.wrong_example.japanese,
-            optionB: c.wrong_example.correct_japanese,
+            optionA: correctFirst ? c.wrong_example.correct_japanese : c.wrong_example.japanese,
+            optionB: correctFirst ? c.wrong_example.japanese : c.wrong_example.correct_japanese,
+            correctOption: correctFirst ? 'A' : 'B',
             french: c.wrong_example.french,
             explanation: c.explanation
         });
@@ -3980,12 +3982,12 @@ function renderLessonExercise(step) {
                 }).join('')}
             </div>
         `;
-    } else { // confusion-check : B est toujours la bonne réponse (correct_japanese)
+    } else { // confusion-check : la position de la bonne réponse est désormais aléatoire (correctOption)
         bodyHtml = `
             <div class="review-card"><div class="review-quiz-instruction">Laquelle de ces phrases est correcte ?</div></div>
             <div class="review-options" style="display:flex;flex-direction:column;gap:10px">
-                <button class="review-option-btn ${answered && selected === 'A' ? 'incorrect' : ''}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('A')" style="text-align:left">${ex.optionA}</button>
-                <button class="review-option-btn ${answered ? 'correct' : ''}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('B')" style="text-align:left">${ex.optionB}</button>
+                <button class="review-option-btn ${answered ? (ex.correctOption === 'A' ? 'correct' : (selected === 'A' ? 'incorrect' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('A')" style="text-align:left">${ex.optionA}</button>
+                <button class="review-option-btn ${answered ? (ex.correctOption === 'B' ? 'correct' : (selected === 'B' ? 'incorrect' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('B')" style="text-align:left">${ex.optionB}</button>
             </div>
             ${answered ? `<div class="vocab-nuance-box" style="margin-top:14px">💡 ${mdBold(ex.explanation || '')}</div>` : ''}
         `;
@@ -4025,7 +4027,7 @@ function submitLessonExercise(selected) {
     if (!s || s.exAnswered) return;
     const step = s.steps[s.index];
     const ex = step.exercise;
-    const isCorrect = ex.type === 'cloze' ? selected === ex.correct : selected === 'B';
+    const isCorrect = ex.type === 'cloze' ? selected === ex.correct : selected === ex.correctOption;
     s.exAnswered = true;
     s.exSelected = selected;
     if (isCorrect) s.exCorrectCount++;
