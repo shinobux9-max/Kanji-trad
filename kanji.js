@@ -3662,14 +3662,6 @@ function showDashboard(isBack = false) {
                 </div>
                 <button onclick="if(confirm('Vider le cache et recharger l\\'app ?')) forceFullReset()" style="background:none;border:none;color:var(--gray);font-size:1.125rem;cursor:pointer;padding:6px;flex-shrink:0;">🔄</button>
             </div>
-            <div class="dash-card free-training-card" id="dashboard-goal-cta" onclick="showDailyGoalModal()">
-                <div class="free-training-icon" style="background:rgba(0,229,255,0.14);color:var(--accent)">⚙</div>
-                <div class="free-training-info">
-                    <div class="free-training-title">Choisis ton niveau</div>
-                    <div class="free-training-sub" id="dashboard-goal-sub">${formatDailyGoalLabel()}</div>
-                </div>
-                <span class="free-training-chevron">→</span>
-            </div>
             <div class="dash-card dash-review-cta" id="dashboard-review-cta">
                 <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
             </div>
@@ -7576,13 +7568,21 @@ async function renderDashboardReviewCta() {
     if (!el) return;
     
     const { total, dueTotal, newTotal } = await getDashboardDueCount();
+    const goalRow = `
+        <div class="dash-goal-row" onclick="showDailyGoalModal()">
+            <span class="dash-goal-icon">⚙</span>
+            <span class="dash-goal-text" id="dashboard-goal-sub">${formatDailyGoalLabel()}</span>
+            <span class="dash-goal-chevron">→</span>
+        </div>
+    `;
     
     if (total === 0) {
-        el.innerHTML = `<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
+        el.innerHTML = `${goalRow}<div class="review-cta-empty">🎉 Rien à réviser aujourd'hui !</div>`;
         return;
     }
     
     el.innerHTML = `
+        ${goalRow}
         <div class="review-cta-label">CARTES DU JOUR À RÉVISER</div>
         <div class="review-cta-split">
             <div class="review-cta-split-box">
