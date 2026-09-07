@@ -97,9 +97,9 @@
       {
         "label": "EXPLICATION",
         "paragraphs": [
-          "La structure verbe en TA + 後で (ato de) permet d’indiquer qu’une action se produit après une autre.",
-          "La structure verbe en TE + から (kara) permet également d'exprimer une succession d'actions. Cependant, avec 後で, la seconde action se produit immédiatement après la première. Il y a même parfois une connotation d'habitude.",
-          "En revanche, avec から, les deux actions ne se suivent pas nécessairement de façon immédiate. On indique plutôt un point de départ pour réaliser une action. On exprime alors un enchaînement logique des actions."
+          "La structure <strong>verbe en TA + 後で</strong> (ato de) permet d’indiquer qu’une action se produit après une autre.",
+          "La structure <strong>verbe en TE + から</strong> (kara) permet également d'exprimer une succession d'actions. Cependant, avec <strong>後で</strong>, la seconde action se produit immédiatement après la première. Il y a même parfois une connotation d'habitude.",
+          "En revanche, avec <strong>から</strong>, les deux actions ne se suivent pas nécessairement de façon immédiate. On indique plutôt un point de départ pour réaliser une action. On exprime alors un enchaînement logique des actions."
         ],
         "sub_title": "La structure est la suivante :",
         "list": [
@@ -110,7 +110,7 @@
       {
         "label": "NUANCE : 後で vs 後に",
         "paragraphs": [
-          "Il est possible de remplacer 後で (ato de) par 後に (ato ni). Alors que 後で se réfère à un moment général, vague ou imprécis, 後に quant à lui marque un point précis dans le temps."
+          "Il est possible de remplacer <strong>後で</strong> (ato de) par <strong>後に</strong> (ato ni). Alors que <strong>後で</strong> se réfère à un moment général, vague ou imprécis, <strong>後に</strong> quant à lui marque un point précis dans le temps."
         ]
       }
     ],
@@ -143,7 +143,7 @@
     "confusions": [
       {
         "with": "Utiliser la forme dictionnaire du verbe au lieu du passé (TA) avant 後で",
-        "explanation": "Pour exprimer « après avoir fait », on emploie impérativement le verbe au **passé (forme TA)**. La forme dictionnaire devant 後で altérerait le sens temporel.",
+        "explanation": "Pour exprimer « après avoir fait », on emploie impérativement le verbe au <strong>passé (forme TA)</strong>. La forme dictionnaire devant <strong>後で</strong> altérerait le sens temporel.",
         "wrong_example": {
           "japanese": "食べる後で、寝ます。",
           "correct_japanese": "食べた後で、寝ます。",
