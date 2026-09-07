@@ -1614,7 +1614,7 @@ async function openVocabFromSearch(wordId, level) {
     const vd = await getLevelVocabData(level);
     if (!vd || !vd.data) return;
     vocabHomeData = { levelId: level, data: vd.data, examples: vd.examples };
-    closeSearchOverlay();
+    closeAllOverlaysAndSessions(); // pas juste closeSearchOverlay() : peut aussi être appelée depuis la fiche kanji (#detail-view), un overlay différent
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     showVocabDetail(wordId, vd.data);
 }
@@ -1623,7 +1623,7 @@ async function openGrammarFromSearch(lessonId, level) {
     const gd = await getLevelGrammarData(level);
     if (!gd || !gd.data) return;
     grammarHomeData = { levelId: level, data: gd.data };
-    closeSearchOverlay();
+    closeAllOverlaysAndSessions();
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     showGrammarDetail(lessonId);
 }
