@@ -2027,7 +2027,7 @@ async function loadJLPTCategory(levelId, category, isBack = false) {
         let examples = null;
         if (category === 'vocab' || category === 'grammar') {
             try {
-                const exRes = await fetch(`./data/${levelId}/exemples.json`);
+                const exRes = await fetch(`./data/${levelId}/exemples.json`, { cache: 'no-store' });
                 if (exRes.ok) {
                     examples = await exRes.json();
                 }
@@ -4245,7 +4245,7 @@ const kanjiCharsCache = {};
 async function getLevelGrammarData(levelId) {
     if (levelId in grammarDataCache) return grammarDataCache[levelId];
     try {
-        const res = await fetch(`./data/${levelId}/grammar.json`);
+        const res = await fetch(`./data/${levelId}/grammar.json`, { cache: 'no-store' });
         grammarDataCache[levelId] = res.ok ? { data: await res.json() } : null;
     } catch (e) {
         grammarDataCache[levelId] = null;
@@ -4256,7 +4256,7 @@ async function getLevelGrammarData(levelId) {
 async function getLevelKanjiChars(levelId) {
     if (levelId in kanjiCharsCache) return kanjiCharsCache[levelId];
     try {
-        const res = await fetch(`./data/${levelId}/kanji.json`);
+        const res = await fetch(`./data/${levelId}/kanji.json`, { cache: 'no-store' });
         if (!res.ok) { kanjiCharsCache[levelId] = null; return null; }
         const data = await res.json();
         kanjiCharsCache[levelId] = Array.isArray(data.chars) ? data.chars : null;
@@ -6280,7 +6280,7 @@ async function renderExemples(char) {
     if (!liste && currentJLPTLevel) {
         try {
             if (!exemplesByLevel[currentJLPTLevel]) {
-                const res = await fetch(`./data/${currentJLPTLevel}/exemples.json`);
+                const res = await fetch(`./data/${currentJLPTLevel}/exemples.json`, { cache: 'no-store' });
                 if (res.ok) {
                     exemplesByLevel[currentJLPTLevel] = await res.json();
                     if (exemplesByLevel[currentJLPTLevel].kanji && exemplesByLevel[currentJLPTLevel].kanji[char]) {
@@ -6627,13 +6627,13 @@ async function getLevelVocabData(levelId) {
     if (levelId in vocabDataCache) return vocabDataCache[levelId];
     
     try {
-        const res = await fetch(`./data/${levelId}/vocab.json`);
+        const res = await fetch(`./data/${levelId}/vocab.json`, { cache: 'no-store' });
         if (!res.ok) { vocabDataCache[levelId] = null; return null; }
         const data = await res.json();
         
         let examples = null;
         try {
-            const exRes = await fetch(`./data/${levelId}/exemples.json`);
+            const exRes = await fetch(`./data/${levelId}/exemples.json`, { cache: 'no-store' });
             if (exRes.ok) examples = await exRes.json();
         } catch (e) { /* pas d'exemples, tant pis */ }
         
@@ -6657,7 +6657,7 @@ async function getLevelVocabGrammarStats(levelId) {
     }
     
     try {
-        const res = await fetch(`./data/${levelId}/grammar.json`);
+        const res = await fetch(`./data/${levelId}/grammar.json`, { cache: 'no-store' });
         if (res.ok) {
             const grammar = await res.json();
             stats.grammarTotal = grammar.length;
@@ -7672,8 +7672,8 @@ async function init() {
     try {
         // Chargement en parallèle : mapping JLPT + Kanjis
         const [mappingRes, kanjiRes] = await Promise.all([
-            fetch('./data/mapping.json'),
-            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json')
+            fetch('./data/mapping.json', { cache: 'no-store' }),
+            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json', { cache: 'no-store' })
         ]);
         
         if (!kanjiRes.ok) throw new Error(`Erreur réseau kanji : ${kanjiRes.status}`);
@@ -7726,7 +7726,7 @@ async function init() {
             }
 
             // 2. Toujours rafraîchir depuis GitHub en arrière-plan
-            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json')
+            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/exemples.json', { cache: 'no-store' })
                 .then(r => r.ok ? r.json() : Promise.reject(r.status))
                 .then(data => {
                     exemplesDb = data;
