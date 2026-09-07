@@ -3685,7 +3685,7 @@ async function showNiveauxScreen(isBack = false) {
         }
         
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','vocab')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59; background:linear-gradient(135deg,${levelData.color}1f,rgba(14,22,48,0.55));" onclick="showCategoryDirect('${levelId}','vocab')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -3764,7 +3764,7 @@ async function showApprendreScreen(isBack = false) {
                     <div class="apprendre-card-title">Kanji</div>
                     <div class="apprendre-card-sub">Caractères et tracé</div>
                 </div>
-                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="navKana()">
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:linear-gradient(135deg,#9D6EFF1f,rgba(14,22,48,0.55));" onclick="navKana()">
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana & Katakana</div>
@@ -3866,7 +3866,7 @@ async function showGrammarNiveauxScreen(isBack = false) {
         }
         
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','grammar')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59; background:linear-gradient(135deg,${levelData.color}1f,rgba(14,22,48,0.55));" onclick="showCategoryDirect('${levelId}','grammar')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -3903,7 +3903,7 @@ async function showKanjiNiveauxScreen(isBack = false) {
         const avgMastery = chars.length > 0 ? Math.round(totalMastery / chars.length) : 0;
         
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="showCategoryDirect('${levelId}','kanji')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59; background:linear-gradient(135deg,${levelData.color}1f,rgba(14,22,48,0.55));" onclick="showCategoryDirect('${levelId}','kanji')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -3963,7 +3963,7 @@ async function showRevisionsScreen(isBack = false) {
                     <div class="apprendre-card-title">Kanji</div>
                     <div class="apprendre-card-sub">Choisir un niveau</div>
                 </div>
-                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showRevisionKanaPicker()">
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:linear-gradient(135deg,#9D6EFF1f,rgba(14,22,48,0.55));" onclick="showRevisionKanaPicker()">
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana / Katakana</div>
@@ -4021,7 +4021,7 @@ async function showRevisionLevelPicker(category, isBack = false) {
         }
 
         return `
-            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59;" onclick="startRevisionFor('${category}','${levelId}')">
+            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59; background:linear-gradient(135deg,${levelData.color}1f,rgba(14,22,48,0.55));" onclick="startRevisionFor('${category}','${levelId}')">
                 <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
                 <div class="niveaux-info">
                     <div class="niveaux-card-title">${levelData.label_full}</div>
@@ -4090,15 +4090,15 @@ async function showRevisionKanaPicker(isBack = false) {
                 <div class="niveaux-subtitle-main">Choisis le syllabaire à réviser.</div>
             </div>
             <div id="niveaux-list">
-                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showKanaRevisionModeSelector('hira')">
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:linear-gradient(135deg,#9D6EFF1f,rgba(14,22,48,0.55));" onclick="showKanaRevisionModeSelector('hira')">
                     <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">あ</div>
                     <div class="niveaux-info"><div class="niveaux-card-title">Hiragana</div><div class="niveaux-card-sub">Toucher pour réviser</div></div>
                 </div>
-                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showKanaRevisionModeSelector('kata')">
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:linear-gradient(135deg,#9D6EFF1f,rgba(14,22,48,0.55));" onclick="showKanaRevisionModeSelector('kata')">
                     <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">ア</div>
                     <div class="niveaux-info"><div class="niveaux-card-title">Katakana</div><div class="niveaux-card-sub">Toucher pour réviser</div></div>
                 </div>
-                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showKanaRevisionModeSelector('both')">
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:linear-gradient(135deg,#9D6EFF1f,rgba(14,22,48,0.55));" onclick="showKanaRevisionModeSelector('both')">
                     <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">両</div>
                     <div class="niveaux-info"><div class="niveaux-card-title">Les deux</div><div class="niveaux-card-sub">Hiragana + Katakana</div></div>
                 </div>
