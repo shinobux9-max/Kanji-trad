@@ -3871,7 +3871,19 @@ function buildLessonExercises(lesson) {
 
 function buildLessonSteps(lesson) {
     const steps = [{ type: 'intro' }];
-    (lesson.sections || []).forEach(sec => steps.push({ type: 'section', section: sec }));
+    (lesson.sections || []).forEach(sec => {
+        const paragraphs = [];
+        if (sec.text) paragraphs.push(sec.text);
+        if (Array.isArray(sec.paragraphs)) paragraphs.push(...sec.paragraphs);
+        paragraphs.forEach((p, i) => steps.push({ type: 'paragraph', text: p, label: sec.label, first: i === 0 }));
+
+        if (sec.sub_title || (Array.isArray(sec.list) && sec.list.length)) {
+            steps.push({ type: 'structure', sub_title: sec.sub_title, list: sec.list });
+        }
+        if (Array.isArray(sec.blocks)) {
+            sec.blocks.forEach(b => steps.push({ type: 'structure', sub_title: b.sub_title, list: b.list, paragraphs: b.paragraphs }));
+        }
+    });
     (lesson.examples || []).forEach(ex => steps.push({ type: 'example', example: ex }));
     if (Array.isArray(lesson.confusions) && lesson.confusions.length) {
         steps.push({ type: 'confusion', confusion: lesson.confusions[0] });
@@ -3938,13 +3950,16 @@ function renderLessonStep() {
 
     let body = '';
     if (step.type === 'intro') body = renderLessonIntro();
-    else if (step.type === 'section') body = renderLessonSection(step);
+    else if (step.type === 'paragraph') body = renderLessonParagraph(step);
+    else if (step.type === 'structure') body = renderLessonStructure(step);
     else if (step.type === 'example') body = renderLessonExample(step);
     else if (step.type === 'confusion') body = renderLessonConfusion(step);
     else if (step.type === 'exercise') body = renderLessonExercise(step);
     else if (step.type === 'end') body = renderLessonEnd();
 
-    container.innerHTML = `<div class="review-page">${step.type === 'end' ? '' : header}${body}</div>`;
+    // innerHTML recrée un nœud DOM neuf à chaque appel, donc l'animation CSS ci-dessous se
+    // rejoue automatiquement à chaque étape sans artifice supplémentaire.
+    container.innerHTML = `<div class="review-page lesson-slide-anim">${step.type === 'end' ? '' : header}${body}</div>`;
 }
 
 function renderLessonIntro() {
@@ -3962,17 +3977,20 @@ function renderLessonIntro() {
     `;
 }
 
-function renderLessonSection(step) {
-    const l = lessonSession.lesson;
-    const sec = step.section;
+function renderLessonParagraph(step) {
     return `
-        ${sec.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:10px">${sec.label}</div>` : ''}
+        ${step.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:6px">${step.label}</div>` : ''}
+        <div class="lesson-floating-text">${mdBold(step.text || '')}</div>
+        <button class="review-continue-btn" onclick="advanceLessonStep()">Suivant →</button>
+    `;
+}
+
+function renderLessonStructure(step) {
+    return `
         <div class="fiche-title-card" style="text-align:left;padding:18px">
-            ${renderSectionBody(sec)}
-        </div>
-        <div class="lesson-tap-reveal" onclick="this.classList.toggle('open')">
-            <div class="lesson-tap-reveal-prompt">👆 Touche pour revoir <strong>${l.item}</strong></div>
-            <div class="lesson-tap-reveal-content">${l.item} — ${l.badge || l.title}</div>
+            ${step.sub_title ? `<div class="section-sub-title">${mdBold(step.sub_title)}</div>` : ''}
+            ${Array.isArray(step.paragraphs) ? step.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
+            ${Array.isArray(step.list) && step.list.length ? `<ul class="section-list">${step.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>` : ''}
         </div>
         <button class="review-continue-btn" onclick="advanceLessonStep()">Suivant →</button>
     `;
