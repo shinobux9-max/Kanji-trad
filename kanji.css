@@ -161,7 +161,6 @@
     .dots-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
     .dot { width: 12px; height: 12px; background: #2a2a38; border-radius: 3px; margin: auto; }
     .dot.active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
-    .welcome-box { display: flex; align-items: center; background: transparent; padding: 14px; border-radius: 12px; margin-bottom: 14px; border: 1px solid #2a3a55; }
     .tanuki-img { width: 52px; height: 52px; margin-right: 14px; border-radius: 50%; }
     
     .prog-item { margin-bottom: 16px; }
@@ -899,7 +898,6 @@
 
 /* Cartes plus aérées */
 .dash-card { padding: 20px; border-radius: 18px; }
-.welcome-box { border-radius: 18px; padding: 16px; }
 .dash-review-cta { border-radius: 18px; padding: 14px; }
 
 /* Split Nouveaux / À réviser façon Hibi, dans le CTA dashboard */

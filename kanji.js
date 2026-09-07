@@ -3655,12 +3655,11 @@ function showDashboard(isBack = false) {
 
     document.getElementById('main-content').innerHTML = `
         <div class="dash-wrap">
-            <div class="welcome-box">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
                 <img src="https://api.dicebear.com/7.x/bottts/svg?seed=tanuki" class="tanuki-img" alt="">
                 <div style="font-size:0.8125rem;line-height:1.6;flex:1;">
                     ${greeting} ! <br>Prêt pour tes révisions ?
                 </div>
-                <button onclick="if(confirm('Vider le cache et recharger l\\'app ?')) forceFullReset()" style="background:none;border:none;color:var(--gray);font-size:1.125rem;cursor:pointer;padding:6px;flex-shrink:0;">🔄</button>
             </div>
             <div class="dash-card dash-review-cta" id="dashboard-review-cta">
                 <div style="color:var(--gray);font-size:0.75rem">Chargement des révisions…</div>
