@@ -628,8 +628,8 @@
 
 .vocab-section-title { font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
 
-.vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; }
-.vocab-example-box .example-jp { font-size: 1rem; color: #fff; margin-bottom: 6px; font-weight: 500; line-height: 1.6; }
+.vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; text-align: center; }
+.vocab-example-box .example-jp { font-size: 1.1875rem; color: #fff; margin-bottom: 8px; font-weight: 500; line-height: 1.7; }
 .vocab-example-box .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 6px; }
 .vocab-example-box .example-fr { font-size: 0.75rem; color: var(--gray); line-height: 1.4; }
 
