@@ -7549,6 +7549,32 @@ async function getDashboardDueCount() {
     return { total: queue.length, dueTotal, newTotal };
 }
 
+// Construit les petits badges colorés (niveau JLPT + scripts kana) reflétant l'objectif
+// actuellement choisi — remplace le simple chevron "→" pour donner un aperçu direct.
+function buildGoalBadgesHtml() {
+    const items = [];
+    getDailyGoalLevels().forEach(l => {
+        items.push({
+            label: jlptMapping?.levels?.[l]?.label || l.toUpperCase(),
+            color: jlptMapping?.levels?.[l]?.color || 'var(--accent)'
+        });
+    });
+    getDailyGoalKanaScripts().forEach(k => {
+        items.push({ label: KANA_SCRIPT_LABELS[k] || k, color: '#9D6EFF' });
+    });
+    if (items.length === 0) return `<span class="dash-goal-chevron">→</span>`;
+
+    const shown = items.slice(0, 2);
+    const overflow = items.length - shown.length;
+    const badges = shown.map(it =>
+        `<span class="dash-goal-badge" style="background:${it.color}22;color:${it.color};border:1px solid ${it.color}44">${it.label}</span>`
+    ).join('');
+    const overflowBadge = overflow > 0
+        ? `<span class="dash-goal-badge" style="background:rgba(255,255,255,0.08);color:var(--gray)">+${overflow}</span>`
+        : '';
+    return badges + overflowBadge;
+}
+
 async function renderDashboardReviewCta() {
     const el = document.getElementById('dashboard-review-cta');
     if (!el) return;
@@ -7558,7 +7584,7 @@ async function renderDashboardReviewCta() {
         <div class="dash-goal-row" onclick="showDailyGoalModal()">
             <span class="dash-goal-icon">⚙</span>
             <span class="dash-goal-text" id="dashboard-goal-sub">Règle ton niveau de carte</span>
-            <span class="dash-goal-chevron">→</span>
+            <span class="dash-goal-badges" id="dashboard-goal-badges">${buildGoalBadgesHtml()}</span>
         </div>
     `;
     
