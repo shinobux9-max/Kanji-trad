@@ -3908,7 +3908,7 @@ function renderLessonIntro() {
             <div class="fiche-title-main">${l.title || ''}</div>
             <div style="font-size:2rem;color:var(--accent);margin:14px 0 6px;font-family:'Noto Sans JP',sans-serif">${l.item || ''}</div>
             <div class="fiche-title-reading">${l.badge || ''}</div>
-            ${l.pattern ? `<div style="margin-top:14px;padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;font-family:monospace;color:var(--accent);font-size:0.8125rem">${l.pattern}</div>` : ''}
+            ${l.pattern ? `<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,0.3);border-radius:8px;font-family:monospace;color:var(--gray);font-size:0.8125rem">${l.pattern}</div>` : ''}
         </div>
         <div style="text-align:center;color:var(--gray);font-size:0.75rem;margin:16px 0">⏱ 3-5 min · Nouvelle notion</div>
         <button class="review-continue-btn" onclick="advanceLessonStep()">Commencer →</button>
