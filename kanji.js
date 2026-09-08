@@ -2332,18 +2332,20 @@ function getPrimaryMeaning(word) {
 // Fonctionne pour tout mot ayant un exemple où il apparaît littéralement.
 function buildVocabWordCloze(word, pool) {
     const ex = word.example;
-    if (!ex || !ex.japanese || !word.word) return null;
+    if (!ex || !ex.japanese) return null;
+    const target = ex.highlight || word.word;
+    if (!target) return null;
     const jp = ex.japanese;
-    const idx = jp.indexOf(word.word);
+    const idx = jp.indexOf(target);
     if (idx === -1) return null;
 
-    const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== word.word);
+    const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== target);
     if (distractorPool.length < 2) return null;
     const distractors = shuffleArray(distractorPool).slice(0, 3).map(w => w.word);
-    const options = shuffleArray([word.word, ...distractors]);
+    const options = shuffleArray([target, ...distractors]);
 
-    const tokens = [jp.slice(0, idx), word.word, jp.slice(idx + word.word.length)];
-    return { tokens, blankIndex: 1, correct: word.word, options, french: ex.french || '' };
+    const tokens = [jp.slice(0, idx), target, jp.slice(idx + target.length)];
+    return { tokens, blankIndex: 1, correct: target, options, french: ex.french || '' };
 }
 
 function buildClozeParticle(word) {
