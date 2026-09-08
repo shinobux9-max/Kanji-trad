@@ -2877,7 +2877,7 @@ function renderGrammarClozeExercise(entry, session) {
                 return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitGrammarQuizAnswer('${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
             }).join('')}
         </div>
-        ${isWrong ? buildWrongParticleMessageHtml(selected) : ''}
+        ${isWrong ? buildParticleComparisonHtml(selected, lesson) : ''}
         ${confusion ? buildConfusionBoxHtml(confusion) : ''}
         ${answered ? `<button class="review-continue-btn" onclick="advanceGrammarReviewQueue()">Continuer →</button>` : ''}
     `;
@@ -4354,7 +4354,7 @@ function renderLessonExercise(step) {
                     return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitLessonExercise('${opt}')">${opt}</button>`;
                 }).join('')}
             </div>
-            ${answered && selected !== ex.correct ? buildWrongParticleMessageHtml(selected) : ''}
+            ${answered && selected !== ex.correct ? buildParticleComparisonHtml(selected, lessonSession.lesson) : ''}
         `;
     } else { // confusion-check : la position de la bonne réponse est désormais aléatoire (correctOption)
         bodyHtml = `
@@ -5069,34 +5069,38 @@ function findLessonByItemSync(itemText) {
     return null;
 }
 
-// Messages d'accroche variés pour ne pas lasser avec toujours la même phrase — l'explication de
-// la particule mal choisie s'affiche séparément en dessous (les EXPLICATION de grammar.json sont
-// des phrases complètes, pas des fragments à compléter grammaticalement).
-const WRONG_PARTICLE_INTROS = [
-    p => `Oups, presque ! Mais **${p}** ne sert pas à ça.`,
-    p => `Bien tenté, mais ce n'est pas tout à fait ça.`,
-    p => `Pas de panique, c'est un classique !`,
-    p => `Aïe, raté de peu !`,
-    p => `Piégé(e) !`,
-    p => `Pas de chance, c'était un piège japonais sournois.`,
-    p => `Erreur de parcours !`,
-    p => `Ce n'est pas la bonne, mais retiens bien ceci :`
-];
+// Résumé court (1re phrase de l'EXPLICATION) — évite de dupliquer 2 paragraphes entiers dans une
+// comparaison qui doit rester lisible en un coup d'œil.
+function getShortLessonExplanation(lesson) {
+    if (!lesson) return '';
+    const explication = (lesson.sections || []).find(s => (s.label || '').toUpperCase() === 'EXPLICATION');
+    const text = explication && Array.isArray(explication.paragraphs) ? explication.paragraphs[0] : '';
+    if (!text) return '';
+    return text.split(/(?<=[.!?])\s/)[0];
+}
 
-// Construit le message affiché quand la particule sélectionnée est fausse — retrouve la leçon
-// correspondant à CETTE particule (pas celle attendue) via son item, et affiche sa vraie
-// explication (section EXPLICATION), pour que l'erreur devienne un moment d'apprentissage.
-function buildWrongParticleMessageHtml(selected) {
+// Comparaison ❌ mauvaise réponse / ✅ bonne réponse — chaque particule est cliquable et ouvre la
+// même popup "Aperçu" que le système de renvoi entre leçons (showLessonReferencePopup).
+function buildParticleComparisonHtml(selected, correctLesson) {
     const wrongLesson = findLessonByItemSync(selected);
-    if (!wrongLesson) return '';
-    const explication = (wrongLesson.sections || []).find(s => (s.label || '').toUpperCase() === 'EXPLICATION');
-    const explanationText = explication && Array.isArray(explication.paragraphs) ? explication.paragraphs[0] : null;
-    if (!explanationText) return '';
-    const intro = WRONG_PARTICLE_INTROS[Math.floor(Math.random() * WRONG_PARTICLE_INTROS.length)](selected);
+    const wrongExplanation = getShortLessonExplanation(wrongLesson);
+    const correctExplanation = getShortLessonExplanation(correctLesson);
+    if (!wrongExplanation && !correctExplanation) return '';
+
+    const particleSpan = (text, lesson) => lesson
+        ? `<span class="lesson-voir-badge-inline" onclick="showLessonReferencePopup('${lesson.id}')">${text}</span>`
+        : `<strong>${text}</strong>`;
+
     return `
-        <div class="wrong-particle-box">
-            <div class="wrong-particle-intro">${mdBold(intro)}</div>
-            <div class="wrong-particle-explanation">${mdBold(explanationText)}</div>
+        <div class="particle-compare-box">
+            <div class="particle-compare-row wrong">
+                <span class="particle-compare-icon">❌</span>
+                <div class="particle-compare-text">Tu as mis ${particleSpan(selected, wrongLesson)}${wrongExplanation ? ` : ${mdBold(wrongExplanation)}` : ''}</div>
+            </div>
+            <div class="particle-compare-row correct">
+                <span class="particle-compare-icon">✅</span>
+                <div class="particle-compare-text">Il fallait mettre ${particleSpan(correctLesson?.item || '', correctLesson)}${correctExplanation ? ` : ${mdBold(correctExplanation)}` : ''}</div>
+            </div>
         </div>
     `;
 }
