@@ -2892,6 +2892,9 @@ function renderGrammarClozeExercise(entry, session) {
 // juste même si la leçon visée est renommée plus tard.
 function buildConfusionBoxHtml(confusion) {
     const voirLesson = confusion.voir ? findLessonByIdSync(confusion.voir) : null;
+    if (confusion.voir && !voirLesson) {
+        console.warn(`⚠️ "voir": "${confusion.voir}" introuvable — vérifie que cette leçon existe bien dans le grammar.json de son niveau.`);
+    }
     return `
         <div class="confusion-box">
             <div class="confusion-box-title">💡 Point de vigilance : ${confusion.with}</div>
