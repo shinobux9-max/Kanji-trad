@@ -699,7 +699,7 @@
 .kana-popup-char { font-family: 'Noto Sans JP', sans-serif; font-size: 1.0625rem; color: #fff; line-height: 1; }
 .kana-popup-romaji { font-size: 0.5rem; color: var(--gray); margin-top: 2px; }
 
-.section-sub-title { font-size: 0.6875rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-sub-title { font-size: 1.0625rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
 .section-sub-title:first-child { margin-top: 0; }
 
 /* Bloc groupé (ex: Groupe 1 / Groupe 2 / Irréguliers) : léger décalage + séparateur visuel */
@@ -714,7 +714,6 @@
 
 /* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
 .md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
-.kana-word-trigger { cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 .md-italic { font-style: italic; color: var(--accent-muted); }
 
 /* ══════════════════════════════════════════════════
@@ -1317,12 +1316,12 @@
 .particle-compare-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; }
 .particle-compare-row.wrong .particle-compare-text { color: #FB7185; }
 .particle-compare-row.correct .particle-compare-text { color: #4ADE80; }
-.particle-compare-row .particle-compare-text strong,
-.particle-compare-row .lesson-voir-badge-inline { color: inherit; }
-.lesson-voir-badge-inline { cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: bold; }
 .confusion-box-title { font-size: 0.9375rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
-.lesson-voir-badge { display: inline-block; font-size: 0.75rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); border-radius: 20px; padding: 5px 12px; margin-bottom: 10px; cursor: pointer; }
-.lesson-voir-badge:active { background: rgba(0,229,255,0.2); }
+/* Badge cliquable unifié — utilisé partout où un mot ouvre une popup (aperçu de leçon, mots
+   hiragana/katakana de l'onboarding, particules du comparatif d'erreur) : même style partout
+   pour que l'utilisateur reconnaisse instantanément "ceci est cliquable". */
+.eye-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8125rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); border-radius: 20px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
+.eye-badge:active { background: rgba(0,229,255,0.2); }
 .confusion-box-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
 .confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; line-height: 1.7; padding: 4px 0; }
 .confusion-example-row.wrong { color: #FB7185; }

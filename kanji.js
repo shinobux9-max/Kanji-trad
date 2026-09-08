@@ -2898,8 +2898,8 @@ function buildConfusionBoxHtml(confusion) {
         <div class="confusion-box">
             <div class="confusion-box-title">💡 Point de vigilance : ${confusion.with}</div>
             ${voirLesson ? `
-                <div class="lesson-voir-badge" onclick="event.stopPropagation();showLessonReferencePopup('${voirLesson.id}')">
-                    🔎 Aperçu : Leçon ${voirLesson.lesson_number || '?'} · ${voirLesson.item || voirLesson.title}${getItemRomaji(voirLesson.item, voirLesson.item_romaji) ? ` · ${getItemRomaji(voirLesson.item, voirLesson.item_romaji)}` : ''}
+                <div class="eye-badge" onclick="event.stopPropagation();showLessonReferencePopup('${voirLesson.id}')">
+                    👁️ Aperçu : Leçon ${voirLesson.lesson_number || '?'} · ${voirLesson.item || voirLesson.title}${getItemRomaji(voirLesson.item, voirLesson.item_romaji) ? ` · ${getItemRomaji(voirLesson.item, voirLesson.item_romaji)}` : ''}
                 </div>
             ` : ''}
             <div class="confusion-box-text">${mdBold(confusion.explanation || '')}</div>
@@ -3873,6 +3873,58 @@ async function showApprendreScreen(isBack = false) {
 let lessonSession = null; // { lesson, steps, index, exAnswered, exSelected, exCorrectCount }
 
 /* ══════════════════════════════════════════════════
+   NAVIGATION SWIPE (gauche/droite) — utilisée par l'onboarding et le parcours de leçon. Un swipe
+   court (ou un tap) fait avancer, comme avant ; un swipe vers la droite permet maintenant de
+   revenir en arrière. activeSwipeContext détermine quelle fonction appeler ; null = inactif.
+══════════════════════════════════════════════════ */
+let activeSwipeContext = null; // null | 'lesson' | 'onboarding'
+
+// Types d'étape du parcours de leçon où le swipe/tap fait avancer — pas sur les exercices
+// (réponse via boutons), l'intro (bouton "Commencer") ou la fin (boutons d'action).
+const LESSON_SWIPE_STEP_TYPES = new Set(['paragraph', 'structure', 'example', 'confusion']);
+
+function initSwipeNavigation() {
+    const el = document.getElementById('main-content');
+    if (!el) return;
+    // Éléments interactifs qui gèrent déjà leur propre tap (badges, options, carte exemple) —
+    // un tap dessus ne doit jamais aussi déclencher l'avancée du swipe.
+    const INTERACTIVE_SELECTOR = '.eye-badge, .review-option-btn, .vocab-example-box, .back-btn, button, .dash-goal-row';
+    let startX = 0, startY = 0, startTime = 0, startTarget = null;
+
+    el.addEventListener('touchstart', e => {
+        if (!activeSwipeContext) return;
+        const t = e.changedTouches[0];
+        startX = t.clientX; startY = t.clientY; startTime = Date.now();
+        startTarget = e.target;
+    }, { passive: true });
+
+    el.addEventListener('touchend', e => {
+        if (!activeSwipeContext) return;
+        if (startTarget && startTarget.closest && startTarget.closest(INTERACTIVE_SELECTOR)) return;
+
+        if (activeSwipeContext === 'lesson') {
+            const step = lessonSession && lessonSession.steps[lessonSession.index];
+            if (!step || !LESSON_SWIPE_STEP_TYPES.has(step.type)) return;
+        }
+
+        const t = e.changedTouches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+        const dt = Date.now() - startTime;
+        const isSwipe = Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5;
+        const isTap = Math.abs(dx) < 15 && Math.abs(dy) < 15 && dt < 400;
+
+        let direction = 0;
+        if (isSwipe) direction = dx < 0 ? 1 : -1;
+        else if (isTap) direction = 1;
+        if (direction === 0) return;
+
+        if (activeSwipeContext === 'lesson') advanceLessonStep(direction);
+        else if (activeSwipeContext === 'onboarding') advanceOnboarding(direction);
+    }, { passive: true });
+}
+
+/* ══════════════════════════════════════════════════
    ONBOARDING "COMMENÇONS L'APPRENTISSAGE" — 5 slides d'introduction, affichées une seule fois
    avant la toute première leçon. Système léger et séparé de lessonSession (pas d'exercices, pas
    de SRS) pour ne pas fragiliser la logique de leçon réelle.
@@ -3936,6 +3988,7 @@ let onboardingIndex = 0;
 function showLessonOnboarding() {
     pushModalState('lesson-onboarding');
     onboardingIndex = 0;
+    activeSwipeContext = 'onboarding';
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     renderOnboardingSlide();
 }
@@ -3961,13 +4014,13 @@ function renderOnboardingSlide() {
             <div class="fiche-title-card" style="text-align:left;padding:20px">
                 ${slide.body.map(p => `<div class="section-paragraph">${makeKanaWordsClickable(mdBold(p))}</div>`).join('')}
             </div>
-            <button class="review-continue-btn" style="margin-top:20px" onclick="advanceOnboarding()">${slide.cta} (${onboardingIndex + 1}/${total})</button>
+            <div class="lesson-tap-hint">${onboardingIndex > 0 ? '👈 Glisse pour revenir · 👉 Glisse ou touche pour continuer' : '👉 Glisse ou touche l\'écran pour continuer'}</div>
         </div>
     `;
 }
 
-function advanceOnboarding() {
-    onboardingIndex++;
+function advanceOnboarding(direction = 1) {
+    onboardingIndex = Math.max(0, onboardingIndex + direction);
     if (onboardingIndex >= LESSON_ONBOARDING_SLIDES.length) {
         finishLessonOnboarding();
     } else {
@@ -4048,12 +4101,12 @@ function closeLessonReferencePopup() {
 // Rend "hiragana(s)"/"katakana(s)" cliquables dans le texte déjà passé par mdBold(), qu'ils
 // soient déjà en gras (span.md-bold, ex: slide 2) ou en texte brut (ex: slides 3/4) — dans les
 // deux cas, le résultat est mis en gras + cliquable, ouvre la table de référence en popup.
-// 🔎 remplace l'ancien symbole ⮻, non pris en charge par certaines polices système.
+// 👁️ signale visuellement que c'est tapotable, même badge que partout ailleurs dans l'app.
 function wrapKanaMentions(html, wordPattern, script) {
     const re = new RegExp(`<span class="md-bold">(${wordPattern})<\\/span>|\\b(${wordPattern})\\b`, 'gi');
     return html.replace(re, (match, boldWord, plainWord) => {
         const word = boldWord || plainWord;
-        return `<span class="md-bold kana-word-trigger" onclick="showKanaTablePopup('${script}')">${word} 🔎</span>`;
+        return `<span class="eye-badge" onclick="showKanaTablePopup('${script}')">👁️ ${word}</span>`;
     });
 }
 
@@ -4065,6 +4118,7 @@ function makeKanaWordsClickable(html) {
 
 function skipLessonOnboarding() {
     markLessonOnboardingSeen();
+    activeSwipeContext = null;
     history.back();
 }
 
@@ -4237,6 +4291,7 @@ async function startGrammarLessonFlowActual() {
 function renderLessonStep() {
     const container = document.getElementById('category-content');
     if (!container || !lessonSession) return;
+    activeSwipeContext = 'lesson';
     const s = lessonSession;
     const step = s.steps[s.index];
     if (step.type === 'end') clearLessonProgress(); else saveLessonProgress();
@@ -4282,23 +4337,23 @@ function renderLessonIntro() {
 
 function renderLessonParagraph(step) {
     return `
-        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+        <div class="lesson-tap-advance">
             ${step.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:6px">${step.label}</div>` : ''}
             <div class="lesson-floating-text-wrap"><div class="lesson-floating-text">${mdBold(step.text || '')}</div></div>
-            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
         </div>
     `;
 }
 
 function renderLessonStructure(step) {
     return `
-        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+        <div class="lesson-tap-advance">
             <div class="fiche-title-card" style="text-align:left;padding:18px">
                 ${step.sub_title ? `<div class="section-sub-title">${mdBold(step.sub_title)}</div>` : ''}
                 ${Array.isArray(step.paragraphs) ? step.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
                 ${Array.isArray(step.list) && step.list.length ? `<ul class="section-list">${step.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>` : ''}
             </div>
-            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
         </div>
     `;
 }
@@ -4306,7 +4361,7 @@ function renderLessonStructure(step) {
 function renderLessonExample(step) {
     const ex = step.example;
     return `
-        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+        <div class="lesson-tap-advance">
             <div class="section-sub-title" style="text-align:center;margin-bottom:6px">Exemple</div>
             <div class="lesson-floating-text-wrap">
                 <div class="lesson-floating-text">
@@ -4315,17 +4370,17 @@ function renderLessonExample(step) {
                     <div style="font-size:0.75em;color:var(--gray)">${mdBold(ex.french || '')}</div>
                 </div>
             </div>
-            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
         </div>
     `;
 }
 
 function renderLessonConfusion(step) {
     return `
-        <div class="lesson-tap-advance" onclick="advanceLessonStep()">
+        <div class="lesson-tap-advance">
             <div class="section-sub-title" style="text-align:center;margin-bottom:10px">⚠️ Dernière règle d'or avant de t'entraîner</div>
             ${buildConfusionBoxHtml(step.confusion)}
-            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
         </div>
     `;
 }
@@ -4565,14 +4620,14 @@ async function applyLessonCompletion() {
     s.nextLessonPreview = nextLesson ? { level: nextLevel, lesson: nextLesson } : null;
 }
 
-async function advanceLessonStep() {
+async function advanceLessonStep(direction = 1) {
     const s = lessonSession;
     if (!s) return;
-    s.index++;
+    s.index = Math.max(0, s.index + direction);
     s.exAnswered = false;
     s.exSelected = null;
     const nextStep = s.steps[s.index];
-    if (nextStep && nextStep.type === 'end' && !s.srsApplied) {
+    if (direction > 0 && nextStep && nextStep.type === 'end' && !s.srsApplied) {
         s.srsApplied = true;
         await applyLessonCompletion();
     }
@@ -4580,6 +4635,7 @@ async function advanceLessonStep() {
 }
 
 function exitLessonFlow() {
+    activeSwipeContext = null;
     history.back();
 }
 
@@ -5088,7 +5144,7 @@ function buildParticleComparisonHtml(selected, correctLesson) {
     if (!wrongExplanation && !correctExplanation) return '';
 
     const particleSpan = (text, lesson) => lesson
-        ? `<span class="lesson-voir-badge-inline" onclick="showLessonReferencePopup('${lesson.id}')">${text}</span>`
+        ? `<span class="eye-badge" onclick="showLessonReferencePopup('${lesson.id}')">👁️ ${text}</span>`
         : `<strong>${text}</strong>`;
 
     return `
@@ -8581,6 +8637,9 @@ async function init() {
         // Précharge la grammaire en arrière-plan pour que le système de renvoi "voir" entre
         // leçons fonctionne dès la première navigation, sans attendre un fetch à la volée.
         preloadAllGrammarLevels();
+        
+        // Active le système de navigation par swipe (onboarding + parcours de leçon)
+        initSwipeNavigation();
 
         let text = await kanjiRes.text();
         text = text.trim();
