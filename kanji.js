@@ -3806,7 +3806,7 @@ async function showApprendreScreen(isBack = false) {
             <div class="dash-card free-training-card" onclick="startGrammarLessonFlow()">
                 <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${savedLessonProgress ? '▶' : '📚'}</div>
                 <div class="free-training-info">
-                    <div class="free-training-title">${savedLessonProgress ? 'Continuer ma leçon' : "Commençons l'apprentissage"}</div>
+                    <div class="free-training-title">${savedLessonProgress ? 'Continuer ma leçon' : "Commencer l'apprentissage"}</div>
                     <div class="free-training-sub">${savedLessonProgress ? `Reprends là où tu t'es arrêté · ${activeLevelLabel} Grammaire` : `Une nouvelle notion vous attend · ${activeLevelLabel} Grammaire`}</div>
                 </div>
                 <span class="free-training-chevron">→</span>
@@ -3891,14 +3891,6 @@ const LESSON_ONBOARDING_SLIDES = [
             "2. Les **Katakanas** : L'autre alphabet phonétique, réservé aux mots d'origine étrangère.",
             "3. Les **Kanjis** : Les caractères d'origine chinoise, qui portent le sens principal des mots (comme 学生 pour « étudiant »)."
         ],
-        cta: 'Le piège à éviter'
-    },
-    {
-        emoji: '🚫', title: "Le piège de l'alphabet latin",
-        body: [
-            "Pour bien apprendre le japonais, commencez par maîtriser les syllabaires de base (hiragana et katakana) sans passer par la romanisation (romaji).",
-            "Arrêtez d'utiliser l'alphabet latin pour lire le japonais afin de ne pas bloquer votre progression naturelle."
-        ],
         cta: 'Les bases indispensables'
     },
     {
@@ -3906,6 +3898,14 @@ const LESSON_ONBOARDING_SLIDES = [
         body: [
             "**Apprendre les Kanas** : Mémorisez les 46 hiraganas et les 46 katakanas en priorité. Cela prend environ deux semaines en y consacrant 15 minutes par jour.",
             "En langues, 10 minutes par jour valent infiniment mieux que 2 heures une fois par semaine. Laissez l'algorithme SRS faire son travail au quotidien."
+        ],
+        cta: 'Le piège à éviter'
+    },
+    {
+        emoji: '🚫', title: "Le piège de l'alphabet latin",
+        body: [
+            "Pour bien apprendre le japonais, commencez par maîtriser les syllabaires de base (hiragana et katakana) sans passer par la romanisation (romaji).",
+            "Arrêtez d'utiliser l'alphabet latin pour lire le japonais afin de ne pas bloquer votre progression naturelle."
         ],
         cta: 'Dernier conseil'
     },
@@ -3948,7 +3948,7 @@ function renderOnboardingSlide() {
                 <div style="font-size:1.375rem;font-weight:bold;color:#fff">${slide.title}</div>
             </div>
             <div class="fiche-title-card" style="text-align:left;padding:20px">
-                ${slide.body.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('')}
+                ${slide.body.map(p => `<div class="section-paragraph">${makeKanaWordsClickable(mdBold(p))}</div>`).join('')}
             </div>
             <button class="review-continue-btn" style="margin-top:20px" onclick="advanceOnboarding()">${slide.cta} (${onboardingIndex + 1}/${total})</button>
         </div>
@@ -3962,6 +3962,50 @@ function advanceOnboarding() {
     } else {
         renderOnboardingSlide();
     }
+}
+
+// Table de référence hiragana/katakana en popup — réutilise kanaGroups déjà chargé en mémoire
+// (aucun fetch nécessaire), affichage en lecture seule (pas de clic vers une fiche individuelle,
+// pour éviter une popup dans la popup).
+function buildKanaTablePopupContent(script) {
+    const groups = kanaGroups[script] || [];
+    return groups.map(group => `
+        <div class="kana-popup-group-title">${group.title || (script === 'hira' ? 'De base' : 'De base')}</div>
+        <div class="kana-popup-rows">
+            ${group.rows.map(row => `
+                <div class="kana-popup-row">
+                    ${row.map(k => k
+                        ? `<div class="kana-popup-cell"><span class="kana-popup-char">${k.c}</span><span class="kana-popup-romaji">${k.r}</span></div>`
+                        : `<div class="kana-popup-cell empty"></div>`
+                    ).join('')}
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function showKanaTablePopup(script) {
+    const modal = document.getElementById('kana-table-popup-modal');
+    if (!modal) return;
+    document.getElementById('kana-table-popup-title').textContent = script === 'hira' ? 'Hiragana' : 'Katakana';
+    document.getElementById('kana-table-popup-content').innerHTML = buildKanaTablePopupContent(script);
+    modal.classList.add('open');
+    modal.style.display = 'flex';
+}
+
+function closeKanaTablePopup() {
+    const modal = document.getElementById('kana-table-popup-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.style.display = 'none';
+}
+
+// Rend "Hiragana(s)"/"Katakana(s)" cliquables dans le texte déjà passé par mdBold() — ajoute le
+// symbole ⮻ pour signaler visuellement que c'est tapotable, ouvre la table de référence en popup.
+function makeKanaWordsClickable(html) {
+    return html
+        .replace(/<strong>(Hiraganas?)<\/strong>/g, (m, word) => `<strong class="kana-word-trigger" onclick="showKanaTablePopup('hira')">${word}⮻</strong>`)
+        .replace(/<strong>(Katakanas?)<\/strong>/g, (m, word) => `<strong class="kana-word-trigger" onclick="showKanaTablePopup('kata')">${word}⮻</strong>`);
 }
 
 function skipLessonOnboarding() {
@@ -4312,7 +4356,7 @@ function renderLessonEnd() {
 }
 
 // ── ÉCRAN "EXPLORER LES LEÇONS" — choix libre, sans verrouillage (le parcours linéaire par
-// défaut reste "Commençons l'apprentissage" ; cet écran sert justement à s'en écarter) ──
+// défaut reste "Commencer l'apprentissage" ; cet écran sert justement à s'en écarter) ──
 async function showExploreLessonsScreen(isBack = false, initialLevel = null) {
     if (!isBack) history.pushState({ view: 'explore-lessons' }, '');
     document.getElementById('page-title').innerText = 'Explorer les leçons';
@@ -7069,6 +7113,8 @@ function openDetail(kanji) {
         levelDisplay = cat.short;
     }
     document.getElementById('d-level').innerText = levelDisplay;
+    const dLevelWord = document.getElementById('d-level-word');
+    if (dLevelWord) dLevelWord.style.display = '';
     document.getElementById('d-strokes').innerText = kanji.strokes;
     document.getElementById('d-romaji').innerText  = kanji.romaji || '–';
 
@@ -7130,6 +7176,8 @@ function openKanaDetail(kana) {
     document.getElementById('detail-view').style.display = 'flex';
     document.getElementById('detail-char-title').innerText = kana.c;
     document.getElementById('d-level').innerText  = label;
+    const dLevelWord = document.getElementById('d-level-word');
+    if (dLevelWord) dLevelWord.style.display = 'none';
     document.getElementById('d-romaji').innerText = kana.r;
     refreshMasteryUI();
     document.getElementById('section-on').style.display  = 'none';

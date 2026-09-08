@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_fix_badge_font">
+    <link rel="stylesheet" href="kanji.css?v=20260906_kana_popup">
 </head>
 <body>
 
@@ -104,7 +104,7 @@
 
                 <!-- Droite : niveau, traits, statut de maîtrise -->
                 <div class="card-stats-col">
-                    <span class="kmc-badge"><b id="d-level">-</b>&nbsp;Niveau</span>
+                    <span class="kmc-badge"><b id="d-level">-</b><span id="d-level-word">&nbsp;Niveau</span></span>
                     <span class="kmc-badge"><b id="d-strokes">-</b>&nbsp;Traits</span>
                     <span class="kmc-badge mastery-badge" id="d-mastery-badge">Non maîtrisé</span>
                 </div>
@@ -291,6 +291,17 @@
     </div>
 </div>
 
+<!-- ── TABLE HIRAGANA/KATAKANA (popup, accessible depuis les mots cliquables des slides d'intro) ── -->
+<div id="kana-table-popup-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeKanaTablePopup()">
+    <div class="mode-selection-card" style="max-height:82vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div class="mode-title" style="margin-bottom:0" id="kana-table-popup-title">Hiragana</div>
+            <button onclick="closeKanaTablePopup()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+        </div>
+        <div id="kana-table-popup-content"></div>
+    </div>
+</div>
+
 <!-- ── FICHE CORRECTION MODAL (correction contextuelle en révision) ── -->
 <div id="fiche-correction-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeFicheCorrectionModal()">
     <div class="mode-selection-card" id="fiche-correction-content"></div>
@@ -317,7 +328,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_apprendre_polish"></script>
+    <script src="kanji.js?v=20260906_kana_popup"></script>
 
     <!-- ── BULK ACTION BAR (mode maîtrise rapide) ────────── -->
     <div id="bulk-action-bar" style="display:none;">

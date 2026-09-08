@@ -675,6 +675,19 @@
 .section-paragraph { font-size: 0.9375rem; color: #fff; line-height: 1.8; margin-bottom: 10px; }
 .section-paragraph:last-child { margin-bottom: 0; }
 
+/* Mots "Hiragana⮻"/"Katakana⮻" cliquables dans les slides d'introduction */
+.kana-word-trigger { cursor: pointer; color: var(--accent); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+
+/* Table de référence hiragana/katakana en popup */
+.kana-popup-group-title { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 16px 0 8px; text-align: center; }
+.kana-popup-group-title:first-child { margin-top: 0; }
+.kana-popup-rows { display: flex; flex-direction: column; gap: 6px; }
+.kana-popup-row { display: flex; gap: 6px; justify-content: center; }
+.kana-popup-cell { width: 44px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,229,255,0.06); border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0; }
+.kana-popup-cell.empty { background: transparent; border: none; }
+.kana-popup-char { font-family: 'Noto Sans JP', sans-serif; font-size: 1.0625rem; color: #fff; line-height: 1; }
+.kana-popup-romaji { font-size: 0.5rem; color: var(--gray); margin-top: 2px; }
+
 .section-sub-title { font-size: 0.6875rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
 .section-sub-title:first-child { margin-top: 0; }
 
