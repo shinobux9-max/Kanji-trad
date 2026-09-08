@@ -2391,32 +2391,27 @@ function buildVocabWordCloze(word, pool) {
     const idx = jp.indexOf(target);
     if (idx === -1) return null;
 
+    // word.reading/word.romaji sont la forme DICTIONNAIRE du mot (ex: 会う "au") — ne coïncide
+    // pas forcément avec la forme conjuguée réellement présente dans l'exemple (ex: 会います
+    // "aimasu"). On ne les réutilise donc que quand la forme dans la phrase correspond
+    // EXACTEMENT au mot du dictionnaire, pour ne jamais afficher une lecture fausse.
+    const targetMatchesDictionaryForm = target === word.word;
+    const targetReading = targetMatchesDictionaryForm ? (word.reading || '') : '';
+    const targetRomaji = targetMatchesDictionaryForm ? (word.romaji || '') : '';
+
     const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== target);
     if (distractorPool.length < 2) return null;
     const distractorWords = shuffleArray(distractorPool).slice(0, 3);
     const options = shuffleArray([
-        { word: target, romaji: word.romaji || '' },
+        { word: target, romaji: targetRomaji },
         ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '' }))
     ]);
 
     const tokens = [jp.slice(0, idx), target, jp.slice(idx + target.length)];
 
-    // Découpe la romaji de la phrase autour de celle du mot ciblé (même logique que pour le
-    // japonais), puis convertit chaque morceau en kana — sert de furigana approximatives pour
-    // le reste de la phrase, qui n'a pas de lecture native disponible par ailleurs.
-    let beforeReading = '', afterReading = '';
-    const sentenceRomaji = ex.romaji || '';
-    if (word.romaji && sentenceRomaji) {
-        const rIdx = sentenceRomaji.toLowerCase().indexOf(word.romaji.toLowerCase());
-        if (rIdx !== -1) {
-            beforeReading = romajiToKana(sentenceRomaji.slice(0, rIdx).trim());
-            afterReading = romajiToKana(sentenceRomaji.slice(rIdx + word.romaji.length).trim());
-        }
-    }
-
     return {
         tokens, blankIndex: 1, correct: target, options, french: ex.french || '',
-        sentenceRomaji, beforeReading, afterReading, targetReading: word.reading || ''
+        sentenceRomaji: ex.romaji || '', targetReading
     };
 }
 
@@ -2632,20 +2627,22 @@ function renderClozeExercise(entry, session) {
     const sentenceHtml = clozeInfo.tokens.map((tok, i) => {
         if (i === clozeInfo.blankIndex) {
             if (!answered) return `<span class="cloze-blank">＿＿</span>`;
-            const cls = selected === clozeInfo.correct ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
-            const reading = clozeInfo.targetReading;
+            const isCorrect = selected === clozeInfo.correct;
+            const cls = isCorrect ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
+            // La lecture connue (targetReading) ne correspond qu'à LA bonne réponse — on ne
+            // l'affiche donc que si c'est justement ce qui a été sélectionné, jamais sur une
+            // mauvaise réponse (on n'a pas de lecture fiable pour les distracteurs ici).
+            const reading = isCorrect ? clozeInfo.targetReading : '';
             return `<span class="${cls}">${reading ? `<ruby>${selected}<rt>${reading}</rt></ruby>` : selected}</span>`;
         }
-        if (!tok.trim()) return `<span>${tok}</span>`;
-        const reading = i === 0 ? clozeInfo.beforeReading : (i === 2 ? clozeInfo.afterReading : null);
-        return reading ? `<span><ruby>${tok}<rt>${reading}</rt></ruby></span>` : `<span>${tok}</span>`;
+        return `<span>${tok}</span>`;
     }).join(' ');
     
     return `
         <div class="review-card review-cloze-card">
             <div class="review-quiz-instruction">Complète la phrase avec le bon élément</div>
             <div class="cloze-sentence">${sentenceHtml}</div>
-            <div class="review-romaji">${clozeInfo.sentenceRomaji || (word.example && word.example.romaji) || ''}</div>
+            ${answered ? `<div class="review-romaji">${clozeInfo.sentenceRomaji || (word.example && word.example.romaji) || ''}</div>` : ''}
             <div class="review-example-fr-only">${mdBold((word.example && word.example.french) || '')}</div>
         </div>
         <div class="review-options">
