@@ -3508,7 +3508,7 @@ function showGrammarDetail(lessonId, isBack = false) {
             <div class="detail-section">
                 <div class="section-label">${section.label || 'Section'}</div>
                 <div class="section-content-box">
-                    ${makeLessonRefsClickable(renderSectionBody(section), data)}
+                    ${renderSectionBody(section)}
                 </div>
             </div>
         `).join('') : ''}
