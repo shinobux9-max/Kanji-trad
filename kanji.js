@@ -3968,9 +3968,8 @@ function advanceOnboarding() {
 // (aucun fetch nécessaire), affichage en lecture seule (pas de clic vers une fiche individuelle,
 // pour éviter une popup dans la popup).
 function buildKanaTablePopupContent(script) {
-    const groups = kanaGroups[script] || [];
+    const groups = (kanaGroups[script] || []).filter(g => !g.title);
     return groups.map(group => `
-        <div class="kana-popup-group-title">${group.title || (script === 'hira' ? 'De base' : 'De base')}</div>
         <div class="kana-popup-rows">
             ${group.rows.map(row => `
                 <div class="kana-popup-row">
