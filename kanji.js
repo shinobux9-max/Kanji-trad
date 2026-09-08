@@ -4004,8 +4004,8 @@ function closeKanaTablePopup() {
 // symbole ⮻ pour signaler visuellement que c'est tapotable, ouvre la table de référence en popup.
 function makeKanaWordsClickable(html) {
     return html
-        .replace(/<strong>(Hiraganas?)<\/strong>/g, (m, word) => `<strong class="kana-word-trigger" onclick="showKanaTablePopup('hira')">${word}⮻</strong>`)
-        .replace(/<strong>(Katakanas?)<\/strong>/g, (m, word) => `<strong class="kana-word-trigger" onclick="showKanaTablePopup('kata')">${word}⮻</strong>`);
+        .replace(/<span class="md-bold">(Hiraganas?)<\/span>/g, (m, word) => `<span class="md-bold kana-word-trigger" onclick="showKanaTablePopup('hira')">${word}⮻</span>`)
+        .replace(/<span class="md-bold">(Katakanas?)<\/span>/g, (m, word) => `<span class="md-bold kana-word-trigger" onclick="showKanaTablePopup('kata')">${word}⮻</span>`);
 }
 
 function skipLessonOnboarding() {
@@ -4347,11 +4347,11 @@ function renderLessonEnd() {
                 <div style="font-size:0.9375rem;color:#fff;margin-top:4px">${nextLesson.title || ''}</div>
             </div>
             <button class="review-continue-btn" onclick="continueToNextLesson()">Continuer →</button>
-            <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px" onclick="exitLessonFlow()">Retour à Apprendre</button>
+            <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px;font-size:0.875rem" onclick="exitLessonFlow()">Retour à Apprendre</button>
         ` : `
             <button class="review-continue-btn" onclick="exitLessonFlow()">Retour à Apprendre</button>
         `}
-        <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
+        <button class="bulk-select-toggle-btn" style="width:100%;margin-top:10px;padding-top:14px;padding-bottom:14px;font-size:0.875rem" onclick="startFreeTrainingFromLesson()">🏋️ Pratiquer en Entraînement libre</button>
     `;
 }
 

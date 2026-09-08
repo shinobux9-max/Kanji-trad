@@ -676,7 +676,6 @@
 .section-paragraph:last-child { margin-bottom: 0; }
 
 /* Mots "Hiragana⮻"/"Katakana⮻" cliquables dans les slides d'introduction */
-.kana-word-trigger { cursor: pointer; color: var(--accent); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 
 /* Table de référence hiragana/katakana en popup */
 .kana-popup-group-title { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 16px 0 8px; text-align: center; }
@@ -703,6 +702,7 @@
 
 /* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
 .md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
+.kana-word-trigger { cursor: pointer; color: var(--accent) !important; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 .md-italic { font-style: italic; color: var(--accent-muted); }
 
 /* ══════════════════════════════════════════════════
