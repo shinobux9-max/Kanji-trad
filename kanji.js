@@ -1508,8 +1508,8 @@ function searchKanjiItems(q, levels) {
     }).slice(0, SEARCH_RESULTS_CAP);
 }
 
-// Cherche aussi dans signification/nuance (pas seulement le mot/la lecture) — c'est ce qui
-// manquait le plus : impossible avant de retrouver une fiche vocab à partir de son sens français.
+// Cherche uniquement dans : word, reading, romaji, meanings (primary/secondary) — jamais dans
+// les exemples de phrases, qui ne font pas partie du champ de recherche voulu.
 function searchVocabItems(items, q) {
     return items.filter(w => {
         if (w.word && w.word.includes(q)) return true;
@@ -1521,22 +1521,20 @@ function searchVocabItems(items, q) {
             if (m.primary && m.primary.toLowerCase().includes(q)) return true;
             if (Array.isArray(m.secondary) && m.secondary.some(s => s.toLowerCase().includes(q))) return true;
         }
-        if (w.nuance && w.nuance.toLowerCase().includes(q)) return true;
         return false;
     }).slice(0, SEARCH_RESULTS_CAP);
 }
 
-// Cherche dans le titre/pattern ET dans le contenu des sections (l'explication du cours) —
-// pas seulement le nom de la particule/notion.
+// Cherche uniquement dans : item, item_romaji, pattern, title, unit_title, badge — jamais dans
+// le contenu des sections (explications) ni dans les exemples de phrases.
 function searchGrammarItems(items, q) {
     return items.filter(l => {
-        if (l.item && l.item.includes(q)) return true;
-        if (l.pattern && l.pattern.includes(q)) return true;
+        if (l.item && l.item.toLowerCase().includes(q)) return true;
+        if (l.item_romaji && l.item_romaji.toLowerCase().includes(q)) return true;
+        if (l.pattern && l.pattern.toLowerCase().includes(q)) return true;
         if (l.title && l.title.toLowerCase().includes(q)) return true;
-        if (Array.isArray(l.sections) && l.sections.some(sec =>
-            (sec.text && sec.text.toLowerCase().includes(q)) ||
-            (Array.isArray(sec.paragraphs) && sec.paragraphs.some(p => p.toLowerCase().includes(q)))
-        )) return true;
+        if (l.unit_title && l.unit_title.toLowerCase().includes(q)) return true;
+        if (l.badge && l.badge.toLowerCase().includes(q)) return true;
         return false;
     }).slice(0, SEARCH_RESULTS_CAP);
 }
