@@ -699,7 +699,7 @@
 .kana-popup-char { font-family: 'Noto Sans JP', sans-serif; font-size: 1.0625rem; color: #fff; line-height: 1; }
 .kana-popup-romaji { font-size: 0.5rem; color: var(--gray); margin-top: 2px; }
 
-.section-sub-title { font-size: 0,938rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-sub-title { font-size: 0.6875rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
 .section-sub-title:first-child { margin-top: 0; }
 
 /* Bloc groupé (ex: Groupe 1 / Groupe 2 / Irréguliers) : léger décalage + séparateur visuel */
@@ -1308,6 +1308,11 @@
 
 /* Explication contextuelle sur confusion (point #2 V2) — repose sur grammar.json > confusions[] */
 .confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; }
+
+/* Message affiché quand la particule choisie est fausse, avec sa vraie explication */
+.wrong-particle-box { margin-top: 14px; padding: 14px; background: rgba(251,113,133,0.08); border: 1px solid rgba(251,113,133,0.3); border-radius: 12px; text-align: left; }
+.wrong-particle-intro { font-size: 0.9375rem; font-weight: bold; color: #FB7185; margin-bottom: 8px; }
+.wrong-particle-explanation { font-size: 0.9375rem; color: var(--text); line-height: 1.6; }
 .confusion-box-title { font-size: 0.9375rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
 .lesson-voir-badge { display: inline-block; font-size: 0.75rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); border-radius: 20px; padding: 5px 12px; margin-bottom: 10px; cursor: pointer; }
 .lesson-voir-badge:active { background: rgba(0,229,255,0.2); }
