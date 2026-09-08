@@ -699,7 +699,7 @@
 .kana-popup-char { font-family: 'Noto Sans JP', sans-serif; font-size: 1.0625rem; color: #fff; line-height: 1; }
 .kana-popup-romaji { font-size: 0.5rem; color: var(--gray); margin-top: 2px; }
 
-.section-sub-title { font-size: 0.6875rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-sub-title { font-size: 0,938rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
 .section-sub-title:first-child { margin-top: 0; }
 
 /* Bloc groupé (ex: Groupe 1 / Groupe 2 / Irréguliers) : léger décalage + séparateur visuel */
