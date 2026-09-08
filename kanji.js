@@ -2900,7 +2900,7 @@ function buildConfusionBoxHtml(confusion) {
             <div class="confusion-box-title">💡 Point de vigilance : ${confusion.with}</div>
             ${voirLesson ? `
                 <div class="lesson-voir-badge" onclick="event.stopPropagation();showLessonReferencePopup('${voirLesson.id}')">
-                    🔎 Voir aussi : Leçon ${voirLesson.lesson_number || '?'} · ${voirLesson.item || voirLesson.title}
+                    🔎 Voir aussi : Leçon ${voirLesson.lesson_number || '?'} · ${voirLesson.item || voirLesson.title}${getItemRomaji(voirLesson.item, voirLesson.item_romaji) ? ` · ${getItemRomaji(voirLesson.item, voirLesson.item_romaji)}` : ''}
                 </div>
             ` : ''}
             <div class="confusion-box-text">${mdBold(confusion.explanation || '')}</div>
