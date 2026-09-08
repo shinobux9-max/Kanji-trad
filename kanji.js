@@ -2387,17 +2387,29 @@ function buildVocabWordCloze(word, pool) {
     if (!ex || !ex.japanese) return null;
     const target = ex.highlight || word.word;
     if (!target) return null;
-    const jp = ex.japanese;
-    const idx = jp.indexOf(target);
-    if (idx === -1) return null;
 
-    // word.reading/word.romaji sont la forme DICTIONNAIRE du mot (ex: 会う "au") — ne coïncide
-    // pas forcément avec la forme conjuguée réellement présente dans l'exemple (ex: 会います
-    // "aimasu"). On ne les réutilise donc que quand la forme dans la phrase correspond
-    // EXACTEMENT au mot du dictionnaire, pour ne jamais afficher une lecture fausse.
-    const targetMatchesDictionaryForm = target === word.word;
-    const targetReading = targetMatchesDictionaryForm ? (word.reading || '') : '';
-    const targetRomaji = targetMatchesDictionaryForm ? (word.romaji || '') : '';
+    // Le texte peut contenir des <rt> insérés au milieu du mot ciblé (ex: 会<rt>あ</rt>い) —
+    // on cherche donc la position sur le texte "propre" (sans <rt>), puis on retrouve la
+    // position correspondante dans le texte brut pour découper sans jamais couper une balise.
+    const rawJp = ex.japanese;
+    const cleanJp = stripRtTags(rawJp);
+    const cleanIdx = cleanJp.indexOf(target);
+    if (cleanIdx === -1) return null;
+
+    const map = buildCleanToRawIndexMap(rawJp);
+    const rawStart = map[cleanIdx];
+    const lastCleanIdx = cleanIdx + target.length - 1;
+    const rawEnd = (lastCleanIdx + 1 < map.length) ? map[lastCleanIdx + 1] : rawJp.length;
+
+    const rawBefore = rawJp.slice(0, rawStart);
+    const rawTarget = rawJp.slice(rawStart, rawEnd);
+    const rawAfter = rawJp.slice(rawEnd);
+
+    // Lecture dérivée directement des <rt> intégrés dans CET exemple précis — fiable même pour
+    // une forme conjuguée (会います), contrairement à word.reading qui est la forme dictionnaire
+    // seule (会う) et ne correspondrait pas au texte réellement affiché dans le trou.
+    const targetReading = extractReadingFromRawRt(rawTarget);
+    const targetRomaji = targetReading ? kanaToRomaji(targetReading) : (word.romaji || '');
 
     const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== target);
     if (distractorPool.length < 2) return null;
@@ -2407,7 +2419,7 @@ function buildVocabWordCloze(word, pool) {
         ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '' }))
     ]);
 
-    const tokens = [jp.slice(0, idx), target, jp.slice(idx + target.length)];
+    const tokens = [autoWrapRuby(rawBefore), target, autoWrapRuby(rawAfter)];
 
     return {
         tokens, blankIndex: 1, correct: target, options, french: ex.french || '',
@@ -3304,12 +3316,50 @@ function showVocabDetail(wordId, allWords = [], isBack = false) {
 
 // Mapping intelligent : détection de famille par mots-clés
 // Convertit le markdown **gras** en <span> stylé (gras + couleur ambre) — utilisée par Grammaire ET Vocabulaire
+// Enveloppe automatiquement "漢字<rt>lecture</rt>" en "<ruby>漢字<rt>lecture</rt></ruby>" — le
+// <rt> seul (sans <ruby> autour) ne s'affiche pas comme furigana dans un navigateur. Ne capture
+// que les caractères CJK juste avant le <rt> (jamais du kana), pour ne jamais avaler par erreur
+// du texte qui n'est pas concerné par cette lecture.
+function autoWrapRuby(str) {
+    if (!str || !str.includes('<rt>')) return str || '';
+    return str.replace(/([\u4e00-\u9faf]+)(<rt>.*?<\/rt>)/g, '<ruby>$1$2</ruby>');
+}
+
+// Retire les balises <rt>...</rt> pour obtenir le texte visible "propre" (sans lecture), utilisé
+// pour retrouver la position d'un mot cible même quand des <rt> sont insérés au milieu de lui.
+function stripRtTags(str) {
+    return (str || '').replace(/<rt>.*?<\/rt>/g, '');
+}
+
+// Extrait la lecture complète d'un fragment brut (avec <rt>) : chaque "kanji<rt>lecture</rt>"
+// devient juste "lecture", le reste (kana déjà présents, espaces, ponctuation) reste tel quel.
+function extractReadingFromRawRt(str) {
+    return (str || '').replace(/[\u4e00-\u9faf]+<rt>(.*?)<\/rt>/g, '$1');
+}
+
+// Construit la correspondance "position dans le texte propre" -> "position dans le texte brut
+// d'origine", pour pouvoir découper avant/cible/après un mot sans jamais couper une balise <rt>
+// en deux, même quand elle est insérée au milieu du mot ciblé (ex: 会<rt>あ</rt>い).
+function buildCleanToRawIndexMap(raw) {
+    const map = [];
+    let ri = 0;
+    while (ri < raw.length) {
+        const m = raw.slice(ri).match(/^<rt>.*?<\/rt>/);
+        if (m) { ri += m[0].length; continue; }
+        map.push(ri);
+        ri++;
+    }
+    return map;
+}
+
 function mdBold(text) {
     if (!text) return text || '';
     // Gras : **texte** — traité en premier pour ne pas être cassé par la règle italique
     let result = text.replace(/\*\*(.+?)\*\*/g, '<span class="md-bold">$1</span>');
     // Italique : *texte* (astérisque simple, convention markdown standard)
     result = result.replace(/\*(.+?)\*/g, '<em class="md-italic">$1</em>');
+    // Furigana : <rt> orphelins auto-enveloppés en <ruby> (voir autoWrapRuby ci-dessus)
+    result = autoWrapRuby(result);
     return result;
 }
 
