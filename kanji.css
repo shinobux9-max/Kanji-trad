@@ -771,7 +771,7 @@
 .dash-review-cta { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.08)); border: 1px solid rgba(0,229,255,0.3); text-align: center; padding: 14px; }
 .dash-goal-row { display: flex; align-items: center; gap: 8px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); cursor: pointer; }
 .dash-goal-icon { flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; background: rgba(0,229,255,0.14); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; }
-.dash-goal-text { flex: 1; font-size: 0.8125rem; color: var(--accent); font-weight: bold; }
+.dash-goal-text { flex: 1; font-size: 0.8125rem; color: var(--accent); font-weight: bold; text-align: left; }
 .dash-goal-chevron { flex-shrink: 0; color: var(--gray); font-size: 0.9375rem; }
 .dash-goal-badges { flex-shrink: 0; display: flex; gap: 5px; }
 .dash-goal-badge { font-size: 0.625rem; font-weight: bold; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
