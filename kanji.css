@@ -702,7 +702,7 @@
 
 /* Rendu du markdown **gras** dans les sections (paragraphs, list, sub_title) */
 .md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
-.kana-word-trigger { cursor: pointer; color: var(--accent) !important; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+.kana-word-trigger { cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 .md-italic { font-style: italic; color: var(--accent-muted); }
 
 /* ══════════════════════════════════════════════════

@@ -4000,12 +4000,22 @@ function closeKanaTablePopup() {
     modal.style.display = 'none';
 }
 
-// Rend "Hiragana(s)"/"Katakana(s)" cliquables dans le texte déjà passé par mdBold() — ajoute le
-// symbole ⮻ pour signaler visuellement que c'est tapotable, ouvre la table de référence en popup.
+// Rend "hiragana(s)"/"katakana(s)" cliquables dans le texte déjà passé par mdBold(), qu'ils
+// soient déjà en gras (span.md-bold, ex: slide 2) ou en texte brut (ex: slides 3/4) — dans les
+// deux cas, le résultat est mis en gras + cliquable, ouvre la table de référence en popup.
+// 🔎 remplace l'ancien symbole ⮻, non pris en charge par certaines polices système.
+function wrapKanaMentions(html, wordPattern, script) {
+    const re = new RegExp(`<span class="md-bold">(${wordPattern})<\\/span>|\\b(${wordPattern})\\b`, 'gi');
+    return html.replace(re, (match, boldWord, plainWord) => {
+        const word = boldWord || plainWord;
+        return `<span class="md-bold kana-word-trigger" onclick="showKanaTablePopup('${script}')">${word} 🔎</span>`;
+    });
+}
+
 function makeKanaWordsClickable(html) {
-    return html
-        .replace(/<span class="md-bold">(Hiraganas?)<\/span>/g, (m, word) => `<span class="md-bold kana-word-trigger" onclick="showKanaTablePopup('hira')">${word}⮻</span>`)
-        .replace(/<span class="md-bold">(Katakanas?)<\/span>/g, (m, word) => `<span class="md-bold kana-word-trigger" onclick="showKanaTablePopup('kata')">${word}⮻</span>`);
+    html = wrapKanaMentions(html, 'Hiraganas?', 'hira');
+    html = wrapKanaMentions(html, 'Katakanas?', 'kata');
+    return html;
 }
 
 function skipLessonOnboarding() {
