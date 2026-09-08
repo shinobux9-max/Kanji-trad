@@ -2886,11 +2886,20 @@ function renderGrammarClozeExercise(entry, session) {
 
 // Contenu de l'encadré "pourquoi c'est faux" — repose entièrement sur le champ optionnel
 // confusions[] de grammar.json (voir modèle communiqué : { with, explanation, wrong_example? }).
-// wrong_example est facultatif, on s'en passe proprement si absent.
+// wrong_example est facultatif, on s'en passe proprement si absent. Le champ optionnel "voir"
+// (id d'une autre leçon, ex: "n4_g_4") génère un badge cliquable "🔎 Voir aussi : Leçon X · item"
+// à partir des vraies données de la leçon visée — jamais du texte écrit à la main, donc toujours
+// juste même si la leçon visée est renommée plus tard.
 function buildConfusionBoxHtml(confusion) {
+    const voirLesson = confusion.voir ? findLessonByIdSync(confusion.voir) : null;
     return `
         <div class="confusion-box">
             <div class="confusion-box-title">💡 Point de vigilance : ${confusion.with}</div>
+            ${voirLesson ? `
+                <div class="lesson-voir-badge" onclick="event.stopPropagation();showLessonReferencePopup('${voirLesson.id}')">
+                    🔎 Voir aussi : Leçon ${voirLesson.lesson_number || '?'} · ${voirLesson.item || voirLesson.title}
+                </div>
+            ` : ''}
             <div class="confusion-box-text">${mdBold(confusion.explanation || '')}</div>
             ${confusion.wrong_example ? `
                 <div class="confusion-example-row wrong"><span>✘</span><span>${mdBold(confusion.wrong_example.japanese || '')}</span></div>
@@ -3301,7 +3310,7 @@ function showGrammarHome(levelId, data, examples = null, isBack = false) {
                     <div class="unit-box-title">
                         ${bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(unit.lessons.map(l => l.id))})' ${unit.lessons.every(l => getItemStatus(l.id) === 'mastered') ? 'checked' : ''}>` : ''}
                         <span class="unit-box-arrow">▶</span>
-                        <span>Leçon ${lessonNumber} - ${unit.title.toUpperCase()}</span>
+                        <span>${lessonNumber} - ${unit.title.toUpperCase()}</span>
                     </div>
                     <div class="unit-box-counter">${unitMastered}/${unit.lessons.length}</div>
                 </div>
@@ -3496,7 +3505,7 @@ function showGrammarDetail(lessonId, isBack = false) {
             <div class="detail-section">
                 <div class="section-label">${section.label || 'Section'}</div>
                 <div class="section-content-box">
-                    ${renderSectionBody(section)}
+                    ${makeLessonRefsClickable(renderSectionBody(section), data)}
                 </div>
             </div>
         `).join('') : ''}
@@ -3999,6 +4008,41 @@ function closeKanaTablePopup() {
     modal.style.display = 'none';
 }
 
+// Popup "voir aussi" : montre l'item + la section EXPLICATION (ou la première section) de la
+// leçon visée par un champ "voir": "id_de_la_leçon" (dans confusions, sections ou examples).
+function showLessonReferencePopup(lessonId) {
+    const modal = document.getElementById('lesson-reference-popup-modal');
+    const content = document.getElementById('lesson-reference-popup-content');
+    if (!modal || !content) return;
+
+    const lesson = findLessonByIdSync(lessonId);
+    if (!lesson) {
+        content.innerHTML = `<div style="color:var(--gray);text-align:center;padding:20px">Leçon introuvable.</div>`;
+    } else {
+        const explication = (lesson.sections || []).find(s => (s.label || '').toUpperCase() === 'EXPLICATION') || (lesson.sections || [])[0];
+        content.innerHTML = `
+            <div class="fiche-title-card" style="margin-bottom:14px">
+                <div style="font-size:0.6875rem;color:var(--accent-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Leçon ${lesson.lesson_number || '?'}</div>
+                <div style="font-size:1.375rem;color:var(--accent);font-weight:bold;font-family:'Noto Sans JP',sans-serif">${lesson.item || ''}</div>
+                ${getItemRomaji(lesson.item, lesson.item_romaji) ? `<div style="font-size:0.75rem;color:var(--gray);margin-top:2px">${getItemRomaji(lesson.item, lesson.item_romaji)}</div>` : ''}
+                <div style="font-size:0.9375rem;color:#fff;margin-top:6px">${lesson.title || ''}</div>
+            </div>
+            ${explication ? `<div class="fiche-title-card" style="text-align:left;padding:18px">${renderSectionBody(explication)}</div>` : `<div style="color:var(--gray);text-align:center">Pas d'explication disponible.</div>`}
+            <button class="review-continue-btn" style="margin-top:16px" onclick="closeLessonReferencePopup();showGrammarDetail('${lesson.id}')">Voir la fiche complète →</button>
+        `;
+    }
+
+    modal.classList.add('open');
+    modal.style.display = 'flex';
+}
+
+function closeLessonReferencePopup() {
+    const modal = document.getElementById('lesson-reference-popup-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.style.display = 'none';
+}
+
 // Rend "hiragana(s)"/"katakana(s)" cliquables dans le texte déjà passé par mdBold(), qu'ils
 // soient déjà en gras (span.md-bold, ex: slide 2) ou en texte brut (ex: slides 3/4) — dans les
 // deux cas, le résultat est mis en gras + cliquable, ouvre la table de référence en popup.
@@ -4261,16 +4305,15 @@ function renderLessonExample(step) {
     const ex = step.example;
     return `
         <div class="lesson-tap-advance" onclick="advanceLessonStep()">
-            <div class="section-sub-title" style="text-align:center;margin-bottom:10px">Exemple</div>
-            <div class="vocab-example-box lesson-example-reveal" onclick="event.stopPropagation(); this.classList.toggle('open')" style="cursor:pointer">
-                <div class="example-jp">${mdBold(ex.japanese || '')}</div>
-                <div class="lesson-example-hidden">
-                    ${ex.romaji ? `<div class="example-ro">${ex.romaji}</div>` : ''}
-                    <div class="example-fr">${mdBold(ex.french || '')}</div>
+            <div class="section-sub-title" style="text-align:center;margin-bottom:6px">Exemple</div>
+            <div class="lesson-floating-text-wrap">
+                <div class="lesson-floating-text">
+                    <div style="font-size:1.0625em;margin-bottom:10px">${mdBold(ex.japanese || '')}</div>
+                    ${ex.romaji ? `<div style="font-size:0.7em;color:var(--accent-muted);margin-bottom:8px">${ex.romaji}</div>` : ''}
+                    <div style="font-size:0.75em;color:var(--gray)">${mdBold(ex.french || '')}</div>
                 </div>
-                <div class="lesson-example-hint">👆 Touche pour voir la traduction</div>
             </div>
-            <div class="lesson-tap-hint" style="margin-top:16px">👆 Touche l'écran (hors de la carte) pour continuer</div>
+            <div class="lesson-tap-hint">👆 Touche l'écran pour continuer</div>
         </div>
     `;
 }
@@ -4985,6 +5028,25 @@ async function getLevelGrammarData(levelId) {
         grammarDataCache[levelId] = null;
     }
     return grammarDataCache[levelId];
+}
+
+// Précharge la grammaire de tous les niveaux JLPT en arrière-plan (fire-and-forget, appelé une
+// fois au démarrage) — permet ensuite des recherches SYNCHRONES via findLessonByIdSync(), utile
+// pour le système de renvoi "voir" entre leçons qui doit fonctionner dans des contextes de rendu
+// synchrones (boîte de confusion affichée à plusieurs endroits différents).
+function preloadAllGrammarLevels() {
+    ALL_JLPT_LEVELS.forEach(level => { getLevelGrammarData(level); });
+}
+
+// Recherche synchrone d'une leçon de grammaire par son id, dans le cache déjà chargé. Le niveau
+// est déduit du préfixe de l'id (ex: "n4_g_4" -> "n4"). Retourne null si pas encore en cache ou
+// introuvable — le badge "voir" se contente alors de ne rien afficher, sans erreur.
+function findLessonByIdSync(lessonId) {
+    if (!lessonId) return null;
+    const level = lessonId.split('_')[0];
+    const cached = grammarDataCache[level];
+    if (!cached || !cached.data) return null;
+    return cached.data.find(l => l.id === lessonId) || null;
 }
 
 async function getLevelKanjiChars(levelId) {
@@ -8459,6 +8521,10 @@ async function init() {
         
         // Enregistre l'ouverture de l'app du jour (pour le streak) — idempotent si déjà fait aujourd'hui
         recordDailyActivity();
+        
+        // Précharge la grammaire en arrière-plan pour que le système de renvoi "voir" entre
+        // leçons fonctionne dès la première navigation, sans attendre un fetch à la volée.
+        preloadAllGrammarLevels();
 
         let text = await kanjiRes.text();
         text = text.trim();

@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_kana_popup_bg">
+    <link rel="stylesheet" href="kanji.css?v=20260906_voir_lesson_link">
 </head>
 <body>
 
@@ -291,6 +291,17 @@
     </div>
 </div>
 
+<!-- ── POPUP DE RENVOI ENTRE LEÇONS ("voir" dans confusions/sections/examples) ── -->
+<div id="lesson-reference-popup-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeLessonReferencePopup()">
+    <div class="mode-selection-card" style="max-height:82vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div class="mode-title" style="margin-bottom:0">Voir aussi</div>
+            <button onclick="closeLessonReferencePopup()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+        </div>
+        <div id="lesson-reference-popup-content"></div>
+    </div>
+</div>
+
 <!-- ── TABLE HIRAGANA/KATAKANA (popup, accessible depuis les mots cliquables des slides d'intro) ── -->
 <div id="kana-table-popup-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeKanaTablePopup()">
     <div class="mode-selection-card" style="max-height:82vh;overflow-y:auto">
@@ -328,7 +339,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260906_fix_end_btn_width"></script>
+    <script src="kanji.js?v=20260906_voir_lesson_link"></script>
 
     <!-- ── BULK ACTION BAR (mode maîtrise rapide) ────────── -->
     <div id="bulk-action-bar" style="display:none;">
