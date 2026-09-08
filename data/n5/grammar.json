@@ -4,7 +4,7 @@
   "unit": 1,
   "unit_title": "Les bases de la phrase",
   "lesson_number": 1,
-  "title": "Affirmer avec politesse",
+  "title": "La formule de politesse de base",
   "item": "です",
   "item_romaji": "desu",
   "pattern": "[Nom / Adjectif] + です",
@@ -62,7 +62,8 @@
   ],
   "confusions": [
     {
-      "with": "L'accumulation avec les verbes d'action (-masu) voir : 🔎 Leçon 04 〜ます / 〜masu",
+      "with": "L'accumulation avec les verbes d'action (-masu)", 
+      "voir": "n5_g_4",
       "explanation": "**です** est une copule d'état, pas un verbe d'action. On ne le colle jamais directement à la suite d'un verbe conjugué en *-masu*, car le verbe se suffit à lui-même pour exprimer l'action et la politesse.",
       "wrong_example": {
         "japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt></ruby>べますです。",
@@ -79,9 +80,9 @@
     "unit": 1,
     "unit_title": "Les bases de la phrase",
     "lesson_number": 2,
-    "title": "Nier poliment",
+    "title": "Exprimer la négation avec politesse",
     "item": "ではありません / じゃないです",
-    "item_romaji": "dewa arimasen/ janai desu",
+    "item_romaji": "dewa arimasen/ ja nai desu",
     "pattern": "[Nom / Adjectif en -na] + ではありません / じゃないです",
     "badge": "Copule - Négatif",
     "sections": [
@@ -147,7 +148,7 @@
     "unit": 1,
     "unit_title": "Les bases de la phrase",
     "lesson_number": 3,
-    "title": "Parler au passé",
+    "title": "Le passé poli des noms et adjectifs en -na",
     "item": "でした",
     "pattern": "[Nom / Adjectif en -na] + でした",
     "badge": "Copule - Passé",
@@ -213,7 +214,7 @@
     "unit": 1,
     "unit_title": "Les bases de la phrase",
     "lesson_number": 4,
-    "title": "Exprimer une action au présent ou au futur",
+    "title": "La forme polie des verbes au présent / futur",
     "item": "〜ます",
     "pattern": "[Radical du verbe] + ます",
     "badge": "Verbe - Présent / Futur",
