@@ -734,6 +734,15 @@
 .lesson-dot { width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.2); transition: all 0.2s ease; flex-shrink: 0; }
 .lesson-dot.active { width: 18px; background: var(--accent); }
 .lesson-bottom-pagination { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px; padding-top: 4px; }
+
+/* Écran de choix en fin d'onboarding (kana / vocab / grammaire) */
+.onboarding-choice-card { display: flex; align-items: center; gap: 14px; background: rgba(14,22,48,0.5); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
+.onboarding-choice-card:active { border-color: var(--accent); }
+.onboarding-choice-card.recommended { border-color: rgba(0,229,255,0.5); box-shadow: 0 0 16px rgba(0,229,255,0.15); }
+.onboarding-choice-icon { flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px; background: rgba(0,229,255,0.1); color: var(--accent); font-family: 'Noto Sans JP', sans-serif; font-size: 1.375rem; display: flex; align-items: center; justify-content: center; }
+.onboarding-choice-title { font-size: 0.9375rem; font-weight: bold; color: #fff; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.onboarding-choice-sub { font-size: 0.75rem; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+.onboarding-recommended-tag { font-size: 0.625rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.15); border: 1px solid rgba(0,229,255,0.4); border-radius: 10px; padding: 2px 8px; }
 .review-progress-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
 .review-progress-text { font-size: 0.75rem; color: var(--gray); flex-shrink: 0; min-width: 50px; text-align: right; }
 

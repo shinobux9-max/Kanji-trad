@@ -2326,6 +2326,26 @@ function getPrimaryMeaning(word) {
 
 // Génère un exercice "trou à combler" sur une particule, seulement si elle apparaît
 // réellement comme token isolé dans l'exemple (sinon on ne peut pas garantir un exercice correct)
+// Génère un exercice à trous à partir du MOT lui-même dans sa phrase d'exemple, plutôt que
+// d'exiger une particule précise (l'ancien buildClozeParticle, qui ne se déclenchait presque
+// jamais faute de champ "particles" ET de tokenisation par espaces, rare en japonais naturel).
+// Fonctionne pour tout mot ayant un exemple où il apparaît littéralement.
+function buildVocabWordCloze(word, pool) {
+    const ex = word.example;
+    if (!ex || !ex.japanese || !word.word) return null;
+    const jp = ex.japanese;
+    const idx = jp.indexOf(word.word);
+    if (idx === -1) return null;
+
+    const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== word.word);
+    if (distractorPool.length < 2) return null;
+    const distractors = shuffleArray(distractorPool).slice(0, 3).map(w => w.word);
+    const options = shuffleArray([word.word, ...distractors]);
+
+    const tokens = [jp.slice(0, idx), word.word, jp.slice(idx + word.word.length)];
+    return { tokens, blankIndex: 1, correct: word.word, options, french: ex.french || '' };
+}
+
 function buildClozeParticle(word) {
     const particles = word.particles || [];
     const jp = (word.example && word.example.japanese) || '';
@@ -2353,7 +2373,7 @@ function buildMeaningQCM(word, pool) {
 }
 
 function prepareSessionItem(word, pool, forceMode = null) {
-    const clozeInfo = buildClozeParticle(word);
+    const clozeInfo = buildVocabWordCloze(word, pool) || buildClozeParticle(word);
     const qcmInfo = buildMeaningQCM(word, pool);
     
     let type = 'flashcard';
@@ -4115,7 +4135,51 @@ function skipLessonOnboarding() {
 // Fin de l'introduction : marque comme vue, puis enchaîne directement sur la vraie leçon
 function finishLessonOnboarding() {
     markLessonOnboardingSeen();
-    startGrammarLessonFlowActual();
+    showOnboardingChoiceScreen();
+}
+
+// Écran de choix affiché juste après l'onboarding : plutôt que d'enchaîner automatiquement sur
+// la grammaire, laisse l'utilisateur décider par où commencer.
+function showOnboardingChoiceScreen() {
+    activeSwipeContext = null;
+    const container = document.getElementById('category-content');
+    if (!container) return;
+    container.innerHTML = `
+        <div class="review-page">
+            <div style="text-align:center;padding:20px 0 24px">
+                <div style="font-size:3rem;margin-bottom:10px">🚀</div>
+                <div style="font-size:1.5rem;font-weight:bold;color:#fff;margin-bottom:6px">Par où commencer ?</div>
+                <div style="font-size:0.9375rem;color:var(--gray)">Choisis ta première étape</div>
+            </div>
+            <div class="onboarding-choice-card recommended" onclick="startOnboardingChoice('kana')">
+                <div class="onboarding-choice-icon">あ</div>
+                <div class="onboarding-choice-info">
+                    <div class="onboarding-choice-title">Apprendre les kanas <span class="onboarding-recommended-tag">Recommandé</span></div>
+                    <div class="onboarding-choice-sub">La base indispensable pour bien démarrer en japonais.</div>
+                </div>
+            </div>
+            <div class="onboarding-choice-card" onclick="startOnboardingChoice('vocab')">
+                <div class="onboarding-choice-icon">語</div>
+                <div class="onboarding-choice-info">
+                    <div class="onboarding-choice-title">Mes premiers mots de vocabulaire</div>
+                    <div class="onboarding-choice-sub">Connaître les kanas aide, mais chaque mot a son romaji — pas de souci si tu ne les connais pas encore.</div>
+                </div>
+            </div>
+            <div class="onboarding-choice-card" onclick="startOnboardingChoice('grammar')">
+                <div class="onboarding-choice-icon">文</div>
+                <div class="onboarding-choice-info">
+                    <div class="onboarding-choice-title">Ma première leçon de grammaire</div>
+                    <div class="onboarding-choice-sub">Là aussi, le romaji est toujours affiché — tu peux commencer sans connaître les kanas.</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function startOnboardingChoice(choice) {
+    if (choice === 'kana') showRevisionKanaPicker();
+    else if (choice === 'vocab') showRevisionLevelPicker('vocab');
+    else if (choice === 'grammar') startGrammarLessonFlowActual();
 }
 
 const LESSON_PROGRESS_KEY = 'kanji_trad_lesson_progress';
