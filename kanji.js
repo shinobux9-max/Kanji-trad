@@ -2341,11 +2341,14 @@ function buildVocabWordCloze(word, pool) {
 
     const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== target);
     if (distractorPool.length < 2) return null;
-    const distractors = shuffleArray(distractorPool).slice(0, 3).map(w => w.word);
-    const options = shuffleArray([target, ...distractors]);
+    const distractorWords = shuffleArray(distractorPool).slice(0, 3);
+    const options = shuffleArray([
+        { word: target, romaji: word.romaji || '' },
+        ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '' }))
+    ]);
 
     const tokens = [jp.slice(0, idx), target, jp.slice(idx + target.length)];
-    return { tokens, blankIndex: 1, correct: target, options, french: ex.french || '' };
+    return { tokens, blankIndex: 1, correct: target, options, french: ex.french || '', sentenceRomaji: ex.romaji || '' };
 }
 
 function buildClozeParticle(word) {
@@ -2358,7 +2361,7 @@ function buildClozeParticle(word) {
     const blankIndex = tokens.indexOf(validParticle);
     const distractorPool = COMMON_PARTICLES.filter(p => p !== validParticle);
     const distractors = shuffleArray(distractorPool).slice(0, 3);
-    const options = shuffleArray([validParticle, ...distractors]);
+    const options = shuffleArray([validParticle, ...distractors]).map(p => ({ word: p, romaji: '' }));
     
     return { tokens, blankIndex, correct: validParticle, options };
 }
@@ -2566,19 +2569,22 @@ function renderClozeExercise(entry, session) {
     
     return `
         <div class="review-card review-cloze-card">
-            <div class="review-quiz-instruction">Complète la phrase avec la bonne particule</div>
+            <div class="review-quiz-instruction">Complète la phrase avec le bon élément</div>
             <div class="cloze-sentence">${sentenceHtml}</div>
-            <div class="review-romaji">${word.romaji || ''}</div>
+            <div class="review-romaji">${clozeInfo.sentenceRomaji || (word.example && word.example.romaji) || ''}</div>
             <div class="review-example-fr-only">${mdBold((word.example && word.example.french) || '')}</div>
         </div>
-        <div class="review-options review-options-particles">
+        <div class="review-options">
             ${clozeInfo.options.map(opt => {
                 let cls = 'review-option-btn';
                 if (answered) {
-                    if (opt === clozeInfo.correct) cls += ' correct';
-                    else if (opt === selected) cls += ' incorrect';
+                    if (opt.word === clozeInfo.correct) cls += ' correct';
+                    else if (opt.word === selected) cls += ' incorrect';
                 }
-                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt}')">${opt}</button>`;
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt.word.replace(/'/g, "\\'")}')">
+                    <span class="cloze-option-word">${opt.word}</span>
+                    ${opt.romaji ? `<span class="cloze-option-romaji">${opt.romaji}</span>` : ''}
+                </button>`;
             }).join('')}
         </div>
         ${(answered && selected !== clozeInfo.correct) ? (
