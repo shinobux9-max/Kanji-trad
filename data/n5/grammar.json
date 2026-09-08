@@ -1,76 +1,88 @@
 [
   {
-  "id": "n5_g_1",
-  "unit": 1,
-  "unit_title": "Les bases de la phrase",
-  "lesson_number": 1,
-  "title": "La formule de politesse de base",
-  "item": "です",
-  "item_romaji": "desu",
-  "pattern": "[Nom / Adjectif] + です",
-  "badge": "Copule",
-  "sections": [
-    {
-      "label": "EXPLICATION",
-      "paragraphs": [
-        "**です** (*desu*) est la copule de politesse en japonais. Bien qu'on le traduise souvent par le verbe **« être »**, son rôle précis est d'affirmer, d'identifier ou de qualifier l'état du sujet en fin de phrase.",
-        "Il confère un ton poli et courtois (registre *desu/masu*), indispensable dans la vie de tous les jours."
-      ]
-    },
-    {
-      "label": "UTILISATION & PRONONCIATION",
-      "paragraphs": [
-        "Il s'installe directement après un **nom** (pour dire ce qu'on est ou ce que c'est) ou après un **adjectif** (pour exprimer un état ou une qualité).",
-        "💡 **Prononciation :** Le **« u »** final est assourdi (presque muet) à l'oral. On prononce généralement **« dess »**."
-      ],
-      "blocks": [
-        {
-          "sub_title": "Structure de base",
-          "list": [
-            "Nom + **です** (ex: <ruby>学生<rt>がくせい</rt></ruby>です - *gakusei desu*  - Je suis étudiant ou C'est un étudiant)",
-            "Adjectif + **です** (ex: <ruby>高<rt>たか</rt></ruby>いです - *takai desu*  - C'est cher. / C'est haut.)"
-          ]
-        }
-      ]
-    }
-  ],
-  "examples": [
-    {
-      "japanese": "<ruby>学生<rt>がくせい</rt></ruby>です。",
-      "romaji": "Gakusei desu.",
-      "french": "Je suis étudiant. (ou : C'est un étudiant)",
-      "highlight": "です"
-    },
-    {
-      "japanese": "<ruby>日本<rt>にほん</rt></ruby><ruby>人<rt>じん</rt></ruby>です。",
-      "romaji": "Nihonjin desu.",
-      "french": "Je suis japonais(e).",
-      "highlight": "です"
-    },
-    {
-      "japanese": "<ruby>高<rt>たか</rt></ruby>いです。",
-      "romaji": "Takai desu.",
-      "french": "C'est cher. / C'est haut.",
-      "highlight": "です"
-    },
-    {
-      "japanese": "すきです。",
-      "romaji": "Suki desu.",
-      "french": "J'aime / C'est apprécié.",
-      "highlight": "です"
-    }
-  ],
-  "confusions": [
-    {
-      "with": "L'accumulation avec les verbes d'action (-masu)", 
-      "voir": "n5_g_4",
-      "explanation": "**です** est une copule d'état, pas un verbe d'action. On ne le colle jamais directement à la suite d'un verbe conjugué en *-masu*, car le verbe se suffit à lui-même pour exprimer l'action et la politesse.",
-      "wrong_example": {
-        "japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt></ruby>べますです。",
-        "romaji": "Ringo o tabemasu desu. (Incorrect)",
-        "correct_japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt>べます。",
-        "correct_romaji": "Ringo o tabemasu. (Correct)",
-        "french": "Je mange une pomme."
+    "id": "n5_g_1",
+    "unit": 1,
+    "unit_title": "Les bases de la phrase",
+    "lesson_number": 1,
+    "title": "La formule de politesse de base",
+    "item": "です",
+    "item_romaji": "desu",
+    "pattern": "[Nom / Adjectif] + です",
+    "badge": "Copule",
+    "sections": [
+      {
+        "label": "EXPLICATION",
+        "paragraphs": [
+          "**です** (*desu*) est la copule de politesse en japonais. Bien qu'on le traduise souvent par le verbe **« être »**, son rôle précis est d'affirmer, d'identifier ou de qualifier l'état du sujet en fin de phrase.",
+          "Il confère un ton poli et courtois (registre *desu/masu*), indispensable dans la vie de tous les jours."
+        ]
+      },
+      {
+        "label": "UTILISATION & PRONONCIATION",
+        "paragraphs": [
+          "Il s'installe directement après un **nom** (pour dire ce qu'on est ou ce que c'est) ou après un **adjectif** (pour exprimer un état ou une qualité).",
+          "💡 **Prononciation :** Le **« u »** final est assourdi (presque muet) à l'oral. On prononce généralement **« dess »**."
+        ],
+        "blocks": [
+          {
+            "sub_title": "Structure de base",
+            "list": [
+              "Nom + **です** (ex: <ruby>学生<rt>がくせい</rt></ruby>です - *gakusei desu*  - Je suis étudiant ou C'est un étudiant)",
+              "Adjectif + **です** (ex: <ruby>高<rt>たか</rt></ruby>いです - *takai desu*  - C'est cher. / C'est haut.)"
+            ]
+          }
+        ]
+      }
+    ],
+    "examples": [
+      {
+        "japanese": "<ruby><r<rt>がくせい</rt></ruby>uby><ruby>学生<rt>がくせい</rt></ruby></ruby>です。",
+        "romaji": "Gakusei desu.",
+        "french": "Je suis étudiant. (ou : C'est un étudiant)",
+        "highlight": [
+          "です",
+          "desu"
+        ]
+      },
+      {
+        "japanese": "<ruby><r<rt>にほん</rt></ruby><ruby>u<rt>じん</rt></ruby>by>日<ruby>本<rt>ほん</rt></ruby><ruby></ruby><ruby>人</ruby><rt>じん</rt></ruby>です。",
+        "romaji": "Nihonjin desu.",
+        "french": "Je suis japonais(e).",
+        "highlight": [
+          "です",
+          "desu"
+        ]
+      },
+      {
+        "japanese": "<ruby><<rt>たか</rt></ruby>ruby>高</ruby>いです。",
+        "romaji": "Takai desu.",
+        "french": "C'est cher. / C'est haut.",
+        "highlight": [
+          "です",
+          "desu"
+        ]
+      },
+      {
+        "japanese": "すきです。",
+        "romaji": "Suki desu.",
+        "french": "J'aime / C'est apprécié.",
+        "highlight": [
+          "です",
+          "desu"
+        ]
+      }
+    ],
+    "confusions": [
+      {
+        "with": "L'accumulation avec les verbes d'action (-masu)",
+        "voir": "n5_g_4",
+        "explanation": "**です** est une copule d'état, pas un verbe d'action. On ne le colle jamais directement à la suite d'un verbe conjugué en *-masu*, car le verbe se suffit à lui-même pour exprimer l'action et la politesse.",
+        "wrong_example": {
+          "japanese": "<ruby><r<rt>りんご</rt></ruby>u<ruby>b<rt>た</rt></ruby>y>林檎</ruby>を<ruby>食</ruby>べますです。",
+          "romaji": "Ringo o tabemasu desu. (Incorrect)",
+          "correct_japanese": "<ruby><r<rt>りんご</rt></ruby>uby>林檎</ruby>を<ruby>食べます。",
+          "correct_romaji": "Ringo o tabemasu. (Correct)",
+          "french": "Je mange une pomme."
         }
       }
     ]
@@ -104,7 +116,7 @@
           {
             "sub_title": "Structure de base",
             "list": [
-              "Écrit / Formel : Nom + **ではありません** (*dewa arimasen*)" ,
+              "Écrit / Formel : Nom + **ではありません** (*dewa arimasen*)",
               "Oral / Courant : Nom + **じゃないです (*janai desu*)**"
             ]
           }
@@ -116,7 +128,10 @@
         "japanese": "パンではありません。",
         "romaji": "Pan dewa arimasen.",
         "french": "Ce n'est pas du pain. (Formel / Écrit)",
-        "highlight": "ではありません"
+        "highlight": [
+          "ではありません",
+          "dewa arimasen/ ja nai desu"
+        ]
       },
       {
         "japanese": "せんせいじゃないです。",
@@ -665,8 +680,8 @@
         "with": "Particule de lieu で ou に",
         "explanation": "La particule **を** indique l'objet direct d'une action, et non le lieu où elle se déroule ou la destination.",
         "wrong_example": {
-          "japanese": "公園をいきます。",
-          "correct_japanese": "公園に行きます。",
+          "japanese": "<ruby>公園<rt>こうえん</rt></ruby>をいきます。",
+          "correct_japanese": "<ruby>公園<rt>こうえん</rt></ruby>に行きます。",
           "french": "Je vais au parc."
         }
       }
@@ -715,7 +730,7 @@
         "highlight": "に"
       },
       {
-        "japanese": "にほんに行きます。",
+        "japanese": "にほんに<ruby>行<rt>い</rt></ruby>きます。",
         "romaji": "Nihon ni ikimasu.",
         "french": "Je vais au Japon.",
         "highlight": "に"
@@ -799,8 +814,8 @@
         "with": "Destination en に",
         "explanation": "Pour indiquer le lieu où l'on se rend (destination), on utilise **に** ou **へ**, et non **で** (qui indique le lieu où se déroule une action active).",
         "wrong_example": {
-          "japanese": "学校でいきます。",
-          "correct_japanese": "学校に行きます。",
+          "japanese": "<ruby>学校<rt>がっこう</rt></ruby>でいきます。",
+          "correct_japanese": "<ruby>学校<rt>がっこう</rt></ruby>に行きます。",
           "french": "Je vais à l'école."
         }
       }
@@ -996,8 +1011,8 @@
         "with": "Particules de thème ou d'objet (は, が, を)",
         "explanation": "Contrairement à d'autres particules qui se cumulent, **も** vient se substituer totalement à **は**, **が** et **を** au lieu de s'y ajouter.",
         "wrong_example": {
-          "japanese": "私もは学生です。",
-          "correct_japanese": "私も学生です。",
+          "japanese": "<ruby>私<rt>わたし</rt></ruby>もは<ruby>学生<rt>がくせい</rt></ruby>です。",
+          "correct_japanese": "<ruby>私<rt>わたし</rt></ruby>も<ruby>学生<rt>がくせい</rt></ruby>です。",
           "french": "Moi aussi, je suis étudiant."
         }
       }
@@ -1052,7 +1067,7 @@
         "highlight": "の"
       },
       {
-        "japanese": "これはだれの傘ですか。",
+        "japanese": "これはだれの<ruby>傘<rt>かさ</rt></ruby>ですか。",
         "romaji": "Kore wa dare no kasa desu ka.",
         "french": "À qui est ce parapluie ?",
         "highlight": "の"
@@ -1063,8 +1078,8 @@
         "with": "Ordre des mots en français",
         "explanation": "Attention à ne pas inverser les rôles : le propriétaire ou le sujet général se place *avant* **の**, et l'objet possédé ou principal se place *après*.",
         "wrong_example": {
-          "japanese": "本私のものです。",
-          "correct_japanese": "私の本です。",
+          "japanese": "<ruby>本<rt>ほん</rt></ruby><ruby>私<rt>わたし</rt></ruby>のものです。",
+          "correct_japanese": "<ruby>私<rt>わたし</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>です。",
           "french": "C'est mon livre."
         }
       }
@@ -1129,8 +1144,8 @@
         "with": "Inversion de l'ordre des mots (comme en français ou anglais)",
         "explanation": "En japonais, la phrase affirmative conserve exactement la même structure syntaxique ; il suffit d'ajouter **か** à la fin sans inverser le sujet et le verbe.",
         "wrong_example": {
-          "japanese": "ですか元気？",
-          "correct_japanese": "元気ですか。",
+          "japanese": "ですか<ruby>元気<rt>げんき</rt></ruby>？",
+          "correct_japanese": "<ruby>元気<rt>げんき</rt></ruby>ですか。",
           "french": "Vas-tu bien ?"
         }
       }
@@ -1250,7 +1265,7 @@
         "highlight": "よ"
       },
       {
-        "japanese": "バスが来ましたよ。",
+        "japanese": "バスが<ruby>来<rt>き</rt></ruby>ましたよ。",
         "romaji": "Basu ga kimashita yo.",
         "french": "Le bus est arrivé (attention / regarde) !",
         "highlight": "よ"
@@ -1327,8 +1342,8 @@
         "with": "Particule de destination/limite まで",
         "explanation": "**から** indique le point de départ (« depuis / à partir de »), tandis que **まで** indique la limite ou la destination finale (« jusqu'à »).",
         "wrong_example": {
-          "japanese": "9時まで会社に行きます。",
-          "correct_japanese": "9時から会社に行きます。",
+          "japanese": "9時まで<ruby>会社<rt>かいしゃ</rt></ruby>に行きます。",
+          "correct_japanese": "9時から<ruby>会社<rt>かいしゃ</rt></ruby>に行きます。",
           "french": "Je vais au travail à partir de 9 heures."
         }
       }
@@ -1393,8 +1408,8 @@
         "with": "Point de départ から",
         "explanation": "**まで** indique la limite finale ou le terminus (« jusqu'à »), tandis que **から** marque le point de départ (« depuis / à partir de »).",
         "wrong_example": {
-          "japanese": "5時まで会社を出ます。",
-          "correct_japanese": "5時に会社を出ます。",
+          "japanese": "5時まで<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>出ます<rt>でます</rt></ruby>。",
+          "correct_japanese": "5時に<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>出ます<rt>でます</rt></ruby>。",
           "french": "Je quitte l'entreprise à 5 heures."
         }
       }
@@ -1459,8 +1474,8 @@
         "with": "Inversion des rôles comparatifs",
         "explanation": "Attention à ne pas placer **より** sur le sujet principal : c'est l'élément comparé (le « que... ») qui prend la particule **より**.",
         "wrong_example": {
-          "japanese": "よりバス新幹線は早いです。",
-          "correct_japanese": "新幹線はバスより早いです。",
+          "japanese": "よりバス新幹線は<ruby>早い<rt>はやい</rt></ruby>です。",
+          "correct_japanese": "新幹線はバスより<ruby>早い<rt>はやい</rt></ruby>です。",
           "french": "Le Shinkansen est plus rapide que le bus."
         }
       }
@@ -1591,8 +1606,8 @@
         "with": "Durée approximative くらい / ぐらい",
         "explanation": "**ごろ** s'emploie uniquement pour un point fixe dans le temps (un horaire), tandis que **くらい / ぐらい** s'utilise pour une durée ou une quantité globale.",
         "wrong_example": {
-          "japanese": "3時間ごろ勉強しました。",
-          "correct_japanese": "3時間くらい勉強しました。",
+          "japanese": "3<ruby>時間<rt>じかん</rt></ruby>ごろ<ruby>勉強<rt>べんきょう</rt></ruby>しました。",
+          "correct_japanese": "3<ruby>時間<rt>じかん</rt></ruby>くらい<ruby>勉強<rt>べんきょう</rt></ruby>しました。",
           "french": "J'ai étudié pendant environ 3 heures."
         }
       }
@@ -1647,7 +1662,7 @@
         "highlight": "ぐらい"
       },
       {
-        "japanese": "どのくらい日本にいますか。",
+        "japanese": "どのくらい<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>にいますか。",
         "romaji": "Dono kurai Nihon ni imasu ka.",
         "french": "Combien de temps environ restes-tu au Japon ?",
         "highlight": "くらい"
@@ -1856,7 +1871,7 @@
         "with": "Négation incorrecte avec です",
         "explanation": "La négation se fait directement sur l'adjectif (en remplaçant **い** par **くない**). On ne met jamais **です** à la forme négative en *dewa arimasen* pour un adjectif en -i au niveau de base.",
         "wrong_example": {
-          "japanese": "このお茶は高いではありません。",
+          "japanese": "このお茶は<ruby>高い<rt>たかい</rt></ruby>ではありません。",
           "correct_japanese": "このお茶は高くありません (ou 高くないです)",
           "french": "Ce thé n'est pas cher."
         }
@@ -1922,8 +1937,8 @@
         "with": "Passé avec des adjectifs en -na ou noms",
         "explanation": "Attention à ne pas appliquer la terminaison **-かった** aux adjectifs en -na ou aux noms (qui prennent *deshita*). Les adjectifs en -i se conjuguent de manière interne.",
         "wrong_example": {
-          "japanese": "映画は面白かったですでした。",
-          "correct_japanese": "映画は面白かったです。",
+          "japanese": "<ruby>映画<rt>えいが</rt></ruby>は面白かったですでした。",
+          "correct_japanese": "<ruby>映画<rt>えいが</rt></ruby>は面白かったです。",
           "french": "Le film était intéressant."
         }
       }
@@ -1988,8 +2003,8 @@
         "with": "Oubli ou ajout indu de la particule な",
         "explanation": "La particule **な** ne s'utilise que devant un nom. En fin de phrase (attribut), on utilise directement **です**, jamais **な**.",
         "wrong_example": {
-          "japanese": "このまちは静かなです。",
-          "correct_japanese": "このまちは静かです。",
+          "japanese": "このまちは<ruby>静か<rt>しずか</rt></ruby>なです。",
+          "correct_japanese": "このまちは<ruby>静か<rt>しずか</rt></ruby>です。",
           "french": "Cette ville est calme."
         }
       }
@@ -2054,8 +2069,8 @@
         "with": "Verbe d'existence pour êtres vivants います",
         "explanation": "**あります** est strictement réservé aux objets inanimés, plantes et événements. Pour les humains et les animaux, il faut impérativement employer **います**.",
         "wrong_example": {
-          "japanese": "部屋に猫があります。",
-          "correct_japanese": "部屋に猫がいます。",
+          "japanese": "<ruby>部屋<rt>へや</rt></ruby>に<ruby>猫<rt>ねこ</rt></ruby>があります。",
+          "correct_japanese": "<ruby>部屋<rt>へや</rt></ruby>に<ruby>猫<rt>ねこ</rt></ruby>がいます。",
           "french": "Il y a un chat dans la chambre."
         }
       }
@@ -2120,8 +2135,8 @@
         "with": "Verbe d'existence pour objets あります",
         "explanation": "**います** s'applique uniquement aux humains et aux animaux. Utiliser **あります** pour un être vivant est incorrect.",
         "wrong_example": {
-          "japanese": "あそこに友達があります。",
-          "correct_japanese": "あそこに友達がいます。",
+          "japanese": "あそこに<ruby>友達<rt>ともだち</rt></ruby>があります。",
+          "correct_japanese": "あそこに<ruby>友達<rt>ともだち</rt></ruby>がいます。",
           "french": "Mon ami est là-bas."
         }
       }
@@ -2170,13 +2185,13 @@
         "highlight": "ほしい"
       },
       {
-        "japanese": "いま、なにが一番ほしいですか。",
+        "japanese": "いま、なにが<ruby>一<rt>いち</rt></ruby><ruby>番<rt>ばん</rt></ruby>ほしいですか。",
         "romaji": "Ima, nani ga ichiban hoshii desu ka.",
         "french": "Maintenant, que veux-tu le plus ?",
         "highlight": "ほしい"
       },
       {
-        "japanese": "おかねは欲しくないです。",
+        "japanese": "おかねは<ruby>欲<rt>ほ</rt></ruby>しくないです。",
         "romaji": "Okane wa hoshikunai desu.",
         "french": "Je ne veux pas d'argent.",
         "highlight": "欲しくない"
@@ -2187,8 +2202,8 @@
         "with": "Désir d'action 〜たい",
         "explanation": "**欲しい** s'applique uniquement à des **objets** (choses matérielles). Pour exprimer l'envie de faire une **action**, on utilise le suffixe verbal **〜たい**.",
         "wrong_example": {
-          "japanese": "日本に行きが欲しいです。",
-          "correct_japanese": "日本に行きたいです。",
+          "japanese": "日<ruby>本<rt>ほん</rt></ruby>に行きが<ruby>欲しい<rt>ほしい</rt></ruby>です。",
+          "correct_japanese": "日<ruby>本<rt>ほん</rt></ruby>に行きたいです。",
           "french": "Je veux aller au Japon."
         }
       }
@@ -2254,8 +2269,8 @@
         "with": "Désir d'objet 欲しい",
         "explanation": "**〜たい** s'attache exclusivement à des **verbes** pour exprimer une action. Pour exprimer le désir d'un **objet**, on emploie l'adjectif **欲しい**.",
         "wrong_example": {
-          "japanese": "車を買いいたいです。",
-          "correct_japanese": "車を買いたいです (ou 車が欲しいです)",
+          "japanese": "<ruby>車<rt>くるま</rt></ruby>を買いいたいです。",
+          "correct_japanese": "<ruby>車<rt>くるま</rt></ruby>を買いたいです (ou <ruby>車<rt>くるま</rt></ruby>が<ruby>欲しい<rt>ほしい</rt></ruby>です)",
           "french": "Je veux acheter une voiture / Je veux une voiture."
         }
       }
@@ -2389,8 +2404,8 @@
         "with": "Forme de dictionnaire pour les états permanents",
         "explanation": "Pour des verbes comme *shiru* (connaître) ou *sumu* (habiter), utiliser la forme simple (dictionnaire) pour décrire sa situation actuelle est incorrect. Il faut obligatoirement utiliser **〜ています**.",
         "wrong_example": {
-          "japanese": "東京に住みます。",
-          "correct_japanese": "東京に住んでいます。",
+          "japanese": "<ruby>東<rt>ひがし</rt></ruby>京に住みます。",
+          "correct_japanese": "<ruby>東<rt>ひがし</rt></ruby>京に住んでいます。",
           "french": "J'habite à Tokyo."
         }
       }
@@ -2455,8 +2470,8 @@
         "with": "Confusion avec l'interdiction 〜てはいけない",
         "explanation": "**〜てもいいです** exprime la permission (avoir le droit de), tandis que **〜てはいけません** exprime l'interdiction (ne pas avoir le droit de).",
         "wrong_example": {
-          "japanese": "ここで写真を撮ってもいけません。",
-          "correct_japanese": "ここで写真を撮ってもいいです (ou 撮ってはいけません)",
+          "japanese": "ここで<ruby>写真<rt>しゃしん</rt></ruby>を撮ってもいけません。",
+          "correct_japanese": "ここで<ruby>写真<rt>しゃしん</rt></ruby>を撮ってもいいです (ou 撮ってはいけません)",
           "french": "Vous pouvez prendre des photos ici (ou : Il est interdit de prendre des photos ici)."
         }
       }
@@ -2589,8 +2604,8 @@
         "with": "Oubli de la forme en て avant から",
         "explanation": "La particule **から** dans cette structure doit impérativement être rattachée à la **forme en て** du verbe. L'utiliser avec la forme dictionnaire ou la forme en *masu* est incorrect.",
         "wrong_example": {
-          "japanese": "手を洗いますから、食べます。",
-          "correct_japanese": "手を洗ってから、食べます。",
+          "japanese": "<ruby>手<rt>て</rt></ruby>を洗いますから、食べます。",
+          "correct_japanese": "<ruby>手<rt>て</rt></ruby>を洗ってから、食べます。",
           "french": "Après m'être lavé les mains, je mange."
         }
       }
@@ -2723,8 +2738,8 @@
         "with": "Absence d'obligation 〜なくてもいいです",
         "explanation": "**〜なければなりません** exprime une obligation inévitable (devoir faire), tandis que **〜なくてもいいです** exprime l'exact opposé, c'est-à-dire l'absence de besoin ou d'obligation.",
         "wrong_example": {
-          "japanese": "明日来なければなりません。(pour dire \"tu n'es pas obligé de venir demain\")",
-          "correct_japanese": "明日来なくてもいいです。",
+          "japanese": "<ruby>明日<rt>あした</rt></ruby>来なければなりません。(pour dire \"tu n'es pas obligé de venir demain\")",
+          "correct_japanese": "<ruby>明日<rt>あした</rt></ruby>来なくてもいいです。",
           "french": "Ce n'est pas la peine de venir demain."
         }
       }
@@ -2790,8 +2805,8 @@
         "with": "Obligation stricte 〜なければならない",
         "explanation": "**〜なくてもいいです** signifie qu'il n'y a pas d'obligation, alors que **〜なければなりません** indique au contraire qu'on ne peut pas y couper et qu'il faut obligatoirement réaliser l'action.",
         "wrong_example": {
-          "japanese": "毎日薬を飲まなくてもいいです。(lorsqu'il s'agit d'un traitement médical impératif)",
-          "correct_japanese": "毎日薬を飲まなければなりません。",
+          "japanese": "<ruby>毎日<rt>まいにち</rt></ruby><ruby>薬<rt>くすり</rt></ruby>を飲まなくてもいいです。(lorsqu'il s'agit d'un traitement médical impératif)",
+          "correct_japanese": "<ruby>毎日<rt>まいにち</rt></ruby><ruby>薬<rt>くすり</rt></ruby>を飲まなければなりません。",
           "french": "Je dois prendre mes médicaments tous les jours."
         }
       }
@@ -2857,8 +2872,8 @@
         "with": "Utilisation de la forme en ます ou de la racine devant ことができます",
         "explanation": "Le verbe précédant **ことができます** doit impérativement être à la **forme dictionnaire** (forme neutre/dictionnaire), jamais à la forme en *masu* ou réduit à sa racine.",
         "wrong_example": {
-          "japanese": "日本語を話しますことができます。",
-          "correct_japanese": "日本語を話すことができます。",
+          "japanese": "日<ruby>本<rt>ほん</rt></ruby>語を<ruby>話<rt>はなし</rt></ruby>しますことができます。",
+          "correct_japanese": "日<ruby>本<rt>ほん</rt></ruby>語を<ruby>話す<rt>はなす</rt></ruby>ことができます。",
           "french": "Je peux parler japonais."
         }
       }
@@ -2925,8 +2940,8 @@
         "with": "Oubli de こと avant です",
         "explanation": "La copule **です** ne peut pas se lier directement à un verbe. L'intermédiaire **こと** est indispensable pour nominaliser l'action.",
         "wrong_example": {
-          "japanese": "趣味は音楽を聞きますです。",
-          "correct_japanese": "趣味は音楽を聞くことです。",
+          "japanese": "趣味は<ruby>音楽<rt>おんがく</rt></ruby>を聞きますです。",
+          "correct_japanese": "趣味は<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞く<rt>きく</rt></ruby>ことです。",
           "french": "Mon passe-temps est d'écouter de la musique."
         }
       }
@@ -2992,8 +3007,8 @@
         "with": "Utilisation de la forme passée (~ta) devant まえに",
         "explanation": "Contrairement au français (« *après être venu* » ou au passé), le verbe précédant **まえに** est toujours au présent (forme dictionnaire), même si l'action de la phrase principale est au passé.",
         "wrong_example": {
-          "japanese": "日本へ来た前に、日本語を勉強しました。",
-          "correct_japanese": "日本へ来る前に、日本語を勉強しました。",
+          "japanese": "日<ruby>本<rt>ほん</rt></ruby>へ来た<ruby>前<rt>まえ</rt></ruby>に、日<ruby>本<rt>ほん</rt></ruby>語を<ruby>勉強<rt>べんきょう</rt></ruby>しました。",
+          "correct_japanese": "日<ruby>本<rt>ほん</rt></ruby>へ来る<ruby>前<rt>まえ</rt></ruby>に、日<ruby>本<rt>ほん</rt></ruby>語を<ruby>勉強<rt>べんきょう</rt></ruby>しました。",
           "french": "Avant de venir au Japon, j'ai étudié le japonais."
         }
       }
@@ -3059,8 +3074,8 @@
         "with": "Forme en た simple (passé ponctuel)",
         "explanation": "Pour relater un événement précis et daté (ex: *« je suis allé au cinéma hier »*), on utilise la forme en *ta* simple. **〜ことがあります** sert exclusivement à évoquer une expérience globale de sa vie, sans notion de date précise.",
         "wrong_example": {
-          "japanese": "昨日映画を見たことがあります。",
-          "correct_japanese": "昨日映画を見ました。",
+          "japanese": "<ruby>昨日<rt>きのう</rt></ruby><ruby>映画<rt>えいが</rt></ruby>を見たことがあります。",
+          "correct_japanese": "<ruby>昨日<rt>きのう</rt></ruby><ruby>映画<rt>えいが</rt></ruby>を見ました。",
           "french": "J'ai regardé un film hier."
         }
       }
@@ -3125,7 +3140,7 @@
         "with": "Utilisation de la forme dictionnaire pour un conseil affirmatif",
         "explanation": "Pour un conseil positif (« faire l'action »), il faut obligatoirement employer la **forme en た** (passé). Utiliser la forme dictionnaire est incorrect dans cette structure.",
         "wrong_example": {
-          "japanese": "早く食べるほうがいいです。",
+          "japanese": "早く<ruby>食べる<rt>たべる</rt></ruby>ほうがいいです。",
           "correct_japanese": "早く食べたほうがいいです。",
           "french": "Il vaut mieux manger rapidement."
         }
@@ -3191,8 +3206,8 @@
         "with": "Oubli du verbe final します / しました",
         "explanation": "La structure **〜たり〜たり** doit impérativement se conclure par le verbe **します** (ou son équivalent passé **しました**). On ne peut pas terminer la phrase directement après le deuxième *tari*.",
         "wrong_example": {
-          "japanese": "日曜日は本を読んだり、テレビを見たり。",
-          "correct_japanese": "日曜日は本を読んだり、テレビを見たりします。",
+          "japanese": "<ruby>日曜日<rt>にちようび</rt></ruby>は<ruby>本<rt>ほん</rt></ruby>を読んだり、テレビを見たり。",
+          "correct_japanese": "<ruby>日曜日<rt>にちようび</rt></ruby>は<ruby>本<rt>ほん</rt></ruby>を読んだり、テレビを見たりします。",
           "french": "Le dimanche, je lis des livres, je regarde la télé, etc."
         }
       }
@@ -3258,8 +3273,8 @@
         "with": "Confusion entre ましょう (proposition) et ましょうか (offre/invitation douce)",
         "explanation": "**〜ましょう** exprime une affirmation proactive (« Faisons cela ! »), tandis que l'ajout de **か** (**〜ましょうか**) transforme la phrase en question pour offrir son aide ou proposer une idée de manière plus ouverte.",
         "wrong_example": {
-          "japanese": "手伝いましょう。",
-          "correct_japanese": "手伝いましょうか。",
+          "japanese": "<ruby>手<rt>て</rt></ruby>伝いましょう。",
+          "correct_japanese": "<ruby>手<rt>て</rt></ruby>伝いましょうか。",
           "french": "Voulez-vous que je vous aide ?"
         }
       }
@@ -3314,7 +3329,7 @@
         "highlight": "てつだいましょうか"
       },
       {
-        "japanese": "いっしょにえいがをみに行きませんか。",
+        "japanese": "いっしょにえいがをみに<ruby>行<rt>い</rt></ruby>きませんか。",
         "romaji": "Issho ni eiga o mii ni ikimasen ka.",
         "french": "Ça te dirait d'aller voir un film ensemble ?",
         "highlight": "いきませんか"
@@ -3325,8 +3340,8 @@
         "with": "Utilisation de ませんか pour offrir de l'aide",
         "explanation": "**〜ませんか** sert à inviter quelqu'un à une activité partagée (« Ça te dit qu'on fasse... ? »). Pour offrir son aide personnelle à quelqu'un (« Veux-tu que je le fasse pour toi ? »), il faut impérativement employer **〜ましょうか**.",
         "wrong_example": {
-          "japanese": "荷物を持ちませんか。",
-          "correct_japanese": "荷物を持ちましょうか。",
+          "japanese": "<ruby>荷物<rt>にもつ</rt></ruby>を持ちませんか。",
+          "correct_japanese": "<ruby>荷物<rt>にもつ</rt></ruby>を持ちましょうか。",
           "french": "Voulez-vous que je porte vos bagages ?"
         }
       }
@@ -3392,8 +3407,8 @@
         "with": "Oubli de la particule に avec un adjectif en -na ou un nom",
         "explanation": "Les noms et les adjectifs en *-na* exigent impérativement la particule **に** avant **なる** (ex: *genki ni naru*). Utiliser *-ku* ou coller directement le mot est une erreur fréquente réservée aux adjectifs en *-i*.",
         "wrong_example": {
-          "japanese": "元気になります。",
-          "correct_japanese": "元気になります。",
+          "japanese": "<ruby>元気<rt>げんき</rt></ruby>になります。",
+          "correct_japanese": "<ruby>元気<rt>げんき</rt></ruby>になります。",
           "french": "Je vais aller mieux / retrouver la forme."
         }
       }
@@ -3459,8 +3474,8 @@
         "with": "Oubli de な avant ので avec un nom ou un adjectif en -na",
         "explanation": "Contrairement à **から**, la particule **ので** exige que les noms et les adjectifs en *-na* soient suivis de **な** (ex: *yasumi na node*) avant de se connecter.",
         "wrong_example": {
-          "japanese": "休みなので、家にいます。",
-          "correct_japanese": "休みなので、家にいます。",
+          "japanese": "休みなので、<ruby>家<rt>いえ</rt></ruby>にいます。",
+          "correct_japanese": "休みなので、<ruby>家<rt>いえ</rt></ruby>にいます。",
           "french": "Comme c'est un jour de congé, je reste à la maison."
         }
       }
@@ -3527,8 +3542,8 @@
         "with": "Utilisation de が dans des situations familiales informelles pour exprimer un contraste sec",
         "explanation": "**が** est formel et marque un contraste net, tandis que **けど** est beaucoup plus souple et usuel entre amis. Utiliser *ga* de façon excessive dans le langage courant peut paraître inutilement formel ou rigide.",
         "wrong_example": {
-          "japanese": "これおいしいですが、高いです。",
-          "correct_japanese": "これおいしいけど、高いです。",
+          "japanese": "これおいしいですが、<ruby>高い<rt>たかい</rt></ruby>です。",
+          "correct_japanese": "これおいしいけど、<ruby>高い<rt>たかい</rt></ruby>です。",
           "french": "C'est délicieux, mais c'est cher."
         }
       }
@@ -3595,8 +3610,8 @@
         "with": "Oubli de la copule だ avec les noms et adjectifs en -na au présent affirmatif",
         "explanation": "Avant la particule **と**, un nom ou un adjectif en *-na* au présent affirmatif doit impérativement comporter **だ** (ex: *ame da to omoimasu*). L'omettre est une erreur grammaticale majeure.",
         "wrong_example": {
-          "japanese": "明日が雨と思います。",
-          "correct_japanese": "明日が雨だ思います。",
+          "japanese": "<ruby>明日<rt>あした</rt></ruby>が<ruby>雨<rt>あめ</rt></ruby>と思います。",
+          "correct_japanese": "<ruby>明日<rt>あした</rt></ruby>が<ruby>雨<rt>あめ</rt></ruby>だ思います。",
           "french": "Je pense qu'il pleuvra demain."
         }
       }
@@ -3663,8 +3678,8 @@
         "with": "Confusion entre les pronoms (これ) et les déterminants (この)",
         "explanation": "**これ** est un pronom et s'emploie de manière autonome (suivi directement d'une particule comme *wa* ou *ga*). Pour qualifier directement un nom (« ce livre »), il faut utiliser le déterminant **この**.",
         "wrong_example": {
-          "japanese": "これ本は面白いです。",
-          "correct_japanese": "この本は面白いです。",
+          "japanese": "これ<ruby>本<rt>ほん</rt></ruby>は<ruby>面白い<rt>おもしろい</rt></ruby>です。",
+          "correct_japanese": "この<ruby>本<rt>ほん</rt></ruby>は<ruby>面白い<rt>おもしろい</rt></ruby>です。",
           "french": "Ce livre est intéressant."
         }
       }
@@ -3731,8 +3746,8 @@
         "with": "Utilisation de ces formes sans nom les accompagnant",
         "explanation": "Les formes en *-no* (**この**, **その**, **あの**, **どの**) ne peuvent jamais s'isoler seules : elles exigent un **nom** immédiatement après elles. Pour désigner un objet de façon isolée, il faut employer la série en *-re* (**これ**, **それ**, etc.).",
         "wrong_example": {
-          "japanese": "これは私の本で、それはあなたの本です。",
-          "correct_japanese": "この本は私ので、その本はあなたの本です。",
+          "japanese": "これは<ruby>私<rt>わたし</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>で、それはあなたの<ruby>本<rt>ほん</rt></ruby>です。",
+          "correct_japanese": "この<ruby>本<rt>ほん</rt></ruby>は<ruby>私<rt>わたし</rt></ruby>ので、その<ruby>本<rt>ほん</rt></ruby>はあなたの<ruby>本<rt>ほん</rt></ruby>です。",
           "french": "Ce livre est le mien, et ce livre-là est le tien."
         }
       }
@@ -3799,8 +3814,8 @@
         "with": "Confusion entre les pronoms d'objets (これ) et les pronoms de lieux (ここ)",
         "explanation": "**ここ**, **そこ**, **あそこ** et **どこ** désignent exclusivement des **lieux** ou des emplacements. Pour pointer un objet matériel, il faut utiliser la série *kore/sore/are/dore*.",
         "wrong_example": {
-          "japanese": "ここは私のペンです。",
-          "correct_japanese": "これは私のペンです。",
+          "japanese": "ここは<ruby>私<rt>わたし</rt></ruby>のペンです。",
+          "correct_japanese": "これは<ruby>私<rt>わたし</rt></ruby>のペンです。",
           "french": "Ceci est mon stylo."
         }
       }
@@ -3870,8 +3885,8 @@
         "with": "Oubli de la particule de liaison possessive の entre l'objet et la position",
         "explanation": "Le mot de position (*ue, shita, naka*, etc.) est un nom. Pour le rattacher à un autre nom, il faut obligatoirement utiliser la particule **の** (ex: *tsukue no ue* et non *tsukue ue*).",
         "wrong_example": {
-          "japanese": "机上に本があります。",
-          "correct_japanese": "机の上に本があります。",
+          "japanese": "<ruby>机<rt>つくえ</rt></ruby><ruby>上<rt>うえ</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>があります。",
+          "correct_japanese": "<ruby>机<rt>つくえ</rt></ruby>の<ruby>上<rt>うえ</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>があります。",
           "french": "Il y a un livre sur le bureau."
         }
       }
@@ -3936,8 +3951,8 @@
         "with": "Confusion entre le simple mot interrogatif de quantité (いくら - ikura) et どのくらい",
         "explanation": "**いくら** s'utilise presque exclusivement pour demander le **prix** précis d'un article, tandis que **どのくらい** sert à estimer une durée, une distance, ou une quantité globale (combien de temps, environ combien).",
         "wrong_example": {
-          "japanese": "日本までいくらがかかりますか。",
-          "correct_japanese": "日本までどのくらいかかりますか。",
+          "japanese": "日<ruby>本<rt>ほん</rt></ruby>までいくらがかかりますか。",
+          "correct_japanese": "日<ruby>本<rt>ほん</rt></ruby>までどのくらいかかりますか。",
           "french": "Combien de temps / d'effort cela prend-il pour aller au Japon ?"
         }
       }
@@ -4005,8 +4020,8 @@
         "with": "Conserver obligatoirement les particules directes を ou が avec les indéfinis",
         "explanation": "Bien qu'il ne soit pas strictement fautif de les garder, les particules directes **を** et **が** sont très souvent omises après *nanika*, *dareka* ou *dokoka* à l'oral, contrairement aux particules de lieu (*ni*, *e*) qui se maintiennent mieux.",
         "wrong_example": {
-          "japanese": "何かを飲みます。",
-          "correct_japanese": "何か飲みます。",
+          "japanese": "<ruby>何<rt>なん / なに</rt></ruby>かを飲みます。",
+          "correct_japanese": "<ruby>何<rt>なん / なに</rt></ruby>か飲みます。",
           "french": "Je bois quelque chose."
         }
       }
@@ -4073,8 +4088,8 @@
         "with": "Oubli de la forme négative du verbe avec も",
         "explanation": "Les pronoms suivis de **も** exigent impérativement un verbe conjugué au **négatif**. Utiliser un verbe affirmatif avec *nanimo* ou *daremo* est une erreur fondamentale.",
         "wrong_example": {
-          "japanese": "何も食べます。",
-          "correct_japanese": "何も食べません。",
+          "japanese": "<ruby>何<rt>なん / なに</rt></ruby>も食べます。",
+          "correct_japanese": "<ruby>何<rt>なん / なに</rt></ruby>も食べません。",
           "french": "Je ne mange rien."
         }
       }
@@ -4140,8 +4155,8 @@
         "with": "Confusion entre あげる et くれる lorsque quelqu'un donne quelque chose au locuteur",
         "explanation": "**あげる** s'emploie lorsque l'on donne vers l'extérieur ou entre tiers. Lorsque l'action est dirigée vers le locuteur (ou son clan), on doit obligatoirement utiliser **くれる**.",
         "wrong_example": {
-          "japanese": "田中さんは私に本をあげました。",
-          "correct_japanese": "田中さんは私に本をくれました。",
+          "japanese": "田<ruby>中<rt>なか</rt></ruby>さんは<ruby>私<rt>わたし</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>をあげました。",
+          "correct_japanese": "田<ruby>中<rt>なか</rt></ruby>さんは<ruby>私<rt>わたし</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>をくれました。",
           "french": "M. Tanaka m'a offert un livre."
         }
       }
@@ -4192,13 +4207,13 @@
         "highlight": "おしえてくれました"
       },
       {
-        "japanese": "ともだちに日本語を教えてあげました。",
+        "japanese": "ともだちに<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>語を教えてあげました。",
         "romaji": "Tomodachi ni nihongo o oshiete agemashita.",
         "french": "J'ai enseigné le japonais à mon ami (pour lui rendre service).",
         "highlight": "おしえてあげました"
       },
       {
-        "japanese": "せんせいに日本語を教えてもらいました。",
+        "japanese": "せんせいに<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>語を教えてもらいました。",
         "romaji": "Sensei ni nihongo o oshiete moraimashita.",
         "french": "J'ai reçu l'enseignement du japonais de la part du professeur.",
         "highlight": "おしえてもらいました"
@@ -4209,8 +4224,8 @@
         "with": "Utilisation de 〜てあげる envers une personne de statut supérieur ou par politesse excessive",
         "explanation": "Dire directement à quelqu'un de supérieur qu'on lui a rendu service avec **〜てあげる** peut paraître condescendant ou paternaliste. On préférera souvent utiliser **〜てもらう** de son propre point de vue.",
         "wrong_example": {
-          "japanese": "先生に日本語を教えてあげました。",
-          "correct_japanese": "先生に日本語を教えていただきました（もらいました）。",
+          "japanese": "<ruby>先生<rt>せんせい</rt></ruby>に日<ruby>本<rt>ほん</rt></ruby>語を教えてあげました。",
+          "correct_japanese": "<ruby>先生<rt>せんせい</rt></ruby>に日<ruby>本<rt>ほん</rt></ruby>語を教えていただきました（もらいました）。",
           "french": "J'ai eu la gentillesse de me faire enseigner le japonais par le professeur."
         }
       }
@@ -4276,7 +4291,7 @@
         "with": "Confondre le radical en -masu avec la forme en -te ou la forme neutre lors de l'ajout de やすい / にくい",
         "explanation": "Le suffixe s'ajoute **uniquement au radical** (la forme en *-masu* sans le *masu*), et non à la forme dictionnaire ou à la forme en *-te*.",
         "wrong_example": {
-          "japanese": "覚えるやすいです。",
+          "japanese": "<ruby>覚える<rt>おぼえる</rt></ruby>やすいです。",
           "correct_japanese": "覚えやすいです。",
           "french": "C'est facile à mémoriser."
         }
@@ -4334,7 +4349,7 @@
         "highlight": "たかくても"
       },
       {
-        "japanese": "にくがすきでも、きょうは食べません。",
+        "japanese": "にくがすきでも、きょうは<ruby>食<rt>た</rt></ruby>べません。",
         "romaji": "Niku ga suki demo, kyou wa tabemasen.",
         "french": "Même si j'aime la viande, je n'en mange pas aujourd'hui.",
         "highlight": "すきでも"
@@ -4345,8 +4360,8 @@
         "with": "Oublier d'utiliser la particule デ (de) avec les noms et adjectifs en -na",
         "explanation": "Avec les adjectifs en *-na* et les noms, on ne peut pas coller *mo* directement : il faut impérativement intercaler **でも** (*demo*) à la place de *na* ou de la copule.",
         "wrong_example": {
-          "japanese": "日曜日も暇でも、勉強しません。",
-          "correct_japanese": "日曜日でも、勉強しません。",
+          "japanese": "<ruby>日曜日<rt>にちようび</rt></ruby>も<ruby>暇<rt>ひま</rt></ruby>でも、<ruby>勉強<rt>べんきょう</rt></ruby>しません。",
+          "correct_japanese": "<ruby>日曜日<rt>にちようび</rt></ruby>でも、<ruby>勉強<rt>べんきょう</rt></ruby>しません。",
           "french": "Même si c'est dimanche, je n'étudie pas."
         }
       }
@@ -4395,7 +4410,7 @@
         "highlight": "ききながら"
       },
       {
-        "japanese": "コーヒーを飲みながら話しましょう。",
+        "japanese": "コーヒーを飲みながら<ruby>話<rt>はなし</rt></ruby>しましょう。",
         "romaji": "Koohii o nominagara hanashimashou.",
         "french": "Discutons tout en buvant un café.",
         "highlight": "のみながら"
@@ -4412,8 +4427,8 @@
         "with": "Inverser l'action principale et l'action secondaire avec ながら",
         "explanation": "L'action la plus importante (ou l'objectif principal) doit toujours se trouver à la **fin de la phrase**. Le verbe en *nagara* indique seulement l'accompagnement accessoire.",
         "wrong_example": {
-          "japanese": "勉強しながら音楽を聞きます。（si l'objectif principal était d'écouter de la musique en premier lieu)",
-          "correct_japanese": "音楽を聴きながら勉強します。（si l'activité principale est d'étudier)",
+          "japanese": "<ruby>勉強<rt>べんきょう</rt></ruby>しながら<ruby>音楽<rt>おんがく</rt></ruby>を聞きます。（si l'objectif principal était d'écouter de la musique en premier lieu)",
+          "correct_japanese": "<ruby>音楽<rt>おんがく</rt></ruby>を聴きながら<ruby>勉強<rt>べんきょう</rt></ruby>します。（si l'activité principale est d'étudier)",
           "french": "J'étudie tout en écoutant de la musique."
         }
       }
@@ -4480,8 +4495,8 @@
         "with": "Confondre la forme -tara avec la simple forme passée en -ta",
         "explanation": "Bien que **〜たら** utilise la base de la forme passée (*-ta*), l'ajout final de **ら** transforme complètement la nature du mot en subordonnée conditionnelle ou temporelle, et non en verbe principal au passé.",
         "wrong_example": {
-          "japanese": "時間があった。行きました。",
-          "correct_japanese": "時間があったら、行きます。",
+          "japanese": "<ruby>時間<rt>じかん</rt></ruby>があった。行きました。",
+          "correct_japanese": "<ruby>時間<rt>じかん</rt></ruby>があったら、行きます。",
           "french": "S'il y a du temps, j'y vais."
         }
       }
@@ -4538,7 +4553,7 @@
         "highlight": "せますぎます"
       },
       {
-        "japanese": "きょうはしごとが多すぎます。",
+        "japanese": "きょうはしごとが<ruby>多<rt>おお</rt></ruby>すぎます。",
         "romaji": "Kyou wa shigoto ga oosugimasu.",
         "french": "Il y a beaucoup trop de travail aujourd'hui.",
         "highlight": "おおすぎます"
@@ -4616,8 +4631,8 @@
         "with": "Confondre 〜ないで (sans faire) avec 〜なくて (parce que / et que l'on ne fait pas)",
         "explanation": "**〜ないで** s'utilise pour lier une action secondaire manquée à une action principale (« faire B sans faire A »), tandis que **〜なくて** s'emploie plutôt pour exprimer une cause ou une liaison neutre (« ne faisant pas A, alors... »).",
         "wrong_example": {
-          "japanese": "朝ご飯を食べなくて学校へ行きました。",
-          "correct_japanese": "朝ご飯を食べないで学校へ行きました。",
+          "japanese": "<ruby>朝ご飯<rt>あさごはん</rt></ruby>を食べなくて<ruby>学校<rt>がっこう</rt></ruby>へ行きました。",
+          "correct_japanese": "<ruby>朝ご飯<rt>あさごはん</rt></ruby>を食べないで<ruby>学校<rt>がっこう</rt></ruby>へ行きました。",
           "french": "Je suis allé à l'école sans manger mon petit-déjeuner."
         }
       }
@@ -4683,8 +4698,8 @@
         "with": "Confondre la proposition d'aide (〜ましょうか) avec l'invitation partagée (〜ましょう)",
         "explanation": "Bien que les deux partagent la base volitive, **〜ましょうか** (avec *ka*) pose la question d'effectuer l'action pour autrui (« On le fait ? / Veux-tu que je... »), tandis que **〜ましょう** exprime une suggestion mutuelle (« Faisons [ensemble]... »).",
         "wrong_example": {
-          "japanese": "一緒に食べましょうか。（lorsqu'on invite quelqu'un à manger avec soi de façon proactive et sûre）",
-          "correct_japanese": "一緒に食べましょう。",
+          "japanese": "<ruby>一緒<rt>いっしょ</rt></ruby>に食べましょうか。（lorsqu'on invite quelqu'un à manger avec soi de façon proactive et sûre）",
+          "correct_japanese": "<ruby>一緒<rt>いっしょ</rt></ruby>に食べましょう。",
           "french": "Mangeons ensemble !"
         }
       }
@@ -4727,19 +4742,19 @@
     ],
     "examples": [
       {
-        "japanese": "らいねんにほんへ行くつもりです。",
+        "japanese": "らいねんにほんへ<ruby>行く<rt>いく</rt></ruby>つもりです。",
         "romaji": "Rainen Nihon e iku tsumori desu.",
         "french": "J'ai l'intention d'aller au Japon l'année prochaine.",
         "highlight": "いくつもり"
       },
       {
-        "japanese": "あしたは会社へ行かないつもりです。",
+        "japanese": "あしたは<ruby>会社<rt>かいしゃ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>かないつもりです。",
         "romaji": "Ashita wa kaisha e ikanai tsumori desu.",
         "french": "Je compte ne pas aller au bureau demain.",
         "highlight": "いかないつもり"
       },
       {
-        "japanese": "来週から日本語を勉強するつもりです。",
+        "japanese": "<ruby>来週<rt>らいしゅう</rt></ruby>から<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>語を<ruby>勉強<rt>べんきょう</rt></ruby>するつもりです。",
         "romaji": "Raishuu kara Nihongo o benkyou suru tsumori desu.",
         "french": "J'ai l'intention d'étudier le japonais à partir de la semaine prochaine.",
         "highlight": "するつもり"
@@ -4750,8 +4765,8 @@
         "with": "Utiliser la forme polie en -masu devant つもり",
         "explanation": "Le terme **つもり** doit toujours être précédé d'un verbe à la **forme neutre (dictionnaire ou -nai)**, jamais de la terminaison de politesse en *-masu*.",
         "wrong_example": {
-          "japanese": "行くつもりです。（correct） / 行きますつもりです。（incorrect）",
-          "correct_japanese": "行くつもりです。",
+          "japanese": "<ruby>行く<rt>いく</rt></ruby>つもりです。（correct） / 行きますつもりです。（incorrect）",
+          "correct_japanese": "<ruby>行く<rt>いく</rt></ruby>つもりです。",
           "french": "J'ai l'intention d'y aller."
         }
       }
@@ -4885,8 +4900,8 @@
         "with": "Utiliser arimasu (あります) pour parler de ses biens personnels possédés",
         "explanation": "Bien que *arimasu* indique l'existence ou la possession inanimée, pour un objet que l'on possède ou transporte régulièrement (comme un téléphone, un parapluie, une voiture), on emploie **持っています** (*motte imasu*).",
         "wrong_example": {
-          "japanese": "車があります。（possédé / possédé en tant que bien personnel permanent）",
-          "correct_japanese": "車を持っています。",
+          "japanese": "<ruby>車<rt>くるま</rt></ruby>があります。（possédé / possédé en tant que bien personnel permanent）",
+          "correct_japanese": "<ruby>車<rt>くるま</rt></ruby>を持っています。",
           "french": "Je possède une voiture."
         }
       }
@@ -4952,8 +4967,8 @@
         "with": "Utiliser 〜なくちゃ / 〜なきゃ dans un cadre formel ou professionnel",
         "explanation": "Ces formes abrégées sont **strictement familières**. Dans un contexte poli ou de travail, il convient d'employer les formes complètes telles que *〜なければなりません* (*nakereba narimasen*).",
         "wrong_example": {
-          "japanese": "先生、もう行かなくちゃいけません。（incorrect - mélange de poli et de familier）",
-          "correct_japanese": "先生、もう行ければなりません。（ou 行かなければなりません）",
+          "japanese": "<ruby>先生<rt>せんせい</rt></ruby>、もう行かなくちゃいけません。（incorrect - mélange de poli et de familier）",
+          "correct_japanese": "<ruby>先生<rt>せんせい</rt></ruby>、もう行ければなりません。（ou 行かなければなりません）",
           "french": "Professeur, je dois y aller."
         }
       }
@@ -5022,8 +5037,8 @@
         "with": "Maintenir la copule 'da' à la fin d'une phrase affirmative avec un nom au style neutre",
         "explanation": "Bien que le dictionnaire indique *da* pour les noms au style neutre (ex: *gakusei da*), à l'oral familier, on omet souvent complètement le *da* en fin de phrase affirmative déclarative.",
         "wrong_example": {
-          "japanese": "彼は学生だ。（grammaticalement correct mais parfois un peu trop affirmatif/sec selon le contexte）",
-          "correct_japanese": "彼は学生。（ou 彼は学生だよ）",
+          "japanese": "彼は<ruby>学生<rt>がくせい</rt></ruby>だ。（grammaticalement correct mais parfois un peu trop affirmatif/sec selon le contexte）",
+          "correct_japanese": "彼は<ruby>学生<rt>がくせい</rt></ruby>。（ou 彼は<ruby>学生<rt>がくせい</rt></ruby>だよ）",
           "french": "C'est un étudiant."
         }
       }

@@ -22,22 +22,22 @@
           {
             "sub_title": "Groupe 1 (godan) : -u → -eru",
             "list": [
-              "書く (kaku) → **書ける** (kakeru)",
-              "話す (hanasu) → **話せる** (hanaseru)"
+              "書<rt>か</rt>く (kaku) → **書<rt>か</rt>ける** (kakeru)",
+              "話<rt>はな</rt>す (hanasu) → **話<rt>はな</rt>せる** (hanaseru)"
             ]
           },
           {
             "sub_title": "Groupe 2 (ichidan) : -ru → -rareru",
             "list": [
-              "食べる (taberu) → **食べられる** (taberareru)",
-              "見る (miru) → **見られる** (mirareru)"
+              "食<rt>た</rt>べる (taberu) → **食<rt>た</rt>べられる** (taberareru)",
+              "見<rt>み</rt>る (miru) → **見<rt>み</rt>られる** (mirareru)"
             ]
           },
           {
             "sub_title": "Verbes irréguliers",
             "list": [
               "する → **できる**",
-              "来る (kuru) → **来られる** (korareru)"
+              "来<rt>く</rt>る (kuru) → **来<rt>こ</rt>られる** (korareru)"
             ]
           }
         ]
@@ -46,30 +46,28 @@
         "label": "NUANCE : ことができる",
         "paragraphs": [
           "**ことができる** s'utilise toujours avec le verbe à la **forme dictionnaire (infinitif)**, quel que soit son groupe.",
-          "💡 **Particules :** La forme conjuguée privilégie la particule **が** (日本語**が**話せる), tandis que **ことができる** conserve généralement la particule **を** (日本語**を**話すことができる)."
+          "💡 **Particules :** La forme conjuguée privilégie la particule **が** (日本語<rt>にほんご</rt>**が**話<rt>はな</rt>せる), tandis que **ことができる** conserve généralement la particule **を** (日本語<rt>にほんご</rt>**を**話<rt>はな</rt>すことができる)."
         ],
         "blocks": [
           {
             "sub_title": "Structure",
-            "list": [
-              "[Verbe à l'infinitif] + **ことができる**"
-            ]
+            "list": ["[Verbe à l'infinitif] + **ことができる**"]
           }
         ]
       }
     ],
     "examples": [
       {
-        "japanese": "私は日本語が話せる。",
+        "japanese": "私<rt>わたし</rt> は 日本語<rt>にほんご</rt> が 話<rt>はな</rt>せる 。",
         "romaji": "Watashi wa nihongo ga hanaseru.",
         "french": "Je peux parler japonais. (Forme conjuguée - Oral / Naturel)",
-        "highlight": "話せる"
+        "highlight": ["話<rt>はな</rt>せる", "hanaseru"]
       },
       {
-        "japanese": "私は日本語を話すことができる。",
+        "japanese": "私<rt>わたし</rt> は 日本語<rt>にほんご</rt> を 話<rt>はな</rt>す こと が できる 。",
         "romaji": "Watashi wa nihongo o hanasu koto ga dekiru.",
         "french": "Je peux parler japonais. (Structure neutre - Écrit / Formel)",
-        "highlight": "話すことができる"
+        "highlight": ["話<rt>はな</rt>す こと が できる", "hanasu koto ga dekiru"]
       }
     ],
     "confusions": [
@@ -77,8 +75,8 @@
         "with": "Conserver la particule を avec le verbe potentiel conjugué",
         "explanation": "Avec la forme potentielle conjuguée (ex: *hanaseru*), l'objet direct prend généralement la particule **が** à la place de **を**.",
         "wrong_example": {
-          "japanese": "日本語を話せる。",
-          "correct_japanese": "日本語が話せる。",
+          "japanese": "日本語<rt>にほんご</rt> を 話<rt>はな</rt>せる 。",
+          "correct_japanese": "日本語<rt>にほんご</rt> が 話<rt>はな</rt>せる 。",
           "french": "Je peux parler japonais."
         }
       }
