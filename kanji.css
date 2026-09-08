@@ -421,6 +421,13 @@
     background-size: cover;
     background-position: center;
 }
+
+/* Fond niveaux-bg également sur la popup de table hiragana/katakana */
+#kana-table-popup-modal .mode-selection-card {
+    background: linear-gradient(180deg, rgba(6,11,24,0.75) 0%, rgba(6,11,24,0.9) 100%), url('images/niveaux-bg.webp');
+    background-size: cover;
+    background-position: center;
+}
     /* Audio quiz mic */
     .mic-btn { width: 80px; height: 80px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); color: var(--accent); font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; margin: 0 auto; }
     .mic-btn.listening { background: var(--accent); color: #000; box-shadow: 0 0 24px var(--accent); animation: pulse-mic 1.5s infinite; }
@@ -678,8 +685,6 @@
 /* Mots "Hiragana⮻"/"Katakana⮻" cliquables dans les slides d'introduction */
 
 /* Table de référence hiragana/katakana en popup */
-.kana-popup-group-title { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 16px 0 8px; text-align: center; }
-.kana-popup-group-title:first-child { margin-top: 0; }
 .kana-popup-rows { display: flex; flex-direction: column; gap: 6px; }
 .kana-popup-row { display: flex; gap: 6px; justify-content: center; }
 .kana-popup-cell { width: 44px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,229,255,0.06); border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0; }
