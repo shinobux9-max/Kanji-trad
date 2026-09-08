@@ -6,6 +6,7 @@
   "lesson_number": 1,
   "title": "Affirmer avec politesse",
   "item": "です",
+  "item_romaji": "desu",
   "pattern": "[Nom / Adjectif] + です",
   "badge": "Copule",
   "sections": [
@@ -26,8 +27,8 @@
         {
           "sub_title": "Structure de base",
           "list": [
-            "Nom + **です** (ex: <ruby>学生<rt>がくせい</rt></ruby>です - *gakusei desu*)",
-            "Adjectif + **です** (ex: <ruby>高<rt>たか</rt></ruby>いです - *takai desu*)"
+            "Nom + **です** (ex: <ruby>学生<rt>がくせい</rt></ruby>です - *gakusei desu*  - Je suis étudiant ou C'est un étudiant)",
+            "Adjectif + **です** (ex: <ruby>高<rt>たか</rt></ruby>いです - *takai desu*  - C'est cher. / C'est haut.)"
           ]
         }
       ]
@@ -61,7 +62,7 @@
   ],
   "confusions": [
     {
-      "with": "L'accumulation avec les verbes d'action (-masu)",
+      "with": "L'accumulation avec les verbes d'action (-masu) voir Leçon 04 🔎",
       "explanation": "**です** est une copule d'état, pas un verbe d'action. On ne le colle jamais directement à la suite d'un verbe conjugué en *-masu*, car le verbe se suffit à lui-même pour exprimer l'action et la politesse.",
       "wrong_example": {
         "japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt></ruby>べますです。",
@@ -80,6 +81,7 @@
     "lesson_number": 2,
     "title": "Nier poliment",
     "item": "ではありません / じゃないです",
+    "item_romaji": "dewa arimasen/ janai desu",
     "pattern": "[Nom / Adjectif en -na] + ではありません / じゃないです",
     "badge": "Copule - Négatif",
     "sections": [
@@ -101,8 +103,8 @@
           {
             "sub_title": "Structure de base",
             "list": [
-              "Écrit / Formel : Nom + **ではありません**",
-              "Oral / Courant : Nom + **じゃないです**"
+              "Écrit / Formel : Nom + **ではありません** (*dewa arimasen*)" ,
+              "Oral / Courant : Nom + **じゃないです (*janai desu*)**"
             ]
           }
         ]
