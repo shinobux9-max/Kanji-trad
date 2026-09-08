@@ -757,8 +757,8 @@
 .review-romaji { font-size: 0.8125rem; color: var(--gray); }
 .review-meaning { font-size: 1.125rem; color: #fff; font-weight: 600; }
 .review-example { padding: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; text-align: left; }
-.review-example .example-jp { font-size: 0.8125rem; color: #fff; margin-bottom: 4px; }
-.review-example .example-fr { font-size: 0.75rem; color: var(--gray); }
+.review-example .example-jp { font-size: 1.0625rem; color: #fff; margin-bottom: 6px; line-height: 1.6; }
+.review-example .example-fr { font-size: 0.9375rem; color: var(--gray); line-height: 1.4; }
 
 .review-grade-buttons { width: 100%; max-width: 340px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .grade-btn { padding: 12px 4px; border-radius: 10px; font-size: 0.6875rem; font-weight: bold; cursor: pointer; background: transparent; border: 1px solid; }

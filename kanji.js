@@ -2295,8 +2295,7 @@ function renderKanjiReviewScreen() {
             </div>
             ${flipped ? `
                 <div class="review-card-back">
-                    ${onReadings.length ? `<div class="review-romaji">On : ${onReadings.slice(0, 3).join('、')}</div>` : ''}
-                    ${kunReadings.length ? `<div class="review-romaji">Kun : ${kunReadings.slice(0, 3).join('、')}</div>` : ''}
+                    ${(onReadings.length || kunReadings.length) ? `<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">${buildReadingChips(kanjiData, { maxOn: 3, maxKun: 3 })}</div>` : ''}
                     <div class="review-meaning">${meanings.slice(0, 3).join(' / ') || '–'}</div>
                 </div>
             ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
@@ -3985,20 +3984,13 @@ async function showApprendreScreen(isBack = false) {
             <div class="dash-card free-training-card" onclick="startGrammarLessonFlow()">
                 <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${savedLessonProgress ? '▶' : '📚'}</div>
                 <div class="free-training-info">
-                    <div class="free-training-title">${savedLessonProgress ? 'Continuer ma leçon' : "Commencer l'apprentissage"}</div>
+                    <div class="free-training-title">${savedLessonProgress ? 'Reprendre' : "Introduction"}</div>
                     <div class="free-training-sub">${savedLessonProgress ? `Reprends là où tu t'es arrêté · ${activeLevelLabel} Grammaire` : `Une nouvelle notion vous attend · ${activeLevelLabel} Grammaire`}</div>
                 </div>
                 <span class="free-training-chevron">→</span>
             </div>
             
-            <div class="dash-card free-training-card" onclick="showExploreLessonsScreen()">
-                <div class="free-training-icon" style="background:rgba(0,229,255,0.15);color:var(--accent)">🔎</div>
-                <div class="free-training-info">
-                    <div class="free-training-title">Explorer les leçons</div>
-                    <div class="free-training-sub">Choisis librement une notion à revoir</div>
-                </div>
-                <span class="free-training-chevron">→</span>
-            </div>
+            <div class="dash-card weakness-widget" id="apprendre-weakness-widget" style="display:none;"></div>
             
             <div class="apprendre-section-header">
                 <span>Fiches</span>
@@ -4027,6 +4019,7 @@ async function showApprendreScreen(isBack = false) {
                 </div>
             </div>
         </div>`;
+    renderWeaknessWidget('apprendre-weakness-widget');
 }
 
 /* ══════════════════════════════════════════════════
@@ -8146,8 +8139,8 @@ async function trainWeaknessItems() {
     launchFreeTraining(pool, pool.length, { type: 'weakness', scope: 'weakness', countRaw: String(pool.length) });
 }
 
-async function renderWeaknessWidget() {
-    const el = document.getElementById('dashboard-weakness-widget');
+async function renderWeaknessWidget(elementId = 'dashboard-weakness-widget') {
+    const el = document.getElementById(elementId);
     if (!el) return;
 
     const data = getWeaknessData();
@@ -9060,6 +9053,13 @@ function closeAllOverlaysAndSessions() {
         bulkSelectRerender = null;
         updateBulkActionBar();
     }
+
+    // Sans ceci, changer d'écran (bottom-nav) pendant l'onboarding ou le parcours de leçon
+    // laissait le contexte swipe actif — un simple tap sur le nouvel écran pouvait alors
+    // déclencher advanceLessonStep()/advanceOnboarding() par erreur (id "category-content"
+    // réutilisé par de nombreux écrans), corrompant la progression sauvegardée en silence.
+    activeSwipeContext = null;
+    lessonSession = null;
 
     reviewSession = null;
     grammarReviewSession = null;
