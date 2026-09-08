@@ -2385,7 +2385,13 @@ function getPrimaryMeaning(word) {
 function buildVocabWordCloze(word, pool) {
     const ex = word.example;
     if (!ex || !ex.japanese) return null;
-    const target = ex.highlight || word.word;
+
+    // highlight peut être une chaîne (ancien format) ou [japonais, romaji] (nouveau format) —
+    // le second élément, quand fourni, permet de masquer précisément la partie répondue dans la
+    // romaji de la phrase avant réponse, plutôt que de devoir cacher toute la ligne.
+    const highlightIsArray = Array.isArray(ex.highlight);
+    const target = (highlightIsArray ? ex.highlight[0] : ex.highlight) || word.word;
+    const targetRomajiExact = highlightIsArray ? ex.highlight[1] : null;
     if (!target) return null;
 
     // Le texte peut contenir des <rt> insérés au milieu du mot ciblé (ex: 会<rt>あ</rt>い) —
@@ -2409,7 +2415,7 @@ function buildVocabWordCloze(word, pool) {
     // une forme conjuguée (会います), contrairement à word.reading qui est la forme dictionnaire
     // seule (会う) et ne correspondrait pas au texte réellement affiché dans le trou.
     const targetReading = extractReadingFromRawRt(rawTarget);
-    const targetRomaji = targetReading ? kanaToRomaji(targetReading) : (word.romaji || '');
+    const targetRomaji = targetRomajiExact || (targetReading ? kanaToRomaji(targetReading) : (word.romaji || ''));
 
     const distractorPool = pool.filter(w => w.id !== word.id && w.word && w.word !== target);
     if (distractorPool.length < 2) return null;
@@ -2421,9 +2427,20 @@ function buildVocabWordCloze(word, pool) {
 
     const tokens = [autoWrapRuby(rawBefore), target, autoWrapRuby(rawAfter)];
 
+    // Romaji de la phrase avec la partie répondue masquée (si on connaît sa romaji exacte) —
+    // reste lisible pour le contexte sans dévoiler la réponse avant d'avoir répondu.
+    const sentenceRomaji = ex.romaji || '';
+    let sentenceRomajiMasked = null;
+    if (targetRomajiExact && sentenceRomaji) {
+        const rIdx = sentenceRomaji.toLowerCase().indexOf(targetRomajiExact.toLowerCase());
+        if (rIdx !== -1) {
+            sentenceRomajiMasked = sentenceRomaji.slice(0, rIdx) + '＿＿＿' + sentenceRomaji.slice(rIdx + targetRomajiExact.length);
+        }
+    }
+
     return {
         tokens, blankIndex: 1, correct: target, options, french: ex.french || '',
-        sentenceRomaji: ex.romaji || '', targetReading
+        sentenceRomaji, sentenceRomajiMasked, targetReading
     };
 }
 
@@ -2654,7 +2671,9 @@ function renderClozeExercise(entry, session) {
         <div class="review-card review-cloze-card">
             <div class="review-quiz-instruction">Complète la phrase avec le bon élément</div>
             <div class="cloze-sentence">${sentenceHtml}</div>
-            ${answered ? `<div class="review-romaji">${clozeInfo.sentenceRomaji || (word.example && word.example.romaji) || ''}</div>` : ''}
+            ${answered
+                ? `<div class="review-romaji">${clozeInfo.sentenceRomaji || (word.example && word.example.romaji) || ''}</div>`
+                : (clozeInfo.sentenceRomajiMasked ? `<div class="review-romaji">${clozeInfo.sentenceRomajiMasked}</div>` : '')}
             <div class="review-example-fr-only">${mdBold((word.example && word.example.french) || '')}</div>
         </div>
         <div class="review-options">
