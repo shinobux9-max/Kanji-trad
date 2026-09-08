@@ -2421,8 +2421,8 @@ function buildVocabWordCloze(word, pool) {
     if (distractorPool.length < 2) return null;
     const distractorWords = shuffleArray(distractorPool).slice(0, 3);
     const options = shuffleArray([
-        { word: target, romaji: targetRomaji },
-        ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '' }))
+        { word: target, romaji: targetRomaji, reading: targetReading },
+        ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '', reading: w.reading || '' }))
     ]);
 
     const tokens = [autoWrapRuby(rawBefore), target, autoWrapRuby(rawAfter)];
@@ -2684,7 +2684,7 @@ function renderClozeExercise(entry, session) {
                     else if (opt.word === selected) cls += ' incorrect';
                 }
                 return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt.word.replace(/'/g, "\\'")}')">
-                    <span class="cloze-option-word">${opt.word}</span>
+                    <span class="cloze-option-word">${opt.reading ? `<ruby>${opt.word}<rt>${opt.reading}</rt></ruby>` : opt.word}</span>
                     ${opt.romaji ? `<span class="cloze-option-romaji">${opt.romaji}</span>` : ''}
                 </button>`;
             }).join('')}
