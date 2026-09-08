@@ -3947,59 +3947,38 @@ function markLessonOnboardingSeen() {
     try { localStorage.setItem(LESSON_ONBOARDING_KEY, '1'); } catch (e) {}
 }
 
-const LESSON_ONBOARDING_SLIDES = [
-    {
-        emoji: '🌸', title: 'Avant de commencer...',
-        body: [
-            "Félicitations pour avoir franchi le pas ! Le japonais est une langue fascinante, mais elle obéit à des logiques différentes du français.",
-            "Pas de panique : ce module d'apprentissage est conçu pour vous guider pas à pas, à votre rythme."
-        ],
-        cta: 'Continuer'
-    },
-    {
-        emoji: '📝', title: "Comment s'écrit le japonais ?",
-        body: [
-            "Le japonais utilise trois systèmes d'écriture mélangés :",
-            "1. Les **Hiraganas** : L'alphabet phonétique de base (pour la grammaire et les terminaisons).",
-            "2. Les **Katakanas** : L'autre alphabet phonétique, réservé aux mots d'origine étrangère.",
-            "3. Les **Kanjis** : Les caractères d'origine chinoise, qui portent le sens principal des mots (comme 学生 pour « étudiant »)."
-        ],
-        cta: 'Les bases indispensables'
-    },
-    {
-        emoji: '⏳', title: 'Kanas et régularité',
-        body: [
-            "**Apprendre les Kanas** : Mémorisez les 46 hiraganas et les 46 katakanas en priorité. Cela prend environ deux semaines en y consacrant 15 minutes par jour.",
-            "En langues, 10 minutes par jour valent infiniment mieux que 2 heures une fois par semaine. Laissez l'algorithme SRS faire son travail au quotidien."
-        ],
-        cta: 'Le piège à éviter'
-    },
-    {
-        emoji: '🚫', title: "Le piège de l'alphabet latin",
-        body: [
-            "Pour bien apprendre le japonais, commencez par maîtriser les syllabaires de base (hiragana et katakana) sans passer par la romanisation (romaji).",
-            "Arrêtez d'utiliser l'alphabet latin pour lire le japonais afin de ne pas bloquer votre progression naturelle."
-        ],
-        cta: 'Dernier conseil'
-    },
-    {
-        emoji: '🎧', title: 'Les clés sur le long terme',
-        body: [
-            "**Pratiquer la répétition** : Utilisez les cartes mémorielles pour ancrer durablement le vocabulaire.",
-            "**S'immerger au quotidien** : Regardez des animes, écoutez des podcasts ou lisez des mangas originaux pour habituer votre oreille.",
-            "**Aborder les Kanji progressivement** : Ne surchargez pas vos débuts, apprenez-les pas à pas une fois les bases acquises."
-        ],
-        cta: "C'est parti !"
+// Slides d'introduction chargées depuis data/onboarding.json (plutôt qu'en dur ici) — mises en
+// cache après le premier chargement, pas de refetch à chaque fois.
+let LESSON_ONBOARDING_SLIDES = [];
+let onboardingSlidesLoaded = false;
+
+async function getOnboardingSlides() {
+    if (onboardingSlidesLoaded) return LESSON_ONBOARDING_SLIDES;
+    try {
+        const res = await fetch('./data/onboarding.json', { cache: 'no-store' });
+        LESSON_ONBOARDING_SLIDES = res.ok ? await res.json() : [];
+    } catch (e) {
+        LESSON_ONBOARDING_SLIDES = [];
     }
-];
+    onboardingSlidesLoaded = true;
+    return LESSON_ONBOARDING_SLIDES;
+}
 
 let onboardingIndex = 0;
 
-function showLessonOnboarding() {
+async function showLessonOnboarding() {
     pushModalState('lesson-onboarding');
     onboardingIndex = 0;
-    activeSwipeContext = 'onboarding';
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    await getOnboardingSlides();
+    if (!LESSON_ONBOARDING_SLIDES.length) {
+        // JSON introuvable ou vide : ne bloque jamais l'utilisateur, enchaîne direct sur la leçon
+        markLessonOnboardingSeen();
+        history.back();
+        startGrammarLessonFlowActual();
+        return;
+    }
+    activeSwipeContext = 'onboarding';
     renderOnboardingSlide();
 }
 
@@ -4013,8 +3992,6 @@ function renderOnboardingSlide() {
         <div class="review-page lesson-slide-anim">
             <div class="review-header">
                 <button class="back-btn" onclick="skipLessonOnboarding()">✕</button>
-                ${buildDotsHtml(total, onboardingIndex)}
-                <div class="review-progress-text">${onboardingIndex + 1}/${total}</div>
             </div>
             <div style="text-align:center;padding:24px 0 16px">
                 <div style="font-size:3rem;margin-bottom:14px">${slide.emoji}</div>
@@ -4024,6 +4001,10 @@ function renderOnboardingSlide() {
                 ${slide.body.map(p => `<div class="section-paragraph">${makeKanaWordsClickable(mdBold(p))}</div>`).join('')}
             </div>
             <div class="lesson-tap-hint">${onboardingIndex > 0 ? '👈 Glisse ou touche pour naviguer 👉' : '👉 Glisse ou touche l\'écran pour naviguer.'}</div>
+            <div class="lesson-bottom-pagination">
+                ${buildDotsHtml(total, onboardingIndex)}
+                <div class="review-progress-text">${onboardingIndex + 1}/${total}</div>
+            </div>
         </div>
     `;
 }
@@ -4249,7 +4230,7 @@ function buildLessonSteps(lesson) {
 // puis enchaîne directement sur la vraie leçon. Les appels suivants sautent l'introduction.
 async function startGrammarLessonFlow() {
     if (!hasSeenLessonOnboarding()) {
-        showLessonOnboarding();
+        await showLessonOnboarding();
         return;
     }
     await startGrammarLessonFlowActual();
@@ -4308,6 +4289,10 @@ function renderLessonStep() {
     const header = `
         <div class="review-header">
             <button class="back-btn" onclick="exitLessonFlow()">✕</button>
+        </div>
+    `;
+    const footer = `
+        <div class="lesson-bottom-pagination">
             ${buildDotsHtml(s.steps.length, s.index)}
             <div class="review-progress-text">${s.index + 1}/${s.steps.length}</div>
         </div>
@@ -4324,7 +4309,7 @@ function renderLessonStep() {
 
     // innerHTML recrée un nœud DOM neuf à chaque appel, donc l'animation CSS ci-dessous se
     // rejoue automatiquement à chaque étape sans artifice supplémentaire.
-    container.innerHTML = `<div class="review-page lesson-slide-anim">${step.type === 'end' ? '' : header}${body}</div>`;
+    container.innerHTML = `<div class="review-page lesson-slide-anim">${step.type === 'end' ? '' : header}${body}${step.type === 'end' ? '' : footer}</div>`;
 }
 
 function renderLessonIntro() {
