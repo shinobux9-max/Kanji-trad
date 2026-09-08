@@ -1441,6 +1441,58 @@ function clearSearch() {
 const KANA_TO_ROMAJI = {"あ":"a","い":"i","う":"u","え":"e","お":"o","か":"ka","き":"ki","く":"ku","け":"ke","こ":"ko","さ":"sa","し":"shi","す":"su","せ":"se","そ":"so","た":"ta","ち":"chi","つ":"tsu","て":"te","と":"to","な":"na","に":"ni","ぬ":"nu","ね":"ne","の":"no","は":"ha","ひ":"hi","ふ":"fu","へ":"he","ほ":"ho","ま":"ma","み":"mi","む":"mu","め":"me","も":"mo","や":"ya","ゆ":"yu","よ":"yo","ら":"ra","り":"ri","る":"ru","れ":"re","ろ":"ro","わ":"wa","を":"wo","ん":"n","が":"ga","ぎ":"gi","ぐ":"gu","げ":"ge","ご":"go","ざ":"za","じ":"ji","ず":"zu","ぜ":"ze","ぞ":"zo","だ":"da","ぢ":"di","づ":"du","で":"de","ど":"do","ば":"ba","び":"bi","ぶ":"bu","べ":"be","ぼ":"bo","ぱ":"pa","ぴ":"pi","ぷ":"pu","ぺ":"pe","ぽ":"po","ア":"a","イ":"i","ウ":"u","エ":"e","オ":"o","カ":"ka","キ":"ki","ク":"ku","ケ":"ke","コ":"ko","サ":"sa","シ":"shi","ス":"su","セ":"se","ソ":"so","タ":"ta","チ":"chi","ツ":"tsu","テ":"te","ト":"to","ナ":"na","ニ":"ni","ヌ":"nu","ネ":"ne","ノ":"no","ハ":"ha","ヒ":"hi","フ":"fu","ヘ":"he","ホ":"ho","マ":"ma","ミ":"mi","ム":"mu","メ":"me","モ":"mo","ヤ":"ya","ユ":"yu","ヨ":"yo","ラ":"ra","リ":"ri","ル":"ru","レ":"re","ロ":"ro","ワ":"wa","ヲ":"wo","ン":"n"};
 function kanaToRomaji(str) { return [...str].map(c => KANA_TO_ROMAJI[c] || c).join(''); }
 
+// Table inverse (romaji -> hiragana), pour dériver des furigana approximatives à partir de la
+// ligne "romaji" d'un exemple quand aucun kana natif n'est disponible pour cette portion de texte.
+const ROMAJI_TO_KANA = {
+    kya:'きゃ',kyu:'きゅ',kyo:'きょ', sha:'しゃ',shu:'しゅ',sho:'しょ',
+    cha:'ちゃ',chu:'ちゅ',cho:'ちょ', nya:'にゃ',nyu:'にゅ',nyo:'にょ',
+    hya:'ひゃ',hyu:'ひゅ',hyo:'ひょ', mya:'みゃ',myu:'みゅ',myo:'みょ',
+    rya:'りゃ',ryu:'りゅ',ryo:'りょ', gya:'ぎゃ',gyu:'ぎゅ',gyo:'ぎょ',
+    ja:'じゃ',ju:'じゅ',jo:'じょ', bya:'びゃ',byu:'びゅ',byo:'びょ',
+    pya:'ぴゃ',pyu:'ぴゅ',pyo:'ぴょ',
+    ka:'か',ki:'き',ku:'く',ke:'け',ko:'こ',
+    sa:'さ',shi:'し',su:'す',se:'せ',so:'そ',
+    ta:'た',chi:'ち',tsu:'つ',te:'て',to:'と',
+    na:'な',ni:'に',nu:'ぬ',ne:'ね',no:'の',
+    ha:'は',hi:'ひ',fu:'ふ',he:'へ',ho:'ほ',
+    ma:'ま',mi:'み',mu:'む',me:'め',mo:'も',
+    ya:'や',yu:'ゆ',yo:'よ',
+    ra:'ら',ri:'り',ru:'る',re:'れ',ro:'ろ',
+    wa:'わ',wo:'を',
+    ga:'が',gi:'ぎ',gu:'ぐ',ge:'げ',go:'ご',
+    za:'ざ',ji:'じ',zu:'ず',ze:'ぜ',zo:'ぞ',
+    da:'だ',di:'ぢ',du:'づ',de:'で',do:'ど',
+    ba:'ば',bi:'び',bu:'ぶ',be:'べ',bo:'ぼ',
+    pa:'ぱ',pi:'ぴ',pu:'ぷ',pe:'ぺ',po:'ぽ',
+    a:'あ',i:'い',u:'う',e:'え',o:'お',
+    n:'ん'
+};
+
+function romajiToKana(str) {
+    if (!str) return '';
+    const s = str.toLowerCase();
+    let result = '';
+    let i = 0;
+    while (i < s.length) {
+        const c = s[i];
+        if (!/[a-z]/.test(c)) { result += s[i]; i++; continue; }
+        // Consonne doublée -> sokuon (petit tsu), ex: "tt" dans "matte"
+        if (i + 1 < s.length && c === s[i + 1] && 'kstpgzdbfr'.includes(c)) {
+            result += 'っ';
+            i++;
+            continue;
+        }
+        const three = s.slice(i, i + 3);
+        const two = s.slice(i, i + 2);
+        if (ROMAJI_TO_KANA[three]) { result += ROMAJI_TO_KANA[three]; i += 3; continue; }
+        if (ROMAJI_TO_KANA[two]) { result += ROMAJI_TO_KANA[two]; i += 2; continue; }
+        if (ROMAJI_TO_KANA[c]) { result += ROMAJI_TO_KANA[c]; i++; continue; }
+        result += c; // caractère non reconnu, laissé tel quel plutôt que planter
+        i++;
+    }
+    return result;
+}
+
 const SMALL_Y_TO_ROMAJI = { "ゃ": "ya", "ゅ": "yu", "ょ": "yo", "ャ": "ya", "ュ": "yu", "ョ": "yo" };
 // Ces bases perdent le "y" dans la combinaison yōon (しょ -> sho, pas shyo)
 const YOON_NO_Y_BASES = new Set(['し', 'じ', 'ち', 'ぢ', 'シ', 'ジ', 'チ', 'ヂ']);
@@ -2348,7 +2400,24 @@ function buildVocabWordCloze(word, pool) {
     ]);
 
     const tokens = [jp.slice(0, idx), target, jp.slice(idx + target.length)];
-    return { tokens, blankIndex: 1, correct: target, options, french: ex.french || '', sentenceRomaji: ex.romaji || '' };
+
+    // Découpe la romaji de la phrase autour de celle du mot ciblé (même logique que pour le
+    // japonais), puis convertit chaque morceau en kana — sert de furigana approximatives pour
+    // le reste de la phrase, qui n'a pas de lecture native disponible par ailleurs.
+    let beforeReading = '', afterReading = '';
+    const sentenceRomaji = ex.romaji || '';
+    if (word.romaji && sentenceRomaji) {
+        const rIdx = sentenceRomaji.toLowerCase().indexOf(word.romaji.toLowerCase());
+        if (rIdx !== -1) {
+            beforeReading = romajiToKana(sentenceRomaji.slice(0, rIdx).trim());
+            afterReading = romajiToKana(sentenceRomaji.slice(rIdx + word.romaji.length).trim());
+        }
+    }
+
+    return {
+        tokens, blankIndex: 1, correct: target, options, french: ex.french || '',
+        sentenceRomaji, beforeReading, afterReading, targetReading: word.reading || ''
+    };
 }
 
 function buildClozeParticle(word) {
@@ -2561,10 +2630,15 @@ function renderClozeExercise(entry, session) {
     const selected = session.selected;
     
     const sentenceHtml = clozeInfo.tokens.map((tok, i) => {
-        if (i !== clozeInfo.blankIndex) return `<span>${tok}</span>`;
-        if (!answered) return `<span class="cloze-blank">＿＿</span>`;
-        const cls = selected === clozeInfo.correct ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
-        return `<span class="${cls}">${selected}</span>`;
+        if (i === clozeInfo.blankIndex) {
+            if (!answered) return `<span class="cloze-blank">＿＿</span>`;
+            const cls = selected === clozeInfo.correct ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
+            const reading = clozeInfo.targetReading;
+            return `<span class="${cls}">${reading ? `<ruby>${selected}<rt>${reading}</rt></ruby>` : selected}</span>`;
+        }
+        if (!tok.trim()) return `<span>${tok}</span>`;
+        const reading = i === 0 ? clozeInfo.beforeReading : (i === 2 ? clozeInfo.afterReading : null);
+        return reading ? `<span><ruby>${tok}<rt>${reading}</rt></ruby></span>` : `<span>${tok}</span>`;
     }).join(' ');
     
     return `
