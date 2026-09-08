@@ -237,7 +237,7 @@
     }
     .kanji-top-info { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
     .kmc-badge { background: rgba(56,189,248,0.10); border: 1px solid rgba(56,189,248,0.3); color: var(--accent-muted); font-size: 0.6875rem; padding: 4px 10px; border-radius: 8px; font-weight: 700; }
-    .kmc-badge b { font-family: 'Syne', sans-serif; }
+    .kmc-badge b { font-weight: 700; }
 
     .kanji-body-grid { display: flex; gap: 12px; align-items: flex-start; }
 
@@ -263,7 +263,7 @@
     .card-stats-col { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; min-width: 88px; }
     .kmc-badge.mastery-badge { background: rgba(255,255,255,0.05); border-color: var(--border); color: var(--gray); text-align: center; }
     .kmc-badge.mastery-badge.mastered { background: rgba(74,222,128,0.15); border-color: #4ADE80; color: #4ADE80; }
-    .kmc-romaji { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+    .kmc-romaji { font-size: 0.75rem; color: #fff; font-weight: 700; }
 
     /* Boîte des lectures ON/KUN + rômaji, entre la carte kanji et Signification */
     .readings-box { margin: 12px 16px 0; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(10,17,32,0.75); backdrop-filter: blur(8px); }
