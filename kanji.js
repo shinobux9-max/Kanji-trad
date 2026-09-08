@@ -3883,6 +3883,16 @@ let activeSwipeContext = null; // null | 'lesson' | 'onboarding'
 // (réponse via boutons), l'intro (bouton "Commencer") ou la fin (boutons d'action).
 const LESSON_SWIPE_STEP_TYPES = new Set(['paragraph', 'structure', 'example', 'confusion']);
 
+// Points de pagination façon carrousel (remplace la barre de progression pour l'onboarding et
+// le parcours de leçon) — le point actif se déplace, montrant qu'il y a un avant et un après.
+function buildDotsHtml(total, currentIndex) {
+    let dots = '';
+    for (let i = 0; i < total; i++) {
+        dots += `<span class="lesson-dot ${i === currentIndex ? 'active' : ''}"></span>`;
+    }
+    return `<div class="lesson-dots">${dots}</div>`;
+}
+
 function initSwipeNavigation() {
     const el = document.getElementById('main-content');
     if (!el) return;
@@ -3998,13 +4008,12 @@ function renderOnboardingSlide() {
     if (!container) return;
     const slide = LESSON_ONBOARDING_SLIDES[onboardingIndex];
     const total = LESSON_ONBOARDING_SLIDES.length;
-    const pct = total > 1 ? Math.round((onboardingIndex / (total - 1)) * 100) : 0;
 
     container.innerHTML = `
         <div class="review-page lesson-slide-anim">
             <div class="review-header">
                 <button class="back-btn" onclick="skipLessonOnboarding()">✕</button>
-                <div class="review-progress-bar"><div class="review-progress-fill" style="width:${pct}%"></div></div>
+                ${buildDotsHtml(total, onboardingIndex)}
                 <div class="review-progress-text">${onboardingIndex + 1}/${total}</div>
             </div>
             <div style="text-align:center;padding:24px 0 16px">
@@ -4014,7 +4023,7 @@ function renderOnboardingSlide() {
             <div class="fiche-title-card" style="text-align:left;padding:20px">
                 ${slide.body.map(p => `<div class="section-paragraph">${makeKanaWordsClickable(mdBold(p))}</div>`).join('')}
             </div>
-            <div class="lesson-tap-hint">${onboardingIndex > 0 ? '👈 Glisse pour revenir · 👉 Glisse ou touche pour continuer' : '👉 Glisse ou touche l\'écran pour continuer'}</div>
+            <div class="lesson-tap-hint">${onboardingIndex > 0 ? '👈 Glisse ou touche pour naviguer 👉' : '👉 Glisse ou touche l\'écran pour naviguer.'}</div>
         </div>
     `;
 }
@@ -4295,12 +4304,11 @@ function renderLessonStep() {
     const s = lessonSession;
     const step = s.steps[s.index];
     if (step.type === 'end') clearLessonProgress(); else saveLessonProgress();
-    const pct = s.steps.length > 1 ? Math.round((s.index / (s.steps.length - 1)) * 100) : 0;
 
     const header = `
         <div class="review-header">
             <button class="back-btn" onclick="exitLessonFlow()">✕</button>
-            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${pct}%"></div></div>
+            ${buildDotsHtml(s.steps.length, s.index)}
             <div class="review-progress-text">${s.index + 1}/${s.steps.length}</div>
         </div>
     `;
@@ -4340,7 +4348,7 @@ function renderLessonParagraph(step) {
         <div class="lesson-tap-advance">
             ${step.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:6px">${step.label}</div>` : ''}
             <div class="lesson-floating-text-wrap"><div class="lesson-floating-text">${mdBold(step.text || '')}</div></div>
-            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour naviguer.</div>
         </div>
     `;
 }
@@ -4353,7 +4361,7 @@ function renderLessonStructure(step) {
                 ${Array.isArray(step.paragraphs) ? step.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('') : ''}
                 ${Array.isArray(step.list) && step.list.length ? `<ul class="section-list">${step.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>` : ''}
             </div>
-            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour naviguer.</div>
         </div>
     `;
 }
@@ -4370,7 +4378,7 @@ function renderLessonExample(step) {
                     <div style="font-size:0.75em;color:var(--gray)">${mdBold(ex.french || '')}</div>
                 </div>
             </div>
-            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour naviguer.</div>
         </div>
     `;
 }
@@ -4380,7 +4388,7 @@ function renderLessonConfusion(step) {
         <div class="lesson-tap-advance">
             <div class="section-sub-title" style="text-align:center;margin-bottom:10px">⚠️ Dernière règle d'or avant de t'entraîner</div>
             ${buildConfusionBoxHtml(step.confusion)}
-            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour continuer</div>
+            <div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour naviguer.</div>
         </div>
     `;
 }

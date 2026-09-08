@@ -728,6 +728,11 @@
 .review-header { width: 100%; display: flex; align-items: center; gap: 12px; }
 .review-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .review-progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+
+/* Points de pagination façon carrousel (onboarding + parcours de leçon) */
+.lesson-dots { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap; }
+.lesson-dot { width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.2); transition: all 0.2s ease; flex-shrink: 0; }
+.lesson-dot.active { width: 18px; background: var(--accent); }
 .review-progress-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
 .review-progress-text { font-size: 0.75rem; color: var(--gray); flex-shrink: 0; min-width: 50px; text-align: right; }
 
@@ -794,7 +799,7 @@
 ══════════════════════════════════════════════════ */
 .dash-review-cta { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.08)); border: 1px solid rgba(0,229,255,0.3); text-align: center; padding: 14px; }
 .dash-goal-row { display: flex; align-items: center; gap: 8px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); cursor: pointer; }
-.dash-goal-icon { flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; background: rgba(0,229,255,0.14); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; }
+.dash-goal-icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: rgba(0,229,255,0.14); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.375rem; }
 .dash-goal-text { flex: 1; font-size: 0.8125rem; color: var(--accent); font-weight: bold; text-align: left; }
 .dash-goal-chevron { flex-shrink: 0; color: var(--gray); font-size: 0.9375rem; }
 .dash-goal-badges { flex-shrink: 0; display: flex; gap: 5px; }
@@ -1320,7 +1325,7 @@
 /* Badge cliquable unifié — utilisé partout où un mot ouvre une popup (aperçu de leçon, mots
    hiragana/katakana de l'onboarding, particules du comparatif d'erreur) : même style partout
    pour que l'utilisateur reconnaisse instantanément "ceci est cliquable". */
-.eye-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8125rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); border-radius: 20px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
+.eye-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8125rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.1); border: 2px solid rgba(0,229,255,0.45); border-radius: 20px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
 .eye-badge:active { background: rgba(0,229,255,0.2); }
 .confusion-box-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
 .confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; line-height: 1.7; padding: 4px 0; }
