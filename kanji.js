@@ -3485,7 +3485,7 @@ function showGrammarDetail(lessonId, isBack = false) {
         
         <!-- BOUTONS ACTIONS -->
         <div class="action-buttons">
-            <button class="link-btn" onclick="startSpecificGrammarLesson('${lesson.id}', '${levelId}')">⏵ Revoir le cours animé</button>
+            <button class="link-btn" onclick="startSpecificGrammarLesson('${lesson.id}', '${levelId}')">Revoir le cours animé &nbsp;&nbsp;▶︎</button>
             <button class="revise-btn ${status === 'mastered' ? 'active' : ''}" onclick="trackItem('${lesson.id}', '${status === 'mastered' ? 'null' : 'mastered'}'); showGrammarDetail('${lesson.id}')">
                 ${status === 'mastered' ? '✓ Maîtrisé' : '✓ Marquer comme maîtrisé'}
             </button>
@@ -3812,7 +3812,18 @@ async function showApprendreScreen(isBack = false) {
                 <span class="free-training-chevron">→</span>
             </div>
             
-            <div class="explore-lessons-link" onclick="showExploreLessonsScreen()">🔎 Explorer les leçons</div>
+            <div class="dash-card free-training-card" onclick="showExploreLessonsScreen()">
+                <div class="free-training-icon" style="background:rgba(0,229,255,0.15);color:var(--accent)">🔎</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">Explorer les leçons</div>
+                    <div class="free-training-sub">Choisis librement une notion à revoir</div>
+                </div>
+                <span class="free-training-chevron">→</span>
+            </div>
+            
+            <div class="apprendre-section-header">
+                <span>Fiches</span>
+            </div>
             
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">

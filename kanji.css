@@ -540,7 +540,7 @@
     .item-description { font-size: 0.875rem; color: #fff; font-weight: 500; margin-bottom: 12px; }
     .pattern-box { font-size: 0.75rem; color: var(--gray); background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; }
     
-    .action-buttons { display: flex; gap: 8px; }
+    .action-buttons { display: flex; gap: 8px; background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(14,22,48,0.5)); border: 1px solid var(--border); border-radius: 12px; padding: 10px; }
     .link-btn { flex: 1; padding: 12px; background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(14,22,48,0.6)); border: 1px solid var(--border); border-radius: 8px; color: #fff; cursor: pointer; font-size: 0.75rem; }
     .link-btn:hover { background: linear-gradient(135deg, rgba(0,229,255,0.18), rgba(14,22,48,0.7)); }
     .revise-btn { flex: 1; padding: 12px; background: var(--accent); border: none; border-radius: 8px; color: var(--bg); cursor: pointer; font-size: 0.8125rem; font-weight: bold; }
@@ -646,7 +646,7 @@
 .lesson-tap-hint { text-align: center; font-size: 0.75rem; color: var(--gray); margin-top: 20px; opacity: 0.7; }
 
 /* Lien d'accès à Explorer les leçons */
-.explore-lessons-link { text-align: center; font-size: 0.8125rem; color: var(--accent-muted); padding: 4px 0 4px; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; }
+.apprendre-section-header { font-size: 0.75rem; font-weight: bold; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; padding: 4px 4px 10px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
 
 /* Écran Explorer les leçons */
 .explore-lesson-row { display: flex; align-items: center; gap: 12px; background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.15s; }
