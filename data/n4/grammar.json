@@ -61,7 +61,8 @@
         "japanese": "私<rt>わたし</rt> は 日本語<rt>にほんご</rt> が 話<rt>はな</rt>せる 。",
         "romaji": "Watashi wa nihongo ga hanaseru.",
         "french": "Je peux parler japonais. (Forme conjuguée - Oral / Naturel)",
-        "highlight": ["話<rt>はな</rt>せる", "hanaseru"]
+        "highlight": ["話<rt>はな</rt>せる"],
+        "highlight": ["hanaseru"]
       },
       {
         "japanese": "私<rt>わたし</rt> は 日本語<rt>にほんご</rt> を 話<rt>はな</rt>す こと が できる 。",

@@ -6,30 +6,20 @@
     "reading": "あう",
     "romaji": "au",
     "meanings": {
-      "primary": "Rencontrer",
-      "secondary": [
-        "Se voir",
-        "Faire la rencontre de"
-      ]
+      "primary": "Rencontrer", 
+      "secondary": ["Se voir", "Faire la rencontre de"]
     },
     "nuance": "S'utilise principalement pour une personne. Ne pas confondre avec 合う (convenir, s'ajuster). S'emploie avec la particule に.",
     "type": "verbe godan",
     "group": "u",
     "category": "action",
-    "kanji_list": [
-      "会"
-    ],
-    "particles": [
-      "に"
-    ],
+    "kanji_list": ["会"],
+    "particles": ["に"],
     "example": {
       "japanese": "<ruby>明日<rt>あした</rt></ruby> <ruby>友達<rt>ともだち</rt></ruby> に <ruby>会<rt>あ</rt></ruby>い ます 。",
       "romaji": "ashita tomodachi ni aimasu.",
       "french": "Je **rencontre** un ami demain.",
-      "highlight": [
-        "会い ます",
-        "aimasu"
-      ]
+      "highlight": ["会い ます", "aimasu"]
     }
   },
   {
