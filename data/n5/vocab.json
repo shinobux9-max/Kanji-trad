@@ -2190,7 +2190,9 @@
       "primary": "Dessin",
       "secondary": [
         "Peinture",
-        "Illustration"
+        "Illustration",
+        "Image",
+        "Tableau"
       ]
     },
     "nuance": "Nom désignant une œuvre graphique, un dessin ou une peinture. S'emploie souvent avec le verbe 見る (regarder) ouを描く (dessiner).",
@@ -2258,7 +2260,7 @@
         "Salle de projection"
       ]
     },
-    "nuance": "Nom composé de 映画 (film) et 館 (bâtiment/hall). Désigne l'établissement ou le bâtiment où l'on va voir des films.",
+    "nuance": "Nom composé de 映画 (film) et 館 (bâtiment / grand établissement). Désigne le lieu physique où l'on va voir des films.",
     "type": "nom",
     "group": "noun",
     "category": "place",
@@ -2268,12 +2270,13 @@
       "館"
     ],
     "particles": [
-      "で"
+      "で",
+      "を"
     ],
     "example": {
-      "japanese": "<ruby>映画館<rt>えいがかん</rt></ruby> で チケット を <ruby>買<rt>か</rt></ruby>い まし た 。",
-      "romaji": "eigakan de chiketto wo kaimashita.",
-      "french": "J'ai acheté un billet au **cinéma**.",
+      "japanese": "<ruby>映画館<rt>えいがかん</rt></ruby> で <ruby>映画<rt>えいが</rt></ruby> を <ruby>見<rt>み</rt></ruby> ます 。",
+      "romaji": "eigakan de eiga wo mimasu.",
+      "french": "Je regarde un film au **cinéma**.",
       "highlight": [
         "映画館",
         "eigakan"
@@ -8421,142 +8424,6 @@
     }
   },
   {
-    "id": "n5_v_272",
-    "level": "N5",
-    "word": "上着",
-    "reading": "うわぎ",
-    "romaji": "uwagi",
-    "meanings": {
-      "primary": "Veste",
-      "secondary": [
-        "Manteau",
-        "Dessus (vêtement)"
-      ]
-    },
-    "nuance": "Nom composé de 上 (dessus) et 着 (vêtement / porter). Désigne un vêtement de dessus que l'on enfile par-dessus d'autres couches, comme une veste ou un manteau.",
-    "type": "nom",
-    "group": "noun",
-    "category": "clothing",
-    "kanji_list": [
-      "上",
-      "着"
-    ],
-    "particles": [
-      "を"
-    ],
-    "example": {
-      "japanese": "<ruby>寒い<rt>さむい</rt></ruby> ので <ruby>上着<rt>うわぎ</rt></ruby> を <ruby>着<rt>き</rt></ruby> ます 。",
-      "romaji": "samui node uwagi wo kimasu.",
-      "french": "Comme il fait froid, je mets une **veste**.",
-      "highlight": [
-        "上着",
-        "uwagi"
-      ]
-    }
-  },
-  {
-    "id": "n5_v_273",
-    "level": "N5",
-    "word": "絵",
-    "reading": "え",
-    "romaji": "e",
-    "meanings": {
-      "primary": "Image",
-      "secondary": [
-        "Peinture",
-        "Dessin",
-        "Tableau"
-      ]
-    },
-    "nuance": "Nom simple désignant une illustration, un dessin ou une œuvre picturale.",
-    "type": "nom",
-    "group": "noun",
-    "category": "art",
-    "kanji_list": [
-      "絵"
-    ],
-    "particles": [
-      "を"
-    ],
-    "example": {
-      "japanese": "きれい な <ruby>絵<rt>え</rt></ruby> を <ruby>見<rt>み</rt></ruby> まし た 。",
-      "romaji": "kirei na e wo mimashita.",
-      "french": "J'ai vu un beau **tableau**.",
-      "highlight": [
-        "絵",
-        "e"
-      ]
-    }
-  },
-  {
-    "id": "n5_v_274",
-    "level": "N5",
-    "word": "映画",
-    "reading": "えいが",
-    "romaji": "eiga",
-    "meanings": {
-      "primary": "Film",
-      "secondary": [
-        "Cinéma (en tant qu'œuvre)"
-      ]
-    },
-    "nuance": "Nom composé de 映 (refléter / projeter) et 画 (image / dessin). Désigne un film cinématographique.",
-    "type": "nom",
-    "group": "noun",
-    "category": "art",
-    "kanji_list": [
-      "映",
-      "画"
-    ],
-    "particles": [
-      "を"
-    ],
-    "example": {
-      "japanese": "<ruby>週末<rt>しゅうまつ</rt></ruby> に <ruby>映画<rt>えいが</rt></ruby> を <ruby>見<rt>み</rt></ruby> ます 。",
-      "romaji": "shuumatsu ni eiga wo mimasu.",
-      "french": "Je regarde un **film** ce week-end.",
-      "highlight": [
-        "映画",
-        "eiga"
-      ]
-    }
-  },
-  {
-    "id": "n5_v_275",
-    "level": "N5",
-    "word": "映画館",
-    "reading": "えいがかん",
-    "romaji": "eigakan",
-    "meanings": {
-      "primary": "Cinéma",
-      "secondary": [
-        "Salle de projection"
-      ]
-    },
-    "nuance": "Nom composé de 映画 (film) et 館 (bâtiment / grand établissement). Désigne le lieu physique où l'on va voir des films.",
-    "type": "nom",
-    "group": "noun",
-    "category": "place",
-    "kanji_list": [
-      "映",
-      "画",
-      "館"
-    ],
-    "particles": [
-      "で",
-      "を"
-    ],
-    "example": {
-      "japanese": "<ruby>映画館<rt>えいがかん</rt></ruby> で <ruby>映画<rt>えいが</rt></ruby> を <ruby>見<rt>み</rt></ruby> ます 。",
-      "romaji": "eigakan de eiga wo mimasu.",
-      "french": "Je regarde un film au **cinéma**.",
-      "highlight": [
-        "映画館",
-        "eigakan"
-      ]
-    }
-  },
-  {
     "id": "n5_v_276",
     "level": "N5",
     "word": "英語",
@@ -10834,37 +10701,6 @@
         "家内",
         "kanai"
       ]
-    }
-  },
-  {
-    "id": "n5_v_357",
-    "level": "N5",
-    "word": "鞄",
-    "reading": "かばん",
-    "romaji": "kaban",
-    "meanings": {
-      "primary": "Sac",
-      "secondary": [
-        "Cartable",
-        "Valise",
-        "Sacoche"
-      ]
-    },
-    "nuance": "Nom désignant un sac (sac à main, cartable, mallette). Souvent écrit en hiragana ou avec le kanji 鞄.",
-    "type": "nom",
-    "group": "noun",
-    "category": "object",
-    "kanji_list": [
-      "鞄"
-    ],
-    "particles": [
-      "が"
-    ],
-    "example": {
-      "japanese": "<ruby>机<rt>つくえ</rt></ruby> の <ruby>上<rt>うえ</rt></ruby> に かばん が あり ます 。",
-      "romaji": "tsukue no ue ni kaban ga arimasu.",
-      "french": "Il y a un **sac** sur le bureau.",
-      "highlight": "かばん"
     }
   },
   {
@@ -21972,37 +21808,6 @@
       "highlight": [
         "プール",
         "puuru"
-      ]
-    }
-  },
-  {
-    "id": "n5_v_702",
-    "level": "N5",
-    "word": "二日",
-    "reading": "ふつか",
-    "romaji": "futsuka",
-    "meanings": {
-      "primary": "Deux jours (durée)",
-      "secondary": [
-        "Le 2 du mois"
-      ]
-    },
-    "nuance": "Nom utilisant la numération japonaise native. Sert à indiquer soit une durée de deux jours, soit le deuxième jour d'un mois calendaire.",
-    "type": "nom",
-    "group": "noun",
-    "category": "time",
-    "kanji_list": [
-      "二",
-      "日"
-    ],
-    "particles": [],
-    "example": {
-      "japanese": "<ruby>旅行<rt>りょこう</rt></ruby> は <ruby>二<rt>に</rt></ruby> 日間 です 。",
-      "romaji": "ryokou wa futsukan desu.",
-      "french": "Le voyage dure **deux jours**.",
-      "highlight": [
-        "二日",
-        "futsuka"
       ]
     }
   },
