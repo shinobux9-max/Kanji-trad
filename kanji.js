@@ -8846,10 +8846,12 @@ async function init() {
         </div>`;
 
     try {
-        // Chargement en parallèle : mapping JLPT + Kanjis
+        // Chargement en parallèle : mapping JLPT + Kanjis (fichier local, plus de dépendance
+        // réseau vers raw.githubusercontent.com qui pouvait faire planter tout init() au moindre
+        // aléa réseau — le fichier existe déjà à la racine du dépôt)
         const [mappingRes, kanjiRes] = await Promise.all([
             fetch('./data/mapping.json', { cache: 'no-store' }),
-            fetch('https://raw.githubusercontent.com/shinobux9-max/Kanji-trad/refs/heads/main/kanji_jouyou_fr.json', { cache: 'no-store' })
+            fetch('./kanji_jouyou_fr.json', { cache: 'no-store' })
         ]);
         
         if (!kanjiRes.ok) throw new Error(`Erreur réseau kanji : ${kanjiRes.status}`);

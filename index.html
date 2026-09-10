@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260910_exemples_unifies">
+    <link rel="stylesheet" href="kanji.css?v=20260910_nav_fix">
 </head>
 <body>
 
@@ -268,8 +268,28 @@
     </div>
 </div>
 
+<!-- ── BARRE DE NAVIGATION PRINCIPALE (bas d'écran) ──────────────── -->
+<nav id="bottom-nav">
+    <div class="bnav-item" id="bnav-accueil" onclick="bottomNavGo('accueil')">
+        <span class="bnav-icon">🏠</span>
+        <span class="bnav-label">Accueil</span>
+    </div>
+    <div class="bnav-item" id="bnav-recherche" onclick="bottomNavGo('recherche')">
+        <span class="bnav-icon">🔍</span>
+        <span class="bnav-label">Recherche</span>
+    </div>
+    <div class="bnav-item" id="bnav-apprendre" onclick="bottomNavGo('apprendre')">
+        <span class="bnav-icon">📚</span>
+        <span class="bnav-label">Apprendre</span>
+    </div>
+    <div class="bnav-item" id="bnav-revisions" onclick="bottomNavGo('revisions')">
+        <span class="bnav-icon">🔄</span>
+        <span class="bnav-label">Réviser</span>
+    </div>
+</nav>
+
     <!-- Script principal -->
-    <script src="kanji.js?v=20260910_exemples_unifies"></script>
+    <script src="kanji.js?v=20260910_nav_fix"></script>
 
 </body>
 </html>

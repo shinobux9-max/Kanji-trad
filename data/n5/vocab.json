@@ -2770,7 +2770,7 @@
     "primary": "Demander",
     "secondary": ["Commander (un plat au restaurant)", "Prier / confier une tâche"]
   },
-  "nuance": "Verbe godan transitif désignant l'action de faire une requête, de demander une faveur, ou de commander (un plat, une boisson au restaurant). *(Note : classé ici en fin de thématique culinaire/quotidienne pour la commande au restaurant)*.",
+  "nuance": "Verbe utilisé pour demander un service, faire une prière ou, dans le contexte du restaurant, passer une commande (plat ou boisson).",
   "type": "verbe godan",
   "group": "u",
   "category": "nourriture_boissons",
@@ -2794,7 +2794,7 @@
     "primary": "Manger",
     "secondary": ["Consommer (un aliment)"]
   },
-  "nuance": "Verbe ichidan transitif fondamental désignant l'action de manger ou de se nourrir.",
+  "nuance": "Verbe ichidan fondamental désignant l'action de manger ou de se nourrir.",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "nourriture_boissons",
@@ -2818,7 +2818,7 @@
     "primary": "Nourriture",
     "secondary": ["Aliment", "Comestible"]
   },
-  "nuance": "Nom composé du radical du verbe 食べる (manger) et de 物 (chose/objet), désignant la nourriture de manière générale.",
+  "nuance": "Nom composé du radical du verbe <ruby>食<rt>た</rt></ruby>べる (taberu, manger) et de <ruby>物<rt>もの</rt></ruby> (mono, chose/objet), désignant la nourriture de manière générale.",
   "type": "nom",
   "group": "nom",
   "category": "nourriture_boissons",
@@ -2842,7 +2842,7 @@
     "primary": "Cantine",
     "secondary": ["Réfectoire", "Cafétéria", "Restaurant populaire"]
   },
-  "nuance": "Nom composé de 食 (manger/repas) et 堂 (salle/bâtiment), désignant une cantine (scolaire ou d'entreprise), un réfectoire ou un petit restaurant populaire et sans prétention.",
+  "nuance": "Nom composé de <ruby>食<rt>しょく</rt></ruby> (shoku, manger/repas) et <ruby>堂<rt>どう</rt></ruby> (dou, salle/bâtiment), désignant une cantine (shokudou - scolaire ou d'entreprise), un réfectoire ou un petit restaurant populaire et sans prétention.",
   "type": "nom",
   "group": "nom",
   "category": "nourriture_boissons",
