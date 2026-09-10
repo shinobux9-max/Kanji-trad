@@ -2811,7 +2811,7 @@
   "id": "n5_v_118",
   "level": "N5",
   "word": "食べ物",
-  "word_furigana": "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></g>",
+  "word_furigana": "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>",
   "reading": "たべもの",
   "romaji": "tabemono",
   "meanings": {
@@ -2859,21 +2859,21 @@
   "id": "n5_v_120",
   "level": "N5",
   "word": "飲み物",
-  "word_furigana": "<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></g>",
+  "word_furigana": "<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby>",
   "reading": "のみもの",
   "romaji": "nomimono",
   "meanings": {
     "primary": "Boisson",
     "secondary": ["Liquide buvable"]
   },
-  "nuance": "Nom composé du radical du verbe 飲む (boire) et de 物 (chose/objet), désignant toute sorte de boisson (eau, thé, jus, etc.).",
+  "nuance": "Nom composé du radical du verbe <ruby>飲<rt>の</rt></ruby>む (nomu, boire) et de <ruby>物<rt>もの</rt></ruby> (mono, chose/objet), désignant toute sorte de boisson (nomimono - eau, thé, jus, etc.).",
   "type": "nom",
   "group": "nom",
   "category": "nourriture_boissons",
   "kanji_list": ["飲", "物"],
   "particles": [],
   "example": {
-    "japanese": "のど が かわいた ので 、<ruby>冷<rt>つめ</rt></ruby>たい <ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></g> を <ruby>買<rt>か</rt></ruby>います 。",
+    "japanese": "のど が かわいた ので 、<ruby>冷<rt>つめ</rt></ruby>たい <ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby> を <ruby>買<rt>か</rt></ruby>います 。",
     "romaji": "nodo ga kawaita node, tsumetai nomimono o kaimasu.",
     "french": "J'ai soif, alors j'achète une **boisson** fraîche.",
     "highlight": ["飲み物", "nomimono"]
@@ -2883,14 +2883,14 @@
   "id": "n5_v_121",
   "level": "N5",
   "word": "飴",
-  "word_furigana": "<ruby>飴<rt>あめ</rt></g>",
+  "word_furigana": "<ruby>飴<rt>あめ</rt></ruby>",
   "reading": "あめ",
   "romaji": "ame",
   "meanings": {
     "primary": "Bonbon",
     "secondary": ["Sucre d'orge", "Caramel dur"]
   },
-  "nuance": "Nom désignant les bonbons durs ou les sucreries (souvent écrit en hiragana あめ). *(Note : attention à ne pas le confondre avec 雨 - la pluie, qui se prononce de la même façon mais a un accent tonal différent)*.",
+  "nuance": "Nom désignant les bonbons durs ou les sucreries souvent écrit en hiragana あめ (ame). *(Note : attention à ne pas le confondre avec <ruby>雨<rt>あめ</rt></ruby> - la pluie, qui se prononce de la même façon mais avec un pitch accent (changement d'intonation), la voix commence haut et descend, il faut donc placer l'intonation sur le premier 'a')*.)*.",
   "type": "nom",
   "group": "nom",
   "category": "nourriture_boissons",
@@ -2907,7 +2907,7 @@
   "id": "n5_v_122",
   "level": "N5",
   "word": "魚",
-  "word_furigana": "<ruby>魚<rt>さかな</rt></g>",
+  "word_furigana": "<ruby>魚<rt>さかな</rt></ruby>",
   "reading": "さかな",
   "romaji": "sakana",
   "meanings": {
@@ -2921,7 +2921,7 @@
   "kanji_list": ["魚"],
   "particles": [],
   "example": {
-    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、<ruby>朝<rt>あさ</rt></ruby> ごはん に おいしい <ruby>魚<rt>さかな</rt></g> を <ruby>食<rt>た</rt></ruby>べます 。",
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、<ruby>朝<rt>あさ</rt></ruby> ごはん に おいしい <ruby>魚<rt>さかな</rt></ruby> を <ruby>食<rt>た</rt></ruby>べます 。",
     "romaji": "maiasa, asa gohan ni oishii sakana o tabemasu.",
     "french": "Chaque matin, je mange du bon **poisson** au petit-déjeuner.",
     "highlight": ["魚", "sakana"]
@@ -2938,7 +2938,7 @@
     "primary": "Classe",
     "secondary": ["Salle de classe", "Groupe d'élèves"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'class', désignant une classe d'élèves ou un groupe de cours (bien que pour la salle de cours physique, on utilise souvent 教室 - kyoushitsu).",
+  "nuance": "Mot en katakana issu de l'anglais 'class', désignant une classe d'élèves ou un groupe de cours.",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -2962,7 +2962,7 @@
     "primary": "Test",
     "secondary": ["Examen", "Interrogation écrite"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'test', désignant un examen scolaire ou une évaluation (synonyme fréquent de 試験 - shiken).",
+  "nuance": "Mot en katakana issu de l'anglais 'test', désignant un examen scolaire ou une évaluation. Synonyme fréquent de <ruby>試験<rt>しけん</rt></ruby> (shiken).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3010,7 +3010,7 @@
     "primary": "Université",
     "secondary": ["Enseignement supérieur"]
   },
-  "nuance": "Nom composé de 大 (grand) et de 学 (étude/apprentissage), désignant un établissement d'enseignement supérieur ou une université.",
+  "nuance": "Nom composé de <ruby>大<rt>だい</rt></ruby> (dai, grand) et de <ruby>学<rt>がく</rt></ruby> (gaku, étude/apprentissage), désignant un établissement d'enseignement supérieur ou une université.",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3034,7 +3034,7 @@
     "primary": "École",
     "secondary": ["Établissement scolaire"]
   },
-  "nuance": "Nom désignant une école au sens général (école primaire, collège, lycée, etc.). Composé de 学 (étude) et 校 (bâtiment/établissement).",
+  "nuance": "Nom désignant une école (<ruby>学校<rt>がっこう</rt></ruby> - gakkou) au sens général (école primaire, collège, lycée, etc.). Composé de <ruby>学<rt>がく</rt></ruby> (gaku, étude) et <ruby>校<rt>こう</rt></ruby> (kou, bâtiment/établissement).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3061,7 +3061,7 @@
   "nuance": "Nom désignant un cours d'eau, une rivière ou un fleuve. *(Note : classé ici dans la transition vers l'environnement ou les lieux extérieurs proches de l'école/la ville)*.",
   "type": "nom",
   "group": "nom",
-  "category": "ecole_apprentissage",
+  "category": "lieux",
   "kanji_list": ["川"],
   "particles": [],
   "example": {
@@ -3082,7 +3082,7 @@
     "primary": "Jardin d'enfants",
     "secondary": ["École maternelle"]
   },
-  "nuance": "Nom composé de 幼 (jeune/enfance), 稚 (enfance) et 園 (jardin/établissement), désignant la maternelle ou le jardin d'enfants pour les jeunes enfants avant l'école primaire.",
+  "nuance": "Nom composé de <ruby>幼<rt>よう</rt></ruby> (you, jeune/enfance), <ruby>稚<rt>ち</rt></ruby> (chi, enfance) et <ruby>園<rt>えん</rt></ruby> (en, jardin/établissement), désignant la maternelle ou le jardin d'enfants pour les jeunes enfants avant l'école primaire.",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3106,7 +3106,7 @@
     "primary": "Tirer",
     "secondary": ["Tracer (une ligne)", "Chercher (dans un dictionnaire)", "Jouer d'un instrument à cordes"]
   },
-  "nuance": "Verbe godan transitif polyvalent désignant l'action de tirer (contraire de 押す - ossu, pousser), de feuilleter un dictionnaire (辞書を引く), ou de jouer d'un instrument à cordes/piano.",
+  "nuance": "Verbe d'action polyvalent. Son sens premier est de tirer. Il s'utilise aussi dans des expressions, comme feuilleter ou chercher dans un dictionnaire <ruby>辞書<rt>じしょ</rt></ruby>を<ruby>引<rt>ひ</rt></ruby>く(jisho o hiku), ou encore jouer d'un instrument à cordes ou du piano.",
   "type": "verbe godan",
   "group": "u",
   "category": "ecole_apprentissage",
@@ -3154,7 +3154,7 @@
     "primary": "Enseigner",
     "secondary": ["Apprendre (quelque chose à quelqu'un)", "Indiquer", "Informer"]
   },
-  "nuance": "Verbe ichidan transitif désignant l'action de transmettre un savoir, d'enseigner une matière, ou d'indiquer une information ou un chemin à quelqu'un.",
+  "nuance": "Verbe ichidan exprimant différentes actions : transmettre un savoir, enseigner une matière, ou indiquer une information ou un chemin à quelqu'un.",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "ecole_apprentissage",
@@ -3178,7 +3178,7 @@
     "primary": "Salle de classe",
     "secondary": ["Classe (salle physique)"]
   },
-  "nuance": "Nom composé de 教 (enseigner) et 室 (chambre/pièce), désignant la salle de cours physique où se déroulent les leçons.",
+  "nuance": "Nom composé de <ruby>教<rt>きょう</rt></ruby> (kyou, enseigner) et <ruby>室<rt>しつ</rt></ruby> (shitsu, chambre/pièce), désignant la salle de cours physique où se déroulent les leçons.",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3200,9 +3200,9 @@
   "romaji": "hon",
   "meanings": {
     "primary": "Livre",
-    "secondary": ["Ouvrage (compteur :冊 - satsu)"]
+    "secondary": ["Ouvrage"]
   },
-  "nuance": "Nom fondamental désignant un livre. *(Note : sert aussi de suffixe de comptage pour les objets longs et cylindriques comme les crayons, bouteilles ou arbres).* ",
+  "nuance": "Nom désignant un livre. Attention à deux particularités : 1) Pour compter des livres, on doit utiliser le suffixe spécifique <ruby>冊<rt>さつ</rt></ruby> (satsu). 2) Ce mot sert lui-même de suffixe de comptage (compteur) pour les objets longs et cylindriques (crayons, bouteilles...).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3224,9 +3224,9 @@
   "romaji": "shiru",
   "meanings": {
     "primary": "Savoir",
-    "secondary": ["Connaître", "Apprendre (une nouvelle)"]
+    "secondary": ["Connaître"]
   },
-  "nuance": "Verbe godan transitif désignant le fait de posséder une information ou de connaître quelqu'un/quelque chose. *(Note : à la forme affirmative, on utilise souvent l'état résultatif 知っている - shitte iru pour 'savoir' ou 'connaître')*.",
+  "nuance": "Verbe désignant le fait de posséder une information. Attention à sa grammaire unique : 1) À l'affirmatif ('je sais'), on utilise TOUJOURS la forme continue <ruby>知っている<rt>しっている</rt></ruby> (shitte iru). 2) Au négatif ('je ne sais pas'), on revient à la forme simple <ruby>知らない<rt>しらない</rt></ruby> (shiranai). On n'utilise 'shiru' seul que pour traduire 'apprendre/découvrir une nouvelle'.",
   "type": "verbe godan",
   "group": "u",
   "category": "ecole_apprentissage",
@@ -3250,7 +3250,7 @@
     "primary": "Anglais",
     "secondary": ["Langue anglaise"]
   },
-  "nuance": "Nom composé de 英 (Angleterre / brillant) et 語 (langue), désignant la langue anglaise, matière enseignée de manière quasi universelle dans le système scolaire japonais.",
+  "nuance": "Nom désignant la langue anglaise. Il est composé de 英 (abréviation pour l'Angleterre) et du suffixe universel <ruby>語<rt>ご</rt></ruby> (go) qui signifie 'langue'. On retrouve ce suffixe pour former d'autres langues, comme <ruby>フランス語<rt>ふらんすご</rt></ruby> (le français) ou <ruby>日本語<rt>にほんご</rt></ruby> (le japonais).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3272,9 +3272,9 @@
   "romaji": "oboeru",
   "meanings": {
     "primary": "Mémoriser",
-    "secondary": ["Apprendre par cœur", "Se souvenir", "Retenir"]
+    "secondary": ["Apprendre par cœur"]
   },
-  "nuance": "Verbe ichidan transitif désignant l'action de stocker des informations en mémoire, d'apprendre du vocabulaire ou des kanjis, ou de se rappeler d'une sensation.",
+  "nuance": "Verbe ichidan désignant le processus d'enregistrer une information en mémoire (ex: du vocabulaire). Attention à sa nuance de temps : à la forme simple, il signifie 'mémoriser/retenir' (action en cours). Pour exprimer l'état résultatif 'se souvenir / se rappeler de quelque chose', on utilise sa forme continue <ruby>覚えている<rt>おぼえている</rt></ruby> (oboete iru).",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "ecole_apprentissage",
@@ -3298,7 +3298,7 @@
     "primary": "Mot",
     "secondary": ["Langue", "Parole", "Vocabulaire", "Terme"]
   },
-  "nuance": "Nom désignant un mot, une expression, la parole ou le langage en général. Composé de 言 (dire/parole) et 葉 (feuille).",
+  "nuance": "Nom désignant un mot, une expression, la parole ou le langage en général. Composé de <ruby>言<rt>こと</rt></ruby> (dire/parole) et <ruby>葉<rt>ば</rt></ruby> (feuille).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3320,9 +3320,9 @@
   "romaji": "jisho",
   "meanings": {
     "primary": "Dictionnaire",
-    "secondary": ["Lexique", "Dictionnaire de langue"]
+    "secondary": ["Lexique"]
   },
-  "nuance": "Nom désignant un dictionnaire (synonyme courant de 国語辞典 ou 辞典). Composé de 辞 (mot/expression) et 書 (livre/écrit).",
+  "nuance": "Nom composé de <ruby>辞<rt>じ</rt></ruby> (ji, mot/expression) et <ruby>書<rt>しょ</rt></ruby> (sho, livre/écrit). Pour dire 'consulter ou chercher dans un dictionnaire', on utilise toujours l'expression figée <ruby>辞書を引く<rt>じしょをひく</rt></ruby> (jisho wo hiku). Pour compter les dictionnaires, on utilise le compteur des livres : <ruby>冊<rt>さつ</rt></ruby> (satsu).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3346,7 +3346,7 @@
     "primary": "Crayon",
     "secondary": ["Crayon à papier"]
   },
-  "nuance": "Nom composé de 鉛 (plomb) et 筆 (pinceau/crayon), désignant le crayon à papier ou crayon graphite utilisé pour écrire ou dessiner.",
+  "nuance": "Nom composé de <ruby>鉛<rt>えん</rt></ruby> (en, plomb) et <ruby>筆<rt>ひつ</rt></ruby> (hitsu, pinceau/style d'écriture). Comme il s'agit d'un objet long et cylindrique, on utilise obligatoirement le suffixe de comptage <ruby>本<rt>ほん</rt></ruby> (hon) pour le dénombrer (<ruby>鉛筆<rt>えんぴつ</rt></ruby> (enpitsu), ex: <ruby>鉛筆<rt>えんぴつ</rt></ruby>を1<ruby>本<rt>いっぽん</rt></ruby><ruby>買<rt>か</rt></ruby>う (enpitsu o ippon kau, acheter un crayon).",
   "type": "nom",
   "group": "nom",
   "category": "ecole_apprentissage",
@@ -3370,7 +3370,7 @@
     "primary": "Travail",
     "secondary": ["Emploi", "Profession", "Tâche professionnelle"]
   },
-  "nuance": "Nom désignant le travail au sens d'emploi ou d'occupation professionnelle. Composé de 仕 (servir/faire) et 事 (chose abstraite/affaire).",
+  "nuance": "Nom désignant une activité professionnelle ou une tâche à accomplir. Composé de <ruby>仕<rt>し</rt></ruby> (shi, servir/faire) et <ruby>事<rt>ごと</rt></ruby> (goto, chose abstraite/affaire).",
   "type": "nom",
   "group": "nom",
   "category": "travail_entreprise",
@@ -3394,7 +3394,7 @@
     "primary": "Entreprise",
     "secondary": ["Société", "Compagnie", "Bureau (par extension)"]
   },
-  "nuance": "Nom composé de 会 (se réunir) et 社 (société/sanctuaire), désignant une entreprise ou une société commerciale.",
+  "nuance": "Nom désignant une entreprise ou une société commerciale. Composé de <ruby>会<rt>かい</rt></ruby> (kai, se réunir) et <ruby>社<rt>しゃ</rt></ruby> (sha, société/sanctuaire).",
   "type": "nom",
   "group": "nom",
   "category": "travail_entreprise",
@@ -3418,7 +3418,7 @@
     "primary": "Travailler pour",
     "secondary": ["Être employé par", "Exercer un emploi dans"]
   },
-  "nuance": "Verbe ichidan transitif (souvent employé avec la structure à la particule に) désignant le fait d'être employé dans une entreprise ou d'exercer une fonction au sein d'une organisation.",
+  "nuance": "Verbe ichidan souvent employé avec la structure à la particule に (ni) désignant le fait d'être employé dans une entreprise ou d'exercer une fonction au sein d'une organisation.",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "travail_entreprise",
@@ -3442,7 +3442,7 @@
     "primary": "Occupé",
     "secondary": ["Pris", "Débordé (par le travail ou les tâches)"]
   },
-  "nuance": "Adjectif en i désignant un état d'emploi du temps chargé ou une personne très occupée (composé du kanji 心 - cœur - et 亡 - perdre/disparaître, suggérant l'esprit accaparé).",
+  "nuance": "Adjectif en -i désignant un emploi du temps chargé. Son kanji (<ruby>忙<rt>ぼう</rt></ruby>) est fascinant : il fusionne la clé du 'cœur/esprit' <ruby>心<rt>しん</rt></ruby> (shin) et le kanji de la 'perte/disparition' <ruby>亡<rt>ぼう</rt></ruby> (bou). Littéralement, être pressé ou occupé en japonais signifie ainsi 'perdre son cœur' ou avoir l'esprit complètement accaparé.",
   "type": "adjectif en i",
   "group": "i",
   "category": "travail_entreprise",
@@ -3464,9 +3464,9 @@
   "romaji": "tsukue",
   "meanings": {
     "primary": "Bureau",
-    "secondary": ["Table de travail", "Pupitre"]
+    "secondary": ["Table de travail"]
   },
-  "nuance": "Nom désignant un bureau de travail ou une table d'étude (par opposition à 椅子 - isu, la chaise, ou au bureau administratif 会社 / 事務所).",
+  "nuance": "Nom désignant le meuble de travail (bureau, pupitre d'écolier). Pour le distinguer, <ruby>机<rt>つくえ</rt></ruby> (tsukue) sert à étudier ou travailler, tandis que <ruby>テーブル<rt>てーぶる</rt></ruby> (tēburu) sert plutôt pour les repas. Comme c'est un grand meuble, on utilise le compteur <ruby>台<rt>だい</rt></ruby> (dai) pour le compter.",
   "type": "nom",
   "group": "nom",
   "category": "travail_entreprise",
@@ -3490,7 +3490,7 @@
     "primary": "Bureau de poste",
     "secondary": ["La poste"]
   },
-  "nuance": "Nom composé de 郵便 (poste/courrier) et de 局 (bureau/station), désignant l'établissement postal où l'on envoie des lettres et des colis ou gère des services financiers.",
+  "nuance": "Nom composé de <ruby>郵便<rt>ゆうびん</rt></ruby> (yuubin, courrier) et <ruby>局<rt>きょく</rt></ruby> (kyoku, bureau). Au Japon, les bureaux de poste et les boîtes aux lettres sont reconnaissables à leur couleur rouge vif et au symbole 〒.",
   "type": "nom",
   "group": "nom",
   "category": "travail_entreprise",
@@ -3512,9 +3512,9 @@
   "romaji": "takushii",
   "meanings": {
     "primary": "Taxi",
-    "secondary": ["Voiture de location avec chauffeur"]
+    "secondary": []
   },
-  "nuance": "Mot en katakana issu de l'anglais 'taxi', désignant un véhicule de transport public payant avec chauffeur.",
+  "nuance": "Emprunt à l'anglais 'taxi' écrit en katakana. Comme il s'agit d'un véhicule, on utilise le compteur <ruby>台<rt>だい</rt></ruby> (dai) pour le compter. Note culturelle : les portes arrière des taxis japonais s'ouvrent et se ferment automatiquement, il ne faut pas essayer de les manipuler soi-même !",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3536,9 +3536,9 @@
   "romaji": "basu",
   "meanings": {
     "primary": "Bus",
-    "secondary": ["Autobus", "Autocar"]
+    "secondary": ["Autobus"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'bus', désignant un autobus pour les déplacements urbains ou interurbains.",
+  "nuance": "Emprunt à l'anglais 'bus' écrit en katakana. Comme pour le taxi et la voiture, on utilise le compteur <ruby>台<rt>だい</rt></ruby> (dai) pour le dénombrer. Pour dire 'prendre le bus', on utilise le verbe <ruby>乗る<rt>のる</rt></ruby> (basu ni noru), et un arrêt de bus se dit <ruby>バス停<rt>ばすてい</rt></ruby> (basutei).",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3559,10 +3559,10 @@
   "reading": "のる",
   "romaji": "noru",
   "meanings": {
-    "primary": "Monter dans",
-    "secondary": ["Prendre (un moyen de transport)", "Embarquer"]
+    "primary": "Prendre (un transport)",
+    "secondary": ["Monter dans"]
   },
-  "nuance": "Verbe godan intransitif (utilisé avec la particule に) désignant l'action de monter à bord d'un véhicule (train, bus, voiture, etc.).",
+  "nuance": "Verbe godan utilisé pour monter à bord d'un véhicule (train, vélo, bus, voiture). Attention à la grammaire : il s'utilise TOUJOURS avec la particule に (ni) juste après le moyen de transport choisi. Son opposé exact est <ruby>降りる<rt>おりる</rt></ruby> (oriru, descendre d'un véhicule).",
   "type": "verbe godan",
   "group": "u",
   "category": "transports",
@@ -3584,9 +3584,9 @@
   "romaji": "dekakeru",
   "meanings": {
     "primary": "Sortir",
-    "secondary": ["Partir (de chez soi)", "Quitter la maison pour une sortie"]
+    "secondary": ["Partir (de chez soi)"]
   },
-  "nuance": "Verbe ichidan intransitif désignant l'action de quitter son domicile pour aller quelque part (pour affaires, loisirs, courses, etc.).",
+  "nuance": "Verbe ichidan désignant l'action de quitter son domicile avec un but précis (loisirs, travail, courses). Contrairement au verbe simple <ruby>出る<rt>でる</rt></ruby> (deru, sortir d'une pièce ou d'un lieu), 'dekakeru' implique une absence plus longue et un déplacement à l'extérieur.",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "transports",
@@ -3600,7 +3600,7 @@
   }
 },
 {
-  "id": "n5_v_151",
+    "id": "n5_v_151",
   "level": "N5",
   "word": "地下鉄",
   "word_furigana": "<ruby>地<rt>ち</rt></ruby><ruby>下<rt>か</rt></ruby><ruby>鉄<rt>てつ</rt></ruby>",
@@ -3608,9 +3608,9 @@
   "romaji": "chikatetsu",
   "meanings": {
     "primary": "Métro",
-    "secondary": ["Chemin de fer souterrain"]
+    "secondary": []
   },
-  "nuance": "Nom composé de 地 (terre/sol), 下 (dessous) et 鉄 (fer/métal), désignant le réseau ou une rame de métro souterrain.",
+  "nuance": "Nom désignant le métro souterrain. Son étymologie littérale est 'le chemin de fer <ruby>鉄<rt>てつ</rt></ruby> (tetsu) sous <ruby>下<rt>か</rt></ruby> (ka) la terre <ruby>地<rt>ち</rt></ruby> (chi)'. Comme il s'agit d'un moyen de transport, on utilise le suffixe de comptage <ruby>台<rt>だい</rt></ruby> (dai) pour dénombrer ses rames.",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3634,7 +3634,7 @@
     "primary": "Venir",
     "secondary": ["Arriver", "Se rendre vers (le locuteur)"]
   },
-  "nuance": "Verbe irrégulier fondamental exprimant un mouvement vers l'endroit où se trouve le locuteur. C'est l'un des verbes de déplacement les plus importants avec 行く (aller).",
+  "nuance": "Verbe irrégulier unique (groupe 3) indiquant un mouvement vers le locuteur. Attention aux changements de lecture majeurs de son kanji selon sa conjugaison : il se lit 'ku' à la forme d'origine, 'ki' à la forme polie, et 'ko' à la forme négative.",
   "type": "verbe irrégulier",
   "group": "irrégulier",
   "category": "transports",
@@ -3658,7 +3658,7 @@
     "primary": "Naître",
     "secondary": ["Venir au monde"]
   },
-  "nuance": "Verbe ichidan intransitif désignant l'action de naître ou d'être mis au monde.",
+  "nuance": "Verbe ichidan désignant l'action de naître ou d'être mis au monde.",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "transports",
@@ -3682,7 +3682,7 @@
     "primary": "Automobile",
     "secondary": ["Voiture", "Véhicule automobile"]
   },
-  "nuance": "Nom composé de 自 (soi-même), 動 (bouger) et 車 (véhicule/roue), désignant une automobile (plus formel que le mot en katakana クルマ ou 車).",
+  "nuance": "Nom désignant une automobile, plus formel que le mot en katakana クルマ (kuruma). Composé de <ruby>自<rt>じ</rt></ruby> (ji, soi-même), <ruby>動<rt>どう</rt></ruby> (dou, bouger) et <ruby>車<rt>しゃ</rt></ruby> (sha, véhicule/roue).",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3706,7 +3706,7 @@
     "primary": "Vélo",
     "secondary": ["Bicyclette"]
   },
-  "nuance": "Nom composé de 自 (soi-même), 転 (rouler/tourner) et 車 (véhicule/roue), désignant une bicyclette.",
+  "nuance": "Nom désignant une bicyclette. Composé de <ruby>自<rt>じ</rt></ruby> (ji, soi-même), <ruby>転<rt>てん</rt></ruby> (ten, rouler/tourner) et <ruby>車<rt>しゃ</rt></ruby> (sha, véhicule/roue).",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3730,7 +3730,7 @@
     "primary": "Aller",
     "secondary": ["Se rendre", "Partir vers"]
   },
-  "nuance": "Verbe godan intransitif fondamental exprimant un mouvement du locuteur vers un autre lieu (souvent utilisé avec les particules に, へ ou まで).",
+  "nuance": "Verbe godan fondamental exprimant un mouvement du locuteur vers un autre lieu souvent utilisé avec les particules に (ni), へ (he) ou まで (made).",
   "type": "verbe godan",
   "group": "u",
   "category": "transports",
@@ -3754,7 +3754,7 @@
     "primary": "Courir",
     "secondary": ["Galoper", "Rouler (pour un véhicule)"]
   },
-  "nuance": "Verbe godan intransitif désignant l'action de courir (à pied) ou de circuler rapidement (pour une voiture, un train).",
+  "nuance": "Verbe désignant l'action de courir ou de circuler pour un véhicule. Attention au piège visuel : bien qu'il se termine par 'ru' précédé d'un son 'i', ce n'est PAS un verbe ichidan. C'est un verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) irrégulier. Sa forme polie est donc <ruby>走ります<rt>はしります</rt></ruby> (hashirimasu) et non 'hashimasu'.",
   "type": "verbe godan",
   "group": "u",
   "category": "transports",
@@ -3778,7 +3778,7 @@
     "primary": "Voiture",
     "secondary": ["Véhicule", "Roue"]
   },
-  "nuance": "Nom courant désignant une voiture ou un véhicule (plus familier et usuel que 自動車 - jidousha).",
+  "nuance": "Nom usuel et quotidien pour désigner une voiture, à privilégier à l'oral face au terme plus formel <ruby>自動車<rt>じどうしゃ</rt></ruby> (jidōsha). Comme pour tous les véhicules et appareils, on utilise obligatoirement le suffixe de comptage <ruby>台<rt>だい</rt></ruby> (dai) pour la dénombrer.",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3802,7 +3802,7 @@
     "primary": "Train électrique",
     "secondary": ["Train", "Tramway"]
   },
-  "nuance": "Nom composé de 電 (électricité) et 車 (véhicule/roue), désignant spécifiquement un train électrique, moyen de transport ferroviaire omniprésent au Japon.",
+  "nuance": "Nom désignant spécifiquement un train de banlieue ou de ligne classique. Son étymologie littérale est 'véhicule <ruby>車<rt>しゃ</rt></ruby> (sha) électrique <ruby>電<rt>でん</rt></ruby> (den)'. Comme il s'agit d'un moyen de transport lourd, on utilise le suffixe de comptage <ruby>台<rt>だい</rt></ruby> (dai) pour dénombrer ses rames.",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3826,7 +3826,7 @@
     "primary": "Voler",
     "secondary": ["Sauter", "Bondir"]
   },
-  "nuance": "Verbe godan intransitif désignant l'action de voler dans les airs (pour un oiseau, un avion) ou de sauter/bondir.",
+  "nuance": "Verbe godan désignant l'action de voler dans les airs (pour un oiseau, un avion) ou de sauter/bondir.",
   "type": "verbe godan",
   "group": "u",
   "category": "transports",
@@ -3850,7 +3850,7 @@
     "primary": "Avion",
     "secondary": ["Aéronef"]
   },
-  "nuance": "Nom composé de 飛 (voler), 行 (aller) et 機 (machine/appareil), désignant un avion pour les voyages aériens nationaux ou internationaux.",
+  "nuance": "Nom désignant un avion. Son étymologie se décompose en 'machine <ruby>機<rt>き</rt></ruby> (ki) qui va <ruby>行<rt>こう</rt></ruby> (kō) en volant <ruby>飛<rt>ひ</rt></ruby> (hi)'. Comme pour tous les grands appareils mécaniques et véhicules, on utilise le suffixe de comptage <ruby>台<rt>だい</rt></ruby> (dai) pour le dénombrer.",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3874,7 +3874,7 @@
     "primary": "Gare",
     "secondary": ["Station (de train, de métro)"]
   },
-  "nuance": "Nom désignant une gare ferroviaire ou une station de métro. C'est un point de repère essentiel dans les déplacements urbains et interurbains au Japon.",
+  "nuance": "Nom désignant une gare ferroviaire ou une station de métro. Le kanji actuel <ruby>駅<rt>えき</rt></ruby> (eki) est une simplification de sa forme ancienne qui comprenait la clé du cheval, rappelant que les gares d'origine étaient les relais de poste où l'on changeait de monture.",
   "type": "nom",
   "group": "nom",
   "category": "transports",
@@ -3898,7 +3898,7 @@
     "primary": "Prendre (du temps ou de l'argent)",
     "secondary": ["Coûter", "Prendre du temps"]
   },
-  "nuance": "Verbe godan intransitif très courant utilisé pour indiquer qu'une durée de temps est nécessaire ou qu'une somme d'argent est requise (ex : 1時間かかる, cela prend 1 heure).",
+  "nuance": "Verbe godan polyvalent servant à indiquer l'exigence ou la consommation d'une ressource. Il s'associe principalement à une notion de durée temporelle ou à un montant financier. S'écrit le plus souvent directement en hiragana au niveau N5 bien qu'il soit issu du kanji <ruby>掛かる<rt>かかる</rt></ruby> (kakaru).",
   "type": "verbe godan",
   "group": "u",
   "category": "communication",
@@ -3922,7 +3922,7 @@
     "primary": "Téléphoner",
     "secondary": ["Passer un appel", "Mettre (des lunettes)", "Accrocher"]
   },
-  "nuance": "Verbe ichidan transitif aux multiples sens. Dans le contexte de la communication, il est associé au téléphone (電話をかける) pour signifier passer un appel.",
+  "nuance": "Verbe ichidan d'une polyvalence extrême dont le sens dépend entièrement du nom auquel il est associé. S'écrit majoritairement en hiragana à ce niveau. Son sens s'oriente vers le fait de projeter ou d'appliquer quelque chose sur un support, comme une action vers autrui ou l'installation de lunettes sur le visage.",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "communication",
@@ -3946,7 +3946,7 @@
     "primary": "Appareil photo",
     "secondary": ["Caméra"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'camera', désignant un appareil photographique ou une caméra numérique.",
+    "nuance": "Emprunt à l'anglais 'camera' écrit en katakana. Comme il s'agit d'un appareil électronique et mécanique, on utilise obligatoirement le suffixe de comptage <ruby>台<rt>だい</rt></ruby> (dai) pour le dénombrer.",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -3994,7 +3994,7 @@
     "primary": "Film",
     "secondary": ["Pellicule photographique"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'film', désignant à l'origine la pellicule photographique (bien qu'il puisse parfois faire référence à un film cinématographique, le terme 映画 - eiga est plus courant pour le cinéma).",
+  "nuance": "Emprunt à l'anglais 'film' écrit en katakana. Il désigne principalement le support physique de la pellicule photo ou cinématographique. Pour désigner l'œuvre cinématographique que l'on regarde, on utilise presque toujours le mot <ruby>映画<rt>えいが</rt></ruby> (eiga).",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -4018,7 +4018,7 @@
     "primary": "Photo",
     "secondary": ["Photographie", "Cliché"]
   },
-  "nuance": "Nom composé de 写 (copier/reproduire) et 真 (vérité/réel), désignant une photographie.",
+  "nuance": "Nom désignant une photo. Son étymologie littérale est 'reproduire <ruby>写<rt>しゃ</rt></ruby> (sha) la vérité <ruby>真<rt>しん</rt></ruby> (shin)'. Comme il s'agit d'un objet plat et fin, on utilise obligatoirement le suffixe de comptage <ruby>枚<rt>まい</rt></ruby> (mai) pour dénombrer des tirages papier.",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -4042,7 +4042,7 @@
     "primary": "Appeler",
     "secondary": ["Inviter", "Crier pour faire venir"]
   },
-  "nuance": "Verbe godan transitif désignant l'action d'appeler quelqu'un à voix haute, de l'inviter (à un événement, chez soi) ou de le nommer.",
+  "nuance": "Verbe godan désignant l'action d'appeler quelqu'un à voix haute, de l'inviter (à un événement, chez soi) ou de le nommer.Son utilisation exige la particule を (wo) pour marquer la personne ciblée.",
   "type": "verbe godan",
   "group": "u",
   "category": "communication",
@@ -4063,10 +4063,10 @@
   "reading": "じ",
   "romaji": "ji",
   "meanings": {
-    "primary": "Caractère",
-    "secondary": ["Lettre", "Caractère d'écriture", "Kanji"]
+    "primary": "Caractère (écrit)",
+    "secondary": ["Lettre", "Écriture"]
   },
-  "nuance": "Nom désignant un caractère écrit, une lettre de l'alphabet ou un kanji (souvent utilisé en suffixe comme 漢字 - kanji, ou 読み方 - yomikata / kanji).",
+  "nuance": "Nom désignant un caractère écrit, une lettre de l'alphabet ou un kanji Il qualifie également le style d'écriture ou la calligraphie d'une personne. Comme il s'agit de symboles tracés sur une surface, on utilise le suffixe de comptage <ruby>文字<rt>もじ</rt></ruby> (moji) ou le compteur général pour les dénombrer.",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -4090,7 +4090,7 @@
     "primary": "Prendre (une photo)",
     "secondary": ["Filmer"]
   },
-  "nuance": "Verbe godan transitif désignant spécifiquement l'action de prendre une photographie ou de filmer une vidéo (à distinguer de 取る - prendre au sens général, ou 採る - cueillir/adopter).",
+  "nuance": "Verbe godan réservé exclusivement à la capture d'images, de photos ou de vidéos. Bien qu'il se prononce exactement comme <ruby>取る<rt>とる</rt></ruby> (toru, prendre/attraper), l'usage de ce kanji spécifique <ruby>撮<rt>さつ</rt></ruby> (satsu) permet de cibler uniquement le domaine de la photographie et de l'audiovisuel.",
   "type": "verbe godan",
   "group": "u",
   "category": "communication",
@@ -4114,7 +4114,7 @@
     "primary": "Journal",
     "secondary": ["Journal d'actualités", "Quotidien"]
   },
-  "nuance": "Nom composé de 新 (nouveau) et 聞 (entendre/nouvelles), désignant le journal d'information imprimé ou numérique.",
+  "nuance": "Nom désignant un journal d'actualités. Son étymologie se décompose en 'nouvelles entendues <ruby>聞<rt>ぶん</rt></ruby> (bun) fraîches/nouvelles <ruby>新<rt>しん</rt></ruby> (shin)'. Comme il s'agit d'une publication imprimée de grand format ou d'un objet plat, on utilise le suffixe de comptage <ruby>部<rt>ぶ</rt></ruby> (bu) pour les exemplaires ou <ruby>枚<rt>まい</rt></ruby> (mai) pour les feuilles.",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -4138,7 +4138,7 @@
     "primary": "Numéro",
     "secondary": ["Chiffre", "Numéro d'identification ou de téléphone"]
   },
-  "nuance": "Nom composé de 番 (tour/ordre) et 号 (nombre/désignation), utilisé pour désigner un numéro d'appel, un numéro de chambre, ou un chiffre attribué.",
+  "nuance": "Nom désignant un numéro d'identification. Il sert de base pour composer des termes comme le numéro de téléphone ou le numéro de chambre.",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -4162,7 +4162,7 @@
     "primary": "Répondre",
     "secondary": ["Donner une réponse (à une question)"]
   },
-  "nuance": "Verbe ichidan intransitif ou transitif désignant l'action de répondre à une question, un test ou une interpellation (souvent employé avec la particule に).",
+  "nuance": "Verbe ichidan désignant l'action de donner une réponse à une question ou à un problème. Attention à sa structure grammaticale : il exige l'utilisation de la particule に (ni) juste après l'élément auquel on répond (la question, la personne, etc.).",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "communication",
@@ -4186,7 +4186,7 @@
     "primary": "Écouter",
     "secondary": ["Entendre", "Demander (une question ou une information)"]
   },
-  "nuance": "Verbe godan transitif aux sens multiples, désignant l'action d'écouter un son, d'entendre quelque chose, ou de s'informer/poser une question à quelqu'un.",
+  "nuance": "Verbe godan qui signifie à la fois 'écouter' et 'demander (une question)'. Attention : lorsqu'on pose une question à quelqu'un, cette personne doit toujours être suivie de la particule に (ni).",
   "type": "verbe godan",
   "group": "u",
   "category": "communication",
@@ -4210,7 +4210,7 @@
     "primary": "Dire",
     "secondary": ["Exprimer", "Nommer", "Prononcer"]
   },
-  "nuance": "Verbe godan transitif fondamental désignant l'action de formuler des paroles, de dire quelque chose ou de nommer un objet.",
+  "nuance": "Verbe godan désignant l'action de formuler des paroles, de dire quelque chose ou de nommer un objet.Attention à sa prononciation courante à l'oral : bien que son dictionnaire l'écrive 'iu', il est très fréquemment prononcé 'yuu' par les Japonais dans la vie de tous les jours.",
   "type": "verbe godan",
   "group": "u",
   "category": "communication",
@@ -4234,7 +4234,7 @@
     "primary": "Parler",
     "secondary": ["Discuter", "S'entretenir", "Raconter"]
   },
-  "nuance": "Verbe godan transitif/intransitif désignant l'action de s'exprimer oralement, de converser avec quelqu'un ou de parler une langue.",
+  "nuance": "Verbe godan désignant l'action de s'exprimer oralement, de converser avec quelqu'un ou de parler une langue. Pour indiquer la langue parlée (comme le français), on utilise la particule を (wo) ou で (de) juste avant le verbe.",
   "type": "verbe godan",
   "group": "u",
   "category": "communication",
@@ -4258,7 +4258,7 @@
     "primary": "Téléphone",
     "secondary": ["Appel téléphonique"]
   },
-  "nuance": "Nom composé de 電 (électricité) et 話 (parole/discussion), désignant à la fois l'appareil téléphonique et la communication ou l'appel par téléphone.",
+  "nuance": "Nom désignant l'appareil ou la communication. Son étymologie littérale est 'la parole <ruby>話<rt>わ</rt></ruby> (wa) électrique <ruby>電<rt>でん</rt></ruby> (den)'. Comme il s'agit d'un appareil électronique, on utilise le compteur 台 (dai) pour dénombrer les objets physiques.",
   "type": "nom",
   "group": "nom",
   "category": "communication",
@@ -4282,7 +4282,7 @@
     "primary": "Combien",
     "secondary": ["Quel prix", "Combien ça coûte"]
   },
-  "nuance": "Pronom interrogatif utilisé pour demander le prix d'un article ou le coût total d'un service.",
+  "nuance": "Mot interrogatif invariable utilisé exclusivement pour s'informer sur une valeur financière ou un montant à payer. Il s'écrit toujours en hiragana pour cet usage afin de ne pas le confondre avec son homophone culinaire qui désigne les œufs de saumon.",
   "type": "adverbe / pronom",
   "group": "autre",
   "category": "achats_argent",
@@ -4306,7 +4306,7 @@
     "primary": "Argent",
     "secondary": ["Monnaie", "Fonds"]
   },
-  "nuance": "Nom précédé du préfixe honorifique お (o-) désignant l'argent ou la monnaie au sens général.",
+  "nuance": "Nom composé du kanji de l'or ou du métal <ruby>金<rt>かね</rt></ruby> (kane), auquel on ajoute le préfixe de politesse お (o) pour en faire un terme respectueux. Dans la vie de tous les jours, il est extrêmement rare de retirer ce préfixe honorifique pour parler de l'argent.",
   "type": "nom",
   "group": "nom",
   "category": "achats_argent",
@@ -4330,7 +4330,7 @@
     "primary": "Faire",
     "secondary": ["Coûter (pour un prix)", "Valoir"]
   },
-  "nuance": "Verbe irrégulier fondamental. Dans le contexte des achats et de l'argent, il est fréquemment employé pour indiquer le prix ou la valeur d'un article (ex: 100円する).",
+  "nuance": "Verbe irrégulier fondamental (groupe 3). En dehors de son sens principal de 'faire', il change de sens lorsqu'il est placé immédiatement après un montant financier pour indiquer le prix ou la valeur qu'affiche un objet.",
   "type": "verbe irrégulier",
   "group": "irrégulier",
   "category": "achats_argent",
@@ -4354,7 +4354,7 @@
     "primary": "Grand magasin",
     "secondary": ["Grand magasin à plusieurs étages (department store)"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'department store', désignant un grand magasin traditionnel japonais proposant des vêtements, de la nourriture de luxe et divers produits.",
+  "nuance": "Abréviation de l'emprunt anglais 'department store' écrite en katakana. Il désigne les grands magasins à plusieurs étages (comme Mitsukoshi ou Takashimaya), souvent plus luxueux que les supermarchés ordinaires.",
   "type": "nom",
   "group": "nom",
   "category": "achats_argent",
@@ -4378,7 +4378,7 @@
     "primary": "Bas",
     "secondary": ["Peu élevé (en parlant d'une hauteur, d'un prix ou d'une voix)"]
   },
-  "nuance": "Adjectif en i désignant ce qui est bas en hauteur ou, par extension, ce qui est bas en termes de prix ou de niveau (contraire de 高い - takai).",
+  "nuance": "Adjectif en -i servant à qualifier une faible hauteur ou un niveau peu élevé (comme une température ou une note). Attention : pour parler d'un prix bas ou bon marché, on utilise plutôt l'adjectif spécifique <ruby>安い<rt>やす</rt></ruby> (yasui). Son antonyme direct est <ruby>高い<rt>たかい</rt></ruby> (takai).",
   "type": "adjectif en i",
   "group": "i",
   "category": "achats_argent",
@@ -4402,7 +4402,7 @@
     "primary": "Vendre",
     "secondary": ["Proposer à la vente"]
   },
-  "nuance": "Verbe godan transitif désignant l'action de vendre un bien ou un produit (contraire de 買う - kau).",
+  "nuance": "Verbe godan transitif désignant l'action de vendre un bien ou un produit. Contraire de <ruby>買う<rt>かう</rt></ruby> (kau, acheter).",
   "type": "verbe godan",
   "group": "u",
   "category": "achats_argent",
@@ -4426,7 +4426,7 @@
     "primary": "Bon marché",
     "secondary": ["Peu coûteux", "Pas cher"]
   },
-  "nuance": "Adjectif en i désignant un prix bas ou abordable (contraire de 高い - takai).",
+  "nuance": "Adjectif en -i utilisé exclusivement pour qualifier un prix bas ou abordable. Contraire de l'adjectif <ruby>高い<rt>たかい</rt></ruby> (takai, cher). Attention à ne pas le confondre avec <ruby>低い<rt>ひくい</rt></ruby> (hikui) qui qualifie une faible hauteur physique.",
   "type": "adjectif en i",
   "group": "i",
   "category": "achats_argent",
@@ -4450,7 +4450,7 @@
     "primary": "Magasin",
     "secondary": ["Boutique", "Établissement commercial", "Restaurant (parfois)"]
   },
-  "nuance": "Nom désignant un commerce, une boutique ou un magasin de vente au détail.",
+  "nuance": "Nom pour désigner un commerce, une boutique, un magasin de vente au détail ou un restaurant. À l'oral, il est très fréquent de lui ajouter le préfixe honorifique pour donner <ruby>お店<rt>おみせ</rt></ruby> (omise) afin de s'exprimer de manière plus polie et naturelle.",
   "type": "nom",
   "group": "nom",
   "category": "achats_argent",
@@ -4474,7 +4474,7 @@
     "primary": "Acheter",
     "secondary": ["Se procurer (en payant)"]
   },
-  "nuance": "Verbe godan transitif désignant l'action d'acquérir un objet en l'achetant (contraire de 売る - uru).",
+  "nuance": "Verbe godan. Son contraire est <ruby>売る<rt>うる</rt></ruby> (uru, vendre). Attention à sa conjugaison au passé : le う final se transforme en un petit tsu, ce qui donne <ruby>買った<rt>かった</rt></ruby> (katta).",
   "type": "verbe godan",
   "group": "u",
   "category": "achats_argent",
@@ -4498,7 +4498,7 @@
     "primary": "Haut",
     "secondary": ["Cher (coûteux)", "Élevé"]
   },
-  "nuance": "Adjectif en i aux doubles sens principaux : désignant ce qui est élevé en hauteur (une montagne, un bâtiment) ou ce qui coûte cher en parlant du prix (contraire de 安い - yasui).",
+  "nuance": "Adjectif en -i possédant deux sens. Il qualifie une grande hauteur physique ou un prix élevé. Son contraire pour la hauteur est <ruby>低い<rt>ひくい</rt></ruby> (hikui, bas) et son contraire pour le prix est <ruby>安い<rt>やす</rt></ruby> (yasui, bon marché).",
   "type": "adjectif en i",
   "group": "i",
   "category": "achats_argent",
@@ -4522,7 +4522,7 @@
     "primary": "Guitare",
     "secondary": ["Guitare acoustique ou électrique"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'guitar', désignant l'instrument de musique.",
+  "nuance": "Emprunt à l'anglais 'guitar' écrit en katakana. Pour dire que l'on joue de cet instrument, on l'associe toujours au verbe spécifique <ruby>弾く<rt>ひく</rt></ruby> (hiku).",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
@@ -4546,7 +4546,7 @@
     "primary": "Sport",
     "secondary": ["Activité sportive", "Exercice physique"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'sports', désignant toute discipline ou activité sportive.",
+  "nuance": "Emprunt à l'anglais 'sports' écrit en katakana. Pour dire que l'on pratique ou fait du sport, on l'associe directement au verbe régulier する (suru).",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
@@ -4568,9 +4568,9 @@
   "romaji": "macchi",
   "meanings": {
     "primary": "Allumette",
-    "secondary": ["Match (compétition sportive - bien que 試合 - shiai soit plus courant pour une compétition)"]
+    "secondary": ["Match"]
   },
-  "nuance": "Mot en katakana issu de l'anglais 'match', désignant principalement une allumette pour allumer le feu, ou parfois une rencontre/match selon le contexte.",
+  "nuance": "Emprunt à l'anglais 'match' écrit en katakana. En japonais quotidien, il désigne presque toujours une allumette pour faire du feu. Pour parler d'un match de sport, les Japonais préfèrent utiliser le mot spécifique <ruby>試合<rt>しあい</rt></ruby> (shiai).",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
@@ -4594,7 +4594,7 @@
     "primary": "Jouer (d'un instrument à cordes ou à clavier)",
     "secondary": ["Pincer", "Frapper (les cordes ou touches)"]
   },
-  "nuance": "Verbe godan transitif utilisé spécifiquement pour jouer d'un instrument de musique qui se pincer, se gratte ou se touche avec un clavier (comme le piano, la guitare, le violon). À ne pas confondre avec 吹く (fukuk - pour les instruments à vent) ou 叩く (tataku - pour les percussions).",
+  "nuance": "Verbe godan utilisé uniquement pour les instruments à cordes (guitare, violon) ou à clavier (piano). Pour les instruments à vent, on utilise <ruby>吹く<rt>ふく</rt></ruby> (fuku), et pour les percussions, <ruby>叩く<rt>たたく</rt></ruby> (tataku).",
   "type": "verbe godan",
   "group": "u",
   "category": "loisirs",
@@ -4616,9 +4616,9 @@
   "romaji": "sanpo",
   "meanings": {
     "primary": "Promenade",
-    "secondary": ["Marche de détente"]
+    "secondary": ["Marche de détente", "Balade"]
   },
-  "nuance": "Nom composé de 散 (épars/se balader) et 歩 (marcher), désignant l'action de se promener. Souvent combiné avec le verbe する (sanpo suru) pour former le verbe correspondant.",
+  "nuance": "Nom désignant l'action de se balader. Son étymologie associe l'idée de se détendre <ruby>散<rt>さん</rt></ruby> (san) et de marcher <ruby>歩<rt>ぽ</rt></ruby> (po). Pour en faire le verbe 'se promener', on lui ajoute directement le verbe する (suru).",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
@@ -4642,7 +4642,7 @@
     "primary": "Se promener",
     "secondary": ["Faire une promenade", "Marcher pour le plaisir"]
   },
-  "nuance": "Verbe suru (verbe en -suru) formé à partir du nom 散歩 et du verbe auxiliaire する, désignant l'action de se promener ou de flâner.",
+  "nuance": "Verbe irrégulier formé par l'association du nom <ruby>散歩<rt>さんぽ</rt></ruby> (sanpo) et du verbe auxiliaire する (suru). Il désigne l'action d'effectuer une promenade pour se détendre.",
   "type": "verbe suru",
   "group": "irrégulier",
   "category": "loisirs",
@@ -4666,7 +4666,7 @@
     "primary": "Voyage",
     "secondary": ["Excursion", "Déplacement touristique"]
   },
-  "nuance": "Nom composé de 旅 (voyage) et 行 (aller), désignant un voyage, qu'il soit de courte ou de longue durée, d'affaires ou d'agrément.",
+  "nuance": "Nom composé de <ruby>旅<rt>りょ</rt></ruby> (ryo, voyage) et <ruby>行<rt>こう</rt></ruby> (kou, aller). Pour en faire le verbe 'voyager', on lui ajoute directement le verbe する (suru). On utilise le suffixe <ruby>回<rt>かい</rt></ruby> (kai) pour compter le nombre de voyages effectués.",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
@@ -4690,7 +4690,7 @@
     "primary": "Film",
     "secondary": ["Cinéma", "Œuvre cinématographique"]
   },
-  "nuance": "Nom composé de 映 (refléter/projeter) et 画 (image/dessin), désignant un film projeté au cinéma ou visionné sur un écran.",
+  "nuance": "Nom composé de <ruby>映<rt>えい</rt></ruby> (ei, projeter) et <ruby>画<rt>が</rt></ruby> (ga, image). Il désigne l'œuvre cinématographique. Pour désigner la salle ou le bâtiment du cinéma, on lui ajoute le suffixe de lieu pour former le mot <ruby>映画館<rt>えいがかん</rt></ruby> (eigakan).",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
@@ -4714,7 +4714,7 @@
     "primary": "Chanter",
     "secondary": ["Interpréter une chanson"]
   },
-  "nuance": "Verbe godan transitif désignant l'action de chanter (souvent utilisé avec le nom 歌 - uta comme objet direct ou en composant avec des activités comme le karaoké).",
+  "nuance": "Verbe godan servant à chanter. Il est très souvent précédé de son nom associé <ruby>歌<rt>うた</rt></ruby> (uta - chanson) avec la particule を (wo). Attention à sa conjugaison au passé : le う final se transforme en un petit tsu, ce qui donne <ruby>歌った<rt>うたった</rt></ruby> (utatta).",
   "type": "verbe godan",
   "group": "u",
   "category": "loisirs",
@@ -4738,7 +4738,7 @@
     "primary": "Nager",
     "secondary": ["Se déplacer dans l'eau"]
   },
-  "nuance": "Verbe godan intransitif désignant l'action de nager (dans une piscine, la mer, une rivière).",
+  "nuance": "Verbe godan servant à se déplacer dans l'eau. Le lieu où l'on nage (comme une piscine ou la mer) se marque généralement avec la particule で (de). Sa forme polie est <ruby>泳ぎます<rt>およぎます</rt></ruby> (oyogimasu).",
   "type": "verbe godan",
   "group": "u",
   "category": "loisirs",
@@ -4762,7 +4762,7 @@
     "primary": "Jouer",
     "secondary": ["S'amuser", "Passer du bon temps", "Sortir pour se divertir"]
   },
-  "nuance": "Verbe godan intransitif très courant utilisé pour les loisirs, les jeux (entre enfants ou adultes) ou pour désigner le fait de sortir s'amuser avec des amis.",
+   "nuance": "Verbe godan désignant l'action de jouer ou de sortir se divertir. Pour exprimer le fait de s'amuser 'avec' des amis, la personne concernée doit être suivie de la particule と (to). Sa conjugaison au passé donne <ruby>遊んだ<rt>あそんだ</rt></ruby> (asonda).",
   "type": "verbe godan",
   "group": "u",
   "category": "loisirs",
@@ -4786,7 +4786,7 @@
     "primary": "Musique",
     "secondary": ["Art musical"]
   },
-  "nuance": "Nom composé de 音 (son) et 楽 (confort/plaisir), désignant la musique au sens général.",
+  "nuance": "Nom composé de <ruby>音<rt>おん</rt></ruby> (on, son) et <ruby>楽<rt>がく</rt></ruby> (gaku, plaisir). Il désigne la musique en tant qu'art. Pour exprimer l'action d'écouter de la musique, on l'associe généralement au verbe <ruby>聞く<rt>きく</rt></ruby> (kiku).",
   "type": "nom",
   "group": "nom",
   "category": "loisirs",
