@@ -250,7 +250,7 @@
     "primary": "Grand-père",
     "secondary": ["Vieil homme", "Personne âgée (terme poli)"]
   },
-  "nuance": "Nom désignant le grand-père d'autrui ou le sien avec respect, ou de manière générale un homme âgé (attention à la distinction de longueur de voyelle avec おじさん (ojisan) qui signifie oncle ou monsieur d'âge mûr).",
+  "nuance": "Nom servant à désigner le grand-père de quelqu'un d'autre ou à s'adresser poliment à un vieil homme. On le compte avec le suffixe 人 (nin).",
   "type": "nom",
   "group": "nom",
   "category": "personnes_famille",
@@ -274,7 +274,7 @@
     "primary": "Oncle",
     "secondary": ["Monsieur", "Homme d'âge mûr"]
   },
-  "nuance": "Nom désignant un oncle (frère des parents ou époux de la tante) ou employé comme appellation polie pour s'adresser à un homme d'âge mûr dans la rue. À prononcer avec un 'i' court.",
+  "nuance": "Nom désignant l'oncle de quelqu'un d'autre ou un homme d'âge mûr. À prononcer avec un 'i' court.",
   "type": "nom",
   "group": "nom",
   "category": "personnes_famille",
@@ -298,7 +298,7 @@
     "primary": "Grand-mère",
     "secondary": ["Vieille dame", "Personne âgée (terme poli)"]
   },
-  "nuance": "Nom désignant la grand-mère ou, par extension polie, une femme âgée. Veillez à bien allonger le son 'aa' pour ne pas le confondre avec おばさん (obasan) la tante.",
+  "nuance": "Nom servant à désigner la grand-mère de quelqu'un d'autre ou à s'adresser poliment à une vieille femme. Veillez à bien allonger le son 'aa' pour ne pas le confondre avec おばさん (obasan) la tante.",
   "type": "nom",
   "group": "nom",
   "category": "personnes_famille",
@@ -346,7 +346,7 @@
     "primary": "Agent de police",
     "secondary": ["Policier de quartier (terme familier et poli)"]
   },
-  "nuance": "Nom familier mais poli très utilisé, notamment par les enfants, pour désigner un agent de police en patrouille (dérivé du verbe <ruby>巡<rt>めぐ</rt></ruby>る - meguru, faire le tour).",
+  "nuance": "Nom familier et poli pour s'adresser à un policier de quartier ou le désigner. Le terme officiel et plus formel est <ruby>警察官<rt>けいさつかん</rt></ruby> (keisatsukan).",
   "type": "nom",
   "group": "nom",
   "category": "personnes_famille",
@@ -370,7 +370,7 @@
     "primary": "Grand frère",
     "secondary": ["Jeune homme", "Frère aîné (d'autrui ou en s'adressant à lui)"]
   },
-  "nuance": "Nom désignant le grand frère de quelqu'un (ou le sien par politesse en s'adressant directement à lui). S'utilise aussi pour interpeller familièrement un jeune homme. (Pour parler de son propre frère aîné à la troisième personne, on emploie <ruby>兄<rt>あに</rt></ruby> (ani)).",
+  "nuance": "Nom servant à désigner le grand frère de quelqu'un d'autre ou à s'adresser à un jeune homme. Pour parler de son propre grand frère, on utilise plutôt <ruby>兄<rt>あに</rt></ruby> (ani).",
   "type": "nom",
   "group": "nom",
   "category": "personnes_famille",
@@ -4797,6 +4797,678 @@
     "romaji": "mainichi heya de kurashikku no ongaku o kikimasu.",
     "french": "J'écoute de la **musique** classique dans ma chambre tous les jours.",
     "highlight": ["音楽", "ongaku"]
+  }
+},
+{
+  "id": "n5_v_201",
+  "level": "N5",
+  "word": "鳴く",
+  "word_furigana": "<ruby>鳴<rt>な</rt></ruby>く",
+  "reading": "なく",
+  "romaji": "naku",
+  "meanings": {
+    "primary": "Crier (pour un animal)",
+    "secondary": ["Chanter (pour un oiseau)", "Bêler", "Aboyer", "Miauler"]
+  },
+  "nuance": "Verbe godan intransitif utilisé exclusivement pour désigner les cris, chants ou sons émis par les animaux (à ne pas confondre avec 泣く - naku, qui signifie pleurer pour les humains).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "loisirs",
+  "kanji_list": ["鳴"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> で <ruby>鳥<rt>とり</rt></ruby> が **<ruby>鳴<rt>な</rt></ruby>いて** います 。",
+    "romaji": "kouen de tori ga naite imasu.",
+    "french": "Un oiseau **chante** dans le parc.",
+    "highlight": ["鳴いて", "naite"]
+  }
+},
+{
+  "id": "n5_v_201",
+  "level": "N5",
+  "word": "鳴く",
+  "word_furigana": "<ruby>鳴<rt>な</rt></ruby>く",
+  "reading": "naku",
+  "romaji": "naku",
+  "meanings": {
+    "primary": "Crier",
+    "secondary": ["Chanter (pour un oiseau)", "Aboyer", "Miauler"]
+  },
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) utilisé exclusivement pour les animaux, à ne pas confondre avec <ruby>泣<rt>な</rt></ruby>く (naku) qui signifie pleurer pour les humains.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "loisirs",
+  "kanji_list": ["鳴"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> で <ruby>鳥<rt>とり</rt></ruby> が <ruby>鳴<rt>な</rt></ruby>いて います 。",
+    "romaji": "kouen de tori ga naite imasu.",
+    "french": "Un oiseau **chante** dans le parc.",
+    "highlight": ["鳴いて", "naite"]
+  }
+},
+{
+  "id": "n5_v_202",
+  "level": "N5",
+  "word": "エレベーター",
+  "word_furigana": "エレベーター",
+  "reading": "えれべーたー",
+  "romaji": "erebeetaa",
+  "meanings": {
+    "primary": "Ascenseur",
+    "secondary": ["Monte-charge"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (elevator). Compteur spécifique : <ruby>基<rt>き</rt></ruby> (ki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "medias_technologie",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>次<rt>つぎ</rt></ruby> の <ruby>階<rt>かい</rt></ruby> へ <ruby>行<rt>い</rt></ruby>く ため に エレベーター に <ruby>乗<rt>の</rt></ruby>ります 。",
+    "romaji": "tsugi no kai e iku tame ni erebeetaa ni norimasu.",
+    "french": "Je prends l'**ascenseur** pour aller à l'étage suivant.",
+    "highlight": ["エレベーター", "erebeetaa"]
+  }
+},
+{
+  "id": "n5_v_203",
+  "level": "N5",
+  "word": "テレビ",
+  "word_furigana": "テレビ",
+  "reading": "てれび",
+  "romaji": "terebi",
+  "meanings": {
+    "primary": "Télévision",
+    "secondary": ["Téléviseur", "Écran de télévision"]
+  },
+  "nuance": "Mot en katakana issu de la contraction de (television). Compteur spécifique : <ruby>台<rt>だい</rt></ruby> (dai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "medias_technologie",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "まいにち <ruby>夜<rt>よる</rt></ruby> に テレビ で ニュース を <ruby>見<rt>み</rt></ruby>ます 。",
+    "romaji": "mainichi yoru ni terebi de nyuusu o mimasu.",
+    "french": "Je regarde les informations à la **télévision** tous les soirs.",
+    "highlight": ["テレビ", "terebi"]
+  }
+},
+{
+  "id": "n5_v_204",
+  "level": "N5",
+  "word": "テープ",
+  "word_furigana": "テープ",
+  "reading": "てーぷ",
+  "romaji": "teepu",
+  "meanings": {
+    "primary": "Ruban adhésif",
+    "secondary": ["Scotch", "Bande magnétique"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (tape). Compteur spécifique : <ruby>巻<rt>かん</rt></ruby> (kan) ou <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "medias_technologie",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>紙<rt>かみ</rt></ruby> を テープ で <ruby>貼<rt>は</rt></ruby>ります 。",
+    "romaji": "kono kami o teepu de harimasu.",
+    "french": "Je colle ce papier avec du **ruban adhésif**.",
+    "highlight": ["テープ", "teepu"]
+  }
+},
+{
+  "id": "n5_v_205",
+  "level": "N5",
+  "word": "ラジオ",
+  "word_furigana": "ラジオ",
+  "reading": "らじお",
+  "romaji": "rajio",
+  "meanings": {
+    "primary": "Radio",
+    "secondary": ["Poste de radio", "Radiodiffusion"]
+  },
+  "nuance": "Mot en katakana issu de la contraction de l'anglais (radio). Compteur spécifique : <ruby>台<rt>だい</rt></ruby> (dai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "medias_technologie",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> ごはん を <ruby>食<rt>た</rt></ruby>べながら ラジオ を <ruby>聞<rt>き</rt></ruby>きます 。",
+    "romaji": "asa gohan o tabenagara rajio o kikimasu.",
+    "french": "J'écoute la **radio** en prenant mon petit-déjeuner.",
+    "highlight": ["ラジオ", "rajio"]
+  }
+},
+{
+  "id": "n5_v_206",
+  "level": "N5",
+  "word": "ラジカセ",
+  "word_furigana": "ラジカセ",
+  "reading": "らじかせ",
+  "romaji": "rajikase",
+  "meanings": {
+    "primary": "Radio-cassette",
+    "secondary": ["Lecteur enregistreur cassette radio"]
+  },
+  "nuance": "Mot en katakana formé par la contraction des mots <ruby>和製英語<rt>わせいえいご</rt></ruby> (wasei-eigo) de <ruby>ラジオ<rt>らじお</rt></ruby> (rajio) et <ruby>カセットレコーダー<rt>かせっとれこーだー</rt></ruby> (kasetto rekoodaa). Compteur spécifique : <ruby>台<rt>だい</rt></ruby> (dai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "medias_technologie",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "ふるい ラジカセ で <ruby>音楽<rt>おんがく</rt></ruby> を <ruby>聞<rt>き</rt></ruby>きます 。",
+    "romaji": "furui rajikase de ongaku o kikimasu.",
+    "french": "J'écoute de la musique avec un vieux **radio-cassette**.",
+    "highlight": ["ラジカセ", "rajikase"]
+  }
+},
+{
+  "id": "n5_v_207",
+  "level": "N5",
+  "word": "いす",
+  "word_furigana": "いす",
+  "reading": "いす",
+  "romaji": "isu",
+  "meanings": {
+    "primary": "Chaise",
+    "secondary": ["Siège", "Tabouret"]
+  },
+  "nuance": "Nom s'écrivant parfois en kanji <ruby>椅子<rt>いす</rt></ruby> (isu), mais très fréquemment en hiragana. Compteur spécifique : <ruby>脚<rt>きゃく</rt></ruby> (kyaku).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "テーブル の <ruby>前<rt>まえ</rt></ruby> に いす を <ruby>置<rt>お</rt></ruby>きます 。",
+    "romaji": "teeburu no mae ni isu o okimasu.",
+    "french": "Je place une **chaise** devant la table.",
+    "highlight": ["いす", "isu"]
+  }
+},
+{
+  "id": "n5_v_208",
+  "level": "N5",
+  "word": "お風呂",
+  "word_furigana": "お<ruby>風呂<rt>ふろ</rt></ruby>",
+  "reading": "おふろ",
+  "romaji": "ofuro",
+  "meanings": {
+    "primary": "Bain",
+    "secondary": ["Salle de bain", "Baignoire"]
+  },
+  "nuance": "Nom précédé du préfixe honorifique お (o-), désignant la salle de bain ou le bain traditionnel japonais. Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) pour les bains pris.",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["風呂"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>夜<rt>よる</rt></ruby> お<ruby>風呂<rt>ふろ</rt></ruby> に <ruby>入<rt>はい</rt></ruby>ります 。",
+    "romaji": "yoru ofuro ni hairimasu.",
+    "french": "Je prends un **bain** le soir.",
+    "highlight": ["お風呂", "ofuro"]
+  }
+},
+{
+  "id": "n5_v_209",
+  "level": "N5",
+  "word": "ふろ",
+  "word_furigana": "ふろ",
+  "reading": "ふろ",
+  "romaji": "furo",
+  "meanings": {
+    "primary": "Bain",
+    "secondary": ["Baignoire", "Salle de bain"]
+  },
+  "nuance": "Variante sans le préfixe honorifique de <ruby>風呂<rt>ふろ</rt></ruby> (furo), désignant le bain ou la baignoire de manière plus neutre ou familière.",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "もう すぐ ふろ が わきます 。",
+    "romaji": "mou sugu furo ga wakimasu.",
+    "french": "Le **bain** sera bientôt chaud.",
+    "highlight": ["ふろ", "furo"]
+  }
+},
+{
+  "id": "n5_v_210",
+  "level": "N5",
+  "word": "ドア",
+  "word_furigana": "ドア",
+  "reading": "どあ",
+  "romaji": "doa",
+  "meanings": {
+    "primary": "Porte",
+    "secondary": ["Porte battante", "Porte d'entrée"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (door), désignant une porte occidentale (à battant), par opposition à la porte traditionnelle japonaise <ruby>戸<rt>と</rt></ruby> (to) ou <ruby>襖<rt>ふすま</rt></ruby> (fusuma). Compteur spécifique : <ruby>枚<rt>まい</rt></ruby> (mai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "さむい ので 、<ruby>部屋<rt>へや</rt></ruby> の ドア を <ruby>閉<rt>し</rt></ruby>めて ください 。",
+    "romaji": "samui node, heya no doa o shimete kudasai.",
+    "french": "Il fait froid, veuillez fermer la **porte** de la chambre.",
+    "highlight": ["ドア", "doa"]
+  }
+},
+{
+  "id": "n5_v_211",
+  "level": "N5",
+  "word": "ナイフ",
+  "word_furigana": "ナイフ",
+  "reading": "ないふ",
+  "romaji": "naifu",
+  "meanings": {
+    "primary": "Couteau",
+    "secondary": ["Couteau de table", "Lame de cuisine"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (knife), désignant un couteau. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "ナイフ で パン を <ruby>切<rt>き</rt></ruby>ります 。",
+    "romaji": "naifu de pan o kirimasu.",
+    "french": "Je coupe le pain avec un **couteau**.",
+    "highlight": ["ナイフ", "naifu"]
+  }
+},
+{
+  "id": "n5_v_212",
+  "level": "N5",
+  "word": "ベッド",
+  "word_furigana": "ベッド",
+  "reading": "べっど",
+  "romaji": "beddo",
+  "meanings": {
+    "primary": "Lit",
+    "secondary": ["Couchage"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (bed), désignant un lit occidental, par opposition au futon traditionnel <ruby>布団<rt>ふとん</rt></ruby> (futon). Compteur spécifique : <ruby>台<rt>だい</rt></ruby> (dai) ou <ruby>床<rt>ゆか</rt></ruby> (yuka).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>夜<rt>よる</rt></ruby> おそく ベッド に <ruby>入<rt>はい</rt></ruby>ります 。",
+    "romaji": "yoru osoku beddo ni hairimasu.",
+    "french": "Je vais au **lit** tard le soir.",
+    "highlight": ["ベッド", "beddo"]
+  }
+},
+{
+  "id": "n5_v_213",
+  "level": "N5",
+  "word": "入る",
+  "word_furigana": "<ruby>入<rt>はい</rt></ruby>る",
+  "reading": "はいる",
+  "romaji": "hairu",
+  "meanings": {
+    "primary": "Entrer",
+    "secondary": ["Pénétrer", "Contenir", "Entrer (dans un bain)"]
+  },
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) marquant l'action d'entrer dans un lieu, souvent associé à la particule に (ni). Bien qu'il se termine par iru/eru, c'est un verbe godan exceptionnel.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "maison_quotidien",
+  "kanji_list": ["入"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "くつ を <ruby>脱<rt>ぬ</rt></ruby>いで <ruby>部屋<rt>へや</rt></ruby> に **<ruby>入<rt>はい</rt></ruby>ります** 。",
+    "romaji": "kutsu o nuide heya ni hairimasu.",
+    "french": "Je retire mes chaussures et **entre** dans la pièce.",
+    "highlight": ["入ります", "hairimasu"]
+  }
+},
+{
+  "id": "n5_v_214",
+  "level": "N5",
+  "word": "入口",
+  "word_furigana": "<ruby>入<rt>い</rt></ruby>り<ruby>口<rt>ぐち</rt></ruby>",
+  "reading": "いりぐち",
+  "romaji": "iriguchi",
+  "meanings": {
+    "primary": "Entrée",
+    "secondary": ["Porte d'entrée", "Accès"]
+  },
+  "nuance": "Nom composé de <ruby>入<rt>はい</rt></ruby>る (hairu) et de <ruby>口<rt>くち</rt></ruby> (kuchi) signifiant la bouche ou l'ouverture (contraire de <ruby>出口<rt>でぐち</rt></ruby> - deguchi).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["入", "口"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>駅<rt>えき</rt></ruby> の **<ruby>入口<rt>いりぐち</rt></ruby>** で ともだち と まちます 。",
+    "romaji": "eki no iriguchi de tomodachi to machimasu.",
+    "french": "J'attends un ami à l'**entrée** de la gare.",
+    "highlight": ["入口", "iriguchi"]
+  }
+},
+{
+  "id": "n5_v_215",
+  "level": "N5",
+  "word": "公園",
+  "word_furigana": "<ruby>公<rt>こう</rt></ruby><ruby>園<rt>えん</rt></ruby>",
+  "reading": "こうえん",
+  "romaji": "kouen",
+  "meanings": {
+    "primary": "Parc",
+    "secondary": ["Jardin public"]
+  },
+  "nuance": "Nom composé de <ruby>公<rt>こう</rt></ruby> (kou - public) et de <ruby>園<rt>えん</rt></ruby> (en - jardin), désignant un parc public. Compteur spécifique : <ruby>個所<rt>かしょ</rt></ruby> (kasho) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["公", "園"],
+  "particles": [],
+  "example": {
+    "japanese": "ひるやすみ に **<ruby>公園<rt>こうえん</rt></ruby>** を <ruby>散歩<rt>さんぽ</rt></ruby>します 。",
+    "romaji": "hiruyasumi ni kouen o sanposhimasu.",
+    "french": "Je me promène dans le **parc** pendant la pause de midi.",
+    "highlight": ["公園", "kouen"]
+  }
+},
+{
+  "id": "n5_v_216",
+  "level": "N5",
+  "word": "宿題",
+  "word_furigana": "<ruby>宿<rt>しゅく</rt></ruby><ruby>題<rt>だい</rt></ruby>",
+  "reading": "しゅくだい",
+  "romaji": "shukudai",
+  "meanings": {
+    "primary": "Devoirs",
+    "secondary": ["Travail scolaire à la maison"]
+  },
+  "nuance": "Nom composé de <ruby>宿<rt>しゅく</rt></ruby> (shuku - loger/demeurer) et de <ruby>題<rt>だい</rt></ruby> (dai - sujet/thème), désignant les devoirs à la maison donnés aux élèves. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["宿", "題"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>学校<rt>がっこう</rt></ruby> の あと で **<ruby>宿題<rt>しゅくだい</rt></ruby>** を します 。",
+    "romaji": "gakkou no ato de shukudai o shimasu.",
+    "french": "Je fais mes **devoirs** après l'école.",
+    "highlight": ["宿題", "shukudai"]
+  }
+},
+{
+  "id": "n5_v_217",
+  "level": "N5",
+  "word": "庭",
+  "word_furigana": "<ruby>庭<rt>にわ</rt></ruby>",
+  "reading": "にわ",
+  "romaji": "niwa",
+  "meanings": {
+    "primary": "Jardin",
+    "secondary": ["Cour", "Espace extérieur privé"]
+  },
+  "nuance": "Nom désignant un jardin, qu'il soit de style traditionnel japonais ou occidental. Compteur spécifique : <ruby>箇所<rt>かしょ</rt></ruby> (kasho) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["庭"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>猫<rt>ねこ</rt></ruby> が **<ruby>庭<rt>にわ</rt></ruby>** で <ruby>走<rt>はし</rt></ruby>って います 。",
+    "romaji": "neko ga niwa de hashitte imasu.",
+    "french": "Un chat court dans le **jardin**.",
+    "highlight": ["庭", "niwa"]
+  }
+},
+{
+  "id": "n5_v_218",
+  "level": "N5",
+  "word": "戸",
+  "word_furigana": "<ruby>戸<rt>と</rt></ruby>",
+  "reading": "と",
+  "romaji": "to",
+  "meanings": {
+    "primary": "Porte (style japonais)",
+    "secondary": ["Porte coulissante", "Vantail"]
+  },
+  "nuance": "Nom désignant spécifiquement une porte traditionnelle japonaise (coulissante ou battante en bois), par opposition à la porte occidentale <ruby>ドア<rt>どあ</rt></ruby> (doa). Compteur spécifique : <ruby>枚<rt>まい</rt></ruby> (mai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["戸"],
+  "particles": [],
+  "example": {
+    "japanese": "あさ に なったら 、<ruby>部屋<rt>へや</rt></ruby> の **<ruby>戸<rt>と</rt></ruby>** を <ruby>開<rt>あ</rt></ruby>けます 。",
+    "romaji": "asa ni nattara, heya no to o akemasu.",
+    "french": "Quand le matin arrive, j'ouvre la **porte** de la chambre.",
+    "highlight": ["戸", "to"]
+  }
+},
+{
+  "id": "n5_v_219",
+  "level": "N5",
+  "word": "掃除",
+  "word_furigana": "<ruby>掃除<rt>そうじ</rt></ruby>",
+  "reading": "そうじ",
+  "romaji": "souji",
+  "meanings": {
+    "primary": "Nettoyage",
+    "secondary": ["Ménage"]
+  },
+  "nuance": "Nom composé de <ruby>掃<rt>そう</rt></ruby> (balayer) et de <ruby>除<rt>じ</rt></ruby> (éliminer/nettoyer), désignant l'action de faire le ménage. Souvent combiné avec le verbe する (suru) pour former le verbe correspondant.",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["掃", "除"],
+  "particles": [],
+  "example": {
+    "japanese": "まいあさ <ruby>部屋<rt>へや</rt></ruby> の **<ruby>掃除<rt>そうじ</rt></ruby>** を します 。",
+    "romaji": "maiasa heya no souji o shimasu.",
+    "french": "Je fais le **ménage** de la chambre tous les matins.",
+    "highlight": ["掃除", "souji"]
+  }
+},
+{
+  "id": "n5_v_220",
+  "level": "N5",
+  "word": "掃除する",
+  "word_furigana": "<ruby>掃除<rt>そうじ</rt></ruby>する",
+  "reading": "そうじする",
+  "romaji": "soujisuru",
+  "meanings": {
+    "primary": "Nettoyer",
+    "secondary": ["Faire le ménage"]
+  },
+  "nuance": "Verbe suru (verbe en -suru) formé à partir du nom <ruby>掃除<rt>そうじ</rt></ruby> (souji) et du verbe auxiliaire する, désignant l'action de nettoyer ou de ranger un espace.",
+  "type": "verbe suru",
+  "group": "irrégulier",
+  "category": "maison_quotidien",
+  "kanji_list": ["掃", "除"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "きょう は <ruby>一日中<rt>いちにちじゅう</rt></ruby> リビング を **<ruby>掃除<rt>そうじ</rt></ruby>します** 。",
+    "romaji": "kyou wa ichinichijuu ribingu o soujishimasu.",
+    "french": "Aujourd'hui, je **nettoie** le salon toute la journée.",
+    "highlight": ["掃除します", "soujishimasu"]
+  }
+},
+{
+  "id": "n5_v_221",
+  "level": "N5",
+  "word": "洗う",
+  "word_furigana": "<ruby>洗<rt>あら</rt></ruby>う",
+  "reading": "あらう",
+  "romaji": "arau",
+  "meanings": {
+    "primary": "Laver",
+    "secondary": ["Rincer", "Nettoyer à l'eau"]
+  },
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) désignant l'action de laver des objets, des vêtements ou des aliments avec de l'eau.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "maison_quotidien",
+  "kanji_list": ["洗"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>食事<rt>しょくじ</rt></ruby> の あと で <ruby>皿<rt>さら</rt></ruby> を **<ruby>洗<rt>あら</rt></ruby>います** 。",
+    "romaji": "shokuji no ato de sara o araimasu.",
+    "french": "Je **lave** les assiettes après le repas.",
+    "highlight": ["洗います", "araimasu"]
+  }
+},
+{
+  "id": "n5_v_222",
+  "level": "N5",
+  "word": "窓",
+  "word_furigana": "<ruby>窓<rt>まど</rt></ruby>",
+  "reading": "まど",
+  "romaji": "mado",
+  "meanings": {
+    "primary": "Fenêtre",
+    "secondary": ["Ouverture", "Guichet"]
+  },
+  "nuance": "Nom désignant une fenêtre ou un guichet. Compteur spécifique : <ruby>枚<rt>まい</rt></ruby> (mai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["窓"],
+  "particles": [],
+  "example": {
+    "japanese": "あさ に なったら 、<ruby>部屋<rt>へや</rt></ruby> の **<ruby>窓<rt>まど</rt></ruby>** を <ruby>開<rt>あ</rt></ruby>けます 。",
+    "romaji": "asa ni nattara, heya no mado o akemasu.",
+    "french": "Quand le matin arrive, j'ouvre la **fenêtre** de la chambre.",
+    "highlight": ["窓", "mado"]
+  }
+},
+{
+  "id": "n5_v_223",
+  "level": "N5",
+  "word": "財布",
+  "word_furigana": "<ruby>財<rt>ざい</rt></ruby><ruby>布<rt>ふ</rt></ruby>",
+  "reading": "さいふ",
+  "romaji": "saifu",
+  "meanings": {
+    "primary": "Portefeuille",
+    "secondary": ["Porte-monnaie"]
+  },
+  "nuance": "Nom composé de <ruby>財<rt>ざい</rt></ruby> (richesse/biens) et de <ruby>布<rt>ふ</rt></ruby> (tissu), désignant un portefeuille ou un porte-monnaie. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["財", "布"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>財布<rt>さいふ</rt></ruby>** から おかね を <ruby>出<rt>だ</rt></ruby>します 。",
+    "romaji": "saifu kara okane o dashimasu.",
+    "french": "Je sors de l'argent de mon **portefeuille**.",
+    "highlight": ["財布", "saifu"]
+  }
+},
+{
+  "id": "n5_v_224",
+  "level": "N5",
+  "word": "部屋",
+  "word_furigana": "<ruby>部<rt>へ</rt></ruby><ruby>屋<rt>や</rt></ruby>",
+  "reading": "へや",
+  "romaji": "heya",
+  "meanings": {
+    "primary": "Chambre",
+    "secondary": ["Pièce", "Salle"]
+  },
+  "nuance": "Nom composé de <ruby>部<rt>ぶ</rt></ruby> (partie/section) et de <ruby>屋<rt>や</rt></ruby> (magasin/bâtiment), désignant une pièce ou une chambre. Compteur spécifique : <ruby>間<rt>ま</rt></ruby> (ma) ou <ruby>部屋<rt>へや</rt></ruby> (heya).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["部", "屋"],
+  "particles": [],
+  "example": {
+    "japanese": "わたし の **<ruby>部屋<rt>へや</rt></ruby>** は とても <ruby>広<rt>ひろ</rt></ruby>い です 。",
+    "romaji": "watashi no heya wa totemo hiroi desu.",
+    "french": "Ma **chambre** est très grande.",
+    "highlight": ["部屋", "heya"]
+  }
+},
+{
+  "id": "n5_v_225",
+  "level": "N5",
+  "word": "お皿",
+  "word_furigana": "お<ruby>皿<rt>さら</rt></ruby>",
+  "reading": "おさら",
+  "romaji": "osara",
+  "meanings": {
+    "primary": "Assiette",
+    "secondary": ["Plat", "Coupelle"]
+  },
+  "nuance": "Nom précédé du préfixe honorifique お (o-), désignant une assiette ou un plat. Compteur spécifique : <ruby>枚<rt>まい</rt></ruby> (mai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["皿"],
+  "particles": [],
+  "example": {
+    "japanese": "りょうり を お<ruby>皿<rt>さら</rt></ruby> に <ruby>盛<rt>も</rt></ruby>ります 。",
+    "romaji": "ryouri o osara ni morimasu.",
+    "french": "Je sers le plat dans une **assiette**.",
+    "highlight": ["お皿", "osara"]
+  }
+},
+{
+  "id": "n5_v_226",
+  "level": "N5",
+  "word": "かぎ",
+  "word_furigana": "かぎ",
+  "reading": "かぎ",
+  "romaji": "kagi",
+  "meanings": {
+    "primary": "Clé",
+    "secondary": ["Verrou", "Mot de passe (informatique)"]
+  },
+  "nuance": "Nom s'écrivant parfois en kanji <ruby>鍵<rt>かぎ</rt></ruby> (kagi), désignant une clé ou une serrure. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "でかける とき に 、<ruby>部屋<rt>へや</rt></ruby> の かぎ を かけます 。",
+    "romaji": "dekakeru toki ni, heya no kagi o kakimasu.",
+    "french": "Je ferme la **clé** de la chambre (je ferme à clé) quand je sors.",
+    "highlight": ["かぎ", "kagi"]
+  }
+},
+{
+  "id": "n5_v_227",
+  "level": "N5",
+  "word": "かばん",
+  "word_furigana": "かばん",
+  "reading": "かばん",
+  "romaji": "kaban",
+  "meanings": {
+    "primary": "Sac",
+    "secondary": ["Sacoche", "Cartable", "Valise"]
+  },
+  "nuance": "Nom s'écrivant parfois en kanji <ruby>鞄<rt>かばん</rt></ruby> (kaban), désignant un sac ou une mallette. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "きょうかしょ を かばん に <ruby>入<rt>はい</rt></ruby>れます 。",
+    "romaji": "kyoukasho o kaban ni iremasu.",
+    "french": "Je mets les manuels scolaires dans le **sac**.",
+    "highlight": ["かばん", "kaban"]
   }
 }
 ]

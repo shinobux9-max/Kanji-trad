@@ -5303,6 +5303,383 @@ async function getLevelGrammarData(levelId) {
     return grammarDataCache[levelId];
 }
 
+// ══════════════════════════════════════════════════
+//   LEARNING PATH — couche de résolution générique
+// ══════════════════════════════════════════════════
+// Résout une référence { type, id } du curriculum vers la vraie donnée pédagogique.
+// Le moteur de parcours ne connaît JAMAIS directement vocab.json/grammar.json/kanji_jouyou_fr.json
+// — il passe systématiquement par cette fonction, qui est le SEUL point de couplage entre le
+// curriculum (qui décrit QUOI enseigner) et les données réelles (qui contiennent le contenu).
+async function getLearningResource(type, id, levelId) {
+    if (type === 'vocabulary') {
+        const vd = await getLevelVocabData(levelId);
+        return vd && vd.data ? vd.data.find(w => w.id === id) || null : null;
+    }
+    if (type === 'grammar') {
+        const gd = await getLevelGrammarData(levelId);
+        return gd && gd.data ? gd.data.find(l => l.id === id) || null : null;
+    }
+    if (type === 'kanji') {
+        // kanjiDb/kanjiMap sont globaux et déjà chargés au démarrage (init()), synchrones —
+        // id est directement le caractère (ex: "学")
+        const idx = kanjiMap.get(id);
+        return idx !== undefined ? kanjiDb[idx] : null;
+    }
+    console.warn(`getLearningResource: type inconnu "${type}"`);
+    return null;
+}
+
+// ── Sauvegarde / reprise de progression ──────────────────────────────────
+// Clé DISTINCTE de LESSON_PROGRESS_KEY (parcours grammaire "Commençons l'apprentissage") :
+// les deux systèmes cohabitent, le Learning Path ne remplace pas l'existant.
+const CURRICULUM_PROGRESS_KEY = 'kanji_trad_curriculum_progress';
+
+function loadLearningProgress() {
+    try {
+        const raw = localStorage.getItem(CURRICULUM_PROGRESS_KEY);
+        return raw ? JSON.parse(raw) : { currentLevel: 'n5', currentUnit: null, currentStep: 0, units: {} };
+    } catch (e) {
+        return { currentLevel: 'n5', currentUnit: null, currentStep: 0, units: {} };
+    }
+}
+
+function saveLearningProgress(progress) {
+    try {
+        localStorage.setItem(CURRICULUM_PROGRESS_KEY, JSON.stringify(progress));
+    } catch (e) {
+        console.warn('Impossible de sauvegarder la progression du parcours:', e);
+    }
+}
+
+// ── État de session en cours (en mémoire, reconstruit depuis la progression sauvegardée) ──
+let learningSession = null; // { levelId, unit, stepIndex, testResults: [{sourceType, sourceId, correct}] }
+
+// Charge le curriculum d'un niveau (data/curriculum/{levelId}.json), pas de cache pour l'instant
+// vu le faible volume attendu (quelques unités par niveau).
+async function getLevelCurriculum(levelId) {
+    try {
+        const res = await fetch(`./data/curriculum/${levelId}.json`, { cache: 'no-store' });
+        if (!res.ok) return null;
+        return await res.json();
+    } catch (e) {
+        console.warn('Impossible de charger le curriculum:', e);
+        return null;
+    }
+}
+
+// Détermine la prochaine unité à faire : la première non "completed", dans l'ordre du fichier.
+// Retourne null si tout est terminé (tout le niveau est fini).
+function getNextLearningUnit(curriculum, progress) {
+    if (!curriculum || !Array.isArray(curriculum.units)) return null;
+    const sorted = [...curriculum.units].sort((a, b) => a.order - b.order);
+    for (const unit of sorted) {
+        const status = progress.units[unit.id]?.status;
+        if (status !== 'completed') return unit;
+    }
+    return null; // niveau entièrement terminé
+}
+
+// Point d'entrée principal : reprend une session en cours, ou démarre/reprend la prochaine
+// unité recommandée.
+async function startLearningPath(levelId = 'n5') {
+    const progress = loadLearningProgress();
+    const curriculum = await getLevelCurriculum(levelId);
+    if (!curriculum) {
+        console.error(`Curriculum introuvable pour ${levelId}`);
+        return;
+    }
+
+    let unit;
+    if (progress.currentUnit && progress.currentLevel === levelId) {
+        unit = curriculum.units.find(u => u.id === progress.currentUnit);
+    }
+    if (!unit) {
+        unit = getNextLearningUnit(curriculum, progress);
+    }
+    if (!unit) {
+        // Niveau entièrement terminé — pas encore de vrai écran dédié, comportement minimal pour l'instant
+        alert('Bravo, tu as terminé toutes les unités disponibles pour ce niveau !');
+        return;
+    }
+
+    await loadLearningUnit(levelId, unit, progress);
+}
+
+// Charge une unité précise et initialise/reprend la session en mémoire.
+async function loadLearningUnit(levelId, unit, progress = null) {
+    progress = progress || loadLearningProgress();
+    const savedStep = (progress.currentUnit === unit.id) ? (progress.currentStep || 0) : 0;
+
+    learningSession = {
+        levelId,
+        unit,
+        stepIndex: savedStep,
+        testResults: []
+    };
+
+    progress.currentLevel = levelId;
+    progress.currentUnit = unit.id;
+    progress.currentStep = savedStep;
+    if (!progress.units[unit.id]) {
+        progress.units[unit.id] = { status: 'in_progress', currentStep: savedStep };
+    }
+    saveLearningProgress(progress);
+
+    renderLearningStep();
+}
+
+// Avance à l'étape suivante (ou termine l'unité si on est déjà à la dernière étape).
+async function completeLearningStep() {
+    if (!learningSession) return;
+    const nextIndex = learningSession.stepIndex + 1;
+    if (nextIndex >= learningSession.unit.steps.length) {
+        await completeLearningUnit();
+        return;
+    }
+    learningSession.stepIndex = nextIndex;
+    const progress = loadLearningProgress();
+    progress.currentStep = nextIndex;
+    if (progress.units[learningSession.unit.id]) {
+        progress.units[learningSession.unit.id].currentStep = nextIndex;
+    }
+    saveLearningProgress(progress);
+    renderLearningStep();
+}
+
+// Revient à l'étape précédente (navigation arrière dans l'unité).
+function startLearningStep(index) {
+    if (!learningSession) return;
+    if (index < 0 || index >= learningSession.unit.steps.length) return;
+    learningSession.stepIndex = index;
+    renderLearningStep();
+}
+
+// Fin d'unité : note le SRS et le weakness tracking pour chaque ressource testée pendant le
+// test final (jamais pendant les étapes de découverte), marque l'unité "completed", propose
+// l'unité suivante. C'est le SEUL moment où gradeReview() est appelé depuis le Learning Path.
+async function completeLearningUnit() {
+    if (!learningSession) return;
+    const { unit, testResults } = learningSession;
+
+    testResults.forEach(r => {
+        const quality = r.correct ? 2 : 0; // Bien si juste, Encore si faux — convention déjà utilisée partout ailleurs dans l'app
+        gradeReview(r.sourceId, quality, { type: r.sourceType, label: r.sourceId });
+    });
+
+    const scorePct = testResults.length
+        ? Math.round(100 * testResults.filter(r => r.correct).length / testResults.length)
+        : null;
+
+    const progress = loadLearningProgress();
+    progress.units[unit.id] = { status: 'completed', score: scorePct };
+    progress.currentStep = 0;
+    saveLearningProgress(progress);
+
+    renderLearningUnitResult(scorePct, testResults);
+}
+
+// ══════════════════════════════════════════════════
+//   LEARNING PATH — renderer générique
+// ══════════════════════════════════════════════════
+// Affiche l'étape courante de la session en cours. Dispatch selon step.type — ne connaît
+// jamais N5 spécifiquement, seulement les types d'étapes génériques du curriculum.
+async function renderLearningStep() {
+    if (!learningSession) return;
+    const { unit, stepIndex } = learningSession;
+    const step = unit.steps[stepIndex];
+    const container = document.getElementById('main-content');
+    if (!container) return;
+
+    const progressDots = unit.steps.map((s, i) =>
+        `<span style="width:8px;height:8px;border-radius:50%;background:${i === stepIndex ? 'var(--accent)' : 'var(--border)'};display:inline-block;margin:0 3px;"></span>`
+    ).join('');
+    const header = `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px;">
+            <button class="back-btn" onclick="closeAllOverlaysAndSessions ? closeAllOverlaysAndSessions() : navDashboard()">←</button>
+            <div>${progressDots}</div>
+            <div style="width:32px;"></div>
+        </div>`;
+
+    if (step.type === 'introduction') {
+        container.innerHTML = header + `
+            <div class="dash-card" style="margin:16px;">
+                <h2 style="margin-top:0;">${unit.title}</h2>
+                <p style="color:var(--gray);">${unit.description || ''}</p>
+                <ul>${(unit.objectives || []).map(o => `<li>${o}</li>`).join('')}</ul>
+                <button class="review-cta-btn" onclick="completeLearningStep()">Commencer →</button>
+            </div>`;
+        return;
+    }
+
+    if (step.type === 'vocabulary' || step.type === 'kanji' || step.type === 'grammar') {
+        const items = await Promise.all(
+            step.items.map(id => getLearningResource(step.type, id, learningSession.levelId))
+        );
+        container.innerHTML = header + `
+            <div style="padding:0 16px;">
+                ${items.map(item => renderLearningResourceCard(step.type, item)).join('')}
+                <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
+            </div>`;
+        return;
+    }
+
+    if (step.type === 'mixed_practice' || step.type === 'test') {
+        await renderLearningExerciseStep(step);
+        return;
+    }
+
+    // Type inconnu : on passe simplement à l'étape suivante plutôt que de bloquer l'utilisateur
+    console.warn(`renderLearningStep: type d'étape inconnu "${step.type}"`);
+    completeLearningStep();
+}
+
+// Petite carte d'affichage générique pour une ressource (vocab/kanji/grammaire) — volontairement
+// simple pour l'instant, à raffiner visuellement une fois le moteur validé fonctionnellement.
+function renderLearningResourceCard(type, item) {
+    if (!item) return `<div class="dash-card">Ressource introuvable.</div>`;
+    if (type === 'vocabulary') {
+        return `<div class="dash-card">
+            <div style="font-size:1.6rem;">${item.word_furigana || item.word}</div>
+            <div style="color:var(--gray);">${item.reading} · ${item.romaji}</div>
+            <div style="margin-top:6px;">${item.meanings?.primary || ''}</div>
+        </div>`;
+    }
+    if (type === 'kanji') {
+        return `<div class="dash-card">
+            <div style="font-size:2.2rem;">${item.char}</div>
+            <div style="color:var(--gray);">On: ${(item.on || []).join('、')} — Kun: ${(item.kun || []).join('、')}</div>
+            <div style="margin-top:6px;">${(item.meanings || []).join(', ')}</div>
+        </div>`;
+    }
+    if (type === 'grammar') {
+        return `<div class="dash-card">
+            <div style="font-size:1.6rem;">${item.item}</div>
+            <div style="color:var(--gray);">${item.pattern || ''}</div>
+            <div style="margin-top:6px;">${item.title || ''}</div>
+        </div>`;
+    }
+    return '';
+}
+
+// Prépare et affiche une question d'exercice (practice ou test). Réutilise EXCLUSIVEMENT les
+// générateurs existants (buildVocabWordCloze, buildMeaningQCM, buildGrammarCloze) — aucun
+// second moteur de quiz créé pour le Learning Path.
+async function renderLearningExerciseStep(step) {
+    if (!learningSession.exerciseQueue || learningSession.exerciseStepId !== step.id) {
+        learningSession.exerciseQueue = await buildLearningExerciseQueue(step);
+        learningSession.exerciseIndex = 0;
+        learningSession.exerciseStepId = step.id;
+    }
+    const queue = learningSession.exerciseQueue;
+    const idx = learningSession.exerciseIndex;
+    const container = document.getElementById('main-content');
+
+    if (idx >= queue.length) {
+        // étape d'exercices terminée
+        learningSession.exerciseQueue = null;
+        completeLearningStep();
+        return;
+    }
+
+    const q = queue[idx];
+    const header = `<div style="padding:14px 16px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>`;
+    const optionsHtml = q.options.map((opt, i) => `
+        <button class="dash-card" style="width:100%;text-align:left;cursor:pointer;margin-bottom:8px;"
+            onclick="answerLearningExercise(${i})">${opt.label}</button>
+    `).join('');
+
+    container.innerHTML = header + `
+        <div style="padding:0 16px;">
+            <div class="dash-card" style="margin-bottom:16px;">${q.prompt}</div>
+            ${optionsHtml}
+        </div>`;
+}
+
+// Construit la file de questions pour une étape mixed_practice/test, à partir des ressources
+// new+review de l'unité, en piochant les distracteurs dans TOUT le niveau (pas seulement
+// l'unité) pour ne jamais être bloqué faute de pool suffisant.
+async function buildLearningExerciseQueue(step) {
+    const { unit, levelId } = learningSession;
+    const vd = await getLevelVocabData(levelId);
+    const gd = await getLevelGrammarData(levelId);
+    const vocabPool = vd && vd.data ? vd.data : [];
+    const grammarPool = gd && gd.data ? gd.data : [];
+
+    const allVocabIds = [...(unit.content.new.vocabulary || []), ...(unit.content.review.vocabulary || [])];
+    const allGrammarIds = [...(unit.content.new.grammar || []), ...(unit.content.review.grammar || [])];
+
+    const questionCount = step.questionCount || (allVocabIds.length + allGrammarIds.length);
+    const queue = [];
+
+    for (const id of allVocabIds) {
+        const word = vocabPool.find(w => w.id === id);
+        if (!word) continue;
+        const qcm = buildMeaningQCM(word, vocabPool);
+        if (qcm) {
+            queue.push({
+                sourceType: 'vocab',
+                sourceId: id,
+                prompt: `Que signifie <strong>${word.word}</strong> ?`,
+                options: qcm.options.map(o => ({ label: o, correct: o === qcm.correct })),
+            });
+        }
+    }
+    for (const id of allGrammarIds) {
+        const lesson = grammarPool.find(l => l.id === id);
+        if (!lesson) continue;
+        const cloze = buildGrammarCloze(lesson, grammarPool);
+        if (cloze) {
+            queue.push({
+                sourceType: 'grammar',
+                sourceId: id,
+                prompt: `${cloze.before}<strong>＿＿＿</strong>${cloze.after}`,
+                options: cloze.options.map(o => ({ label: o, correct: o === cloze.correct })),
+            });
+        }
+    }
+
+    // mélange et limite au nombre de questions demandé
+    for (let i = queue.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [queue[i], queue[j]] = [queue[j], queue[i]];
+    }
+    return queue.slice(0, questionCount);
+}
+
+// Traite la réponse à une question d'exercice (practice ou test).
+function answerLearningExercise(selectedIndex) {
+    const queue = learningSession.exerciseQueue;
+    const idx = learningSession.exerciseIndex;
+    const q = queue[idx];
+    const isCorrect = q.options[selectedIndex].correct;
+
+    // Le test final alimente le SRS en fin d'unité ; les étapes de découverte/pratique
+    // n'enregistrent rien dans le SRS (voir completeLearningUnit).
+    const currentStep = learningSession.unit.steps[learningSession.stepIndex];
+    if (currentStep.type === 'test') {
+        learningSession.testResults.push({ sourceType: q.sourceType, sourceId: q.sourceId, correct: isCorrect });
+    } else if (!isCorrect) {
+        updateWeaknessTracking(q.sourceId, 0, { type: q.sourceType, label: q.sourceId });
+    }
+
+    learningSession.exerciseIndex++;
+    renderLearningExerciseStep(currentStep);
+}
+
+// Écran de fin d'unité.
+function renderLearningUnitResult(scorePct, testResults) {
+    const container = document.getElementById('main-content');
+    if (!container) return;
+    const correctCount = testResults.filter(r => r.correct).length;
+    container.innerHTML = `
+        <div style="padding:24px 16px;text-align:center;">
+            <h2>Unité terminée !</h2>
+            <div style="font-size:2.4rem;color:var(--accent);margin:16px 0;">${scorePct !== null ? scorePct + ' %' : '—'}</div>
+            <p style="color:var(--gray);">${correctCount} / ${testResults.length} bonnes réponses</p>
+            <button class="review-cta-btn" onclick="startLearningPath(learningSession.levelId)">Continuer →</button>
+        </div>`;
+}
+
 // Précharge la grammaire de tous les niveaux JLPT en arrière-plan (fire-and-forget, appelé une
 // fois au démarrage) — permet ensuite des recherches SYNCHRONES via findLessonByIdSync(), utile
 // pour le système de renvoi "voir" entre leçons qui doit fonctionner dans des contextes de rendu

@@ -1,0 +1,37 @@
+{
+  "level": "n5",
+  "version": 1,
+  "units": [
+    {
+      "id": "n5_u01",
+      "order": 1,
+      "title": "Se présenter",
+      "description": "Poser les bases de la phrase japonaise et identifier une personne ou son métier.",
+      "objectives": [
+        "Utiliser です pour affirmer/identifier",
+        "Reconnaître et lire les kanji 学 et 生",
+        "Connaître le vocabulaire de l'école : étudiant, professeur"
+      ],
+      "content": {
+        "new": {
+          "vocabulary": ["n5_v_32", "n5_v_22"],
+          "kanji": ["学", "生"],
+          "grammar": ["n5_g_1"]
+        },
+        "review": {
+          "vocabulary": [],
+          "kanji": [],
+          "grammar": []
+        }
+      },
+      "steps": [
+        { "id": "intro", "type": "introduction" },
+        { "id": "vocab_01", "type": "vocabulary", "items": ["n5_v_32", "n5_v_22"] },
+        { "id": "kanji_01", "type": "kanji", "items": ["学", "生"] },
+        { "id": "grammar_01", "type": "grammar", "items": ["n5_g_1"] },
+        { "id": "practice_01", "type": "mixed_practice" },
+        { "id": "test_01", "type": "test", "questionCount": 6 }
+      ]
+    }
+  ]
+}
