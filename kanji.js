@@ -5463,7 +5463,7 @@ async function completeLearningUnit() {
 
     testResults.forEach(r => {
         const quality = r.correct ? 2 : 0; // Bien si juste, Encore si faux — convention déjà utilisée partout ailleurs dans l'app
-        gradeReview(r.sourceId, quality, { type: r.sourceType, label: r.sourceId });
+        gradeReview(r.sourceId, quality, { type: r.sourceType, label: r.sourceLabel });
     });
 
     const scorePct = testResults.length
@@ -5619,6 +5619,7 @@ async function buildLearningExerciseQueue(step) {
             queue.push({
                 sourceType: 'vocab',
                 sourceId: id,
+                sourceLabel: word.word,
                 prompt: `Que signifie <strong>${word.word}</strong> ?`,
                 options: qcm.options.map(o => ({ label: o, correct: o === qcm.correct })),
             });
@@ -5632,6 +5633,7 @@ async function buildLearningExerciseQueue(step) {
             queue.push({
                 sourceType: 'grammar',
                 sourceId: id,
+                sourceLabel: lesson.item || lesson.pattern,
                 prompt: `${cloze.before}<strong>＿＿＿</strong>${cloze.after}`,
                 options: cloze.options.map(o => ({ label: o, correct: o === cloze.correct })),
             });
@@ -5657,9 +5659,9 @@ function answerLearningExercise(selectedIndex) {
     // n'enregistrent rien dans le SRS (voir completeLearningUnit).
     const currentStep = learningSession.unit.steps[learningSession.stepIndex];
     if (currentStep.type === 'test') {
-        learningSession.testResults.push({ sourceType: q.sourceType, sourceId: q.sourceId, correct: isCorrect });
+        learningSession.testResults.push({ sourceType: q.sourceType, sourceId: q.sourceId, sourceLabel: q.sourceLabel, correct: isCorrect });
     } else if (!isCorrect) {
-        updateWeaknessTracking(q.sourceId, 0, { type: q.sourceType, label: q.sourceId });
+        updateWeaknessTracking(q.sourceId, 0, { type: q.sourceType, label: q.sourceLabel });
     }
 
     learningSession.exerciseIndex++;
