@@ -1,0 +1,75 @@
+n5_g_1 | Unité 1 - Les bases de la phrase | La formule de politesse de base | desu | Copule
+n5_g_2 | Unité 1 - Les bases de la phrase | Exprimer la négation avec politesse | dewa arimasen/ ja nai desu | Copule - Négatif
+n5_g_3 | Unité 1 - Les bases de la phrase | Le passé poli des noms et adjectifs en -na | deshita | Copule - Passé
+n5_g_4 | Unité 1 - Les bases de la phrase | La forme polie des verbes au présent / futur | 〜masu | Verbe - Présent / Futur
+n5_g_5 | Unité 1 - Les bases de la phrase | Nier une action | 〜masen | Verbe - Négatif
+n5_g_6 | Unité 1 - Les bases de la phrase | Action accomplie dans le passé | 〜mashita | Verbe - Passé
+n5_g_7 | Unité 1 - Les bases de la phrase | Action non accomplie au passé | 〜masen deshita | Verbe - Passé Négatif
+n5_g_8 | Unité 2 - Les particules fondamentales | Poser le thème de la phrase | wa | Particule - Thème
+n5_g_9 | Unité 2 - Les particules fondamentales | Identifier le sujet précis | ga | Particule - Sujet
+n5_g_10 | Unité 2 - Les particules fondamentales | Désigner l'objet direct d'une action | o | Particule - COD
+n5_g_11 | Unité 2 - Les particules fondamentales | Cible, destination et temps précis | ni | Particule - Cible & Temps
+n5_g_12 | Unité 2 - Les particules fondamentales | Lieu d'action et moyen utilisé | de | Particule - Lieu & Moyen
+n5_g_13 | Unité 2 - Les particules fondamentales | Indiquer une direction générale | e | Particule - Direction
+n5_g_14 | Unité 2 - Les particules fondamentales | Accompagnement et énumération complète | to | Particule - Association
+n5_g_15 | Unité 2 - Les particules fondamentales | Inclusion et similitude | mo | Particule - Inclusion
+n5_g_16 | Unité 2 - Les particules fondamentales | Possession et lien entre les mots | no | Particule - Lien & Possession
+n5_g_17 | Unité 2 - Les particules fondamentales | Poser une question | ka | Particule - Question
+n5_g_18 | Unité 2 - Les particules fondamentales | Demander confirmation | ne | Particule - Accord & Confirmation
+n5_g_19 | Unité 2 - Les particules fondamentales | Informer ou affirmer avec assurance | yo | Particule - Information & Assurance
+n5_g_20 | Unité 3 - Origine, limites et comparaisons | Point de départ ou raison | kara | Particule - Origine & Cause
+n5_g_21 | Unité 3 - Origine, limites et comparaisons | Fixer une limite spatiale ou temporelle | made | Particule - Limite & Terminus
+n5_g_22 | Unité 3 - Origine, limites et comparaisons | Exprimer un point de comparaison | yori | Particule - Comparaison
+n5_g_23 | Unité 3 - Origine, limites et comparaisons | Exprimer la restriction | dake | Particule - Restriction
+n5_g_24 | Unité 3 - Origine, limites et comparaisons | Approximation temporelle | goro | Particule - Approximation temporelle
+n5_g_25 | Unité 3 - Origine, limites et comparaisons | Approximation de durée ou quantité | kurai / gurai | Particule - Estimation & Durée
+n5_g_26 | Unité 3 - Origine, limites et comparaisons | Énumération incomplète | ya | Particule - Liste partielle
+n5_g_27 | Unité 3 - Origine, limites et comparaisons | Conclure une énumération | nado | Particule - Etc. & Exemples
+n5_g_28 | Unité 4 - Les Adjectifs | Adjectifs en -i au présent | i-adjectives (Present) | Adjectif - Forme en い
+n5_g_29 | Unité 4 - Les Adjectifs | Adjectifs en -i au passé | i-adjectives (Past) | Adjectif - Forme en い
+n5_g_30 | Unité 4 - Les Adjectifs | Adjectifs en -na | na-adjectives | Adjectif - Forme en な
+n5_g_31 | Unité 5 - L'existence et la possession | Existence d'objets inanimés | arimasu | Verbe - Existence (Inanimé)
+n5_g_32 | Unité 5 - L'existence et la possession | Existence d'êtres vivants | imasu | Verbe - Existence (Animé)
+n5_g_33 | Unité 5 - L'existence et la possession | Exprimer ses désirs | hoshii | Adjectif - Désir d'objet
+n5_g_34 | Unité 5 - L'existence et la possession | Exprimer une envie de faire | 〜tai | Suffixe - Volonté d'action
+n5_g_35 | Unité 6 - La forme en TE (て) | Demander poliment (Demande) | 〜te kudasai | Structure - Requête & Politesse
+n5_g_36 | Unité 6 - La forme en TE (て) | Action en cours et état continu | 〜te iru | Structure - Progressif & État
+n5_g_37 | Unité 6 - La forme en TE (て) | Demander ou donner une permission | 〜te mo ii | Structure - Permission
+n5_g_38 | Unité 6 - La forme en TE (て) | Exprimer une interdiction | 〜te wa ikenai | Structure - Interdiction
+n5_g_39 | Unité 6 - La forme en TE (て) | Enchaîner des actions | te kara | Structure - Séquence temporelle
+n5_g_40 | Unité 7 - Obligations et interdictions (Forme NAI) | Demander de ne pas faire | 〜naide kudasai | Structure - Requête négative
+n5_g_41 | Unité 7 - Obligations et interdictions (Forme NAI) | Exprimer une obligation | 〜nakereba naranai | Structure - Obligation stricte
+n5_g_42 | Unité 7 - Obligations et interdictions (Forme NAI) | Absence d'obligation | 〜nakutemo ii | Structure - Absence d'obligation
+n5_g_43 | Unité 8 - La forme dictionnaire et les capacités | Exprimer une capacité ou possibilité | 〜koto ga dekiru | Structure - Capacité & Possibilité
+n5_g_44 | Unité 8 - La forme dictionnaire et les capacités | Parler de ses loisirs | 〜shumi wa 〜koto desu | Structure - Passe-temps
+n5_g_45 | Unité 8 - La forme dictionnaire et les capacités | Indiquer un moment (avant) | 〜mae ni | Structure - Chronologie
+n5_g_46 | Unité 9 - Expériences et propositions (Forme TA) | Exprimer une expérience passée | 〜koto ga aru | Structure - Expérience passée
+n5_g_47 | Unité 9 - Expériences et propositions (Forme TA) | Donner un conseil ou une recommandation | 〜hou ga ii | Structure - Conseil & Recommandation
+n5_g_48 | Unité 9 - Expériences et propositions (Forme TA) | Énumérer des actions représentatives | 〜tari 〜tari suru | Structure - Énumération non exhaustive
+n5_g_49 | Unité 9 - Expériences et propositions (Forme TA) | Proposer poliment une action commune | 〜mashou | Structure - Proposition & Incitation
+n5_g_50 | Unité 9 - Expériences et propositions (Forme TA) | Inviter poliment quelqu'un | 〜mashou ka / 〜masen ka | Structure - Invitation & Offre d'aide
+n5_g_51 | Unité 10 - Exprimer les changements et les raisons | Exprimer un changement d'état | ni naru / ku naru | Structure - Changement d'état
+n5_g_52 | Unité 10 - Exprimer les changements et les raisons | Donner une raison ou une cause | kara / node | Structure - Cause & Raison
+n5_g_53 | Unité 10 - Exprimer les changements et les raisons | Exprimer une opposition légère | ga / kedo | Structure - Opposition & Conjonction
+n5_g_54 | Unité 10 - Exprimer les changements et les raisons | Citer des paroles ou des pensées | 〜to (iu / omou) | Structure - Citation & Opinion
+n5_g_55 | Unité 11 - Les démonstratifs et positions | Désigner des objets (Ko-So-A-Do) | kore / sore / are / dore | Structure - Pronoms démonstratifs
+n5_g_56 | Unité 11 - Les démonstratifs et positions | Déterminants démonstratifs | kono / sono / ano / dono | Structure - Déterminants démonstratifs
+n5_g_57 | Unité 11 - Les démonstratifs et positions | Désigner des lieux | koko / soko / asoko / doko | Structure - Lieux démonstratifs
+n5_g_58 | Unité 11 - Les démonstratifs et positions | Exprimer la position spatiale | ue / shita / mae / ushiro / naka / tonari | Structure - Mots de position
+n5_g_59 | Unité 12 - Mots interrogatifs et indéfinis | Quantité et durée | donokurai / donogurai | Structure - Interrogatif de durée & quantité
+n5_g_60 | Unité 12 - Mots interrogatifs et indéfinis | Pronoms indéfinis (Quelque chose / Quelqu'un) | nanika / dareka / dokoka | Structure - Pronoms indéfinis
+n5_g_61 | Unité 12 - Mots interrogatifs et indéfinis | Négation totale | nanimo / daremo / dokomo | Structure - Négation absolue
+n5_g_62 | Unité 13 - Structures avancées et polies | Donner ou recevoir des objets | ageru / morau / kureru | Structure - Don & Réception
+n5_g_63 | Unité 13 - Structures avancées et polies | Rendre service (Faire pour quelqu'un) | -te ageru / -te kureru / -te morau | Structure - Services & Actions bienveillantes
+n5_g_64 | Unité 13 - Structures avancées et polies | Exprimer la facilité ou la difficulté | -yasui / -nikui | Structure - Facilité & Difficulté
+n5_g_65 | Unité 13 - Structures avancées et polies | Même si / Malgré | -temo | Structure - Concession
+n5_g_66 | Unité 13 - Structures avancées et polies | Simultanéité de deux actions | -nagara | Structure - Simultanéité
+n5_g_67 | Unité 14 - Conditionnels et nuances | Conditionnel temporel ou logique | -tara | Structure - Conditionnel & Antériorité
+n5_g_68 | Unité 14 - Conditionnels et nuances | Exprimer l'excès ou le trop-plein | -sugiru | Structure - Excès & Exagération
+n5_g_69 | Unité 14 - Conditionnels et nuances | Faire sans effectuer une action | -naide | Structure - Absence d'action
+n5_g_70 | Unité 14 - Conditionnels et nuances | Proposer son aide | -mashou ka | Structure - Offre de service
+n5_g_71 | Unité 15 - Expressions d'intention et d'état | Avoir l'intention de | -tsumori | Structure - Intention & Projet
+n5_g_72 | Unité 15 - Expressions d'intention et d'état | Exprimer la possibilité ou le doute | -deshou / -darou | Structure - Probabilité & Supposition
+n5_g_73 | Unité 15 - Expressions d'intention et d'état | Exprimer la possession d'un objet | -o motte iru | Structure - Possession & État
+n5_g_74 | Unité 15 - Expressions d'intention et d'état | Devoir / Il faut (Forme courte) | -nakucha / -nakya | Structure - Obligation familière
+n5_g_75 | Unité 15 - Expressions d'intention et d'état | Forme neutre / familière |  | Structure - Registre familier
