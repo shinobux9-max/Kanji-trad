@@ -940,6 +940,19 @@ function speakText(text, lang = 'ja-JP') {
     }
 }
 
+// Extrait le texte à lire à voix haute depuis une phrase avec furigana (<ruby>kanji<rt>lecture</rt></ruby>) :
+// ne garde QUE le kanji/texte de base, jamais la lecture — sinon la synthèse vocale lit les
+// deux collés (ex: "音楽おんがく" au lieu de juste "音楽"). Retire aussi tout <rt> orphelin
+// et toute autre balise résiduelle, par sécurité.
+function stripRubyForSpeech(html) {
+    if (!html) return '';
+    return html
+        .replace(/<rt>.*?<\/rt>/g, '')   // retire la lecture entière (balise + contenu)
+        .replace(/<\/?ruby>/g, '')       // retire juste les balises ruby, garde le kanji
+        .replace(/<[^>]+>/g, '')         // filet de sécurité pour toute autre balise
+        .trim();
+}
+
 /* ══════════════════════════════════════════════════
    MAPPING CATÉGORIES : Anglais → Français
 ══════════════════════════════════════════════════ */
@@ -3310,7 +3323,7 @@ function showVocabDetail(wordId, allWords = [], isBack = false) {
             <div class="example-jp">${mdBold(word.example.japanese || '')}</div>
             <div class="example-ro">${mdBold(word.example.romaji || '')}</div>
             <div class="example-fr">${mdBold(word.example.french || '')}</div>
-            <button class="vocab-speak-btn-example" onclick="speakText('${(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
+            <button class="vocab-speak-btn-example" onclick="speakText('${stripRubyForSpeech(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
         </div>`;
     }
     
@@ -3685,7 +3698,7 @@ function showGrammarDetail(lessonId, isBack = false) {
                             <div class="example-jp">${highlightText(example.japanese || '', example.highlight || '')}</div>
                             <div class="example-ro">${example.romaji || ''}</div>
                             <div class="example-fr">${example.french || ''}</div>
-                            ${example.japanese ? `<button class="speak-btn" onclick="speakText('${(example.japanese || '').replace(/'/g, "\\'")}')" title="Cliquer pour écouter">🔊</button>` : ''}
+                            ${example.japanese ? `<button class="speak-btn" onclick="speakText('${stripRubyForSpeech(example.japanese || '').replace(/'/g, "\\'")}')" title="Cliquer pour écouter">🔊</button>` : ''}
                         </div>
                     `).join('')}
                 </div>
@@ -7456,7 +7469,7 @@ async function renderExemples(char) {
         const jpHtml = target
             ? jp.replace(new RegExp(`(${target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'), '<span class="highlight-grammar">$1</span>')
             : jp;
-        const plainText = jp.replace(/<[^>]+>/g, '').replace(/'/g, "\\'");
+        const plainText = stripRubyForSpeech(jp).replace(/'/g, "\\'");
         const romajiLine = romaji
             ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${romaji}</div>`
             : '';
