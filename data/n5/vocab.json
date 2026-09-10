@@ -34,7 +34,7 @@
       "primary": "Adorer",
       "secondary": ["Aimer beaucoup", "Être très friand de"]
     },
-    "nuance": "Adjectif en na exprimant un degré d'affection ou de préférence très élevé envers une personne, un plat ou une chose. S'associe souvent avec la particule が pour l'objet aimé.",
+    "nuance": "Adjectif en na exprimant un degré d'affection ou de préférence très élevé envers une personne, un plat ou une chose. S'associe souvent avec la particule が (ga) pour l'objet aimé.",
     "type": "adjectif en na",
     "group": "na",
     "category": "emotions_sentiments",
@@ -58,7 +58,7 @@
       "primary": "Détester",
       "secondary": ["Ne pas aimer"]
     },
-    "nuance": "Adjectif en na marquant l'aversion ou le désamour. Bien qu'exprimant un sentiment négatif, il est très courant, mais s'emploie avec un certain degré de franchise directe. S'associe avec la particule が.",
+    "nuance": "Adjectif en na marquant l'aversion ou le désamour. Bien qu'exprimant un sentiment négatif, il est très courant, mais s'emploie avec un certain degré de franchise directe. S'associe avec la particule が '(ga).",
     "type": "adjectif en na",
     "group": "na",
     "category": "emotions_sentiments",
@@ -70,5 +70,4733 @@
       "french": "Il **déteste** les légumes.",
       "highlight": ["嫌い", "kirai"]
     }
+  },
+  {
+  "id": "n5_v_4",
+  "level": "N5",
+  "word": "暗い",
+  "word_furigana": "<ruby>暗<rt>くら</rt></ruby>い",
+  "reading": "くらい",
+  "romaji": "kurai",
+  "meanings": {
+    "primary": "Sombre",
+    "secondary": ["Obscur", "Triste (personnalité, ambiance)"]
+  },
+  "nuance": "Adjectif en i utilisé pour décrire un lieu qui manque de lumière, ou métaphoriquement une atmosphère ou une personnalité sombre et mélancolique.",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "emotions_sentiments",
+  "kanji_list": ["暗"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>部屋<rt>へや</rt></ruby> が <ruby>暗<rt>くら</rt></ruby>い ので 、<ruby>明<rt>あ</rt></ruby>かり を つけて ください 。",
+    "romaji": "heya ga kurai node, akari o tsukete kudasai.",
+    "french": "La pièce est **sombre**, veuillez allumer la lumière.",
+    "highlight": ["暗い", "kurai"]
   }
+},
+{
+  "id": "n5_v_5",
+  "level": "N5",
+  "word": "楽しい",
+  "word_furigana": "<ruby>楽<rt>たの</rt></ruby>しい",
+  "reading": "たのしい",
+  "romaji": "tanoshii",
+  "meanings": {
+    "primary": "Amusant",
+    "secondary": ["Joyeux", "Gai", "Agréable"]
+  },
+  "nuance": "Adjectif en i exprimant qu'une situation, un moment ou une activité procure du plaisir, de la joie et du divertissement.",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "emotions_sentiments",
+  "kanji_list": ["楽"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の <ruby>旅行<rt>りょこう</rt></ruby> は とても <ruby>楽<rt>たの</rt></ruby>しい です 。",
+    "romaji": "kyou no ryokou wa totemo tanoshii desu.",
+    "french": "Le voyage d'aujourd'hui est très **amusant**.",
+    "highlight": ["楽しい", "tanoshii"]
+  }
+},
+{
+  "id": "n5_v_6",
+  "level": "N5",
+  "word": "欲しい",
+  "word_furigana": "<ruby>欲<rt>ほ</rt></ruby>しい",
+  "reading": "ほしい",
+  "romaji": "hoshii",
+  "meanings": {
+    "primary": "Vouloir",
+    "secondary": ["Désirer", "Souhaiter (avoir quelque chose)"]
+  },
+  "nuance": "Adjectif en i qui exprime le désir d'obtenir un objet. Il s'utilise avec la particule が '(ga) pour désigner l'objet convoité.",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "emotions_sentiments",
+  "kanji_list": ["欲"],
+  "particles": ["が"],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> は <ruby>新<rt>あたら</rt></ruby>しい <ruby>車<rt>くるま</rt></ruby> が <ruby>欲<rt>ほ</rt></ruby>しい です 。",
+    "romaji": "watashi wa atarashii kuruma ga hoshii desu.",
+    "french": "Je **veux** une nouvelle voiture.",
+    "highlight": ["欲しい", "hoshii"]
+  }
+},
+{
+  "id": "n5_v_7",
+  "level": "N5",
+  "word": "涼しい",
+  "word_furigana": "<ruby>涼<rt>すず</rt></ruby>しい",
+  "reading": "すずしい",
+  "romaji": "suzushii",
+  "meanings": {
+    "primary": "Frais",
+    "secondary": ["Agréablement frais (météo)"]
+  },
+  "nuance": "Adjectif en i utilisé pour décrire une température fraîche et agréable, généralement en parlant du temps, du climat ou d'une brise (à ne pas confondre avec <ruby>爽<rt>さわ</rt></ruby>やか (sawayaka) qui s'applique aussi à l'ambiance ou au caractère).",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "emotions_sentiments",
+  "kanji_list": ["涼"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>秋<rt>あき</rt></ruby> に なって 、<ruby>夜<rt>よる</rt></ruby> は <ruby>涼<rt>すず</rt></ruby>しく なりました 。",
+    "romaji": "aki ni natte, yoru wa suzushiku narimashita.",
+    "french": "L'automne est arrivé et les nuits sont devenues **fraîches**.",
+    "highlight": ["涼しく", "suzushiku"]
+  }
+},
+{
+  "id": "n5_v_8",
+  "level": "N5",
+  "word": "温かい",
+  "word_furigana": "<ruby>温<rt>あたた</rt></ruby>かい",
+  "reading": "あたたかい",
+  "romaji": "atatakai",
+  "meanings": {
+    "primary": "Chaud",
+    "secondary": ["Tiède", "Chaleureux (climat, plat, ou accueil)"]
+  },
+  "nuance": "Adjectif en i qualifiant une température douce et agréable (pour l'air, l'eau, les objets ou les plats). S'écrit aussi <ruby>暖<rt>あたた</rt></ruby>かい (atatakai) lorsqu'il s'agit de la météo ou d'un climat.",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "emotions_sentiments",
+  "kanji_list": ["温"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>寒<rt>さむ</rt></ruby>い <ruby>日<rt>ひ</rt></ruby> に は 、<ruby>温<rt>あたた</rt></ruby>かい <ruby>御茶<rt>おちゃ</rt></ruby> を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "samui hi ni wa, atatakai ocha o nomimasu.",
+    "french": "Les jours froids, je bois du thé **chaud**.",
+    "highlight": ["温かい", "atatakai"]
+  }
+},
+{
+  "id": "n5_v_9",
+  "level": "N5",
+  "word": "疲れる",
+  "word_furigana": "<ruby>疲<rt>つか</rt></ruby>れる",
+  "reading": "つかれる",
+  "romaji": "tsukareru",
+  "meanings": {
+    "primary": "Se fatiguer",
+    "secondary": ["Être fatigué", "S'épuiser"]
+  },
+  "nuance": "Verbe ichidan intransitif décrivant l'état de fatigue physique ou mentale. On utilise très fréquemment sa forme en -te iru (<ruby>疲<rt>つか</rt></ruby>れている (tsukarete iru)) pour dire \"être fatigué\".",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "emotions_sentiments",
+  "kanji_list": ["疲"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>今日<rt>きょう</rt></ruby> は <ruby>仕事<rt>しごと</rt></ruby> が <ruby>多<rt>おお</rt></ruby>くて 、とても <ruby>疲<rt>つか</rt></ruby>れました 。",
+    "romaji": "kyou wa shigoto ga ookute, totemo tsukaremashita.",
+    "french": "Aujourd'hui, il y avait beaucoup de travail et je me suis beaucoup **fatigué**.",
+    "highlight": ["疲れました", "tsukaremashita"]
+  }
+},
+{
+  "id": "n5_v_10",
+  "level": "N5",
+  "word": "面白い",
+  "word_furigana": "<ruby>面<rt>おも</rt></ruby><ruby>白<rt>しろ</rt></ruby>い",
+  "reading": "おもしろい",
+  "romaji": "omoshiroi",
+  "meanings": {
+    "primary": "Intéressant",
+    "secondary": ["Amusant", "Divertissant", "Drôle"]
+  },
+  "nuance": "Adjectif en i employé pour qualifier quelque chose qui captive l'esprit, qui procure du divertissement ou qui fait rire (un livre, un film, une idée, une blague).",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "emotions_sentiments",
+  "kanji_list": ["面", "白"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>昨日<rt>きのう</rt></ruby> <ruby>読<rt>よ</rt></ruby>んだ <ruby>本<rt>ほん</rt></ruby> は とても <ruby>面<rt>おも</rt></ruby><ruby>白<rt>しろ</rt></ruby>かった です 。",
+    "romaji": "kinou yonda hon wa totemo omoshirokatta desu.",
+    "french": "Le livre que j'ai lu hier était très **intéressant**.",
+    "highlight": ["面白かった", "omoshirokatta"]
+  }
+},
+{
+  "id": "n5_v_11",
+  "level": "N5",
+  "word": "おじいさん",
+  "word_furigana": "おじいさん",
+  "reading": "おじいさん",
+  "romaji": "ojiisan",
+  "meanings": {
+    "primary": "Grand-père",
+    "secondary": ["Vieil homme", "Personne âgée (terme poli)"]
+  },
+  "nuance": "Nom désignant le grand-père d'autrui ou le sien avec respect, ou de manière générale un homme âgé (attention à la distinction de longueur de voyelle avec おじさん (ojisan) qui signifie oncle ou monsieur d'âge mûr).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>祖父<rt>そふ</rt></ruby> は おじいさん と <ruby>呼<rt>よ</rt></ruby>ばれる の が <ruby>好<rt>す</rt></ruby>き です 。",
+    "romaji": "watashi no sofu wa ojiisan to yobareru no ga suki desu.",
+    "french": "Mon grand-père aime être appelé **grand-père**.",
+    "highlight": ["おじいさん", "ojiisan"]
+  }
+},
+{
+  "id": "n5_v_12",
+  "level": "N5",
+  "word": "おじさん",
+  "word_furigana": "おじさん",
+  "reading": "おじさん",
+  "romaji": "ojisan",
+  "meanings": {
+    "primary": "Oncle",
+    "secondary": ["Monsieur", "Homme d'âge mûr"]
+  },
+  "nuance": "Nom désignant un oncle (frère des parents ou époux de la tante) ou employé comme appellation polie pour s'adresser à un homme d'âge mûr dans la rue. À prononcer avec un 'i' court.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>昨日<rt>きのう</rt></ruby> 、おじさん の <ruby>家<rt>いえ</rt></ruby> に <ruby>行<rt>い</rt></ruby>きました 。",
+    "romaji": "kinou, ojisan no ie ni ikimashita.",
+    "french": "Hier, je suis allé chez mon **oncle**.",
+    "highlight": ["おじさん", "ojisan"]
+  }
+},
+{
+  "id": "n5_v_13",
+  "level": "N5",
+  "word": "おばあさん",
+  "word_furigana": "おばあさん",
+  "reading": "おばあさん",
+  "romaji": "obaasan",
+  "meanings": {
+    "primary": "Grand-mère",
+    "secondary": ["Vieille dame", "Personne âgée (terme poli)"]
+  },
+  "nuance": "Nom désignant la grand-mère ou, par extension polie, une femme âgée. Veillez à bien allonger le son 'aa' pour ne pas le confondre avec おばさん (obasan) la tante.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "おばあさん が <ruby>作<rt>つく</rt></ruby>った <ruby>料理<rt>りょうり</rt></ruby> は とても <ruby>美味<rt>おい</rt></ruby>しい です 。",
+    "romaji": "obaasan ga tsukutta ryouri wa totemo oishii desu.",
+    "french": "La cuisine préparée par ma **grand-mère** est très délicieuse.",
+    "highlight": ["おばあさん", "obaasan"]
+  }
+},
+{
+  "id": "n5_v_14",
+  "level": "N5",
+  "word": "おばさん",
+  "word_furigana": "おばさん",
+  "reading": "おばさん",
+  "romaji": "obasan",
+  "meanings": {
+    "primary": "Tante",
+    "secondary": ["Dame d'âge mûr", "Femme d'un certain âge"]
+  },
+  "nuance": "Nom désignant une tante (sœur des parents ou épouse de l'oncle) ou utilisé pour interpeller poliment une femme d'âge mûr. Attention à la voyelle courte 'a' qui le distingue de おばあさん (obaasan) grand-mère.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の おばさん は <ruby>東京<rt>とうきょう</rt></ruby> に <ruby>住<rt>す</rt></ruby>んでいます 。",
+    "romaji": "watashi no obasan wa toukyou ni sundeimasu.",
+    "french": "Ma **tante** habite à Tokyo.",
+    "highlight": ["おばさん", "obasan"]
+  }
+},
+{
+  "id": "n5_v_15",
+  "level": "N5",
+  "word": "お巡りさん",
+  "word_furigana": "お<ruby>巡<rt>ま和</rt></ruby>りさん",
+  "reading": "おまわりさん",
+  "romaji": "omawarisan",
+  "meanings": {
+    "primary": "Agent de police",
+    "secondary": ["Policier de quartier (terme familier et poli)"]
+  },
+  "nuance": "Nom familier mais poli très utilisé, notamment par les enfants, pour désigner un agent de police en patrouille (dérivé du verbe <ruby>巡<rt>めぐ</rt></ruby>る - meguru, faire le tour).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["巡"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>道<rt>みち</rt></ruby> が 分からない ので 、お巡りさん に <ruby>聞<rt>き</rt></ruby>きました 。",
+    "romaji": "michi ga wakaranai node, omawarisan ni kikimashita.",
+    "french": "Ne connaissant pas le chemin, je l'ai demandé à l'**agent de police**.",
+    "highlight": ["お巡りさん", "omawarisan"]
+  }
+},
+{
+  "id": "n5_v_16",
+  "level": "N5",
+  "word": "お兄さん",
+  "word_furigana": "お<ruby>兄<rt>に</rt></ruby>さん",
+  "reading": "おにいさん",
+  "romaji": "oniisan",
+  "meanings": {
+    "primary": "Grand frère",
+    "secondary": ["Jeune homme", "Frère aîné (d'autrui ou en s'adressant à lui)"]
+  },
+  "nuance": "Nom désignant le grand frère de quelqu'un (ou le sien par politesse en s'adressant directement à lui). S'utilise aussi pour interpeller familièrement un jeune homme. (Pour parler de son propre frère aîné à la troisième personne, on emploie <ruby>兄<rt>あに</rt></ruby> (ani)).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["兄"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>彼<rt>かれ</rt></ruby> の お兄さん は <ruby>医者<rt>いしゃ</rt></ruby> です 。",
+    "romaji": "kare no oniisan wa isha desu.",
+    "french": "Son **grand frère** est médecin.",
+    "highlight": ["お兄さん", "oniisan"]
+  }
+},
+{
+  "id": "n5_v_17",
+  "level": "N5",
+  "word": "お姉さん",
+  "word_furigana": "お<ruby>姉<rt>ねえ</rt></ruby>さん",
+  "reading": "おねえさん",
+  "romaji": "oneesan",
+  "meanings": {
+    "primary": "Grande sœur",
+    "secondary": ["Jeune femme", "Sœur aînée (d'autrui ou en s'adressant à elle)"]
+  },
+  "nuance": "Nom désignant la grande sœur de quelqu'un ou utilisé pour s'adresser directement à elle, ainsi que pour interpeller poliment une jeune femme dans la rue. Pour parler de sa propre sœur aînée à quelqu'un d'autre, on utilise <ruby>姉<rt>あね</rt></ruby> (ane).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["姉"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の お姉さん は <ruby>会社員<rt>かいしゃいん</rt></ruby> です 。",
+    "romaji": "watashi no oneesan wa kaishain desu.",
+    "french": "Ma **grande sœur** est employée de bureau.",
+    "highlight": ["お姉さん", "oneesan"]
+  }
+},
+{
+  "id": "n5_v_18",
+  "level": "N5",
+  "word": "お母さん",
+  "word_furigana": "お<ruby>母<rt>かあ</rt></ruby>さん",
+  "reading": "おかあさん",
+  "romaji": "okaasan",
+  "meanings": {
+    "primary": "Mère",
+    "secondary": ["Maman"]
+  },
+  "nuance": "Nom poli pour désigner la mère d'autrui ou pour s'adresser directement à sa propre mère. Pour parler de sa propre mère à un tiers, on utilise plutôt le terme neutre <ruby>母<rt>はは</rt></ruby> (haha).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["母"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>昨日<rt>きのう</rt></ruby> 、お母さん と <ruby>一緒<rt>いっしょ</rt></ruby> に <ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby> を しました 。",
+    "romaji": "kinou, okaasan to issho ni kaimono o shimashita.",
+    "french": "Hier, j'ai fait les courses avec ma **mère**.",
+    "highlight": ["お母さん", "okaasan"]
+  }
+},
+{
+  "id": "n5_v_19",
+  "level": "N5",
+  "word": "お父さん",
+  "word_furigana": "お<ruby>父<rt>とう</rt></ruby>さん",
+  "reading": "おとうさん",
+  "romaji": "otousan",
+  "meanings": {
+    "primary": "Père",
+    "secondary": ["Papa"]
+  },
+  "nuance": "Nom poli pour désigner le père d'autrui ou pour s'adresser directement à son propre père. Pour parler de son propre père à une personne extérieure à la famille, on emploie le terme <ruby>父<rt>ちち</rt></ruby> (chichi).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["父"],
+  "particles": [],
+  "example": {
+    "japanese": "お父さん は <ruby>毎朝<rt>まいあさ</rt></ruby> <ruby>新聞<rt>しんぶん</rt></ruby> を <ruby>読<rt>よ</rt></ruby>みます 。",
+    "romaji": "otousan wa maiasa shinbun o yomimasu.",
+    "french": "Mon **père** lit le journal tous les matins.",
+    "highlight": ["お父さん", "otousan"]
+  }
+},
+{
+  "id": "n5_v_20",
+  "level": "N5",
+  "word": "両親",
+  "word_furigana": "<ruby>両<rt>りょう</rt></ruby><ruby>親<rt>しん</rt></ruby>",
+  "reading": "りょうしん",
+  "romaji": "ryoushin",
+  "meanings": {
+    "primary": "Parents",
+    "secondary": ["Père et mère"]
+  },
+  "nuance": "Nom désignant à la fois le père et la mère, qu'il s'agisse des siens ou de ceux de quelqu'un d'autre.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["両", "親"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>両親<rt>りょうしん</rt></ruby> は <ruby>旅行<rt>りょこう</rt></ruby> が <ruby>好<rt>す</rt></ruby>き です 。",
+    "romaji": "watashi no ryoushin wa ryokou ga suki desu.",
+    "french": "Mes **parents** aiment voyager.",
+    "highlight": ["両親", "ryoushin"]
+  }
+},
+{
+  "id": "n5_v_21",
+  "level": "N5",
+  "word": "兄",
+  "word_furigana": "<ruby>兄<rt>あに</rt></ruby>",
+  "reading": "あに",
+  "romaji": "ani",
+  "meanings": {
+    "primary": "Grand frère",
+    "secondary": ["Frère aîné (en parlant du sien)"]
+  },
+  "nuance": "Mot qu'on emploie pour parler de son propre grand frère à quelqu'un d'extérieur (à l'inverse de <ruby>お兄<rt>おにい</rt></ruby>さん (oniisan) qui sert à s'adresser directement à lui ou à parler du frère de quelqu'un d'autre).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["兄"],
+  "particles": [],
+  "example": {
+    "japanese": "わたしの <ruby>兄<rt>あに</rt></ruby> は <ruby>会社員<rt>かいしゃいん</rt></ruby> です 。",
+    "romaji": "watashi no ani wa kaishain desu.",
+    "french": "Mon **grand frère** est employé de bureau.",
+    "highlight": ["兄", "ani"]
+  }
+},
+{
+  "id": "n5_v_22",
+  "level": "N5",
+  "word": "先生",
+  "word_furigana": "<ruby>先<rt>せん</rt></ruby><ruby>生<rt>せい</rt></ruby>",
+  "reading": "せんせい",
+  "romaji": "sensei",
+  "meanings": {
+    "primary": "Professeur",
+    "secondary": ["Enseignant", "Maître", "Médecin", "Auteur / Professionnel qualifié"]
+  },
+  "nuance": "Nom utilisé à la fois comme titre honorifique après un nom de famille et comme appellation pour s'adresser à un professeur, un docteur, un auteur ou un maître dans un art. On ne l'utilise jamais pour soi-même.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["先", "生"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>田中<rt>たなか</rt></ruby> <ruby>先生<rt>せんせい</rt></ruby> は <ruby>日本語<rt>にほんご</rt></ruby> を <ruby>教<rt>おし</rt></ruby>えます 。",
+    "romaji": "tanaka sensei wa nihongo o oshiemasu.",
+    "french": "Le **professeur** Tanaka enseigne le japonais.",
+    "highlight": ["先生", "sensei"]
+  }
+},
+{
+  "id": "n5_v_23",
+  "level": "N5",
+  "word": "友達",
+  "word_furigana": "<ruby>友<rt>とも</rt></ruby><ruby>達<rt>だち</rt></ruby>",
+  "reading": "ともだち",
+  "romaji": "tomodachi",
+  "meanings": {
+    "primary": "Ami",
+    "secondary": ["Copain", "Camarade"]
+  },
+  "nuance": "Nom courant désignant un ami ou une amie avec qui l'on entretient des liens amicaux. Le suffixe -tachi indique le pluriel mais est ici figé dans le mot.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["友", "達"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>週末<rt>しゅうまつ</rt></ruby> に <ruby>友達<rt>ともだち</rt></ruby> と <ruby>映画<rt>えいが</rt></ruby> を <ruby>見<rt>み</rt></ruby>ます 。",
+    "romaji": "shuumatsu ni tomodachi to eiga o mimasu.",
+    "french": "Ce week-end, je regarde un film avec un **ami**.",
+    "highlight": ["友達", "tomodachi"]
+  }
+},
+{
+  "id": "n5_v_24",
+  "level": "N5",
+  "word": "叔母",
+  "word_furigana": "<ruby>叔母<rt>おば</rt></ruby>",
+  "reading": "おば",
+  "romaji": "oba",
+  "meanings": {
+    "primary": "Tante",
+    "secondary": ["Sœur cadette des parents / Épouse de l'oncle cadet"]
+  },
+  "nuance": "Mot qu'on emploie pour parler de sa propre tante à quelqu'un d'extérieur à la famille, par opposition à <ruby>おば<rt>おば</rt></ruby>さん (obasan) qu'on utilise pour s'adresser directement à elle ou pour désigner la tante de quelqu'un d'autre.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["叔", "母"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>叔母<rt>おば</rt></ruby> は <ruby>北海道<rt>ほっかいどう</rt></ruby> に <ruby>住<rt>す</rt></ruby>んでいます 。",
+    "romaji": "watashi no oba wa hokkaidou ni sundeimasu.",
+    "french": "Ma **tante** habite à Hokkaidō.",
+    "highlight": ["叔母", "oba"]
+  }
+},
+{
+  "id": "n5_v_25",
+  "level": "N5",
+  "word": "叔父",
+  "word_furigana": "<ruby>叔父<rt>おじ</rt></ruby>",
+  "reading": "おじ",
+  "romaji": "oji",
+  "meanings": {
+    "primary": "Oncle",
+    "secondary": ["Frère cadet des parents / Époux de la tante cadette"]
+  },
+  "nuance": "Mot qu'on emploie pour parler de son propre oncle à quelqu'un d'extérieur à la famille, par opposition à <ruby>叔父<rt>おじ</rt></ruby>さん (ojisan) qu'on utilise pour s'adresser directement à lui ou pour désigner l'oncle de quelqu'un d'autre.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["叔", "父"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>叔父<rt>おじ</rt></ruby> は <ruby>毎週末<rt>まいしゅうまつ</rt></ruby> テニス を します 。",
+    "romaji": "oji wa maishuumatsu tenisu o shimasu.",
+    "french": "Mon **oncle** fait du tennis chaque week-end.",
+    "highlight": ["叔父", "oji"]
+  }
+},
+{
+  "id": "n5_v_26",
+  "level": "N5",
+  "word": "外国",
+  "word_furigana": "<ruby>外<rt>がい</rt></ruby><ruby>国<rt>こく</rt></ruby>",
+  "reading": "がいこく",
+  "romaji": "gaikoku",
+  "meanings": {
+    "primary": "Pays étranger",
+    "secondary": ["Étranger (pays)"]
+  },
+  "nuance": "Nom composé de <ruby>外<rt>がい</rt></ruby> (extérieur) et <ruby>国<rt>こく</rt></ruby> (pays), désignant n'importe quel pays autre que le Japon.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["外", "国"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>将来<rt>しょうらい</rt></ruby> 、<ruby>外国<rt>がいこく</rt></ruby> へ <ruby>旅行<rt>りょこう</rt></ruby> に <ruby>行<rt>い</rt></ruby>きたい です 。",
+    "romaji": "shourai, gaikoku e ryokou ni ikitai desu.",
+    "french": "À l'avenir, je veux aller en voyage dans un **pays étranger**.",
+    "highlight": ["外国", "gaikoku"]
+  }
+},
+{
+  "id": "n5_v_27",
+  "level": "N5",
+  "word": "外国人",
+  "word_furigana": "<ruby>外<rt>がい</rt></ruby><ruby>国<rt>こく</rt></ruby><ruby>人<rt>じん</rt></ruby>",
+  "reading": "がいこくじん",
+  "romaji": "gaikokujin",
+  "meanings": {
+    "primary": "Étranger",
+    "secondary": ["Ressortissant étranger", "Personne de nationalité étrangère"]
+  },
+  "nuance": "Nom désignant une personne qui possède une nationalité autre que japonaise. (Note : la catégorie \"personnes_famille\" est celle du lot courant, bien que ce mot appartienne au champ lexical de la société ou des personnes en général).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["外", "国", "人"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>図書館<rt>としょかん</rt></ruby> で <ruby>外国<rt>がいこく</rt></ruby><ruby>人<rt>じん</rt></ruby> の <ruby>友達<rt>ともだち</rt></ruby> が できました 。",
+    "romaji": "toshokan de gaikokujin no tomodachi ga dekimashita.",
+    "french": "Je me suis fait un ami **étranger** à la bibliothèque.",
+    "highlight": ["外国人", "gaikokujin"]
+  }
+},
+{
+  "id": "n5_v_28",
+  "level": "N5",
+  "word": "大人",
+  "word_furigana": "<ruby>大<rt>おと</rt></ruby><ruby>人<rt>おとな</rt></ruby>",
+  "reading": "おとな",
+  "romaji": "otona",
+  "meanings": {
+    "primary": "Adulte",
+    "secondary": ["Personne majeure"]
+  },
+  "nuance": "Nom désignant une personne ayant atteint l'âge adulte (contraire de <ruby>子供<rt>こども</rt></ruby> (kodomo), l'enfant). Attention à sa lecture en jukujikun (lecture spéciale des kanjis associés).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["大", "人"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>弟<rt>おとうと</rt></ruby> は <ruby>早く<rt>はや</rt></ruby> <ruby>大人<rt>おとな</rt></ruby> に なりたい と <ruby>言<rt>い</rt></ruby>っています 。",
+    "romaji": "otouto wa hayaku otona ni naritai to itteimasu.",
+    "french": "Mon petit frère dit qu'il veut devenir **adulte** rapidement.",
+    "highlight": ["大人", "otona"]
+  }
+},
+{
+  "id": "n5_v_29",
+  "level": "N5",
+  "word": "妹",
+  "word_furigana": "<ruby>妹<rt>いもうと</rt></ruby>",
+  "reading": "いもうと",
+  "romaji": "imouto",
+  "meanings": {
+    "primary": "Petite sœur",
+    "secondary": ["Sœur cadette"]
+  },
+  "nuance": "Nom désignant sa propre sœur cadette (on utilise la forme polie <ruby>妹<rt>いもうと</rt></ruby>さん (imoutosan) pour parler de la sœur cadette de quelqu'un d'autre).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["妹"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>妹<rt>いもうと</rt></ruby> は <ruby>高校生<rt>こうこうせい</rt></ruby> です 。",
+    "romaji": "watashi no imouto wa koukousei desu.",
+    "french": "Ma **petite sœur** est lycéenne.",
+    "highlight": ["妹", "imouto"]
+  }
+},
+{
+  "id": "n5_v_30",
+  "level": "N5",
+  "word": "姉",
+  "word_furigana": "<ruby>姉<rt>あね</rt></ruby>",
+  "reading": "あね",
+  "romaji": "ane",
+  "meanings": {
+    "primary": "Grande sœur",
+    "secondary": ["Sœur aînée"]
+  },
+  "nuance": "Mot qu'on emploie pour parler de sa propre grande sœur à quelqu'un d'extérieur (par opposition à la forme polie <ruby>お姉<rt>おねえ</rt></ruby>さん (oneesan) qu'on utilise pour s'adresser directement à elle ou pour désigner la sœur de quelqu'un d'autre).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["姉"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>姉<rt>あね</rt></ruby> は <ruby>銀行員<rt>ぎんこういん</rt></ruby> です 。",
+    "romaji": "watashi no ane wa ginkouin desu.",
+    "french": "Ma **grande sœur** est employée de banque.",
+    "highlight": ["姉", "ane"]
+  }
+},
+{
+  "id": "n5_v_31",
+  "level": "N5",
+  "word": "子供",
+  "word_furigana": "<ruby>子<rt>こ</rt></ruby><ruby>供<rt>ども</rt></ruby>",
+  "reading": "こども",
+  "romaji": "kodomo",
+  "meanings": {
+    "primary": "Enfant",
+    "secondary": ["Gamin", "Progéniture"]
+  },
+  "nuance": "Nom désignant un enfant (par opposition à <ruby>大人<rt>おとな</rt></ruby> (otona), l'adulte). Le suffixe -domo marque à l'origine le pluriel, bien que le mot désigne aujourd'hui un ou plusieurs enfants selon le contexte.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["子", "供"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> で <ruby>子供<rt>こども</rt></ruby> たち が <ruby>遊<rt>あそ</rt></ruby>んでいます 。",
+    "romaji": "kouen de kodomo tachi ga asondeimasu.",
+    "french": "Les **enfants** jouent dans le parc.",
+    "highlight": ["子供", "kodomo"]
+  }
+},
+{
+  "id": "n5_v_32",
+  "level": "N5",
+  "word": "学生",
+  "word_furigana": "<ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>",
+  "reading": "がくせい",
+  "romaji": "gakusei",
+  "meanings": {
+    "primary": "Étudiant",
+    "secondary": ["Élève", "Écolier (au sens large)"]
+  },
+  "nuance": "Nom désignant une personne qui étudie, le plus souvent un étudiant du secondaire ou du supérieur (université).",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["学", "生"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> は <ruby>大学<rt>だいがく</rt></ruby> の <ruby>学生<rt>がくせい</rt></ruby> です 。",
+    "romaji": "watashi wa daigaku no gakusei desu.",
+    "french": "Je suis **étudiant** à l'université.",
+    "highlight": ["学生", "gakusei"]
+  }
+},
+{
+  "id": "n5_v_33",
+  "level": "N5",
+  "word": "家",
+  "word_furigana": "<ruby>家<rt>いえ</rt></ruby>",
+  "reading": "いえ",
+  "romaji": "ie",
+  "meanings": {
+    "primary": "Maison",
+    "secondary": ["Domicile", "Foyer", "Logement", "Famille"]
+  },
+  "nuance": "Nom désignant le bâtiment physique où l'on habite, ou par extension le foyer familial (peut aussi se lire <ruby>家<rt>うち</rt></ruby> (uchi) dans un contexte plus familier pour dire 'chez soi').",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["家"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>日曜日<rt>にちようび</rt></ruby> は <ruby>家<rt>いえ</rt></ruby> で のんびり します 。",
+    "romaji": "nichiyoubi wa ie de nonbiri shimasu.",
+    "french": "Dimanche, je me détends à la **maison**.",
+    "highlight": ["家", "ie"]
+  }
+},
+{
+  "id": "n5_v_34",
+  "level": "N5",
+  "word": "家庭",
+  "word_furigana": "<ruby>家<rt>か</rt></ruby><ruby>庭<rt>てい</rt></ruby>",
+  "reading": "かてい",
+  "romaji": "katei",
+  "meanings": {
+    "primary": "Foyer",
+    "secondary": ["Famille", "Ménage", "Cadre familial"]
+  },
+  "nuance": "Nom désignant le foyer ou l'ambiance chaleureuse de la maison, par opposition au bâtiment physique <ruby>家<rt>いえ</rt></ruby> (ie, maison).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["家", "庭"],
+  "particles": [],
+  "example": {
+    "japanese": "げんき な <ruby>家庭<rt>かてい</rt></ruby> を つくる こと が <ruby>大切<rt>たいせつ</rt></ruby> です 。",
+    "romaji": "genki na katei o tsukuru koto ga taisetsu desu.",
+    "french": "Il est important de créer un **foyer** heureux.",
+    "highlight": ["家庭", "katei"]
+  }
+},
+{
+  "id": "n5_v_35",
+  "level": "N5",
+  "word": "家族",
+  "word_furigana": "<ruby>家<rt>か</rt></ruby><ruby>族<rt>ぞく</rt></ruby>",
+  "reading": "かぞく",
+  "romaji": "kazoku",
+  "meanings": {
+    "primary": "Famille",
+    "secondary": ["Membres de la famille"]
+  },
+  "nuance": "Nom désignant l'ensemble des membres d'un foyer vivant ensemble ou la famille au sens proche (parents et enfants).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["家", "族"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>家族<rt>かぞく</rt></ruby> は 4 <ruby>人<rt>にん</rt></ruby> です 。",
+    "romaji": "watashi no kazoku wa yonin desu.",
+    "french": "Ma **famille** est composée de 4 personnes.",
+    "highlight": ["家族", "kazoku"]
+  }
+},
+{
+  "id": "n5_v_36",
+  "level": "N5",
+  "word": "弟",
+  "word_furigana": "<ruby>弟<rt>おとうと</rt></ruby>",
+  "reading": "おとうと",
+  "romaji": "otouto",
+  "meanings": {
+    "primary": "Petit frère",
+    "secondary": ["Frère cadet"]
+  },
+  "nuance": "Nom désignant son propre petit frère lorsqu'on parle à quelqu'un d'extérieur. Pour désigner le frère cadet d'une autre personne ou s'adresser à lui, on utilise généralement la forme polie <ruby>弟<rt>おとうと</rt></ruby>さん (otoutosan).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["弟"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>弟<rt>おとうと</rt></ruby> は <ruby>中学生<rt>ちゅうがくせい</rt></ruby> です 。",
+    "romaji": "watashi no otouto wa chuugakusei desu.",
+    "french": "Mon **petit frère** est collégien.",
+    "highlight": ["弟", "otouto"]
+  }
+},
+{
+  "id": "n5_v_37",
+  "level": "N5",
+  "word": "母",
+  "word_furigana": "<ruby>母<rt>はは</rt></ruby>",
+  "reading": "はは",
+  "romaji": "haha",
+  "meanings": {
+    "primary": "Ma mère",
+    "secondary": ["Mère (en parlant de la sienne)"]
+  },
+  "nuance": "Mot qu'on emploie pour parler de sa propre mère à quelqu'un d'extérieur (par opposition à la forme polie <ruby>お母<rt>おかあ</rt></ruby>さん (okaasan) qu'on utilise pour s'adresser directement à elle ou pour désigner la mère de quelqu'un d'autre).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["母"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう 、<ruby>母<rt>はは</rt></ruby> と <ruby>一緒<rt>いっしょ</rt></ruby> に <ruby>料理<rt>りょうり</rt></ruby> を します 。",
+    "romaji": "kyou, haha to issho ni ryouri o shimasu.",
+    "french": "Aujourd'hui, je fais la cuisine avec ma **mère**.",
+    "highlight": ["母", "haha"]
+  }
+},
+{
+  "id": "n5_v_38",
+  "level": "N5",
+  "word": "生徒",
+  "word_furigana": "<ruby>生<rt>せい</rt></ruby><ruby>徒<rt>と</rt></ruby>",
+  "reading": "せいと",
+  "romaji": "seito",
+  "meanings": {
+    "primary": "Élève",
+    "secondary": ["Écolier", "Collégien", "Lycéen"]
+  },
+  "nuance": "Nom désignant un élève, principalement dans l'enseignement primaire ou secondaire (collège et lycée). Pour un étudiant d'université, on utilise plutôt <ruby>学生<rt>がくせい</rt></ruby> (gakusei).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["生", "徒"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>教室<rt>きょうしつ</rt></ruby> に <ruby>20<rt>にじゅっ</rt></ruby> <ruby>人<rt>にん</rt></ruby> の <ruby>生徒<rt>せいと</rt></ruby> が います 。",
+    "romaji": "kyoushitsu ni nijuppin no seito ga imasu.",
+    "french": "Il y a 20 **élèves** dans la classe.",
+    "highlight": ["生徒", "seito"]
+  }
+},
+{
+  "id": "n5_v_39",
+  "level": "N5",
+  "word": "男の子",
+  "word_furigana": "<ruby>男<rt>おとこ</rt></ruby> の <ruby>子<rt>こ</rt></ruby>",
+  "reading": "おとこのこ",
+  "romaji": "otokonoko",
+  "meanings": {
+    "primary": "Garçon",
+    "secondary": ["Jeune garçon", "Gamin"]
+  },
+  "nuance": "Nom composé de <ruby>男<rt>おとこ</rt></ruby> (otoko, homme) et <ruby>子<rt>こ</rt></ruby> (ko, enfant), désignant un jeune garçon ou un enfant de sexe masculin.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["男", "子"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> で <ruby>男の子<rt>おとこのこ</rt></ruby> が サッカー を しています 。",
+    "romaji": "kouen de otokonoko ga sakkaa o shiteimasu.",
+    "french": "Un **garçon** joue au football dans le parc.",
+    "highlight": ["男の子", "otokonoko"]
+  }
+},
+{
+  "id": "n5_v_40",
+  "level": "N5",
+  "word": "留学生",
+  "word_furigana": "<ruby>留<rt>りゅう</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>",
+  "reading": "りゅうがくせい",
+  "romaji": "ryuugakusei",
+  "meanings": {
+    "primary": "Étudiant étranger",
+    "secondary": ["Étudiant en échange international"]
+  },
+  "nuance": "Nom désignant une personne qui étudie à l'étranger, ou plus spécifiquement un étudiant international venu faire ses études au Japon.",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["留", "学", "生"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> は <ruby>大学<rt>だいがく</rt></ruby> で <ruby>留学生<rt>りゅうがくせい</rt></ruby> と <ruby>話<rt>はな</rt></ruby>しました 。",
+    "romaji": "watashi wa daigaku de ryuugakusei to hanashimashita.",
+    "french": "J'ai parlé avec un **étudiant étranger** à l'université.",
+    "highlight": ["留学生", "ryuugakusei"]
+  }
+},
+{
+  "id": "n5_v_41",
+  "level": "N5",
+  "word": "習う",
+  "word_furigana": "<ruby>習<rt>なら</rt></ruby>う",
+  "reading": "ならう",
+  "romaji": "narau",
+  "meanings": {
+    "primary": "Apprendre",
+    "secondary": ["Prendre des leçons", "Étudier (auprès de quelqu'un)"]
+  },
+  "nuance": "Verbe godan employé pour exprimer l'action d'apprendre une compétence ou un savoir auprès d'un professeur (par opposition à <ruby>勉強<rt>べんきょう</rt></ruby>する (benkyousuru) qui désigne l'étude en général ou <ruby>覚<rt>おぼ</rt></ruby>える (oboeru) qui insiste sur la mémorisation).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "personnes_famille",
+  "kanji_list": ["習"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>来週<rt>らいしゅう</rt></ruby> から <ruby>漢字<rt>かんじ</rt></ruby> を <ruby>習<rt>なら</rt></ruby>います 。",
+    "romaji": "raishuu kara kanji o naraimasu.",
+    "french": "À partir de la semaine prochaine, j'**apprendrai** les kanjis.",
+    "highlight": ["習います", "naraimasu"]
+  }
+},
+{
+  "id": "n5_v_42",
+  "level": "N5",
+  "word": "警官",
+  "word_furigana": "<ruby>警<rt>けい</rt></ruby><ruby>官<rt>かん</rt></ruby>",
+  "reading": "けいかん",
+  "romaji": "keikan",
+  "meanings": {
+    "primary": "Policier",
+    "secondary": ["Agent de police", "Officier de police"]
+  },
+  "nuance": "Terme plus soutenu désignant un membre des forces de police (par opposition au terme familier <ruby>巡査<rt>じゅんさ</rt></ruby>an ou au plus courant omawarisan).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["警", "官"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>街<rt>まち</rt></ruby> で <ruby>警官<rt>けいかん</rt></ruby> が <ruby>パトロール<rt>ぱとろーる</rt></ruby> を しています 。",
+    "romaji": "machi de keikan ga patorooru o shiteimasu.",
+    "french": "Un **policier** fait des patrouilles dans la ville.",
+    "highlight": ["警官", "keikan"]
+  }
+},
+{
+  "id": "n5_v_43",
+  "level": "N5",
+  "word": "隣",
+  "word_furigana": "<ruby>隣<rt>となり</rt></ruby>",
+  "reading": "となり",
+  "romaji": "tonari",
+  "meanings": {
+    "primary": "À côté",
+    "secondary": ["Voisin", "Maison d'à côté"]
+  },
+  "nuance": "Nom indiquant l'emplacement directement à côté ou voisin (souvent utilisé avec la particule の (no) pour qualifier un objet, une personne ou un lieu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "personnes_famille",
+  "kanji_list": ["隣"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>家<rt>いえ</rt></ruby> の <ruby>隣<rt>となり</rt></ruby> に スーパー が あります 。",
+    "romaji": "watashi no ie no tonari ni suupaa ga arimasu.",
+    "french": "Il y a un supermarché **à côté** de chez moi.",
+    "highlight": ["隣", "tonari"]
+  }
+},
+{
+  "id": "n5_v_44",
+  "level": "N5",
+  "word": "おなか",
+  "word_furigana": "おなか",
+  "reading": "おなか",
+  "romaji": "onaka",
+  "meanings": {
+    "primary": "Ventre",
+    "secondary": ["Estomac", "Abdomen"]
+  },
+  "nuance": "Nom désignant le ventre ou l'estomac, très fréquemment écrit en hiragana (ou parfois en kanji <ruby>腹<rt>はら</rt></ruby>, hara). Il est souvent utilisé dans des expressions figées comme avoir faim (おなかがすいた, onakagasuita) ou avoir mal au ventre (おなかが<ruby>痛<rt>いた</rt></ruby>い, onakaga itai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> ごはん を <ruby>食<rt>た</rt></ruby>べて 、おなか が いっぱい に なりました 。",
+    "romaji": "asa gohan o tabete, onaka ga ippai ni narimashita.",
+    "french": "En ayant mangé le petit-déjeuner, mon **ventre** est devenu plein (j'ai le ventre plein).",
+    "highlight": ["おなか", "onaka"]
+  }
+},
+{
+  "id": "n5_v_45",
+  "level": "N5",
+  "word": "お腹",
+  "word_furigana": "お<ruby>腹<rt>なか</rt></ruby>",
+  "reading": "おなか",
+  "romaji": "onaka",
+  "meanings": {
+    "primary": "Ventre",
+    "secondary": ["Estomac", "Abdomen"]
+  },
+  "nuance": "Forme écrite avec le kanji <ruby>腹<rt>はら</rt></ruby> du mot <ruby>腹<rt>なか</rt></ruby> (onaka). La prononciation reste identique, l'utilisation de la version en kanji confère un aspect un peu plus soutenu ou visuel dans les textes.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["腹"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>昨日<rt>きのう</rt></ruby> から お腹 が <ruby>痛<rt>いた</rt></ruby>い です 。",
+    "romaji": "kinou kara onaka ga itai desu.",
+    "french": "J'ai mal au **ventre** depuis hier.",
+    "highlight": ["お腹", "onaka"]
+  }
+},
+{
+  "id": "n5_v_46",
+  "level": "N5",
+  "word": "体",
+  "word_furigana": "<ruby>体<rt>からだ</rt></ruby>",
+  "reading": "からだ",
+  "romaji": "karada",
+  "meanings": {
+    "primary": "Corps",
+    "secondary": ["Physique", "Santé corporelle"]
+  },
+  "nuance": "Nom fondamental désignant le corps humain dans sa globalité, qu'il s'agisse de la forme physique, de la santé ou de l'enveloppe corporelle.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["体"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> <ruby>運動<rt>うんどう</rt></ruby> を して 、<ruby>体<rt>からだ</rt></ruby> を <ruby>健康<rt>けんこう</rt></ruby> に します 。",
+    "romaji": "mainichi undou o shite, karada o kenkou ni shimasu.",
+    "french": "Je fais du sport tous les jours pour garder mon **corps** en bonne santé.",
+    "highlight": ["体", "karada"]
+  }
+},
+{
+  "id": "n5_v_47",
+  "level": "N5",
+  "word": "医者",
+  "word_furigana": "<ruby>医<rt>い</rt></ruby><ruby>者<rt>しゃ</rt></ruby>",
+  "reading": "いしゃ",
+  "romaji": "isha",
+  "meanings": {
+    "primary": "Médecin",
+    "secondary": ["Docteur"]
+  },
+  "nuance": "Nom désignant un professionnel de la santé qui soigne les malades (souvent employé pour parler d'un médecin de manière générale, tandis que <ruby>先生<rt>せんせい</rt></ruby> (sensei) s'utilise pour s'adresser directement à lui).",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["医", "者"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>病気<rt>びょうき</rt></ruby> の とき は 、<ruby>医者<rt>いしゃ</rt></ruby> に <ruby>診<rt>み</rt></ruby>てもらいます 。",
+    "romaji": "byouki no toki wa, isha ni mitemoraimasu.",
+    "french": "Quand on est malade, on se fait examiner par un **médecin**.",
+    "highlight": ["医者", "isha"]
+  }
+},
+{
+  "id": "n5_v_48",
+  "level": "N5",
+  "word": "口",
+  "word_furigana": "<ruby>口<rt>くち</rt></ruby>",
+  "reading": "くち",
+  "romaji": "kuchi",
+  "meanings": {
+    "primary": "Bouche",
+    "secondary": ["Ouverture", "Entrée / Issue"]
+  },
+  "nuance": "Nom désignant la partie du visage (la bouche) ou, par extension, une ouverture, une entrée ou une issue (comme <ruby>改札<rt>かいさつ</rt></ruby><ruby>口<rt>ぐち</rt></ruby> (kaisatsuguchi), la sortie des tickets de métro).",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["口"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>薬<rt>くすり</rt></ruby> を <ruby>飲<rt>の</rt></ruby>む とき 、<ruby>口<rt>くち</rt></ruby> を <ruby>開<rt>あ</rt></ruby>けます 。",
+    "romaji": "kusuri o nomu toki, kuchi o akemasu.",
+    "french": "Quand on prend un médicament, on ouvre la **bouche**.",
+    "highlight": ["口", "kuchi"]
+  }
+},
+{
+  "id": "n5_v_49",
+  "level": "N5",
+  "word": "寝る",
+  "word_furigana": "<ruby>寝<rt>ね</rt></ruby>る",
+  "reading": "ねる",
+  "romaji": "neru",
+  "meanings": {
+    "primary": "Dormir",
+    "secondary": ["Se coucher", "Aller au lit"]
+  },
+  "nuance": "Verbe ichidan qui exprime l'action de se coucher ou de dormir pour se reposer. Très courant dans la vie quotidienne.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "corps_sante",
+  "kanji_list": ["寝"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>夜<rt>よる</rt></ruby> は 11 <ruby>時<rt>じ</rt></ruby> に <ruby>寝<rt>ね</rt></ruby>ます 。",
+    "romaji": "yoru wa juuichiji ni nemasu.",
+    "french": "Je **dors** (je vais me coucher) à 23 heures le soir.",
+    "highlight": ["寝ます", "nemasu"]
+  }
+},
+{
+  "id": "n5_v_50",
+  "level": "N5",
+  "word": "差す",
+  "word_furigana": "<ruby>差<rt>さ</rt></ruby>す",
+  "reading": "さす",
+  "romaji": "sasu",
+  "meanings": {
+    "primary": "Ouvrir (un parapluie)",
+    "secondary": ["Lever (une main, un parasol)", "Pointer", "Verser (des gouttes)"]
+  },
+  "nuance": "Verbe godan employé spécifiquement pour l'action d'ouvrir et de tenir un parapluie au-dessus de soi (<ruby>傘<rt>かさ</rt></ruby>を<ruby>差<rt>さ</rt></ruby>す, kasa o sasu), ou de tendre la main ou pointer quelque chose.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "corps_sante",
+  "kanji_list": ["差"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>雨<rt>あめ</rt></ruby> が <ruby>降<rt>ふ</rt></ruby>ってきた ので 、<ruby>傘<rt>かさ</rt></ruby> を <ruby>差<rt>さ</rt></ruby>します 。",
+    "romaji": "ame ga futtekita node, kasa o sashimasu.",
+    "french": "La pluie s'étant mise à tomber, j'**ouvre** un parapluie.",
+    "highlight": ["差します", "sashimasu"]
+  }
+},
+{
+  "id": "n5_v_51",
+  "level": "N5",
+  "word": "手",
+  "word_furigana": "<ruby>手<rt>て</rt></ruby>",
+  "reading": "て",
+  "romaji": "te",
+  "meanings": {
+    "primary": "Main",
+    "secondary": ["Bras", "Écriture (style)"]
+  },
+  "nuance": "Nom fondamental désignant la main humaine, la patte d'un animal, ou par extension le style d'écriture.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["手"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>食事<rt>しょくじ</rt></ruby> の <ruby>前<rt>まえ</rt></ruby> に 、<ruby>手<rt>て</rt></ruby> を <ruby>洗<rt>あら</rt></ruby>います 。",
+    "romaji": "shokuji no mae ni, te o arainasu.",
+    "french": "Avant le repas, je me lave les **mains**.",
+    "highlight": ["手", "te"]
+  }
+},
+{
+  "id": "n5_v_52",
+  "level": "N5",
+  "word": "手紙",
+  "word_furigana": "<ruby>手<rt>て</rt></ruby><ruby>紙<rt>がみ</rt></ruby>",
+  "reading": "てがみ",
+  "romaji": "tegami",
+  "meanings": {
+    "primary": "Lettre",
+    "secondary": ["Courrier postal"]
+  },
+  "nuance": "Nom composé de <ruby>手<rt>て</rt></ruby> (main) et <ruby>紙<rt>かみ</rt></ruby> (papier) désignant une lettre écrite à la main ou un courrier.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["手", "紙"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>友達<rt>ともだち</rt></ruby> に <ruby>手紙<rt>てがみ</rt></ruby> を <ruby>書<rt>か</rt></ruby>きます 。",
+    "romaji": "tomodachi ni tegami o kakimasu.",
+    "french": "J'écris une **lettre** à un ami.",
+    "highlight": ["手紙", "tegami"]
+  }
+},
+{
+  "id": "n5_v_53",
+  "level": "N5",
+  "word": "歩く",
+  "word_furigana": "<ruby>歩<rt>ある</rt></ruby>く",
+  "reading": "あるく",
+  "romaji": "aruku",
+  "meanings": {
+    "primary": "Marcher",
+    "secondary": ["Se promener à pied"]
+  },
+  "nuance": "Verbe godan exprimant l'action de se déplacer à pied. Très courant pour parler de la marche au quotidien.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "corps_sante",
+  "kanji_list": ["歩"],
+  "particles": ["を", "に"],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> <ruby>駅<rt>えき</rt></ruby> まで <ruby>歩<rt>ある</rt></ruby>きます 。",
+    "romaji": "mainichi eki made arukimasu.",
+    "french": "Je **marche** jusqu'à la gare tous les jours.",
+    "highlight": ["歩きます", "arukimasu"]
+  }
+},
+{
+  "id": "n5_v_54",
+  "level": "N5",
+  "word": "歯",
+  "word_furigana": "<ruby>歯<rt>は</rt></ruby>",
+  "reading": "は",
+  "romaji": "ha",
+  "meanings": {
+    "primary": "Dent",
+    "secondary": ["Denture"]
+  },
+  "nuance": "Nom désignant une dent humaine ou animale, élément essentiel de l'hygiène et de la santé corporelle.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["歯"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、<ruby>歯<rt>は</rt></ruby> を <ruby>磨<rt>みが</rt></ruby>きます 。",
+    "romaji": "maiasa, ha o migakimasu.",
+    "french": "Je me brosse les **dents** tous les matins.",
+    "highlight": ["歯", "ha"]
+  }
+},
+{
+  "id": "n5_v_55",
+  "level": "N5",
+  "word": "病気",
+  "word_furigana": "<ruby>病<rt>びょう</rt></ruby><ruby>気<rt>き</rt></ruby>",
+  "reading": "びょうき",
+  "romaji": "byouki",
+  "meanings": {
+    "primary": "Maladie",
+    "secondary": ["Sickness", "Affection"]
+  },
+  "nuance": "Nom désignant un état de mauvaise santé, une maladie ou une affection physique.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["病", "気"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>病気<rt>びょうき</rt></ruby> の とき は 、<ruby>家<rt>いえ</rt></ruby> で <ruby>休<rt>やす</rt></ruby>みます 。",
+    "romaji": "byouki no toki wa, ie de yasumimasu.",
+    "french": "Quand on a une **maladie**, on se repose à la maison.",
+    "highlight": ["病気", "byouki"]
+  }
+},
+{
+  "id": "n5_v_56",
+  "level": "N5",
+  "word": "病院",
+  "word_furigana": "<ruby>病<rt>びょう</rt></ruby><ruby>院<rt>いん</rt></ruby>",
+  "reading": "びょういん",
+  "romaji": "byouin",
+  "meanings": {
+    "primary": "Hôpital",
+    "secondary": ["Clinique", "Centre médical"]
+  },
+  "nuance": "Nom désignant un établissement de santé où l'on se rend pour se faire examiner ou soigner en cas de maladie ou de blessure.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["病", "院"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>熱<rt>ねつ</rt></ruby> が ある ので 、<ruby>病院<rt>びょういん</rt></ruby> へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "netsu ga aru node, byouin e ikimasu.",
+    "french": "Ayant de la fièvre, je vais à l'**hôpital**.",
+    "highlight": ["病院", "byouin"]
+  }
+},
+{
+  "id": "n5_v_57",
+  "level": "N5",
+  "word": "目",
+  "word_furigana": "<ruby>目<rt>め</rt></ruby>",
+  "reading": "め",
+  "romaji": "me",
+  "meanings": {
+    "primary": "Œil",
+    "secondary": ["Yeux", "Vue", "Regard"]
+  },
+  "nuance": "Nom fondamental désignant l'organe de la vision (l'œil ou les yeux). S'utilise aussi par extension pour exprimer un point de vue ou une perspective.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["目"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>目<rt>め</rt></ruby> が <ruby>痛<rt>いた</rt></ruby>い ので 、<ruby>医者<rt>いしゃ</rt></ruby> に <ruby>診<rt>み</rt></ruby>てもらいます 。",
+    "romaji": "me ga itai node, isha ni mitemoraimasu.",
+    "french": "J'ai mal à l'**œil**, je me fais donc examiner par un médecin.",
+    "highlight": ["目", "me"]
+  }
+},
+{
+  "id": "n5_v_58",
+  "level": "N5",
+  "word": "耳",
+  "word_furigana": "<ruby>耳<rt>みみ</rt></ruby>",
+  "reading": "みみ",
+  "romaji": "mimi",
+  "meanings": {
+    "primary": "Oreille",
+    "secondary": ["Ouïe"]
+  },
+  "nuance": "Nom désignant l'organe de l'audition (l'oreille) ou la capacité d'entendre.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["耳"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>音楽<rt>おんがく</rt></ruby> を <ruby>聞<rt>き</rt></ruby>く とき 、<ruby>耳<rt>みみ</rt></ruby> に イヤホン を つけます 。",
+    "romaji": "ongaku o kiku toki, mimi ni iyahon o tsukemasu.",
+    "french": "Quand on écoute de la musique, on met des écouteurs dans les **oreilles**.",
+    "highlight": ["耳", "mimi"]
+  }
+},
+{
+  "id": "n5_v_59",
+  "level": "N5",
+  "word": "薬",
+  "word_furigana": "<ruby>薬<rt>くすり</rt></ruby>",
+  "reading": "くすり",
+  "romaji": "kusuri",
+  "meanings": {
+    "primary": "Médicament",
+    "secondary": ["Remède", "Pilule", "Potion"]
+  },
+  "nuance": "Nom désignant un remède ou un médicament destiné à soigner une maladie ou à soulager une douleur.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["薬"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>食後<rt>しょくご</rt></ruby> に 、この <ruby>薬<rt>くすり</rt></ruby> を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "shokugo ni, kono kusuri o nomimasu.",
+    "french": "Je prends ce **médicament** après les repas.",
+    "highlight": ["薬", "kusuri"]
+  }
+},
+{
+  "id": "n5_v_60",
+  "level": "N5",
+  "word": "足",
+  "word_furigana": "<ruby>足<rt>あし</rt></ruby>",
+  "reading": "あし",
+  "romaji": "ashi",
+  "meanings": {
+    "primary": "Pied",
+    "secondary": ["Jambe"]
+  },
+  "nuance": "Nom désignant le pied ou la jambe humaine, ou par extension la patte d'un animal (le japonais emploie généralement un seul mot pour couvrir ces différentes parties).",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["足"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>長<rt>なが</rt></ruby>い <ruby>時間<rt>じかん</rt></ruby> <ruby>歩<rt>ある</rt></ruby>いて 、<ruby>足<rt>あし</rt></ruby> が <ruby>痛<rt>いた</rt></ruby>いです 。",
+    "romaji": "nagai jikan aruite, ashi ga itai desu.",
+    "french": "En ayant marché longtemps, j'ai mal aux **pieds** (ou aux jambes).",
+    "highlight": ["足", "ashi"]
+  }
+},
+{
+  "id": "n5_v_61",
+  "level": "N5",
+  "word": "身体",
+  "word_furigana": "<ruby>身<rt>しん</rt></ruby><ruby>体<rt>たい</rt></ruby>",
+  "reading": "しんたい",
+  "romaji": "shintai",
+  "meanings": {
+    "primary": "Corps",
+    "secondary": ["Physique", "Organisme"]
+  },
+  "nuance": "Équivalent soutenu ou médical de <ruby>体<rt>からだ</rt></ruby> (karada), ce dernier étant réservé à l'usage courant.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["身", "体"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>健康<rt>けんこう</rt></ruby> の ため に 、<ruby>身体<rt>しんたい</rt></ruby> を <ruby>動<rt>うご</rt></ruby>かします 。",
+    "romaji": "kenkou no tame ni, shintai o ugokashimasu.",
+    "french": "Pour ma santé, je fais bouger mon **corps**.",
+    "highlight": ["身体", "shintai"]
+  }
+},
+{
+  "id": "n5_v_62",
+  "level": "N5",
+  "word": "軽い",
+  "word_furigana": "<ruby>軽<rt>かる</rt></ruby>い",
+  "reading": "かるい",
+  "romaji": "karui",
+  "meanings": {
+    "primary": "Léger",
+    "secondary": ["Peu lourd", "Bénin (maladie)"]
+  },
+  "nuance": "Adjectif en -i qui signifie \"léger\" (contraire de <ruby>重<rt>おも</rt></ruby>い, lourd) et qualifie aussi une maladie ou un symptôme sans gravité.",
+  "type": "adjectif i",
+  "group": "i",
+  "category": "corps_sante",
+  "kanji_list": ["軽"],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>鞄<rt>かばん</rt></ruby> は <ruby>軽<rt>かる</rt></ruby>くて 、<ruby>持<rt>も</rt></ruby>ちやすい です 。",
+    "romaji": "kono kaban wa karukute, mochiyasui desu.",
+    "french": "Ce sac est **léger** et facile à porter.",
+    "highlight": ["軽い", "karui"]
+  }
+},
+{
+  "id": "n5_v_63",
+  "level": "N5",
+  "word": "降りる",
+  "word_furigana": "<ruby>降<rt>お</rt></ruby>りる",
+  "reading": "おりる",
+  "romaji": "oriru",
+  "meanings": {
+    "primary": "Descendre",
+    "secondary": ["Sortir (d'un véhicule)"]
+  },
+  "nuance": "Verbe ichidan désignant l'action de descendre d'un lieu surélevé ou d'un moyen de transport (train, bus, etc.). S'écrit aussi <ruby>下<rt>お</rt></ruby>りる (oriru).",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "corps_sante",
+  "kanji_list": ["降"],
+  "particles": ["を", "から"],
+  "example": {
+    "japanese": "<ruby>次<rt>つぎ</rt></ruby> の <ruby>駅<rt>えき</rt></ruby> で <ruby>電車<rt>でんしゃ</rt></ruby> を <ruby>降<rt>お</rt></ruby>ります 。",
+    "romaji": "tsugi no eki de densha o orimasu.",
+    "french": "Je **descends** du train à la prochaine gare.",
+    "highlight": ["降ります", "orimasu"]
+  }
+},
+{
+  "id": "n5_v_64",
+  "level": "N5",
+  "word": "鞄",
+  "word_furigana": "<ruby>鞄<rt>かばん</rt></ruby>",
+  "reading": "かばん",
+  "romaji": "kaban",
+  "meanings": {
+    "primary": "Sac",
+    "secondary": ["Cartable", "Valise", "Sacoche"]
+  },
+  "nuance": "Nom désignant un sac servant à transporter des affaires (souvent écrit en katakana カバン (kaban) au quotidien). *(Note : classé ici dans le lot courant, bien qu'il s'agisse d'un objet usuel).* ",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["鞄"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>私<rt>わたし</rt></ruby> の <ruby>鞄<rt>かばん</rt></ruby> に <ruby>教科書<rt>きょうかしょ</rt></ruby> が 入っています 。",
+    "romaji": "watashi no kaban ni kyokasho ga haitteimasu.",
+    "french": "Il y a des manuels scolaires dans mon **sac**.",
+    "highlight": ["鞄", "kaban"]
+  }
+},
+{
+  "id": "n5_v_65",
+  "level": "N5",
+  "word": "頭",
+  "word_furigana": "<ruby>頭<rt>あたま</rt></ruby>",
+  "reading": "あたま",
+  "romaji": "atama",
+  "meanings": {
+    "primary": "Tête",
+    "secondary": ["Esprit", "Intellect"]
+  },
+  "nuance": "Désigne la tête ou, dans un autre sens, l'intelligence et la matière grise.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["頭"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>昨日<rt>きのう</rt></ruby> から <ruby>頭<rt>あたま</rt></ruby> が <ruby>痛<rt>いた</rt></ruby>い です 。",
+    "romaji": "kinou kara atama ga itai desu.",
+    "french": "J'ai mal à la **tête** depuis hier.",
+    "highlight": ["頭", "atama"]
+  }
+},
+{
+  "id": "n5_v_66",
+  "level": "N5",
+  "word": "飲む",
+  "word_furigana": "<ruby>飲<rt>の</rt></ruby>む",
+  "reading": "のむ",
+  "romaji": "nomu",
+  "meanings": {
+    "primary": "Boire",
+    "secondary": ["Prendre (un médicament)"]
+  },
+  "nuance": "Verbe pour exprimer l'action de boire un liquide (eau, thé, alcool) ou d'avaler un médicament.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "corps_sante",
+  "kanji_list": ["飲"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>喉<rt>のど</rt></ruby> が <ruby>乾<rt>かわ</rt></ruby>いた ので 、<ruby>水<rt>みず</rt></ruby> を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "nodo ga kawaita node, mizu o nomimasu.",
+    "french": "Ayant la gorge sèche, je **bois** de l'eau.",
+    "highlight": ["飲みます", "nomimasu"]
+  }
+},
+{
+  "id": "n5_v_67",
+  "level": "N5",
+  "word": "鼻",
+  "word_furigana": "<ruby>鼻<rt>はな</rt></ruby>",
+  "reading": "はな",
+  "romaji": "hana",
+  "meanings": {
+    "primary": "Nez",
+    "secondary": ["Flur (odorat)"]
+  },
+  "nuance": "Nom désignant l'organe de l'odorat et de la respiration situé sur le visage.",
+  "type": "nom",
+  "group": "nom",
+  "category": "corps_sante",
+  "kanji_list": ["鼻"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>風邪<rt>かぜ</rt></ruby> を <ruby>引<rt>ひ</rt></ruby>いて 、<ruby>鼻<rt>はな</rt></ruby> が <ruby>出<rt>で</rt></ruby>ます 。",
+    "romaji": "kaze o hiite, hana ga demasu.",
+    "french": "J'ai attrapé un rhume et le **nez** me coule.",
+    "highlight": ["鼻", "hana"]
+  }
+},
+{
+  "id": "n5_v_68",
+  "level": "N5",
+  "word": "はく",
+  "word_furigana": "はく",
+  "reading": "はく",
+  "romaji": "haku",
+  "meanings": {
+    "primary": "Mettre (un vêtement sur le bas du corps)",
+    "secondary": ["Porter (pantalon, jupe, chaussures)"]
+  },
+  "nuance": "Verbe godan employé pour enfiler ou porter un vêtement ou un accessoire sur le bas du corps (pantalons, jupes, chaussures, chaussettes), par opposition à <ruby>着<rt>き</rt></ruby>る (kiru) pour le haut. S'écrit le plus souvent en hiragana ou avec le kanji <ruby>履<rt>は</rt></ruby>く.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": ["を"],
+  "example": {
+    "japanese": "きょう は <ruby>新<rt>あたら</rt></ruby>しい ズボン を はきます 。",
+    "romaji": "kyou wa atarashii zubon o hakimasu.",
+    "french": "Aujourd'hui, je **mets** un nouveau pantalon.",
+    "highlight": ["はきます", "hakimasu"]
+  }
+},
+{
+  "id": "n5_v_69",
+  "level": "N5",
+  "word": "コート",
+  "word_furigana": "コート",
+  "reading": "こーと",
+  "romaji": "kooto",
+  "meanings": {
+    "primary": "Manteau",
+    "secondary": ["Trench-coat", "Imperméable"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'coat', désignant un manteau ou un pardessus que l'on porte par-dessus ses vêtements pour se protéger du froid ou de la pluie.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>寒<rt>さむ</rt></ruby>い ので 、あたたかい コート を <ruby>着<rt>き</rt></ruby>ます 。",
+    "romaji": "samui node, atatakai kooto o kimasu.",
+    "french": "Il fait froid, alors je **mets** un manteau chaud.",
+    "highlight": ["コート", "kooto"]
+  }
+},
+{
+  "id": "n5_v_70",
+  "level": "N5",
+  "word": "シャツ",
+  "word_furigana": "シャツ",
+  "reading": "しゃつ",
+  "romaji": "shatsu",
+  "meanings": {
+    "primary": "Chemise",
+    "secondary": ["T-shirt", "Maillot de corps"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'shirt', désignant une chemise, un t-shirt ou un sous-vêtement haut (on utilise aussi plus précisément ワイシャツ (waishatsu) pour la chemise de costume ou Tシャツ (T-shatsu) pour le t-shirt).",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>白<rt>しろ</rt></ruby>い シャツ を <ruby>洗濯<rt>せんたく</rt></ruby> します 。",
+    "romaji": "shiroi shatsu o sentaku shimasu.",
+    "french": "Je lave une **chemise** blanche.",
+    "highlight": ["シャツ", "shatsu"]
+  }
+},
+{
+  "id": "n5_v_71",
+  "level": "N5",
+  "word": "スカート",
+  "word_furigana": "スカート",
+  "reading": "すかーと",
+  "romaji": "sukaato",
+  "meanings": {
+    "primary": "Jupe",
+    "secondary": ["Jupe longue ou courte"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'skirt', désignant une jupe. Avec ce vêtement, on emploie le verbe <ruby>履<rt>は</rt></ruby>く (haku, mettre/porter).",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>新<rt>あたら</rt></ruby>しい スカート を かいました 。",
+    "romaji": "atarashii sukaato o kaimashita.",
+    "french": "J'ai acheté une nouvelle **jupe**.",
+    "highlight": ["スカート", "sukaato"]
+  }
+},
+{
+  "id": "n5_v_72",
+  "level": "N5",
+  "word": "ズボン",
+  "word_furigana": "ズボン",
+  "reading": "ずぼん",
+  "romaji": "zubon",
+  "meanings": {
+    "primary": "Pantalon",
+    "secondary": ["Pantalon de costume", "Jean"]
+  },
+  "nuance": "Nom désignant un pantalon (terme courant, bien que le mot d'origine anglaise パンツ (pantsu) - pants soit aussi utilisé, ce dernier désignant parfois les sous-vêtements selon le contexte). On utilise le verbe <ruby>履<rt>は</rt></ruby>く (haku) pour l'enfiler.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>黒<rt>くろ</rt></ruby>い ズボン を はいています 。",
+    "romaji": "kuroi zubon o haiteimasu.",
+    "french": "Je porte un **pantalon** noir.",
+    "highlight": ["ズボン", "zubon"]
+  }
+},
+{
+  "id": "n5_v_73",
+  "level": "N5",
+  "word": "ネクタイ",
+  "word_furigana": "ネクタイ",
+  "reading": "ねくたい",
+  "romaji": "nekutai",
+  "meanings": {
+    "primary": "Cravate",
+    "secondary": ["Accessoire de costume"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'necktie', désignant la cravate portée traditionnellement avec une chemise et un costume.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>会社<rt>かいしゃ</rt></ruby> の ため に 、<ruby>赤<rt>あか</rt></ruby>い ネクタイ を つけます 。",
+    "romaji": "kaisha no tame ni, akai nekutai o tsukemasu.",
+    "french": "Je mets une **cravate** rouge pour aller au travail.",
+    "highlight": ["ネクタイ", "nekutai"]
+  }
+},
+{
+  "id": "n5_v_74",
+  "level": "N5",
+  "word": "ボタン",
+  "word_furigana": "ボタン",
+  "reading": "ぼたん",
+  "romaji": "botan",
+  "meanings": {
+    "primary": "Bouton",
+    "secondary": ["Bouton de vêtement", "Bouton poussoir / électrique"]
+  },
+  "nuance": "Mot en katakana désignant à la fois un bouton de fermeture sur un vêtement (chemise, veste) et un bouton d'appareil ou d'interrupteur (emprunté au portugais ou au néerlandais via l'histoire).",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "シャツ の ボタン が とれました 。",
+    "romaji": "shatsu no botan ga toremashita.",
+    "french": "Le **bouton** de la chemise s'est décousu.",
+    "highlight": ["ボタン", "botan"]
+  }
+},
+{
+  "id": "n5_v_75",
+  "level": "N5",
+  "word": "ポケット",
+  "word_furigana": "ポケット",
+  "reading": "ぽけっと",
+  "romaji": "poketto",
+  "meanings": {
+    "primary": "Poche",
+    "secondary": ["Pochette de vêtement"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'pocket', désignant la poche cousue sur un vêtement (pantalon, manteau, chemise) pour y ranger de petits objets.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "ズボン の ポケット に ケータイ が あります 。",
+    "romaji": "zubon no poketto ni keetai ga arimasu.",
+    "french": "Il y a un téléphone portable dans la **poche** du pantalon.",
+    "highlight": ["ポケット", "poketto"]
+  }
+},
+{
+  "id": "n5_v_76",
+  "level": "N5",
+  "word": "ワイシャツ",
+  "word_furigana": "ワイシャツ",
+  "reading": "わいしゃつ",
+  "romaji": "waishatsu",
+  "meanings": {
+    "primary": "Chemise (blanche ou de costume)",
+    "secondary": ["Chemise habillée"]
+  },
+  "nuance": "Mot en katakana (contraction de 'white shirt') désignant spécifiquement une chemise habillée, le plus souvent blanche, portée traditionnellement avec un costume au travail ou à l'école.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> 、<ruby>白<rt>しろ</rt></ruby>い ワイシャツ を <ruby>着<rt>き</rt></ruby>て <ruby>会社<rt>かいしゃ</rt></ruby> に <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "mainichi, shiroi waishatsu o kite kaisha ni ikimasu.",
+    "french": "Tous les jours, je mets une **chemise** blanche pour aller au bureau.",
+    "highlight": ["ワイシャツ", "waishatsu"]
+  }
+},
+{
+  "id": "n5_v_77",
+  "level": "N5",
+  "word": "上着",
+  "word_furigana": "<ruby>上<rt>うえ</rt></ruby><ruby>着<rt>ぎ</rt></ruby>",
+  "reading": "うわぎ",
+  "romaji": "uwagi",
+  "meanings": {
+    "primary": "Veste",
+    "secondary": ["Blouson", "Manteau", "Vêtement du dessus"]
+  },
+  "nuance": "Nom composé de <ruby>上<rt>うえ</rt></ruby> (ue, dessus) et <ruby>着<rt>ぎ</rt></ruby> (gi, vêtement) désignant de manière générale tout vêtement que l'on porte par-dessus les autres (veste, pardessus, blouson).",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": ["上", "着"],
+  "particles": [],
+  "example": {
+    "japanese": "10 <ruby>月<rt>がつ</rt></ruby> に なって <ruby>寒<rt>さむ</rt></ruby>くなった ので 、<ruby>上着<rt>うわぎ</rt></ruby> を <ruby>着<rt>き</rt></ruby>ます 。",
+    "romaji": "juugatsu ni natte samukunatta node, uwagi o kimasu.",
+    "french": "Octobre étant arrivé et le temps s'étant rafraîchi, je mets une **veste**.",
+    "highlight": ["上着", "uwagi"]
+  }
+},
+{
+  "id": "n5_v_78",
+  "level": "N5",
+  "word": "帽子",
+  "word_furigana": "<ruby>帽<rt>ぼう</rt></ruby><ruby>子<rt>し</rt></ruby>",
+  "reading": "ぼうし",
+  "romaji": "boushi",
+  "meanings": {
+    "primary": "Chapeau",
+    "secondary": ["Casquette", "Bonnet"]
+  },
+  "nuance": "Nom désignant tout couvre-chef (chapeau, casquette, bonnet, etc.). On emploie généralement le verbe かぶる (kaburu) pour indiquer qu'on le met sur la tête.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": ["帽", "子"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>日<rt>ひ</rt></ruby> が <ruby>強<rt>つよ</rt></ruby>い ので 、<ruby>帽子<rt>ぼうし</rt></ruby> を かぶります 。",
+    "romaji": "hi ga tsuyoi node, boushi o kaburimasu.",
+    "french": "Le soleil tapant fort, je mets un **chapeau** (une casquette).",
+    "highlight": ["帽子", "boushi"]
+  }
+},
+{
+  "id": "n5_v_79",
+  "level": "N5",
+  "word": "押す",
+  "word_furigana": "<ruby>押<rt>お</rt></ruby>す",
+  "reading": "おす",
+  "romaji": "osu",
+  "meanings": {
+    "primary": "Pousser",
+    "secondary": ["Appuyer sur (un bouton)", "Tamponner"]
+  },
+  "nuance": "Verbe godan très courant au quotidien, désignant l'action de pousser un objet, d'appuyer sur un bouton, ou d'appliquer un tampon/sceau.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "vetements",
+  "kanji_list": ["押"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "ドア の ボタン を <ruby>押<rt>お</rt></ruby>して 、<ruby>電車<rt>でんしゃ</rt></ruby> を <ruby>降<rt>お</rt></ruby>ります 。",
+    "romaji": "doa no botan o oshite, densha o orimasu.",
+    "french": "J'**appuie** sur le bouton de la porte pour descendre du train.",
+    "highlight": ["押して", "oshite"]
+  }
+},
+{
+  "id": "n5_v_80",
+  "level": "N5",
+  "word": "曇る",
+  "word_furigana": "<ruby>曇<rt>くも</rt></ruby>る",
+  "reading": "くもる",
+  "romaji": "kumoru",
+  "meanings": {
+    "primary": "Devenir nuageux",
+    "secondary": ["Se couvrir (ciel)", "S'embuer (lunettes, vitre)"]
+  },
+  "nuance": "Verbe godan désignant le fait que le ciel se couvre de nuages, ou par extension qu'une surface vitrée ou des lunettes s'embuent.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "vetements",
+  "kanji_list": ["曇"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> は <ruby>晴<rt>は</rt></ruby>れていた のに 、<ruby>昼<rt>ひる</rt></ruby> から <ruby>曇<rt>くも</rt></ruby>って きました 。",
+    "romaji": "asa wa hareteita noni, hiru kara kumotte kimashita.",
+    "french": "Le temps était clair ce matin, mais il a **commencé à se couvrir** depuis midi.",
+    "highlight": ["曇って", "kumotte"]
+  }
+},
+{
+  "id": "n5_v_81",
+  "level": "N5",
+  "word": "眼鏡",
+  "word_furigana": "<ruby>眼<rt>めが</rt></ruby><ruby>鏡<rt>ね</rt></ruby>",
+  "reading": "めがね",
+  "romaji": "megane",
+  "meanings": {
+    "primary": "Lunettes",
+    "secondary": ["Paire de lunettes"]
+  },
+  "nuance": "Nom désignant les lunettes correctrices ou solaires souvent écrit plus simplement en hiragana めがね (megane) ou en katakana メガネ (megane)au quotidien.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": ["眼", "鏡"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>字<rt>じ</rt></ruby> を <ruby>読<rt>よ</rt></ruby>む とき 、<ruby>眼鏡<rt>めがね</rt></ruby> を かけます 。",
+    "romaji": "ji o yomu toki, megane o kakimasu.",
+    "french": "Quand je lis des caractères, je mets mes **lunettes**.",
+    "highlight": ["眼鏡", "megane"]
+  }
+},
+{
+  "id": "n5_v_82",
+  "level": "N5",
+  "word": "締める",
+  "word_furigana": "<ruby>締<rt>し</rt></ruby>める",
+  "reading": "しめる",
+  "romaji": "shimeru",
+  "meanings": {
+    "primary": "Attacher",
+    "secondary": ["Serrer", "Nouer (une cravate, une ceinture)"]
+  },
+  "nuance": "Verbe ichidan transitif désignant l'action de serrer, nouer ou attacher comme une cravate ex: ネクタイを<ruby>閉<rt>し</rt></ruby>める (nekutai o shimeru) ou une ceinture. À ne pas confondre avec <ruby>閉<rt>し</rt></ruby>める (fermer une porte ou une fenêtre).",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "vetements",
+  "kanji_list": ["締"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>会社<rt>かいしゃ</rt></ruby> に <ruby>行<rt>い</rt></ruby>く 前 に 、ネクタイ を <ruby>締<rt>し</rt></ruby>めます 。",
+    "romaji": "kaisha ni iku mae ni, nekutai o shimemasu.",
+    "french": "Avant d'aller au bureau, je **noue** (serre) ma cravate.",
+    "highlight": ["締めます", "shimemasu"]
+  }
+},
+{
+  "id": "n5_v_83",
+  "level": "N5",
+  "word": "背広",
+  "word_furigana": "<ruby>背<rt>せ</rt></ruby><ruby>広<rt>びろ</rt></ruby>",
+  "reading": "せびろ",
+  "romaji": "sebiro",
+  "meanings": {
+    "primary": "Costume",
+    "secondary": ["Costume d'homme", "Veste de costume"]
+  },
+  "nuance": "Nom traditionnel désignant un costume occidental pour homme (veste et pantalon assortis). Bien que le mot moderne スーツ (suutsu) soit aujourd'hui plus courant au quotidien, <ruby>背広<rt>せびろ</rt></ruby> (sebiro) reste le terme classique ou formel pour le costume.",
+  "type": "nom",
+  "group": "nom",
+  "category": "vetements",
+  "kanji_list": ["背", "広"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>父<rt>ちち</rt></ruby> は <ruby>毎日<rt>まいにち</rt></ruby> <ruby>背広<rt>せびろ</rt></ruby> を <ruby>着<rt>き</rt></ruby>て <ruby>会社<rt>かいしゃ</rt></ruby> に <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "chichi wa mainichi sebiro o kite kaisha ni ikimasu.",
+    "french": "Mon père met un **costume** tous les jours pour aller au bureau.",
+    "highlight": ["背広", "sebiro"]
+  }
+},
+{
+  "id": "n5_v_84",
+  "level": "N5",
+  "word": "お弁当",
+  "word_furigana": "お<ruby>弁<rt>べん</rt></ruby><ruby>当<rt>とう</rt></ruby>",
+  "reading": "おべんとう",
+  "romaji": "obentou",
+  "meanings": {
+    "primary": "Bento",
+    "secondary": ["Repas préparé en boîte", "Casse-croûte"]
+  },
+  "nuance": "Nom désignant un repas préparé à l'avance et disposé dans une boîte compartimentée (souvent avec le préfixe honorifique お, o). Très populaire au Japon pour le déjeuner à l'école ou au travail.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["弁", "当"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>今日<rt>きょう</rt></ruby> の <ruby>昼<rt>ひる</rt></ruby> ごはん は <ruby>家<rt>いえ</rt></ruby> で <ruby>作<rt>つく</rt></ruby>った お<ruby>弁当<rt>べんとう</rt></ruby> です 。",
+    "romaji": "kyou no hiru gohan wa ie de tsukutta obentou desu.",
+    "french": "Mon déjeuner d'aujourd'hui est un **bento** préparé à la maison.",
+    "highlight": ["お弁当", "obentou"]
+  }
+},
+{
+  "id": "n5_v_85",
+  "level": "N5",
+  "word": "お茶",
+  "word_furigana": "お<ruby>茶<rt>ちゃ</rt></ruby>",
+  "reading": "おちゃ",
+  "romaji": "ocha",
+  "meanings": {
+    "primary": "Thé vert",
+    "secondary": ["Thé en général", "Pause thé"]
+  },
+  "nuance": "Nom désignant par défaut le thé vert japonais au quotidien, souvent précédé du préfixe poli お.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["茶"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>客<rt>きゃく</rt></ruby>さん に お<ruby>茶<rt>ちゃ</rt></ruby> を <ruby>出<rt>だ</rt></ruby>します 。",
+    "romaji": "kyakusan ni ocha o dashimasu.",
+    "french": "Je sers du **thé vert** aux invités.",
+    "highlight": ["お茶", "ocha"]
+  }
+},
+{
+  "id": "n5_v_86",
+  "level": "N5",
+  "word": "お酒",
+  "word_furigana": "お<ruby>酒<rt>さけ</rt></ruby>",
+  "reading": "おさけ",
+  "romaji": "osake",
+  "meanings": {
+    "primary": "Alcool",
+    "secondary": ["Boisson alcoolisée", "Saké (alcool de riz)"]
+  },
+  "nuance": "Nom désignant toute boisson alcoolisée au sens large, ou spécifiquement le saké japonais traditionnel. S'emploie souvent avec le préfixe poli お (o).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["酒"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>父<rt>ちち</rt></ruby> は <ruby>晩<rt>ばん</rt></ruby> ごはん の とき に お<ruby>酒<rt>さけ</rt></ruby> を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "chichi wa ban gohan no toki ni osake o nomimasu.",
+    "french": "Mon père boit de l'**alcool** au moment du dîner.",
+    "highlight": ["お酒", "osake"]
+  }
+},
+{
+  "id": "n5_v_87",
+  "level": "N5",
+  "word": "くだもの",
+  "word_furigana": "くだもの",
+  "reading": "くだもの",
+  "romaji": "kudamono",
+  "meanings": {
+    "primary": "Fruit",
+    "secondary": ["Fruits frais"]
+  },
+  "nuance": "Nom désignant les fruits (s'écrit couramment en kanji <ruby>果物<rt>くだもの</rt></ruby> ou en hiragana). Terme général très courant pour les pommes, bananes, oranges, etc.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> ごはん に <ruby>新鮮<rt>しんせん</rt></ruby> な くだもの を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "asa gohan ni shinsen na kudamono o tabemasu.",
+    "french": "Je mange des **fruits** frais au petit-déjeuner.",
+    "highlight": ["くだもの", "kudamono"]
+  }
+},
+{
+  "id": "n5_v_88",
+  "level": "N5",
+  "word": "ご飯",
+  "word_furigana": "ご<ruby>飯<rt>はん</rt></ruby>",
+  "reading": "ごはん",
+  "romaji": "gohan",
+  "meanings": {
+    "primary": "Riz cuit",
+    "secondary": ["Repas", "Nourriture"]
+  },
+  "nuance": "Nom fondamental désignant à la fois le riz blanc cuit (aliment de base) et, par extension, un repas complet comme <ruby>朝ご飯<rt>あさごはん</rt></ruby> (asagohan, petit-déjeuner) ; <ruby>昼ご飯<rt>ひるごはん</rt></ruby> (hirugohan, déjeuner) ; <ruby>晩ご飯<rt>ばんごはん</rt></ruby> (bangohan, dîner).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["飯"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> おいしい ご<ruby>飯<rt>はん</rt></ruby> を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "mainichi oishii gohan o tabemasu.",
+    "french": "Je mange du bon **riz** (un bon repas) tous les jours.",
+    "highlight": ["ご飯", "gohan"]
+  }
+},
+{
+  "id": "n5_v_89",
+  "level": "N5",
+  "word": "ちゃわん",
+  "word_furigana": "ちゃわん",
+  "reading": "ちゃわん",
+  "romaji": "chawan",
+  "meanings": {
+    "primary": "Bol à riz",
+    "secondary": ["Bol à thé (historiquement)", "Bol en céramique"]
+  },
+  "nuance": "Nom désignant traditionnellement le bol en céramique utilisé pour manger le riz (ou autrefois pour le thé, <ruby>茶碗<rt>ちゃわん</rt></ruby> - chawan, qui s'écrit aussi directement ainsi en kanji).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "ちゃわん に ご<ruby>飯<rt>はん</rt></ruby> を <ruby>多<rt>おお</rt></ruby>く <ruby>入<rt>い</rt></ruby>れます 。",
+    "romaji": "chawan ni gohan o ooku iremasu.",
+    "french": "Je mets beaucoup de **riz** dans le bol.",
+    "highlight": ["ちゃわん", "chawan"]
+  }
+},
+{
+  "id": "n5_v_90",
+  "level": "N5",
+  "word": "とり肉",
+  "word_furigana": "とり<ruby>肉<rt>にく</rt></ruby>",
+  "reading": "とりにく",
+  "romaji": "toriniku",
+  "meanings": {
+    "primary": "Viande de poulet",
+    "secondary": ["Poulet (viande)"]
+  },
+  "nuance": "Nom composé de <ruby>鳥<rt>とり</rt></ruby> (tori, oiseau/volaille) et de <ruby>肉<rt>にく</rt></ruby> (niku, viande), désignant spécifiquement la chair de poulet consommée en cuisine (s'écrit aussi <ruby>鶏肉<rt>とりにく</rt></ruby> toriniku).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["肉"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の <ruby>夕飯<rt>ゆうはん</rt></ruby> は とり<ruby>肉<rt>にく</rt></ruby> の カレー です 。",
+    "romaji": "kyou no yuuhan wa toriniku no karee desu.",
+    "french": "Le dîner d'aujourd'hui est un curry au **poulet**.",
+    "highlight": ["とり肉", "toriniku"]
+  }
+},
+{
+  "id": "n5_v_91",
+  "level": "N5",
+  "word": "ばんごはん",
+  "word_furigana": "ばんごはん",
+  "reading": "ばんごはん",
+  "romaji": "bangohan",
+  "meanings": {
+    "primary": "Dîner",
+    "secondary": ["Repas du soir"]
+  },
+  "nuance": "Nom désignant le repas du soir (souvent écrit en kanji <ruby>晩<rt>ばん</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby> - bangohan). Composé de <ruby>晩<rt>ばん</rt></ruby> (ban, soir) et de ごはん (gohan, repas/riz).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>家族<rt>かぞく</rt></ruby> みんな で ばんごはん を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "kazoku minna de bangohan o tabemasu.",
+    "french": "Nous prenons le **dîner** tous ensemble en famille.",
+    "highlight": ["ばんごはん", "bangohan"]
+  }
+},
+{
+  "id": "n5_v_92",
+  "level": "N5",
+  "word": "ひるごはん",
+  "word_furigana": "ひるごはん",
+  "reading": "ひるごはん",
+  "romaji": "hirugohan",
+  "meanings": {
+    "primary": "Déjeuner",
+    "secondary": ["Repas de midi"]
+  },
+  "nuance": "Nom désignant le repas de midi. Souvent écrit en kanji <ruby>昼<rt>ひる</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby> (hirugohan). Composé de <ruby>昼<rt>ひる</rt></ruby> (hiru, midi/journée) et de ごはん (gohan, repas/riz).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>12<rt>じゅうに</rt></ruby><ruby>時<rt>じ</rt></ruby> に ひるごはん を <ruby>食<rt>た</rt></ruby>べに <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "juuniji ni hirugohan o tabe ni ikimasu.",
+    "french": "Je vais manger le **déjeuner** à midi.",
+    "highlight": ["ひるごはん", "hirugohan"]
+  }
+},
+{
+  "id": "n5_v_93",
+  "level": "N5",
+  "word": "カップ",
+  "word_furigana": "カップ",
+  "reading": "かっぷ",
+  "romaji": "kappu",
+  "meanings": {
+    "primary": "Tasse",
+    "secondary": ["Gobelet", "Mug", "Tasse à café/thé"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'cup', désignant une tasse avec ou sans anse, ou un gobelet utilisé pour boire des boissons chaudes ou froides.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "カップ に コーヒー を <ruby>注<rt>そそ</rt></ruby>ぎます 。",
+    "romaji": "kappu ni koohii o sosogimasu.",
+    "french": "Je verse du café dans la **tasse**.",
+    "highlight": ["カップ", "kappu"]
+  }
+},
+{
+  "id": "n5_v_94",
+  "level": "N5",
+  "word": "カレー",
+  "word_furigana": "カレー",
+  "reading": "かれー",
+  "romaji": "karee",
+  "meanings": {
+    "primary": "Curry",
+    "secondary": ["Curry japonais", "Riz au curry"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'curry', désignant le plat très populaire au Japon. Généralement servi sur du riz : カレーライス (karee raisu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>辛<rt>から</rt></ruby>い カレー を <ruby>食<rt>た</rt></ruby>べる の が <ruby>好<rt>す</rt></ruby>き です 。",
+    "romaji": "karai karee o taberu no ga suki desu.",
+    "french": "J'aime manger du **curry** épicé.",
+    "highlight": ["カレー", "karee"]
+  }
+},
+{
+  "id": "n5_v_95",
+  "level": "N5",
+  "word": "コーヒー",
+  "word_furigana": "コーヒー",
+  "reading": "こーひー",
+  "romaji": "koohii",
+  "meanings": {
+    "primary": "Café",
+    "secondary": ["Boisson au café"]
+  },
+  "nuance": "Mot en katakana issu du néerlandais 'koffie', désignant la boisson à base de grains de café torréfiés.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、あたたかい コーヒー を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "maiasa, atatakai koohii o nomimasu.",
+    "french": "Chaque matin, je bois un **café** chaud.",
+    "highlight": ["コーヒー", "koohii"]
+  }
+},
+{
+  "id": "n5_v_96",
+  "level": "N5",
+  "word": "テーブル",
+  "word_furigana": "テーブル",
+  "reading": "てーぶる",
+  "romaji": "teeburu",
+  "meanings": {
+    "primary": "Table",
+    "secondary": ["Table à manger", "Bureau"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'table', désignant une table de salon ou de salle à manger dans le contexte des repas et de la cuisine.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>料理<rt>りょうり</rt></ruby> を テーブル の <ruby>上<rt>うえ</rt></ruby> に <ruby>並<rt>なら</rt></ruby>べます 。",
+    "romaji": "ryouri o teeburu no ue ni narabemasu.",
+    "french": "Je dispose les plats sur la **table**.",
+    "highlight": ["テーブル", "teeburu"]
+  }
+},
+{
+  "id": "n5_v_97",
+  "level": "N5",
+  "word": "パン",
+  "word_furigana": "パン",
+  "reading": "ぱん",
+  "romaji": "pan",
+  "meanings": {
+    "primary": "Pain",
+    "secondary": ["Brioche", "Viennoiserie"]
+  },
+  "nuance": "Mot en katakana issu du portugais 'pão', désignant le pain au sens large (baguette, pain de mie, brioches). Aliment très consommé au petit-déjeuner au Japon.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "あさ は ごはん の <ruby>代<rt>か</rt></ruby>わりに パン を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "asa wa gohan no kawari ni pan o tabemasu.",
+    "french": "Le matin, je mange du **pain** à la place du riz.",
+    "highlight": ["パン", "pan"]
+  }
+},
+{
+  "id": "n5_v_98",
+  "level": "N5",
+  "word": "レストラン",
+  "word_furigana": "レストラン",
+  "reading": "れすとらん",
+  "romaji": "resutoran",
+  "meanings": {
+    "primary": "Restaurant",
+    "secondary": ["Établissement de restauration"]
+  },
+  "nuance": "Mot en katakana issu du français 'restaurant', désignant un établissement où l'on sert des repas à table.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>週末<rt>しゅうまつ</rt></ruby> に <ruby>家族<rt>かぞく</rt></ruby> と <ruby>一緒<rt>いっしょ</rt></ruby> に レストラン で <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "shuumatsu ni kazoku to issho ni resutoran de tabemasu.",
+    "french": "Je mange au **restaurant** avec ma famille le week-end.",
+    "highlight": ["レストラン", "resutoran"]
+  }
+},
+{
+  "id": "n5_v_99",
+  "level": "N5",
+  "word": "卵",
+  "word_furigana": "<ruby>卵<rt>たまご</rt></ruby>",
+  "reading": "たまご",
+  "romaji": "tamago",
+  "meanings": {
+    "primary": "Œuf",
+    "secondary": ["Œuf de poule"]
+  },
+  "nuance": "Nom désignant l'œuf, ingrédient de base très courant en cuisine japonaise. S'écrit aussi <ruby>玉子<rt>たまご</rt></ruby> (tamago) quand il est cuit ou préparé.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["卵"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> ごはん に <ruby>卵<rt>たまご</rt></ruby> の <ruby>料理<rt>りょうり</rt></ruby> を <ruby>作<rt>つく</rt></ruby>ります 。",
+    "romaji": "asa gohan ni tamago no ryouri o tsukurimasu.",
+    "french": "Je prépare un plat à base d'**œufs** pour le petit-déjeuner.",
+    "highlight": ["卵", "tamago"]
+  }
+},
+{
+  "id": "n5_v_100",
+  "level": "N5",
+  "word": "台所",
+  "word_furigana": "<ruby>台<rt>だい</rt></ruby><ruby>所<rt>どころ</rt></ruby>",
+  "reading": "だいどころ",
+  "romaji": "daidokoro",
+  "meanings": {
+    "primary": "Cuisine",
+    "secondary": ["Pièce pour cuisiner"]
+  },
+  "nuance": "Nom désignant la pièce de la maison réservée à la préparation des repas et à la cuisine. On utilise aussi plus communément le terme en katakana キッチン (kicchin).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["台", "所"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>母<rt>はは</rt></ruby> は <ruby>台所<rt>だいどころ</rt></ruby> で <ruby>夕飯<rt>ゆうはん</rt></ruby> を <ruby>作<rt>つく</rt></ruby>っています 。",
+    "romaji": "haha wa daidokoro de yuuhan o tsukutteimasu.",
+    "french": "Ma mère prépare le dîner dans la **cuisine**.",
+    "highlight": ["台所", "daidokoro"]
+  }
+},
+{
+  "id": "n5_v_101",
+  "level": "N5",
+  "word": "喫茶店",
+  "word_furigana": "<ruby>喫<rt>きっ</rt></ruby><ruby>茶<rt>さ</rt></ruby><ruby>店<rt>てん</rt></ruby>",
+  "reading": "きっさてん",
+  "romaji": "kissaten",
+  "meanings": {
+    "primary": "Café",
+    "secondary": ["Salon de thé traditionnel", "Coffee-shop à la japonaise"]
+  },
+  "nuance": "Nom désignant un salon de thé ou un café de style traditionnel japonais, par opposition aux chaînes de type Western ou aux restaurants.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["喫", "茶", "店"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>午後<rt>ごご</rt></ruby> 、<ruby>静<rt>しず</rt></ruby>かな 喫茶店 で コーヒー を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "gogo, shizukana kissaten de koohii o nomimasu.",
+    "french": "Cet après-midi, je bois un café dans un **salon de thé** calme.",
+    "highlight": ["喫茶店", "kissaten"]
+  }
+},
+{
+  "id": "n5_v_102",
+  "level": "N5",
+  "word": "塩",
+  "word_furigana": "<ruby>塩<rt>しお</rt></ruby>",
+  "reading": "しお",
+  "romaji": "shio",
+  "meanings": {
+    "primary": "Sel",
+    "secondary": ["Sel de cuisine"]
+  },
+  "nuance": "Nom désignant le sel, condiment fondamental utilisé pour assaisonner les plats ou en cuisine.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["塩"],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>料理<rt>りょうり</rt></ruby> に は ちょっと <ruby>塩<rt>しお</rt></ruby> が <ruby>多<rt>おお</rt></ruby>い です 。",
+    "romaji": "kono ryouri ni wa chotto shio ga ooi desu.",
+    "french": "Il y a un peu trop de **sel** dans ce plat.",
+    "highlight": ["塩", "shio"]
+  }
+},
+{
+  "id": "n5_v_103",
+  "level": "N5",
+  "word": "夕飯",
+  "word_furigana": "<ruby>夕<rt>ゆう</rt></ruby><ruby>飯<rt>はん</rt></ruby>",
+  "reading": "ゆうはん",
+  "romaji": "yuuhan",
+  "meanings": {
+    "primary": "Repas du soir",
+    "secondary": ["Dîner", "Souper"]
+  },
+  "nuance": "Nom désignant le repas du soir. Synonyme plus formel ou direct de <ruby>晩<rt>ばん</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby> (bangohan). Composé de <ruby>夕<rt>ゆう</rt></ruby> (yuu, soir) et de <ruby>飯<rt>はん</rt></ruby> (han, repas).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["夕", "飯"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>今夜<rt>こんや</rt></ruby> の 夕飯 は <ruby>何<rt>なに</rt></ruby> を <ruby>作<rt>つく</rt></ruby>ります か 。",
+    "romaji": "konya no yuuhan wa nani o tsukurimasu ka.",
+    "french": "Que préparons-nous pour le **dîner** ce soir ?",
+    "highlight": ["夕飯", "yuuhan"]
+  }
+},
+{
+  "id": "n5_v_104",
+  "level": "N5",
+  "word": "料理",
+  "word_furigana": "<ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>",
+  "reading": "りょうり",
+  "romaji": "ryouri",
+  "meanings": {
+    "primary": "Cuisine",
+    "secondary": ["Plat", "Spécialité culinaire", "Action de cuisiner"]
+  },
+  "nuance": "Nom désignant à la fois l'art de cuisiner (préparer des plats) et le plat préparé lui-même (ex. : <ruby>日本<rt>にほん</rt></ruby><ruby>料理<rt>りょうり</rt></ruby> (nihon ryouri, cuisine japonaise). S'associe souvent au verbe する (suru) faire la cuisine.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["料", "理"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>母<rt>はは</rt></ruby> は <ruby>毎日<rt>まいにち</rt></ruby> おいしい <ruby>料理<rt>りょうり</rt></ruby> を <ruby>作<rt>つく</rt></ruby>ってくれます 。",
+    "romaji": "haha wa mainichi oishii ryouri o tsukuttekuremasu.",
+    "french": "Ma mère me prépare de bons **plats** délicieux tous les jours.",
+    "highlight": ["料理", "ryouri"]
+  }
+},
+{
+  "id": "n5_v_105",
+  "level": "N5",
+  "word": "昼ご飯",
+  "word_furigana": "<ruby>昼<rt>ひる</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby>",
+  "reading": "ひるごはん",
+  "romaji": "hirugohan",
+  "meanings": {
+    "primary": "Repas du midi",
+    "secondary": ["Déjeuner"]
+  },
+  "nuance": "Nom composé de <ruby>昼<rt>ひる</rt></ruby> (midi/journée) et de ご<ruby>飯<rt>はん</rt></ruby> (riz/repas), désignant le déjeuner (hirugohan). Souvent écrit en hiragana (ひるごはん) ou avec les kanji (<ruby>昼ご飯<rt>ひるごはん</rt></ruby>).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["昼", "飯"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>友達<rt>ともだち</rt></ruby> と <ruby>一緒<rt>いっしょ</rt></ruby> に <ruby>昼<rt>ひる</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby> を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "tomodachi to issho ni hirugohan o tabemasu.",
+    "french": "Je prends le **déjeuner** avec un ami.",
+    "highlight": ["昼ご飯", "hirugohan"]
+  }
+},
+{
+  "id": "n5_v_106",
+  "level": "N5",
+  "word": "晩ご飯",
+  "word_furigana": "<ruby>晩<rt>ばん</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby>",
+  "reading": "ばんごはん",
+  "romaji": "bangohan",
+  "meanings": {
+    "primary": "Repas du soir",
+    "secondary": ["Dîner"]
+  },
+  "nuance": "Nom composé de <ruby>晩<rt>ばん</rt></ruby> (soir) et de ご<ruby>飯<rt>はん</rt></ruby> (riz/repas), désignant le dîner (bangohan). Équivalent plus courant au quotidien que <ruby>夕飯<rt>ゆうはん</rt></ruby> (yuuhan).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["晩", "飯"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の <ruby>晩<rt>ばん</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby> は <ruby>何<rt>なに</rt></ruby> です か 。",
+    "romaji": "kyou no bangohan wa nani desu ka.",
+    "french": "Quel est le **dîner** d'aujourd'hui ?",
+    "highlight": ["晩ご飯", "bangohan"]
+  }
+},
+{
+  "id": "n5_v_107",
+  "level": "N5",
+  "word": "果物",
+  "word_furigana": "<ruby>果<rt>くだ</rt></ruby><ruby>物<rt>もの</rt></ruby>",
+  "reading": "くだもの",
+  "romaji": "kudamono",
+  "meanings": {
+    "primary": "Fruit",
+    "secondary": ["Fruits frais"]
+  },
+  "nuance": "Nom désignant les fruits, écrit ici avec les kanji <ruby>果物<rt>くだもの</rt></ruby> (kudamono, souvent écrit aussi en hiragana くだもの). Terme général pour les produits de verger.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["果", "物"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>市場<rt>いちば</rt></ruby> で <ruby>新鮮<rt>しんせん</rt></ruby> な <ruby>果物<rt>くだもの</rt></ruby> を かいました 。",
+    "romaji": "ichiba de shinsen na kudamono o kaimashita.",
+    "french": "J'ai acheté des **fruits** frais au marché.",
+    "highlight": ["果物", "kudamono"]
+  }
+},
+{
+  "id": "n5_v_108",
+  "level": "N5",
+  "word": "牛乳",
+  "word_furigana": "<ruby>牛<rt>ぎゅう</rt></ruby><ruby>乳<rt>にゅう</rt></ruby>",
+  "reading": "ぎゅうにゅう",
+  "romaji": "gyuunyuu",
+  "meanings": {
+    "primary": "Lait de vache",
+    "secondary": ["Lait frais"]
+  },
+  "nuance": "Nom composé de <ruby>牛<rt>ぎゅう</rt></ruby> (bœuf/vache) et de <ruby>乳<rt>にゅう</rt></ruby> (lait), désignant spécifiquement le lait de vache destiné à la consommation (on utilise plus simplement le mot en katakana ミルク (miruku) pour le lait en général ou dans d'autres contextes).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["牛", "乳"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、<ruby>体<rt>からだ</rt></ruby> の ため に <ruby>牛乳<rt>ぎゅうにゅう</rt></ruby> を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "maiasa, karada no tame ni gyuunyuu o nomimasu.",
+    "french": "Chaque matin, je bois du **lait de vache** pour la santé.",
+    "highlight": ["牛乳", "gyuunyuu"]
+  }
+},
+{
+  "id": "n5_v_109",
+  "level": "N5",
+  "word": "牛肉",
+  "word_furigana": "<ruby>牛<rt>ぎゅう</rt></ruby><ruby>肉<rt>にく</rt></ruby>",
+  "reading": "ぎゅうにく",
+  "romaji": "gyuuniku",
+  "meanings": {
+    "primary": "Viande de bœuf",
+    "secondary": ["Bœuf (viande)"]
+  },
+  "nuance": "Nom composé de <ruby>牛<rt>ぎゅう</rt></ruby> (bœuf) et de <ruby>肉<rt>にく</rt></ruby> (viande), désignant la chair de bœuf (gyuuniku) utilisée en cuisine.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["牛", "肉"],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>店<rt>みせ</rt></ruby> の <ruby>牛肉<rt>ぎゅうにく</rt></ruby> は とても やわらかい です 。",
+    "romaji": "kono mise no gyuuniku wa totemo yawarakai desu.",
+    "french": "La **viande de bœuf** de ce magasin est très tendre.",
+    "highlight": ["牛肉", "gyuuniku"]
+  }
+},
+{
+  "id": "n5_v_110",
+  "level": "N5",
+  "word": "砂糖",
+  "word_furigana": "<ruby>砂<rt>さ</rt></ruby><ruby>糖<rt>とう</rt></ruby>",
+  "reading": "さとう",
+  "romaji": "satou",
+  "meanings": {
+    "primary": "Sucre",
+    "secondary": ["Sucre de cuisine"]
+  },
+  "nuance": "Nom désignant le sucre, condiment ou ingrédient sucrant fondamental en cuisine et en pâtisserie.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["砂", "糖"],
+  "particles": [],
+  "example": {
+    "japanese": "コーヒー に <ruby>砂糖<rt>さとう</rt></ruby> を ふたつ <ruby>入<rt>い</rt></ruby>れます 。",
+    "romaji": "koohii ni satou o futatsu iremasu.",
+    "french": "Je mets deux morceaux de **sucre** dans mon café.",
+    "highlight": ["砂糖", "satou"]
+  }
+},
+{
+  "id": "n5_v_111",
+  "level": "N5",
+  "word": "箸",
+  "word_furigana": "<ruby>箸<rt>はし</rt></ruby>",
+  "reading": "はし",
+  "romaji": "hashi",
+  "meanings": {
+    "primary": "Baguettes (pour manger)",
+    "secondary": ["Baguettes japonaises"]
+  },
+  "nuance": "Nom désignant les baguettes traditionnelles (<ruby>箸<rt>はし</rt></ruby> - hashi) utilisées pour manger. Côté pitch accent (changement d'intonation), la voix commence haut et descend, il faut donc placer l'intonation sur le 'ha'.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["箸"],
+  "particles": [],
+  "example": {
+    "japanese": "1 <ruby>人<rt>にん</rt></ruby> に つき 、<ruby>箸<rt>はし</rt></ruby> を 1 <ruby>膳<rt>ぜん</rt></ruby> <ruby>使<rt>つか</rt></ruby>います 。",
+    "romaji": "hitori ni tsuki, hashi o ichizen tsukaimasu.",
+    "french": "On utilise une paire de **baguettes** par personne.",
+    "highlight": ["箸", "hashi"]
+  }
+},
+{
+  "id": "n5_v_112",
+  "level": "N5",
+  "word": "紅茶",
+  "word_furigana": "<ruby>紅<rt>こう</rt></ruby><ruby>茶<rt>ちゃ</rt></ruby>",
+  "reading": "こうちゃ",
+  "romaji": "koucha",
+  "meanings": {
+    "primary": "Thé noir",
+    "secondary": ["Thé rouge (traduction littérale)"]
+  },
+  "nuance": "Mot utilisé pour le thé noir de style occidental, à ne pas confondre avec le thé vert traditionnel <ruby>緑茶<rt>りょくちゃ</rt></ruby> (ryoukucha) ou <ruby>お茶<rt>おちゃ</rt></ruby> (ocha).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["紅", "茶"],
+  "particles": [],
+  "example": {
+    "japanese": "ケーキ と <ruby>一緒<rt>いっしょ</rt></ruby> に あたたかい <ruby>紅茶<rt>こうちゃ</rt></ruby> を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "keeki to issho ni atatakai koucha o nomimasu.",
+    "french": "Je bois du **thé noir** chaud avec un gâteau.",
+    "highlight": ["紅茶", "koucha"]
+  }
+},
+{
+  "id": "n5_v_113",
+  "level": "N5",
+  "word": "肉",
+  "word_furigana": "<ruby>肉<rt>にく</rt></ruby>",
+  "reading": "にく",
+  "romaji": "niku",
+  "meanings": {
+    "primary": "Viande",
+    "secondary": ["Chair animale"]
+  },
+  "nuance": "Nom désignant la viande (<ruby>肉<rt>にく</rt></ruby> - niku) de manière générale (bœuf, porc, poulet, etc.), utilisé seul ou en suffixe. Comme <ruby>牛肉<rt>ぎゅうにく</rt></ruby> (gyuuniku) ou <ruby>鶏肉<rt>とりにく</rt></ruby> (toriniku).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["肉"],
+  "particles": [],
+  "example": {
+    "japanese": "すき焼き に は たくさん の <ruby>肉<rt>にく</rt></ruby> を <ruby>入<rt>い</rt></ruby>れます 。",
+    "romaji": "sukiyaki ni wa takusan no niku o iremasu.",
+    "french": "On met beaucoup de **viande** dans le sukiyaki.",
+    "highlight": ["肉", "niku"]
+  }
+},
+{
+  "id": "n5_v_114",
+  "level": "N5",
+  "word": "豚肉",
+  "word_furigana": "<ruby>豚<rt>ぶた</rt></ruby><ruby>肉<rt>にく</rt></ruby>",
+  "reading": "ぶたにく",
+  "romaji": "butaniku",
+  "meanings": {
+    "primary": "Viande de porc",
+    "secondary": ["Porc (viande)"]
+  },
+  "nuance": "Nom composé de <ruby>豚<rt>ぶた</rt></ruby> (buta, cochon) et de <ruby>肉<rt>にく</rt></ruby> (niku, viande), désignant la chair de porc (butaniku) très utilisée dans les plats japonais (comme le tonkatsu ou le ramen au porc).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["豚", "肉"],
+  "particles": [],
+  "example": {
+    "japanese": "スーパー で 新鮮な 豚肉 を かいました 。",
+    "romaji": "suupaa de shinsenna butaniku o kaimashita.",
+    "french": "J'ai acheté de la **viande de porc** fraîche au supermarché.",
+    "highlight": ["豚肉", "butaniku"]
+  }
+},
+{
+  "id": "n5_v_115",
+  "level": "N5",
+  "word": "野菜",
+  "word_furigana": "<ruby>野<rt>や</rt></ruby><ruby>菜<rt>さい</rt></ruby>",
+  "reading": "やさい",
+  "romaji": "yasai",
+  "meanings": {
+    "primary": "Légume",
+    "secondary": ["Légumes frais"]
+  },
+  "nuance": "Nom désignant les légumes (yasai) de manière générale. Composé des kanji <ruby>野<rt>や</rt></ruby> (ya, champ/campagne) et <ruby>菜<rt>さい</rt></ruby> (lsai, égume/plante comestible).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["野", "菜"],
+  "particles": [],
+  "example": {
+    "japanese": "健康 の ため に 、毎日 たくさん の 野菜 を 食べています 。",
+    "romaji": "kenkou no tame ni, mainichi takusan no yasai o tabeteimasu.",
+    "french": "Pour ma santé, je mange beaucoup de **légumes** tous les jours.",
+    "highlight": ["野菜", "yasai"]
+  }
+},
+{
+  "id": "n5_v_116",
+  "level": "N5",
+  "word": "頼む",
+  "word_furigana": "<ruby>頼<rt>たノ</rt></ruby>む",
+  "reading": "たのむ",
+  "romaji": "tanomu",
+  "meanings": {
+    "primary": "Demander",
+    "secondary": ["Commander (un plat au restaurant)", "Prier / confier une tâche"]
+  },
+  "nuance": "Verbe godan transitif désignant l'action de faire une requête, de demander une faveur, ou de commander (un plat, une boisson au restaurant). *(Note : classé ici en fin de thématique culinaire/quotidienne pour la commande au restaurant)*.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "nourriture_boissons",
+  "kanji_list": ["頼"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "レストラン で カレーライス を 頼みました 。",
+    "romaji": "resutoran de kareeraisu o tanomimashita.",
+    "french": "J'ai **commandé** un riz au curry au restaurant.",
+    "highlight": ["頼みました", "tanomimashita"]
+  }
+},
+{
+  "id": "n5_v_117",
+  "level": "N5",
+  "word": "食べる",
+  "word_furigana": "<ruby>食<rt>た</rt></ruby>べる",
+  "reading": "たべる",
+  "romaji": "taberu",
+  "meanings": {
+    "primary": "Manger",
+    "secondary": ["Consommer (un aliment)"]
+  },
+  "nuance": "Verbe ichidan transitif fondamental désignant l'action de manger ou de se nourrir.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "nourriture_boissons",
+  "kanji_list": ["食"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> ごはん に パン を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "asa gohan ni pan o tabemasu.",
+    "french": "Je **mange** du pain au petit-déjeuner.",
+    "highlight": ["食べます", "tabemasu"]
+  }
+},
+{
+  "id": "n5_v_118",
+  "level": "N5",
+  "word": "食べ物",
+  "word_furigana": "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></g>",
+  "reading": "たべもの",
+  "romaji": "tabemono",
+  "meanings": {
+    "primary": "Nourriture",
+    "secondary": ["Aliment", "Comestible"]
+  },
+  "nuance": "Nom composé du radical du verbe 食べる (manger) et de 物 (chose/objet), désignant la nourriture de manière générale.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["食", "物"],
+  "particles": [],
+  "example": {
+    "japanese": "スーパー に おいしい <ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby> が たくさん あります 。",
+    "romaji": "suupaa ni oishii tabemono o takusan arimasu.",
+    "french": "Il y a beaucoup de **nourriture** délicieuse au supermarché.",
+    "highlight": ["食べ物", "tabemono"]
+  }
+},
+{
+  "id": "n5_v_119",
+  "level": "N5",
+  "word": "食堂",
+  "word_furigana": "<ruby>食<rt>しょく</rt></ruby><ruby>堂<rt>どう</rt></ruby>",
+  "reading": "しょくどう",
+  "romaji": "shokudou",
+  "meanings": {
+    "primary": "Cantine",
+    "secondary": ["Réfectoire", "Cafétéria", "Restaurant populaire"]
+  },
+  "nuance": "Nom composé de 食 (manger/repas) et 堂 (salle/bâtiment), désignant une cantine (scolaire ou d'entreprise), un réfectoire ou un petit restaurant populaire et sans prétention.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["食", "堂"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>昼<rt>ひる</rt></ruby> ごはん は <ruby>会社<rt>かいしゃ</rt></ruby> の <ruby>食堂<rt>しょくどう</rt></ruby> で <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "hiru gohan wa kaisha no shokudou de tabemasu.",
+    "french": "Je prends mon déjeuner à la **cantine** de l'entreprise.",
+    "highlight": ["食堂", "shokudou"]
+  }
+},
+{
+  "id": "n5_v_120",
+  "level": "N5",
+  "word": "飲み物",
+  "word_furigana": "<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></g>",
+  "reading": "のみもの",
+  "romaji": "nomimono",
+  "meanings": {
+    "primary": "Boisson",
+    "secondary": ["Liquide buvable"]
+  },
+  "nuance": "Nom composé du radical du verbe 飲む (boire) et de 物 (chose/objet), désignant toute sorte de boisson (eau, thé, jus, etc.).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["飲", "物"],
+  "particles": [],
+  "example": {
+    "japanese": "のど が かわいた ので 、<ruby>冷<rt>つめ</rt></ruby>たい <ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></g> を <ruby>買<rt>か</rt></ruby>います 。",
+    "romaji": "nodo ga kawaita node, tsumetai nomimono o kaimasu.",
+    "french": "J'ai soif, alors j'achète une **boisson** fraîche.",
+    "highlight": ["飲み物", "nomimono"]
+  }
+},
+{
+  "id": "n5_v_121",
+  "level": "N5",
+  "word": "飴",
+  "word_furigana": "<ruby>飴<rt>あめ</rt></g>",
+  "reading": "あめ",
+  "romaji": "ame",
+  "meanings": {
+    "primary": "Bonbon",
+    "secondary": ["Sucre d'orge", "Caramel dur"]
+  },
+  "nuance": "Nom désignant les bonbons durs ou les sucreries (souvent écrit en hiragana あめ). *(Note : attention à ne pas le confondre avec 雨 - la pluie, qui se prononce de la même façon mais a un accent tonal différent)*.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["飴"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>喉<rt>のど</rt></ruby> が <ruby>痛<rt>いた</rt></ruby>い ので 、<ruby>飴<rt>あめ</rt></ruby> を なめます 。",
+    "romaji": "nodo ga itai node, ame o namemasu.",
+    "french": "J'ai mal à la gorge, alors je suce un **bonbon**.",
+    "highlight": ["飴", "ame"]
+  }
+},
+{
+  "id": "n5_v_122",
+  "level": "N5",
+  "word": "魚",
+  "word_furigana": "<ruby>魚<rt>さかな</rt></g>",
+  "reading": "さかな",
+  "romaji": "sakana",
+  "meanings": {
+    "primary": "Poisson",
+    "secondary": ["Poisson (chair ou animal)"]
+  },
+  "nuance": "Nom désignant le poisson, ingrédient essentiel de la cuisine japonaise traditionnelle (consommé grillé, bouilli, ou cru en sushi/sashimi).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nourriture_boissons",
+  "kanji_list": ["魚"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、<ruby>朝<rt>あさ</rt></ruby> ごはん に おいしい <ruby>魚<rt>さかな</rt></g> を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "maiasa, asa gohan ni oishii sakana o tabemasu.",
+    "french": "Chaque matin, je mange du bon **poisson** au petit-déjeuner.",
+    "highlight": ["魚", "sakana"]
+  }
+},
+{
+  "id": "n5_v_123",
+  "level": "N5",
+  "word": "クラス",
+  "word_furigana": "クラス",
+  "reading": "くらす",
+  "romaji": "kurasu",
+  "meanings": {
+    "primary": "Classe",
+    "secondary": ["Salle de classe", "Groupe d'élèves"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'class', désignant une classe d'élèves ou un groupe de cours (bien que pour la salle de cours physique, on utilise souvent 教室 - kyoushitsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "わたし の <ruby>クラス<rt>くらす</rt></ruby> に は <ruby>学生<rt>がくせい</rt></ruby> が <ruby>20<rt>にじゅっ</rt></ruby><ruby>人<rt>にん</rt></ruby> います 。",
+    "romaji": "watashi no kurasu ni wa gakusei ga nijuunin imasu.",
+    "french": "Il y a vingt élèves dans ma **classe**.",
+    "highlight": ["クラス", "kurasu"]
+  }
+},
+{
+  "id": "n5_v_124",
+  "level": "N5",
+  "word": "テスト",
+  "word_furigana": "テスト",
+  "reading": "てすと",
+  "romaji": "tesuto",
+  "meanings": {
+    "primary": "Test",
+    "secondary": ["Examen", "Interrogation écrite"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'test', désignant un examen scolaire ou une évaluation (synonyme fréquent de 試験 - shiken).",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>明日<rt>あした</rt></ruby> 、<ruby>日本語<rt>にほんご</rt></ruby> の <ruby>テスト<rt>てすと</rt></ruby> が あります 。",
+    "romaji": "ashita, nihongo no tesuto ga arimasu.",
+    "french": "Demain, il y a un **test** de japonais.",
+    "highlight": ["テスト", "tesuto"]
+  }
+},
+{
+  "id": "n5_v_125",
+  "level": "N5",
+  "word": "ノート",
+  "word_furigana": "ノート",
+  "reading": "のーと",
+  "romaji": "nooto",
+  "meanings": {
+    "primary": "Cahier",
+    "secondary": ["Carnet de notes", "Bloc-notes"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'notebook', désignant un cahier d'écolier ou un carnet ligné/quadrillé pour prendre des notes.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>先生<rt>せんせい</rt></ruby> の <ruby>言<rt>い</rt></ruby>った こと を <ruby>ノート<rt>のーと</rt></ruby> に <ruby>書<rt>か</rt></ruby>きます 。",
+    "romaji": "sensei no itta koto o nooto ni kakimasu.",
+    "french": "J'écris ce que le professeur a dit dans mon **cahier**.",
+    "highlight": ["ノート", "nooto"]
+  }
+},
+{
+  "id": "n5_v_126",
+  "level": "N5",
+  "word": "大学",
+  "word_furigana": "<ruby>大<rt>だい</rt></ruby><ruby>学<rt>がく</rt></ruby>",
+  "reading": "だいがく",
+  "romaji": "daigaku",
+  "meanings": {
+    "primary": "Université",
+    "secondary": ["Enseignement supérieur"]
+  },
+  "nuance": "Nom composé de 大 (grand) et de 学 (étude/apprentissage), désignant un établissement d'enseignement supérieur ou une université.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["大", "学"],
+  "particles": [],
+  "example": {
+    "japanese": "わたし は <ruby>毎日<rt>まいにち</rt></ruby> <ruby>電車<rt>でんしゃ</rt></ruby> で <ruby>大学<rt>だいがく</rt></ruby> へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "watashi wa mainichi densha de daigaku e ikimasu.",
+    "french": "Je vais à l'**université** en train tous les jours.",
+    "highlight": ["大学", "daigaku"]
+  }
+},
+{
+  "id": "n5_v_127",
+  "level": "N5",
+  "word": "学校",
+  "word_furigana": "<ruby>学<rt>がっ</rt></ruby><ruby>校<rt>こう</rt></ruby>",
+  "reading": "がっこう",
+  "romaji": "gakkou",
+  "meanings": {
+    "primary": "École",
+    "secondary": ["Établissement scolaire"]
+  },
+  "nuance": "Nom désignant une école au sens général (école primaire, collège, lycée, etc.). Composé de 学 (étude) et 校 (bâtiment/établissement).",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["学", "校"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>子供<rt>こども</rt></ruby> たち は <ruby>朝<rt>あさ</rt></ruby> <ruby>学校<rt>がっこう</rt></ruby> へ <ruby>歩<rt>ある</rt></ruby>いて <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "kodomo tachi wa asa gakkou e aruite ikimasu.",
+    "french": "Les enfants vont à l'**école** à pied le matin.",
+    "highlight": ["学校", "gakkou"]
+  }
+},
+{
+  "id": "n5_v_128",
+  "level": "N5",
+  "word": "川",
+  "word_furigana": "<ruby>川<rt>かわ</rt></ruby>",
+  "reading": "かわ",
+  "romaji": "kawa",
+  "meanings": {
+    "primary": "Rivière",
+    "secondary": ["Fleuve", "Cours d'eau"]
+  },
+  "nuance": "Nom désignant un cours d'eau, une rivière ou un fleuve. *(Note : classé ici dans la transition vers l'environnement ou les lieux extérieurs proches de l'école/la ville)*.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["川"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> の <ruby>近<rt>ちか</rt></ruby>く に <ruby>綺麗<rt>きれい</rt></ruby> な <ruby>川<rt>かわ</rt></ruby> が あります 。",
+    "romaji": "kouen no chikaku ni kirei na kawa ga arimasu.",
+    "french": "Il y a une belle **rivière** près du parc.",
+    "highlight": ["川", "kawa"]
+  }
+},
+{
+  "id": "n5_v_129",
+  "level": "N5",
+  "word": "幼稚園",
+  "word_furigana": "<ruby>幼<rt>よう</rt></ruby><ruby>稚<rt>ち</rt></ruby><ruby>園<rt>えん</rt></ruby>",
+  "reading": "ようちえん",
+  "romaji": "youchien",
+  "meanings": {
+    "primary": "Jardin d'enfants",
+    "secondary": ["École maternelle"]
+  },
+  "nuance": "Nom composé de 幼 (jeune/enfance), 稚 (enfance) et 園 (jardin/établissement), désignant la maternelle ou le jardin d'enfants pour les jeunes enfants avant l'école primaire.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["幼", "稚", "園"],
+  "particles": [],
+  "example": {
+    "japanese": "ちいさい <ruby>子供<rt>こども</rt></ruby> が <ruby>幼稚園<rt>ようちえん</rt></ruby> へ <ruby>通<rt>かよ</rt></ruby>っています 。",
+    "romaji": "chiisai kodomo ga youchien e kayotteimasu.",
+    "french": "Un petit enfant fréquente le **jardin d'enfants**.",
+    "highlight": ["幼稚園", "youchien"]
+  }
+},
+{
+  "id": "n5_v_130",
+  "level": "N5",
+  "word": "引く",
+  "word_furigana": "<ruby>引<rt>ひ</rt></ruby>く",
+  "reading": "ひく",
+  "romaji": "hiku",
+  "meanings": {
+    "primary": "Tirer",
+    "secondary": ["Tracer (une ligne)", "Chercher (dans un dictionnaire)", "Jouer d'un instrument à cordes"]
+  },
+  "nuance": "Verbe godan transitif polyvalent désignant l'action de tirer (contraire de 押す - ossu, pousser), de feuilleter un dictionnaire (辞書を引く), ou de jouer d'un instrument à cordes/piano.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["引"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "わからない <ruby>言葉<rt>ことば</rt></ruby> を <ruby>辞書<rt>じしょ</rt></ruby> で <ruby>引<rt>ひ</rt></ruby>きます 。",
+    "romaji": "wakaranai kotoba o jisho de hikimasu.",
+    "french": "Je **cherche** un mot que je ne connais pas dans le dictionnaire.",
+    "highlight": ["引きます", "hikimasu"]
+  }
+},
+{
+  "id": "n5_v_131",
+  "level": "N5",
+  "word": "授業",
+  "word_furigana": "<ruby>授<rt>じゅ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>",
+  "reading": "じゅぎょう",
+  "romaji": "jugyou",
+  "meanings": {
+    "primary": "Cours",
+    "secondary": ["Leçon", "Classe (pédagogique)"]
+  },
+  "nuance": "Nom désignant une leçon ou un cours dispensé par un professeur dans un établissement scolaire.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["授", "業"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>午後<rt>ごご</rt></ruby> の <ruby>授業<rt>じゅぎょう</rt></ruby> が <ruby>始<rt>はじ</rt></ruby>まります 。",
+    "romaji": "gogo no jugyou ga hajimarimasu.",
+    "french": "Le **cours** de l'après-midi commence.",
+    "highlight": ["授業", "jugyou"]
+  }
+},
+{
+  "id": "n5_v_132",
+  "level": "N5",
+  "word": "教える",
+  "word_furigana": "<ruby>教<rt>おし</rt></ruby>える",
+  "reading": "おしえる",
+  "romaji": "oshieru",
+  "meanings": {
+    "primary": "Enseigner",
+    "secondary": ["Apprendre (quelque chose à quelqu'un)", "Indiquer", "Informer"]
+  },
+  "nuance": "Verbe ichidan transitif désignant l'action de transmettre un savoir, d'enseigner une matière, ou d'indiquer une information ou un chemin à quelqu'un.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["教"],
+  "particles": ["に", "を"],
+  "example": {
+    "japanese": "<ruby>先生<rt>せんせい</rt></ruby> が <ruby>学生<rt>がくせい</rt></ruby> に <ruby>日本語<rt>にほんご</rt></ruby> を <ruby>教<rt>おし</rt></ruby>えます 。",
+    "romaji": "sensei ga gakusei ni nihongo o oshiemasu.",
+    "french": "Le professeur **enseigne** le japonais aux élèves.",
+    "highlight": ["教えます", "oshiemasu"]
+  }
+},
+{
+  "id": "n5_v_133",
+  "level": "N5",
+  "word": "教室",
+  "word_furigana": "<ruby>教<rt>きょう</rt></ruby><ruby>室<rt>しつ</rt></ruby>",
+  "reading": "きょうしつ",
+  "romaji": "kyoushitsu",
+  "meanings": {
+    "primary": "Salle de classe",
+    "secondary": ["Classe (salle physique)"]
+  },
+  "nuance": "Nom composé de 教 (enseigner) et 室 (chambre/pièce), désignant la salle de cours physique où se déroulent les leçons.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["教", "室"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>生徒<rt>せいと</rt></ruby> たち は <ruby>教室<rt>きょうしつ</rt></ruby> で <ruby>本<rt>ほん</rt></ruby> を <ruby>読<rt>よ</rt></ruby>んでいます 。",
+    "romaji": "seito tachi wa kyoushitsu de hon o yondeimasu.",
+    "french": "Les élèves lisent un livre dans la **salle de classe**.",
+    "highlight": ["教室", "kyoushitsu"]
+  }
+},
+{
+  "id": "n5_v_134",
+  "level": "N5",
+  "word": "本",
+  "word_furigana": "<ruby>本<rt>ほん</rt></ruby>",
+  "reading": "ほん",
+  "romaji": "hon",
+  "meanings": {
+    "primary": "Livre",
+    "secondary": ["Ouvrage (compteur :冊 - satsu)"]
+  },
+  "nuance": "Nom fondamental désignant un livre. *(Note : sert aussi de suffixe de comptage pour les objets longs et cylindriques comme les crayons, bouteilles ou arbres).* ",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["本"],
+  "particles": [],
+  "example": {
+    "japanese": "しずか な <ruby>部屋<rt>へや</rt></ruby> で <ruby>本<rt>ほん</rt></ruby> を <ruby>読<rt>よ</rt></ruby>む の が <ruby>好き<rt>すき</rt></ruby> です 。",
+    "romaji": "shizuka na heya de hon o yomu no ga suki desu.",
+    "french": "J'aime lire un **livre** dans une chambre calme.",
+    "highlight": ["本", "hon"]
+  }
+},
+{
+  "id": "n5_v_135",
+  "level": "N5",
+  "word": "知る",
+  "word_furigana": "<ruby>知<rt>し</rt></ruby>る",
+  "reading": "しる",
+  "romaji": "shiru",
+  "meanings": {
+    "primary": "Savoir",
+    "secondary": ["Connaître", "Apprendre (une nouvelle)"]
+  },
+  "nuance": "Verbe godan transitif désignant le fait de posséder une information ou de connaître quelqu'un/quelque chose. *(Note : à la forme affirmative, on utilise souvent l'état résultatif 知っている - shitte iru pour 'savoir' ou 'connaître')*.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["知"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "この <ruby>漢字<rt>かんじ</rt></ruby> の <ruby>意味<rt>いみ</rt></ruby> を <ruby>知<rt>し</rt></ruby>っています か 。",
+    "romaji": "kono kanji no imi o shitteimasu ka.",
+    "french": "**Savez-vous** le sens de ce kanji ?",
+    "highlight": ["知って", "shitte"]
+  }
+},
+{
+  "id": "n5_v_136",
+  "level": "N5",
+  "word": "英語",
+  "word_furigana": "<ruby>英<rt>えい</rt></ruby><ruby>語<rt>ご</rt></ruby>",
+  "reading": "えいご",
+  "romaji": "eigo",
+  "meanings": {
+    "primary": "Anglais",
+    "secondary": ["Langue anglaise"]
+  },
+  "nuance": "Nom composé de 英 (Angleterre / brillant) et 語 (langue), désignant la langue anglaise, matière enseignée de manière quasi universelle dans le système scolaire japonais.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["英", "語"],
+  "particles": [],
+  "example": {
+    "japanese": "3 <ruby>時<rt>じ</rt></ruby> から <ruby>英語<rt>えいご</rt></ruby> の <ruby>授業<rt>じゅぎょう</rt></ruby> が あります 。",
+    "romaji": "sanji kara eigo no jugyou ga arimasu.",
+    "french": "Il y a un cours d'**anglais** à partir de trois heures.",
+    "highlight": ["英語", "eigo"]
+  }
+},
+{
+  "id": "n5_v_137",
+  "level": "N5",
+  "word": "覚える",
+  "word_furigana": "<ruby>覚<rt>おぼ</rt></ruby>える",
+  "reading": "おぼえる",
+  "romaji": "oboeru",
+  "meanings": {
+    "primary": "Mémoriser",
+    "secondary": ["Apprendre par cœur", "Se souvenir", "Retenir"]
+  },
+  "nuance": "Verbe ichidan transitif désignant l'action de stocker des informations en mémoire, d'apprendre du vocabulaire ou des kanjis, ou de se rappeler d'une sensation.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["覚"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> <ruby>新<rt>あたら</rt></ruby>しい <ruby>単語<rt>たんご</rt></ruby> を <ruby>覚<rt>おぼ</rt></ruby>えます 。",
+    "romaji": "mainichi atarashii tango o oboemasu.",
+    "french": "Je **mémorise** de nouveaux mots de vocabulaire tous les jours.",
+    "highlight": ["覚えます", "oboemasu"]
+  }
+},
+{
+  "id": "n5_v_138",
+  "level": "N5",
+  "word": "言葉",
+  "word_furigana": "<ruby>言<rt>こと</rt></ruby><ruby>葉<rt>ば</rt></ruby>",
+  "reading": "ことば",
+  "romaji": "kotoba",
+  "meanings": {
+    "primary": "Mot",
+    "secondary": ["Langue", "Parole", "Vocabulaire", "Terme"]
+  },
+  "nuance": "Nom désignant un mot, une expression, la parole ou le langage en général. Composé de 言 (dire/parole) et 葉 (feuille).",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["言", "葉"],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>辞書<rt>じしょ</rt></ruby> で <ruby>新<rt>あたら</rt></ruby>しい <ruby>言葉<rt>ことば</rt></ruby> を <ruby>調<rt>しら</rt></ruby>べます 。",
+    "romaji": "kono jisho de atarashii kotoba o shirabemasu.",
+    "french": "Je cherche un nouveau **mot** dans ce dictionnaire.",
+    "highlight": ["言葉", "kotoba"]
+  }
+},
+{
+  "id": "n5_v_139",
+  "level": "N5",
+  "word": "辞書",
+  "word_furigana": "<ruby>辞<rt>じ</rt></ruby><ruby>書<rt>しょ</rt></ruby>",
+  "reading": "じしょ",
+  "romaji": "jisho",
+  "meanings": {
+    "primary": "Dictionnaire",
+    "secondary": ["Lexique", "Dictionnaire de langue"]
+  },
+  "nuance": "Nom désignant un dictionnaire (synonyme courant de 国語辞典 ou 辞典). Composé de 辞 (mot/expression) et 書 (livre/écrit).",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["辞", "書"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>日本語<rt>にほんご</rt></ruby> の <ruby>勉強<rt>べんきょう</rt></ruby> に は <ruby>辞書<rt>じしょ</rt></ruby> が <ruby>大切<rt>たいせつ</rt></ruby> です 。",
+    "romaji": "nihongo no benkyou ni wa jisho ga taisetsu desu.",
+    "french": "Le **dictionnaire** est important pour l'apprentissage du japonais.",
+    "highlight": ["辞書", "jisho"]
+  }
+},
+{
+  "id": "n5_v_140",
+  "level": "N5",
+  "word": "鉛筆",
+  "word_furigana": "<ruby>鉛<rt>えん</rt></ruby><ruby>筆<rt>ぴつ</rt></ruby>",
+  "reading": "えんぴつ",
+  "romaji": "enpitsu",
+  "meanings": {
+    "primary": "Crayon",
+    "secondary": ["Crayon à papier"]
+  },
+  "nuance": "Nom composé de 鉛 (plomb) et 筆 (pinceau/crayon), désignant le crayon à papier ou crayon graphite utilisé pour écrire ou dessiner.",
+  "type": "nom",
+  "group": "nom",
+  "category": "ecole_apprentissage",
+  "kanji_list": ["鉛", "筆"],
+  "particles": [],
+  "example": {
+    "japanese": "テスト の とき は ボールペン で は なく <ruby>鉛筆<rt>えんぴつ</rt></ruby> を <ruby>使<rt>つか</rt></ruby>います 。",
+    "romaji": "tesuto no toki wa boorupen de wa naku enpitsu o tsukaimasu.",
+    "french": "Au moment du test, on utilise un **crayon** et non un stylo à Bille.",
+    "highlight": ["鉛筆", "enpitsu"]
+  }
+},
+{
+  "id": "n5_v_141",
+  "level": "N5",
+  "word": "仕事",
+  "word_furigana": "<ruby>仕<rt>し</rt></ruby><ruby>事<rt>ごと</rt></ruby>",
+  "reading": "しごと",
+  "romaji": "shigoto",
+  "meanings": {
+    "primary": "Travail",
+    "secondary": ["Emploi", "Profession", "Tâche professionnelle"]
+  },
+  "nuance": "Nom désignant le travail au sens d'emploi ou d'occupation professionnelle. Composé de 仕 (servir/faire) et 事 (chose abstraite/affaire).",
+  "type": "nom",
+  "group": "nom",
+  "category": "travail_entreprise",
+  "kanji_list": ["仕", "事"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>父<rt>ちち</rt></ruby> は <ruby>毎日<rt>まいにち</rt></ruby> <ruby>朝<rt>あさ</rt></ruby> から <ruby>晩<rt>ばん</rt></ruby> まで <ruby>仕事<rt>しごと</rt></ruby> を します 。",
+    "romaji": "chichi wa mainichi asa kara ban made shigoto o shimasu.",
+    "french": "Mon père **travaille** du matin au soir tous les jours.",
+    "highlight": ["仕事", "shigoto"]
+  }
+},
+{
+  "id": "n5_v_142",
+  "level": "N5",
+  "word": "会社",
+  "word_furigana": "<ruby>会<rt>かい</rt></ruby><ruby>社<rt>しゃ</rt></ruby>",
+  "reading": "かいしゃ",
+  "romaji": "kaisha",
+  "meanings": {
+    "primary": "Entreprise",
+    "secondary": ["Société", "Compagnie", "Bureau (par extension)"]
+  },
+  "nuance": "Nom composé de 会 (se réunir) et 社 (société/sanctuaire), désignant une entreprise ou une société commerciale.",
+  "type": "nom",
+  "group": "nom",
+  "category": "travail_entreprise",
+  "kanji_list": ["会", "社"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>兄<rt>あに</rt></ruby> は <ruby>東京<rt>とうきょう</rt></ruby> の <ruby>会社<rt>かいしゃ</rt></ruby> で <ruby>働<rt>はたら</rt></ruby>いています 。",
+    "romaji": "ani wa toukyou no kaisha de hataraiteimasu.",
+    "french": "Mon frère **travaille** dans une entreprise à Tokyo.",
+    "highlight": ["会社", "kaisha"]
+  }
+},
+{
+  "id": "n5_v_143",
+  "level": "N5",
+  "word": "勤める",
+  "word_furigana": "<ruby>勤<rt>つと</rt></ruby>める",
+  "reading": "つとめる",
+  "romaji": "tsutomeru",
+  "meanings": {
+    "primary": "Travailler pour",
+    "secondary": ["Être employé par", "Exercer un emploi dans"]
+  },
+  "nuance": "Verbe ichidan transitif (souvent employé avec la structure à la particule に) désignant le fait d'être employé dans une entreprise ou d'exercer une fonction au sein d'une organisation.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "travail_entreprise",
+  "kanji_list": ["勤"],
+  "particles": ["に", "を"],
+  "example": {
+    "japanese": "わたし は この <ruby>銀行<rt>ぎんこう</rt></ruby> に <ruby>勤<rt>つと</rt></ruby>めて います 。",
+    "romaji": "watashi wa kono ginkou ni tsutomete imasu.",
+    "french": "Je **travaille** dans cette banque.",
+    "highlight": ["勤めて", "tsutomete"]
+  }
+},
+{
+  "id": "n5_v_144",
+  "level": "N5",
+  "word": "忙しい",
+  "word_furigana": "<ruby>忙<rt>いそが</rt></ruby>しい",
+  "reading": "いそがしい",
+  "romaji": "isogashii",
+  "meanings": {
+    "primary": "Occupé",
+    "secondary": ["Pris", "Débordé (par le travail ou les tâches)"]
+  },
+  "nuance": "Adjectif en i désignant un état d'emploi du temps chargé ou une personne très occupée (composé du kanji 心 - cœur - et 亡 - perdre/disparaître, suggérant l'esprit accaparé).",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "travail_entreprise",
+  "kanji_list": ["忙"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>今週<rt>こんしゅう</rt></ruby> は <ruby>仕事<rt>しごと</rt></ruby> が おおく て とても <ruby>忙<rt>いそが</rt></ruby>しい です 。",
+    "romaji": "konshuu wa shigoto ga ooku te totemo isogashii desu.",
+    "french": "Cette semaine, j'ai beaucoup de travail et je suis très **occupé**.",
+    "highlight": ["忙しい", "isogashii"]
+  }
+},
+{
+  "id": "n5_v_145",
+  "level": "N5",
+  "word": "机",
+  "word_furigana": "<ruby>机<rt>つくえ</rt></ruby>",
+  "reading": "つくえ",
+  "romaji": "tsukue",
+  "meanings": {
+    "primary": "Bureau",
+    "secondary": ["Table de travail", "Pupitre"]
+  },
+  "nuance": "Nom désignant un bureau de travail ou une table d'étude (par opposition à 椅子 - isu, la chaise, ou au bureau administratif 会社 / 事務所).",
+  "type": "nom",
+  "group": "nom",
+  "category": "travail_entreprise",
+  "kanji_list": ["机"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>机<rt>つくえ</rt></ruby> の <ruby>上<rt>うえ</rt></ruby> に <ruby>パソコン<rt>ぱそこん</rt></ruby> と <ruby>本<rt>ほん</rt></ruby> が あります 。",
+    "romaji": "tsukue no ue ni pasokon to hon ga arimasu.",
+    "french": "Il y a un ordinateur et un livre sur le **bureau**.",
+    "highlight": ["机", "tsukue"]
+  }
+},
+{
+  "id": "n5_v_146",
+  "level": "N5",
+  "word": "郵便局",
+  "word_furigana": "<ruby>郵<rt>ゆう</rt></ruby><ruby>便<rt>びん</rt></ruby><ruby>局<rt>きょく</rt></ruby>",
+  "reading": "ゆうびんきょく",
+  "romaji": "yuubinkyoku",
+  "meanings": {
+    "primary": "Bureau de poste",
+    "secondary": ["La poste"]
+  },
+  "nuance": "Nom composé de 郵便 (poste/courrier) et de 局 (bureau/station), désignant l'établissement postal où l'on envoie des lettres et des colis ou gère des services financiers.",
+  "type": "nom",
+  "group": "nom",
+  "category": "travail_entreprise",
+  "kanji_list": ["郵", "便", "局"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>小包<rt>こづつみ</rt></ruby> を <ruby>送<rt>おく</rt></ruby>る ため に <ruby>郵便局<rt>ゆうびんきょく</rt></ruby> へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "kozutsumi o okuru tame ni yuubinkyoku e ikimasu.",
+    "french": "Je vais au **bureau de poste** pour envoyer un colis.",
+    "highlight": ["郵便局", "yuubinkyoku"]
+  }
+},
+{
+  "id": "n5_v_147",
+  "level": "N5",
+  "word": "タクシー",
+  "word_furigana": "タクシー",
+  "reading": "たくしー",
+  "romaji": "takushii",
+  "meanings": {
+    "primary": "Taxi",
+    "secondary": ["Voiture de location avec chauffeur"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'taxi', désignant un véhicule de transport public payant avec chauffeur.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>雨<rt>あめ</rt></ruby> が <ruby>降<rt>ふ</rt></ruby>って いる ので 、<ruby>駅<rt>えき</rt></ruby> まで タクシー に <ruby>乗<rt>の</rt></ruby>ります 。",
+    "romaji": "ame ga futte iru node, ekiまで takushii ni norimasu.",
+    "french": "Il pleut, alors je prends un **taxi** pour aller à la gare.",
+    "highlight": ["タクシー", "takushii"]
+  }
+},
+{
+  "id": "n5_v_148",
+  "level": "N5",
+  "word": "バス",
+  "word_furigana": "バス",
+  "reading": "ばす",
+  "romaji": "basu",
+  "meanings": {
+    "primary": "Bus",
+    "secondary": ["Autobus", "Autocar"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'bus', désignant un autobus pour les déplacements urbains ou interurbains.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、<ruby>会社<rt>かいしゃ</rt></ruby> まで バス で <ruby>通<rt>かよ</rt></ruby>っています 。",
+    "romaji": "maiasa, kaisha made basu de kayotteimasu.",
+    "french": "Tous les matins, je me rends à l'entreprise en **bus**.",
+    "highlight": ["バス", "basu"]
+  }
+},
+{
+  "id": "n5_v_149",
+  "level": "N5",
+  "word": "乗る",
+  "word_furigana": "<ruby>乗<rt>の</rt></ruby>る",
+  "reading": "のる",
+  "romaji": "noru",
+  "meanings": {
+    "primary": "Monter dans",
+    "secondary": ["Prendre (un moyen de transport)", "Embarquer"]
+  },
+  "nuance": "Verbe godan intransitif (utilisé avec la particule に) désignant l'action de monter à bord d'un véhicule (train, bus, voiture, etc.).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "transports",
+  "kanji_list": ["乗"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "<ruby>明日<rt>あした</rt></ruby> の <ruby>朝<rt>あさ</rt></ruby> 、<ruby>新幹線<rt>しんかんせん</rt></ruby> に <ruby>乗<rt>の</rt></ruby>ります 。",
+    "romaji": "ashita no asa, shinkansen ni norimasu.",
+    "french": "Demain matin, je **monte dans** le Shinkansen.",
+    "highlight": ["乗ります", "norimasu"]
+  }
+},
+{
+  "id": "n5_v_150",
+  "level": "N5",
+  "word": "出かける",
+  "word_furigana": "<ruby>出<rt>で</rt></ruby>かける",
+  "reading": "でかける",
+  "romaji": "dekakeru",
+  "meanings": {
+    "primary": "Sortir",
+    "secondary": ["Partir (de chez soi)", "Quitter la maison pour une sortie"]
+  },
+  "nuance": "Verbe ichidan intransitif désignant l'action de quitter son domicile pour aller quelque part (pour affaires, loisirs, courses, etc.).",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "transports",
+  "kanji_list": ["出"],
+  "particles": ["に", "へ"],
+  "example": {
+    "japanese": "<ruby>週末<rt>しゅうまつ</rt></ruby> に <ruby>友達<rt>ともだち</rt></ruby> と <ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby> に <ruby>出<rt>で</rt></ruby>かけます 。",
+    "romaji": "shuumatsu ni tomodachi to kaimono ni dekakemasu.",
+    "french": "Je **sors** faire des courses avec un ami ce week-end.",
+    "highlight": ["出かけます", "dekakemasu"]
+  }
+},
+{
+  "id": "n5_v_151",
+  "level": "N5",
+  "word": "地下鉄",
+  "word_furigana": "<ruby>地<rt>ち</rt></ruby><ruby>下<rt>か</rt></ruby><ruby>鉄<rt>てつ</rt></ruby>",
+  "reading": "ちかてつ",
+  "romaji": "chikatetsu",
+  "meanings": {
+    "primary": "Métro",
+    "secondary": ["Chemin de fer souterrain"]
+  },
+  "nuance": "Nom composé de 地 (terre/sol), 下 (dessous) et 鉄 (fer/métal), désignant le réseau ou une rame de métro souterrain.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["地", "下", "鉄"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>東京<rt>とうきょう</rt></ruby> の <ruby>地下鉄<rt>ちかてつ</rt></ruby> は とても <ruby>便利<rt>べんり</rt></ruby> です 。",
+    "romaji": "toukyou no chikatetsu wa totemo benri desu.",
+    "french": "Le **métro** de Tokyo est très pratique.",
+    "highlight": ["地下鉄", "chikatetsu"]
+  }
+},
+{
+  "id": "n5_v_152",
+  "level": "N5",
+  "word": "来る",
+  "word_furigana": "<ruby>来<rt>く</rt></ruby>る",
+  "reading": "くる",
+  "romaji": "kuru",
+  "meanings": {
+    "primary": "Venir",
+    "secondary": ["Arriver", "Se rendre vers (le locuteur)"]
+  },
+  "nuance": "Verbe irrégulier fondamental exprimant un mouvement vers l'endroit où se trouve le locuteur. C'est l'un des verbes de déplacement les plus importants avec 行く (aller).",
+  "type": "verbe irrégulier",
+  "group": "irrégulier",
+  "category": "transports",
+  "kanji_list": ["来"],
+  "particles": ["に", "へ", "を"],
+  "example": {
+    "japanese": "<ruby>明日<rt>あした</rt></ruby> 、<ruby>私<rt>わたし</rt></ruby> の <ruby>家<rt>いえ</rt></ruby> に <ruby>友達<rt>ともだち</rt></ruby> が <ruby>来<rt>き</rt></ruby>ます 。",
+    "romaji": "ashita, watashi no ie ni tomodachi ga kimasu.",
+    "french": "Demain, un ami **vient** chez moi.",
+    "highlight": ["来ます", "kimasu"]
+  }
+},
+{
+  "id": "n5_v_153",
+  "level": "N5",
+  "word": "生まれる",
+  "word_furigana": "<ruby>生<rt>う</rt></ruby>まれる",
+  "reading": "うまれる",
+  "romaji": "umareru",
+  "meanings": {
+    "primary": "Naître",
+    "secondary": ["Venir au monde"]
+  },
+  "nuance": "Verbe ichidan intransitif désignant l'action de naître ou d'être mis au monde.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "transports",
+  "kanji_list": ["生"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "わたし は <ruby>東京<rt>とうきょう</rt></ruby> で <ruby>生<rt>う</rt></ruby>まれました 。",
+    "romaji": "watashi wa toukyou de umaremashita.",
+    "french": "Je suis **né** à Tokyo.",
+    "highlight": ["生まれました", "umaremashita"]
+  }
+},
+{
+  "id": "n5_v_154",
+  "level": "N5",
+  "word": "自動車",
+  "word_furigana": "<ruby>自<rt>じ</rt></ruby><ruby>動<rt>どう</rt></ruby><ruby>車<rt>しゃ</rt></ruby>",
+  "reading": "じどうしゃ",
+  "romaji": "jidousha",
+  "meanings": {
+    "primary": "Automobile",
+    "secondary": ["Voiture", "Véhicule automobile"]
+  },
+  "nuance": "Nom composé de 自 (soi-même), 動 (bouger) et 車 (véhicule/roue), désignant une automobile (plus formel que le mot en katakana クルマ ou 車).",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["自", "動", "車"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>父<rt>ちち</rt></ruby> は <ruby>新<rt>あたら</rt></ruby>しい <ruby>自動車<rt>じどうしゃ</rt></ruby> を <ruby>買<rt>か</rt></ruby>いました 。",
+    "romaji": "chichi wa atarashii jidousha o kaimashita.",
+    "french": "Mon père a acheté une nouvelle **automobile**.",
+    "highlight": ["自動車", "jidousha"]
+  }
+},
+{
+  "id": "n5_v_155",
+  "level": "N5",
+  "word": "自転車",
+  "word_furigana": "<ruby>自<rt>じ</rt></ruby><ruby>転<rt>てん</rt></ruby><ruby>車<rt>しゃ</rt></ruby>",
+  "reading": "じてんしゃ",
+  "romaji": "jitensha",
+  "meanings": {
+    "primary": "Vélo",
+    "secondary": ["Bicyclette"]
+  },
+  "nuance": "Nom composé de 自 (soi-même), 転 (rouler/tourner) et 車 (véhicule/roue), désignant une bicyclette.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["自", "転", "車"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> <ruby>自転車<rt>じてんしゃ</rt></ruby> で <ruby>学校<rt>がっこう</rt></ruby> へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "mainichi jitensha de gakkou e ikimasu.",
+    "french": "Je vais à l'école en **vélo** tous les jours.",
+    "highlight": ["自転車", "jitensha"]
+  }
+},
+{
+  "id": "n5_v_156",
+  "level": "N5",
+  "word": "行く",
+  "word_furigana": "<ruby>行<rt>い</rt></ruby>く",
+  "reading": "いく",
+  "romaji": "iku",
+  "meanings": {
+    "primary": "Aller",
+    "secondary": ["Se rendre", "Partir vers"]
+  },
+  "nuance": "Verbe godan intransitif fondamental exprimant un mouvement du locuteur vers un autre lieu (souvent utilisé avec les particules に, へ ou まで).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "transports",
+  "kanji_list": ["行"],
+  "particles": ["に", "へ", "まで"],
+  "example": {
+    "japanese": "<ruby>来週<rt>らいしゅう</rt></ruby> 、<ruby>京都<rt>きょうと</rt></ruby> へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "raishuu, kyouto e ikimasu.",
+    "french": "La semaine prochaine, je vais **aller** à Kyoto.",
+    "highlight": ["行きます", "ikimasu"]
+  }
+},
+{
+  "id": "n5_v_157",
+  "level": "N5",
+  "word": "走る",
+  "word_furigana": "<ruby>走<rt>はし</rt></ruby>る",
+  "reading": "はしる",
+  "romaji": "hashiru",
+  "meanings": {
+    "primary": "Courir",
+    "secondary": ["Galoper", "Rouler (pour un véhicule)"]
+  },
+  "nuance": "Verbe godan intransitif désignant l'action de courir (à pied) ou de circuler rapidement (pour une voiture, un train).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "transports",
+  "kanji_list": ["走"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> 、<ruby>公園<rt>こうえん</rt></ruby> を <ruby>走<rt>はし</rt></ruby>ります 。",
+    "romaji": "asa, kouen o hashirimasu.",
+    "french": "Le matin, je **cours** dans le parc.",
+    "highlight": ["走ります", "hashirimasu"]
+  }
+},
+{
+  "id": "n5_v_158",
+  "level": "N5",
+  "word": "車",
+  "word_furigana": "<ruby>車<rt>くるま</rt></ruby>",
+  "reading": "くるま",
+  "romaji": "kuruma",
+  "meanings": {
+    "primary": "Voiture",
+    "secondary": ["Véhicule", "Roue"]
+  },
+  "nuance": "Nom courant désignant une voiture ou un véhicule (plus familier et usuel que 自動車 - jidousha).",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["車"],
+  "particles": [],
+  "example": {
+    "japanese": "わたしたち は <ruby>車<rt>くるま</rt></ruby> で <ruby>旅行<rt>りょこう</rt></ruby> に <ruby>出<rt>で</rt></ruby>かけます 。",
+    "romaji": "watatachi wa kuruma de ryokou ni dekakemasu.",
+    "french": "Nous **sortons** en voyage en voiture.",
+    "highlight": ["車", "kuruma"]
+  }
+},
+{
+  "id": "n5_v_159",
+  "level": "N5",
+  "word": "電車",
+  "word_furigana": "<ruby>電<rt>でん</rt></ruby><ruby>車<rt>しゃ</rt></ruby>",
+  "reading": "でんしゃ",
+  "romaji": "densha",
+  "meanings": {
+    "primary": "Train électrique",
+    "secondary": ["Train", "Tramway"]
+  },
+  "nuance": "Nom composé de 電 (électricité) et 車 (véhicule/roue), désignant spécifiquement un train électrique, moyen de transport ferroviaire omniprésent au Japon.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["電", "車"],
+  "particles": [],
+  "example": {
+    "japanese": "まいにち <ruby>電車<rt>でんしゃ</rt></ruby> で <ruby>会社<rt>かいしゃ</rt></ruby> へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "mainichi densha de kaisha e ikimasu.",
+    "french": "Je vais à l'entreprise en **train** tous les jours.",
+    "highlight": ["電車", "densha"]
+  }
+},
+{
+  "id": "n5_v_160",
+  "level": "N5",
+  "word": "飛ぶ",
+  "word_furigana": "<ruby>飛<rt>と</rt></ruby>ぶ",
+  "reading": "とぶ",
+  "romaji": "tobu",
+  "meanings": {
+    "primary": "Voler",
+    "secondary": ["Sauter", "Bondir"]
+  },
+  "nuance": "Verbe godan intransitif désignant l'action de voler dans les airs (pour un oiseau, un avion) ou de sauter/bondir.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "transports",
+  "kanji_list": ["飛"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>空<rt>そら</rt></ruby> に <ruby>鳥<rt>とり</rt></ruby> が <ruby>飛<rt>と</rt></ruby>んで います 。",
+    "romaji": "sora ni tori ga tonde imasu.",
+    "french": "Un oiseau **vole** dans le ciel.",
+    "highlight": ["飛んで", "tonde"]
+  }
+},
+{
+  "id": "n5_v_161",
+  "level": "N5",
+  "word": "飛行機",
+  "word_furigana": "<ruby>飛<rt>ひ</rt></ruby><ruby>行<rt>こう</rt></ruby><ruby>機<rt>き</rt></ruby>",
+  "reading": "ひこうき",
+  "romaji": "hikouki",
+  "meanings": {
+    "primary": "Avion",
+    "secondary": ["Aéronef"]
+  },
+  "nuance": "Nom composé de 飛 (voler), 行 (aller) et 機 (machine/appareil), désignant un avion pour les voyages aériens nationaux ou internationaux.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["飛", "行", "機"],
+  "particles": [],
+  "example": {
+    "japanese": "らいしゅう 、<ruby>飛行機<rt>ひこうき</rt></ruby> で フランス へ <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "raishuu, hikouki de furansu e ikimasu.",
+    "french": "La semaine prochaine, je vais en France en **avion**.",
+    "highlight": ["飛行機", "hikouki"]
+  }
+},
+{
+  "id": "n5_v_162",
+  "level": "N5",
+  "word": "駅",
+  "word_furigana": "<ruby>駅<rt>えき</rt></ruby>",
+  "reading": "えき",
+  "romaji": "eki",
+  "meanings": {
+    "primary": "Gare",
+    "secondary": ["Station (de train, de métro)"]
+  },
+  "nuance": "Nom désignant une gare ferroviaire ou une station de métro. C'est un point de repère essentiel dans les déplacements urbains et interurbains au Japon.",
+  "type": "nom",
+  "group": "nom",
+  "category": "transports",
+  "kanji_list": ["駅"],
+  "particles": [],
+  "example": {
+    "japanese": "わたし は <ruby>毎朝<rt>まいあさ</rt></ruby> <ruby>自転車<rt>じてんしゃ</rt></ruby> で <ruby>駅<rt>えき</rt></ruby> まで <ruby>行<rt>い</rt></ruby>きます 。",
+    "romaji": "watashi wa maiasa jitensha de eki made ikimasu.",
+    "french": "Je vais à la **gare** à vélo tous les matins.",
+    "highlight": ["駅", "eki"]
+  }
+},
+{
+  "id": "n5_v_163",
+  "level": "N5",
+  "word": "かかる",
+  "word_furigana": "かかる",
+  "reading": "かかる",
+  "romaji": "kakaru",
+  "meanings": {
+    "primary": "Prendre (du temps ou de l'argent)",
+    "secondary": ["Coûter", "Prendre du temps"]
+  },
+  "nuance": "Verbe godan intransitif très courant utilisé pour indiquer qu'une durée de temps est nécessaire ou qu'une somme d'argent est requise (ex : 1時間かかる, cela prend 1 heure).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "communication",
+  "kanji_list": [],
+  "particles": ["に"],
+  "example": {
+    "japanese": "うち から <ruby>会社<rt>かいしゃ</rt></ruby> まで 1<ruby>時間<rt>じかん</rt></ruby> <ruby>掛<rt>か</rt></ruby>かります 。",
+    "romaji": "uchi kara kaisha maden ichijikan kakarimasu.",
+    "french": "Il **faut** une heure de chez moi jusqu'à l'entreprise.",
+    "highlight": ["かかります", "kakarimasu"]
+  }
+},
+{
+  "id": "n5_v_164",
+  "level": "N5",
+  "word": "かける",
+  "word_furigana": "かける",
+  "reading": "かける",
+  "romaji": "kakeru",
+  "meanings": {
+    "primary": "Téléphoner",
+    "secondary": ["Passer un appel", "Mettre (des lunettes)", "Accrocher"]
+  },
+  "nuance": "Verbe ichidan transitif aux multiples sens. Dans le contexte de la communication, il est associé au téléphone (電話をかける) pour signifier passer un appel.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "communication",
+  "kanji_list": [],
+  "particles": ["を", "に"],
+  "example": {
+    "japanese": "<ruby>母<rt>はは</rt></ruby> に <ruby>電話<rt>でんわ</rt></ruby> を かけます 。",
+    "romaji": "haha ni denwa o kakemasu.",
+    "french": "Je **téléphone** à ma mère.",
+    "highlight": ["かけます", "kakemasu"]
+  }
+},
+{
+  "id": "n5_v_165",
+  "level": "N5",
+  "word": "カメラ",
+  "word_furigana": "カメラ",
+  "reading": "かめら",
+  "romaji": "kamera",
+  "meanings": {
+    "primary": "Appareil photo",
+    "secondary": ["Caméra"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'camera', désignant un appareil photographique ou une caméra numérique.",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>旅行<rt>りょこう</rt></ruby> で <ruby>新<rt>あたら</rt></ruby>しい カメラ で <ruby>写真<rt>しゃしん</rt></ruby> を <ruby>撮<rt>と</rt></ruby>ります 。",
+    "romaji": "ryokou de atarashii kamera de shashin o torimasu.",
+    "french": "Je prends des photos avec un nouvel **appareil photo** pendant le voyage.",
+    "highlight": ["カメラ", "kamera"]
+  }
+},
+{
+  "id": "n5_v_166",
+  "level": "N5",
+  "word": "ニュース",
+  "word_furigana": "ニュース",
+  "reading": "にゅーす",
+  "romaji": "nyuusu",
+  "meanings": {
+    "primary": "Informations",
+    "secondary": ["Journal télévisé", "Nouvelles (TV/Radio)"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'news', désignant les informations, le journal télévisé ou les actualités diffusées dans les médias.",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby> 、テレビ で ニュース を <ruby>見<rt>み</rt></ruby>ます 。",
+    "romaji": "maiasa, terebi de nyuusu o mimasu.",
+    "french": "Tous les matins, je regarde les **informations** à la télévision.",
+    "highlight": ["ニュース", "nyuusu"]
+  }
+},
+{
+  "id": "n5_v_167",
+  "level": "N5",
+  "word": "フィルム",
+  "word_furigana": "フィルム",
+  "reading": "ふぃるむ",
+  "romaji": "firumu",
+  "meanings": {
+    "primary": "Film",
+    "secondary": ["Pellicule photographique"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'film', désignant à l'origine la pellicule photographique (bien qu'il puisse parfois faire référence à un film cinématographique, le terme 映画 - eiga est plus courant pour le cinéma).",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "カメラ に フィルム を <ruby>入<rt>い</rt></ruby>れます 。",
+    "romaji": "kamera ni firumu o iremasu.",
+    "french": "Je mets la **pellicule** dans l'appareil photo.",
+    "highlight": ["フィルム", "firumu"]
+  }
+},
+{
+  "id": "n5_v_168",
+  "level": "N5",
+  "word": "写真",
+  "word_furigana": "<ruby>写<rt>しゃ</rt></ruby><ruby>真<rt>しん</rt></ruby>",
+  "reading": "しゃしん",
+  "romaji": "shashin",
+  "meanings": {
+    "primary": "Photo",
+    "secondary": ["Photographie", "Cliché"]
+  },
+  "nuance": "Nom composé de 写 (copier/reproduire) et 真 (vérité/réel), désignant une photographie.",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": ["写", "真"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう <ruby>撮<rt>と</rt></ruby>った <ruby>写真<rt>しゃしん</rt></ruby> を <ruby>友達<rt>ともだち</rt></ruby> に <ruby>見<rt>み</rt></ruby>せます 。",
+    "romaji": "kyou totta shashin o tomodachi ni misemasu.",
+    "french": "Je montre la **photo** prise aujourd'hui à mon ami.",
+    "highlight": ["写真", "shashin"]
+  }
+},
+{
+  "id": "n5_v_169",
+  "level": "N5",
+  "word": "呼ぶ",
+  "word_furigana": "<ruby>呼<rt>よ</rt></ruby>ぶ",
+  "reading": "よぶ",
+  "romaji": "yobu",
+  "meanings": {
+    "primary": "Appeler",
+    "secondary": ["Inviter", "Crier pour faire venir"]
+  },
+  "nuance": "Verbe godan transitif désignant l'action d'appeler quelqu'un à voix haute, de l'inviter (à un événement, chez soi) ou de le nommer.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "communication",
+  "kanji_list": ["呼"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>部屋<rt>へや</rt></ruby> の <ruby>中<rt>なか</rt></ruby> から <ruby>友達<rt>ともだち</rt></ruby> を <ruby>呼<rt>よ</rt></ruby>びます 。",
+    "romaji": "heya no naka kara tomodachi o yobimasu.",
+    "french": "J'**appelle** mon ami depuis l'intérieur de la pièce.",
+    "highlight": ["呼びます", "yobimasu"]
+  }
+},
+{
+  "id": "n5_v_170",
+  "level": "N5",
+  "word": "字",
+  "word_furigana": "<ruby>字<rt>じ</rt></ruby>",
+  "reading": "じ",
+  "romaji": "ji",
+  "meanings": {
+    "primary": "Caractère",
+    "secondary": ["Lettre", "Caractère d'écriture", "Kanji"]
+  },
+  "nuance": "Nom désignant un caractère écrit, une lettre de l'alphabet ou un kanji (souvent utilisé en suffixe comme 漢字 - kanji, ou 読み方 - yomikata / kanji).",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": ["字"],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>漢字<rt>かんじ</rt></ruby> は <ruby>字<rt>じ</rt></ruby> が <ruby>大<rt>おお</rt></ruby>きくて <ruby>読<rt>よ</rt></ruby>みやすい です 。",
+    "romaji": "kono kanji wa ji ga ookikute yomiyasui desu.",
+    "french": "Ce kanji a de grands **caractères** et est facile à lire.",
+    "highlight": ["字", "ji"]
+  }
+},
+{
+  "id": "n5_v_171",
+  "level": "N5",
+  "word": "撮る",
+  "word_furigana": "<ruby>撮<rt>と</rt></ruby>る",
+  "reading": "とる",
+  "romaji": "toru",
+  "meanings": {
+    "primary": "Prendre (une photo)",
+    "secondary": ["Filmer"]
+  },
+  "nuance": "Verbe godan transitif désignant spécifiquement l'action de prendre une photographie ou de filmer une vidéo (à distinguer de 取る - prendre au sens général, ou 採る - cueillir/adopter).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "communication",
+  "kanji_list": ["撮"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> で <ruby>花<rt>はな</rt></ruby> の <ruby>写真<rt>しゃしん</rt></ruby> を <ruby>撮<rt>と</rt></ruby>ります 。",
+    "romaji": "kouen de hana no shashin o torimasu.",
+    "french": "Je **prends** une photo des fleurs dans le parc.",
+    "highlight": ["撮ります", "torimasu"]
+  }
+},
+{
+  "id": "n5_v_172",
+  "level": "N5",
+  "word": "新聞",
+  "word_furigana": "<ruby>新<rt>しん</rt></ruby><ruby>聞<rt>ぶん</rt></ruby>",
+  "reading": "しんぶん",
+  "romaji": "shinbun",
+  "meanings": {
+    "primary": "Journal",
+    "secondary": ["Journal d'actualités", "Quotidien"]
+  },
+  "nuance": "Nom composé de 新 (nouveau) et 聞 (entendre/nouvelles), désignant le journal d'information imprimé ou numérique.",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": ["新", "聞"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>朝<rt>あさ</rt></ruby> ごはん を <ruby>食<rt>た</rt></ruby>べながら <ruby>新聞<rt>しんぶん</rt></ruby> を <ruby>読<rt>よ</rt></ruby>みます 。",
+    "romaji": "asa gohan o tabenagara shinbun o yomimasu.",
+    "french": "Je lis le **journal** en prenant mon petit-déjeuner.",
+    "highlight": ["新聞", "shinbun"]
+  }
+},
+{
+  "id": "n5_v_173",
+  "level": "N5",
+  "word": "番号",
+  "word_furigana": "<ruby>番<rt>ばん</rt></ruby><ruby>号<rt>ごう</rt></ruby>",
+  "reading": "ばんごう",
+  "romaji": "bangou",
+  "meanings": {
+    "primary": "Numéro",
+    "secondary": ["Chiffre", "Numéro d'identification ou de téléphone"]
+  },
+  "nuance": "Nom composé de 番 (tour/ordre) et 号 (nombre/désignation), utilisé pour désigner un numéro d'appel, un numéro de chambre, ou un chiffre attribué.",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": ["番", "号"],
+  "particles": [],
+  "example": {
+    "japanese": "すみませんが 、あなたの <ruby>電話<rt>でんわ</rt></ruby> **<ruby>番号<rt>ばんごう</rt></ruby>** を <ruby>教<rt>おし</rt></ruby>えて ください 。",
+    "romaji": "sumimasen ga, anata no denwa bangou o oshiete kudasai.",
+    "french": "Excusez-moi, pourriez-vous m'indiquer votre **numéro** de téléphone ?",
+    "highlight": ["番号", "bangou"]
+  }
+},
+{
+  "id": "n5_v_174",
+  "level": "N5",
+  "word": "答える",
+  "word_furigana": "<ruby>答<rt>こた</rt></ruby>える",
+  "reading": "こたえる",
+  "romaji": "kotaeru",
+  "meanings": {
+    "primary": "Répondre",
+    "secondary": ["Donner une réponse (à une question)"]
+  },
+  "nuance": "Verbe ichidan intransitif ou transitif désignant l'action de répondre à une question, un test ou une interpellation (souvent employé avec la particule に).",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "communication",
+  "kanji_list": ["答"],
+  "particles": ["に"],
+  "example": {
+    "japanese": "<ruby>先生<rt>せんせい</rt></ruby> の <ruby>質問<rt>しつもん</rt></ruby> に <ruby>日本語<rt>にほんご</rt></ruby> で <ruby>答<rt>こた</rt></ruby>えます 。",
+    "romaji": "sensei no shitsumon ni nihongo de kotaemasu.",
+    "french": "Je **réponds** à la question du professeur en japonais.",
+    "highlight": ["答えます", "kotaemasu"]
+  }
+},
+{
+  "id": "n5_v_175",
+  "level": "N5",
+  "word": "聞く",
+  "word_furigana": "<ruby>聞<rt>き</rt></ruby>く",
+  "reading": "きく",
+  "romaji": "kiku",
+  "meanings": {
+    "primary": "Écouter",
+    "secondary": ["Entendre", "Demander (une question ou une information)"]
+  },
+  "nuance": "Verbe godan transitif aux sens multiples, désignant l'action d'écouter un son, d'entendre quelque chose, ou de s'informer/poser une question à quelqu'un.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "communication",
+  "kanji_list": ["聞"],
+  "particles": ["を", "に"],
+  "example": {
+    "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> <ruby>朝<rt>あさ</rt></ruby> ラジオ の <ruby>音楽<rt>おんがく</rt></persos> を **<ruby>聞<rt>き</rt></ruby>きます** 。",
+    "romaji": "mainichi asa rajio no ongaku o kikimasu.",
+    "french": "J'**écoute** de la musique à la radio tous les matins.",
+    "highlight": ["聞きます", "kikimasu"]
+  }
+},
+{
+  "id": "n5_v_176",
+  "level": "N5",
+  "word": "言う",
+  "word_furigana": "<ruby>言<rt>い</rt></ruby>う",
+  "reading": "いう",
+  "romaji": "iu",
+  "meanings": {
+    "primary": "Dire",
+    "secondary": ["Exprimer", "Nommer", "Prononcer"]
+  },
+  "nuance": "Verbe godan transitif fondamental désignant l'action de formuler des paroles, de dire quelque chose ou de nommer un objet.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "communication",
+  "kanji_list": ["言"],
+  "particles": ["と", "を"],
+  "example": {
+    "japanese": "かれ は <ruby>大切<rt>たいせつ</rt></ruby> な こと を **<ruby>言<rt>い</rt></ruby>いました** 。",
+    "romaji": "kare wa taisetsu na koto o imashita.",
+    "french": "Il a **dit** une chose importante.",
+    "highlight": ["言いました", "imashita"]
+  }
+},
+{
+  "id": "n5_v_177",
+  "level": "N5",
+  "word": "話す",
+  "word_furigana": "<ruby>話<rt>はな</rt></ruby>す",
+  "reading": "はなす",
+  "romaji": "hanasu",
+  "meanings": {
+    "primary": "Parler",
+    "secondary": ["Discuter", "S'entretenir", "Raconter"]
+  },
+  "nuance": "Verbe godan transitif/intransitif désignant l'action de s'exprimer oralement, de converser avec quelqu'un ou de parler une langue.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "communication",
+  "kanji_list": ["話"],
+  "particles": ["と", "を", "に"],
+  "example": {
+    "japanese": "ともだち と <ruby>日本語<rt>にほんご</rt></ruby> で **<ruby>話<rt>はな</rt></ruby>します** 。",
+    "romaji": "tomodachi to nihongo de hanashimasu.",
+    "french": "Je **parle** en japonais avec mon ami.",
+    "highlight": ["話します", "hanashimasu"]
+  }
+},
+{
+  "id": "n5_v_178",
+  "level": "N5",
+  "word": "電話",
+  "word_furigana": "<ruby>電<rt>でん</rt></ruby><ruby>話<rt>わ</rt></ruby>",
+  "reading": "でんわ",
+  "romaji": "denwa",
+  "meanings": {
+    "primary": "Téléphone",
+    "secondary": ["Appel téléphonique"]
+  },
+  "nuance": "Nom composé de 電 (électricité) et 話 (parole/discussion), désignant à la fois l'appareil téléphonique et la communication ou l'appel par téléphone.",
+  "type": "nom",
+  "group": "nom",
+  "category": "communication",
+  "kanji_list": ["電", "話"],
+  "particles": [],
+  "example": {
+    "japanese": "すみませんが 、いま <ruby>電話<rt>でんわ</rt></ruby> を つかっています 。",
+    "romaji": "sumimasen ga, ima denwa o tsukatte imasu.",
+    "french": "Excusez-moi, j'utilise le **téléphone** en ce moment.",
+    "highlight": ["電話", "denwa"]
+  }
+},
+{
+  "id": "n5_v_179",
+  "level": "N5",
+  "word": "いくら",
+  "word_furigana": "いくら",
+  "reading": "いくら",
+  "romaji": "ikura",
+  "meanings": {
+    "primary": "Combien",
+    "secondary": ["Quel prix", "Combien ça coûte"]
+  },
+  "nuance": "Pronom interrogatif utilisé pour demander le prix d'un article ou le coût total d'un service.",
+  "type": "adverbe / pronom",
+  "group": "autre",
+  "category": "achats_argent",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "この りんご は <ruby>幾<rt>いく</rt></ruby>ら です か 。",
+    "romaji": "kono ringo wa ikura desu ka.",
+    "french": "Combien **coûtent** ces pommes ?",
+    "highlight": ["いくら", "ikura"]
+  }
+},
+{
+  "id": "n5_v_180",
+  "level": "N5",
+  "word": "お金",
+  "word_furigana": "お<ruby>金<rt>かね</rt></ruby>",
+  "reading": "おかね",
+  "romaji": "okane",
+  "meanings": {
+    "primary": "Argent",
+    "secondary": ["Monnaie", "Fonds"]
+  },
+  "nuance": "Nom précédé du préfixe honorifique お (o-) désignant l'argent ou la monnaie au sens général.",
+  "type": "nom",
+  "group": "nom",
+  "category": "achats_argent",
+  "kanji_list": ["金"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>財布<rt>さいふ</rt></ruby> の <ruby>中<rt>なか</rt></ruby> に お<ruby>金<rt>かね</rt></ruby> が あんまり ありません 。",
+    "romaji": "saifu no naka ni okane ga anmari arimasen.",
+    "french": "Il n'y a pas beaucoup d'**argent** dans mon portefeuille.",
+    "highlight": ["お金", "okane"]
+  }
+},
+{
+  "id": "n5_v_181",
+  "level": "N5",
+  "word": "する",
+  "word_furigana": "する",
+  "reading": "する",
+  "romaji": "suru",
+  "meanings": {
+    "primary": "Faire",
+    "secondary": ["Coûter (pour un prix)", "Valoir"]
+  },
+  "nuance": "Verbe irrégulier fondamental. Dans le contexte des achats et de l'argent, il est fréquemment employé pour indiquer le prix ou la valeur d'un article (ex: 100円する).",
+  "type": "verbe irrégulier",
+  "group": "irrégulier",
+  "category": "achats_argent",
+  "kanji_list": [],
+  "particles": ["を"],
+  "example": {
+    "japanese": "この ノート は 200<ruby>円<rt>えん</rt></ruby> します 。",
+    "romaji": "kono nooto wa nihyaku en shimasu.",
+    "french": "Ce carnet **coûte** 200 yens.",
+    "highlight": ["します", "shimasu"]
+  }
+},
+{
+  "id": "n5_v_182",
+  "level": "N5",
+  "word": "デパート",
+  "word_furigana": "デパート",
+  "reading": "でぱーと",
+  "romaji": "depaato",
+  "meanings": {
+    "primary": "Grand magasin",
+    "secondary": ["Grand magasin à plusieurs étages (department store)"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'department store', désignant un grand magasin traditionnel japonais proposant des vêtements, de la nourriture de luxe et divers produits.",
+  "type": "nom",
+  "group": "nom",
+  "category": "achats_argent",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>日曜日<rt>にちようび</rt></ruby> に デパート で <ruby>服<rt>ふく</rt></ruby> を <ruby>買<rt>か</rt></ruby>います 。",
+    "romaji": "nichiyoubi ni depaato de fuku o kaimasu.",
+    "french": "Dimanche, j'achète des vêtements au **grand magasin**.",
+    "highlight": ["デパート", "depaato"]
+  }
+},
+{
+  "id": "n5_v_183",
+  "level": "N5",
+  "word": "低い",
+  "word_furigana": "<ruby>低<rt>ひく</rt></ruby>い",
+  "reading": "ひくい",
+  "romaji": "hikui",
+  "meanings": {
+    "primary": "Bas",
+    "secondary": ["Peu élevé (en parlant d'une hauteur, d'un prix ou d'une voix)"]
+  },
+  "nuance": "Adjectif en i désignant ce qui est bas en hauteur ou, par extension, ce qui est bas en termes de prix ou de niveau (contraire de 高い - takai).",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "achats_argent",
+  "kanji_list": ["低"],
+  "particles": [],
+  "example": {
+    "japanese": "この デパート の <ruby>品物<rt>しなもの</rt></ruby> の <ruby>値段<rt>ねだん</rt></ruby> は あまり <ruby>低<rt>ひく</rt></ruby>く ありません 。",
+    "romaji": "kono depaato no shinamono no nedan wa amari hikuqu arimasen.",
+    "french": "Les **prix** des articles de ce grand magasin ne sont pas très bas.",
+    "highlight": ["低い", "hikui"]
+  }
+},
+{
+  "id": "n5_v_184",
+  "level": "N5",
+  "word": "売る",
+  "word_furigana": "<ruby>売<rt>う</rt></ruby>る",
+  "reading": "うる",
+  "romaji": "uru",
+  "meanings": {
+    "primary": "Vendre",
+    "secondary": ["Proposer à la vente"]
+  },
+  "nuance": "Verbe godan transitif désignant l'action de vendre un bien ou un produit (contraire de 買う - kau).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "achats_argent",
+  "kanji_list": ["売"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "あの <ruby>店<rt>みせ</rt></ruby> で は いろいろな お<ruby>土産<rt>みやげ</rt></ruby> を **<ruby>売<rt>う</rt></ruby>って** います 。",
+    "romaji": "ano mise de wa iroirona omiyage o utte imasu.",
+    "french": "Dans ce magasin, ils **vendent** diverses spécialités souvenirs.",
+    "highlight": ["売って", "utte"]
+  }
+},
+{
+  "id": "n5_v_185",
+  "level": "N5",
+  "word": "安い",
+  "word_furigana": "<ruby>安<rt>やす</rt></ruby>い",
+  "reading": "やすい",
+  "romaji": "yasui",
+  "meanings": {
+    "primary": "Bon marché",
+    "secondary": ["Peu coûteux", "Pas cher"]
+  },
+  "nuance": "Adjectif en i désignant un prix bas ou abordable (contraire de 高い - takai).",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "achats_argent",
+  "kanji_list": ["安"],
+  "particles": [],
+  "example": {
+    "japanese": "この スーパー の <ruby>野菜<rt>やさい</rt></ruby> は とても **<ruby>安<rt>やす</rt></ruby>い** です 。",
+    "romaji": "kono suupaa no yasai wa totemo yasui desu.",
+    "french": "Les légumes de ce supermarché sont très **bon marché**.",
+    "highlight": ["安い", "yasui"]
+  }
+},
+{
+  "id": "n5_v_186",
+  "level": "N5",
+  "word": "店",
+  "word_furigana": "<ruby>店<rt>みせ</rt></ruby>",
+  "reading": "みせ",
+  "romaji": "mise",
+  "meanings": {
+    "primary": "Magasin",
+    "secondary": ["Boutique", "Établissement commercial", "Restaurant (parfois)"]
+  },
+  "nuance": "Nom désignant un commerce, une boutique ou un magasin de vente au détail.",
+  "type": "nom",
+  "group": "nom",
+  "category": "achats_argent",
+  "kanji_list": ["店"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>駅<rt>えき</rt></ruby> の <ruby>近<rt>ちか</rt></ruby>く に <ruby>新<rt>あたら</rt></ruby>しい **<ruby>店<rt>みせ</rt></ruby>** ができました 。",
+    "romaji": "eki no chikaku ni atarashii mise gaできました.",
+    "french": "Un nouveau **magasin** a ouvert près de la gare.",
+    "highlight": ["店", "mise"]
+  }
+},
+{
+  "id": "n5_v_187",
+  "level": "N5",
+  "word": "買う",
+  "word_furigana": "<ruby>買<rt>か</rt></ruby>う",
+  "reading": "かう",
+  "romaji": "kau",
+  "meanings": {
+    "primary": "Acheter",
+    "secondary": ["Se procurer (en payant)"]
+  },
+  "nuance": "Verbe godan transitif désignant l'action d'acquérir un objet en l'achetant (contraire de 売る - uru).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "achats_argent",
+  "kanji_list": ["買"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "デパート で <ruby>新<rt>あたら</rt></ruby>しい <ruby>靴<rt>くつ</rt></ruby> を **<ruby>買<rt>か</rt></ruby>いました** 。",
+    "romaji": "depaato de atarashii kutsu o kaimashita.",
+    "french": "J'ai **acheté** de nouvelles chaussures au grand magasin.",
+    "highlight": ["買いました", "kaimashita"]
+  }
+},
+{
+  "id": "n5_v_188",
+  "level": "N5",
+  "word": "高い",
+  "word_furigana": "<ruby>高<rt>たか</rt></ruby>い",
+  "reading": "たかい",
+  "romaji": "takai",
+  "meanings": {
+    "primary": "Haut",
+    "secondary": ["Cher (coûteux)", "Élevé"]
+  },
+  "nuance": "Adjectif en i aux doubles sens principaux : désignant ce qui est élevé en hauteur (une montagne, un bâtiment) ou ce qui coûte cher en parlant du prix (contraire de 安い - yasui).",
+  "type": "adjectif en i",
+  "group": "i",
+  "category": "achats_argent",
+  "kanji_list": ["高"],
+  "particles": [],
+  "example": {
+    "japanese": "この <ruby>時計<rt>とけい</rt></ruby> は とても **<ruby>高<rt>たか</rt></ruby>い** です 。",
+    "romaji": "kono tokei wa totemo takai desu.",
+    "french": "Cette montre est très **chère**.",
+    "highlight": ["高い", "takai"]
+  }
+},
+{
+  "id": "n5_v_189",
+  "level": "N5",
+  "word": "ギター",
+  "word_furigana": "ギター",
+  "reading": "ぎたー",
+  "romaji": "gitaa",
+  "meanings": {
+    "primary": "Guitare",
+    "secondary": ["Guitare acoustique ou électrique"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'guitar', désignant l'instrument de musique.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "まいにち <ruby>部屋<rt>へや</rt></ruby> で **ギター** を <ruby>弾<rt>ひ</rt></ruby>きます 。",
+    "romaji": "mainichi heya de gitaa o hikimasu.",
+    "french": "Je joue de la **guitare** dans ma chambre tous les jours.",
+    "highlight": ["ギター", "gitaa"]
+  }
+},
+{
+  "id": "n5_v_190",
+  "level": "N5",
+  "word": "スポーツ",
+  "word_furigana": "スポーツ",
+  "reading": "すぷーつ",
+  "romaji": "supootsu",
+  "meanings": {
+    "primary": "Sport",
+    "secondary": ["Activité sportive", "Exercice physique"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'sports', désignant toute discipline ou activité sportive.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "しゅうまつ に <ruby>公園<rt>こうえん</rt></ruby> で **スポーツ** を します 。",
+    "romaji": "shuumatsu ni kouen de supootsu o shimasu.",
+    "french": "Je fais du **sport** au parc le week-end.",
+    "highlight": ["スポーツ", "supootsu"]
+  }
+},
+{
+  "id": "n5_v_191",
+  "level": "N5",
+  "word": "マッチ",
+  "word_furigana": "マッチ",
+  "reading": "まっち",
+  "romaji": "macchi",
+  "meanings": {
+    "primary": "Allumette",
+    "secondary": ["Match (compétition sportive - bien que 試合 - shiai soit plus courant pour une compétition)"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais 'match', désignant principalement une allumette pour allumer le feu, ou parfois une rencontre/match selon le contexte.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "**マッチ** で キャンプ の たきび に ひ を つけます 。",
+    "romaji": "macchi de kyanpu no takibi ni hi o tsukemasu.",
+    "french": "J'allume le feu de camp avec une **allumette**.",
+    "highlight": ["マッチ", "macchi"]
+  }
+},
+{
+  "id": "n5_v_192",
+  "level": "N5",
+  "word": "弾く",
+  "word_furigana": "<ruby>弾<rt>ひ</rt></ruby>く",
+  "reading": "ひく",
+  "romaji": "hiku",
+  "meanings": {
+    "primary": "Jouer (d'un instrument à cordes ou à clavier)",
+    "secondary": ["Pincer", "Frapper (les cordes ou touches)"]
+  },
+  "nuance": "Verbe godan transitif utilisé spécifiquement pour jouer d'un instrument de musique qui se pincer, se gratte ou se touche avec un clavier (comme le piano, la guitare, le violon). À ne pas confondre avec 吹く (fukuk - pour les instruments à vent) ou 叩く (tataku - pour les percussions).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "loisirs",
+  "kanji_list": ["弾"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "まいにち ピアノ を **<ruby>弾<rt>ひ</rt></ruby>きます** 。",
+    "romaji": "mainichi piano o hikimasu.",
+    "french": "Je **joue** du piano tous les jours.",
+    "highlight": ["弾きます", "hikimasu"]
+  }
+},
+{
+  "id": "n5_v_193",
+  "level": "N5",
+  "word": "散歩",
+  "word_furigana": "<ruby>散<rt>さん</rt></ruby><ruby>歩<rt>ぽ</rt></ruby>",
+  "reading": "さんぽ",
+  "romaji": "sanpo",
+  "meanings": {
+    "primary": "Promenade",
+    "secondary": ["Marche de détente"]
+  },
+  "nuance": "Nom composé de 散 (épars/se balader) et 歩 (marcher), désignant l'action de se promener. Souvent combiné avec le verbe する (sanpo suru) pour former le verbe correspondant.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": ["散", "歩"],
+  "particles": [],
+  "example": {
+    "japanese": "あさ ごはん の あと で **<ruby>散歩<rt>さんぽ</rt></ruby>** を します 。",
+    "romaji": "asa gohan no ato de sanpo o shimasu.",
+    "french": "Je fais une **promenade** après le petit-déjeuner.",
+    "highlight": ["散歩", "sanpo"]
+  }
+},
+{
+  "id": "n5_v_194",
+  "level": "N5",
+  "word": "散歩する",
+  "word_furigana": "<ruby>散<rt>さん</rt></ruby><ruby>歩<rt>ぽ</rt></ruby>する",
+  "reading": "さんぽする",
+  "romaji": "sanposuru",
+  "meanings": {
+    "primary": "Se promener",
+    "secondary": ["Faire une promenade", "Marcher pour le plaisir"]
+  },
+  "nuance": "Verbe suru (verbe en -suru) formé à partir du nom 散歩 et du verbe auxiliaire する, désignant l'action de se promener ou de flâner.",
+  "type": "verbe suru",
+  "group": "irrégulier",
+  "category": "loisirs",
+  "kanji_list": ["散", "歩"],
+  "particles": ["を", "で"],
+  "example": {
+    "japanese": "きょう は <ruby>天気<rt>てんき</rt></ruby> が いい ので 、<ruby>公園<rt>こうえん</rt></ruby> を **<ruby>散歩<rt>さんぽ</rt></ruby>します** 。",
+    "romaji": "kyou wa tenki ga ii node, kouen o sanposhimasu.",
+    "french": "Il fait beau aujourd'hui, alors je **me promène** dans le parc.",
+    "highlight": ["散歩します", "sanposhimasu"]
+  }
+},
+{
+  "id": "n5_v_195",
+  "level": "N5",
+  "word": "旅行",
+  "word_furigana": "<ruby>旅<rt>りょ</rt></ruby><ruby>行<rt>こう</rt></ruby>",
+  "reading": "りょこう",
+  "romaji": "ryokou",
+  "meanings": {
+    "primary": "Voyage",
+    "secondary": ["Excursion", "Déplacement touristique"]
+  },
+  "nuance": "Nom composé de 旅 (voyage) et 行 (aller), désignant un voyage, qu'il soit de courte ou de longue durée, d'affaires ou d'agrément.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": ["旅", "行"],
+  "particles": [],
+  "example": {
+    "japanese": "らいしゅう 、<ruby>家族<rt>かぞく</rt></ruby> と いっしょ に <ruby>北海道<rt>ほっかいどう</rt></ruby> へ **<ruby>旅行<rt>りょこう</rt></ruby>** に 行きます 。",
+    "romaji": "raishuu, kazoku to issho ni hokkaidou e ryokou ni ikimasu.",
+    "french": "La semaine prochaine, je vais en **voyage** à Hokkaidō avec ma famille.",
+    "highlight": ["旅行", "ryokou"]
+  }
+},
+{
+  "id": "n5_v_196",
+  "level": "N5",
+  "word": "映画",
+  "word_furigana": "<ruby>映<rt>えい</rt></ruby><ruby>画<rt>が</rt></ruby>",
+  "reading": "えいが",
+  "romaji": "eiga",
+  "meanings": {
+    "primary": "Film",
+    "secondary": ["Cinéma", "Œuvre cinématographique"]
+  },
+  "nuance": "Nom composé de 映 (refléter/projeter) et 画 (image/dessin), désignant un film projeté au cinéma ou visionné sur un écran.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": ["映", "画"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の <ruby>夜<rt>よる</rt></ruby> 、<ruby>友達<rt>ともだち</rt></ruby> と **<ruby>映画<rt>えいが</rt></ruby>** を 見ます 。",
+    "romaji": "kyou no yoru, tomodachi to eiga o mimasu.",
+    "french": "Ce soir, je regarde un **film** avec un ami.",
+    "highlight": ["映画", "eiga"]
+  }
+},
+{
+  "id": "n5_v_197",
+  "level": "N5",
+  "word": "歌う",
+  "word_furigana": "<ruby>歌<rt>うた</rt></ruby>う",
+  "reading": "うたう",
+  "romaji": "utau",
+  "meanings": {
+    "primary": "Chanter",
+    "secondary": ["Interpréter une chanson"]
+  },
+  "nuance": "Verbe godan transitif désignant l'action de chanter (souvent utilisé avec le nom 歌 - uta comme objet direct ou en composant avec des activités comme le karaoké).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "loisirs",
+  "kanji_list": ["歌"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "カラオケ で 日本語 の <ruby>歌<rt>うた</rt></ruby> を **<ruby>歌<rt>うた</rt></ruby>います** 。",
+    "romaji": "karaoke de nihongo no uta o utaimasu.",
+    "french": "Je **chante** des chansons japonaises au karaoké.",
+    "highlight": ["歌います", "utaimasu"]
+  }
+},
+{
+  "id": "n5_v_198",
+  "level": "N5",
+  "word": "泳ぐ",
+  "word_furigana": "<ruby>泳<rt>およ</rt></ruby>ぐ",
+  "reading": "およぐ",
+  "romaji": "oyogu",
+  "meanings": {
+    "primary": "Nager",
+    "secondary": ["Se déplacer dans l'eau"]
+  },
+  "nuance": "Verbe godan intransitif désignant l'action de nager (dans une piscine, la mer, une rivière).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "loisirs",
+  "kanji_list": ["泳"],
+  "particles": ["で", "を"],
+  "example": {
+    "japanese": "なつ に うみ で **<ruby>泳<rt>およ</rt></ruby>ぎます** 。",
+    "romaji": "natsu ni umi de oyogimasu.",
+    "french": "Je **nage** dans la mer en été.",
+    "highlight": ["泳ぎます", "oyogimasu"]
+  }
+},
+{
+  "id": "n5_v_199",
+  "level": "N5",
+  "word": "遊ぶ",
+  "word_furigana": "<ruby>遊<rt>あそ</rt></ruby>ぶ",
+  "reading": "あそぶ",
+  "romaji": "asobu",
+  "meanings": {
+    "primary": "Jouer",
+    "secondary": ["S'amuser", "Passer du bon temps", "Sortir pour se divertir"]
+  },
+  "nuance": "Verbe godan intransitif très courant utilisé pour les loisirs, les jeux (entre enfants ou adultes) ou pour désigner le fait de sortir s'amuser avec des amis.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "loisirs",
+  "kanji_list": ["遊"],
+  "particles": ["と", "で"],
+  "example": {
+    "japanese": "しゅうまつ に ともだち と こうえん で **<ruby>遊<rt>あそ</rt></ruby>びます** 。",
+    "romaji": "shuumatsu ni tomodachi to kouen de asobimasu.",
+    "french": "Je **m'amuse** (je joue) avec des amis au parc le week-end.",
+    "highlight": ["遊びます", "asobimasu"]
+  }
+},
+{
+  "id": "n5_v_200",
+  "level": "N5",
+  "word": "音楽",
+  "word_furigana": "<ruby>音<rt>おん</rt></ruby><ruby>楽<rt>がく</rt></ruby>",
+  "reading": "おんがく",
+  "romaji": "ongaku",
+  "meanings": {
+    "primary": "Musique",
+    "secondary": ["Art musical"]
+  },
+  "nuance": "Nom composé de 音 (son) et 楽 (confort/plaisir), désignant la musique au sens général.",
+  "type": "nom",
+  "group": "nom",
+  "category": "loisirs",
+  "kanji_list": ["音", "楽"],
+  "particles": [],
+  "example": {
+    "japanese": "まいにち へや で クラシック の **<ruby>音楽<rt>おんがく</rt></ruby>** を ききます 。",
+    "romaji": "mainichi heya de kurashikku no ongaku o kikimasu.",
+    "french": "J'écoute de la **musique** classique dans ma chambre tous les jours.",
+    "highlight": ["音楽", "ongaku"]
+  }
+}
 ]
