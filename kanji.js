@@ -211,6 +211,7 @@ function startOralTest(kanjiChar) {
 let exemplesDb   = {};
 let jlptMapping  = null;    // Mapping JLPT (chargé depuis data/mapping.json)
 let exemplesByLevel = {};  // {n5: {...}, n4: {...}, ...} — exemples contextualisés
+let exemplesLoadPromises = {}; // évite les doubles fetch en cas d'appels concurrents
 let kanjiDb  = [];
 let kanjiMap = new Map();   // char → index dans kanjiDb  (O(1) lookup)
 let categories = new Map(); // catId → {id, label, color, short, indices[]}
@@ -2380,10 +2381,15 @@ function getPrimaryMeaning(word) {
 // Génère un exercice à trous à partir du MOT lui-même dans sa phrase d'exemple, plutôt que
 // d'exiger une particule précise (l'ancien buildClozeParticle, qui ne se déclenchait presque
 // jamais faute de champ "particles" ET de tokenisation par espaces, rare en japonais naturel).
-// Fonctionne pour tout mot ayant un exemple où il apparaît littéralement.
+// Fonctionne pour tout mot ayant un exemple où il apparaît littéralement. Pioche au hasard
+// parmi l'exemple canonique (word.example) et les exemples supplémentaires éventuels
+// d'exemples.json (exemplesByLevel déjà chargé — aucun fetch synchrone ici).
 function buildVocabWordCloze(word, pool) {
-    const ex = word.example;
-    if (!ex || !ex.japanese) return null;
+    const levelId = (word.level || '').toLowerCase();
+    const extras = getVocabExtraExamples(levelId, word.id);
+    const allExamples = [word.example, ...extras].filter(e => e && e.japanese);
+    if (!allExamples.length) return null;
+    const ex = allExamples[Math.floor(Math.random() * allExamples.length)];
 
     // highlight peut être une chaîne (ancien format) ou [japonais, romaji] (nouveau format) —
     // le second élément, quand fourni, permet de masquer précisément la partie répondue dans la
@@ -2801,12 +2807,20 @@ let grammarReviewSession = null; // { queue: [{lesson,type,clozeInfo}], index, r
 
 // Génère un trou à combler grammaire : utilise example.highlight (déjà la forme exacte présente dans la phrase)
 function buildGrammarCloze(lesson, pool) {
-    const example = Array.isArray(lesson.examples)
-        ? lesson.examples.find(ex => ex.japanese && ex.highlight && ex.japanese.includes(ex.highlight))
-        : null;
-    if (!example) return null;
+    // highlight peut être une string (ancien format) ou un tableau [texte, romaji] (nouveau
+    // format) : on ne travaille jamais qu'avec le texte japonais (index 0) ici.
+    const highlightTarget = (h) => Array.isArray(h) ? h[0] : h;
+
+    // Niveau dérivé de l'id (ex: "n5_g_12" -> "n5") : grammar.json n'a pas de champ level dédié.
+    const levelId = (lesson.id || '').split('_')[0];
+    const extraExamples = getGrammarExtraExamples(levelId, lesson.id);
+    const allExamples = [...(lesson.examples || []), ...extraExamples];
+
+    const usable = allExamples.filter(ex => ex.japanese && ex.highlight && ex.japanese.includes(highlightTarget(ex.highlight)));
+    if (!usable.length) return null;
+    const example = usable[Math.floor(Math.random() * usable.length)];
     
-    const correct = example.highlight;
+    const correct = highlightTarget(example.highlight);
     const sentence = example.japanese;
     const blankStart = sentence.indexOf(correct);
     if (blankStart === -1) return null;
@@ -2816,7 +2830,7 @@ function buildGrammarCloze(lesson, pool) {
         .filter(l => l.id !== lesson.id)
         .map(l => {
             const ex = Array.isArray(l.examples) ? l.examples.find(e => e.highlight) : null;
-            return ex ? ex.highlight : null;
+            return ex ? highlightTarget(ex.highlight) : null;
         })
         .filter(h => h && h !== correct);
     
@@ -3602,45 +3616,27 @@ function showGrammarDetail(lessonId, isBack = false) {
     const badgeText = lesson.badge || 'Leçon';
     const levelLabel = lesson.level || (levelId ? levelId.toUpperCase() : 'N5');
     
-    // Fonction helper pour surligner
+    // Fonction helper pour surligner. highlight peut être une string (ancien format) ou un
+    // tableau [texte, romaji] (nouveau format) : dans ce cas on surligne juste le texte (index 0).
     const highlightText = (text, highlight) => {
-        if (!text || !highlight) return text || '';
+        const target = Array.isArray(highlight) ? highlight[0] : highlight;
+        if (!text || !target) return text || '';
         return text.replace(
-            new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'),
+            new RegExp(`(${target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'),
             '<span class="highlight-grammar">$1</span>'
         );
     };
     
     // mdBold et renderSectionBody sont maintenant des fonctions globales (voir plus haut dans le fichier)
     
-    // Résout les exemples d'une leçon : priorité aux exemples externes (exemples.json, format N4+),
-    // fallback sur lesson.examples embarqué (format N5). Déduit le highlight si absent.
-    const resolveExamples = () => {
-        const externalMap = grammarHomeData?.examples?.grammar;
-        if (externalMap) {
-            const prefix = `${lesson.id}_ex`;
-            const matchedKeys = Object.keys(externalMap)
-                .filter(k => k.startsWith(prefix))
-                .sort((a, b) => (parseInt(a.slice(prefix.length)) || 0) - (parseInt(b.slice(prefix.length)) || 0));
-            
-            if (matchedKeys.length > 0) {
-                const baseItem = (lesson.item || '').replace(/^〜/, '').split(/[\s/]/)[0];
-                return matchedKeys.map(k => {
-                    const ex = externalMap[k];
-                    const japanese = ex.jp || '';
-                    const highlight = baseItem && japanese.includes(baseItem) ? baseItem : '';
-                    return {
-                        japanese,
-                        romaji: ex.ro || '',
-                        french: ex.fr || '',
-                        highlight
-                    };
-                });
-            }
-        }
-        return Array.isArray(lesson.examples) ? lesson.examples : [];
-    };
-    const resolvedExamples = resolveExamples();
+    // Résout les exemples d'une leçon : lesson.examples embarqué + exemples supplémentaires
+    // d'exemples.json (data/{niveau}/exemples.json, clé "grammar", indexés par lesson.id) —
+    // même mécanisme et même format que celui utilisé par le quiz (buildGrammarCloze).
+    const levelIdForExamples = (lesson.id || '').split('_')[0];
+    const resolvedExamples = [
+        ...(Array.isArray(lesson.examples) ? lesson.examples : []),
+        ...getGrammarExtraExamples(levelIdForExamples, lesson.id)
+    ];
     
     let html = `<div class="detail-page">
         <!-- HEADER -->
@@ -4382,10 +4378,13 @@ async function findActiveLearningLevel(afterLevel = null) {
 // seulement la mémorisation, comme suggéré.
 function buildLessonExercises(lesson) {
     const exercises = [];
-    const usableExamples = (lesson.examples || []).filter(ex => ex.highlight && ex.japanese && ex.japanese.includes(ex.highlight));
+    // highlight peut être une string (ancien format) ou un tableau [texte, romaji] (nouveau
+    // format) : on ne travaille jamais qu'avec le texte japonais (index 0) ici.
+    const highlightTarget = (h) => Array.isArray(h) ? h[0] : h;
+    const usableExamples = (lesson.examples || []).filter(ex => ex.highlight && ex.japanese && ex.japanese.includes(highlightTarget(ex.highlight)));
 
     usableExamples.slice(0, 2).forEach(ex => {
-        const correct = ex.highlight;
+        const correct = highlightTarget(ex.highlight);
         const distractorPool = COMMON_PARTICLES.filter(p => p !== correct);
         const options = shuffleArray([correct, ...shuffleArray(distractorPool).slice(0, 2)]);
         exercises.push({ type: 'cloze', sentence: ex.japanese, correct, options, french: ex.french });
@@ -5284,6 +5283,10 @@ async function getLevelGrammarData(levelId) {
     } catch (e) {
         grammarDataCache[levelId] = null;
     }
+    // Précharge aussi exemples.json en tâche de fond (fire-and-forget, ne bloque pas le retour)
+    // pour que les exemples supplémentaires soient déjà en cache au moment où le quiz ou la
+    // fiche détail en ont besoin.
+    ensureExemplesLoaded(levelId);
     return grammarDataCache[levelId];
 }
 
@@ -7369,6 +7372,41 @@ async function renderLinkedVocab(char) {
     }).join('');
 }
 
+// Charge (avec cache) exemples.json pour un niveau donné. Réutilisable par kanji, vocab et
+// grammaire — ne fait le fetch qu'une seule fois par niveau, même en cas d'appels concurrents.
+async function ensureExemplesLoaded(levelId) {
+    if (!levelId) return null;
+    if (exemplesByLevel[levelId]) return exemplesByLevel[levelId];
+    if (exemplesLoadPromises[levelId]) return exemplesLoadPromises[levelId];
+    exemplesLoadPromises[levelId] = (async () => {
+        try {
+            const res = await fetch(`./data/${levelId}/exemples.json`, { cache: 'no-store' });
+            if (res.ok) {
+                exemplesByLevel[levelId] = await res.json();
+            }
+        } catch (e) {
+            console.warn(`Impossible de charger exemples pour ${levelId}:`, e);
+        }
+        return exemplesByLevel[levelId] || null;
+    })();
+    return exemplesLoadPromises[levelId];
+}
+
+// Exemples supplémentaires pour un mot de vocabulaire, au-delà de celui déjà présent sur sa
+// fiche (word.example). Retourne un tableau (vide si rien de chargé ou rien pour cet id).
+// Ne déclenche jamais de fetch : suppose que ensureExemplesLoaded(levelId) a déjà été appelé.
+function getVocabExtraExamples(levelId, wordId) {
+    const data = levelId && exemplesByLevel[levelId];
+    return (data && data.vocab && data.vocab[wordId]) || [];
+}
+
+// Même principe pour une leçon de grammaire, au-delà des exemples déjà présents dans
+// lesson.examples.
+function getGrammarExtraExamples(levelId, lessonId) {
+    const data = levelId && exemplesByLevel[levelId];
+    return (data && data.grammar && data.grammar[lessonId]) || [];
+}
+
 async function renderExemples(char) {
     const container = document.getElementById('exemples-container');
     if (!container) return;
@@ -7389,20 +7427,12 @@ async function renderExemples(char) {
         liste = exemplesDb[char];
     }
     
-    // 3. Si rien n'a été trouvé et qu'on a un niveau JLPT, charger en async
+    // 3. Si rien n'a été trouvé et qu'on a un niveau JLPT, charger en async (via le loader
+    // partagé, réutilisé aussi par le vocabulaire et la grammaire)
     if (!liste && currentJLPTLevel) {
-        try {
-            if (!exemplesByLevel[currentJLPTLevel]) {
-                const res = await fetch(`./data/${currentJLPTLevel}/exemples.json`, { cache: 'no-store' });
-                if (res.ok) {
-                    exemplesByLevel[currentJLPTLevel] = await res.json();
-                    if (exemplesByLevel[currentJLPTLevel].kanji && exemplesByLevel[currentJLPTLevel].kanji[char]) {
-                        liste = exemplesByLevel[currentJLPTLevel].kanji[char];
-                    }
-                }
-            }
-        } catch (e) {
-            console.warn(`Impossible de charger exemples pour ${currentJLPTLevel}:`, e);
+        const data = await ensureExemplesLoaded(currentJLPTLevel);
+        if (data && data.kanji && data.kanji[char]) {
+            liste = data.kanji[char];
         }
     }
     
@@ -7414,24 +7444,30 @@ async function renderExemples(char) {
         return;
     }
 
-    // Format : { jp, ka?, ro?, fr }
-    // ka = lecture kana de la phrase (nouveau), ro = romaji (ancien ou nouveau)
+    // Format actuel : { japanese, romaji, french, highlight? }. japanese contient déjà les
+    // <ruby><rt> sur chaque kanji. highlight (string ou [texte, romaji]) surligne la cible
+    // dans la phrase si fourni. Repli sur l'ancien format { jp, ka, ro, fr } si jamais une
+    // entrée n'a pas encore été migrée.
     const items = liste.map(ex => {
-        const safe = (ex.jp || char).replace(/'/g, "\\'");
-        const kanaLine   = ex.ka
-            ? `<div style="font-size:0.88rem;color:#9b8bff;margin-bottom:3px;line-height:1.5">${ex.ka}</div>`
+        const jp = ex.japanese || ex.jp || '';
+        const romaji = ex.romaji || ex.ro || '';
+        const fr = ex.french || ex.fr || '';
+        const target = Array.isArray(ex.highlight) ? ex.highlight[0] : ex.highlight;
+        const jpHtml = target
+            ? jp.replace(new RegExp(`(${target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'), '<span class="highlight-grammar">$1</span>')
+            : jp;
+        const plainText = jp.replace(/<[^>]+>/g, '').replace(/'/g, "\\'");
+        const romajiLine = romaji
+            ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${romaji}</div>`
             : '';
-        const romajiLine = ex.ro
-            ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${ex.ro}</div>`
-            : '';
-        return `<div onclick="speakSentence('${safe}')"
+        return `<div onclick="speakSentence('${plainText}')"
             style="position:relative;background:rgba(255,255,255,0.03);padding:14px 40px 14px 14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);transition:background 0.15s"
             onmouseenter="this.style.background='rgba(255,255,255,0.06)'"
             onmouseleave="this.style.background='rgba(255,255,255,0.03)'">
             <span style="position:absolute;top:12px;right:12px;font-size:1rem;opacity:0.7">🔊</span>
-            <div style="font-size:1.1rem;color:#fff;margin-bottom:5px;line-height:1.4">${ex.jp}</div>
-            ${kanaLine}${romajiLine}
-            <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${ex.fr}</div>
+            <div style="font-size:1.1rem;color:#fff;margin-bottom:5px;line-height:1.4">${jpHtml}</div>
+            ${romajiLine}
+            <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${fr}</div>
         </div>`;
     }).join('');
 
@@ -7754,13 +7790,11 @@ async function getLevelVocabData(levelId) {
         if (!res.ok) { vocabDataCache[levelId] = null; return null; }
         const data = flattenIfNested(await res.json());
         
-        let examples = null;
-        try {
-            const exRes = await fetch(`./data/${levelId}/exemples.json`, { cache: 'no-store' });
-            if (exRes.ok) examples = await exRes.json();
-        } catch (e) { /* pas d'exemples, tant pis */ }
+        // Précharge exemples.json via le mécanisme unifié (partagé avec kanji et grammaire) —
+        // plus de fetch séparé ici, exemplesByLevel[levelId] fera référence une fois chargé.
+        await ensureExemplesLoaded(levelId);
         
-        vocabDataCache[levelId] = { data, examples };
+        vocabDataCache[levelId] = { data, examples: exemplesByLevel[levelId] || null };
     } catch (e) {
         vocabDataCache[levelId] = null;
     }
