@@ -82,9 +82,7 @@
     "primary": "Sombre",
     "secondary": ["Obscur", "Triste (personnalité, ambiance)"]
   },
-  "nuance": "Adjectif en i utilisé pour décrire un lieu qui manque de lumière, ou métaphoriquement une atmosphère ou une personnalité sombre et mélancolique.",
-  "type": "adjectif en i",
-  "group": "i",
+  "nuance": "Adjectif en i exprimant qu'un moment, un événement ou une activité procure de la joie et du divertissement. À ne pas confondre avec <ruby>好<rt>す</rt></ruby>き (suki) qui exprime l'amour ou l'affection.",  "group": "i",
   "category": "emotions_sentiments",
   "kanji_list": ["暗"],
   "particles": [],
@@ -154,7 +152,7 @@
     "primary": "Frais",
     "secondary": ["Agréablement frais (météo)"]
   },
-  "nuance": "Adjectif en i utilisé pour décrire une température fraîche et agréable, généralement en parlant du temps, du climat ou d'une brise (à ne pas confondre avec <ruby>爽<rt>さわ</rt></ruby>やか (sawayaka) qui s'applique aussi à l'ambiance ou au caractère).",
+  "nuance": "Adjectif en i utilisé pour décrire une température fraîche et agréable, généralement en parlant du temps, du climat ou d'une brise (à ne pas confondre avec <ruby>爽<rt>さわ</rt></ruby>やか (*sawayaka*) qui s'applique aussi à l'ambiance ou au caractère).",
   "type": "adjectif en i",
   "group": "i",
   "category": "emotions_sentiments",
@@ -6670,5 +6668,78 @@
     "french": "Ce thé est très **chaud**.",
     "highlight": ["熱い", "atsui"]
   }
+},
+{
+  "id": "n5_v_278",
+  "level": "N5",
+  "word": "秋",
+  "word_furigana": "<ruby>秋<rt>あき</rt></ruby>",
+  "reading": "あき",
+  "romaji": "aki",
+  "meanings": {
+    "primary": "Automne",
+    "secondary": ["Saison automnale"]
+  },
+  "nuance": "Nom désignant la saison de l'automne, caractérisée par le jaunissement et la chute des feuilles (<ruby>紅葉<rt>こうよう / もみじ</rt></ruby> - kouyou / momiji). Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) ou <ruby>季<rt>き</rt></ruby> (ki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["秋"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>秋<rt>あき</rt></ruby>** に なる と 、はっぱ が あかくなり ます 。",
+    "romaji": "aki ni naru to, happa ga akaku narimasu.",
+    "french": "Quand l'**automne** arrive, les feuilles deviennent rouges.",
+    "highlight": ["秋", "aki"]
+  }
+},
+{
+  "id": "n5_v_279",
+  "level": "N5",
+  "word": "降る",
+  "word_furigana": "<ruby>降<rt>ふ</rt></ruby>る",
+  "reading": "ふる",
+  "romaji": "furu",
+  "meanings": {
+    "primary": "Tomber (pluie, neige)",
+    "secondary": ["Précipiter (météo)"]
+  },
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) désignant la pluie (<ruby>雨<rt>あめ</rt></ruby>) ou la neige (<ruby>雪<rt>ゆき</rt></ruby>), généralement associé à la particule が (ga) pour le sujet et に (ni) ou へ (e) pour la direction.",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "meteo_saisons",
+  "kanji_list": ["降"],
+  "particles": ["が"],
+  "example": {
+    "japanese": "あした は あめ が **<ruby>降<rt>ふ</rt></ruby>ります** 。",
+    "romaji": "ashita wa ame ga furimasu.",
+    "french": "Il **pleuvra** (la pluie tombera) demain.",
+    "highlight": ["降ります", "furimasu"]
+  }
+},
+{
+  "id": "n5_v_280",
+  "level": "N5",
+  "word": "雨",
+  "word_furigana": "<ruby>雨<rt>あめ</rt></ruby>",
+  "reading": "あめ",
+  "romaji": "ame",
+  "meanings": {
+    "primary": "Pluie",
+    "secondary": ["Précipitations pluvieuses"]
+  },
+  "nuance": "Nom désignant la pluie. L'intensité est nuancée par des onomatopées : ぽつぽつ (potsupotsu) pour les premières gouttes, しとしと (shitoshito) pour une pluie fine, et ザーザー (zāzā) pour une pluie battante.",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["雨"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう は **<ruby>雨<rt>あめ</rt></ruby>** だ から 、かさ を もっていきます 。",
+    "romaji": "kyou wa ame da kara, kasa o motte ikimasu.",
+    "french": "Comme c'est la **pluie** aujourd'hui, je prends un parapluie.",
+    "highlight": ["雨", "ame"]
+  }
 }
+
 ]
