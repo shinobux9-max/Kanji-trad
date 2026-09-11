@@ -10,7 +10,7 @@
       "primary": "Frais",
       "secondary": ["Rafraîchissant", "Agréable", "Vif"]
     },
-    "nuance": "Utilisé pour décrire une sensation de fraîcheur agréable (temps, brise) ou une personnalité franche, souriante et pleine de vitalité.",
+    "nuance": "**Adjectif en na** utilisé pour décrire une sensation de fraîcheur agréable (temps, brise) ou une personnalité franche, souriante et pleine de vitalité.",
     "type": "Adjectif en na",
     "group": "な - na",
     "category": "emotions_sentiments",
@@ -34,7 +34,7 @@
       "primary": "Adorer",
       "secondary": ["Aimer beaucoup", "Être très friand de"]
     },
-    "nuance": "Adjectif en na exprimant un degré d'affection ou de préférence très élevé envers une personne, un plat ou une chose. S'associe souvent avec la particule が (*ga*) pour l'objet aimé.",
+    "nuance": "**Adjectif en na** exprimant un degré d'affection ou de préférence très élevé envers une personne, un plat ou une chose. S'associe souvent avec la particule が (*ga*) pour l'objet aimé.",
     "type": "adjectif en na",
     "group": "na",
     "category": "emotions_sentiments",
@@ -58,7 +58,7 @@
       "primary": "Détester",
       "secondary": ["Ne pas aimer"]
     },
-    "nuance": "Adjectif en na exprimant l'aversion ou le désamour. Bien qu'exprimant un sentiment négatif, il s'emploie directement et sans détour au quotidien. Il se construit généralement avec la particule が (*ga*).",
+    "nuance": "**Adjectif en na** exprimant l'aversion ou le désamour. Bien qu'exprimant un sentiment négatif, il s'emploie directement et sans détour au quotidien. Il se construit généralement avec la particule が (*ga*).",
     "type": "adjectif en na",
     "group": "na",
     "category": "emotions_sentiments",
@@ -82,7 +82,7 @@
     "primary": "Sombre",
     "secondary": ["Obscur", "Triste (personnalité, ambiance)"]
   },
-  "nuance": "Adjectif en i qualifiant l'obscurité physique d'un lieu ou la noirceur d'une personnalité. Au Japon, l'association de l'obscurité à la tristesse est très présente dans la culture, le kanji <ruby>暗<rt>くら</rt></ruby> (*kura*) évoquant souvent une atmosphère mélancolique ou un secret inavouable. S'utilise fréquemment pour décrire une pièce sombre ou un avenir incertain.",
+  "nuance": "**Adjectif en i** qualifiant l'obscurité physique d'un lieu ou la noirceur d'une personnalité. Au Japon, l'association de l'obscurité à la tristesse est très présente dans la culture, le kanji <ruby>暗<rt>くら</rt></ruby> (*kura*) évoquant souvent une atmosphère mélancolique ou un secret inavouable. S'utilise fréquemment pour décrire une pièce sombre ou un avenir incertain.",
   "group": "i",
   "category": "emotions_sentiments",
   "kanji_list": ["暗"],
@@ -105,7 +105,7 @@
     "primary": "Amusant",
     "secondary": ["Joyeux", "Gai", "Agréable"]
   },
-  "nuance": "Adjectif en i exprimant qu'une situation, un moment ou une activité procure du plaisir, de la joie et du divertissement.",
+  "nuance": "**Adjectif en i** exprimant qu'une situation, un moment ou une activité procure du plaisir, de la joie et du divertissement.",
   "type": "adjectif en i",
   "group": "i",
   "category": "emotions_sentiments",
@@ -129,7 +129,7 @@
     "primary": "Vouloir",
     "secondary": ["Désirer", "Souhaiter (avoir quelque chose)"]
   },
-  "nuance": "Adjectif en i qui exprime le désir d'obtenir un objet. Il s'utilise avec la particule が '(*ga*) pour désigner l'objet convoité.",
+  "nuance": "**Adjectif en i** qui exprime le désir d'obtenir un objet. Il s'utilise avec la particule が '(*ga*) pour désigner l'objet convoité.",
   "type": "adjectif en i",
   "group": "i",
   "category": "emotions_sentiments",
@@ -153,7 +153,7 @@
     "primary": "Frais",
     "secondary": ["Agréablement frais (météo)"]
   },
-  "nuance": "Adjectif en i utilisé pour décrire une température fraîche et agréable, généralement en parlant du temps, du climat ou d'une brise (à ne pas confondre avec <ruby>爽<rt>さわ</rt></ruby>やか (*sawayaka*) qui s'applique aussi à l'ambiance ou au caractère).",
+  "nuance": "**Adjectif en i** utilisé pour décrire une température fraîche et agréable, généralement en parlant du temps, du climat ou d'une brise (à ne pas confondre avec <ruby>爽<rt>さわ</rt></ruby>やか (*sawayaka*) qui s'applique aussi à l'ambiance ou au caractère).",
   "type": "adjectif en i",
   "group": "i",
   "category": "emotions_sentiments",
@@ -177,7 +177,7 @@
     "primary": "Chaud",
     "secondary": ["Tiède", "Chaleureux (climat, plat, ou accueil)"]
   },
-  "nuance": "Adjectif en i qualifiant une température douce et agréable (pour l'air, l'eau, les objets ou les plats). S'écrit aussi <ruby>暖<rt>あたた</rt></ruby>かい (*atatakai*) lorsqu'il s'agit de la météo ou d'un climat.",
+  "nuance": "**Adjectif en i** qualifiant une température douce et agréable (pour l'air, l'eau, les objets ou les plats). S'écrit aussi <ruby>暖<rt>あたた</rt></ruby>かい (*atatakai*) lorsqu'il s'agit de la météo ou d'un climat.",
   "type": "adjectif en i",
   "group": "i",
   "category": "emotions_sentiments",
@@ -201,7 +201,7 @@
     "primary": "Se fatiguer",
     "secondary": ["Être fatigué", "S'épuiser"]
   },
-  "nuance": "Verbe ichidan décrivant l'état de fatigue physique ou mentale. On utilise très fréquemment sa forme en **-te iru** <ruby>疲<rt>つか</rt></ruby>れている (*tsukarete iru*) pour dire \"être fatigué\".",
+  "nuance": "**Verbe ichidan** décrivant l'état de fatigue physique ou mentale. On utilise très fréquemment sa forme en **-te iru** <ruby>疲<rt>つか</rt></ruby>れている (*tsukarete iru*) pour dire \"être fatigué\".",
   "type": "verbe ichidan",
   "group": "ru",
   "category": "emotions_sentiments",
