@@ -59,6 +59,7 @@
       },
       "steps": [
         { "id": "intro", "type": "introduction" },
+        { "id": "concept_verbes", "type": "concept", "conceptId": "n5_verbes" },
         { "id": "vocab_01", "type": "vocabulary", "items": ["n5_v_156", "n5_v_127", "n5_v_117", "n5_v_66"] },
         { "id": "kanji_01", "type": "kanji", "items": ["行", "校", "食", "飲"] },
         { "id": "grammar_2a", "type": "grammar", "items": ["n5_g_8", "n5_g_9", "n5_g_10"] },

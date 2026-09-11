@@ -5470,5 +5470,1205 @@
     "french": "Je mets les manuels scolaires dans le **sac**.",
     "highlight": ["かばん", "kaban"]
   }
+},
+{
+  "id": "n5_v_228",
+  "level": "N5",
+  "word": "せっけん",
+  "word_furigana": "せっけん",
+  "reading": "せっけん",
+  "romaji": "sekken",
+  "meanings": {
+    "primary": "Savon",
+    "secondary": ["Pain de savon", "Savonnette"]
+  },
+  "nuance": "Nom s'écrivant également en kanji <ruby>石鹸<rt>せっけん</rt></ruby> (sekken), désignant le savon pour le corps ou le lavage des mains. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "せっけん で て を あらいます 。",
+    "romaji": "sekken de te o araimasu.",
+    "french": "Je me lave les mains avec du **savon**.",
+    "highlight": ["せっけん", "sekken"]
+  }
+},
+{
+  "id": "n5_v_229",
+  "level": "N5",
+  "word": "ちり紙",
+  "word_furigana": "ちり<ruby>紙<rt>かみ</rt></ruby>",
+  "reading": "ちりがみ",
+  "romaji": "chirigami",
+  "meanings": {
+    "primary": "Papier hygiénique",
+    "secondary": ["Papier mouchoir", "Papier toilette"]
+  },
+  "nuance": "Nom composé de ちり (poussière/déchets) et de <ruby>紙<rt>かみ</rt></ruby> (kami - papier), désignant historiquement le papier de soie ou le papier multi-usage (mouchoir ou papier toilette). Compteur spécifique : <ruby>巻<rt>かん</rt></ruby> (kan) ou <ruby>枚<rt>まい</rt></ruby> (mai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["紙"],
+  "particles": [],
+  "example": {
+    "japanese": "トイレ に ちり紙 が あります 。",
+    "romaji": "toire ni chirigami ga arimasu.",
+    "french": "Il y a du **papier hygiénique** aux toilettes.",
+    "highlight": ["ちり紙", "chirigami"]
+  }
+},
+{
+  "id": "n5_v_230",
+  "level": "N5",
+  "word": "コップ",
+  "word_furigana": "コップ",
+  "reading": "こっぷ",
+  "romaji": "koppu",
+  "meanings": {
+    "primary": "Verre",
+    "secondary": ["Tasse", "Gobelet"]
+  },
+  "nuance": "Mot en katakana issu du néerlandais (kop) ou du portugais (copo), désignant un verre à boire, un gobelet ou une tasse sans anse. Compteur spécifique : <ruby>杯<rt>はい</rt></ruby> (hai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "コップ に みず を いれます 。",
+    "romaji": "koppu ni mizu o iremasu.",
+    "french": "Je mets de l'eau dans le **verre**.",
+    "highlight": ["コップ", "koppu"]
+  }
+},
+{
+  "id": "n5_v_231",
+  "level": "N5",
+  "word": "スプーン",
+  "word_furigana": "スプーン",
+  "reading": "すぷーん",
+  "romaji": "supuun",
+  "meanings": {
+    "primary": "Cuillère",
+    "secondary": ["Cuillère à soupe", "Cuillère à café"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (spoon), désignant une cuillère. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "スプーン で スープ を <ruby>飲<rt>の</rt></ruby>みます 。",
+    "romaji": "supuun de suupu o nomimasu.",
+    "french": "Je bois la soupe avec une **cuillère**.",
+    "highlight": ["スプーン", "supuun"]
+  }
+},
+{
+  "id": "n5_v_232",
+  "level": "N5",
+  "word": "フォーク",
+  "word_furigana": "フォーク",
+  "reading": "ふぉーく",
+  "romaji": "fooku",
+  "meanings": {
+    "primary": "Fourchette",
+    "secondary": ["Fourchette de table"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (fork), désignant une fourchette. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "フォーク で パスタ を <ruby>食<rt>た</rt></ruby>べます 。",
+    "romaji": "fooku de pasuta o tabemasu.",
+    "french": "Je mange des pâtes avec une **fourchette**.",
+    "highlight": ["フォーク", "fooku"]
+  }
+},
+{
+  "id": "n5_v_233",
+  "level": "N5",
+  "word": "ポスト",
+  "word_furigana": "ポスト",
+  "reading": "ぽすと",
+  "romaji": "posuto",
+  "meanings": {
+    "primary": "Boîte aux lettres",
+    "secondary": ["Boîte postale", "Pilier (métier, figuratif)"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (post), désignant une boîte aux lettres de rue ou personnelle. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>台<rt>だい</rt></ruby> (dai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "ポスト に てがみ を <ruby>入<rt>はい</rt></ruby>れます 。",
+    "romaji": "posuto ni tegami o iremasu.",
+    "french": "Je mets la lettre dans la **boîte aux lettres**.",
+    "highlight": ["ポスト", "posuto"]
+  }
+},
+{
+  "id": "n5_v_234",
+  "level": "N5",
+  "word": "傘",
+  "word_furigana": "<ruby>傘<rt>かさ</rt></ruby>",
+  "reading": "かさ",
+  "romaji": "kasa",
+  "meanings": {
+    "primary": "Parapluie",
+    "secondary": ["Ombrelle"]
+  },
+  "nuance": "Nom désignant un parapluie ou une ombrelle. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["傘"],
+  "particles": [],
+  "example": {
+    "japanese": "あめ が ふって いる ので 、**<ruby>傘<rt>かさ</rt></ruby>** を さします 。",
+    "romaji": "ame ga futte iru node, kasa o sashimasu.",
+    "french": "Il pleut, donc j'ouvre un **parapluie**.",
+    "highlight": ["傘", "kasa"]
+  }
+},
+{
+  "id": "n5_v_235",
+  "level": "N5",
+  "word": "石鹸",
+  "word_furigana": "<ruby>石鹸<rt>せっけん</rt></ruby>",
+  "reading": "せっけん",
+  "romaji": "sekken",
+  "meanings": {
+    "primary": "Savon",
+    "secondary": ["Pain de savon", "Savonnette"]
+  },
+  "nuance": "Nom s'écrivant également en hiragana <ruby>せっけん<rt>せっけん</rt></ruby> (sekken), désignant le savon pour le corps ou le lavage des mains. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["石", "鹸"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>石鹸<rt>せっけん</rt></ruby>** で て を あらいます 。",
+    "romaji": "sekken de te o araimasu.",
+    "french": "Je me lave les mains avec du **savon**.",
+    "highlight": ["石鹸", "sekken"]
+  }
+},
+{
+  "id": "n5_v_236",
+  "level": "N5",
+  "word": "箱",
+  "word_furigana": "<ruby>箱<rt>はこ</rt></ruby>",
+  "reading": "はこ",
+  "romaji": "hako",
+  "meanings": {
+    "primary": "Boîte",
+    "secondary": ["Coffret", "Carton"]
+  },
+  "nuance": "Nom désignant une boîte, un coffret ou un carton de rangement. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["箱"],
+  "particles": [],
+  "example": {
+    "japanese": "ふるい もの を **<ruby>箱<rt>はこ</rt></ruby>** に いれます 。",
+    "romaji": "furui mono o hako ni iremasu.",
+    "french": "Je mets les vieilles choses dans une **boîte**.",
+    "highlight": ["箱", "hako"]
+  }
+},
+{
+  "id": "n5_v_237",
+  "level": "N5",
+  "word": "紙",
+  "word_furigana": "<ruby>紙<rt>かみ</rt></ruby>",
+  "reading": "かみ",
+  "romaji": "kami",
+  "meanings": {
+    "primary": "Papier",
+    "secondary": ["Feuille de papier"]
+  },
+  "nuance": "Nom désignant le papier au sens général ou une feuille de papier. Compteur spécifique : <ruby>枚<rt>まい</rt></ruby> (mai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["紙"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>紙<rt>かみ</rt></ruby>** に なまえ を かきます 。",
+    "romaji": "kami ni namae o kakimasu.",
+    "french": "J'écris mon nom sur du **papier**.",
+    "highlight": ["紙", "kami"]
+  }
+},
+{
+  "id": "n5_v_238",
+  "level": "N5",
+  "word": "鍵",
+  "word_furigana": "<ruby>鍵<rt>かぎ</rt></ruby>",
+  "reading": "かぎ",
+  "romaji": "kagi",
+  "meanings": {
+    "primary": "Clé",
+    "secondary": ["Verrou", "Mot de passe"]
+  },
+  "nuance": "Nom s'écrivant également en hiragana <ruby>かぎ<rt>かぎ</rt></ruby> (kagi), désignant une clé physique ou une serrure. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["鍵"],
+  "particles": [],
+  "example": {
+    "japanese": "ドア の **<ruby>鍵<rt>かぎ</rt></ruby>** を しめます 。",
+    "romaji": "doa no kagi o shimemasu.",
+    "french": "Je ferme la **clé** de la porte (je ferme la porte à clé).",
+    "highlight": ["鍵", "kagi"]
+  }
+},
+{
+  "id": "n5_v_239",
+  "level": "N5",
+  "word": "交差点",
+  "word_furigana": "<ruby>交<rt>こう</rt></ruby><ruby>差<rt>さ</rt></ruby><ruby>点<rt>てん</rt></ruby>",
+  "reading": "こうさてん",
+  "romaji": "kousaten",
+  "meanings": {
+    "primary": "Carrefour",
+    "secondary": ["Intersection", "Croisement"]
+  },
+  "nuance": "Nom composé de <ruby>交<rt>こう</rt></ruby> (croiser), <ruby>差<rt>さ</rt></ruby> (différence/interstice) et <ruby>点<rt>てん</rt></ruby> (point), désignant une intersection de routes. Compteur spécifique : <ruby>箇<rt>か</rt></ruby><ruby>所<rt>しょ</rt></ruby> (kasho) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["交", "差", "点"],
+  "particles": [],
+  "example": {
+    "japanese": "あの **<ruby>交差点<rt>こうさてん</rt></ruby>** を <ruby>右<rt>みぎ</rt></ruby> に <ruby>曲<rt>ま</rt></ruby>がります 。",
+    "romaji": "ano kousaten o migi ni magarimasu.",
+    "french": "Je tourne à droite à ce **carrefour**.",
+    "highlight": ["交差点", "kousaten"]
+  }
+},
+{
+  "id": "n5_v_240",
+  "level": "N5",
+  "word": "交番",
+  "word_furigana": "<ruby>交<rt>こう</rt></ruby><ruby>番<rt>ばん</rt></ruby>",
+  "reading": "こうばん",
+  "romaji": "kouban",
+  "meanings": {
+    "primary": "Poste de police",
+    "secondary": ["Commissariat de quartier (Japon)", "Ilot de police"]
+  },
+  "nuance": "Nom composé de <ruby>交<rt>こう</rt></ruby> (alternance/roulement) et <ruby>番<rt>ばん</rt></ruby> (garde/poste), faisant référence au système de service posté des officiers dans ces petits postes de quartier japonais. Compteur spécifique : <ruby>箇<rt>か</rt></ruby><ruby>所<rt>しょ</rt></ruby> (kasho) ou <ruby>軒<rt>けん</rt></ruby> (ken).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["交", "番"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>道<rt>みち</rt></ruby> が わからない ので 、**<ruby>交番<rt>こうばん</rt></ruby>** で <ruby>聞<rt>き</rt></ruby>きます 。",
+    "romaji": "michi ga wakaranai node, kouban de kikimasu.",
+    "french": "Comme je ne connais pas le chemin, je demande au **poste de police**.",
+    "highlight": ["交番", "kouban"]
+  }
+},
+{
+  "id": "n5_v_241",
+  "level": "N5",
+  "word": "出口",
+  "word_furigana": "<ruby>出<rt>で</rt></ruby><ruby>口<rt>ぐち</rt></ruby>",
+  "reading": "でぐち",
+  "romaji": "deguchi",
+  "meanings": {
+    "primary": "Sortie",
+    "secondary": ["Issue", "Porte de sortie"]
+  },
+  "nuance": "Nom composé de <ruby>出<rt>で</rt></ruby>る (deru - sortir) et <ruby>口<rt>くち</rt></ruby> (kuchi - bouche/ouverture), désignant l'issue d'un bâtiment ou d'une zone (contraire de <ruby>入口<rt>いりぐち</rt></ruby> - iriguchi). Compteur spécifique : <ruby>箇<rt>か</rt></ruby><ruby>所<rt>しょ</rt></ruby> (kasho) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["出", "口"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>駅<rt>えき</rt></ruby> の **<ruby>出口<rt>でぐち</rt></ruby>** は どちら です か 。",
+    "romaji": "eki no deguchi wa dochira desu ka.",
+    "french": "Où se trouve la **sortie** de la gare ?",
+    "highlight": ["出口", "deguchi"]
+  }
+},
+{
+  "id": "n5_v_242",
+  "level": "N5",
+  "word": "図書館",
+  "word_furigana": "<ruby>図<rt>と</rt></ruby><ruby>書<rt>しょ</rt></ruby><ruby>館<rt>かん</rt></ruby>",
+  "reading": "としょかん",
+  "romaji": "toshokan",
+  "meanings": {
+    "primary": "Bibliothèque",
+    "secondary": ["Médiathèque (publique ou universitaire)"]
+  },
+  "nuance": "Nom composé de <ruby>図書<rt>としょ</rt></ruby> (tosho - livres/ouvrages) et de <ruby>館<rt>かん</rt></ruby> (kan - bâtiment public), désignant une bibliothèque. Compteur spécifique : <ruby>軒<rt>けん</rt></ruby> (ken) ou <ruby>個所<rt>かしょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["図", "書", "館"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>図書館<rt>としょかん</rt></ruby>** で ほんにん を よみます 。",
+    "romaji": "toshokan de hon o yomimasu.",
+    "french": "Je lis des livres à la **bibliothèque**.",
+    "highlight": ["図書館", "toshokan"]
+  }
+},
+{
+  "id": "n5_v_243",
+  "level": "N5",
+  "word": "国",
+  "word_furigana": "<ruby>国<rt>くに</rt></ruby>",
+  "reading": "くに",
+  "romaji": "kuni",
+  "meanings": {
+    "primary": "Pays",
+    "secondary": ["Patrie", "Nation", "Région d'origine"]
+  },
+  "nuance": "Nom désignant un pays, une nation ou la région natale d'une personne. Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>か国<rt>かこく</rt></ruby> (kakoku).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["国"],
+  "particles": [],
+  "example": {
+    "japanese": "らいげつ 、わたし の **<ruby>国<rt>くに</rt></ruby>** へ かえります 。",
+    "romaji": "raigetsu, watashi no kuni e kaerimasu.",
+    "french": "Le mois prochain, je retourne dans mon **pays**.",
+    "highlight": ["国", "kuni"]
+  }
+},
+{
+  "id": "n5_v_244",
+  "level": "N5",
+  "word": "大使館",
+  "word_furigana": "<ruby>大<rt>たい</rt></ruby><ruby>使<rt>し</rt></ruby><ruby>館<rt>かん</rt></ruby>",
+  "reading": "たいしかん",
+  "romaji": "taishikan",
+  "meanings": {
+    "primary": "Ambassade",
+    "secondary": ["Représentation diplomatique"]
+  },
+  "nuance": "Nom composé de <ruby>大使<rt>たいし</rt></ruby> (taishi - ambassadeur) et de <ruby>館<rt>kan</rt></ruby> (<ruby>館<rt>かん</rt></ruby> - bâtiment), désignant une ambassade. Compteur spécifique : <ruby>軒<rt>けん</rt></ruby> (ken) ou <ruby>箇所<rt>かしょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["大", "使", "館"],
+  "particles": [],
+  "example": {
+    "japanese": "がいこく の **<ruby>大使館<rt>たいしかん</rt></ruby>** へ いきます 。",
+    "romaji": "gaikoku no taishikan e ikimasu.",
+    "french": "Je vais à l'**ambassade** étrangère.",
+    "highlight": ["大使館", "taishikan"]
+  }
+},
+{
+  "id": "n5_v_245",
+  "level": "N5",
+  "word": "帰国",
+  "word_furigana": "<ruby>帰<rt>き</rt></ruby><ruby>国<rt>こく</rt></ruby>",
+  "reading": "きこく",
+  "romaji": "kikoku",
+  "meanings": {
+    "primary": "Retour au pays",
+    "secondary": ["Rapatriement", "Retour dans sa patrie"]
+  },
+  "nuance": "Nom composé de <ruby>帰<rt>き</rt></ruby> (kiku - rentrer) et de <ruby>国<rt>くに</rt></ruby> (koku - pays), souvent combiné avec le verbe する (suru) pour signifier 'rentrer dans son pays d'origine'.",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["帰", "国"],
+  "particles": [],
+  "example": {
+    "japanese": "らいねん の なつ に **<ruby>帰国<rt>きこく</rt></ruby>** する よてい です 。",
+    "romaji": "rainen no natsu ni kikoku suru yotei desu.",
+    "french": "J'ai l'intention de faire mon **retour au pays** l'été prochain.",
+    "highlight": ["帰国", "kikoku"]
+  }
+},
+{
+  "id": "n5_v_246",
+  "level": "N5",
+  "word": "建物",
+  "word_furigana": "<ruby>建<rt>た</rt></ruby>て<ruby>物<rt>もの</rt></ruby>",
+  "reading": "たてもの",
+  "romaji": "tatemono",
+  "meanings": {
+    "primary": "Bâtiment",
+    "secondary": ["Immeuble", "Construction", "Édifice"]
+  },
+  "nuance": "Nom composé de <ruby>建<rt>た</rt></ruby>てる (tateru - construire/bâtir) et de <ruby>物<rt>もの</rt></ruby> (mono - chose), désignant tout type de construction architecturale ou d'immeuble. Compteur spécifique : <ruby>棟<rt>とう</rt></ruby> (tou) ou <ruby>軒<rt>けん</rt></ruby> (ken).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["建", "物"],
+  "particles": [],
+  "example": {
+    "japanese": "あの おおきい **<ruby>建物<rt>たてもの</rt></ruby>** は びょういん です 。",
+    "romaji": "ano ookii tatemono wa byouin desu.",
+    "french": "Ce grand **bâtiment** est un hôpital.",
+    "highlight": ["建物", "tatemono"]
+  }
+},
+{
+  "id": "n5_v_247",
+  "level": "N5",
+  "word": "本棚",
+  "word_furigana": "<ruby>本<rt>ほん</rt></ruby><ruby>棚<rt>だな</rt></ruby>",
+  "reading": "ほんだな",
+  "romaji": "hondana",
+  "meanings": {
+    "primary": "Bibliothèque (meuble)",
+    "secondary": ["Étagère à livres", "Étagère de rangement pour livres"]
+  },
+  "nuance": "Nom composé de <ruby>本<rt>ほん</rt></ruby> (hon - livre) et de <ruby>棚<rt>たな</rt></ruby> (tana - étagère/banc), désignant spécifiquement le meuble pour ranger les livres (par opposition à la bibliothèque institutionnelle <ruby>図書館<rt>としょかん</rt></ruby>). Compteur spécifique : <ruby>個<rt>こ</rt></ruby> (ko) ou <ruby>台<rt>だい</rt></ruby> (dai).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["本", "棚"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>本棚<rt>ほんだな</rt></ruby>** に たくさん の ほん が あります 。",
+    "romaji": "hondana ni takusan no hon ga arimasu.",
+    "french": "Il y a beaucoup de livres sur l'**étagère à livres**.",
+    "highlight": ["本棚", "hondana"]
+  }
+},
+{
+  "id": "n5_v_248",
+  "level": "N5",
+  "word": "玄関",
+  "word_furigana": "<ruby>玄<rt>げん</rt></ruby><ruby>関<rt>かん</rt></ruby>",
+  "reading": "げんかん",
+  "romaji": "genkan",
+  "meanings": {
+    "primary": "Entrée (traditionnelle japonaise)",
+    "secondary": ["Vestibule", "Porche d'entrée"]
+  },
+  "nuance": "Nom désignant le vestibule traditionnel situé à l'entrée d'une maison, d'un appartement ou d'un bâtiment japonais, où l'on retire ses chaussures avant de monter sur le plancher surélevé. Compteur spécifique : <ruby>箇<rt>か</rt></ruby><ruby>所<rt>しょ</rt></ruby> (kasho) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["玄", "関"],
+  "particles": [],
+  "example": {
+    "japanese": "くつ を **<ruby>玄関<rt>げんかん</rt></ruby>** で <ruby>脱<rt>ぬ</rt></ruby>ぎます 。",
+    "romaji": "kutsu o genkan de nugimasu.",
+    "french": "Je retire mes chaussures dans l'**entrée**.",
+    "highlight": ["玄関", "genkan"]
+  }
+},
+{
+  "id": "n5_v_249",
+  "level": "N5",
+  "word": "町",
+  "word_furigana": "<ruby>町<rt>まち</rt></ruby>",
+  "reading": "まち",
+  "romaji": "machi",
+  "meanings": {
+    "primary": "Ville",
+    "secondary": ["Quartier", "Bourg", "Rue commerçante"]
+  },
+  "nuance": "Nom désignant une ville (souvent de taille moyenne ou petite par rapport à <ruby>市<rt>し</rt></ruby> - shi), un quartier ou une rue animée. Compteur spécifique : <ruby>つ<rt>つ</rt></ruby> (tsu) ou <ruby>箇所<rt>かしょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["町"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう は **<ruby>町<rt>まち</rt></ruby>** で かいもの を します 。",
+    "romaji": "kyou wa machi de kaimono o shimasu.",
+    "french": "Aujourd'hui, je fais des achats en **ville**.",
+    "highlight": ["町", "machi"]
+  }
+},
+{
+  "id": "n5_v_250",
+  "level": "N5",
+  "word": "銀行",
+  "word_furigana": "<ruby>銀<rt>ぎん</rt></ruby><ruby>行<rt>こう</rt></ruby>",
+  "reading": "ぎんこう",
+  "romaji": "ginkou",
+  "meanings": {
+    "primary": "Banque",
+    "secondary": ["Établissement bancaire"]
+  },
+  "nuance": "Nom composé de <ruby>銀<rt>ぎん</rt></ruby> (argent métal) et de <ruby>行<rt>こう</rt></ruby> (aller/institution), désignant une banque. Compteur spécifique : <ruby>軒<rt>けん</rt></ruby> (ken) ou <ruby>箇所<rt>かしょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "maison_quotidien",
+  "kanji_list": ["銀", "行"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>銀行<rt>ぎんこう</rt></ruby>** で おかね を おろします 。",
+    "romaji": "ginkou de okane o oroshimasu.",
+    "french": "Je retire de l'argent à la **banque**.",
+    "highlight": ["銀行", "ginkou"]
+  }
+},
+{
+  "id": "n5_v_251",
+  "level": "N5",
+  "word": "ペット",
+  "word_furigana": "ペット",
+  "reading": "ぺっと",
+  "romaji": "petto",
+  "meanings": {
+    "primary": "Animal de compagnie",
+    "secondary": ["Animal domestique"]
+  },
+  "nuance": "Mot en katakana issu de l'anglais (pet), désignant un animal de compagnie élevé à la maison. Compteur spécifique : <ruby>匹<rt>ひき</rt></ruby> (hiki) pour les petits animaux ou <ruby>羽<rt>わ</rt></ruby> (wa) pour les oiseaux.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "うち で **ペット** を かって います 。",
+    "romaji": "uchi de petto o katte imasu.",
+    "french": "Je garde un **animal de compagnie** à la maison.",
+    "highlight": ["ペット", "petto"]
+  }
+},
+{
+  "id": "n5_v_252",
+  "level": "N5",
+  "word": "動物",
+  "word_furigana": "<ruby>動<rt>どう</rt></ruby><ruby>物<rt>ぶつ</rt></ruby>",
+  "reading": "どうぶつ",
+  "romaji": "doubutsu",
+  "meanings": {
+    "primary": "Animal",
+    "secondary": ["Faune"]
+  },
+  "nuance": "Nom composé de <ruby>動<rt>どう</rt></ruby> (bouger) et de <ruby>物<rt>ぶつ</rt></ruby> (chose), désignant un animal de manière générale. Compteur spécifique : <ruby>匹<rt>ひき</rt></ruby> (hiki) ou <ruby>頭<rt>とう</rt></ruby> (tou) pour les grands animaux.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["動", "物"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>動物園<rt>どうぶつえん</rt></ruby> で たくさん の **<ruby>動物<rt>どうぶつ</rt></ruby>** を みました 。",
+    "romaji": "doubutsuen de takusan no doubutsu o mimashita.",
+    "french": "J'ai vu beaucoup d'**animaux** au zoo.",
+    "highlight": ["動物", "doubutsu"]
+  }
+},
+{
+  "id": "n5_v_253",
+  "level": "N5",
+  "word": "山",
+  "word_furigana": "<ruby>山<rt>やま</rt></ruby>",
+  "reading": "やま",
+  "romaji": "yama",
+  "meanings": {
+    "primary": "Montagne",
+    "secondary": ["Mont", "Tas (au figuré)"]
+  },
+  "nuance": "Nom désignant une montagne ou une élévation naturelle du terrain. Compteur spécifique : <ruby>座<rt>ざ</rt></ruby> (za) ou <ruby>つ<rt>つ</rt></ruby> (tsu).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["山"],
+  "particles": [],
+  "example": {
+    "japanese": "らいしゅう 、**<ruby>山<rt>やま</rt></ruby>** に <ruby>登<rt>のぼ</rt></ruby>ります 。",
+    "romaji": "raishuu, yama ni noborimasu.",
+    "french": "La semaine prochaine, je grimpe une **montagne**.",
+    "highlight": ["山", "yama"]
+  }
+},
+{
+  "id": "n5_v_254",
+  "level": "N5",
+  "word": "木",
+  "word_furigana": "<ruby>木<rt>き</rt></ruby>",
+  "reading": "き",
+  "romaji": "ki",
+  "meanings": {
+    "primary": "Arbre",
+    "secondary": ["Bois", "Plante ligneuse"]
+  },
+  "nuance": "Nom désignant un arbre vivant ou le bois en tant que matériau. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon) pour les arbres.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["木"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>庭<rt>にわ</rt></ruby> に おおきい **<ruby>木<rt>き</rt></ruby>** が あります 。",
+    "romaji": "niwa ni ookii ki ga arimasu.",
+    "french": "Il y a un grand **arbre** dans le jardin.",
+    "highlight": ["木", "ki"]
+  }
+},
+{
+  "id": "n5_v_255",
+  "level": "N5",
+  "word": "村",
+  "word_furigana": "<ruby>村<rt>むら</rt></ruby>",
+  "reading": "むら",
+  "romaji": "mura",
+  "meanings": {
+    "primary": "Village",
+    "secondary": ["Hameau", "Commune rurale"]
+  },
+  "nuance": "Nom désignant un village ou une communauté rurale, par opposition à la ville (<ruby>町<rt>まち</rt></ruby> - machi ou <ruby>市<rt>し</rt></ruby> - shi). Compteur spécifique : <ruby>つ<rt>つ</rt></ruby> (tsu) ou <ruby>ヶ<rt>か</rt></ruby><ruby>所<rt>しょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "lieux",
+  "kanji_list": ["村"],
+  "particles": [],
+  "example": {
+    "japanese": "この **<ruby>村<rt>むら</rt></ruby>** は とても しずか です 。",
+    "romaji": "kono mura wa totemo shizuka desu.",
+    "french": "Ce **village** est très calme.",
+    "highlight": ["村", "mura"]
+  }
+},
+{
+  "id": "n5_v_256",
+  "level": "N5",
+  "word": "海",
+  "word_furigana": "<ruby>海<rt>うみ</rt></ruby>",
+  "reading": "うみ",
+  "romaji": "umi",
+  "meanings": {
+    "primary": "Mer",
+    "secondary": ["Océan", "Bord de mer"]
+  },
+  "nuance": "Nom désignant la mer ou l'océan. Compteur spécifique : <ruby>つ<rt>つ</rt></ruby> (tsu) ou <ruby>箇所<rt>かしょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["海"],
+  "particles": [],
+  "example": {
+    "japanese": "なつ に **<ruby>海<rt>うみ</rt></ruby>** で およぎます 。",
+    "romaji": "natsu ni umi de oyogimasu.",
+    "french": "Je nage dans la **mer** en été.",
+    "highlight": ["海", "umi"]
+  }
+},
+{
+  "id": "n5_v_257",
+  "level": "N5",
+  "word": "犬",
+  "word_furigana": "<ruby>犬<rt>いぬ</rt></ruby>",
+  "reading": "いぬ",
+  "romaji": "inu",
+  "meanings": {
+    "primary": "Chien",
+    "secondary": ["Canidé"]
+  },
+  "nuance": "Nom désignant un chien. Compteur spécifique : <ruby>匹<rt>ひき</rt></ruby> (hiki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["犬"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>公園<rt>こうえん</rt></ruby> で **<ruby>犬<rt>いぬ</rt></ruby>** が <ruby>走<rt>はし</rt></ruby>って います 。",
+    "romaji": "kouen de inu ga hashitte imasu.",
+    "french": "Un **chien** court dans le parc.",
+    "highlight": ["犬", "inu"]
+  }
+},
+{
+  "id": "n5_v_258",
+  "level": "N5",
+  "word": "猫",
+  "word_furigana": "<ruby>猫<rt>ねこ</rt></ruby>",
+  "reading": "ねこ",
+  "romaji": "neko",
+  "meanings": {
+    "primary": "Chat",
+    "secondary": ["Félin"]
+  },
+  "nuance": "Nom désignant un chat. Compteur spécifique : <ruby>匹<rt>ひき</rt></ruby> (hiki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["猫"],
+  "particles": [],
+  "example": {
+    "japanese": "うち の **<ruby>猫<rt>ねこ</rt></ruby>** は げんき です 。",
+    "romaji": "uchi no neko wa genki desu.",
+    "french": "Mon **chat** est en bonne santé.",
+    "highlight": ["猫", "neko"]
+  }
+},
+{
+  "id": "n5_v_259",
+  "level": "N5",
+  "word": "登る",
+  "word_furigana": "<ruby>登<rt>のぼ</rt></ruby>る",
+  "reading": "のぼる",
+  "romaji": "noboru",
+  "meanings": {
+    "primary": "Grimper",
+    "secondary": ["Monter", "Escalader"]
+  },
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) transitif ou intransitif désignant l'action de grimper ou de gravir une montagne, des escaliers ou une structure, généralement associé à la particule に (ni) ou を (o).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "nature_animaux",
+  "kanji_list": ["登"],
+  "particles": ["に", "を"],
+  "example": {
+    "japanese": "あした 、<ruby>山<rt>やま</rt></ruby> に **<ruby>登<rt>のぼ</rt></ruby>ります** 。",
+    "romaji": "ashita, yama ni noborimasu.",
+    "french": "Demain, je **grimperai** la montagne.",
+    "highlight": ["登ります", "noborimasu"]
+  }
+},
+{
+  "id": "n5_v_260",
+  "level": "N5",
+  "word": "空",
+  "word_furigana": "<ruby>空<rt>そら</rt></ruby>",
+  "reading": "そら",
+  "romaji": "sora",
+  "meanings": {
+    "primary": "Ciel",
+    "secondary": ["Firmament", "Atmosphère"]
+  },
+  "nuance": "Nom désignant le ciel. Compteur spécifique : <ruby>つ<rt>つ</rt></ruby> (tsu) ou <ruby>箇所<rt>かしょ</rt></ruby> (kasho).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["空"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の **<ruby>空<rt>そら</rt></ruby>** は とても あおいです 。",
+    "romaji": "kyou no sora wa totemo aoi desu.",
+    "french": "Le **ciel** d'aujourd'hui est très bleu.",
+    "highlight": ["空", "sora"]
+  }
+},
+{
+  "id": "n5_v_261",
+  "level": "N5",
+  "word": "花",
+  "word_furigana": "<ruby>花<rt>はな</rt></ruby>",
+  "reading": "はな",
+  "romaji": "hana",
+  "meanings": {
+    "primary": "Fleur",
+    "secondary": ["Floraison"]
+  },
+  "nuance": "Nom désignant une fleur ou une plante florale. Compteur spécifique : <ruby>本<rt>ほん</rt></ruby> (hon) pour les fleurs à tige ou <ruby>輪<rt>わ</rt></ruby> (wa) pour les fleurs écloses.",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["花"],
+  "particles": [],
+  "example": {
+    "japanese": "<ruby>庭<rt>にわ</rt></ruby> に きれいな **<ruby>花<rt>はな</rt></ruby>** が さいて います 。",
+    "romaji": "niwa ni kireina hana ga saite imasu.",
+    "french": "De jolies **fleurs** éclosent dans le jardin.",
+    "highlight": ["花", "hana"]
+  }
+},
+{
+  "id": "n5_v_262",
+  "level": "N5",
+  "word": "鳥",
+  "word_furigana": "<ruby>鳥<rt>とり</rt></ruby>",
+  "reading": "とり",
+  "romaji": "tori",
+  "meanings": {
+    "primary": "Oiseau",
+    "secondary": ["Volatile", "Chair de volaille"]
+  },
+  "nuance": "Nom désignant un oiseau. Compteur spécifique : <ruby>羽<rt>わ</rt></ruby> (wa).",
+  "type": "nom",
+  "group": "nom",
+  "category": "nature_animaux",
+  "kanji_list": ["鳥"],
+  "particles": [],
+  "example": {
+    "japanese": "き の えだ に **<ruby>鳥<rt>とり</rt></ruby>** が とまって います 。",
+    "romaji": "ki no eda ni tori ga tomatte imasu.",
+    "french": "Un **oiseau** est posé sur la branche de l'arbre.",
+    "highlight": ["鳥", "tori"]
+  }
+},
+{
+  "id": "n5_v_263",
+  "level": "N5",
+  "word": "くもり",
+  "word_furigana": "くもり",
+  "reading": "くもり",
+  "romaji": "kumori",
+  "meanings": {
+    "primary": "Nuageux",
+    "secondary": ["Temps couvert", "Nuage"]
+  },
+  "nuance": "Nom ou forme nominale dérivée du verbe <ruby>曇<rt>くも</rt></ruby>る (kumoru - se couvrir de nuages), désignant un temps nuageux ou couvert. Compteur spécifique : <ruby>日<rt>ひ</rt></ruby> (hi) pour les jours.",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": [],
+  "particles": [],
+  "example": {
+    "japanese": "きょう は **くもり** です が 、あめ は ふりません 。",
+    "romaji": "kyou wa kumori desu ga, ame wa furimasen.",
+    "french": "Aujourd'hui, c'est **nuageux**, mais il ne pleut pas.",
+    "highlight": ["くもり", "kumori"]
+  }
+},
+{
+  "id": "n5_v_264",
+  "level": "N5",
+  "word": "冬",
+  "word_furigana": "<ruby>冬<rt>ふゆ</rt></ruby>",
+  "reading": "ふゆ",
+  "romaji": "fuyu",
+  "meanings": {
+    "primary": "Hiver",
+    "secondary": ["Saison froide"]
+  },
+  "nuance": "Nom désignant la saison de l'hiver, la plus froide de l'année. Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) ou <ruby>季<rt>き</rt></ruby> (ki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["冬"],
+  "particles": [],
+  "example": {
+    "japanese": "にほん の **<ruby>冬<rt>ふゆ</rt></ruby>** は とても さむい です 。",
+    "romaji": "nihon no fuyu wa totemo samui desu.",
+    "french": "L'**hiver** au Japon est très froid.",
+    "highlight": ["冬", "fuyu"]
+  }
+},
+{
+  "id": "n5_v_265",
+  "level": "N5",
+  "word": "冷たい",
+  "word_furigana": "<ruby>冷<rt>つめ</rt></ruby>たい",
+  "reading": "つめたい",
+  "romaji": "tsumetai",
+  "meanings": {
+    "primary": "Froid (au toucher)",
+    "secondary": ["Glacé", "Froid (chose ou liquide)", "Insensible (figuré)"]
+  },
+  "nuance": "Adjectif en -i (<ruby>形容詞<rt>けいようし</rt></ruby>) qualifiant la température tactile d'un objet, d'une surface ou d'un liquide, à ne pas confondre avec <ruby>寒<rt>さむ</rt></ruby>い (samui) qui qualifie la température ambiante de l'air.",
+  "type": "adjectif i",
+  "group": "i",
+  "category": "meteo_saisons",
+  "kanji_list": ["冷"],
+  "particles": [],
+  "example": {
+    "japanese": "この みず は とても **<ruby>冷<rt>つめ</rt></ruby>たい** です 。",
+    "romaji": "kono mizu wa totemo tsumetai desu.",
+    "french": "Cette eau est très **froide** (au toucher).",
+    "highlight": ["冷たい", "tsumetai"]
+  }
+},
+{
+  "id": "n5_v_266",
+  "level": "N5",
+  "word": "吹く",
+  "word_furigana": "<ruby>吹<rt>ふ</rt></ruby>く",
+  "reading": "ふく",
+  "romaji": "fuku",
+  "meanings": {
+    "primary": "Souffler",
+    "secondary": ["Jouer d'un instrument à vent", "Émettre de l'air"]
+  },
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) transitif ou intransitif désignant l'action du vent qui souffle, ou de souffler de l'air/de jouer d'un instrument à vent. Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai).",
+  "type": "verbe godan",
+  "group": "u",
+  "category": "meteo_saisons",
+  "kanji_list": ["吹"],
+  "particles": ["を"],
+  "example": {
+    "japanese": "きょう は かぜ が つよく **<ruby>吹<rt>ふ</rt></ruby>いて** います 。",
+    "romaji": "kyou wa kaze ga tsuyoku fuite imasu.",
+    "french": "Le vent **souffle** fort aujourd'hui.",
+    "highlight": ["吹いて", "fuite"]
+  }
+},
+{
+  "id": "n5_v_267",
+  "level": "N5",
+  "word": "夏",
+  "word_furigana": "<ruby>夏<rt>なつ</rt></ruby>",
+  "reading": "なつ",
+  "romaji": "natsu",
+  "meanings": {
+    "primary": "Été",
+    "secondary": ["Saison chaude"]
+  },
+  "nuance": "Nom désignant la saison estivale, la plus chaude de l'année. Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) ou <ruby>季<rt>き</rt></ruby> (ki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["夏"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>夏<rt>なつ</rt></ruby>** は てんき が よくて あつい です 。",
+    "romaji": "natsu wa tenki ga yokute atsui desu.",
+    "french": "En **été**, le temps est beau et il fait chaud.",
+    "highlight": ["夏", "natsu"]
+  }
+},
+{
+  "id": "n5_v_268",
+  "level": "N5",
+  "word": "夏休み",
+  "word_furigana": "<ruby>夏<rt>なつ</rt></ruby><ruby>休<rt>やす</rt></ruby>み",
+  "reading": "なつやすみ",
+  "romaji": "natsuyasumi",
+  "meanings": {
+    "primary": "Vacances d'été",
+    "secondary": ["Congés estivaux"]
+  },
+  "nuance": "Nom composé de <ruby>夏<rt>なつ</rt></ruby> (natsu - été) et de <ruby>休み<rt>やすみ</rt></ruby> (yasumi - repos/vacances), désignant la période des vacances scolaires ou professionnelles estivales. Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) ou <ruby>日間<rt>にちかん</rt></ruby> (nichikan).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["夏", "休"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>夏休み<rt>なつやすみ</rt></ruby>** に りょこう を します 。",
+    "romaji": "natsuyasumi ni ryokou o shimasu.",
+    "french": "Je fais un voyage pendant les **vacances d'été**.",
+    "highlight": ["夏休み", "natsuyasumi"]
+  }
+},
+{
+  "id": "n5_v_269",
+  "level": "N5",
+  "word": "天気",
+  "word_furigana": "<ruby>天<rt>てん</rt></ruby><ruby>気<rt>き</rt></ruby>",
+  "reading": "てんき",
+  "romaji": "tenki",
+  "meanings": {
+    "primary": "Météo",
+    "secondary": ["Temps (qu'il fait)", "Climat"]
+  },
+  "nuance": "Nom composé de <ruby>天<rt>てん</rt></ruby> (ciel) et de <ruby>気<rt>き</rt></ruby> (esprit/atmosphère), désignant les conditions atmosphériques ou le beau temps (souvent abrégé pour signifier qu'il fait beau).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["天", "気"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう は **<ruby>天気<rt>てんき</rt></ruby>** が とても いい です 。",
+    "romaji": "kyou wa tenki ga totemo ii desu.",
+    "french": "La **météo** est très bonne aujourd'hui (il fait très beau).",
+    "highlight": ["天気", "tenki"]
+  }
+},
+{
+  "id": "n5_v_270",
+  "level": "N5",
+  "word": "寒い",
+  "word_furigana": "<ruby>寒<rt>さむ</rt></ruby>い",
+  "reading": "さむい",
+  "romaji": "samui",
+  "meanings": {
+    "primary": "Froid",
+    "secondary": ["Froid (température ambiante)"]
+  },
+  "nuance": "Adjectif en -i (<ruby>形容詞<rt>けいようし</rt></ruby>) qualifiant la température de l'air ou de l'environnement, à ne pas confondre avec <ruby>冷<rt>つめ</rt></ruby>たい (tsumetai) qui s'applique à la température tactile des objets ou des liquides.",
+  "type": "adjectif i",
+  "group": "i",
+  "category": "meteo_saisons",
+  "kanji_list": ["寒"],
+  "particles": [],
+  "example": {
+    "japanese": "ふゆ の あさ は とても **<ruby>寒<rt>さむ</rt></ruby>い** です 。",
+    "romaji": "fuyu no asa wa totemo samui desu.",
+    "french": "Les matins d'hiver sont très **froids**.",
+    "highlight": ["寒い", "samui"]
+  }
+},
+{
+  "id": "n5_v_271",
+  "level": "N5",
+  "word": "春",
+  "word_furigana": "<ruby>春<rt>はる</rt></ruby>",
+  "reading": "はる",
+  "romaji": "haru",
+  "meanings": {
+    "primary": "Printemps",
+    "secondary": ["Saison printanière"]
+  },
+  "nuance": "Nom désignant la saison du printemps, caractérisée par l'éclosion des fleurs de cerisier (<ruby>桜<rt>さくら</rt></ruby> - sakura). Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) ou <ruby>季<rt>き</rt></ruby> (ki).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["春"],
+  "particles": [],
+  "example": {
+    "japanese": "**<ruby>春<rt>はる</rt></ruby>** に なる と 、<ruby>花<rt>はな</rt></ruby> が さきます 。",
+    "romaji": "haru ni naru to, hana ga sakimasu.",
+    "french": "Quand le **printemps** arrive, les fleurs éclosent.",
+    "highlight": ["春", "haru"]
+  }
+},
+{
+  "id": "n5_v_272",
+  "level": "N5",
+  "word": "晴れ",
+  "word_furigana": "<ruby>晴<rt>は</rt></ruby>れ",
+  "reading": "はれ",
+  "romaji": "hare",
+  "meanings": {
+    "primary": "Beau temps",
+    "secondary": ["Ciel dégagé", "Ensoleillé"]
+  },
+  "nuance": "Nom ou forme nominale dérivée du verbe <ruby>晴<rt>は</rt></ruby>れる (hareru - se dégager), désignant un temps clair et ensoleillé. Compteur spécifique : <ruby>日<rt>ひ</rt></ruby> (hi).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["晴"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の てんき は **<ruby>晴<rt>は</rt></ruby>れ** です 。",
+    "romaji": "kyou no tenki wa hare desu.",
+    "french": "Le temps d'aujourd'hui est au **beau fixe** (ensoleillé).",
+    "highlight": ["晴れ", "hare"]
+  }
+},
+{
+  "id": "n5_v_273",
+  "level": "N5",
+  "word": "晴れる",
+  "word_furigana": "<ruby>晴<rt>は</rt></ruby>れる",
+  "reading": "はれる",
+  "romaji": "hareru",
+  "meanings": {
+    "primary": "Se dégager (météo)",
+    "secondary": ["Faire beau", "Se dissiper (nuages, brouillard)"]
+  },
+  "nuance": "Verbe <ruby>一段<rt>いちだん</rt></ruby> (ichidan) intransitif désignant l'action du ciel qui se dégage, des nuages qui se dissipent ou du temps qui devient ensoleillé.",
+  "type": "verbe ichidan",
+  "group": "ru",
+  "category": "meteo_saisons",
+  "kanji_list": ["晴"],
+  "particles": [],
+  "example": {
+    "japanese": "ごご から **<ruby>晴<rt>は</rt></ruby>れて** 、あたたかく なりました 。",
+    "romaji": "gogo kara harete, atatakaku narimashita.",
+    "french": "Le temps **s'est dégagé** à partir de l'après-midi et il a fait plus chaud.",
+    "highlight": ["晴れて", "harete"]
+  }
+},
+{
+  "id": "n5_v_274",
+  "level": "N5",
+  "word": "暑い",
+  "word_furigana": "<ruby>暑<rt>あつ</rt></ruby>い",
+  "reading": "あつい",
+  "romaji": "atsui",
+  "meanings": {
+    "primary": "Chaud",
+    "secondary": ["Chaud (température atmosphérique ou climatique)"]
+  },
+  "nuance": "Adjectif en -i (<ruby>形容詞<rt>けいようし</rt></ruby>) qualifiant la température de l'air ou de la météo (à ne pas confondre avec <ruby>熱<rt>あつ</rt></ruby>い qui s'applique à la température tactile d'un objet ou d'un liquide).",
+  "type": "adjectif i",
+  "group": "i",
+  "category": "meteo_saisons",
+  "kanji_list": ["暑"],
+  "particles": [],
+  "example": {
+    "japanese": "なつ は とても **<ruby>暑<rt>あつ</rt></ruby>い** です 。",
+    "romaji": "natsu wa totemo atsui desu.",
+    "french": "L'été est très **chaud**.",
+    "highlight": ["暑い", "atsui"]
+  }
+},
+{
+  "id": "n5_v_275",
+  "level": "N5",
+  "word": "暖かい",
+  "word_furigana": "<ruby>暖<rt>あたた</rt></ruby>かい",
+  "reading": "あたたかい",
+  "romaji": "atatakai",
+  "meanings": {
+    "primary": "Chaud",
+    "secondary": ["Doux (météo, climat)", "Tiède (température ambiante ou d'une pièce)"]
+  },
+  "nuance": "Adjectif en -i (<ruby>形容詞<rt>けいようし</rt></ruby>) qualifiant une température douce ou agréablement chaude (s'utilise principalement pour le climat, la météo ou l'ambiance d'un lieu, bien qu'il puisse aussi désigner la tiédeur d'un plat, s'écrivant alors souvent <ruby>温<rt>あたた</rt></ruby>かい).",
+  "type": "adjectif i",
+  "group": "i",
+  "category": "meteo_saisons",
+  "kanji_list": ["暖"],
+  "particles": [],
+  "example": {
+    "japanese": "はる に なって 、**<ruby>暖<rt>あたた</rt></ruby>かく** なりました 。",
+    "romaji": "haru ni natte, atatakaku narimashita.",
+    "french": "Le printemps est arrivé et il a fait **doux** (chaud).",
+    "highlight": ["暖かく", "atatakaku"]
+  }
+},
+{
+  "id": "n5_v_276",
+  "level": "N5",
+  "word": "曇り",
+  "word_furigana": "<ruby>曇<rt>くも</rt></ruby>り",
+  "reading": "くもり",
+  "romaji": "kumori",
+  "meanings": {
+    "primary": "Temps nuageux",
+    "secondary": ["Ciel couvert", "Nuageux"]
+  },
+  "nuance": "Nom ou forme nominale du verbe <ruby>曇<rt>くも</rt></ruby>る (kumoru - se couvrir), écrit ici avec son kanji pour désigner spécifiquement un temps nuageux ou couvert (alternativement écrit en hiragana <ruby>くもり<rt>くもり</rt></ruby>). Compteur spécifique : <ruby>日<rt>ひ</rt></ruby> (hi).",
+  "type": "nom",
+  "group": "nom",
+  "category": "meteo_saisons",
+  "kanji_list": ["曇"],
+  "particles": [],
+  "example": {
+    "japanese": "きょう の てんき は **<ruby>曇<rt>くも</rt></ruby>り** です 。",
+    "romaji": "kyou no tenki wa kumori desu.",
+    "french": "La météo d'aujourd'hui est **nuageuse**.",
+    "highlight": ["曇り", "kumori"]
+  }
+},
+{
+  "id": "n5_v_277",
+  "level": "N5",
+  "word": "熱い",
+  "word_furigana": "<ruby>熱<rt>あつ</rt></ruby>い",
+  "reading": "あつい",
+  "romaji": "atsui",
+  "meanings": {
+    "primary": "Chaud (au toucher)",
+    "secondary": ["Brûlant", "Chaud (liquide ou objet)"]
+  },
+  "nuance": "Adjectif en -i (<ruby>形容詞<rt>けいようし</rt></ruby>) qualifiant la température élevée d'un objet, d'un plat ou d'un liquide au contact, à ne pas confondre avec <ruby>暑<rt>あつ</rt></ruby>い (atsui) qui s'applique exclusivement à la température de l'air et de la météo.",
+  "type": "adjectif i",
+  "group": "i",
+  "category": "meteo_saisons",
+  "kanji_list": ["熱"],
+  "particles": [],
+  "example": {
+    "japanese": "この おちゃ は とても **<ruby>熱<rt>あつ</rt></ruby>い** です 。",
+    "romaji": "kono ocha wa totemo atsui desu.",
+    "french": "Ce thé est très **chaud**.",
+    "highlight": ["熱い", "atsui"]
+  }
 }
 ]

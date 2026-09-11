@@ -5325,8 +5325,27 @@ async function getLearningResource(type, id, levelId) {
         const idx = kanjiMap.get(id);
         return idx !== undefined ? kanjiDb[idx] : null;
     }
+    if (type === 'concept') {
+        const cd = await getLevelConceptsData(levelId);
+        return cd && cd.concepts ? cd.concepts.find(c => c.id === id) || null : null;
+    }
     console.warn(`getLearningResource: type inconnu "${type}"`);
     return null;
+}
+
+// data/concepts/{levelId}.json — introductions/rappels/points d'attention pédagogiques,
+// jamais notés au SRS, jamais dans Réviser (voir renderLearningStep et completeLearningUnit :
+// un step de type "concept" ne génère AUCUNE question, AUCUN appel à gradeReview).
+let conceptsDataCache = {};
+async function getLevelConceptsData(levelId) {
+    if (levelId in conceptsDataCache) return conceptsDataCache[levelId];
+    try {
+        const res = await fetch(`./data/concepts/${levelId}.json`, { cache: 'no-store' });
+        conceptsDataCache[levelId] = res.ok ? await res.json() : null;
+    } catch (e) {
+        conceptsDataCache[levelId] = null;
+    }
+    return conceptsDataCache[levelId];
 }
 
 // ── Sauvegarde / reprise de progression ──────────────────────────────────
@@ -5536,6 +5555,33 @@ async function renderLearningStep() {
         container.innerHTML = header + `
             <div style="padding:0 16px;">
                 ${items.map(item => renderLearningResourceCard(step.type, item)).join('')}
+                <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
+            </div>`;
+        return;
+    }
+
+    if (step.type === 'concept') {
+        const concept = await getLearningResource('concept', step.conceptId, learningSession.levelId);
+        if (!concept) {
+            console.warn(`Concept introuvable: ${step.conceptId}`);
+            completeLearningStep();
+            return;
+        }
+        const typeLabels = { introduction: '📘 Introduction', rappel: '🟨 Rappel', point_attention: '⚠️ Point d\'attention' };
+        const paragraphsHtml = (concept.content.paragraphs || []).map(p => `<p>${mdBold(p)}</p>`).join('');
+        const examplesHtml = (concept.content.examples || []).map(ex => `
+            <div class="dash-card" style="margin-bottom:8px;">
+                <div style="font-size:1.1rem;">${ex.japanese}</div>
+                ${ex.note ? `<div style="color:var(--gray);font-size:0.85rem;margin-top:4px;">${ex.note}</div>` : ''}
+            </div>`).join('');
+        container.innerHTML = header + `
+            <div style="padding:0 16px;">
+                <div style="color:var(--accent);font-size:0.85rem;font-weight:bold;margin-bottom:6px;">${typeLabels[concept.type] || '📘 Introduction'}</div>
+                <div class="dash-card" style="margin-bottom:16px;">
+                    <h2 style="margin-top:0;">${concept.title}</h2>
+                    ${paragraphsHtml}
+                </div>
+                ${examplesHtml}
                 <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
             </div>`;
         return;
