@@ -5530,6 +5530,25 @@ function computeCoveredUpTo(unit, stepIndex) {
     return covered;
 }
 
+// Comme computeCoveredUpTo, mais réinitialisé à chaque mixed_practice/test rencontré — ne garde
+// que ce qui a été introduit DEPUIS la dernière pratique. Sert à ce qu'une pratique intermédiaire
+// (ex: après le groupe "localisation") ne teste que ce groupe précis, jamais tout ce qui a été vu
+// depuis le début de l'unité (ça, c'est le rôle du test final, qui utilise computeCoveredUpTo).
+function computeRecentUpTo(unit, stepIndex) {
+    let recent = { vocabulary: [], kanji: [], grammar: [] };
+    for (let i = 0; i <= stepIndex && i < unit.steps.length; i++) {
+        const s = unit.steps[i];
+        if (s.type === 'mixed_practice' || s.type === 'test') {
+            if (i < stepIndex) recent = { vocabulary: [], kanji: [], grammar: [] };
+            continue;
+        }
+        if ((s.type === 'vocabulary' || s.type === 'kanji' || s.type === 'grammar') && Array.isArray(s.items)) {
+            recent[s.type].push(...s.items);
+        }
+    }
+    return recent;
+}
+
 async function loadLearningUnit(levelId, unit, progress = null) {
     progress = progress || loadLearningProgress();
     const savedStep = (progress.currentUnit === unit.id) ? (progress.currentStep || 0) : 0;
@@ -5539,7 +5558,8 @@ async function loadLearningUnit(levelId, unit, progress = null) {
         unit,
         stepIndex: savedStep,
         testResults: [],
-        coveredNew: computeCoveredUpTo(unit, savedStep)
+        coveredNew: computeCoveredUpTo(unit, savedStep),
+        recentNew: computeRecentUpTo(unit, savedStep)
     };
 
     progress.currentLevel = levelId;
@@ -5564,6 +5584,7 @@ async function completeLearningStep() {
     }
     learningSession.stepIndex = nextIndex;
     learningSession.coveredNew = computeCoveredUpTo(learningSession.unit, nextIndex);
+    learningSession.recentNew = computeRecentUpTo(learningSession.unit, nextIndex);
     const progress = loadLearningProgress();
     progress.currentStep = nextIndex;
     if (progress.units[learningSession.unit.id]) {
@@ -5579,6 +5600,7 @@ function startLearningStep(index) {
     if (index < 0 || index >= learningSession.unit.steps.length) return;
     learningSession.stepIndex = index;
     learningSession.coveredNew = computeCoveredUpTo(learningSession.unit, index);
+    learningSession.recentNew = computeRecentUpTo(learningSession.unit, index);
     renderLearningStep();
 }
 
@@ -5616,7 +5638,7 @@ async function completeLearningUnit() {
 function learningPathFAB() {
     const levelId = learningSession ? learningSession.levelId : 'n5';
     return `<button onclick="showLearningPathHome('${levelId}')"
-        style="position:fixed;top:64px;left:16px;z-index:500;width:44px;height:44px;border-radius:50%;
+        style="position:fixed;top:58px;left:12px;z-index:600;width:40px;height:40px;border-radius:50%;
         background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;
         box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">←</button>`;
 }
@@ -5802,23 +5824,35 @@ async function renderLearningExerciseStep(step) {
         const correctOpt = q.options.find(o => o.correct);
         const selectedOpt = q.options[q.selectedIndex];
 
-        if (q.sourceType === 'grammar') {
-            // Comparatif ❌/✅ cliquable, même système que le quiz de particules existant —
-            // toujours affiché (juste ou faux), pour pouvoir consulter la fiche dans les deux cas.
+        if (isCorrect) {
+            // Toujours un simple message de confirmation si la réponse est juste — jamais le
+            // comparatif ❌/✅ (qui n'a pas de sens quand "tu as mis X" et "il fallait mettre X"
+            // sont identiques).
+            feedbackHtml = `<div class="dash-card" style="margin-top:14px;">✅ Bonne réponse !</div>`;
+        } else if (q.sourceType === 'grammar') {
+            // Comparatif ❌/✅ cliquable, même système que le quiz de particules existant.
             feedbackHtml = buildLearningGrammarComparisonHtml(
-                selectedOpt.label, isCorrect ? null : selectedOpt.lesson,
+                selectedOpt.label, selectedOpt.lesson,
                 correctOpt.label, correctOpt.lesson
             );
         } else {
-            // Vocabulaire : retour simple + accès à la fiche complète du mot.
+            // Vocabulaire : même structure visuelle rouge/vert que le comparatif grammaire, avec
+            // le mot japonais et son kanji cliquable (👁️) plutôt qu'un bouton séparé.
+            const kanjiChar = q.sourceWord?.kanji_list?.[0];
+            const kanjiBadge = kanjiChar
+                ? ` <span class="eye-badge" onclick='showFicheCorrectionModal({type:"kanji", item:{char:"${kanjiChar}"}})'>👁️ ${q.sourceWord.word_furigana || q.sourceWord.word}</span>`
+                : (q.sourceWord ? ` <span class="md-bold">${q.sourceWord.word}</span>` : '');
             feedbackHtml = `
-                <div class="dash-card" style="margin-top:14px;">
-                    ${isCorrect
-                        ? `<div>✅ Bonne réponse !</div>`
-                        : `<div>❌ Tu as répondu <strong>${selectedOpt.label}</strong></div>
-                           <div style="margin-top:4px;">✅ La bonne réponse était <strong>${correctOpt.label}</strong></div>`}
-                </div>
-                ${q.sourceWord ? `<button class="fiche-correction-btn" style="margin-top:10px" onclick="showLearningFicheCorrection()">📖 Voir la fiche : ${q.sourceWord.word}</button>` : ''}`;
+                <div class="particle-compare-box">
+                    <div class="particle-compare-row wrong">
+                        <span class="particle-compare-icon">❌</span>
+                        <div class="particle-compare-text">Tu as répondu <span class="md-bold">${selectedOpt.label}</span></div>
+                    </div>
+                    <div class="particle-compare-row correct">
+                        <span class="particle-compare-icon">✅</span>
+                        <div class="particle-compare-text">La bonne réponse était <span class="md-bold">${correctOpt.label}</span>${kanjiBadge}</div>
+                    </div>
+                </div>`;
         }
         feedbackHtml += `<button class="review-cta-btn" style="margin-top:14px;" onclick="continueLearningExercise()">Continuer →</button>`;
     }
@@ -5838,8 +5872,8 @@ async function renderLearningExerciseStep(step) {
 // particule, on pioche en priorité parmi celles du MÊME groupe de sens plutôt que n'importe
 // quelle autre leçon de grammaire (éviter des choix comme "は / から / のみます" sans lien).
 const PARTICLE_THEMATIC_GROUPS = [
-    ['は', 'が', 'を', 'に'],               // particules de base : thème / sujet / objet / cible
-    ['で', 'へ', 'から', 'まで'],            // localisation : lieu, direction, origine, limite
+    ['は', 'が', 'を'],                     // particules de base : thème / sujet / objet
+    ['に', 'で', 'へ', 'から', 'まで'],       // localisation : cible, lieu, direction, origine, limite
     ['と', 'も', 'の'],                     // relation, association, possession
     ['か', 'ね', 'よ'],                     // nuances de conversation
 ];
@@ -5910,10 +5944,12 @@ async function buildLearningExerciseQueue(step) {
     const vocabPool = vd && vd.data ? vd.data : [];
     const grammarPool = gd && gd.data ? gd.data : [];
 
-    // "review" toujours disponible (déjà appris avant cette unité) + uniquement le "new" déjà
-    // couvert jusqu'à l'étape courante (jamais ce qui n'a pas encore été enseigné)
-    const allVocabIds = [...(learningSession.coveredNew.vocabulary || []), ...(unit.content.review.vocabulary || [])];
-    const allGrammarIds = [...(learningSession.coveredNew.grammar || []), ...(unit.content.review.grammar || [])];
+    // "review" toujours disponible (déjà appris avant cette unité). Pour une pratique
+    // intermédiaire, on ne teste QUE le groupe introduit juste avant (recentNew) ; pour le test
+    // final, on couvre tout ce qui a été vu depuis le début de l'unité (coveredNew, cumulatif).
+    const newSource = step.type === 'test' ? learningSession.coveredNew : learningSession.recentNew;
+    const allVocabIds = [...(newSource.vocabulary || []), ...(unit.content.review.vocabulary || [])];
+    const allGrammarIds = [...(newSource.grammar || []), ...(unit.content.review.grammar || [])];
 
     const questionCount = step.questionCount || (allVocabIds.length + allGrammarIds.length);
     const queue = [];
