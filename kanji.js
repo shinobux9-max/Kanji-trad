@@ -5568,21 +5568,39 @@ async function renderLearningStep() {
             return;
         }
         const typeLabels = { introduction: '📘 Introduction', rappel: '🟨 Rappel', point_attention: '⚠️ Point d\'attention' };
-        const paragraphsHtml = (concept.content.paragraphs || []).map(p => `<p>${mdBold(p)}</p>`).join('');
-        const examplesHtml = (concept.content.examples || []).map(ex => `
-            <div class="dash-card" style="margin-bottom:8px;">
-                <div style="font-size:1.1rem;">${ex.japanese}</div>
-                ${ex.romaji ? `<div style="color:var(--accent);font-style:italic;font-size:0.9rem;margin-top:2px;">${ex.romaji}</div>` : ''}
-                ${ex.note ? `<div style="color:var(--gray);font-size:0.85rem;margin-top:4px;">${ex.note}</div>` : ''}
+
+        // Bloc exemple réutilisable : japonais, romaji juste EN DESSOUS (jamais entre
+        // parenthèses), puis traduction française, puis note éventuelle.
+        const renderConceptExample = (ex) => `
+            <div class="dash-card" style="margin-bottom:8px;overflow-wrap:break-word;">
+                <div style="font-size:1.05rem;line-height:1.6;">${ex.japanese}</div>
+                ${ex.romaji ? `<div style="color:var(--accent);font-style:italic;font-size:0.85rem;margin-top:2px;">${ex.romaji}</div>` : ''}
+                ${ex.french ? `<div style="color:var(--text);font-size:0.9rem;margin-top:4px;">${ex.french}</div>` : ''}
+                ${ex.note ? `<div style="color:var(--gray);font-size:0.8rem;margin-top:4px;">${ex.note}</div>` : ''}
+            </div>`;
+
+        const paragraphsHtml = (concept.content.paragraphs || []).map(p => `<p style="overflow-wrap:break-word;">${mdBold(p)}</p>`).join('');
+        const examplesHtml = (concept.content.examples || []).map(renderConceptExample).join('');
+
+        // Nouveau format "items" : plusieurs mini-blocs titre + explication + exemple, pour les
+        // concepts qui couvrent plusieurs éléments (ex: les particules d'un même groupe) sans
+        // tout déverser en un seul bloc de texte.
+        const itemsHtml = (concept.content.items || []).map(item => `
+            <div class="dash-card" style="margin-bottom:14px;overflow-wrap:break-word;">
+                <h3 style="margin-top:0;color:var(--accent);">${item.title}</h3>
+                <p style="overflow-wrap:break-word;">${mdBold(item.explanation || '')}</p>
+                ${item.example ? renderConceptExample(item.example) : ''}
             </div>`).join('');
+
         container.innerHTML = header + `
-            <div style="padding:0 16px;">
+            <div style="padding:0 16px;max-width:100%;">
                 <div style="color:var(--accent);font-size:0.85rem;font-weight:bold;margin-bottom:6px;">${typeLabels[concept.type] || '📘 Introduction'}</div>
-                <div class="dash-card" style="margin-bottom:16px;">
+                <div class="dash-card" style="margin-bottom:16px;overflow-wrap:break-word;">
                     <h2 style="margin-top:0;">${concept.title}</h2>
                     ${paragraphsHtml}
                 </div>
                 ${examplesHtml}
+                ${itemsHtml}
                 <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
             </div>`;
         return;
@@ -5603,25 +5621,25 @@ async function renderLearningStep() {
 function renderLearningResourceCard(type, item) {
     if (!item) return `<div class="dash-card">Ressource introuvable.</div>`;
     if (type === 'vocabulary') {
-        return `<div class="dash-card">
-            <div style="font-size:1.6rem;">${item.word_furigana || item.word}</div>
-            <div style="color:var(--gray);">${item.romaji}</div>
+        return `<div class="dash-card" style="overflow-wrap:break-word;">
+            <div style="font-size:1.4rem;line-height:1.6;">${item.word_furigana || item.word}</div>
+            <div style="color:var(--accent);font-style:italic;">${item.romaji}</div>
             <div style="margin-top:6px;">${item.meanings?.primary || ''}</div>
         </div>`;
     }
     if (type === 'kanji') {
-        const onTags = (item.on || []).map(r => `<span class="tag tag-on" style="font-size:0.875rem;padding:4px 10px;margin-right:4px;">${r}</span>`).join('');
-        const kunTags = (item.kun || []).map(r => `<span class="tag tag-kun" style="font-size:0.875rem;padding:4px 10px;margin-right:4px;">${r}</span>`).join('');
-        return `<div class="dash-card">
-            <div style="font-size:2.2rem;">${item.char}</div>
+        const onTags = (item.on || []).map(r => `<span class="tag tag-on" style="font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${r}</span>`).join('');
+        const kunTags = (item.kun || []).map(r => `<span class="tag tag-kun" style="font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${r}</span>`).join('');
+        return `<div class="dash-card" style="overflow-wrap:break-word;">
+            <div style="font-size:2rem;">${item.char}</div>
             <div style="margin-top:8px;">${onTags}${kunTags}</div>
             <div style="margin-top:6px;">${(item.meanings || []).join(', ')}</div>
         </div>`;
     }
     if (type === 'grammar') {
-        return `<div class="dash-card">
-            <div style="font-size:1.6rem;color:var(--accent);">${item.item}</div>
-            <div style="color:var(--gray);">${item.item_romaji || ''}</div>
+        return `<div class="dash-card" style="overflow-wrap:break-word;">
+            <div style="font-size:1.4rem;color:var(--accent);line-height:1.6;">${item.item}</div>
+            <div style="color:var(--accent);font-style:italic;opacity:0.8;">${item.item_romaji || ''}</div>
             <div style="color:var(--gray);margin-top:2px;">${item.pattern || ''}</div>
             <div style="margin-top:6px;">${item.title || ''}</div>
         </div>`;
@@ -5666,8 +5684,8 @@ async function renderLearningExerciseStep(step) {
 // particule, on pioche en priorité parmi celles du MÊME groupe de sens plutôt que n'importe
 // quelle autre leçon de grammaire (éviter des choix comme "は / から / のみます" sans lien).
 const PARTICLE_THEMATIC_GROUPS = [
-    ['は', 'が', 'を'],                    // structure de base : thème / sujet / objet
-    ['に', 'で', 'へ', 'から', 'まで'],      // lieu, destination, moyen, origine, limite
+    ['は', 'が', 'を', 'に'],               // particules de base : thème / sujet / objet / cible
+    ['で', 'へ', 'から', 'まで'],            // localisation : lieu, direction, origine, limite
     ['と', 'も', 'の'],                     // relation, association, possession
     ['か', 'ね', 'よ'],                     // nuances de conversation
 ];
@@ -5704,7 +5722,7 @@ async function buildLearningExerciseQueue(step) {
                 sourceType: 'vocab',
                 sourceId: id,
                 sourceLabel: word.word,
-                prompt: `Que signifie ${word.word_furigana || word.word} <em>(${word.romaji})</em> ?`,
+                prompt: `Que signifie ${word.word_furigana || word.word} ?<div style="color:var(--accent);font-style:italic;font-size:0.85rem;margin-top:4px;">${word.romaji}</div>`,
                 options: qcm.options.map(o => ({ label: o, correct: o === qcm.correct })),
             });
         }
