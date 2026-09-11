@@ -4061,6 +4061,9 @@ let activeSwipeContext = null; // null | 'lesson' | 'onboarding'
 // Types d'étape du parcours de leçon où le swipe/tap fait avancer — pas sur les exercices
 // (réponse via boutons), l'intro (bouton "Commencer") ou la fin (boutons d'action).
 const LESSON_SWIPE_STEP_TYPES = new Set(['paragraph', 'structure', 'example', 'confusion']);
+// Étapes du Learning Path où le swipe/tap fait simplement avancer (jamais sur les exercices,
+// où il faut d'abord choisir une réponse).
+const LEARNING_PATH_SWIPE_STEP_TYPES = new Set(['introduction', 'vocabulary', 'kanji', 'grammar', 'concept']);
 
 // Points de pagination façon carrousel (remplace la barre de progression pour l'onboarding et
 // le parcours de leçon) — le point actif se déplace, montrant qu'il y a un avant et un après.
@@ -4095,6 +4098,10 @@ function initSwipeNavigation() {
             const step = lessonSession && lessonSession.steps[lessonSession.index];
             if (!step || !LESSON_SWIPE_STEP_TYPES.has(step.type)) return;
         }
+        if (activeSwipeContext === 'learning-path') {
+            const step = learningSession && learningSession.unit.steps[learningSession.stepIndex];
+            if (!step || !LEARNING_PATH_SWIPE_STEP_TYPES.has(step.type)) return;
+        }
 
         const t = e.changedTouches[0];
         const dx = t.clientX - startX;
@@ -4110,6 +4117,10 @@ function initSwipeNavigation() {
 
         if (activeSwipeContext === 'lesson') advanceLessonStep(direction);
         else if (activeSwipeContext === 'onboarding') advanceOnboarding(direction);
+        else if (activeSwipeContext === 'learning-path') {
+            if (direction === 1) completeLearningStep();
+            else startLearningStep(learningSession.stepIndex - 1);
+        }
     }, { passive: true });
 }
 
@@ -5539,6 +5550,7 @@ async function loadLearningUnit(levelId, unit, progress = null) {
     }
     saveLearningProgress(progress);
 
+    activeSwipeContext = 'learning-path';
     renderLearningStep();
 }
 
@@ -5604,7 +5616,7 @@ async function completeLearningUnit() {
 function learningPathFAB() {
     const levelId = learningSession ? learningSession.levelId : 'n5';
     return `<button onclick="showLearningPathHome('${levelId}')"
-        style="position:fixed;bottom:88px;left:16px;z-index:500;width:48px;height:48px;border-radius:50%;
+        style="position:fixed;top:64px;left:16px;z-index:500;width:44px;height:44px;border-radius:50%;
         background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;
         box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">←</button>`;
 }
@@ -5615,6 +5627,13 @@ async function renderLearningStep() {
     const step = unit.steps[stepIndex];
     const container = document.getElementById('main-content');
     if (!container) return;
+
+    // Étape marquée "skipRender" (ex: grammaire déjà couverte en détail par le concept
+    // précédent) : compte pour le suivi de couverture, mais ne s'affiche jamais à l'écran.
+    if (step.skipRender) {
+        completeLearningStep();
+        return;
+    }
 
     const progressDots = unit.steps.map((s, i) =>
         `<span style="width:8px;height:8px;border-radius:50%;background:${i === stepIndex ? 'var(--accent)' : 'var(--border)'};display:inline-block;margin:0 3px;"></span>`
@@ -5639,9 +5658,16 @@ async function renderLearningStep() {
         const items = await Promise.all(
             step.items.map(id => getLearningResource(step.type, id, learningSession.levelId))
         );
+        // Pour les kanji, on précharge le vocabulaire du niveau une seule fois pour pouvoir
+        // afficher les mots qui utilisent chaque caractère (lien inverse kanji -> vocabulaire).
+        let vocabPoolForLinks = null;
+        if (step.type === 'kanji') {
+            const vd = await getLevelVocabData(learningSession.levelId);
+            vocabPoolForLinks = vd && vd.data ? vd.data : [];
+        }
         container.innerHTML = header + `
             <div style="padding:0 16px;">
-                ${items.map(item => renderLearningResourceCard(step.type, item)).join('')}
+                ${items.map(item => renderLearningResourceCard(step.type, item, vocabPoolForLinks)).join('')}
                 <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
             </div>`;
         return;
@@ -5705,7 +5731,7 @@ async function renderLearningStep() {
 
 // Petite carte d'affichage générique pour une ressource (vocab/kanji/grammaire) — volontairement
 // simple pour l'instant, à raffiner visuellement une fois le moteur validé fonctionnellement.
-function renderLearningResourceCard(type, item) {
+function renderLearningResourceCard(type, item, vocabPoolForLinks = null) {
     if (!item) return `<div class="dash-card">Ressource introuvable.</div>`;
     if (type === 'vocabulary') {
         return `<div class="dash-card" style="overflow-wrap:break-word;">
@@ -5715,13 +5741,29 @@ function renderLearningResourceCard(type, item) {
         </div>`;
     }
     if (type === 'kanji') {
-        const onTags = (item.on || []).map(r => `<span class="tag tag-on" style="font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${r}</span>`).join('');
-        const kunTags = (item.kun || []).map(r => `<span class="tag tag-kun" style="font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${r}</span>`).join('');
+        const readingTag = (r, cls) => {
+            const romaji = kanaToRomajiPrecise(r.replace(/\./g, ''));
+            return `<span class="tag ${cls}" style="font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${r} <span style="opacity:0.75;">(${romaji})</span></span>`;
+        };
+        const onTags = (item.on || []).map(r => readingTag(r, 'tag-on')).join('');
+        const kunTags = (item.kun || []).map(r => readingTag(r, 'tag-kun')).join('');
+
+        // Lien inverse kanji -> vocabulaire : mots du niveau qui utilisent ce kanji.
+        let relatedWordsHtml = '';
+        if (vocabPoolForLinks) {
+            const related = vocabPoolForLinks.filter(w => Array.isArray(w.kanji_list) && w.kanji_list.includes(item.char)).slice(0, 6);
+            if (related.length) {
+                relatedWordsHtml = `<div style="margin-top:10px;color:var(--gray);font-size:0.85rem;">Mots avec ce kanji :</div>
+                    <div style="margin-top:4px;">${related.map(w => `<span class="tag" style="background:var(--surface);color:var(--text);font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${w.word_furigana || w.word}</span>`).join('')}</div>`;
+            }
+        }
+
         return `<div class="dash-card" style="overflow-wrap:break-word;">
             <div style="font-size:2rem;">${item.char}</div>
             ${item.on && item.on.length ? `<div style="margin-top:8px;color:var(--gray);font-size:0.85rem;">Lecture on : ${onTags}</div>` : ''}
             ${item.kun && item.kun.length ? `<div style="margin-top:6px;color:var(--gray);font-size:0.85rem;">Lecture kun : ${kunTags}</div>` : ''}
             <div style="margin-top:6px;">${(item.meanings || []).join(', ')}</div>
+            ${relatedWordsHtml}
         </div>`;
     }
     if (type === 'grammar') {
@@ -5757,14 +5799,44 @@ async function renderLearningExerciseStep(step) {
 
     const q = queue[idx];
     const header = `<div style="padding:14px 16px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>` + learningPathFAB();
-    const optionsHtml = q.options.map((opt, i) => `
-        <button class="review-option-btn" onclick="answerLearningExercise(${i})">${opt.label}</button>
-    `).join('');
+
+    const optionsHtml = q.options.map((opt, i) => {
+        let cls = 'review-option-btn';
+        if (q.answered) {
+            if (opt.correct) cls += ' correct';
+            else if (i === q.selectedIndex) cls += ' incorrect';
+        }
+        const romajiHtml = opt.romaji ? `<div style="font-size:0.8rem;opacity:0.75;margin-top:2px;">${opt.romaji}</div>` : '';
+        return `<button class="${cls}" ${q.answered ? 'disabled' : ''} onclick="answerLearningExercise(${i})">
+            <div>${opt.label}</div>${romajiHtml}
+        </button>`;
+    }).join('');
+
+    // Bloc de retour après réponse : ❌/✅ façon quiz classique, puis Continuer. Jamais affiché
+    // avant d'avoir répondu.
+    let feedbackHtml = '';
+    if (q.answered) {
+        const isCorrect = q.options[q.selectedIndex]?.correct;
+        const correctLabel = q.options.find(o => o.correct)?.label || '';
+        feedbackHtml = `
+            <div class="dash-card" style="margin-top:14px;">
+                ${isCorrect
+                    ? `<div>✅ Bonne réponse !</div>`
+                    : `<div>❌ Tu as répondu <strong>${q.options[q.selectedIndex]?.label || ''}</strong></div>
+                       <div style="margin-top:4px;">✅ La bonne réponse était <strong>${correctLabel}</strong></div>`}
+                ${q.feedback ? `<div style="margin-top:10px;color:var(--gray);">${mdBold(q.feedback)}</div>` : ''}
+            </div>
+            <button class="review-cta-btn" style="margin-top:14px;" onclick="continueLearningExercise()">Continuer →</button>`;
+    }
 
     container.innerHTML = header + `
         <div style="padding:0 16px;">
-            <div class="review-card" style="font-size:1.3rem;margin-bottom:16px;">${q.prompt}</div>
+            <div class="review-card" style="margin-bottom:16px;">
+                <div style="font-size:1.3rem;line-height:1.7;">${q.promptMain}</div>
+                ${q.promptSub ? `<div style="color:var(--accent);font-style:italic;font-size:0.9rem;">${q.promptSub}</div>` : ''}
+            </div>
             <div class="review-options">${optionsHtml}</div>
+            ${feedbackHtml}
         </div>`;
 }
 
@@ -5786,6 +5858,20 @@ function findParticleGroup(particleItem) {
 // de l'unité (déjà appris avant), en piochant les distracteurs dans TOUT le niveau (pas
 // seulement l'unité) pour ne jamais être bloqué faute de pool suffisant. Le test final (dernière
 // étape) couvre lui toujours l'intégralité du "new" de l'unité, puisqu'à ce stade tout a été vu.
+// Cherche la romaji d'une option de cloze grammaire en la retrouvant dans les highlight des
+// exemples du pool (highlight = [texte, romaji] dans notre format). Ne devine jamais : si
+// aucune correspondance exacte n'est trouvée, retourne null et l'option s'affiche sans romaji.
+function findRomajiForGrammarOption(optionText, pool) {
+    for (const lesson of pool) {
+        for (const ex of (lesson.examples || [])) {
+            if (Array.isArray(ex.highlight) && ex.highlight[0] === optionText) {
+                return ex.highlight[1] || null;
+            }
+        }
+    }
+    return null;
+}
+
 async function buildLearningExerciseQueue(step) {
     const { unit, levelId } = learningSession;
     const vd = await getLevelVocabData(levelId);
@@ -5810,7 +5896,11 @@ async function buildLearningExerciseQueue(step) {
                 sourceType: 'vocab',
                 sourceId: id,
                 sourceLabel: word.word,
-                prompt: `Que signifie ${word.word_furigana || word.word} ?<div style="color:var(--accent);font-style:italic;font-size:0.85rem;margin-top:4px;">${word.romaji}</div>`,
+                // Question "Que signifie X ?" : jamais de traduction française en aide, ce
+                // serait littéralement la réponse (les options SONT les sens français).
+                promptMain: `Que signifie ${word.word_furigana || word.word} ?`,
+                promptSub: word.romaji,
+                feedback: word.nuance || '',
                 options: qcm.options.map(o => ({ label: o, correct: o === qcm.correct })),
             });
         }
@@ -5835,8 +5925,16 @@ async function buildLearningExerciseQueue(step) {
                 sourceType: 'grammar',
                 sourceId: id,
                 sourceLabel: lesson.item || lesson.pattern,
-                prompt: `${cloze.before}<strong>＿＿＿</strong>${cloze.after}`,
-                options: cloze.options.map(o => ({ label: o, correct: o === cloze.correct })),
+                // Ici la traduction française ne révèle pas quelle particule/forme choisir,
+                // donc on peut l'afficher comme aide sans donner la réponse.
+                promptMain: `${cloze.before}<strong>＿＿＿</strong>${cloze.after}`,
+                promptSub: cloze.french || '',
+                feedback: '',
+                options: cloze.options.map(o => ({
+                    label: o,
+                    correct: o === cloze.correct,
+                    romaji: findRomajiForGrammarOption(o, clozePool),
+                })),
             });
         }
     }
@@ -5854,6 +5952,7 @@ function answerLearningExercise(selectedIndex) {
     const queue = learningSession.exerciseQueue;
     const idx = learningSession.exerciseIndex;
     const q = queue[idx];
+    if (q.answered) return; // déjà répondu, ignore un second clic éventuel
     const isCorrect = q.options[selectedIndex].correct;
 
     // Le test final alimente le SRS en fin d'unité ; les étapes de découverte/pratique
@@ -5865,7 +5964,17 @@ function answerLearningExercise(selectedIndex) {
         updateWeaknessTracking(q.sourceId, 0, { type: q.sourceType, label: q.sourceLabel });
     }
 
+    // On affiche le retour (bonne/mauvaise réponse) AVANT d'avancer — l'avancée réelle se fait
+    // au clic sur "Continuer" (continueLearningExercise), jamais automatiquement.
+    q.answered = true;
+    q.selectedIndex = selectedIndex;
+    renderLearningExerciseStep(currentStep);
+}
+
+// Appelé par le bouton "Continuer" une fois le retour affiché : passe à la question suivante.
+function continueLearningExercise() {
     learningSession.exerciseIndex++;
+    const currentStep = learningSession.unit.steps[learningSession.stepIndex];
     renderLearningExerciseStep(currentStep);
 }
 
@@ -9689,6 +9798,7 @@ function closeAllOverlaysAndSessions() {
     // réutilisé par de nombreux écrans), corrompant la progression sauvegardée en silence.
     activeSwipeContext = null;
     lessonSession = null;
+    learningSession = null;
 
     reviewSession = null;
     grammarReviewSession = null;
