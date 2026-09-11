@@ -5639,7 +5639,7 @@ async function renderLearningStep() {
         `<span style="width:8px;height:8px;border-radius:50%;background:${i === stepIndex ? 'var(--accent)' : 'var(--border)'};display:inline-block;margin:0 3px;"></span>`
     ).join('');
     const header = `
-        <div style="display:flex;align-items:center;justify-content:center;padding:14px 16px 6px;">
+        <div style="display:flex;align-items:center;justify-content:center;padding:56px 16px 6px;">
             <div>${progressDots}</div>
         </div>` + learningPathFAB();
 
@@ -5658,16 +5658,9 @@ async function renderLearningStep() {
         const items = await Promise.all(
             step.items.map(id => getLearningResource(step.type, id, learningSession.levelId))
         );
-        // Pour les kanji, on précharge le vocabulaire du niveau une seule fois pour pouvoir
-        // afficher les mots qui utilisent chaque caractère (lien inverse kanji -> vocabulaire).
-        let vocabPoolForLinks = null;
-        if (step.type === 'kanji') {
-            const vd = await getLevelVocabData(learningSession.levelId);
-            vocabPoolForLinks = vd && vd.data ? vd.data : [];
-        }
         container.innerHTML = header + `
             <div style="padding:0 16px;">
-                ${items.map(item => renderLearningResourceCard(step.type, item, vocabPoolForLinks)).join('')}
+                ${items.map(item => renderLearningResourceCard(step.type, item)).join('')}
                 <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
             </div>`;
         return;
@@ -5748,22 +5741,11 @@ function renderLearningResourceCard(type, item, vocabPoolForLinks = null) {
         const onTags = (item.on || []).map(r => readingTag(r, 'tag-on')).join('');
         const kunTags = (item.kun || []).map(r => readingTag(r, 'tag-kun')).join('');
 
-        // Lien inverse kanji -> vocabulaire : mots du niveau qui utilisent ce kanji.
-        let relatedWordsHtml = '';
-        if (vocabPoolForLinks) {
-            const related = vocabPoolForLinks.filter(w => Array.isArray(w.kanji_list) && w.kanji_list.includes(item.char)).slice(0, 6);
-            if (related.length) {
-                relatedWordsHtml = `<div style="margin-top:10px;color:var(--gray);font-size:0.85rem;">Mots avec ce kanji :</div>
-                    <div style="margin-top:4px;">${related.map(w => `<span class="tag" style="background:var(--surface);color:var(--text);font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${w.word_furigana || w.word}</span>`).join('')}</div>`;
-            }
-        }
-
         return `<div class="dash-card" style="overflow-wrap:break-word;">
             <div style="font-size:2rem;">${item.char}</div>
             ${item.on && item.on.length ? `<div style="margin-top:8px;color:var(--gray);font-size:0.85rem;">Lecture on : ${onTags}</div>` : ''}
             ${item.kun && item.kun.length ? `<div style="margin-top:6px;color:var(--gray);font-size:0.85rem;">Lecture kun : ${kunTags}</div>` : ''}
             <div style="margin-top:6px;">${(item.meanings || []).join(', ')}</div>
-            ${relatedWordsHtml}
         </div>`;
     }
     if (type === 'grammar') {
@@ -5798,7 +5780,7 @@ async function renderLearningExerciseStep(step) {
     }
 
     const q = queue[idx];
-    const header = `<div style="padding:14px 16px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>` + learningPathFAB();
+    const header = `<div style="padding:56px 16px 14px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>` + learningPathFAB();
 
     const optionsHtml = q.options.map((opt, i) => {
         let cls = 'review-option-btn';
@@ -5817,16 +5799,28 @@ async function renderLearningExerciseStep(step) {
     let feedbackHtml = '';
     if (q.answered) {
         const isCorrect = q.options[q.selectedIndex]?.correct;
-        const correctLabel = q.options.find(o => o.correct)?.label || '';
-        feedbackHtml = `
-            <div class="dash-card" style="margin-top:14px;">
-                ${isCorrect
-                    ? `<div>✅ Bonne réponse !</div>`
-                    : `<div>❌ Tu as répondu <strong>${q.options[q.selectedIndex]?.label || ''}</strong></div>
-                       <div style="margin-top:4px;">✅ La bonne réponse était <strong>${correctLabel}</strong></div>`}
-                ${q.feedback ? `<div style="margin-top:10px;color:var(--gray);">${mdBold(q.feedback)}</div>` : ''}
-            </div>
-            <button class="review-cta-btn" style="margin-top:14px;" onclick="continueLearningExercise()">Continuer →</button>`;
+        const correctOpt = q.options.find(o => o.correct);
+        const selectedOpt = q.options[q.selectedIndex];
+
+        if (q.sourceType === 'grammar') {
+            // Comparatif ❌/✅ cliquable, même système que le quiz de particules existant —
+            // toujours affiché (juste ou faux), pour pouvoir consulter la fiche dans les deux cas.
+            feedbackHtml = buildLearningGrammarComparisonHtml(
+                selectedOpt.label, isCorrect ? null : selectedOpt.lesson,
+                correctOpt.label, correctOpt.lesson
+            );
+        } else {
+            // Vocabulaire : retour simple + accès à la fiche complète du mot.
+            feedbackHtml = `
+                <div class="dash-card" style="margin-top:14px;">
+                    ${isCorrect
+                        ? `<div>✅ Bonne réponse !</div>`
+                        : `<div>❌ Tu as répondu <strong>${selectedOpt.label}</strong></div>
+                           <div style="margin-top:4px;">✅ La bonne réponse était <strong>${correctOpt.label}</strong></div>`}
+                </div>
+                ${q.sourceWord ? `<button class="fiche-correction-btn" style="margin-top:10px" onclick="showLearningFicheCorrection()">📖 Voir la fiche : ${q.sourceWord.word}</button>` : ''}`;
+        }
+        feedbackHtml += `<button class="review-cta-btn" style="margin-top:14px;" onclick="continueLearningExercise()">Continuer →</button>`;
     }
 
     container.innerHTML = header + `
@@ -5872,6 +5866,43 @@ function findRomajiForGrammarOption(optionText, pool) {
     return null;
 }
 
+// Retrouve la leçon d'origine d'une option de cloze grammaire (même principe que la romaji),
+// pour pouvoir construire le comparatif ❌/✅ cliquable comme dans le quiz de particules existant.
+function findLessonForGrammarOption(optionText, pool) {
+    for (const lesson of pool) {
+        for (const ex of (lesson.examples || [])) {
+            if (Array.isArray(ex.highlight) && ex.highlight[0] === optionText) {
+                return lesson;
+            }
+        }
+    }
+    return null;
+}
+
+// Comparatif ❌/✅ pour une question de grammaire du Learning Path — même principe visuel que
+// buildParticleComparisonHtml (leçons cliquables via showLessonReferencePopup), mais les leçons
+// sont fournies directement (pas de lookup par item bare, nos options sont des formes conjuguées).
+function buildLearningGrammarComparisonHtml(selectedText, selectedLesson, correctText, correctLesson) {
+    const wrongExplanation = getShortLessonExplanation(selectedLesson);
+    const correctExplanation = getShortLessonExplanation(correctLesson);
+
+    const span = (text, lesson) => lesson
+        ? `<span class="eye-badge" onclick="showLessonReferencePopup('${lesson.id}')">👁️ ${text}</span>`
+        : `<strong>${text}</strong>`;
+
+    return `
+        <div class="particle-compare-box">
+            <div class="particle-compare-row wrong">
+                <span class="particle-compare-icon">❌</span>
+                <div class="particle-compare-text">Tu as mis ${span(selectedText, selectedLesson)}${wrongExplanation ? ` : ${mdBold(wrongExplanation)}` : ''}</div>
+            </div>
+            <div class="particle-compare-row correct">
+                <span class="particle-compare-icon">✅</span>
+                <div class="particle-compare-text">Il fallait mettre ${span(correctText, correctLesson)}${correctExplanation ? ` : ${mdBold(correctExplanation)}` : ''}</div>
+            </div>
+        </div>`;
+}
+
 async function buildLearningExerciseQueue(step) {
     const { unit, levelId } = learningSession;
     const vd = await getLevelVocabData(levelId);
@@ -5896,6 +5927,7 @@ async function buildLearningExerciseQueue(step) {
                 sourceType: 'vocab',
                 sourceId: id,
                 sourceLabel: word.word,
+                sourceWord: word,
                 // Question "Que signifie X ?" : jamais de traduction française en aide, ce
                 // serait littéralement la réponse (les options SONT les sens français).
                 promptMain: `Que signifie ${word.word_furigana || word.word} ?`,
@@ -5925,6 +5957,7 @@ async function buildLearningExerciseQueue(step) {
                 sourceType: 'grammar',
                 sourceId: id,
                 sourceLabel: lesson.item || lesson.pattern,
+                sourceLesson: lesson,
                 // Ici la traduction française ne révèle pas quelle particule/forme choisir,
                 // donc on peut l'afficher comme aide sans donner la réponse.
                 promptMain: `${cloze.before}<strong>＿＿＿</strong>${cloze.after}`,
@@ -5934,6 +5967,7 @@ async function buildLearningExerciseQueue(step) {
                     label: o,
                     correct: o === cloze.correct,
                     romaji: findRomajiForGrammarOption(o, clozePool),
+                    lesson: o === cloze.correct ? lesson : findLessonForGrammarOption(o, clozePool),
                 })),
             });
         }
@@ -5978,13 +6012,22 @@ function continueLearningExercise() {
     renderLearningExerciseStep(currentStep);
 }
 
+// Ouvre la fiche complète du mot de la question courante — relit l'état en mémoire plutôt que
+// de faire transiter l'objet mot via l'attribut onclick (plus sûr, évite tout souci de
+// caractères spéciaux/apostrophes dans les textes français).
+function showLearningFicheCorrection() {
+    const q = learningSession?.exerciseQueue?.[learningSession.exerciseIndex];
+    if (!q || !q.sourceWord) return;
+    showFicheCorrectionModal({ type: 'vocab', item: q.sourceWord });
+}
+
 // Écran de fin d'unité.
 function renderLearningUnitResult(scorePct, testResults) {
     const container = document.getElementById('main-content');
     if (!container) return;
     const correctCount = testResults.filter(r => r.correct).length;
     container.innerHTML = learningPathFAB() + `
-        <div style="padding:24px 16px;text-align:center;">
+        <div style="padding:64px 16px 24px;text-align:center;">
             <h2>Unité terminée !</h2>
             <div style="font-size:2.4rem;color:var(--accent);margin:16px 0;">${scorePct !== null ? scorePct + ' %' : '—'}</div>
             <p style="color:var(--gray);">${correctCount} / ${testResults.length} bonnes réponses</p>
