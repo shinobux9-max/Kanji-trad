@@ -5406,6 +5406,21 @@ async function startLearningPath(levelId = 'n5') {
 }
 
 // Charge une unité précise et initialise/reprend la session en mémoire.
+// Calcule ce qui a été couvert (vu) dans l'unité jusqu'à une étape donnée incluse — utilisé pour
+// que les exercices de pratique ne testent jamais une notion pas encore enseignée à ce stade
+// (important pour les unités qui introduisent la grammaire par petits blocs successifs, comme
+// n5_u02 avec ses sous-parties 2A/2B/2C/2D).
+function computeCoveredUpTo(unit, stepIndex) {
+    const covered = { vocabulary: [], kanji: [], grammar: [] };
+    for (let i = 0; i <= stepIndex && i < unit.steps.length; i++) {
+        const s = unit.steps[i];
+        if ((s.type === 'vocabulary' || s.type === 'kanji' || s.type === 'grammar') && Array.isArray(s.items)) {
+            covered[s.type].push(...s.items);
+        }
+    }
+    return covered;
+}
+
 async function loadLearningUnit(levelId, unit, progress = null) {
     progress = progress || loadLearningProgress();
     const savedStep = (progress.currentUnit === unit.id) ? (progress.currentStep || 0) : 0;
@@ -5414,7 +5429,8 @@ async function loadLearningUnit(levelId, unit, progress = null) {
         levelId,
         unit,
         stepIndex: savedStep,
-        testResults: []
+        testResults: [],
+        coveredNew: computeCoveredUpTo(unit, savedStep)
     };
 
     progress.currentLevel = levelId;
@@ -5437,6 +5453,7 @@ async function completeLearningStep() {
         return;
     }
     learningSession.stepIndex = nextIndex;
+    learningSession.coveredNew = computeCoveredUpTo(learningSession.unit, nextIndex);
     const progress = loadLearningProgress();
     progress.currentStep = nextIndex;
     if (progress.units[learningSession.unit.id]) {
@@ -5451,6 +5468,7 @@ function startLearningStep(index) {
     if (!learningSession) return;
     if (index < 0 || index >= learningSession.unit.steps.length) return;
     learningSession.stepIndex = index;
+    learningSession.coveredNew = computeCoveredUpTo(learningSession.unit, index);
     renderLearningStep();
 }
 
@@ -5596,8 +5614,10 @@ async function renderLearningExerciseStep(step) {
 }
 
 // Construit la file de questions pour une étape mixed_practice/test, à partir des ressources
-// new+review de l'unité, en piochant les distracteurs dans TOUT le niveau (pas seulement
-// l'unité) pour ne jamais être bloqué faute de pool suffisant.
+// déjà couvertes à ce stade de l'unité (jamais une notion pas encore enseignée) + le "review"
+// de l'unité (déjà appris avant), en piochant les distracteurs dans TOUT le niveau (pas
+// seulement l'unité) pour ne jamais être bloqué faute de pool suffisant. Le test final (dernière
+// étape) couvre lui toujours l'intégralité du "new" de l'unité, puisqu'à ce stade tout a été vu.
 async function buildLearningExerciseQueue(step) {
     const { unit, levelId } = learningSession;
     const vd = await getLevelVocabData(levelId);
@@ -5605,8 +5625,10 @@ async function buildLearningExerciseQueue(step) {
     const vocabPool = vd && vd.data ? vd.data : [];
     const grammarPool = gd && gd.data ? gd.data : [];
 
-    const allVocabIds = [...(unit.content.new.vocabulary || []), ...(unit.content.review.vocabulary || [])];
-    const allGrammarIds = [...(unit.content.new.grammar || []), ...(unit.content.review.grammar || [])];
+    // "review" toujours disponible (déjà appris avant cette unité) + uniquement le "new" déjà
+    // couvert jusqu'à l'étape courante (jamais ce qui n'a pas encore été enseigné)
+    const allVocabIds = [...(learningSession.coveredNew.vocabulary || []), ...(unit.content.review.vocabulary || [])];
+    const allGrammarIds = [...(learningSession.coveredNew.grammar || []), ...(unit.content.review.grammar || [])];
 
     const questionCount = step.questionCount || (allVocabIds.length + allGrammarIds.length);
     const queue = [];

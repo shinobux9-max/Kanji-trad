@@ -32,6 +32,45 @@
         { "id": "practice_01", "type": "mixed_practice" },
         { "id": "test_01", "type": "test", "questionCount": 6 }
       ]
+    },
+    {
+      "id": "n5_u02",
+      "order": 2,
+      "title": "Les particules fondamentales",
+      "description": "Relier les éléments d'une phrase entre eux : sujet, objet, lieu, destination et nuances de conversation.",
+      "objectives": [
+        "Distinguer は et が",
+        "Utiliser を pour marquer l'objet d'une action",
+        "Utiliser に、で、へ pour le lieu et la destination",
+        "Utiliser と、も、の pour relier des éléments",
+        "Utiliser か、ね、よ pour nuancer une phrase"
+      ],
+      "content": {
+        "new": {
+          "vocabulary": ["n5_v_156", "n5_v_127", "n5_v_117", "n5_v_66"],
+          "kanji": ["行", "校", "食", "飲"],
+          "grammar": ["n5_g_8", "n5_g_9", "n5_g_10", "n5_g_11", "n5_g_12", "n5_g_13", "n5_g_14", "n5_g_15", "n5_g_16", "n5_g_17", "n5_g_18", "n5_g_19"]
+        },
+        "review": {
+          "vocabulary": ["n5_v_32", "n5_v_22"],
+          "kanji": ["学"],
+          "grammar": ["n5_g_1"]
+        }
+      },
+      "steps": [
+        { "id": "intro", "type": "introduction" },
+        { "id": "vocab_01", "type": "vocabulary", "items": ["n5_v_156", "n5_v_127", "n5_v_117", "n5_v_66"] },
+        { "id": "kanji_01", "type": "kanji", "items": ["行", "校", "食", "飲"] },
+        { "id": "grammar_2a", "type": "grammar", "items": ["n5_g_8", "n5_g_9", "n5_g_10"] },
+        { "id": "practice_2a", "type": "mixed_practice" },
+        { "id": "grammar_2b", "type": "grammar", "items": ["n5_g_11", "n5_g_12", "n5_g_13"] },
+        { "id": "practice_2b", "type": "mixed_practice" },
+        { "id": "grammar_2c", "type": "grammar", "items": ["n5_g_14", "n5_g_15", "n5_g_16"] },
+        { "id": "practice_2c", "type": "mixed_practice" },
+        { "id": "grammar_2d", "type": "grammar", "items": ["n5_g_17", "n5_g_18", "n5_g_19"] },
+        { "id": "practice_2d", "type": "mixed_practice" },
+        { "id": "test_02", "type": "test", "questionCount": 10 }
+      ]
     }
   ]
 }
