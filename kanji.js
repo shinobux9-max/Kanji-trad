@@ -3998,6 +3998,15 @@ async function showApprendreScreen(isBack = false) {
                 </div>
                 <span class="free-training-chevron">→</span>
             </div>
+
+            <div class="dash-card free-training-card" onclick="showLearningPathHome('n5')">
+                <div class="free-training-icon" style="background:rgba(0,229,255,0.15);color:var(--accent)">🗺️</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">Parcours guidé</div>
+                    <div class="free-training-sub">Vocabulaire, kanji et grammaire ensemble, unité par unité</div>
+                </div>
+                <span class="free-training-chevron">→</span>
+            </div>
             
             <div class="dash-card weakness-widget" id="apprendre-weakness-widget" style="display:none;"></div>
             
@@ -5398,6 +5407,76 @@ function getNextLearningUnit(curriculum, progress) {
     return null; // niveau entièrement terminé
 }
 
+// Statut d'affichage d'une unité pour l'écran de liste : "completed" / "in_progress" /
+// "available" (pas encore commencée mais accessible, juste après la dernière terminée) /
+// "locked" (pas encore atteinte). Les unités terminées ou en cours restent TOUJOURS
+// consultables librement (l'utilisateur peut revenir revoir un chapitre déjà fait).
+function getLearningUnitDisplayStatus(unit, curriculum, progress) {
+    const p = progress.units[unit.id];
+    if (p && p.status === 'completed') return 'completed';
+    if (p && p.status === 'in_progress') return 'in_progress';
+    const next = getNextLearningUnit(curriculum, progress);
+    if (next && next.id === unit.id) return 'available';
+    return 'locked';
+}
+
+// Écran de liste des unités d'un niveau — permet de reprendre une unité en cours, revoir une
+// unité déjà terminée, ou démarrer la prochaine unité disponible. Les unités pas encore
+// atteintes restent verrouillées (pas de saut en avant).
+async function showLearningPathHome(levelId, isBack = false) {
+    if (!isBack) history.pushState({ view: 'learning-path-home', levelId }, '');
+    document.getElementById('page-title').innerText = 'Parcours guidé';
+    const main = document.getElementById('main-content');
+    const curriculum = await getLevelCurriculum(levelId);
+    const progress = loadLearningProgress();
+
+    if (!curriculum || !Array.isArray(curriculum.units) || !curriculum.units.length) {
+        main.innerHTML = `<div class="dash-card" style="margin:16px;">Aucune unité disponible pour ce niveau pour l'instant.</div>`;
+        return;
+    }
+
+    const sorted = [...curriculum.units].sort((a, b) => a.order - b.order);
+    const statusMeta = {
+        completed:   { icon: '✓', color: '#4ADE80', label: 'Terminée' },
+        in_progress: { icon: '▶', color: 'var(--accent)', label: 'En cours' },
+        available:   { icon: '○', color: 'var(--gray)', label: 'À commencer' },
+        locked:      { icon: '🔒', color: 'var(--gray)', label: 'Verrouillée' },
+    };
+
+    const cardsHtml = sorted.map(unit => {
+        const status = getLearningUnitDisplayStatus(unit, curriculum, progress);
+        const meta = statusMeta[status];
+        const locked = status === 'locked';
+        return `<div class="dash-card" style="${locked ? 'opacity:0.5;' : 'cursor:pointer;'}margin-bottom:10px;"
+                ${locked ? '' : `onclick="startLearningUnitById('${levelId}', '${unit.id}')"`}>
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="color:${meta.color};font-size:1.2rem;">${meta.icon}</span>
+                <div style="flex:1;">
+                    <div style="font-weight:bold;">${unit.title}</div>
+                    <div style="color:var(--gray);font-size:0.85rem;">${meta.label}${status==='completed' && progress.units[unit.id]?.score != null ? ' · ' + progress.units[unit.id].score + ' %' : ''}</div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    main.innerHTML = `
+        <div style="padding:16px;">
+            <div class="apprendre-title-main" style="margin-bottom:4px;">Niveau ${levelId.toUpperCase()}</div>
+            <div class="apprendre-subtitle-main" style="margin-bottom:16px;">Choisis une unité à commencer ou à revoir.</div>
+            ${cardsHtml}
+        </div>`;
+}
+
+// Démarre/reprend une unité précise depuis l'écran de liste (par son id, pas forcément
+// "la prochaine" comme le fait startLearningPath).
+async function startLearningUnitById(levelId, unitId) {
+    const curriculum = await getLevelCurriculum(levelId);
+    if (!curriculum) return;
+    const unit = curriculum.units.find(u => u.id === unitId);
+    if (!unit) return;
+    await loadLearningUnit(levelId, unit);
+}
+
 // Point d'entrée principal : reprend une session en cours, ou démarre/reprend la prochaine
 // unité recommandée.
 async function startLearningPath(levelId = 'n5') {
@@ -5520,6 +5599,16 @@ async function completeLearningUnit() {
 // ══════════════════════════════════════════════════
 // Affiche l'étape courante de la session en cours. Dispatch selon step.type — ne connaît
 // jamais N5 spécifiquement, seulement les types d'étapes génériques du curriculum.
+// Bouton retour flottant (FAB), présent sur tout le parcours guidé sauf l'écran de liste des
+// unités lui-même — ramène toujours à cette liste plutôt qu'en haut de la page courante.
+function learningPathFAB() {
+    const levelId = learningSession ? learningSession.levelId : 'n5';
+    return `<button onclick="showLearningPathHome('${levelId}')"
+        style="position:fixed;bottom:88px;left:16px;z-index:500;width:48px;height:48px;border-radius:50%;
+        background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;
+        box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">←</button>`;
+}
+
 async function renderLearningStep() {
     if (!learningSession) return;
     const { unit, stepIndex } = learningSession;
@@ -5531,11 +5620,9 @@ async function renderLearningStep() {
         `<span style="width:8px;height:8px;border-radius:50%;background:${i === stepIndex ? 'var(--accent)' : 'var(--border)'};display:inline-block;margin:0 3px;"></span>`
     ).join('');
     const header = `
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px;">
-            <button class="back-btn" onclick="closeAllOverlaysAndSessions ? closeAllOverlaysAndSessions() : navDashboard()">←</button>
+        <div style="display:flex;align-items:center;justify-content:center;padding:14px 16px 6px;">
             <div>${progressDots}</div>
-            <div style="width:32px;"></div>
-        </div>`;
+        </div>` + learningPathFAB();
 
     if (step.type === 'introduction') {
         container.innerHTML = header + `
@@ -5632,7 +5719,8 @@ function renderLearningResourceCard(type, item) {
         const kunTags = (item.kun || []).map(r => `<span class="tag tag-kun" style="font-size:0.8rem;padding:4px 10px;margin-right:4px;margin-bottom:4px;display:inline-block;">${r}</span>`).join('');
         return `<div class="dash-card" style="overflow-wrap:break-word;">
             <div style="font-size:2rem;">${item.char}</div>
-            <div style="margin-top:8px;">${onTags}${kunTags}</div>
+            ${item.on && item.on.length ? `<div style="margin-top:8px;color:var(--gray);font-size:0.85rem;">Lecture on : ${onTags}</div>` : ''}
+            ${item.kun && item.kun.length ? `<div style="margin-top:6px;color:var(--gray);font-size:0.85rem;">Lecture kun : ${kunTags}</div>` : ''}
             <div style="margin-top:6px;">${(item.meanings || []).join(', ')}</div>
         </div>`;
     }
@@ -5668,7 +5756,7 @@ async function renderLearningExerciseStep(step) {
     }
 
     const q = queue[idx];
-    const header = `<div style="padding:14px 16px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>`;
+    const header = `<div style="padding:14px 16px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>` + learningPathFAB();
     const optionsHtml = q.options.map((opt, i) => `
         <button class="review-option-btn" onclick="answerLearningExercise(${i})">${opt.label}</button>
     `).join('');
@@ -5786,7 +5874,7 @@ function renderLearningUnitResult(scorePct, testResults) {
     const container = document.getElementById('main-content');
     if (!container) return;
     const correctCount = testResults.filter(r => r.correct).length;
-    container.innerHTML = `
+    container.innerHTML = learningPathFAB() + `
         <div style="padding:24px 16px;text-align:center;">
             <h2>Unité terminée !</h2>
             <div style="font-size:2.4rem;color:var(--accent);margin:16px 0;">${scorePct !== null ? scorePct + ' %' : '—'}</div>
