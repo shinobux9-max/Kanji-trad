@@ -10,9 +10,9 @@
       "primary": "Frais",
       "secondary": ["Rafraîchissant", "Agréable", "Vif"]
     },
-    "nuance": "Adjectif en na utilisé pour décrire une sensation de fraîcheur agréable (temps, brise) ou une personnalité franche, souriante et pleine de vitalité.",
-    "type": "adjectif en na",
-    "group": "na",
+    "nuance": "Utilisé pour décrire une sensation de fraîcheur agréable (temps, brise) ou une personnalité franche, souriante et pleine de vitalité.",
+    "type": "Adjectif en な (*na*) ",
+    "group": "な",
     "category": "emotions_sentiments",
     "kanji_list": ["爽"],
     "particles": [],
@@ -34,9 +34,9 @@
       "primary": "Adorer",
       "secondary": ["Aimer beaucoup", "Être très friand de"]
     },
-    "nuance": "Adjectif en na exprimant un degré d'affection ou de préférence très élevé envers une personne, un plat ou une chose. S'associe souvent avec la particule が (ga) pour l'objet aimé.",
+    "nuance": "Adjectif en な (*na*) exprimant un degré d'affection ou de préférence très élevé envers une personne, un plat ou une chose. S'associe souvent avec la particule が (*ga*) pour l'objet aimé.",
     "type": "adjectif en na",
-    "group": "na",
+    "group": "な",
     "category": "emotions_sentiments",
     "kanji_list": ["大", "好"],
     "particles": ["が"],
@@ -58,7 +58,7 @@
       "primary": "Détester",
       "secondary": ["Ne pas aimer"]
     },
-    "nuance": "Adjectif en na marquant l'aversion ou le désamour. Bien qu'exprimant un sentiment négatif, il est très courant, mais s'emploie avec un certain degré de franchise directe. S'associe avec la particule が '(ga).",
+    "nuance": "Adjectif en な (*na*) exprimant l'aversion ou le désamour. Bien qu'exprimant un sentiment négatif, il s'emploie directement et sans détour au quotidien. Il se construit généralement avec la particule が (*ga*).",
     "type": "adjectif en na",
     "group": "na",
     "category": "emotions_sentiments",
@@ -82,7 +82,8 @@
     "primary": "Sombre",
     "secondary": ["Obscur", "Triste (personnalité, ambiance)"]
   },
-  "nuance": "Adjectif en i exprimant qu'un moment, un événement ou une activité procure de la joie et du divertissement. À ne pas confondre avec <ruby>好<rt>す</rt></ruby>き (suki) qui exprime l'amour ou l'affection.",  "group": "i",
+  "nuance": "Adjectif en い (*i*) qualifiant l'obscurité physique d'un lieu ou la noirceur d'une personnalité. Au Japon, l'association de l'obscurité à la tristesse est très présente dans la culture, le kanji <ruby>暗<rt>くら</rt></ruby> (*kura*) évoquant souvent une atmosphère mélancolique ou un secret inavouable. S'utilise fréquemment pour décrire une pièce sombre ou un avenir incertain.",
+  "group": "i",
   "category": "emotions_sentiments",
   "kanji_list": ["暗"],
   "particles": [],
@@ -104,7 +105,7 @@
     "primary": "Amusant",
     "secondary": ["Joyeux", "Gai", "Agréable"]
   },
-  "nuance": "Adjectif en i exprimant qu'une situation, un moment ou une activité procure du plaisir, de la joie et du divertissement.",
+  "nuance": "Adjectif en い (*i*) exprimant qu'une situation, un moment ou une activité procure du plaisir, de la joie et du divertissement.",
   "type": "adjectif en i",
   "group": "i",
   "category": "emotions_sentiments",
@@ -6632,7 +6633,7 @@
     "primary": "Temps nuageux",
     "secondary": ["Ciel couvert", "Nuageux"]
   },
-  "nuance": "Nom ou forme nominale du verbe <ruby>曇<rt>くも</rt></ruby>る (kumoru - se couvrir), écrit ici avec son kanji pour désigner spécifiquement un temps nuageux ou couvert (alternativement écrit en hiragana <ruby>くもり<rt>くもり</rt></ruby>). Compteur spécifique : <ruby>日<rt>ひ</rt></ruby> (hi).",
+  "nuance": "Nom désignant un temps nuageux. Un dicton populaire japonais affirme que si les nuages se déplacent vers l'est, le temps va s'éclaircir, tandis que s'ils vont vers l'ouest, la pluie arrive.",
   "type": "nom",
   "group": "nom",
   "category": "meteo_saisons",
@@ -6656,7 +6657,7 @@
     "primary": "Chaud (au toucher)",
     "secondary": ["Brûlant", "Chaud (liquide ou objet)"]
   },
-  "nuance": "Adjectif en -i (<ruby>形容詞<rt>けいようし</rt></ruby>) qualifiant la température élevée d'un objet, d'un plat ou d'un liquide au contact, à ne pas confondre avec <ruby>暑<rt>あつ</rt></ruby>い (atsui) qui s'applique exclusivement à la température de l'air et de la météo.",
+  "nuance": "Adjectif en -i qualifiant la température élevée d'un objet ou d'un aliment au toucher. Fait culturel : les Japonais qui ne supportent pas les plats trop chauds sont appelés <ruby>猫舌<rt>ねこじた</rt></ruby> (*nekojita*), littéralement une 'langue de chat'.",
   "type": "adjectif i",
   "group": "i",
   "category": "meteo_saisons",
@@ -6680,7 +6681,7 @@
     "primary": "Automne",
     "secondary": ["Saison automnale"]
   },
-  "nuance": "Nom désignant la saison de l'automne, caractérisée par le jaunissement et la chute des feuilles (<ruby>紅葉<rt>こうよう / もみじ</rt></ruby> - kouyou / momiji). Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (kai) ou <ruby>季<rt>き</rt></ruby> (ki).",
+  "nuance": "Nom désignant la saison de l'automne, caractérisée par le jaunissement et la chute des feuilles <ruby>紅葉<rt>こうよう / もみじ</rt></ruby> (*kouyou / momiji*). Compteur spécifique : <ruby>回<rt>かい</rt></ruby> (*kai*) ou <ruby>季<rt>き</rt></ruby> (*ki*).",
   "type": "nom",
   "group": "nom",
   "category": "meteo_saisons",
@@ -6704,7 +6705,7 @@
     "primary": "Tomber (pluie, neige)",
     "secondary": ["Précipiter (météo)"]
   },
-  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) désignant la pluie (<ruby>雨<rt>あめ</rt></ruby>) ou la neige (<ruby>雪<rt>ゆき</rt></ruby>), généralement associé à la particule が (ga) pour le sujet et に (ni) ou へ (e) pour la direction.",
+  "nuance": "Verbe <ruby>五段<rt>ごだん</rt></ruby> (godan) désignant la pluie <ruby>雨<rt>あめ</rt></ruby> (*ame) ou la neige <ruby>雪<rt>ゆき</rt></ruby> (*yuki), généralement associé à la particule が (*ga*) pour le sujet et に (*ni*) ou へ (*e*) pour la direction.",
   "type": "verbe godan",
   "group": "u",
   "category": "meteo_saisons",
@@ -6728,7 +6729,7 @@
     "primary": "Pluie",
     "secondary": ["Précipitations pluvieuses"]
   },
-  "nuance": "Nom désignant la pluie. L'intensité est nuancée par des onomatopées : ぽつぽつ (potsupotsu) pour les premières gouttes, しとしと (shitoshito) pour une pluie fine, et ザーザー (zāzā) pour une pluie battante.",
+  "nuance": "Nom désignant la pluie. L'intensité est nuancée par des onomatopées : ぽつぽつ (*potsupotsu*) pour les premières gouttes, しとしと (*shitoshito*) pour une pluie fine, et ザーザー (*zāzā*) pour une pluie battante.",
   "type": "nom",
   "group": "nom",
   "category": "meteo_saisons",
