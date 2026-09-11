@@ -9,16 +9,16 @@
         "paragraphs": [
           "Un verbe japonais peut prendre différentes formes selon ce qu'on veut exprimer. La **forme dictionnaire** est la forme de référence : celle qu'on trouve dans un dictionnaire, et celle qu'on utilise pour chercher un mot.",
           "Les verbes se répartissent en trois groupes, qui déterminent comment ils se conjuguent :",
-          "**Groupe 1 (godan)** — la terminaison change selon la conjugaison : <ruby>飲<rt>の</rt></ruby>む devient <ruby>飲<rt>の</rt></ruby>みます.",
-          "**Groupe 2 (ichidan)** — on retire juste る et on ajoute la terminaison : <ruby>食<rt>た</rt></ruby>べる devient <ruby>食<rt>た</rt></ruby>べます.",
-          "**Irréguliers** — する et <ruby>来<rt>く</rt></ruby>る ne suivent pas ces règles, il faut les apprendre à part.",
+          "**Groupe 1 (godan)** — la terminaison change selon la conjugaison : <ruby>飲<rt>の</rt></ruby>む (*nomu*) devient <ruby>飲<rt>の</rt></ruby>みます (*nomimasu*).",
+          "**Groupe 2 (ichidan)** — on retire juste る et on ajoute la terminaison : <ruby>食<rt>た</rt></ruby>べる (*taberu*) devient <ruby>食<rt>た</rt></ruby>べます (*tabemasu*).",
+          "**Irréguliers** — する (*suru*) et <ruby>来<rt>く</rt></ruby>る (*kuru*) ne suivent pas ces règles, il faut les apprendre à part.",
           "Retiens surtout ceci : la **terminaison change selon la forme**, mais le sens de base du verbe reste le même. Les fiches de grammaire suivantes t'apprendront chaque transformation en détail."
         ],
         "examples": [
-          { "japanese": "<ruby>食<rt>た</rt></ruby>べる → <ruby>食<rt>た</rt></ruby>べます", "note": "Groupe 2 (ichidan)" },
-          { "japanese": "<ruby>飲<rt>の</rt></ruby>む → <ruby>飲<rt>の</rt></ruby>みます", "note": "Groupe 1 (godan)" },
-          { "japanese": "する → します", "note": "Irrégulier" },
-          { "japanese": "<ruby>来<rt>く</rt></ruby>る → <ruby>来<rt>き</rt></ruby>ます", "note": "Irrégulier" }
+          { "japanese": "<ruby>食<rt>た</rt></ruby>べる → <ruby>食<rt>た</rt></ruby>べます", "romaji": "Taberu → Tabemasu", "highlight": "ru, masu", "note": "Groupe 2 (ichidan)" },
+          { "japanese": "<ruby>飲<rt>の</rt></ruby>む → <ruby>飲<rt>の</rt></ruby>みます", "romaji": "Nomu → Nomimasu", "highlight": "mu, mimasu", "note": "Groupe 1 (godan)" },
+          { "japanese": "する → します", "romaji": "Suru → Shimasu", "highlight": "suru, shimasu", "note": "Irrégulier" },
+          { "japanese": "<ruby>来<rt>く</rt></ruby>る → <ruby>来<rt>き</rt></ruby>ます", "romaji": "Kuru → Kimasu", "highlight": "kuru, kimasu", "note": "Irrégulier" }
         ]
       }
     }

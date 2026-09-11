@@ -5572,6 +5572,7 @@ async function renderLearningStep() {
         const examplesHtml = (concept.content.examples || []).map(ex => `
             <div class="dash-card" style="margin-bottom:8px;">
                 <div style="font-size:1.1rem;">${ex.japanese}</div>
+                ${ex.romaji ? `<div style="color:var(--accent);font-style:italic;font-size:0.9rem;margin-top:2px;">${ex.romaji}</div>` : ''}
                 ${ex.note ? `<div style="color:var(--gray);font-size:0.85rem;margin-top:4px;">${ex.note}</div>` : ''}
             </div>`).join('');
         container.innerHTML = header + `
@@ -5604,21 +5605,24 @@ function renderLearningResourceCard(type, item) {
     if (type === 'vocabulary') {
         return `<div class="dash-card">
             <div style="font-size:1.6rem;">${item.word_furigana || item.word}</div>
-            <div style="color:var(--gray);">${item.reading} · ${item.romaji}</div>
+            <div style="color:var(--gray);">${item.romaji}</div>
             <div style="margin-top:6px;">${item.meanings?.primary || ''}</div>
         </div>`;
     }
     if (type === 'kanji') {
+        const onTags = (item.on || []).map(r => `<span class="tag tag-on" style="font-size:0.875rem;padding:4px 10px;margin-right:4px;">${r}</span>`).join('');
+        const kunTags = (item.kun || []).map(r => `<span class="tag tag-kun" style="font-size:0.875rem;padding:4px 10px;margin-right:4px;">${r}</span>`).join('');
         return `<div class="dash-card">
             <div style="font-size:2.2rem;">${item.char}</div>
-            <div style="color:var(--gray);">On: ${(item.on || []).join('、')} — Kun: ${(item.kun || []).join('、')}</div>
+            <div style="margin-top:8px;">${onTags}${kunTags}</div>
             <div style="margin-top:6px;">${(item.meanings || []).join(', ')}</div>
         </div>`;
     }
     if (type === 'grammar') {
         return `<div class="dash-card">
-            <div style="font-size:1.6rem;">${item.item}</div>
-            <div style="color:var(--gray);">${item.pattern || ''}</div>
+            <div style="font-size:1.6rem;color:var(--accent);">${item.item}</div>
+            <div style="color:var(--gray);">${item.item_romaji || ''}</div>
+            <div style="color:var(--gray);margin-top:2px;">${item.pattern || ''}</div>
             <div style="margin-top:6px;">${item.title || ''}</div>
         </div>`;
     }
@@ -5648,15 +5652,27 @@ async function renderLearningExerciseStep(step) {
     const q = queue[idx];
     const header = `<div style="padding:14px 16px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>`;
     const optionsHtml = q.options.map((opt, i) => `
-        <button class="dash-card" style="width:100%;text-align:left;cursor:pointer;margin-bottom:8px;"
-            onclick="answerLearningExercise(${i})">${opt.label}</button>
+        <button class="review-option-btn" onclick="answerLearningExercise(${i})">${opt.label}</button>
     `).join('');
 
     container.innerHTML = header + `
         <div style="padding:0 16px;">
-            <div class="dash-card" style="margin-bottom:16px;">${q.prompt}</div>
-            ${optionsHtml}
+            <div class="review-card" style="font-size:1.3rem;margin-bottom:16px;">${q.prompt}</div>
+            <div class="review-options">${optionsHtml}</div>
         </div>`;
+}
+
+// Regroupement thématique des particules pour des distracteurs cohérents : quand on teste une
+// particule, on pioche en priorité parmi celles du MÊME groupe de sens plutôt que n'importe
+// quelle autre leçon de grammaire (éviter des choix comme "は / から / のみます" sans lien).
+const PARTICLE_THEMATIC_GROUPS = [
+    ['は', 'が', 'を'],                    // structure de base : thème / sujet / objet
+    ['に', 'で', 'へ', 'から', 'まで'],      // lieu, destination, moyen, origine, limite
+    ['と', 'も', 'の'],                     // relation, association, possession
+    ['か', 'ね', 'よ'],                     // nuances de conversation
+];
+function findParticleGroup(particleItem) {
+    return PARTICLE_THEMATIC_GROUPS.find(group => group.includes(particleItem)) || null;
 }
 
 // Construit la file de questions pour une étape mixed_practice/test, à partir des ressources
@@ -5688,7 +5704,7 @@ async function buildLearningExerciseQueue(step) {
                 sourceType: 'vocab',
                 sourceId: id,
                 sourceLabel: word.word,
-                prompt: `Que signifie <strong>${word.word}</strong> ?`,
+                prompt: `Que signifie ${word.word_furigana || word.word} <em>(${word.romaji})</em> ?`,
                 options: qcm.options.map(o => ({ label: o, correct: o === qcm.correct })),
             });
         }
@@ -5696,7 +5712,18 @@ async function buildLearningExerciseQueue(step) {
     for (const id of allGrammarIds) {
         const lesson = grammarPool.find(l => l.id === id);
         if (!lesson) continue;
-        const cloze = buildGrammarCloze(lesson, grammarPool);
+
+        // Si c'est une particule connue, on essaie d'abord un pool thématique (distracteurs
+        // cohérents) ; sinon, ou si le groupe est trop petit pour générer l'exercice, on retombe
+        // sur le pool complet du niveau.
+        let clozePool = grammarPool;
+        const group = findParticleGroup(lesson.item);
+        if (group) {
+            const thematicPool = grammarPool.filter(l => group.includes(l.item));
+            if (thematicPool.length >= 4) clozePool = thematicPool;
+        }
+
+        const cloze = buildGrammarCloze(lesson, clozePool);
         if (cloze) {
             queue.push({
                 sourceType: 'grammar',
