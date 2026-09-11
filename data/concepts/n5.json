@@ -7,7 +7,7 @@
       "title": "Les verbes japonais",
       "content": {
         "paragraphs": [
-          "Un verbe japonais peut prendre différentes formes selon ce qu'on veut exprimer. La **forme dictionnaire** est la forme de référence : celle qu'on trouve dans un dictionnaire, et celle qu'on utilise pour chercher un mot.",
+          "Un verbe japonais peut prendre différentes formes selon ce qu'on veut exprimer. La **forme dictionnaire** (*verbe à l'infinitif*) est la forme de référence : celle qu'on trouve dans un dictionnaire, et celle qu'on utilise pour chercher un mot.",
           "Les verbes se répartissent en trois groupes, qui déterminent comment ils se conjuguent :",
           "**Groupe 1 (godan)** — la terminaison change selon la conjugaison : <ruby>飲<rt>の</rt></ruby>む (*nomu*) devient <ruby>飲<rt>の</rt></ruby>みます (*nomimasu*).",
           "**Groupe 2 (ichidan)** — on retire juste る et on ajoute la terminaison : <ruby>食<rt>た</rt></ruby>べる (*taberu*) devient <ruby>食<rt>た</rt></ruby>べます (*tabemasu*).",
@@ -15,155 +15,14 @@
           "Retiens surtout ceci : la **terminaison change selon la forme**, mais le sens de base du verbe reste le même. Les fiches de grammaire suivantes t'apprendront chaque transformation en détail."
         ],
         "examples": [
-          {
-            "japanese": "<ruby>食<rt>た</rt></ruby>べる → <ruby>食<rt>た</rt></ruby>べます",
+          { "japanese": "<ruby>食<rt>た</rt></ruby>べる → <ruby>食<rt>た</rt></ruby>べます", 
             "romaji": "Taberu → Tabemasu",
             "french": "Manger → Mange",
-            "highlight": "ru, masu",
-            "note": "Groupe 2 (ichidan)"
-          },
-          {
-            "japanese": "<ruby>飲<rt>の</rt></ruby>む → <ruby>飲<rt>の</rt></ruby>みます",
-            "romaji": "Nomu → Nomimasu",
-            "french": "Boire → Bois",
-            "highlight": "mu, mimasu",
-            "note": "Groupe 1 (godan)"
-          },
-          {
-            "japanese": "する → します",
-            "romaji": "Suru → Shimasu",
-            "french": "Faire → Fais",
-            "highlight": "suru, shimasu",
-            "note": "Irrégulier"
-          },
-          {
-            "japanese": "<ruby>来<rt>く</rt></ruby>る → <ruby>来<rt>き</rt></ruby>ます",
-            "romaji": "Kuru → Kimasu",
-            "french": "Venir → Viens",
-            "highlight": "kuru, kimasu",
-            "note": "Irrégulier"
-          }
-        ]
-      }
-    },
-    {
-      "id": "n5_particules_base",
-      "level": "N5",
-      "type": "introduction",
-      "title": "Les particules de base",
-      "content": {
-        "paragraphs": [
-          "Les particules sont de petits mots grammaticaux placés juste après un mot ou un groupe de mots, pour indiquer son rôle dans la phrase. Elles jouent un rôle un peu comme les prépositions en français, mais avec un fonctionnement propre au japonais.",
-          "Voici les trois particules les plus fondamentales : elles servent à construire le squelette de presque toutes les phrases japonaises."
-        ],
-        "items": [
-          {
-            "title": "は (wa)",
-            "explanation": "La particule **は** sert à introduire le **thème principal** de la phrase. Elle correspond au français « En ce qui concerne... » ou « Quant à... », et indique sur quoi porte l'information qui va suivre.",
-            "example": {
-              "japanese": "<ruby>私<rt>わたし</rt></ruby>はマイクです。",
-              "romaji": "Watashi wa Maiku desu.",
-              "french": "Je suis Mike. (Quant à moi, c'est Mike)"
-            }
-          },
-          {
-            "title": "が (ga)",
-            "explanation": "La particule **が** désigne le **sujet grammatical précis** de la phrase. Contrairement à は qui pose le thème général, **が** met un coup de projecteur sur l'élément qui la précède pour répondre à « Qui ? » ou « Quoi ? ».",
-            "example": {
-              "japanese": "<ruby>猫<rt>ねこ</rt></ruby>がいます。",
-              "romaji": "Neko ga imasu.",
-              "french": "Il y a un chat."
-            }
-          },
-          {
-            "title": "を (wo)",
-            "explanation": "La particule **を** marque le **complément d'objet direct** de la phrase : l'élément qui subit directement l'action du verbe (ce que l'on mange, ce que l'on lit, ce que l'on achète...).",
-            "example": {
-              "japanese": "<ruby>林檎<rt>りんご</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。",
-              "romaji": "Ringo o tabemasu.",
-              "french": "Je mange une pomme."
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "n5_particules_localisation",
-      "level": "N5",
-      "type": "introduction",
-      "title": "Les particules de localisation",
-      "content": {
-        "paragraphs": [
-          "Ces particules servent à préciser un lieu : où une action se déroule, avec quel moyen, ou vers quelle direction on se dirige."
-        ],
-        "items": [
-          {
-            "title": "に (ni)",
-            "explanation": "La particule **に** indique un **point d'aboutissement** ou une **cible précise** : une destination, un moment précis dans le temps, ou la présence d'un objet ou d'une personne quelque part.",
-            "example": {
-              "japanese": "<ruby>七時<rt>しちじ</rt></ruby>におきます。",
-              "romaji": "Shichiji ni okimasu.",
-              "french": "Je me réveille à 7 heures."
-            }
-          },
-          {
-            "title": "で (de)",
-            "explanation": "La particule **で** possède deux fonctions majeures : marquer le **lieu où se déroule une action**, et indiquer le **moyen ou l'outil** utilisé pour l'accomplir. Elle répond à « Où ? » (cadre de l'action) et « Comment / Avec quoi ? ».",
-            "example": {
-              "japanese": "レストランで<ruby>食<rt>た</rt></ruby>べます。",
-              "romaji": "Resutoran de tabemasu.",
-              "french": "Je mange au restaurant."
-            }
-          },
-          {
-            "title": "へ (e)",
-            "explanation": "La particule **へ** indique la **direction** ou le **mouvement** vers un lieu, comme « vers » en français. Contrairement à に qui met l'accent sur la destination finale, **へ** insiste sur le cap ou le déplacement lui-même.",
-            "example": {
-              "japanese": "<ruby>東京<rt>とうきょう</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きます。",
-              "romaji": "Toukyou e ikimasu.",
-              "french": "Je vais à Tokyo / Je pars en direction de Tokyo."
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": "n5_particules_relation",
-      "level": "N5",
-      "type": "introduction",
-      "title": "Les particules de relation et de possession",
-      "content": {
-        "paragraphs": [
-          "Ces particules servent à relier des éléments entre eux : accompagnement, inclusion, ou possession."
-        ],
-        "items": [
-          {
-            "title": "と (to)",
-            "explanation": "La particule **と** remplit deux rôles majeurs : l'**énumération exhaustive** (« et ») et l'**accompagnement** (« avec »). Reliant des noms, elle indique que la liste est complète.",
-            "example": {
-              "japanese": "<ruby>友達<rt>ともだち</rt></ruby>と<ruby>話<rt>はな</rt></ruby>します。",
-              "romaji": "Tomodachi to hanashimasu.",
-              "french": "Je parle avec un ami."
-            }
-          },
-          {
-            "title": "も (mo)",
-            "explanation": "La particule **も** signifie « aussi », « également », ou « non plus » dans une phrase négative. Elle indique qu'un élément partage la même caractéristique ou réalise la même action qu'un autre déjà mentionné.",
-            "example": {
-              "japanese": "<ruby>私<rt>わたし</rt></ruby>もがくせいです。",
-              "romaji": "Watashi mo gakusei desu.",
-              "french": "Moi aussi, je suis étudiant."
-            }
-          },
-          {
-            "title": "の (no)",
-            "explanation": "La particule **の** relie deux noms entre eux : le premier vient préciser ou caractériser le second. Elle sert principalement à exprimer la **possession**, l'**appartenance** ou la **catégorie**.",
-            "example": {
-              "japanese": "<ruby>私<rt>わたし</rt></ruby>のほんです。",
-              "romaji": "Watashi no hon desu.",
-              "french": "C'est mon livre."
-            }
-          }
+            "highlight": "ru, masu", 
+            "note": "Groupe 2 (ichidan)" },
+          { "japanese": "<ruby>飲<rt>の</rt></ruby>む → <ruby>飲<rt>の</rt></ruby>みます", "romaji": "Nomu → Nomimasu", "highlight": "mu, mimasu", "note": "Groupe 1 (godan)" },
+          { "japanese": "する → します", "romaji": "Suru → Shimasu", "highlight": "suru, shimasu", "note": "Irrégulier" },
+          { "japanese": "<ruby>来<rt>く</rt></ruby>る → <ruby>来<rt>き</rt></ruby>ます", "romaji": "Kuru → Kimasu", "highlight": "kuru, kimasu", "note": "Irrégulier" }
         ]
       }
     }

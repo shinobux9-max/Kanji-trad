@@ -8,9 +8,9 @@
       "title": "Se présenter",
       "description": "Poser les bases de la phrase japonaise et identifier une personne ou son métier.",
       "objectives": [
-        "Utiliser です pour affirmer/identifier",
-        "Reconnaître et lire les kanji 学 et 生",
-        "Connaître le vocabulaire de l'école : étudiant, professeur"
+        "Utiliser **です** pour affirmer/identifier",
+        "Reconnaître et lire les kanji **学** et **生**",
+        "Connaître le vocabulaire de l'école : **étudiant**, **professeur**"
       ],
       "content": {
         "new": {
@@ -27,7 +27,6 @@
       "steps": [
         { "id": "intro", "type": "introduction" },
         { "id": "vocab_01", "type": "vocabulary", "items": ["n5_v_32", "n5_v_22"] },
-        { "id": "kanji_01", "type": "kanji", "items": ["学", "生"] },
         { "id": "grammar_01", "type": "grammar", "items": ["n5_g_1"] },
         { "id": "practice_01", "type": "mixed_practice" },
         { "id": "test_01", "type": "test", "questionCount": 6 }
@@ -40,10 +39,10 @@
       "description": "Relier les éléments d'une phrase entre eux : sujet, objet, lieu, destination et nuances de conversation.",
       "objectives": [
         "Distinguer は et が",
-        "Utiliser を pour marquer l'objet d'une action",
-        "Utiliser に、で、へ pour le lieu et la destination",
-        "Utiliser と、も、の pour relier des éléments",
-        "Utiliser か、ね、よ pour nuancer une phrase"
+        "Utiliser **を** pour marquer l'objet d'une action",
+        "Utiliser **に**、**で**、**へ** pour le lieu et la destination",
+        "Utiliser **と**、**も**、**の** pour relier des éléments",
+        "Utiliser **か**、**ね**、**よ** pour nuancer une phrase"
       ],
       "content": {
         "new": {
