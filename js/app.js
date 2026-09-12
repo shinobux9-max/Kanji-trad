@@ -1,52 +1,61 @@
-/**
- * js/app.js
- * Point d'entrée principal et chef d'orchestre de l'application
- */
+/* ==========================================
+   js/app.js — Point d'entrée principal (ESM)
+   ========================================== */
 
-import { loadKanjiData, loadVocabData, loadGrammarData } from './core/data-loader.js';
-import { initNavigation, navigateTo } from './core/navigation.js';
-import { initModalListeners } from './ui/modals.js';
-import { updateDashboardStats, initDashboardUI } from './ui/dashboard.js';
-import { renderKanjiGrid } from './features/kanji.js';
-import { renderVocabGrid } from './features/vocabulary.js';
-import { renderGrammarGrid } from './features/grammar.js';
-import { state } from './core/state.js';
+// 1. CORE (Fondations & Système)
+import { initState, getState, setState } from './core/state.js';
+import { initStorage, loadUserData, saveUserData } from './core/storage.js';
+import { initNavigation, bottomNavGo, toggleSearch, clearSearch, debouncedDoSearch } from './core/navigation.js';
+import { loadAllData } from './core/data-loader.js';
 
-/**
- * Initialisation au chargement de l'application
- */
-async function initApp() {
-    console.log("Initialisation de l'architecture modulaire Kanji-trad...");
+// 2. LEARNING (Algorithmes & Répétition)
+import { initSRS, processReviewAnswer } from './learning/srs.js';
+import { initWeaknessWidget, loadWeaknessItems } from './learning/weakness.js';
+import { initExercises, startQuizMode, launchQuizMode, launchStrokeMode, launchKanaTraceMode } from './learning/exercises.js';
+import { initLearningPath } from './learning/learning-path.js';
 
+// 3. FEATURES (Modules Métier spécifiques)
+import { initKanjiModule, replayAnimation, launchDetailTrace, toggleDetailMastery, openFolderModal, closeFolderModal, confirmNewFolder } from './features/kanji.js';
+import { initVocabularyModule } from './features/vocabulary.js';
+import { initGrammarModule } from './features/grammar.js';
+import { initKanaModule } from './features/kana.js';
+import { initQuizModule, closeQuiz, togglePause, toggleExamples, continueAfterFeedback } from './features/quiz.js';
+import { initStrokeModule, closeStrokeQuiz, toggleStrokePause } from './features/stroke.js';
+import { initOralModule, startOralTest } from './features/oral.js';
+import { initFreeTrainingModule } from './features/free-training.js';
+
+// 4. UI (Composants visuels, modales & popups)
+import { initDashboardUI } from './ui/dashboard.js';
+import { initCardsUI } from './ui/cards.js';
+import { 
+    closeQuizModal, 
+    closeKanaTraceModal, 
+    closeDailyGoalModal, 
+    saveDailyGoalFromModal, 
+    closeLessonReferencePopup, 
+    closeKanaTablePopup, 
+    closeFicheCorrectionModal 
+} from './ui/modals.js';
+import { initCommonUI, exitBulkSelectMode } from './ui/common.js';
+
+// --- Initialisation globale au chargement du DOM ---
+document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // 1. Activer la navigation et le système de modales
+        await loadAllData();
+        initStorage();
+        initState();
+
         initNavigation();
-        initModalListeners();
-
-        // 2. Charger toutes les bases de données JSON en parallèle
-        await Promise.all([
-            loadKanjiData(),
-            loadVocabData(),
-            loadGrammarData()
-        ]);
-
-        console.log("Toutes les données ont été chargées avec succès.");
-
-        // 3. Initialiser les vues et le dashboard
+        initCommonUI();
         initDashboardUI();
 
-        // 4. Pré-afficher le contenu initial (niveau N5 par exemple)
-        renderKanjiGrid('kanji-grid', state.currentJLPTLevel);
-        renderVocabGrid('vocab-list', state.currentJLPTLevel);
-        renderGrammarGrid('grammar-list', state.currentJLPTLevel);
+        initKanjiModule();
+        initVocabularyModule();
+        initGrammarModule();
+        initKanaModule();
 
-        // 5. Afficher le Dashboard au démarrage
-        navigateTo('dashboard-screen', { pushHistory: false });
-
+        console.log("🚀 Application initialisée avec succès !");
     } catch (error) {
-        console.error("Erreur lors de l'initialisation de l'application :", error);
+        console.error("❌ Erreur lors de l'initialisation de l'application :", error);
     }
-}
-
-// Lancement au DOMContentLoaded
-document.addEventListener('DOMContentLoaded', initApp);
+});
