@@ -1,0 +1,172 @@
+/* ══════════════════════════════════════════════════
+   learning.css — Vues d'Apprentissage & Leçons Progressives
+   Lien dans index.html : <link rel="stylesheet" href="css/learning.css">
+══════════════════════════════════════════════════ */
+
+
+/* ── CONTRASTE SECTIONS DYNAMIQUES ── */
+[data-lessons] { background: var(--surface) !important; }
+
+/* ══════════════════════════════════════════════════
+   MICRO-INTERACTIONS - Parcours "Commençons l'apprentissage"
+══════════════════════════════════════════════════ */
+.lesson-example-hidden { display: none; }
+.lesson-example-reveal.open .lesson-example-hidden { display: block; }
+.lesson-example-reveal.open .lesson-example-hint { display: none; }
+.lesson-example-hint { font-size: 0.6875rem; color: var(--gray); text-align: center; margin-top: 8px; }
+
+/* Texte flottant centré, un paragraphe à la fois (au lieu d'un mur de texte d'un coup) */
+.lesson-tap-advance { cursor: pointer; min-height: calc(100vh - 220px); display: flex; flex-direction: column; justify-content: center; }
+.lesson-floating-text-wrap { display: flex; align-items: center; justify-content: center; min-height: 160px; padding: 30px 12px; cursor: pointer; }
+.lesson-floating-text { text-align: center; font-size: 1.1875rem; line-height: 1.85; color: #fff; }
+.lesson-tap-hint { text-align: center; font-size: 0.75rem; color: var(--gray); margin-top: 20px; opacity: 0.7; }
+
+/* Lien d'accès à Explorer les leçons */
+.apprendre-section-header { font-size: 0.75rem; font-weight: bold; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; padding: 4px 4px 10px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+
+/* ── ÉCRAN EXPLORER LES LEÇONS ────── */
+.explore-lesson-row { display: flex; align-items: center; gap: 12px; background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.15s; }
+.explore-lesson-row:hover { border-color: var(--accent); }
+.explore-lesson-icon { flex-shrink: 0; font-size: 1.125rem; width: 24px; text-align: center; }
+.explore-lesson-info { flex: 1; min-width: 0; }
+.explore-lesson-item { font-family: 'Noto Sans JP', sans-serif; font-size: 0.9375rem; color: #fff; font-weight: bold; }
+.explore-lesson-title { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+.explore-lesson-status { flex-shrink: 0; font-size: 0.6875rem; font-weight: bold; }
+
+/* Animation d'entrée à chaque changement d'étape du parcours de leçon */
+@keyframes lessonSlideIn { 
+    from { opacity: 0; transform: translateY(18px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+.lesson-slide-anim { animation: lessonSlideIn 0.5s ease; }
+
+/* ── POINTS DE PAGINATION & ONBOARDING ── */
+.lesson-dots { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap; }
+.lesson-dot { width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.2); transition: all 0.2s ease; flex-shrink: 0; }
+.lesson-dot.active { width: 18px; background: var(--accent); }
+.lesson-bottom-pagination { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px; padding-top: 4px; }
+
+/* Écran de choix en fin d'onboarding (kana / vocab / grammaire) */
+.onboarding-choice-card { display: flex; align-items: center; gap: 14px; background: rgba(14,22,48,0.5); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
+.onboarding-choice-card:active { border-color: var(--accent); }
+.onboarding-choice-card.recommended { border-color: rgba(0,229,255,0.5); box-shadow: 0 0 16px rgba(0,229,255,0.15); }
+.onboarding-choice-icon { flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px; background: rgba(0,229,255,0.1); color: var(--accent); font-family: 'Noto Sans JP', sans-serif; font-size: 1.375rem; display: flex; align-items: center; justify-content: center; }
+.onboarding-choice-title { font-size: 0.9375rem; font-weight: bold; color: #fff; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.onboarding-choice-sub { font-size: 0.75rem; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+.onboarding-recommended-tag { font-size: 0.625rem; font-weight: bold; color: var(--accent); background: rgba(0,229,255,0.15); border: 1px solid rgba(0,229,255,0.4); border-radius: 10px; padding: 2px 8px; }
+
+/* ══════════════════════════════════════════════════
+   ÉCRAN "APPRENDRE"
+══════════════════════════════════════════════════ */
+.apprendre-wrap { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.apprendre-header { margin-bottom: 2px; }
+.apprendre-title-main { font-size: 1.625rem; color: #fff; font-weight: bold; }
+.apprendre-subtitle-main { font-size: 0.8125rem; color: var(--gray); margin-top: 4px; }
+
+.apprendre-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.apprendre-card { background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: border-color 0.15s; }
+.apprendre-card:hover { border-color: var(--accent); }
+.apprendre-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: bold; margin-bottom: 10px; }
+.apprendre-card-title { font-size: 0.875rem; color: #fff; font-weight: bold; }
+.apprendre-card-sub { font-size: 0.6875rem; color: var(--gray); margin-top: 2px; }
+
+.review-type-tag { align-self: center; font-size: 0.6875rem; color: var(--accent-muted); font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ══════════════════════════════════════════════════
+   ENTRAÎNEMENT LIBRE (point #8)
+══════════════════════════════════════════════════ */
+.free-training-banner {
+    background: rgba(157,110,255,0.12);
+    border: 1px solid rgba(157,110,255,0.35);
+    color: #9D6EFF;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+.free-training-banner.small { font-size: 0.6875rem; padding: 6px 10px; margin-bottom: 10px; width: 100%; max-width: 340px; }
+
+.ft-radio-group { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.ft-radio-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; border-bottom: 1px solid var(--border); }
+.ft-radio-row:last-child { border-bottom: none; }
+.ft-radio-row input[type="radio"] { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--accent); }
+.ft-radio-label { font-weight: bold; font-size: 0.875rem; color: var(--text); }
+.ft-radio-sub { font-size: 0.6875rem; color: var(--gray); }
+
+.ft-radio-pills { flex-direction: row; }
+.ft-radio-pill { flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px 4px; cursor: pointer; border-right: 1px solid var(--border); }
+.ft-radio-pill:last-child { border-right: none; }
+.ft-radio-pill input[type="radio"] { display: none; }
+.ft-radio-pill span { font-weight: bold; font-size: 0.9375rem; color: var(--gray); }
+.ft-radio-pill input[type="radio"]:checked + span { color: var(--accent); }
+
+.ft-grade-buttons { grid-template-columns: repeat(2, 1fr); }
+
+/* Correction contextuelle (point #9) */
+.fiche-correction-btn {
+    align-self: center;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--accent-muted);
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.fiche-correction-btn:hover { background: rgba(0,229,255,0.08); }
+.fiche-sub { font-size: 0.8125rem; color: var(--accent); text-align: center; margin-bottom: 10px; }
+
+/* Widget "À renforcer" (point #10) */
+.weakness-list { display: flex; flex-direction: column; gap: 2px; }
+.weakness-row { display: flex; align-items: center; gap: 10px; padding: 8px 4px; cursor: pointer; border-radius: 8px; }
+.weakness-row:hover { background: rgba(255,255,255,0.04); }
+.weakness-icon { flex-shrink: 0; font-size: 0.9375rem; }
+.weakness-label { flex: 1; font-size: 0.8125rem; color: var(--text); font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.weakness-count { flex-shrink: 0; font-size: 0.6875rem; color: #FB7185; font-weight: bold; background: rgba(251,113,133,0.12); padding: 2px 8px; border-radius: 8px; }
+.weakness-train-btn { width: 100%; margin-top: 12px; padding: 10px; background: rgba(157,110,255,0.12); border: 1px solid rgba(157,110,255,0.35); color: #9D6EFF; font-size: 0.75rem; font-weight: bold; border-radius: 10px; cursor: pointer; }
+.weakness-train-btn:hover { background: rgba(157,110,255,0.2); }
+
+/* ══════════════════════════════════════════════════
+   DÉTAILS ENTRAÎNEMENT, FICHES KANJI & TITRES PARTAGÉS
+══════════════════════════════════════════════════ */
+
+/* Détail carte par carte, mode Test blanc uniquement */
+.ft-results-detail { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 2px; margin-top: 16px; max-height: 240px; overflow-y: auto; text-align: left; }
+.ft-result-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 0.8125rem; }
+.ft-result-row.ok { color: #4ADE80; background: rgba(74,222,128,0.06); }
+.ft-result-row.wrong { color: #FB7185; background: rgba(251,113,133,0.06); }
+.ft-result-row span:last-child { color: var(--text); font-weight: 500; }
+
+/* Fiche kanji en révision, façon maquette dédiée (carte décorative + carte de lectures) */
+.kfiche-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(14,22,48,0.6));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 150px;
+    margin-bottom: 14px;
+}
+.kfiche-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.kfiche-char { font-size: 3.5rem; color: var(--accent); text-shadow: 0 0 15px rgba(0,229,255,0.6); font-weight: bold; line-height: 1; margin-bottom: 6px; }
+.kfiche-subtext { color: var(--text); font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
+.kfiche-subtext-secondary { color: var(--gray); font-size: 0.6875rem; font-weight: 400; margin-top: 2px; white-space: normal; max-width: 220px; }
+.kfiche-badges { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.kfiche-badge-level { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 16px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
+.kfiche-badge-strokes { background: transparent; border: 1px solid var(--border); color: var(--gray); padding: 4px 12px; border-radius: 16px; font-size: 0.75rem; white-space: nowrap; }
+.kfiche-readings-card { background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(14,22,48,0.6)); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+
+/* Boîte de titre partagée vocab/grammaire (même recette visuelle que la carte kanji) */
+.fiche-title-card { background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(14,22,48,0.6)); border: 1px solid var(--border); border-radius: 12px; padding: 22px 16px; text-align: center; margin-bottom: 14px; }
+.fiche-title-main { font-family: 'Noto Sans JP', sans-serif; font-size: 1.625rem; font-weight: bold; color: #fff; line-height: 1.3; }
+.fiche-title-reading { font-size: 0.8125rem; color: var(--accent-muted); margin-top: 6px; }
+.fiche-title-meaning { font-size: 0.8125rem; color: var(--gray); margin-top: 6px; }
+.kfiche-reading-section { margin-bottom: 12px; }
+.kfiche-reading-section:last-child { margin-bottom: 0; }
+.kfiche-reading-label { font-size: 0.625rem; font-weight: 700; color: var(--accent-muted); letter-spacing: 1px; margin-bottom: 6px; }
+.kfiche-romaji-text { color: var(--text); font-size: 0.8125rem; margin-top: 4px; }

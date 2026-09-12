@@ -29,7 +29,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_option_padding">
+    <!-- Styles de base & variables globales -->
+<link rel="stylesheet" href="css/base.css">
+
+<!-- Structure & composantes transversales -->
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+
+<!-- Modules de contenu -->
+<link rel="stylesheet" href="css/kanji.css">
+<link rel="stylesheet" href="css/vocab.css">
+<link rel="stylesheet" href="css/grammar.css">
+
+<!-- Modes d'apprentissage & entraînement -->
+<link rel="stylesheet" href="css/learning.css">
+<link rel="stylesheet" href="css/review.css">
+<link rel="stylesheet" href="css/quiz.css">
 </head>
 <body>
 
@@ -339,7 +354,7 @@
 </div>
 
     <!-- Script principal -->
-    <script src="kanji.js?v=20260910_lp_bugfixes2"></script>
+    <script type="module" src="js/app.js"></script>
 
     <!-- ── BULK ACTION BAR (mode maîtrise rapide) ────────── -->
     <div id="bulk-action-bar" style="display:none;">

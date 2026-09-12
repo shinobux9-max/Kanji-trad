@@ -1,0 +1,43 @@
+/* ══════════════════════════════════════════════════
+   kanji.css — Dictionnaire, Tracés & Fiches Kanji
+   Lien dans index.html : <link rel="stylesheet" href="css/kanji.css">
+══════════════════════════════════════════════════ */
+
+/* ── KANJI DETAIL BODY & TAGS ─────── */
+.detail-body { padding: 0 16px 16px; }
+.section-title { font-size: 0.5625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin: 14px 0 8px; }
+
+.tag-container { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag { padding: 3px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; }
+.tag-on  { background: #1e3a32; color: #a3d2ca; }
+.tag-kun { background: rgba(212,175,55,0.15); color: #D4AF37; }
+
+/* ── STROKE ORDER GUIDE & EXAMPLES ── */
+.stroke-guide-row { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none; }
+.stroke-guide-row::-webkit-scrollbar { display: none; }
+.stroke-guide-cell { flex-shrink: 0; width: 72px; height: 72px; position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.stroke-guide-cell svg { width: 100%; height: 100%; }
+.stroke-guide-num { position: absolute; top: 3px; right: 4px; font-size: 0.5625rem; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); line-height: 1; }
+
+.examples-wrap { padding: 0 16px 30px; }
+#kana-writer-svg { width: 140px; height: 140px; }
+
+/* ── SERIES CARD & LIST ──────────── */
+.series-grid { display: flex; flex-direction: column; gap: 0; margin-bottom: 8px; }
+.series-card { background: transparent; border: none; border-bottom: 1px solid var(--border); padding: 14px 16px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: background 0.1s; }
+.series-card:active { background: var(--card); }
+.series-card-kanji { font-size: 2.125rem; width: 44px; text-align: center; color: #fff; line-height: 1; flex-shrink: 0; }
+.series-card-body { flex: 1; }
+.series-card-num { font-family: 'Syne', sans-serif; font-size: 0.9375rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+.series-card-label { font-size: 0.6875rem; color: var(--gray); margin-top: 3px; }
+.series-card-actions { flex-shrink: 0; }
+.series-quiz-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 7px; font-size: 0.75rem; font-weight: bold; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.series-quiz-btn:active { background: var(--accent); border-color: var(--accent); color: #000; }
+
+/* ══════════════════════════════════════════════════
+   CASES DE KANJI (liste par niveau) — nouvelle classe, remplace le style inline
+══════════════════════════════════════════════════ */
+.kanji-grid-cell { padding: 16px; text-align: center; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+.kanji-grid-cell:hover { background: rgba(255,255,255,0.08); }
+.kanji-grid-cell .kgc-char { font-size: 2rem; font-weight: bold; }
+.kanji-grid-cell .kgc-meaning { font-size: 0.6875rem; color: var(--gray); margin-top: 6px; }
