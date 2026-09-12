@@ -1,0 +1,291 @@
+/* ══════════════════════════════════════════════════
+   layout.css — Grilles, Conteneurs & Vues Principales
+   Lien dans index.html : <link rel="stylesheet" href="css/layout.css">
+══════════════════════════════════════════════════ */
+
+
+/* ── NAVIGATION SUBMENUS ─────────── */
+.nav-submenu { display: none; background: rgba(0,0,0,0.2); }
+    .nav-submenu.open { display: block; }
+    .nav-sub-item { padding: 9px 16px 9px 62px; font-size: 0.75rem; border-bottom: 1px solid rgba(42,42,56,0.5); cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--gray); transition: background 0.1s, color 0.1s; }
+    .nav-sub-item:hover, .nav-sub-item:active { background: var(--card); color: var(--text); }
+    .nav-sub-item .scount { font-size: 0.625rem; background: var(--card); padding: 2px 6px; border-radius: 4px; margin-left: 6px; color: var(--gray); }
+    .nav-sub-quiz { font-size: 0.625rem; padding: 3px 8px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .nav-sub-quiz:hover { background: var(--accent); color: #000; }
+
+    /* Page Mes Dossiers */
+    .folders-wrap { padding: 16px; }
+    .folder-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
+    .folder-card:active { border-color: var(--accent); }
+    .folder-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .folder-card-icon { font-size: 1.375rem; }
+    .folder-card-name { flex: 1; font-weight: bold; font-size: 0.9375rem; }
+    .folder-card-count { font-size: 0.75rem; color: var(--gray); }
+    .folder-card-kanjis { display: flex; flex-wrap: wrap; gap: 6px; }
+    .folder-kanji-chip { font-size: 1.25rem; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; color: #fff; cursor: pointer; }
+    .folder-card-actions { display: flex; gap: 8px; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+    .folder-action-btn { flex: 1; padding: 8px; background: none; border: 1px solid var(--border); border-radius: 7px; color: var(--gray); font-size: 0.75rem; cursor: pointer; font-family: inherit; }
+    .folder-action-btn.danger { border-color: #e55; color: #e55; }
+    .folder-action-btn:active { background: var(--card); }
+    .folder-empty { text-align: center; padding: 40px 20px; color: var(--gray); }
+    .folder-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .folder-empty-text { font-size: 0.875rem; line-height: 1.6; }
+
+    /* ── CONTAINER ───────────────────── */
+.container { padding-top: 0; height: 100vh; overflow-y: auto; }
+.container.search-open { padding-top: 112px; }
+
+/* ── DASHBOARD LAYOUT ────────────── */
+.dash-wrap { padding: 32px 16px 16px; }
+
+/* ── GRADE OVERVIEW LAYOUT ───────── */
+.grade-overview { padding: 14px; }
+.section-divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+/* ── KANJI LIST LAYOUT ────────────── */
+.list-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+
+/* ── KANA LAYOUT & GRIDS ─────────── */
+.kana-tabs { display: flex; border-bottom: 1px solid var(--border); }
+.kana-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin-bottom: 4px; }
+
+/* ── DETAIL VIEW LAYOUT ──────────── */
+#detail-view { 
+    position: fixed; inset: 0; 
+    background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('../images/niveaux-bg.webp'); 
+    background-size: cover; background-position: center; background-attachment: fixed; 
+    z-index: 3000; display: none; flex-direction: column; 
+}
+.detail-content { flex: 1; overflow-y: auto; padding-top: 56px; }
+.kanji-body-grid { display: flex; gap: 12px; align-items: flex-start; }
+
+/* ── KANJI CARD LAYOUT ───────────── */
+.card-actions-col { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+.kanji-center-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.card-stats-col { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; min-width: 88px; }
+.readings-box { margin: 12px 16px 0; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(10,17,32,0.75); backdrop-filter: blur(8px); }
+.info-card { margin: 0 16px 4px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(10,17,32,0.75); backdrop-filter: blur(8px); }
+
+/* ── RESPONSIVE MOBILE (KANJI DETAIL) ── */
+@media (max-width: 380px) {
+    .kanji-body-grid { flex-direction: column; align-items: center; }
+    .card-actions-col { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .card-stats-col { align-items: center; text-align: center; }
+}
+
+/* ── SPINNER / LOADING ───────────── */
+.spinner { width: 30px; height: 30px; border: 3px solid #333; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── QUIZ LAYOUT ─────────────────── */
+#quiz-view { 
+    position: fixed; inset: 0; 
+    background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('../images/niveaux-bg.webp'); 
+    background-size: cover; background-position: center; background-attachment: fixed; 
+    z-index: 4000; display: none; flex-direction: column; 
+}
+.quiz-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; overflow: hidden; }
+
+/* ── QUIZ FEEDBACK MODAL OVERLAY ── */
+#quiz-feedback-modal { 
+    position: fixed; inset: 0; 
+    background: rgba(0,0,0,0.7); 
+    z-index: 6000; display: none; 
+    align-items: center; justify-content: center; 
+    padding: 20px; backdrop-filter: blur(4px); 
+}
+#quiz-feedback-modal.open { display: flex; }
+
+/* ── STROKE QUIZ LAYOUT ──────────── */
+#stroke-quiz-view { 
+    position: fixed; inset: 0; 
+    background: linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%), url('../images/niveaux-bg.webp'); 
+    background-size: cover; background-position: center; background-attachment: fixed; 
+    z-index: 4500; display: none; flex-direction: column; 
+}
+
+#stroke-quiz-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 16px 16px 30px; gap: 14px; }
+#stroke-quiz-body.tracing { overflow-y: hidden; } /* Désactive le scroll pendant le tracé */
+
+/* ── MODE SELECTION OVERLAY ───────── */
+.mode-selection-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+    z-index: 5000; display: none; align-items: flex-end; justify-content: center;
+    padding: 0; backdrop-filter: blur(6px);
+}
+.mode-selection-overlay.open { display: flex; }
+
+/* ── BACKGROUNDS MODALES (NIVEAUX BG) ── */
+#fiche-correction-modal .mode-selection-card {
+    background: linear-gradient(180deg, rgba(6,11,24,0.75) 0%, rgba(6,11,24,0.9) 100%), url('../images/niveaux-bg.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+#kana-table-popup-modal .mode-selection-card {
+    background: linear-gradient(180deg, rgba(6,11,24,0.75) 0%, rgba(6,11,24,0.9) 100%), url('../images/niveaux-bg.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+#lesson-reference-popup-modal .mode-selection-card {
+    background: linear-gradient(180deg, rgba(6,11,24,0.75) 0%, rgba(6,11,24,0.9) 100%), url('../images/niveaux-bg.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+/* ══════════════════════════════════════════════════
+   ÉCRAN NIVEAUX — cartes pleine largeur (façon Lexique)
+══════════════════════════════════════════════════ */
+.niveaux-wrap {
+    padding: 16px; display: flex; flex-direction: column; gap: 16px;
+    min-height: 100%;
+}
+.niveaux-header { margin-bottom: 4px; }
+.niveaux-title-main { font-size: 1.625rem; color: #fff; font-weight: bold; }
+.niveaux-subtitle-main { font-size: 0.8125rem; color: var(--gray); margin-top: 4px; }
+
+#niveaux-list { display: flex; flex-direction: column; gap: 12px; }
+
+.niveaux-card { display: flex; align-items: center; gap: 14px; padding: 16px; background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 14px; cursor: pointer; transition: border-color 0.15s; }
+.niveaux-card:hover { border-color: var(--accent); }
+.niveaux-card.locked { cursor: default; opacity: 0.55; }
+.niveaux-card.locked:hover { border-color: var(--border); }
+
+.niveaux-badge { flex-shrink: 0; width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.9375rem; font-weight: bold; }
+
+.niveaux-info { flex: 1; min-width: 0; }
+.niveaux-card-title { font-size: 0.9375rem; color: #fff; font-weight: bold; }
+.niveaux-card-sub { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+.niveaux-progress-bar { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.niveaux-progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+.niveaux-wave { display: block; width: 100%; height: 20px; margin-top: 4px; }
+
+.niveaux-pct { flex-shrink: 0; font-size: 0.9375rem; color: #fff; font-weight: bold; }
+.niveaux-soon { flex-shrink: 0; font-size: 0.75rem; color: var(--gray); }
+
+/* ══════════════════════════════════════════════════
+   BOTTOM NAV LAYER — Barre de navigation fixe
+══════════════════════════════════════════════════ */
+#bottom-nav { position: fixed; bottom: 14px; left: 14px; right: 14px; height: 60px; background: var(--surface); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); display: flex; z-index: 950; }
+.bnav-btn { flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--gray); cursor: pointer; }
+.bnav-btn.active { color: var(--accent); }
+.bnav-icon { font-size: 1.25rem; }
+.bnav-label { font-size: 0.5625rem; }
+
+/* Laisser de la place au-dessus de la barre du bas pour ne pas masquer le contenu */
+.container#main-content { padding-bottom: 96px; }
+
+/* Navbar flottante : effet verre dépoli enrichi */
+#bottom-nav {
+    background:
+        linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.85) 100%),
+        url('images/niveaux-bg.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed, fixed;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* ══════════════════════════════════════════════════
+   NIVEAUX DE MAÎTRISE — cartes repliables avec % global
+══════════════════════════════════════════════════ */
+.prog-level-card { background: rgba(6,11,24,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
+.prog-level-header { display: flex; align-items: center; gap: 10px; padding: 8px 16px; cursor: pointer; user-select: none; }
+.prog-level-arrow { color: var(--gray); font-size: 0.625rem; transition: transform 0.2s; }
+.prog-level-arrow.open { transform: rotate(90deg); }
+.prog-level-title { font-size: 0.8125rem; color: #fff; font-weight: bold; }
+.prog-level-items { display: none; flex-direction: column; gap: 12px; padding: 0 16px 16px; }
+.prog-level-items.open { display: flex; }
+
+/* ══════════════════════════════════════════════════
+   PAGE DE DÉTAIL DE PROGRESSION & CALENDRIER
+══════════════════════════════════════════════════ */
+.progression-page { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.progression-page .back-btn { margin-bottom: 4px; }
+.progression-title { font-size: 1.5rem; color: #fff; font-weight: bold; }
+.progression-subtitle { font-size: 0.75rem; color: var(--gray); margin-top: -8px; }
+
+.streak-detail-card { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(56,189,248,0.06)); border: 1px solid rgba(0,229,255,0.3); border-radius: 18px; padding: 18px; }
+.streak-detail-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
+.streak-detail-row { display: flex; align-items: baseline; justify-content: space-between; margin: 10px 0 16px; }
+.streak-detail-num { font-size: 2.25rem; color: #fff; font-weight: bold; }
+.streak-detail-unit { font-size: 0.8125rem; color: var(--gray); font-weight: normal; margin-left: 6px; }
+.streak-detail-record { font-size: 0.75rem; color: var(--gray); }
+
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.cal-day-label { text-align: center; font-size: 0.625rem; color: var(--gray); font-weight: bold; padding-bottom: 4px; }
+.cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.6875rem; color: var(--gray); background: rgba(255,255,255,0.04); }
+.cal-cell.empty { background: none; }
+.cal-cell.active { background: var(--accent); color: var(--bg); font-size: 0.8125rem; }
+.cal-cell.today:not(.active) { border: 1px solid var(--accent); color: #fff; font-weight: bold; }
+
+.progression-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.progression-stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
+.progression-stat-icon { font-size: 1.125rem; margin-bottom: 10px; }
+.progression-stat-num { font-size: 1.5rem; color: #fff; font-weight: bold; }
+.progression-stat-total { font-size: 0.9375rem; color: var(--gray); font-weight: normal; }
+.progression-stat-label { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+
+/* ══════════════════════════════════════════════════
+   PULL-TO-REFRESH — indicateur visuel
+══════════════════════════════════════════════════ */
+#ptr-indicator {
+    position: fixed; top: 10px; left: 50%; transform: translateX(-50%) translateY(0);
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--accent);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+    font-size: 1.125rem; opacity: 0; z-index: 2000; transition: opacity 0.15s;
+    pointer-events: none;
+}
+#ptr-indicator.ready { box-shadow: 0 0 12px rgba(0,229,255,0.4); }
+#ptr-indicator.loading { animation: ptr-spin 0.6s linear infinite; }
+@keyframes ptr-spin { to { transform: translateX(-50%) translateY(60px) rotate(360deg); } }
+
+/* ══════════════════════════════════════════════════
+   OPACITÉ RÉDUITE (0.05) — Niveaux, Apprendre/Révisions, carton Niveaux de maîtrise
+══════════════════════════════════════════════════ */
+.niveaux-card, .apprendre-card, .dash-mastery-card {
+    background: rgba(10, 17, 32, 0.05);
+}
+
+#bulk-action-bar {
+    position: fixed;
+    bottom: 84px;
+    left: 14px;
+    right: 14px;
+    z-index: 960;
+    background: rgba(14,18,28,0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 20px rgba(0,229,255,0.15);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#bulk-action-bar #bulk-select-count {
+    font-size: 0.75rem;
+    color: var(--gray);
+    flex: 1;
+}
+#bulk-action-bar button {
+    flex-shrink: 0;
+    padding: 10px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+#bulk-action-bar button.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+}
+#bulk-action-bar button:hover { filter: brightness(1.15); }
