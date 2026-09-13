@@ -12,58 +12,50 @@ def get_reading(word):
 
 
 def bulletproof_formatter(text: str) -> str:
-    """1. Supprime toutes les balises, les astérisques (**) et les espaces.
+    """1. Supprime uniquement les astérisques (**).
 
-    2. Isole chirurgicalement chaque kanji/bloc de ses okuriganas.
-    3. Reconstruit la phrase avec le formatage parfait (ruby + espaces).
+    2. Isole les portions de texte qui ne sont PAS déjà entourées de balises ruby.
+    3. Applique pykakasi uniquement sur ces portions non formatées pour ajouter les ruby manquants.
+    4. Concatène le tout en conservant la structure d'origine.
     """
     if not text:
         return ""
 
-    # 1. Nettoyage radical : enlève les balises, les astérisques de gras et tous les espaces
-    clean = re.sub(r"<.*?>", "", text)  # Supprime les balises HTML/ruby
-    clean = clean.replace("**", "")  # Supprime les astérisques de Markdown
-    clean = clean.replace(" ", "")  # Supprime tous les espaces existants
+    # 1. Nettoyage minimal : on supprime juste les astérisques de Markdown si besoin
+    clean_text = text.replace("**", "")
 
-    # 2. Découpage de la phrase en blocs (Kanjis / Kanas / Ponctuation)
-    tokens = re.findall(r"([\u4e00-\u9faf]+|[^\u4e00-\u9faf]+)", clean)
+    # 2. On découpe la chaîne en alternant : (ce qui est dans une balise ruby) et (le reste)
+    # Le motif regex capture les blocs <ruby>...</ruby> pour les laisser intacts.
+    pattern = r"(<ruby>.*?</ruby>|[^\s<]+|\s+)"
+    tokens = re.findall(pattern, clean_text)
 
     formatted_parts = []
 
     for token in tokens:
-        # Si le token contient des kanjis
-        if re.search(r"[\u4e00-\u9faf]", token):
-            # On sépare le kanji pur de sa terminaison éventuelle (ex: 知ら -> 知 + ら)
-            match = re.match(r"^([\u4e00-\u9faf]+)(.*)$", token)
-            if match:
-                kanji_part = match.group(1)
-                kana_part = match.group(2)
-
-                kanji_reading = get_reading(kanji_part)
-                formatted_token = (
-                    f"<ruby>{kanji_part}<rt>{kanji_reading}</rt></ruby>{kana_part}"
-                )
-                formatted_parts.append(formatted_token)
-            else:
-                reading = get_reading(token)
-                formatted_parts.append(f"<ruby>{token}<rt>{reading}</rt></ruby>")
-        else:
-            # C'est du kana pur ou de la ponctuation
+        # Si le token est déjà une balise ruby ou un simple espace, on le laisse tel quel
+        if token.startswith("<ruby>") or token.isspace():
             formatted_parts.append(token)
+        else:
+            # C'est du texte brut (conttenant potentiellement des kanjis non formattés)
+            # On utilise pykakasi pour convertir les parties de ce token si nécessaire
+            result = kks.convert(token)
+            token_formatted = []
 
-    # 3. Ré-espacement propre entre les mots
-    raw_joined = " ".join(formatted_parts)
+            for item in result:
+                orig = item["orig"]
+                hira = item["hira"]
 
-    # 4. Ajustements cosmétiques de la ponctuation
-    cleaned = (
-        raw_joined.replace(" 。", "。")
-        .replace(" 、", "、")
-        .replace(" ！", "！")
-        .replace(" ？", "？")
-        .replace("  ", " ")
-    )
+                # Si le morceau contient des kanjis et diffère de sa lecture
+                if re.search(r"[\u4e00-\u9faf]", orig) and orig != hira:
+                    token_formatted.append(
+                        f"<ruby>{orig}<rt>{hira}</rt></ruby>"
+                    )
+                else:
+                    token_formatted.append(orig)
 
-    return cleaned.strip()
+            formatted_parts.append("".join(token_formatted))
+
+    return "".join(formatted_parts).strip()
 
 
 def update_exemples_json(filename="exemples.json"):
@@ -71,25 +63,31 @@ def update_exemples_json(filename="exemples.json"):
         with open(filename, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(
-            f"Erreur : Le fichier '{filename}' est introuvable dans le dossier."
-        )
+        print(f"Erreur : Le fichier '{filename}' est introuvable dans le dossier.")
         return
 
     count = 0
-    for grammar_id, examples in data.items():
-        if isinstance(examples, list):
-            for ex in examples:
-                if "japanese" in ex:
+
+    # Fonction récursive ou itérative pour gérer les dictionnaires imbriqués (ex: "vocab": {"n5_v_1": [...]})
+    def process_node(node):
+        nonlocal count
+        if isinstance(node, dict):
+            for k, v in node.items():
+                process_node(v)
+        elif isinstance(node, list):
+            for ex in node:
+                if isinstance(ex, dict) and "japanese" in ex:
                     original_jp = ex["japanese"]
                     ex["japanese"] = bulletproof_formatter(original_jp)
                     count += 1
+
+    process_node(data)
 
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     print(
-        f"Succès total ! {count} phrases ont été reformattées proprement dans '{filename}'."
+        f"Succès total ! {count} phrases ont été complétées/reformattées dans '{filename}'."
     )
 
 
