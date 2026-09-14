@@ -4117,8 +4117,10 @@ function initSwipeNavigation() {
 
         if (activeSwipeContext === 'lesson') advanceLessonStep(direction);
         else if (activeSwipeContext === 'onboarding') advanceOnboarding(direction);
-        else if (activeSwipeContext === 'learning-path') {
-            if (direction === 1) completeLearningStep();
+        if (activeSwipeContext === 'learning-path') {
+            const lpStep = learningSession && learningSession.unit.steps[learningSession.stepIndex];
+            if (lpStep && lpStep.type === 'concept') advanceConceptSubStep(direction);
+            else if (direction === 1) completeLearningStep();
             else startLearningStep(learningSession.stepIndex - 1);
         }
     }, { passive: true });
@@ -5638,9 +5640,99 @@ async function completeLearningUnit() {
 function learningPathFAB() {
     const levelId = learningSession ? learningSession.levelId : 'n5';
     return `<button onclick="showLearningPathHome('${levelId}')"
-        style="position:fixed;top:58px;left:12px;z-index:600;width:40px;height:40px;border-radius:50%;
-        background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;
+        style="position:fixed;top:10px;left:10px;z-index:600;width:38px;height:38px;border-radius:50%;
+        background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;
         box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">←</button>`;
+}
+
+// Aplatit concept.sections en une liste de micro-écrans : un titre au tout début, puis un
+// écran par paragraphe et un par exemple — jamais un gros bloc de texte d'un coup, même
+// principe que buildLessonSteps() pour le parcours grammaire.
+function flattenConceptSections(concept) {
+    const typeLabels = { introduction: '📘 Introduction', rappel: '🟨 Rappel', point_attention: '⚠️ Point de vigilance' };
+    const steps = [{ kind: 'title', label: typeLabels[concept.type] || '📘 Introduction', title: concept.title }];
+    for (const section of (concept.sections || [])) {
+        if (Array.isArray(section.paragraphs)) {
+            for (const p of section.paragraphs) {
+                steps.push({ kind: 'paragraph', label: section.label, text: p });
+            }
+        }
+        if (Array.isArray(section.examples)) {
+            for (const ex of section.examples) {
+                steps.push({ kind: 'example', label: section.label, example: ex });
+            }
+        }
+    }
+    return steps;
+}
+
+// Affiche un micro-écran de concept, façon texte flottant, avec pagination en bas comme dans
+// le reste de l'app (jamais en haut).
+function renderConceptMicroStep(concept, microSteps, subIndex) {
+    const container = document.getElementById('main-content');
+    if (!container) return;
+    const micro = microSteps[subIndex];
+
+    let bodyHtml = '';
+    if (micro.kind === 'title') {
+        bodyHtml = `
+            <div class="lesson-tap-advance">
+                <div class="section-sub-title" style="text-align:center;margin-bottom:6px">${micro.label}</div>
+                <div class="lesson-floating-text-wrap"><div class="lesson-floating-text" style="font-size:1.5rem;font-weight:bold;">${micro.title}</div></div>
+            </div>`;
+    } else if (micro.kind === 'paragraph') {
+        bodyHtml = `
+            <div class="lesson-tap-advance">
+                ${micro.label ? `<div class="section-sub-title" style="text-align:center;margin-bottom:6px">${micro.label}</div>` : ''}
+                <div class="lesson-floating-text-wrap"><div class="lesson-floating-text">${mdBold(micro.text || '')}</div></div>
+            </div>`;
+    } else if (micro.kind === 'example') {
+        const ex = micro.example;
+        bodyHtml = `
+            <div class="lesson-tap-advance">
+                <div class="section-sub-title" style="text-align:center;margin-bottom:6px">${micro.label || 'Exemple'}</div>
+                <div class="lesson-floating-text-wrap">
+                    <div class="lesson-floating-text">
+                        <div style="font-size:1.0625em;margin-bottom:10px">${mdBold(ex.japanese || '')}</div>
+                        ${ex.romaji ? `<div style="font-size:0.7em;color:var(--accent-muted, var(--accent));margin-bottom:8px;font-style:italic;">${mdBold(ex.romaji)}</div>` : ''}
+                        <div style="font-size:0.75em;color:var(--gray)">${mdBold(ex.french || '')}</div>
+                        ${ex.note ? `<div style="font-size:0.7em;color:var(--gray);margin-top:6px;opacity:0.8;">${mdBold(ex.note)}</div>` : ''}
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    const isLast = subIndex === microSteps.length - 1;
+    const dotsHtml = microSteps.map((s, i) =>
+        `<span style="width:7px;height:7px;border-radius:50%;background:${i === subIndex ? 'var(--accent)' : 'var(--border)'};display:inline-block;margin:0 3px;"></span>`
+    ).join('');
+
+    container.innerHTML = learningPathFAB() + `
+        <div style="padding:56px 16px 6px;min-height:calc(100vh - 220px);display:flex;flex-direction:column;justify-content:center;">
+            ${bodyHtml}
+        </div>
+        <div class="lesson-bottom-pagination">
+            <div class="lesson-dots">${dotsHtml}</div>
+            ${isLast ? `<button class="review-cta-btn" onclick="completeLearningStep()">Continuer →</button>` : `<div class="lesson-tap-hint">👉 Glisse ou touche l'écran pour naviguer.</div>`}
+        </div>`;
+}
+
+// Avance/recule dans les micro-écrans d'un concept. En bout de liste (avant le premier ou après
+// le dernier), passe à l'étape suivante/précédente du curriculum comme d'habitude.
+function advanceConceptSubStep(direction) {
+    const step = learningSession.unit.steps[learningSession.stepIndex];
+    getLearningResource('concept', step.conceptId, learningSession.levelId).then(concept => {
+        const microSteps = flattenConceptSections(concept);
+        const next = learningSession.conceptSubIndex + direction;
+        if (next < 0) {
+            startLearningStep(learningSession.stepIndex - 1);
+        } else if (next >= microSteps.length) {
+            completeLearningStep();
+        } else {
+            learningSession.conceptSubIndex = next;
+            renderConceptMicroStep(concept, microSteps, next);
+        }
+    });
 }
 
 async function renderLearningStep() {
@@ -5660,19 +5752,17 @@ async function renderLearningStep() {
     const progressDots = unit.steps.map((s, i) =>
         `<span style="width:8px;height:8px;border-radius:50%;background:${i === stepIndex ? 'var(--accent)' : 'var(--border)'};display:inline-block;margin:0 3px;"></span>`
     ).join('');
-    const header = `
-        <div style="display:flex;align-items:center;justify-content:center;padding:56px 16px 6px;">
-            <div>${progressDots}</div>
-        </div>` + learningPathFAB();
+    const header = learningPathFAB();
+    const bottomDots = `<div style="display:flex;align-items:center;justify-content:center;padding:16px;">${progressDots}</div>`;
 
     if (step.type === 'introduction') {
         container.innerHTML = header + `
-            <div class="dash-card" style="margin:16px;">
+            <div class="dash-card" style="margin:56px 16px 16px;">
                 <h2 style="margin-top:0;">${unit.title}</h2>
                 <p style="color:var(--gray);">${unit.description || ''}</p>
                 <ul>${(unit.objectives || []).map(o => `<li>${o}</li>`).join('')}</ul>
                 <button class="review-cta-btn" onclick="completeLearningStep()">Commencer →</button>
-            </div>`;
+            </div>` + bottomDots;
         return;
     }
 
@@ -5681,10 +5771,10 @@ async function renderLearningStep() {
             step.items.map(id => getLearningResource(step.type, id, learningSession.levelId))
         );
         container.innerHTML = header + `
-            <div style="padding:0 16px;">
+            <div style="padding:56px 16px 0;">
                 ${items.map(item => renderLearningResourceCard(step.type, item)).join('')}
                 <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
-            </div>`;
+            </div>` + bottomDots;
         return;
     }
 
@@ -5695,42 +5785,20 @@ async function renderLearningStep() {
             completeLearningStep();
             return;
         }
-        const typeLabels = { introduction: '📘 Introduction', rappel: '🟨 Rappel', point_attention: '⚠️ Point d\'attention' };
 
-        // Bloc exemple réutilisable : japonais, romaji juste EN DESSOUS (jamais entre
-        // parenthèses), puis traduction française, puis note éventuelle.
-        const renderConceptExample = (ex) => `
-            <div class="dash-card" style="margin-bottom:8px;overflow-wrap:break-word;">
-                <div style="font-size:1.05rem;line-height:1.6;">${ex.japanese}</div>
-                ${ex.romaji ? `<div style="color:var(--accent);font-style:italic;font-size:0.85rem;margin-top:2px;">${ex.romaji}</div>` : ''}
-                ${ex.french ? `<div style="color:var(--text);font-size:0.9rem;margin-top:4px;">${ex.french}</div>` : ''}
-                ${ex.note ? `<div style="color:var(--gray);font-size:0.8rem;margin-top:4px;">${ex.note}</div>` : ''}
-            </div>`;
+        // Aplatit les sections en une liste de micro-écrans (1 titre + 1 par paragraphe/exemple)
+        // pour reproduire le principe "texte flottant" du parcours grammaire — jamais un gros
+        // bloc de texte d'un coup.
+        const microSteps = flattenConceptSections(concept);
 
-        const paragraphsHtml = (concept.content.paragraphs || []).map(p => `<p style="overflow-wrap:break-word;">${mdBold(p)}</p>`).join('');
-        const examplesHtml = (concept.content.examples || []).map(renderConceptExample).join('');
-
-        // Nouveau format "items" : plusieurs mini-blocs titre + explication + exemple, pour les
-        // concepts qui couvrent plusieurs éléments (ex: les particules d'un même groupe) sans
-        // tout déverser en un seul bloc de texte.
-        const itemsHtml = (concept.content.items || []).map(item => `
-            <div class="dash-card" style="margin-bottom:14px;overflow-wrap:break-word;">
-                <h3 style="margin-top:0;color:var(--accent);">${item.title}</h3>
-                <p style="overflow-wrap:break-word;">${mdBold(item.explanation || '')}</p>
-                ${item.example ? renderConceptExample(item.example) : ''}
-            </div>`).join('');
-
-        container.innerHTML = header + `
-            <div style="padding:0 16px;max-width:100%;">
-                <div style="color:var(--accent);font-size:0.85rem;font-weight:bold;margin-bottom:6px;">${typeLabels[concept.type] || '📘 Introduction'}</div>
-                <div class="dash-card" style="margin-bottom:16px;overflow-wrap:break-word;">
-                    <h2 style="margin-top:0;">${concept.title}</h2>
-                    ${paragraphsHtml}
-                </div>
-                ${examplesHtml}
-                ${itemsHtml}
-                <button class="review-cta-btn" onclick="completeLearningStep()">Suivant →</button>
-            </div>`;
+        // Reprend/initialise l'index interne au concept courant (réinitialisé si on change de
+        // concept, conservé si on revient sur le même après navigation arrière).
+        if (learningSession.conceptStepId !== step.id) {
+            learningSession.conceptStepId = step.id;
+            learningSession.conceptSubIndex = 0;
+        }
+        const subIndex = Math.min(learningSession.conceptSubIndex, microSteps.length - 1);
+        renderConceptMicroStep(concept, microSteps, subIndex);
         return;
     }
 
@@ -5802,7 +5870,8 @@ async function renderLearningExerciseStep(step) {
     }
 
     const q = queue[idx];
-    const header = `<div style="padding:56px 16px 14px;color:var(--gray);">Question ${idx + 1} / ${queue.length}</div>` + learningPathFAB();
+    const header = learningPathFAB();
+    const questionCounter = `<div style="padding:56px 16px 14px;color:var(--gray);text-align:center;">Question ${idx + 1} / ${queue.length}</div>`;
 
     const optionsHtml = q.options.map((opt, i) => {
         let cls = 'review-option-btn';
@@ -5837,11 +5906,10 @@ async function renderLearningExerciseStep(step) {
             );
         } else {
             // Vocabulaire : même structure visuelle rouge/vert que le comparatif grammaire, avec
-            // le mot japonais et son kanji cliquable (👁️) plutôt qu'un bouton séparé.
-            const kanjiChar = q.sourceWord?.kanji_list?.[0];
-            const kanjiBadge = kanjiChar
-                ? ` <span class="eye-badge" onclick='showFicheCorrectionModal({type:"kanji", item:{char:"${kanjiChar}"}})'>👁️ ${q.sourceWord.word_furigana || q.sourceWord.word}</span>`
-                : (q.sourceWord ? ` <span class="md-bold">${q.sourceWord.word}</span>` : '');
+            // le mot japonais cliquable (👁️) ouvrant SA PROPRE fiche vocabulaire (pas le kanji).
+            const wordBadge = q.sourceWord
+                ? ` <span class="eye-badge" onclick="showLearningFicheCorrection()">👁️ ${q.sourceWord.word_furigana || q.sourceWord.word}</span>`
+                : '';
             feedbackHtml = `
                 <div class="particle-compare-box">
                     <div class="particle-compare-row wrong">
@@ -5850,14 +5918,14 @@ async function renderLearningExerciseStep(step) {
                     </div>
                     <div class="particle-compare-row correct">
                         <span class="particle-compare-icon">✅</span>
-                        <div class="particle-compare-text">La bonne réponse était <span class="md-bold">${correctOpt.label}</span>${kanjiBadge}</div>
+                        <div class="particle-compare-text">La bonne réponse était <span class="md-bold">${correctOpt.label}</span>${wordBadge}</div>
                     </div>
                 </div>`;
         }
         feedbackHtml += `<button class="review-cta-btn" style="margin-top:14px;" onclick="continueLearningExercise()">Continuer →</button>`;
     }
 
-    container.innerHTML = header + `
+    container.innerHTML = header + questionCounter + `
         <div style="padding:0 16px;">
             <div class="review-card" style="margin-bottom:16px;">
                 <div style="font-size:1.3rem;line-height:1.7;">${q.promptMain}</div>
