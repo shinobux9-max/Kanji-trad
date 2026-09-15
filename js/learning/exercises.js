@@ -34,7 +34,7 @@ import { buildConfusionBoxHtml, buildParticleComparisonHtml, showLessonReference
 import { COMMON_PARTICLES } from '../features/vocabulary.js';
 import { showRevisionKanaPicker } from '../features/kana.js';
 import { showFreeTrainingConfig } from '../features/free-training.js';
-import { mdBold, continueFAB, backFAB } from '../ui/common.js';
+import { mdBold, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
 import { completeLearningStep, startLearningStep, advanceConceptSubStep, showLearningPathHome } from './learning-path.js';
 
 /* ══════════════════════════════════════════════════
@@ -171,6 +171,7 @@ let onboardingIndex = 0;
 
 export async function showLessonOnboarding() {
     pushModalState('lesson-onboarding');
+    hideBottomNav();
     onboardingIndex = 0;
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     await getOnboardingSlides();
@@ -428,6 +429,7 @@ export async function startGrammarLessonFlow() {
 }
 
 export async function startGrammarLessonFlowActual() {
+    hideBottomNav();
     // Reprend une leçon interrompue si elle existe encore, sur SON niveau sauvegardé — sinon
     // détermine dynamiquement quel niveau propose actuellement du contenu neuf (N5 d'abord).
     const saved = getSavedLessonProgress();
@@ -643,6 +645,7 @@ function renderLessonEnd() {
 ══════════════════════════════════════════════════ */
 export async function showExploreLessonsScreen(isBack = false, initialLevel = null) {
     if (!isBack) history.pushState({ view: 'explore-lessons' }, '');
+    hideBottomNav();
     document.getElementById('page-title').innerText = 'Explorer les leçons';
     const main = document.getElementById('main-content');
     const level = initialLevel || await findActiveLearningLevel() || 'n5';
@@ -707,6 +710,7 @@ function renderExploreLessonsList(lessons, level) {
 // Démarre (ou reprend, si c'est la leçon en cours) une leçon précise choisie depuis
 // l'exploration libre — contrairement à startGrammarLessonFlow(), ignore l'ordre linéaire imposé.
 export async function startSpecificGrammarLesson(lessonId, level) {
+    hideBottomNav();
     const data = await getLevelGrammarData(level);
     if (!data || !data.data) return;
     const lesson = data.data.find(l => l.id === lessonId);

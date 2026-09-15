@@ -129,6 +129,16 @@ export function closeSearchOverlay() {
    les mises à jour state.* sont du vrai code fonctionnel.
 ══════════════════════════════════════════════════ */
 export const MODAL_EXIT_REGISTRY = {
+    // 'kanji-detail'/'kana-detail' : la fiche kanji/kana utilise un OVERLAY partagé
+    // (#detail-view) posé PAR-DESSUS l'écran courant (liste, grille...), jamais un
+    // remplacement de main-content — donc "fermer" cette fiche ne doit JAMAIS re-rendre quoi
+    // que ce soit d'autre que fermer l'overlay lui-même (l'écran dessous est déjà correct,
+    // inchangé). Bug trouvé en test réel : sans ces 2 entrées, aucune des deux ne
+    // correspondait à rien dans les registres, donc handlePopState() tombait sur le cas par
+    // défaut (showDashboard) — fermer une fiche renvoyait à l'accueil au lieu de fermer
+    // simplement l'overlay.
+    'kanji-detail': () => closeDetail(),
+    'kana-detail': () => closeDetail(),
     // ⚠️ ATTENTION : showRevisionLevelPicker (features/vocabulary.js, pas encore porté)
     'vocab-review': () => { state.reviewSession = null; showRevisionLevelPicker('vocab', true); },
     'vocab-review-selector': () => showRevisionLevelPicker('vocab', true),
@@ -194,6 +204,8 @@ export const SCREEN_REGISTRY = {
     'revision-level-picker': (s) => showRevisionLevelPicker(s.category, true),
     // ⚠️ ATTENTION : showRevisionKanaPicker, même raison (cycle via pushModalState).
     'revision-kana-picker': () => showRevisionKanaPicker(true),
+    // ⚠️ ATTENTION : showKanaLearningPicker, même raison (cycle via pushModalState).
+    'kana-learning-picker': () => showKanaLearningPicker(true),
 };
 
 /**

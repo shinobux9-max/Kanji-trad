@@ -22,7 +22,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    RÉVISION GRAMMAIRE (flashcard + trou à combler + SRS)
@@ -82,6 +82,7 @@ export function prepareGrammarSessionItem(lesson, pool, forceMode = null) {
  * Vrai appel JS non importé (bouton "Entraînement libre").
  */
 export function showGrammarReviewModeSelector() {
+    hideBottomNav();
     const container = document.getElementById('category-content');
     const data = state.grammarHomeData?.data || [];
     const dueLessons = buildDueQueue(data);
@@ -130,6 +131,7 @@ export function refreshGrammarHome(isBack = true) {
 }
 
 export function startGrammarReview(forceMode = null) {
+    hideBottomNav();
     const data = state.grammarHomeData?.data || [];
     const dueLessons = buildDueQueue(data);
 
@@ -607,6 +609,7 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
  * appel JS non importé (bouton "Revoir le cours animé").
  */
 export function showGrammarDetail(lessonId, isBack = false) {
+    hideBottomNav();
     const { levelId, data } = state.grammarHomeData || {};
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     const container = document.getElementById('category-content');
@@ -642,7 +645,7 @@ export function showGrammarDetail(lessonId, isBack = false) {
         ...getGrammarExtraExamples(levelIdForExamples, lesson.id)
     ];
 
-    let html = backFAB('refreshGrammarHome(false)') + `<div class="detail-page">
+    let html = backFAB('history.back()') + `<div class="detail-page">
         <div class="detail-header-top">
             <div class="header-info">
                 <div class="lesson-title">Leçon ${lessonNum}</div>

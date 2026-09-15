@@ -17,7 +17,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, countDueItems, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { openDetail, stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB } from '../ui/common.js';
+import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
 
 const VOCAB_CATEGORY_MAP = {
     'action': '🎬 Action', 'color': '🎨 Couleurs', 'descriptor': '✨ Descripteurs',
@@ -158,6 +158,7 @@ export function prepareSessionItem(word, pool, forceMode = null) {
  * Vrai appel JS non importé (dans le bouton "Entraînement libre").
  */
 export function showVocabReviewModeSelector() {
+    hideBottomNav();
     const container = document.getElementById('category-content');
     const data = state.vocabHomeData?.data || [];
     const dueWords = buildDueQueue(data);
@@ -224,6 +225,7 @@ export function openVocabDetailFromState(wordId) {
 }
 
 export function startVocabReview(forceMode = null) {
+    hideBottomNav();
     const data = state.vocabHomeData?.data || [];
     const dueWords = buildDueQueue(data);
 
@@ -574,6 +576,7 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
    FICHE DÉTAIL D'UN MOT
 ══════════════════════════════════════════════════ */
 export function showVocabDetail(wordId, allWords = [], isBack = false) {
+    hideBottomNav();
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     const container = document.getElementById('category-content');
 
@@ -625,7 +628,7 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
 
     let html = `<div class="vocab-detail-page">`;
 
-    html += backFAB('refreshVocabList(false)') + `<div class="vocab-detail-header" style="justify-content:flex-end">
+    html += backFAB('history.back()') + `<div class="vocab-detail-header" style="justify-content:flex-end">
         <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
     </div>`;
 

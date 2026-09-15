@@ -29,7 +29,8 @@ import { getLevelKanjiChars, getLevelVocabGrammarStats } from '../core/data-load
 import { getKanjiMastery } from '../features/kanji.js';
 import { buildReviewQueue, getStats } from '../learning/srs.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
-import { backFAB } from './common.js';
+import { showKanaLearningPicker } from '../features/kana.js';
+import { backFAB, showBottomNav, hideBottomNav } from './common.js';
 
 /* ══════════════════════════════════════════════════
    SÉRIE (STREAK) — jours d'activité consécutifs
@@ -402,6 +403,7 @@ export async function startDashboardReview() {
  */
 export function showDashboard(isBack = false) {
     if (!isBack) history.pushState({ view: 'dashboard' }, '');
+    showBottomNav();
 
     const streak = getStreakData();
 
@@ -459,7 +461,7 @@ export function navDashboard() {
 // navigation.js — si navigation.js importait un jour dashboard.js en retour, même en passant
 // par kanji.js plutôt que par kana.js, ce serait un cycle. Autant ne jamais ajouter de lien
 // dashboard.js -> kana.js non plus, par cohérence, même si celui-là seul ne cycle pas encore).
-export function navKana() { loadKanas(); }
+export function navKana() { showKanaLearningPicker(); }
 // ⚠️ ATTENTION : showNiveauxScreen existe dans ce même fichier (voir plus bas) — appel
 // interne normal, pas une landmine à proprement parler, juste noté pour cohérence.
 export function navNiveaux() { showNiveauxScreen(); }
@@ -475,6 +477,7 @@ export function navNiveaux() { showNiveauxScreen(); }
  */
 export async function showNiveauxScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'niveaux' }, '');
+    hideBottomNav();
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Niveaux';
 
@@ -556,6 +559,7 @@ export function setActiveBottomNav(key) {
  */
 export async function showProgressionDetail(isBack = false) {
     if (!isBack) history.pushState({ view: 'progression' }, '');
+    hideBottomNav();
     const streak = getStreakData();
     const stats = getStats();
 

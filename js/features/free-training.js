@@ -20,7 +20,7 @@ import { getSrsInfo, getRawItemsForTypeLevel, makeQueueEntry, getEntryTrackingId
 import { updateWeaknessTracking } from '../learning/weakness.js';
 import { prepareSessionItem, getPrimaryMeaning } from './vocabulary.js';
 import { prepareGrammarSessionItem } from './grammar.js';
-import { mdBold, showFicheCorrectionModal, continueFAB, backFAB } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    STATS GLOBALES D'ENTRAÎNEMENT LIBRE (compteurs cumulés, distincts du SRS)
@@ -253,6 +253,7 @@ export async function startFreeTraining() {
 ══════════════════════════════════════════════════ */
 export function launchFreeTraining(pool, targetCount, config) {
     pushModalState('free-training-session');
+    hideBottomNav();
     if (state.trainingChronoInterval) { clearInterval(state.trainingChronoInterval); state.trainingChronoInterval = null; }
 
     const mode = (config && config.mode) || 'normal';

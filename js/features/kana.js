@@ -22,7 +22,7 @@ import { kanaGroups, getKanaFlatList } from '../core/data-loader.js';
 import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted } from '../learning/srs.js';
 import { createStrokeWriter, markMastered } from './strokes.js';
-import { handleListItemClick, toggleCategoryMasteryLive, refreshMasteryUI, backFAB } from '../ui/common.js';
+import { handleListItemClick, toggleCategoryMasteryLive, refreshMasteryUI, backFAB, hideBottomNav } from '../ui/common.js';
 
 /**
  * Équivalent EXACT de kanaDataLoader(char, onLoad, onError) du monolithe. Charge les
@@ -48,17 +48,51 @@ export function kanaDataLoader(char, onLoad, onError) {
 ══════════════════════════════════════════════════ */
 let currentKanaTabType = 'hira'; // suivi de l'onglet actif, utile pour "Tout sélectionner" et le retour en mode normal
 
-export function loadKanas() {
+export function loadKanas(script = 'hira') {
     document.getElementById('page-title').innerText = 'Kana';
-    renderKanaScreen('hira');
+    renderKanaScreen(script);
+}
+
+/**
+ * Écran de choix Hiragana/Katakana avant la grille — demandé explicitement : auparavant,
+ * Apprendre > Kana tombait directement sur la grille (toujours hiragana par défaut), sans
+ * possibilité de choisir. Même famille visuelle que showRevisionKanaPicker (côté Réviser),
+ * mais mène à renderKanaScreen() (navigation/consultation) plutôt qu'à une session de
+ * révision — 2 cartes seulement (pas de "Les deux", qui n'a pas de sens pour une grille de
+ * consultation simple ; les onglets internes de renderKanaScreen permettent déjà de basculer
+ * une fois à l'intérieur).
+ */
+export function showKanaLearningPicker(isBack = false) {
+    if (!isBack) history.pushState({ view: 'kana-learning-picker' }, '');
+    hideBottomNav();
+    document.getElementById('page-title').innerText = 'Kana';
+    const main = document.getElementById('main-content');
+
+    main.innerHTML = `${backFAB()}
+        <div class="niveaux-wrap">
+            <div class="niveaux-header">
+                <div class="niveaux-title-main">Kana</div>
+                <div class="niveaux-subtitle-main">Choisis le syllabaire à consulter.</div>
+            </div>
+            <div id="niveaux-list">
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:#9D6EFF1f;" onclick="loadKanas('hira')">
+                    <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">あ</div>
+                    <div class="niveaux-info"><div class="niveaux-card-title">Hiragana</div><div class="niveaux-card-sub">Toucher pour consulter</div></div>
+                </div>
+                <div class="niveaux-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:#9D6EFF1f;" onclick="loadKanas('kata')">
+                    <div class="niveaux-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">ア</div>
+                    <div class="niveaux-info"><div class="niveaux-card-title">Katakana</div><div class="niveaux-card-sub">Toucher pour consulter</div></div>
+                </div>
+            </div>
+        </div>`;
 }
 
 // Redessine l'écran complet (onglets + bouton Sélectionner + grille) — nécessaire pour que
 // le bouton Sélectionner disparaisse/réapparaisse correctement selon bulkSelectMode.
 export function renderKanaScreen(type) {
     currentKanaTabType = type;
-    document.getElementById('main-content').innerHTML = `
-        <div class="kana-tabs">
+    document.getElementById('main-content').innerHTML = `${backFAB('showKanaLearningPicker()')}
+        <div class="kana-tabs" style="margin-top:56px">
             <div class="kana-tab ${type === 'hira' ? 'active' : ''}" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
             <div class="kana-tab ${type === 'kata' ? 'active' : ''}" id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>
             ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshKanaScreen)">☑ Sélectionner</button>` : ''}
@@ -134,6 +168,8 @@ export function renderKanaGrid(type) {
    FICHE DÉTAIL KANA (même #detail-view que kanji, voir features/kanji.js::openDetail)
 ══════════════════════════════════════════════════ */
 export function openKanaDetail(kana) {
+    pushModalState('kana-detail');
+    hideBottomNav();
     state.currentType = 'kana'; state.currentChar = kana.c;
     // Le kana n'a pas de "mots qui l'utilisent" (contrairement au kanji) — on vide cette
     // section qui pourrait sinon garder le contenu résiduel d'un kanji visité juste avant
@@ -268,6 +304,7 @@ export function getDueKanaChars(script) {
 
 export async function showRevisionKanaPicker(isBack = false) {
     if (!isBack) history.pushState({ view: 'revision-kana-picker' }, '');
+    hideBottomNav();
     document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
@@ -295,6 +332,7 @@ export async function showRevisionKanaPicker(isBack = false) {
 }
 
 export function showKanaRevisionModeSelector(script) {
+    hideBottomNav();
     const dueKana = getDueKanaChars(script);
     if (dueKana.length === 0) {
         alert('Rien à réviser pour le moment ! 🎉');
@@ -333,6 +371,7 @@ export function showKanaRevisionModeSelector(script) {
 let kanaReviewSession = null;
 
 export function startKanaFlashcardReview(script) {
+    hideBottomNav();
     const dueKana = getDueKanaChars(script);
     if (dueKana.length === 0) return;
 
@@ -467,6 +506,7 @@ export function launchKanaTraceMode(mode) {
 
 // Entrée depuis l'onglet Révisions → Kana → mode "Tracé normal"/"Tracé difficile"
 export function startKanaTraceReview(script, mode) {
+    hideBottomNav();
     const dueKana = getDueKanaChars(script);
     if (dueKana.length === 0) { alert('Rien à réviser pour le moment ! 🎉'); return; }
     pushModalState('kana-trace-review');

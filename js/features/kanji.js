@@ -41,7 +41,7 @@ import { ALL_JLPT_LEVELS } from '../core/constants.js';
 import { pushModalState } from '../core/navigation.js';
 import { kanaToRomaji } from '../core/data-loader.js';
 import { countDueItems, buildDueQueue } from '../learning/srs.js';
-import { isBulkSelected, refreshMasteryUI, buildSpeakableExampleHtml, backFAB } from '../ui/common.js';
+import { isBulkSelected, refreshMasteryUI, buildSpeakableExampleHtml, backFAB, hideBottomNav } from '../ui/common.js';
 // NOTE : le fichier réel de ce projet s'appelle strokes.js (avec un "s"), alors que
 // l'arborescence cible communiquée liste "stroke.js" (singulier) — divergence de nommage à
 // clarifier/renommer un jour, mais je pointe vers le fichier qui existe réellement.
@@ -497,6 +497,7 @@ export function confirmNewFolder() {
 ══════════════════════════════════════════════════ */
 export function navFolders(isBack = false) {
     if (!isBack) history.pushState({ view: 'folders' }, '');
+    hideBottomNav();
     document.getElementById('page-title').innerText = '📁 Mes Dossiers';
     renderFoldersPage();
 }
@@ -609,6 +610,7 @@ export function openKanjiFromChar(char) {
 ══════════════════════════════════════════════════ */
 export function openDetail(kanji) {
     pushModalState('kanji-detail');
+    hideBottomNav();
 
     state.currentType = 'kanji';
     state.currentChar = kanji.char;

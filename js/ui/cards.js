@@ -16,7 +16,7 @@
  */
 
 import { state } from '../core/state.js';
-import { backFAB } from './common.js';
+import { backFAB, showBottomNav, hideBottomNav } from './common.js';
 import { pushModalState, closeAllOverlaysAndSessions } from '../core/navigation.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats, flattenIfNested } from '../core/data-loader.js';
 import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow, hasSeenLessonOnboarding, startGrammarLessonFlowActual, showLessonOnboarding, showOnboardingChoiceScreen } from '../learning/exercises.js';
@@ -36,6 +36,7 @@ import { buildNiveauxWaveSvg, navKana } from './dashboard.js';
 ══════════════════════════════════════════════════ */
 export async function showRevisionsScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'revisions' }, '');
+    showBottomNav();
     document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
@@ -85,6 +86,7 @@ export async function showRevisionsScreen(isBack = false) {
 
 export async function showRevisionLevelPicker(category, isBack = false) {
     if (!isBack) history.pushState({ view: 'revision-level-picker', category }, '');
+    hideBottomNav();
     document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
@@ -171,6 +173,7 @@ export async function startRevisionFor(category, levelId) {
    MODE DE RÉVISION KANJI — flashcard + tracé (normal/hardcore)
 ══════════════════════════════════════════════════ */
 export function showKanjiReviewModeSelector() {
+    hideBottomNav();
     const container = document.getElementById('category-content');
     const dueChars = getDueKanjiChars();
 
@@ -214,12 +217,14 @@ export function startKanjiFreeTrainingFromSelector() {
 }
 
 export function startKanjiTraceReview(mode) {
+    hideBottomNav();
     const dueChars = getDueKanjiChars();
     if (dueChars.length === 0) return;
     startStrokeQuiz({ type: 'queue', id: dueChars, mode });
 }
 
 export function startKanjiFlashcardReview() {
+    hideBottomNav();
     const dueChars = getDueKanjiChars();
     if (dueChars.length === 0) return;
 
@@ -335,6 +340,7 @@ export function renderKanjiReviewSummary() {
  */
 export async function showGrammarNiveauxScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'grammar-niveaux' }, '');
+    hideBottomNav();
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Grammaire';
 
@@ -395,6 +401,7 @@ export async function showGrammarNiveauxScreen(isBack = false) {
  */
 export async function showKanjiNiveauxScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'kanji-niveaux' }, '');
+    hideBottomNav();
     const mainContent = document.getElementById('main-content');
     document.getElementById('page-title').innerText = 'Kanji';
 
@@ -443,6 +450,7 @@ export async function showKanjiNiveauxScreen(isBack = false) {
  */
 export async function showApprendreScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'apprendre' }, '');
+    showBottomNav();
     document.getElementById('page-title').innerText = 'Apprendre';
     const main = document.getElementById('main-content');
     const savedLessonProgress = getSavedLessonProgress();
@@ -519,6 +527,7 @@ export async function showApprendreScreen(isBack = false) {
 ══════════════════════════════════════════════════ */
 export async function showCategoryDirect(levelId, category, isBack = false) {
     if (!state.jlptMapping || !state.jlptMapping.levels[levelId]) return;
+    hideBottomNav();
 
     if (!isBack) history.pushState({ view: 'category-direct', levelId, category }, '');
 

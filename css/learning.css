@@ -58,7 +58,7 @@
 /* ══════════════════════════════════════════════════
    ÉCRAN "APPRENDRE"
 ══════════════════════════════════════════════════ */
-.apprendre-wrap { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.apprendre-wrap { padding: 16px 16px 100px; display: flex; flex-direction: column; gap: 16px; }
 .apprendre-header { margin-bottom: 2px; }
 .apprendre-title-main { font-size: 1.625rem; color: #fff; font-weight: bold; }
 .apprendre-subtitle-main { font-size: 0.8125rem; color: var(--gray); margin-top: 4px; }

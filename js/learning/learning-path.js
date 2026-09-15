@@ -15,7 +15,7 @@ import { state } from '../core/state.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelConceptsData, kanaToRomajiPrecise } from '../core/data-loader.js';
 import { gradeReview } from './srs.js';
 import { updateWeaknessTracking } from './weakness.js';
-import { mdBold, showFicheCorrectionModal, continueFAB } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB, hideBottomNav } from '../ui/common.js';
 import { buildMeaningQCM } from '../features/vocabulary.js';
 import { buildGrammarCloze, getShortLessonExplanation, showLessonReferencePopup } from '../features/grammar.js';
 
@@ -113,6 +113,7 @@ export function getLearningUnitDisplayStatus(unit, curriculum, progress) {
 
 export async function showLearningPathHome(levelId, isBack = false) {
     if (!isBack) history.pushState({ view: 'learning-path-home', levelId }, '');
+    hideBottomNav();
     // Bug trouvé en test réel : sans ce nettoyage, state.activeSwipeContext restait sur
     // 'learning-path' et state.learningSession pointait toujours sur l'ancienne unité — un
     // simple tap sur une carte d'unité (un <div>, pas un <button>, donc pas exclu du
@@ -235,6 +236,7 @@ export function computeRecentUpTo(unit, stepIndex) {
 
 // Charge une unité précise et initialise/reprend la session en mémoire (state.learningSession).
 export async function loadLearningUnit(levelId, unit, progress = null) {
+    hideBottomNav();
     progress = progress || loadLearningProgress();
     const savedStep = (progress.currentUnit === unit.id) ? (progress.currentStep || 0) : 0;
 

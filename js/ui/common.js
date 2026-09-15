@@ -405,3 +405,19 @@ export function backFAB(onclickFn = 'history.back()', icon = '←') {
         background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;
         box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">${icon}</button>`;
 }
+
+/**
+ * Affiche/masque la barre de navigation du bas — visible UNIQUEMENT sur les 3 écrans
+ * principaux (Accueil/Apprendre/Réviser), masquée dès qu'on descend dans un sous-écran
+ * (choix de niveau, liste, fiche, sélecteur de mode, session de révision...), demandé
+ * explicitement. showDashboard()/showApprendreScreen()/showRevisionsScreen() appellent
+ * showBottomNav() ; tous les autres écrans appellent hideBottomNav().
+ */
+export function showBottomNav() {
+    const nav = document.getElementById('bottom-nav');
+    if (nav) nav.style.display = '';
+}
+export function hideBottomNav() {
+    const nav = document.getElementById('bottom-nav');
+    if (nav) nav.style.display = 'none';
+}
