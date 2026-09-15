@@ -50,7 +50,7 @@ import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashca
 ══════════════════════════════════════════════════ */
 const EXPOSED_FUNCTIONS = {
     trackItem, getRawItemsForTypeLevel,
-    closeSearchOverlay, bottomNavGo, toggleSearch, setActiveBottomNav, closeAllOverlaysAndSessions,
+    closeSearchOverlay, bottomNavGo, toggleSearch, setActiveBottomNav, closeAllOverlaysAndSessions, renderDashboard,
     // free-training.js
     advanceTrainingQuiz, answerTrainingCard, endTrainingSession, onFreeTrainingModeChange,
     onFreeTrainingTypeChange, openTrainingCurrentFiche, retrainMistakes, showFreeTrainingConfig,
