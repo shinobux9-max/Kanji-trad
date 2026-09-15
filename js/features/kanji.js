@@ -499,12 +499,24 @@ export function openFolderModal(char) {
     _fmChar = char;
     document.getElementById('fm-kanji-label').textContent = `Kanji : ${char}`;
     document.getElementById('fm-new-inp').value = '';
+    // Repart toujours de l'état "ligne nouveau dossier fermée" — ni le HTML ni le CSS ne
+    // définissaient d'état par défaut explicite pour cette ligne (ambiguïté déjà présente
+    // dans le monolithe original), donc on le fixe nous-mêmes ici plutôt que de dépendre
+    // d'un état implicite du navigateur.
+    document.getElementById('fm-new-row').style.display = 'none';
     renderFolderModalList(char);
     document.getElementById('folder-modal').classList.add('open');
 }
 
 export function closeFolderModal() {
     document.getElementById('folder-modal').classList.remove('open');
+    // Remet toujours la ligne "nouveau dossier" à son état initial (fermée), même si on
+    // annule après l'avoir ouverte sans valider — évite qu'elle reste visible par erreur à
+    // la prochaine ouverture de la modal.
+    const row = document.getElementById('fm-new-row');
+    if (row) row.style.display = 'none';
+    const inp = document.getElementById('fm-new-inp');
+    if (inp) { inp.value = ''; inp.blur(); }
     _fmChar = null;
 }
 
@@ -567,6 +579,8 @@ export function confirmNewFolder() {
 
     addKanjiToFolder(_fmChar, name);
     inp.value = '';
+    inp.blur(); // referme le clavier virtuel (mobile) — sans ça, il pouvait rester ouvert et
+                // recouvrir les boutons du bas de la fenêtre au prochain réaffichage
     document.getElementById('fm-new-row').style.display = 'none';
     renderFolderModalList(_fmChar);
     updateSaveBtnState(_fmChar);
