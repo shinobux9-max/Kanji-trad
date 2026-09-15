@@ -180,7 +180,7 @@
 #bottom-nav {
     background:
         linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.85) 100%),
-        url('images/niveaux-bg.webp');
+        url('../images/niveaux-bg.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed, fixed;

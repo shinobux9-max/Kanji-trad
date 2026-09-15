@@ -800,6 +800,31 @@ aucun chantier de fonctionnalité connu. La seule chose qui n'a jamais été fai
 tout ce handoff : **un test réel dans un navigateur** — voir la checklist de test fournie
 séparément à l'utilisateur pour la première vérification en conditions réelles.
 
+## Session [continuation 15] — premier vrai test navigateur : app.js confirmé fonctionnel
+
+**Excellente nouvelle** : premier test réel sur GitHub Pages (branche modularisation) —
+`app.js`, `core/data-loader.js`, `ui/dashboard.js` tournent bel et bien (logs de la console
+attribués aux bons fichiers, bootstrap complet réussi : mapping JLPT chargé, 2977 kanji
+chargés, dashboard rendu). Les 404 sur `data/n1|n2|n3/grammar.json` etc. sont un manque de
+contenu déjà connu (seuls N5/N4 ont du vrai contenu), pas une régression. Le
+`Service Worker registration failed: Worker disallowed` était déjà présent AVANT la
+bascule (confirmé sur l'ancien monolithe aussi), pas introduit par ce chantier.
+
+**Un vrai bug trouvé par ce premier test, corrigé** : `GET .../css/images/niveaux-bg.webp
+404`. Le monolithe original (`kanji.css` à la racine) référençait l'image en
+`url('images/niveaux-bg.webp')` — chemin relatif correct depuis la racine. La
+modularisation CSS a déplacé le contenu dans `css/`, mais 3 occurrences sur les 10 (2 dans
+`components.css`, 1 dans `layout.css`) avaient gardé le chemin sans `../`, pointant donc
+vers `css/images/...` au lieu de `images/...`. Les 7 autres occurrences avaient déjà le bon
+`../images/...` — incohérence interne au sein même des 9 fichiers CSS (probablement une
+correction partielle faite lors du chantier de modularisation CSS antérieur à ce handoff).
+**Corrigé : les 10 occurrences utilisent maintenant `../images/niveaux-bg.webp` de façon
+cohérente.** Vérifié qu'aucun autre `url(...)` n'a le même problème (scan complet des 9
+fichiers CSS, un seul asset image référencé au total).
+
+**Prochaine étape** : poursuivre la checklist de test (`CHECKLIST-TEST.md`) — navigation,
+recherche, une session de révision de chaque type, entraînement libre, Learning Path.
+
 ## PROCHAINE ÉTAPE (à planifier au démarrage de la prochaine session)
 
 La modularisation JS est complète — plus aucun chantier de fonctionnalité connu.

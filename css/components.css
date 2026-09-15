@@ -12,7 +12,7 @@
 
 /* ── SEARCH BAR (agrandie, filtres type + niveau) ── */
     #search-bar {
-        background: linear-gradient(180deg, rgba(6,11,24,0.92) 0%, rgba(6,11,24,0.98) 100%), url('images/niveaux-bg.webp');
+        background: linear-gradient(180deg, rgba(6,11,24,0.92) 0%, rgba(6,11,24,0.98) 100%), url('../images/niveaux-bg.webp');
         background-size: cover; background-position: center;
         padding: 10px 12px 12px; position: fixed; top: 0; width: 100%; z-index: 990;
         border-bottom: 1px solid var(--border);
@@ -52,7 +52,7 @@
         /* ── SEARCH RESULTS ── même fond que les autres grands overlays de l'app */
     #search-results {
         position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.92) 100%), url('images/niveaux-bg.webp');
+        background: linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.92) 100%), url('../images/niveaux-bg.webp');
         background-size: cover; background-position: center; background-attachment: fixed;
         z-index: 980; overflow-y: auto; display: none;
         padding-top: 160px; /* laisse la place à la barre + ses 2 rangées de filtres, plus haute qu'avant */
