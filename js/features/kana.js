@@ -91,7 +91,7 @@ export function showKanaLearningPicker(isBack = false) {
 // le bouton Sélectionner disparaisse/réapparaisse correctement selon bulkSelectMode.
 export function renderKanaScreen(type) {
     currentKanaTabType = type;
-    document.getElementById('main-content').innerHTML = `${backFAB('showKanaLearningPicker()')}
+    document.getElementById('main-content').innerHTML = `${backFAB('history.back()')}
         <div class="kana-tabs" style="margin-top:56px">
             <div class="kana-tab ${type === 'hira' ? 'active' : ''}" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
             <div class="kana-tab ${type === 'kata' ? 'active' : ''}" id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>

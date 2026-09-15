@@ -537,7 +537,6 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
 
     const catLabels = { kanji: 'Kanji', vocab: 'Vocabulaire', grammar: 'Grammaire' };
     const catLabel = catLabels[category] || category;
-    const backFn = category === 'vocab' ? 'showNiveauxScreen' : category === 'grammar' ? 'showGrammarNiveauxScreen' : 'showKanjiNiveauxScreen';
 
     // Sous-titre : stats réelles si disponibles, sinon la description du niveau
     let subtitle = levelData.description;
@@ -550,7 +549,7 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
         subtitle = `${chars ? chars.length : 0} kanji`;
     }
 
-    mainContent.innerHTML = `${backFAB(`closeAllOverlaysAndSessions(); ${backFn}()`)}
+    mainContent.innerHTML = `${backFAB('history.back()')}
         <div class="cat-header" style="padding-top:56px">
             <div class="cat-header-info">
                 <div class="cat-header-title">${catLabel} ${levelData.label}</div>

@@ -575,7 +575,7 @@ export async function showProgressionDetail(isBack = false) {
     const currentMonthKey = new Date().toISOString().slice(0, 7);
     const monthCount = stats.monthKey === currentMonthKey ? stats.monthCount : 0;
 
-    document.getElementById('main-content').innerHTML = `${backFAB('navDashboard()')}
+    document.getElementById('main-content').innerHTML = `${backFAB('history.back()')}
         <div class="progression-page">
             <div class="progression-title">Ta progression</div>
             <div class="progression-subtitle">${stats.sessionsCount} session${stats.sessionsCount > 1 ? 's' : ''} · ${streak.currentStreak} jour${streak.currentStreak > 1 ? 's' : ''} d'affilée</div>
