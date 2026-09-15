@@ -17,7 +17,7 @@
  */
 
 import { state } from './core/state.js';
-import { initNavigation, closeSearchOverlay, bottomNavGo, toggleSearch } from './core/navigation.js';
+import { initNavigation, closeSearchOverlay, bottomNavGo, toggleSearch, closeAllOverlaysAndSessions } from './core/navigation.js';
 import { preloadAllGrammarLevels } from './core/data-loader.js';
 import { trackItem } from './core/storage.js';
 
@@ -43,14 +43,14 @@ import { openWeaknessItem, trainWeaknessItems } from './learning/weakness.js';
 import { closeFicheCorrectionModal, enterBulkSelectMode, handleListItemClick, showFicheCorrectionModal, toggleCategoryMasteryLive, exitBulkSelectMode, toggleDetailMastery } from './ui/common.js';
 import { navDashboard, showDailyGoalModal, showProgressionDetail, startDashboardReview, closeDailyGoalModal, saveDailyGoalFromModal, showNiveauxScreen, navKana } from './ui/dashboard.js';
 import { openGrammarFromSearch, openKanjiFromSearchHit, openVocabFromSearch, toggleSearchFilter, resetSearchFilters, clearSearch, debouncedDoSearch, showSearchPanel, hideSearchPanel } from './ui/modals.js';
-import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen } from './ui/cards.js';
+import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory } from './ui/cards.js';
 
 /* ══════════════════════════════════════════════════
    EXPOSITION SUR window — UNE SEULE PASSE, ici et nulle part ailleurs (voir HANDOFF.md)
 ══════════════════════════════════════════════════ */
 const EXPOSED_FUNCTIONS = {
     trackItem, getRawItemsForTypeLevel,
-    closeSearchOverlay, bottomNavGo, toggleSearch, setActiveBottomNav,
+    closeSearchOverlay, bottomNavGo, toggleSearch, setActiveBottomNav, closeAllOverlaysAndSessions,
     // free-training.js
     advanceTrainingQuiz, answerTrainingCard, endTrainingSession, onFreeTrainingModeChange,
     onFreeTrainingTypeChange, openTrainingCurrentFiche, retrainMistakes, showFreeTrainingConfig,
@@ -100,7 +100,7 @@ const EXPOSED_FUNCTIONS = {
     showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview,
     startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor,
     submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen,
-    showKanjiNiveauxScreen, showApprendreScreen,
+    showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory,
 };
 Object.entries(EXPOSED_FUNCTIONS).forEach(([name, fn]) => { window[name] = fn; });
 

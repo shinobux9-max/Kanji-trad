@@ -16,16 +16,16 @@
  */
 
 import { state } from '../core/state.js';
-import { pushModalState } from '../core/navigation.js';
-import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats } from '../core/data-loader.js';
+import { pushModalState, closeAllOverlaysAndSessions } from '../core/navigation.js';
+import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats, flattenIfNested } from '../core/data-loader.js';
 import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow } from '../learning/exercises.js';
 import { showLearningPathHome } from '../learning/learning-path.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
 import { gradeReview, scheduleRelearning, recordSessionCompleted } from '../learning/srs.js';
-import { getDueKanjiChars, buildReadingChips, getKanjiMastery } from '../features/kanji.js';
+import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList } from '../features/kanji.js';
 import { startStrokeQuiz } from '../features/strokes.js';
-import { showVocabReviewModeSelector } from '../features/vocabulary.js';
-import { showGrammarReviewModeSelector } from '../features/grammar.js';
+import { showVocabReviewModeSelector, displayVocabList } from '../features/vocabulary.js';
+import { showGrammarReviewModeSelector, showGrammarHome } from '../features/grammar.js';
 import { showRevisionKanaPicker } from '../features/kana.js';
 import { showFreeTrainingConfig } from '../features/free-training.js';
 import { buildNiveauxWaveSvg, navKana } from './dashboard.js';
@@ -499,4 +499,96 @@ export async function showApprendreScreen(isBack = false) {
             </div>
         </div>`;
     renderWeaknessWidget('apprendre-weakness-widget');
+}
+
+/* ══════════════════════════════════════════════════
+   ROUTEUR CROSS-FEATURE — showCategoryDirect / loadJLPTCategory
+   ─────────────────────────────────────────────────
+   Écran générique "kanji|vocab|grammaire d'un niveau JLPT donné", distribue vers
+   displayKanjiList/displayVocabList/showGrammarHome selon la catégorie. Dernière landmine
+   connue résolue (référencée depuis core/navigation.js, ui/cards.js lui-même — pour les
+   écrans "Niveaux" — et features/kanji.js::displayKanjiListFromHome()).
+══════════════════════════════════════════════════ */
+export async function showCategoryDirect(levelId, category, isBack = false) {
+    if (!state.jlptMapping || !state.jlptMapping.levels[levelId]) return;
+
+    if (!isBack) history.pushState({ view: 'category-direct', levelId, category }, '');
+
+    state.currentJLPTLevel = levelId;
+    const levelData = state.jlptMapping.levels[levelId];
+    const mainContent = document.getElementById('main-content');
+
+    const catLabels = { kanji: 'Kanji', vocab: 'Vocabulaire', grammar: 'Grammaire' };
+    const catLabel = catLabels[category] || category;
+    const backFn = category === 'vocab' ? 'showNiveauxScreen' : category === 'grammar' ? 'showGrammarNiveauxScreen' : 'showKanjiNiveauxScreen';
+
+    // Sous-titre : stats réelles si disponibles, sinon la description du niveau
+    let subtitle = levelData.description;
+    if (category === 'vocab' || category === 'grammar') {
+        const vg = await getLevelVocabGrammarStats(levelId);
+        if (category === 'vocab' && vg.vocabTotal > 0) subtitle = `${vg.vocabTotal} mots · ${vg.vocabMastered} maîtrisés`;
+        if (category === 'grammar' && vg.grammarTotal > 0) subtitle = `${vg.grammarTotal} leçons · ${vg.grammarMastered} maîtrisées`;
+    } else if (category === 'kanji') {
+        const chars = await getLevelKanjiChars(levelId);
+        subtitle = `${chars ? chars.length : 0} kanji`;
+    }
+
+    mainContent.innerHTML = `
+        <div class="cat-header">
+            <button class="back-btn" onclick="closeAllOverlaysAndSessions(); ${backFn}()">←</button>
+            <div class="cat-header-info">
+                <div class="cat-header-title">${catLabel} ${levelData.label}</div>
+                <div class="cat-header-sub">${subtitle}</div>
+            </div>
+        </div>
+        <div id="category-content" style="padding:16px">
+            <div style="text-align:center;color:var(--gray);margin-top:40px">
+                <div class="spinner" style="margin-bottom:16px"></div>
+                Chargement…
+            </div>
+        </div>`;
+
+    loadJLPTCategory(levelId, category, true);
+}
+
+export async function loadJLPTCategory(levelId, category, isBack = false) {
+    const container = document.getElementById('category-content');
+    if (!container) return;
+
+    try {
+        container.innerHTML = '<div style="text-align:center;color:var(--gray)"><div class="spinner" style="margin-bottom:16px"></div>Chargement…</div>';
+
+        const url = `./data/${levelId}/${category}.json`;
+        const res = await fetch(url, { cache: 'no-store' });
+
+        if (!res.ok) {
+            throw new Error(`Fichier non trouvé : ${url}`);
+        }
+
+        const data = flattenIfNested(await res.json());
+
+        let examples = null;
+        if (category === 'vocab' || category === 'grammar') {
+            try {
+                const exRes = await fetch(`./data/${levelId}/exemples.json`, { cache: 'no-store' });
+                if (exRes.ok) {
+                    examples = await exRes.json();
+                }
+            } catch (e) {
+                console.warn(`Exemples non trouvés pour ${levelId}:`, e);
+            }
+        }
+
+        if (category === 'kanji') {
+            displayKanjiList(levelId, data, isBack);
+        } else if (category === 'vocab') {
+            displayVocabList(levelId, data, examples, isBack);
+        } else if (category === 'grammar') {
+            showGrammarHome(levelId, data, examples, isBack);
+        }
+
+    } catch (e) {
+        container.innerHTML = `<div style="color:#e55;font-size:0.8125rem;padding:20px;text-align:center">Erreur : ${e.message}</div>`;
+        console.error('loadJLPTCategory error:', e);
+    }
 }
