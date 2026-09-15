@@ -164,10 +164,11 @@ export const SCREEN_REGISTRY = {
     'dashboard': () => { showDashboard(true); renderDashboard(); },
     // ⚠️ ATTENTION : features/free-training.js, pas encore porté
     'free-training-config': () => showFreeTrainingConfig(true),
-    // ⚠️ ATTENTION : loadCategory/loadSeriesPage existent dans features/kanji.js, mais
-    // kanji.js importe pushModalState depuis CE fichier — cycle si import réel (voir en-tête).
-    'category': (s) => loadCategory(s.id, true),
-    'series': (s) => loadSeriesPage(s.id, true),
+    // 'category'/'series' retirées (session de nettoyage) : loadCategory/loadSeriesPage
+    // (ancienne navigation par grade Primaire/Collège) n'existent plus nulle part —
+    // écrans jamais atteignables depuis l'interface actuelle, supprimés à la demande de
+    // l'utilisateur. Le moteur de quiz par modal (showQuizModeModal/launchQuizMode) qu'ils
+    // utilisaient reste lui bien vivant, utilisé par le bouton "⚡ Quiz" des dossiers.
     // ⚠️ ATTENTION : les 6 suivantes n'appartiennent à aucun module porté actuellement
     'niveaux': () => showNiveauxScreen(true),
     'apprendre': () => showApprendreScreen(true),

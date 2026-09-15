@@ -21,7 +21,6 @@ import { initNavigation, closeSearchOverlay, bottomNavGo, toggleSearch, closeAll
 import { preloadAllGrammarLevels } from './core/data-loader.js';
 import { trackItem } from './core/storage.js';
 
-import { buildCategories, buildSeries } from './features/kanji.js';
 import { initSwipeNavigation } from './learning/exercises.js';
 import { getRawItemsForTypeLevel } from './learning/srs.js';
 import { initMicSearch } from './ui/modals.js';
@@ -31,8 +30,8 @@ import { recordDailyActivity, renderDashboard, setActiveBottomNav, showDashboard
 // HTML, groupées par fichier d'origine (générées programmatiquement, voir en-tête) ──
 import { advanceTrainingQuiz, answerTrainingCard, endTrainingSession, onFreeTrainingModeChange, onFreeTrainingTypeChange, openTrainingCurrentFiche, retrainMistakes, showFreeTrainingConfig, startFreeTraining, submitTrainingQuizAnswer, launchFreeTraining, flipTrainingCard } from './features/free-training.js';
 import { advanceGrammarReviewQueue, closeLessonReferencePopup, showGrammarHome, showLessonReferencePopup, startGrammarReview, submitGrammarQuizAnswer, submitGrammarReviewGrade, refreshGrammarHome, startGrammarFreeTrainingFromSelector, showGrammarDetail, renderSectionBody, buildConfusionBoxHtml, flipGrammarReviewCard } from './features/grammar.js';
-import { kanaTraceHint, kanaTraceSkip, openKanaDetail, replayKanaTraceQuiz, showKanaRevisionModeSelector, startKanaFlashcardReview, startKanaTraceQuiz, startKanaTraceReview, submitKanaReviewGrade, switchKanaTab, showRevisionKanaPicker, refreshKanaScreen, closeKanaTraceModal, launchKanaTraceMode, resetKanaReviewSession, flipKanaReviewCard } from './features/kana.js';
-import { loadCategory, loadSeriesPage, openDetail, openKanjiFromChar, promptCreateEmptyFolder, promptDeleteFolder, promptRenameFolder, toggleFmNewRow, toggleKanjiInFolder, refreshKanjiList, closeFolderModal, confirmNewFolder, openFolderModal, displayKanjiList, closeDetail, getJLPTLevel, navFolders } from './features/kanji.js';
+import { kanaTraceHint, kanaTraceSkip, openKanaDetail, replayKanaTraceQuiz, showKanaRevisionModeSelector, startKanaFlashcardReview, startKanaTraceQuiz, startKanaTraceReview, submitKanaReviewGrade, switchKanaTab, showRevisionKanaPicker, refreshKanaScreen, closeKanaTraceModal, launchKanaTraceMode, resetKanaReviewSession, flipKanaReviewCard, loadKanas } from './features/kana.js';
+import { openDetail, openKanjiFromChar, promptCreateEmptyFolder, promptDeleteFolder, promptRenameFolder, toggleFmNewRow, toggleKanjiInFolder, refreshKanjiList, closeFolderModal, confirmNewFolder, openFolderModal, displayKanjiList, closeDetail, getJLPTLevel, navFolders } from './features/kanji.js';
 import { speakSentence, speakText, startOralTest } from './features/oral.js';
 import { answerQuiz, revealChoices, showQuizModeModal, skipVocalQuestion, startFolderQuiz, startQuiz, startVoiceRecognition, closeQuiz, closeQuizModal, continueAfterFeedback, launchQuizMode, launchStrokeMode, toggleExamples, togglePause } from './features/quiz.js';
 import { closeStrokeQuiz, sqShowHint, sqSkip, startStrokeQuiz, launchDetailTrace, replayAnimation } from './features/strokes.js';
@@ -62,9 +61,9 @@ const EXPOSED_FUNCTIONS = {
     // kana.js
     kanaTraceHint, kanaTraceSkip, openKanaDetail, replayKanaTraceQuiz, showKanaRevisionModeSelector,
     startKanaFlashcardReview, startKanaTraceQuiz, startKanaTraceReview, submitKanaReviewGrade, switchKanaTab,
-    showRevisionKanaPicker, refreshKanaScreen, closeKanaTraceModal, launchKanaTraceMode, resetKanaReviewSession, flipKanaReviewCard,
+    showRevisionKanaPicker, refreshKanaScreen, closeKanaTraceModal, launchKanaTraceMode, resetKanaReviewSession, flipKanaReviewCard, loadKanas,
     // kanji.js
-    loadCategory, loadSeriesPage, openDetail, openKanjiFromChar, promptCreateEmptyFolder,
+    openDetail, openKanjiFromChar, promptCreateEmptyFolder,
     promptDeleteFolder, promptRenameFolder, toggleFmNewRow, toggleKanjiInFolder, refreshKanjiList,
     closeFolderModal, confirmNewFolder, openFolderModal, displayKanjiList, closeDetail, getJLPTLevel, navFolders,
     // oral.js
@@ -259,10 +258,6 @@ async function init() {
             state.exemplesDb = {};
         }
 
-        // Construction des structures internes (catégories/séries de kanji).
-        buildCategories();
-        buildSeries();
-
         // Affichage du dashboard : d'abord le HTML (showDashboard), puis les barres de
         // progression (renderDashboard).
         document.getElementById('page-title').innerText = '漢字 Study';
@@ -270,7 +265,7 @@ async function init() {
         renderDashboard();
         setActiveBottomNav('accueil');
 
-        console.log(`✅ ${state.data.kanjiDb.length} kanji chargés — ${state.seriesMap.size} séries créées`);
+        console.log(`✅ ${state.data.kanjiDb.length} kanji chargés`);
 
     } catch (e) {
         console.error('Erreur BDD:', e);
