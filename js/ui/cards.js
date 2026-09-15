@@ -621,6 +621,12 @@ export function startIntroductionOrResume() {
     if (hasLessonProgress && hasLearningPathProgress) {
         // Les deux ont une session active : on garde la possibilité de choisir laquelle
         // reprendre plutôt que de trancher arbitrairement pour l'une des deux.
+        // Bug trouvé en test réel, corrigé : showOnboardingChoiceScreen() s'attend à ce que
+        // #category-content existe déjà (vrai quand on vient de finir les slides d'intro,
+        // FAUX quand on y arrive directement depuis l'écran Apprendre) — sans ce conteneur,
+        // la fonction se terminait silencieusement (if (!container) return;), sans erreur ni
+        // affichage. On le crée nous-mêmes avant l'appel, comme le fait tout le reste de l'app.
+        document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
         showOnboardingChoiceScreen();
     } else if (hasLessonProgress) {
         startGrammarLessonFlowActual();
@@ -628,6 +634,7 @@ export function startIntroductionOrResume() {
         startLearningPath(learningProgress.currentLevel);
     } else {
         // Intro déjà vue, aucune session active nulle part : repropose le choix de départ.
+        document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
         showOnboardingChoiceScreen();
     }
 }

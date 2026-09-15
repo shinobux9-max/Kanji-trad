@@ -382,7 +382,7 @@ export function buildSpeakableExampleHtml(japaneseHtml, romaji, french, speakArg
  */
 export function continueFAB(onclickFn, label = 'Continuer →') {
     return `<button onclick="${onclickFn}"
-        style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:600;
+        style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:960;
         padding:14px 32px;border-radius:999px;background:var(--accent);border:none;
         color:#000;font-size:0.9375rem;font-weight:bold;
         box-shadow:0 4px 16px rgba(0,229,255,0.35);cursor:pointer;white-space:nowrap;">
