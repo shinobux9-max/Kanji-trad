@@ -17,7 +17,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, countDueItems, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { openDetail, stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode } from '../ui/common.js';
+import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml } from '../ui/common.js';
 
 const VOCAB_CATEGORY_MAP = {
     'action': '🎬 Action', 'color': '🎨 Couleurs', 'descriptor': '✨ Descripteurs',
@@ -660,12 +660,12 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
 
     if (word.example && word.example.japanese) {
         html += `<div class="vocab-section-title">Exemple en contexte</div>`;
-        html += `<div class="vocab-example-box">
-            <div class="example-jp">${mdBold(word.example.japanese || '')}</div>
-            <div class="example-ro">${mdBold(word.example.romaji || '')}</div>
-            <div class="example-fr">${mdBold(word.example.french || '')}</div>
-            <button class="vocab-speak-btn-example" onclick="speakText('${stripRubyForSpeech(word.example.japanese || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
-        </div>`;
+        html += buildSpeakableExampleHtml(
+            mdBold(word.example.japanese || ''),
+            mdBold(word.example.romaji || ''),
+            mdBold(word.example.french || ''),
+            stripRubyForSpeech(word.example.japanese || '').replace(/'/g, "\\'")
+        );
     }
 
     if (Array.isArray(word.kanji_list) && word.kanji_list.length) {

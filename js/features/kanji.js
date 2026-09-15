@@ -41,7 +41,7 @@ import { ALL_JLPT_LEVELS } from '../core/constants.js';
 import { pushModalState } from '../core/navigation.js';
 import { kanaToRomaji } from '../core/data-loader.js';
 import { countDueItems, buildDueQueue } from '../learning/srs.js';
-import { isBulkSelected, refreshMasteryUI } from '../ui/common.js';
+import { isBulkSelected, refreshMasteryUI, buildSpeakableExampleHtml } from '../ui/common.js';
 // NOTE : le fichier réel de ce projet s'appelle strokes.js (avec un "s"), alors que
 // l'arborescence cible communiquée liste "stroke.js" (singulier) — divergence de nommage à
 // clarifier/renommer un jour, mais je pointe vers le fichier qui existe réellement.
@@ -438,7 +438,10 @@ export function removeKanjiFromFolder(char, folderName) {
     const f = loadFolders();
     if (f[folderName]) {
         f[folderName] = f[folderName].filter(c => c !== char);
-        if (f[folderName].length === 0) delete f[folderName];
+        // Ne supprime plus le dossier automatiquement quand il devient vide (changement
+        // demandé — le comportement d'origine du monolithe supprimait le dossier vide, mais
+        // ça surprenait à l'usage : un dossier vide doit rester disponible pour y remettre
+        // des kanji plus tard, pas disparaître silencieusement).
     }
     saveFolders(f);
 }
@@ -578,12 +581,10 @@ export function confirmNewFolder() {
     if (!_fmChar) return;
 
     addKanjiToFolder(_fmChar, name);
-    inp.value = '';
-    inp.blur(); // referme le clavier virtuel (mobile) — sans ça, il pouvait rester ouvert et
-                // recouvrir les boutons du bas de la fenêtre au prochain réaffichage
-    document.getElementById('fm-new-row').style.display = 'none';
-    renderFolderModalList(_fmChar);
     updateSaveBtnState(_fmChar);
+    // Ferme maintenant la fenêtre après création (changement demandé — plus de
+    // "créer + rester ouvert pour ajouter à d'autres dossiers").
+    closeFolderModal();
 }
 
 /* ══════════════════════════════════════════════════
@@ -594,7 +595,8 @@ export function confirmNewFolder() {
    plus bas dans ce même fichier, la seconde dans features/quiz.js) et exposées sur window
    par app.js.
 ══════════════════════════════════════════════════ */
-export function navFolders() {
+export function navFolders(isBack = false) {
+    if (!isBack) history.pushState({ view: 'folders' }, '');
     document.getElementById('page-title').innerText = '📁 Mes Dossiers';
     renderFoldersPage();
 }
@@ -606,11 +608,15 @@ export function renderFoldersPage() {
 
     main.innerHTML = '';
 
+    const backBtn = `<button class="back-btn-top" onclick="history.back()" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
+        ← RETOUR
+    </button>`;
+
     const wrap = document.createElement('div');
     wrap.className = 'folders-wrap';
 
     if (names.length === 0) {
-        wrap.innerHTML = `<div class="folder-empty">
+        wrap.innerHTML = backBtn + `<div class="folder-empty">
             <div class="folder-empty-icon">📂</div>
             <div class="folder-empty-text">Aucun dossier créé.<br>
             Ouvrez une fiche kanji et appuyez sur ⭐ pour commencer.</div>
@@ -619,7 +625,7 @@ export function renderFoldersPage() {
         return;
     }
 
-    wrap.innerHTML = `<button onclick="promptCreateEmptyFolder()"
+    wrap.innerHTML = backBtn + `<button onclick="promptCreateEmptyFolder()"
         style="width:100%;padding:12px;margin-bottom:16px;background:none;border:1px dashed var(--accent);border-radius:10px;color:var(--accent);font-size:0.8125rem;cursor:pointer;font-family:inherit;">
         ➕ Créer un dossier vide
     </button>`;
@@ -915,18 +921,7 @@ export async function renderExemples(char) {
             ? jp.replace(new RegExp(`(${target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g'), '<span class="highlight-grammar">$1</span>')
             : jp;
         const plainText = stripRubyForSpeech(jp).replace(/'/g, "\\'");
-        const romajiLine = romaji
-            ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${romaji}</div>`
-            : '';
-        return `<div onclick="speakSentence('${plainText}')"
-            style="position:relative;background:rgba(255,255,255,0.03);padding:14px 40px 14px 14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);transition:background 0.15s"
-            onmouseenter="this.style.background='rgba(255,255,255,0.06)'"
-            onmouseleave="this.style.background='rgba(255,255,255,0.03)'">
-            <span style="position:absolute;top:12px;right:12px;font-size:1rem;opacity:0.7">🔊</span>
-            <div style="font-size:1.1rem;color:#fff;margin-bottom:5px;line-height:1.4">${jpHtml}</div>
-            ${romajiLine}
-            <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${fr}</div>
-        </div>`;
+        return buildSpeakableExampleHtml(jpHtml, romaji, fr, plainText);
     }).join('');
 
     container.innerHTML = `

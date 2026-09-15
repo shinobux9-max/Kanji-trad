@@ -179,6 +179,9 @@ export const SCREEN_REGISTRY = {
     'category-direct': (s) => showCategoryDirect(s.levelId, s.category, true),
     // ⚠️ ATTENTION : displayKanjiList existe dans features/kanji.js, même raison que ci-dessus.
     'kanji-list': () => { if (state.kanjiHomeData) displayKanjiList(state.kanjiHomeData.levelId, { chars: state.kanjiHomeData.chars }, true); },
+    // ⚠️ ATTENTION : navFolders existe dans features/kanji.js, même raison de cycle que
+    // loadCategory/loadSeriesPage juste au-dessus.
+    'folders': () => navFolders(true),
     // ⚠️ ATTENTION : features/vocabulary.js, pas encore porté
     'vocab-list': () => { if (state.vocabHomeData) displayVocabList(state.vocabHomeData.levelId, state.vocabHomeData.data, state.vocabHomeData.examples, true); },
     'vocab-detail': (s) => { if (state.vocabHomeData) showVocabDetail(s.wordId, state.vocabHomeData.data, true); },

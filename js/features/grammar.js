@@ -22,7 +22,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    RÉVISION GRAMMAIRE (flashcard + trou à combler + SRS)
@@ -680,14 +680,12 @@ export function showGrammarDetail(lessonId, isBack = false) {
             <div class="examples-section">
                 <div class="section-label">EXEMPLES</div>
                 <div class="examples-container">
-                    ${resolvedExamples.map(example => `
-                        <div class="example-item">
-                            <div class="example-jp">${highlightText(example.japanese || '', example.highlight || '')}</div>
-                            <div class="example-ro">${example.romaji || ''}</div>
-                            <div class="example-fr">${example.french || ''}</div>
-                            ${example.japanese ? `<button class="speak-btn" onclick="speakText('${stripRubyForSpeech(example.japanese || '').replace(/'/g, "\\'")}')" title="Cliquer pour écouter">🔊</button>` : ''}
-                        </div>
-                    `).join('')}
+                    ${resolvedExamples.map(example => buildSpeakableExampleHtml(
+                        highlightText(example.japanese || '', example.highlight || ''),
+                        example.romaji || '',
+                        example.french || '',
+                        stripRubyForSpeech(example.japanese || '').replace(/'/g, "\\'")
+                    )).join('')}
                 </div>
             </div>
         ` : ''}

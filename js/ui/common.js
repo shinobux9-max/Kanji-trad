@@ -342,3 +342,32 @@ export function buildCleanToRawIndexMap(raw) {
     }
     return map;
 }
+
+/**
+ * Construit le HTML d'un exemple de phrase cliquable, dans le style visuel de la fiche
+ * kanji (fond translucide, bordure gauche colorée, icône 🔊 en haut à droite) — ajoutée pour
+ * harmoniser le design des exemples entre kanji/vocabulaire/grammaire (demande explicite,
+ * les 3 fiches utilisaient chacune leur propre style avant ça).
+ *
+ * @param {string} japaneseHtml - HTML déjà prêt (peut contenir des <ruby>/<rt> ou un
+ *   surlignage <span class="highlight-grammar">, selon l'appelant)
+ * @param {string} romaji - optionnel, affiché sous le japonais si fourni
+ * @param {string} french - traduction
+ * @param {string} speakArg - texte déjà nettoyé/échappé à passer tel quel à speakText(...)
+ *   dans l'attribut onclick (l'appelant gère l'échappement, cf. les 3 usages différents
+ *   d'origine : simple quote replace, stripRubyForSpeech, etc.)
+ */
+export function buildSpeakableExampleHtml(japaneseHtml, romaji, french, speakArg) {
+    const romajiLine = romaji
+        ? `<div style="font-size:0.78rem;color:var(--accent);margin-bottom:4px;font-family:monospace;opacity:0.8">${romaji}</div>`
+        : '';
+    return `<div onclick="speakText('${speakArg}')"
+        style="position:relative;background:rgba(255,255,255,0.03);padding:14px 40px 14px 14px;border-radius:10px;margin-bottom:10px;cursor:pointer;border-left:3px solid var(--accent);transition:background 0.15s"
+        onmouseenter="this.style.background='rgba(255,255,255,0.06)'"
+        onmouseleave="this.style.background='rgba(255,255,255,0.03)'">
+        <span style="position:absolute;top:12px;right:12px;font-size:1rem;opacity:0.7">🔊</span>
+        <div style="font-size:1.1rem;color:#fff;margin-bottom:5px;line-height:1.4">${japaneseHtml}</div>
+        ${romajiLine}
+        <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${french}</div>
+    </div>`;
+}

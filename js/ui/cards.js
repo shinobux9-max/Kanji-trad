@@ -22,7 +22,7 @@ import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow
 import { showLearningPathHome } from '../learning/learning-path.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
 import { gradeReview, scheduleRelearning, recordSessionCompleted } from '../learning/srs.js';
-import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList } from '../features/kanji.js';
+import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList, navFolders } from '../features/kanji.js';
 import { startStrokeQuiz } from '../features/strokes.js';
 import { showVocabReviewModeSelector, displayVocabList } from '../features/vocabulary.js';
 import { showGrammarReviewModeSelector, showGrammarHome } from '../features/grammar.js';
@@ -72,6 +72,11 @@ export async function showRevisionsScreen(isBack = false) {
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana / Katakana</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#FBBF2499; box-shadow:0 0 18px #FBBF2459;" onclick="navFolders()">
+                    <div class="apprendre-card-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24;">📁</div>
+                    <div class="apprendre-card-title">Mes dossiers</div>
+                    <div class="apprendre-card-sub">Favoris et kanji enregistrés</div>
                 </div>
             </div>
         </div>`;
@@ -495,6 +500,11 @@ export async function showApprendreScreen(isBack = false) {
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana & Katakana</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#FBBF2499; box-shadow:0 0 18px #FBBF2459;" onclick="navFolders()">
+                    <div class="apprendre-card-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24;">📁</div>
+                    <div class="apprendre-card-title">Mes dossiers</div>
+                    <div class="apprendre-card-sub">Favoris et kanji enregistrés</div>
                 </div>
             </div>
         </div>`;
