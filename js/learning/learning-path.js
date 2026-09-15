@@ -113,6 +113,13 @@ export function getLearningUnitDisplayStatus(unit, curriculum, progress) {
 
 export async function showLearningPathHome(levelId, isBack = false) {
     if (!isBack) history.pushState({ view: 'learning-path-home', levelId }, '');
+    // Bug trouvé en test réel : sans ce nettoyage, state.activeSwipeContext restait sur
+    // 'learning-path' et state.learningSession pointait toujours sur l'ancienne unité — un
+    // simple tap sur une carte d'unité (un <div>, pas un <button>, donc pas exclu du
+    // détecteur de swipe) était intercepté par la logique de swipe de l'ANCIENNE session
+    // AVANT même d'atteindre le vrai onclick="startLearningUnitById(...)" de la carte.
+    state.activeSwipeContext = null;
+    state.learningSession = null;
     document.getElementById('page-title').innerText = 'Parcours guidé';
     const main = document.getElementById('main-content');
     const curriculum = await getLevelCurriculum(levelId);
@@ -297,6 +304,10 @@ export async function completeLearningUnit() {
 
     const progress = loadLearningProgress();
     progress.units[unit.id] = { status: 'completed', score: scorePct };
+    // Bug trouvé en test réel : progress.currentUnit n'était jamais réinitialisé ici — donc
+    // startLearningPath() (bouton "Continuer") retrouvait toujours CETTE unité (déjà
+    // terminée) au lieu de passer à la suivante via getNextLearningUnit(). Corrigé.
+    progress.currentUnit = null;
     progress.currentStep = 0;
     saveLearningProgress(progress);
 
@@ -759,6 +770,11 @@ export function showLearningFicheCorrection() {
 export function renderLearningUnitResult(scorePct, testResults) {
     const container = document.getElementById('main-content');
     if (!container) return;
+    // Écran de fin d'unité : navigation uniquement par boutons (Continuer/Retour), jamais par
+    // swipe — désactivé ici pour qu'un tap parasite ne déclenche pas la logique de swipe
+    // (state.learningSession est volontairement CONSERVÉ : continueLearningPath() en a
+    // encore besoin pour lire .levelId).
+    state.activeSwipeContext = null;
     const correctCount = testResults.filter(r => r.correct).length;
     container.innerHTML = learningPathFAB() + `
         <div style="padding:64px 16px 24px;text-align:center;">
