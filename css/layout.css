@@ -14,7 +14,7 @@
     .nav-sub-quiz:hover { background: var(--accent); color: #000; }
 
     /* Page Mes Dossiers */
-    .folders-wrap { padding: 16px; }
+    .folders-wrap { padding: 56px 16px 16px; }
     .folder-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
     .folder-card:active { border-color: var(--accent); }
     .folder-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -138,7 +138,7 @@
    ÉCRAN NIVEAUX — cartes pleine largeur (façon Lexique)
 ══════════════════════════════════════════════════ */
 .niveaux-wrap {
-    padding: 16px; display: flex; flex-direction: column; gap: 16px;
+    padding: 56px 16px 16px; display: flex; flex-direction: column; gap: 16px;
     min-height: 100%;
 }
 .niveaux-header { margin-bottom: 4px; }
@@ -202,8 +202,7 @@
 /* ══════════════════════════════════════════════════
    PAGE DE DÉTAIL DE PROGRESSION & CALENDRIER
 ══════════════════════════════════════════════════ */
-.progression-page { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
-.progression-page .back-btn { margin-bottom: 4px; }
+.progression-page { padding: 56px 16px 16px; display: flex; flex-direction: column; gap: 16px; }
 .progression-title { font-size: 1.5rem; color: #fff; font-weight: bold; }
 .progression-subtitle { font-size: 0.75rem; color: var(--gray); margin-top: -8px; }
 

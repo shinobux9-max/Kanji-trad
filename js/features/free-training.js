@@ -20,7 +20,7 @@ import { getSrsInfo, getRawItemsForTypeLevel, makeQueueEntry, getEntryTrackingId
 import { updateWeaknessTracking } from '../learning/weakness.js';
 import { prepareSessionItem, getPrimaryMeaning } from './vocabulary.js';
 import { prepareGrammarSessionItem } from './grammar.js';
-import { mdBold, showFicheCorrectionModal, continueFAB } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB, backFAB } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    STATS GLOBALES D'ENTRAÎNEMENT LIBRE (compteurs cumulés, distincts du SRS)
@@ -413,9 +413,8 @@ export function renderTrainingScreen() {
         ? `<button class="fiche-correction-btn" onclick="openTrainingCurrentFiche()">📖 Voir la fiche</button>`
         : '';
 
-    const headerHtml = `
+    const headerHtml = `${backFAB('endTrainingSession()', '✕')}
         <div class="review-header">
-            <button class="back-btn" onclick="endTrainingSession()">✕</button>
             <div class="review-progress-bar">${progressFill}</div>
             <div class="review-progress-text">${progressText}</div>
         </div>

@@ -41,7 +41,7 @@ import { ALL_JLPT_LEVELS } from '../core/constants.js';
 import { pushModalState } from '../core/navigation.js';
 import { kanaToRomaji } from '../core/data-loader.js';
 import { countDueItems, buildDueQueue } from '../learning/srs.js';
-import { isBulkSelected, refreshMasteryUI, buildSpeakableExampleHtml } from '../ui/common.js';
+import { isBulkSelected, refreshMasteryUI, buildSpeakableExampleHtml, backFAB } from '../ui/common.js';
 // NOTE : le fichier réel de ce projet s'appelle strokes.js (avec un "s"), alors que
 // l'arborescence cible communiquée liste "stroke.js" (singulier) — divergence de nommage à
 // clarifier/renommer un jour, mais je pointe vers le fichier qui existe réellement.
@@ -508,9 +508,7 @@ export function renderFoldersPage() {
 
     main.innerHTML = '';
 
-    const backBtn = `<button class="back-btn-top" onclick="history.back()" style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--gray); padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-bottom: 20px;">
-        ← RETOUR
-    </button>`;
+    const backBtn = backFAB();
 
     const wrap = document.createElement('div');
     wrap.className = 'folders-wrap';

@@ -22,7 +22,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    RÉVISION GRAMMAIRE (flashcard + trou à combler + SRS)
@@ -95,7 +95,7 @@ export function showGrammarReviewModeSelector() {
 
     container.innerHTML = `
         <div class="review-mode-selector">
-            <button class="back-btn" onclick="history.back()">←</button>
+            ${backFAB()}
             <div class="review-mode-title">Choisis ton mode de révision</div>
             <div class="review-mode-count">${dueLessons.length} leçon${dueLessons.length > 1 ? 's' : ''} à revoir</div>
 
@@ -168,9 +168,8 @@ export function renderGrammarReviewScreen() {
         ? renderGrammarClozeExercise(entry, session)
         : renderGrammarFlashcardExercise(entry, session);
 
-    container.innerHTML = `<div class="review-page">
+    container.innerHTML = `${backFAB('history.back()', '✕')}<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -643,9 +642,8 @@ export function showGrammarDetail(lessonId, isBack = false) {
         ...getGrammarExtraExamples(levelIdForExamples, lesson.id)
     ];
 
-    let html = `<div class="detail-page">
+    let html = backFAB('refreshGrammarHome(false)') + `<div class="detail-page">
         <div class="detail-header-top">
-            <button onclick="refreshGrammarHome(false)" class="back-btn">←</button>
             <div class="header-info">
                 <div class="lesson-title">Leçon ${lessonNum}</div>
                 <div class="lesson-subtitle">${levelLabel} • ${unitText}</div>

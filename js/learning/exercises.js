@@ -34,7 +34,7 @@ import { buildConfusionBoxHtml, buildParticleComparisonHtml, showLessonReference
 import { COMMON_PARTICLES } from '../features/vocabulary.js';
 import { showRevisionKanaPicker } from '../features/kana.js';
 import { showFreeTrainingConfig } from '../features/free-training.js';
-import { mdBold, continueFAB } from '../ui/common.js';
+import { mdBold, continueFAB, backFAB } from '../ui/common.js';
 import { completeLearningStep, startLearningStep, advanceConceptSubStep, showLearningPathHome } from './learning-path.js';
 
 /* ══════════════════════════════════════════════════
@@ -191,11 +191,8 @@ function renderOnboardingSlide() {
     const slide = LESSON_ONBOARDING_SLIDES[onboardingIndex];
     const total = LESSON_ONBOARDING_SLIDES.length;
 
-    container.innerHTML = `
+    container.innerHTML = `${backFAB('skipLessonOnboarding()', '✕')}
         <div class="review-page lesson-slide-anim">
-            <div class="review-header">
-                <button class="back-btn" onclick="skipLessonOnboarding()">✕</button>
-            </div>
             <div style="text-align:center;padding:24px 0 16px">
                 <div style="font-size:3rem;margin-bottom:14px">${slide.emoji}</div>
                 <div style="font-size:1.375rem;font-weight:bold;color:#fff">${slide.title}</div>
@@ -474,7 +471,7 @@ export function renderLessonStep() {
     const step = s.steps[s.index];
     if (step.type === 'end') clearLessonProgress(); else saveLessonProgress();
 
-    const header = `<div class="review-header"><button class="back-btn" onclick="exitLessonFlow()">✕</button></div>`;
+    const header = backFAB('exitLessonFlow()', '✕');
     const footer = `
         <div class="lesson-bottom-pagination">
             ${buildDotsHtml(s.steps.length, s.index)}
@@ -649,9 +646,8 @@ export async function showExploreLessonsScreen(isBack = false, initialLevel = nu
     document.getElementById('page-title').innerText = 'Explorer les leçons';
     const main = document.getElementById('main-content');
     const level = initialLevel || await findActiveLearningLevel() || 'n5';
-    main.innerHTML = `
-        <div style="padding:16px">
-            <button class="back-btn" onclick="history.back()">←</button>
+    main.innerHTML = `${backFAB()}
+        <div style="padding:56px 16px 16px">
             <div class="apprendre-title-main" style="margin-top:10px">Explorer les leçons</div>
             <div id="explore-level-tabs" class="ft-radio-group ft-radio-pills" style="margin:14px 0"></div>
             <div id="explore-lessons-list"><div style="color:var(--gray);font-size:0.75rem;text-align:center;padding:20px">Chargement…</div></div>

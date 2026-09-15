@@ -716,7 +716,7 @@ async function renderLearningExerciseStep(step) {
     }
 
     container.innerHTML = header + questionCounter + `
-        <div style="padding:0 16px;">
+        <div style="padding:0 16px 160px;">
             <div class="review-card" style="margin-bottom:16px;">
                 <div style="font-size:1.3rem;line-height:1.7;">${q.promptMain}</div>
                 ${q.promptSub ? `<div style="color:var(--accent);font-style:italic;font-size:0.9rem;">${q.promptSub}</div>` : ''}

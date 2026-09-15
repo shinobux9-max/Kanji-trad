@@ -389,3 +389,19 @@ export function continueFAB(onclickFn, label = 'Continuer →') {
         ${label}
     </button>`;
 }
+
+/**
+ * Bouton retour/fermer en FAB (bouton flottant, position fixe, haut-gauche) — remplace les
+ * boutons retour inline dans tout le reste de l'app (chantier "point 9" demandé
+ * explicitement). Même famille visuelle que continueFAB() ci-dessus et l'ancien
+ * learningPathFAB() (learning/learning-path.js, qui devient un simple appel à celle-ci avec
+ * sa propre cible).
+ * @param {string} onclickFn - expression JS à exécuter au clic (ex: "history.back()")
+ * @param {string} icon - '←' (retour) ou '✕' (fermer une session active), selon le contexte
+ */
+export function backFAB(onclickFn = 'history.back()', icon = '←') {
+    return `<button onclick="${onclickFn}"
+        style="position:fixed;top:10px;left:10px;z-index:600;width:38px;height:38px;border-radius:50%;
+        background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;
+        box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">${icon}</button>`;
+}

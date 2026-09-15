@@ -29,6 +29,7 @@ import { getLevelKanjiChars, getLevelVocabGrammarStats } from '../core/data-load
 import { getKanjiMastery } from '../features/kanji.js';
 import { buildReviewQueue, getStats } from '../learning/srs.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
+import { backFAB } from './common.js';
 
 /* ══════════════════════════════════════════════════
    SÉRIE (STREAK) — jours d'activité consécutifs
@@ -482,7 +483,7 @@ export async function showNiveauxScreen(isBack = false) {
         return;
     }
 
-    mainContent.innerHTML = `
+    mainContent.innerHTML = `${backFAB()}
         <div class="niveaux-wrap">
             <div class="niveaux-header">
                 <div class="niveaux-title-main">Niveaux</div>
@@ -570,9 +571,8 @@ export async function showProgressionDetail(isBack = false) {
     const currentMonthKey = new Date().toISOString().slice(0, 7);
     const monthCount = stats.monthKey === currentMonthKey ? stats.monthCount : 0;
 
-    document.getElementById('main-content').innerHTML = `
+    document.getElementById('main-content').innerHTML = `${backFAB('navDashboard()')}
         <div class="progression-page">
-            <button class="back-btn" onclick="navDashboard()">←</button>
             <div class="progression-title">Ta progression</div>
             <div class="progression-subtitle">${stats.sessionsCount} session${stats.sessionsCount > 1 ? 's' : ''} · ${streak.currentStreak} jour${streak.currentStreak > 1 ? 's' : ''} d'affilée</div>
 

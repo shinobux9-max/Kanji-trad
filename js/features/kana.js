@@ -22,7 +22,7 @@ import { kanaGroups, getKanaFlatList } from '../core/data-loader.js';
 import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted } from '../learning/srs.js';
 import { createStrokeWriter, markMastered } from './strokes.js';
-import { handleListItemClick, toggleCategoryMasteryLive, refreshMasteryUI } from '../ui/common.js';
+import { handleListItemClick, toggleCategoryMasteryLive, refreshMasteryUI, backFAB } from '../ui/common.js';
 
 /**
  * Équivalent EXACT de kanaDataLoader(char, onLoad, onError) du monolithe. Charge les
@@ -271,7 +271,7 @@ export async function showRevisionKanaPicker(isBack = false) {
     document.getElementById('page-title').innerText = 'Réviser';
     const main = document.getElementById('main-content');
 
-    main.innerHTML = `
+    main.innerHTML = `${backFAB()}
         <div class="niveaux-wrap">
             <div class="niveaux-header">
                 <div class="niveaux-title-main">Kana</div>
@@ -305,7 +305,7 @@ export function showKanaRevisionModeSelector(script) {
     document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
     document.getElementById('category-content').innerHTML = `
         <div class="review-mode-selector">
-            <button class="back-btn" onclick="history.back()">←</button>
+            ${backFAB()}
             <div class="review-mode-title">Choisis ton mode de révision</div>
             <div class="review-mode-count">${dueKana.length} kana à revoir</div>
 
@@ -361,9 +361,8 @@ export function renderKanaReviewScreen() {
     const total = session.queue.length;
     const flipped = session.flipped;
 
-    container.innerHTML = `<div class="review-page">
+    container.innerHTML = `${backFAB('history.back()', '✕')}<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>

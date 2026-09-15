@@ -16,6 +16,7 @@
  */
 
 import { state } from '../core/state.js';
+import { backFAB } from './common.js';
 import { pushModalState, closeAllOverlaysAndSessions } from '../core/navigation.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats, flattenIfNested } from '../core/data-loader.js';
 import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow, hasSeenLessonOnboarding, startGrammarLessonFlowActual, showLessonOnboarding, showOnboardingChoiceScreen } from '../learning/exercises.js';
@@ -94,7 +95,7 @@ export async function showRevisionLevelPicker(category, isBack = false) {
 
     const labels = { grammar: 'Grammaire', vocab: 'Vocabulaire', kanji: 'Kanji' };
 
-    main.innerHTML = `
+    main.innerHTML = `${backFAB()}
         <div class="niveaux-wrap">
             <div class="niveaux-header">
                 <div class="niveaux-title-main">${labels[category]}</div>
@@ -182,7 +183,7 @@ export function showKanjiReviewModeSelector() {
 
     container.innerHTML = `
         <div class="review-mode-selector">
-            <button class="back-btn" onclick="history.back()">←</button>
+            ${backFAB()}
             <div class="review-mode-title">Choisis ton mode de révision</div>
             <div class="review-mode-count">${dueChars.length} kanji à revoir</div>
 
@@ -253,9 +254,8 @@ export function renderKanjiReviewScreen() {
     const onReadings = kanjiData?.on || [];
     const kunReadings = kanjiData?.kun || [];
 
-    container.innerHTML = `<div class="review-page">
+    container.innerHTML = `${backFAB('history.back()', '✕')}<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -343,7 +343,7 @@ export async function showGrammarNiveauxScreen(isBack = false) {
         return;
     }
 
-    mainContent.innerHTML = `
+    mainContent.innerHTML = `${backFAB()}
         <div class="niveaux-wrap">
             <div class="niveaux-header">
                 <div class="niveaux-title-main">Grammaire</div>
@@ -424,7 +424,7 @@ export async function showKanjiNiveauxScreen(isBack = false) {
             </div>`;
     }))).join('');
 
-    mainContent.innerHTML = `
+    mainContent.innerHTML = `${backFAB()}
         <div class="niveaux-wrap">
             <div class="niveaux-header">
                 <div class="niveaux-title-main">Kanji</div>
@@ -541,9 +541,8 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
         subtitle = `${chars ? chars.length : 0} kanji`;
     }
 
-    mainContent.innerHTML = `
-        <div class="cat-header">
-            <button class="back-btn" onclick="closeAllOverlaysAndSessions(); ${backFn}()">←</button>
+    mainContent.innerHTML = `${backFAB(`closeAllOverlaysAndSessions(); ${backFn}()`)}
+        <div class="cat-header" style="padding-top:56px">
             <div class="cat-header-info">
                 <div class="cat-header-title">${catLabel} ${levelData.label}</div>
                 <div class="cat-header-sub">${subtitle}</div>

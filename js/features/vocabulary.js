@@ -17,7 +17,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, countDueItems, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { openDetail, stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB } from '../ui/common.js';
+import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB } from '../ui/common.js';
 
 const VOCAB_CATEGORY_MAP = {
     'action': '🎬 Action', 'color': '🎨 Couleurs', 'descriptor': '✨ Descripteurs',
@@ -171,7 +171,7 @@ export function showVocabReviewModeSelector() {
 
     container.innerHTML = `
         <div class="review-mode-selector">
-            <button class="back-btn" onclick="history.back()">←</button>
+            ${backFAB()}
             <div class="review-mode-title">Choisis ton mode de révision</div>
             <div class="review-mode-count">${dueWords.length} mot${dueWords.length > 1 ? 's' : ''} à revoir</div>
 
@@ -268,9 +268,8 @@ export function renderReviewScreen() {
         bodyHtml = renderFlashcardExercise(entry, session);
     }
 
-    container.innerHTML = `<div class="review-page">
+    container.innerHTML = `${backFAB('history.back()', '✕')}<div class="review-page">
         <div class="review-header">
-            <button class="back-btn" onclick="history.back()">✕</button>
             <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
             <div class="review-progress-text">${progress} / ${total}</div>
         </div>
@@ -626,8 +625,7 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
 
     let html = `<div class="vocab-detail-page">`;
 
-    html += `<div class="vocab-detail-header">
-        <button class="back-btn" onclick="refreshVocabList(false)">←</button>
+    html += backFAB('refreshVocabList(false)') + `<div class="vocab-detail-header" style="justify-content:flex-end">
         <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
     </div>`;
 
