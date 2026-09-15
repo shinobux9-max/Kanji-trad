@@ -343,7 +343,7 @@ function findNextLessonToLearn(lessons) {
 // Détermine quel niveau JLPT propose actuellement une leçon jamais commencée (N5 d'abord).
 // afterLevel : cherche STRICTEMENT après un niveau donné (utilisé quand le niveau courant
 // est épuisé).
-async function findActiveLearningLevel(afterLevel = null) {
+export async function findActiveLearningLevel(afterLevel = null) {
     let searching = !afterLevel;
     for (const levelId of ALL_JLPT_LEVELS) {
         if (!searching) {

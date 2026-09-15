@@ -18,6 +18,9 @@
 import { state } from '../core/state.js';
 import { pushModalState } from '../core/navigation.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats } from '../core/data-loader.js';
+import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow } from '../learning/exercises.js';
+import { showLearningPathHome } from '../learning/learning-path.js';
+import { renderWeaknessWidget } from '../learning/weakness.js';
 import { gradeReview, scheduleRelearning, recordSessionCompleted } from '../learning/srs.js';
 import { getDueKanjiChars, buildReadingChips, getKanjiMastery } from '../features/kanji.js';
 import { startStrokeQuiz } from '../features/strokes.js';
@@ -25,7 +28,7 @@ import { showVocabReviewModeSelector } from '../features/vocabulary.js';
 import { showGrammarReviewModeSelector } from '../features/grammar.js';
 import { showRevisionKanaPicker } from '../features/kana.js';
 import { showFreeTrainingConfig } from '../features/free-training.js';
-import { buildNiveauxWaveSvg } from './dashboard.js';
+import { buildNiveauxWaveSvg, navKana } from './dashboard.js';
 
 /* ══════════════════════════════════════════════════
    ONGLET "RÉVISER" — choix catégorie -> choix niveau/script -> lance direct la révision
@@ -424,4 +427,76 @@ export async function showKanjiNiveauxScreen(isBack = false) {
             </div>
             <div id="niveaux-list">${cardsHtml}</div>
         </div>`;
+}
+
+/**
+ * Équivalent EXACT de showApprendreScreen(isBack) du monolithe — écran d'accueil de l'onglet
+ * "Apprendre". N'existait dans AUCUN fichier porté jusqu'ici (vrai trou, pas juste une
+ * landmine) : découvert en testant réellement l'app (clic sur l'onglet Apprendre ->
+ * ReferenceError). Toutes ses dépendances existaient déjà, juste jamais assemblées dans
+ * cette fonction précise.
+ */
+export async function showApprendreScreen(isBack = false) {
+    if (!isBack) history.pushState({ view: 'apprendre' }, '');
+    document.getElementById('page-title').innerText = 'Apprendre';
+    const main = document.getElementById('main-content');
+    const savedLessonProgress = getSavedLessonProgress();
+    const activeLevel = savedLessonProgress ? savedLessonProgress.level : await findActiveLearningLevel();
+    const activeLevelLabel = activeLevel ? activeLevel.toUpperCase() : '';
+
+    main.innerHTML = `
+        <div class="apprendre-wrap">
+            <div class="apprendre-header">
+                <div class="apprendre-title-main">Apprendre</div>
+                <div class="apprendre-subtitle-main">Suis le fil, ou choisis toi-même ci-dessous.</div>
+            </div>
+
+            <div class="dash-card free-training-card" onclick="startGrammarLessonFlow()">
+                <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${savedLessonProgress ? '▶' : '📚'}</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">${savedLessonProgress ? 'Reprendre' : "Introduction"}</div>
+                    <div class="free-training-sub">${savedLessonProgress ? `Reprends là où tu t'es arrêté · ${activeLevelLabel} Grammaire` : `Une nouvelle notion vous attend · ${activeLevelLabel} Grammaire`}</div>
+                </div>
+                <span class="free-training-chevron">→</span>
+            </div>
+
+            <div class="dash-card free-training-card" onclick="showLearningPathHome('n5')">
+                <div class="free-training-icon" style="background:rgba(0,229,255,0.15);color:var(--accent)">🗺️</div>
+                <div class="free-training-info">
+                    <div class="free-training-title">Parcours guidé</div>
+                    <div class="free-training-sub">Vocabulaire, kanji et grammaire ensemble, unité par unité</div>
+                </div>
+                <span class="free-training-chevron">→</span>
+            </div>
+
+            <div class="dash-card weakness-widget" id="apprendre-weakness-widget" style="display:none;"></div>
+
+            <div class="apprendre-section-header">
+                <span>Fiches</span>
+            </div>
+
+            <div class="apprendre-grid">
+                <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showGrammarNiveauxScreen()">
+                    <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
+                    <div class="apprendre-card-title">Grammaire</div>
+                    <div class="apprendre-card-sub">Une règle = une fiche</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#FBBF2499; box-shadow:0 0 18px #FBBF2459;" onclick="showNiveauxScreen()">
+                    <div class="apprendre-card-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24;">語</div>
+                    <div class="apprendre-card-title">Vocabulaire</div>
+                    <div class="apprendre-card-sub">Mots par niveau JLPT</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#00E5FF99; box-shadow:0 0 18px #00E5FF59;" onclick="showKanjiNiveauxScreen()">
+                    <div class="apprendre-card-icon" style="background:rgba(0,229,255,0.15);color:var(--accent);">字</div>
+                    <div class="apprendre-card-title">Kanji</div>
+                    <div class="apprendre-card-sub">Caractères et tracé</div>
+                </div>
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:#9D6EFF1f;" onclick="navKana()">
+                    <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
+                    <div class="apprendre-card-title">Kana</div>
+                    <div class="apprendre-card-sub">Hiragana & Katakana</div>
+                </div>
+            </div>
+        </div>`;
+    renderWeaknessWidget('apprendre-weakness-widget');
 }
