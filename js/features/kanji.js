@@ -1160,6 +1160,14 @@ export function stripRubyForSpeech(html) {
         .replace(/<rt>.*?<\/rt>/g, '')   // retire la lecture entière (balise + contenu)
         .replace(/<\/?ruby>/g, '')       // retire juste les balises ruby, garde le kanji
         .replace(/<[^>]+>/g, '')         // filet de sécurité pour toute autre balise
+        // Bug trouvé en test réel (pas dans le monolithe original non plus, mais présent
+        // depuis le début) : le texte brut passé à la synthèse vocale garde les astérisques
+        // markdown (**gras**/*italique*, syntaxe de mdBold()) tels quels — la voix les lisait
+        // littéralement ("astérisque"). Déballe la syntaxe (retire les astérisques, garde le
+        // texte) plutôt que de simplement les supprimer, pour ne pas coller deux mots ensemble
+        // si jamais il n'y avait pas d'espace autour.
+        .replace(/\*\*(.+?)\*\*/g, '$1')
+        .replace(/\*(.+?)\*/g, '$1')
         .trim();
 }
 
