@@ -76,14 +76,12 @@ export function initSwipeNavigation() {
     const INTERACTIVE_SELECTOR = '.eye-badge, .review-option-btn, .vocab-example-box, .back-btn, button, .dash-goal-row';
     let startX = 0, startY = 0, startTime = 0, startTarget = null;
 
-    el.addEventListener('touchstart', e => {
-        if (!state.activeSwipeContext) return;
-        const t = e.changedTouches[0];
-        startX = t.clientX; startY = t.clientY; startTime = Date.now();
-        startTarget = e.target;
-    }, { passive: true });
-
-    el.addEventListener('touchend', e => {
+    // Logique de décision partagée tactile/souris — équivalent EXACT du monolithe (qui
+    // n'écoutait que touchstart/touchend, jamais la souris : sur PC, impossible de faire
+    // avancer les slides — bug trouvé en test réel, jamais présent sur mobile donc jamais
+    // remarqué avant). Extraite en fonction commune pour ne pas dupliquer la logique de
+    // décision (tap vs swipe vs rien) entre les deux jeux d'événements.
+    function handleGestureEnd(endX, endY) {
         if (!state.activeSwipeContext) return;
         if (startTarget && startTarget.closest && startTarget.closest(INTERACTIVE_SELECTOR)) return;
 
@@ -96,9 +94,8 @@ export function initSwipeNavigation() {
             if (!step || !LEARNING_PATH_SWIPE_STEP_TYPES.has(step.type)) return;
         }
 
-        const t = e.changedTouches[0];
-        const dx = t.clientX - startX;
-        const dy = t.clientY - startY;
+        const dx = endX - startX;
+        const dy = endY - startY;
         const dt = Date.now() - startTime;
         const isSwipe = Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5;
         const isTap = Math.abs(dx) < 15 && Math.abs(dy) < 15 && dt < 400;
@@ -116,7 +113,35 @@ export function initSwipeNavigation() {
             else if (direction === 1) completeLearningStep();
             else startLearningStep(state.learningSession.stepIndex - 1);
         }
+    }
+
+    el.addEventListener('touchstart', e => {
+        if (!state.activeSwipeContext) return;
+        const t = e.changedTouches[0];
+        startX = t.clientX; startY = t.clientY; startTime = Date.now();
+        startTarget = e.target;
     }, { passive: true });
+
+    el.addEventListener('touchend', e => {
+        const t = e.changedTouches[0];
+        handleGestureEnd(t.clientX, t.clientY);
+    }, { passive: true });
+
+    // Souris (PC/navigateur desktop) — même logique que le tactile ci-dessus, jamais
+    // présente dans le monolithe original (touch uniquement).
+    let mouseDown = false;
+    el.addEventListener('mousedown', e => {
+        if (!state.activeSwipeContext) return;
+        mouseDown = true;
+        startX = e.clientX; startY = e.clientY; startTime = Date.now();
+        startTarget = e.target;
+    });
+
+    el.addEventListener('mouseup', e => {
+        if (!mouseDown) return;
+        mouseDown = false;
+        handleGestureEnd(e.clientX, e.clientY);
+    });
 }
 
 /* ══════════════════════════════════════════════════
