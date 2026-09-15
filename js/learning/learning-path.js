@@ -15,7 +15,7 @@ import { state } from '../core/state.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelConceptsData, kanaToRomajiPrecise } from '../core/data-loader.js';
 import { gradeReview } from './srs.js';
 import { updateWeaknessTracking } from './weakness.js';
-import { mdBold, showFicheCorrectionModal } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB } from '../ui/common.js';
 import { buildMeaningQCM } from '../features/vocabulary.js';
 import { buildGrammarCloze, getShortLessonExplanation, showLessonReferencePopup } from '../features/grammar.js';
 
@@ -712,7 +712,7 @@ async function renderLearningExerciseStep(step) {
                     </div>
                 </div>`;
         }
-        feedbackHtml += `<button class="review-cta-btn" style="margin-top:14px;" onclick="continueLearningExercise()">Continuer →</button>`;
+        feedbackHtml += continueFAB('continueLearningExercise()');
     }
 
     container.innerHTML = header + questionCounter + `

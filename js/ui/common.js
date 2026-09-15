@@ -371,3 +371,21 @@ export function buildSpeakableExampleHtml(japaneseHtml, romaji, french, speakArg
         <div style="font-size:0.88rem;color:#a0a0b0;line-height:1.4">${french}</div>
     </div>`;
 }
+
+/**
+ * Bouton "Continuer" en FAB (bouton flottant, position fixe) — remplace le bouton inline
+ * classique après une réponse à un exercice (trou à combler / QCM), pour qu'il reste
+ * toujours visible et atteignable sans avoir à faire défiler, quelle que soit la longueur du
+ * contenu de correction au-dessus. Même famille visuelle que le FAB retour du Learning Path
+ * (position fixe, ombre portée), mais en bas de l'écran et en couleur accent (action
+ * principale) plutôt qu'en haut en couleur neutre (navigation secondaire).
+ */
+export function continueFAB(onclickFn, label = 'Continuer →') {
+    return `<button onclick="${onclickFn}"
+        style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:600;
+        padding:14px 32px;border-radius:999px;background:var(--accent);border:none;
+        color:#000;font-size:0.9375rem;font-weight:bold;
+        box-shadow:0 4px 16px rgba(0,229,255,0.35);cursor:pointer;white-space:nowrap;">
+        ${label}
+    </button>`;
+}

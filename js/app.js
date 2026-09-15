@@ -42,7 +42,7 @@ import { openWeaknessItem, trainWeaknessItems } from './learning/weakness.js';
 import { closeFicheCorrectionModal, enterBulkSelectMode, handleListItemClick, showFicheCorrectionModal, toggleCategoryMasteryLive, exitBulkSelectMode, toggleDetailMastery } from './ui/common.js';
 import { navDashboard, showDailyGoalModal, showProgressionDetail, startDashboardReview, closeDailyGoalModal, saveDailyGoalFromModal, showNiveauxScreen, navKana } from './ui/dashboard.js';
 import { openGrammarFromSearch, openKanjiFromSearchHit, openVocabFromSearch, toggleSearchFilter, resetSearchFilters, clearSearch, debouncedDoSearch, showSearchPanel, hideSearchPanel } from './ui/modals.js';
-import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory } from './ui/cards.js';
+import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume } from './ui/cards.js';
 
 /* ══════════════════════════════════════════════════
    EXPOSITION SUR window — UNE SEULE PASSE, ici et nulle part ailleurs (voir HANDOFF.md)
@@ -99,7 +99,7 @@ const EXPOSED_FUNCTIONS = {
     showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview,
     startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor,
     submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen,
-    showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory,
+    showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume,
 };
 Object.entries(EXPOSED_FUNCTIONS).forEach(([name, fn]) => { window[name] = fn; });
 

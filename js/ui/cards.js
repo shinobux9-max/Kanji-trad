@@ -18,8 +18,8 @@
 import { state } from '../core/state.js';
 import { pushModalState, closeAllOverlaysAndSessions } from '../core/navigation.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats, flattenIfNested } from '../core/data-loader.js';
-import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow } from '../learning/exercises.js';
-import { showLearningPathHome } from '../learning/learning-path.js';
+import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow, hasSeenLessonOnboarding, startGrammarLessonFlowActual, showLessonOnboarding, showOnboardingChoiceScreen } from '../learning/exercises.js';
+import { showLearningPathHome, loadLearningProgress, startLearningPath } from '../learning/learning-path.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
 import { gradeReview, scheduleRelearning, recordSessionCompleted } from '../learning/srs.js';
 import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList, navFolders } from '../features/kanji.js';
@@ -446,7 +446,13 @@ export async function showApprendreScreen(isBack = false) {
     document.getElementById('page-title').innerText = 'Apprendre';
     const main = document.getElementById('main-content');
     const savedLessonProgress = getSavedLessonProgress();
-    const activeLevel = savedLessonProgress ? savedLessonProgress.level : await findActiveLearningLevel();
+    const learningProgress = loadLearningProgress();
+    // Fusion "Introduction"/"Parcours guidé" en une seule carte (demande explicite) : "Reprendre"
+    // s'active dès qu'une session est active dans L'UN OU L'AUTRE des deux systèmes.
+    const hasLearningPathProgress = !!learningProgress.currentUnit;
+    const hasAnyProgress = !!savedLessonProgress || hasLearningPathProgress;
+    const activeLevel = savedLessonProgress ? savedLessonProgress.level
+        : (hasLearningPathProgress ? learningProgress.currentLevel : await findActiveLearningLevel());
     const activeLevelLabel = activeLevel ? activeLevel.toUpperCase() : '';
 
     main.innerHTML = `
@@ -456,23 +462,15 @@ export async function showApprendreScreen(isBack = false) {
                 <div class="apprendre-subtitle-main">Suis le fil, ou choisis toi-même ci-dessous.</div>
             </div>
 
-            <div class="dash-card free-training-card" onclick="startGrammarLessonFlow()">
-                <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${savedLessonProgress ? '▶' : '📚'}</div>
+            <div class="dash-card free-training-card" onclick="startIntroductionOrResume()">
+                <div class="free-training-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80">${hasAnyProgress ? '▶' : '📚'}</div>
                 <div class="free-training-info">
-                    <div class="free-training-title">${savedLessonProgress ? 'Reprendre' : "Introduction"}</div>
-                    <div class="free-training-sub">${savedLessonProgress ? `Reprends là où tu t'es arrêté · ${activeLevelLabel} Grammaire` : `Une nouvelle notion vous attend · ${activeLevelLabel} Grammaire`}</div>
+                    <div class="free-training-title">${hasAnyProgress ? 'Reprendre' : 'Introduction'}</div>
+                    <div class="free-training-sub">${hasAnyProgress ? `Reprends là où tu t'es arrêté · ${activeLevelLabel}` : `Découvre le parcours guidé et les bases · ${activeLevelLabel}`}</div>
                 </div>
                 <span class="free-training-chevron">→</span>
             </div>
 
-            <div class="dash-card free-training-card" onclick="showLearningPathHome('n5')">
-                <div class="free-training-icon" style="background:rgba(0,229,255,0.15);color:var(--accent)">🗺️</div>
-                <div class="free-training-info">
-                    <div class="free-training-title">Parcours guidé</div>
-                    <div class="free-training-sub">Vocabulaire, kanji et grammaire ensemble, unité par unité</div>
-                </div>
-                <span class="free-training-chevron">→</span>
-            </div>
 
             <div class="dash-card weakness-widget" id="apprendre-weakness-widget" style="display:none;"></div>
 
@@ -600,5 +598,36 @@ export async function loadJLPTCategory(levelId, category, isBack = false) {
     } catch (e) {
         container.innerHTML = `<div style="color:#e55;font-size:0.8125rem;padding:20px;text-align:center">Erreur : ${e.message}</div>`;
         console.error('loadJLPTCategory error:', e);
+    }
+}
+
+/**
+ * Orchestre le clic sur la carte fusionnée "Introduction"/"Reprendre" de l'écran Apprendre.
+ * Fusion demandée explicitement : un seul point d'entrée pour le parcours de leçon ET le
+ * Learning Path, au lieu de deux cartes séparées.
+ */
+export function startIntroductionOrResume() {
+    if (!hasSeenLessonOnboarding()) {
+        // Jamais vu l'intro : passe TOUJOURS par l'onboarding, peu importe une éventuelle
+        // progression déjà entamée par ailleurs (cas rare, mais l'intro reste prioritaire).
+        showLessonOnboarding();
+        return;
+    }
+
+    const hasLessonProgress = !!getSavedLessonProgress();
+    const learningProgress = loadLearningProgress();
+    const hasLearningPathProgress = !!learningProgress.currentUnit;
+
+    if (hasLessonProgress && hasLearningPathProgress) {
+        // Les deux ont une session active : on garde la possibilité de choisir laquelle
+        // reprendre plutôt que de trancher arbitrairement pour l'une des deux.
+        showOnboardingChoiceScreen();
+    } else if (hasLessonProgress) {
+        startGrammarLessonFlowActual();
+    } else if (hasLearningPathProgress) {
+        startLearningPath(learningProgress.currentLevel);
+    } else {
+        // Intro déjà vue, aucune session active nulle part : repropose le choix de départ.
+        showOnboardingChoiceScreen();
     }
 }

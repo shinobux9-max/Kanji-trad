@@ -20,7 +20,7 @@ import { getSrsInfo, getRawItemsForTypeLevel, makeQueueEntry, getEntryTrackingId
 import { updateWeaknessTracking } from '../learning/weakness.js';
 import { prepareSessionItem, getPrimaryMeaning } from './vocabulary.js';
 import { prepareGrammarSessionItem } from './grammar.js';
-import { mdBold, showFicheCorrectionModal } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    STATS GLOBALES D'ENTRAÎNEMENT LIBRE (compteurs cumulés, distincts du SRS)
@@ -502,7 +502,7 @@ function renderTrainingQuizExercise(container, headerHtml, entry, exercise) {
     container.innerHTML = `<div class="review-page">
         ${headerHtml}
         ${bodyHtml}
-        ${answered ? `<button class="review-continue-btn" onclick="advanceTrainingQuiz()">Continuer →</button>` : ''}
+        ${answered ? continueFAB('advanceTrainingQuiz()') : ''}
     </div>`;
 }
 

@@ -17,7 +17,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, countDueItems, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { openDetail, stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml } from '../ui/common.js';
+import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB } from '../ui/common.js';
 
 const VOCAB_CATEGORY_MAP = {
     'action': '🎬 Action', 'color': '🎨 Couleurs', 'descriptor': '✨ Descripteurs',
@@ -336,7 +336,7 @@ function renderQcmExercise(entry, session) {
                 return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt.replace(/'/g, "\\'")}')">${mdBold(opt)}</button>`;
             }).join('')}
         </div>
-        ${answered ? `<button class="review-continue-btn" onclick="advanceReviewQueue()">Continuer →</button>` : ''}
+        ${answered ? continueFAB('advanceReviewQueue()') : ''}
     `;
 }
 
@@ -386,7 +386,7 @@ function renderClozeExercise(entry, session) {
                     ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>`
                     : ''
         ) : ''}
-        ${answered ? `<button class="review-continue-btn" onclick="advanceReviewQueue()">Continuer →</button>` : ''}
+        ${answered ? continueFAB('advanceReviewQueue()') : ''}
     `;
 }
 

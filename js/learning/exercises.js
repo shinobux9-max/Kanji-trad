@@ -16,19 +16,12 @@
  * donc le swipe est ENTIÈREMENT fonctionnel (pas de branche en landmine, contrairement à ce
  * qui avait été anticipé au départ).
  *
- * ⚠️ DÉCOUVERTE 2 (gap réel trouvé en lisant le monolithe, pas encore comblé) :
- * showRevisionLevelPicker(category, isBack)/startRevisionFor(category, levelId) (monolithe
- * ligne ~5029) et showKanjiReviewModeSelector (référencée par features/kanji.js comme
- * landmine depuis une session antérieure à ce handoff) n'ont JAMAIS été portées nulle part —
- * système "choisir catégorie -> niveau -> mode" cross-cutting (vocab+grammaire+kanji),
- * distinct de ce fichier. Laissé en landmine ici (startOnboardingChoice l'appelle) plutôt que
- * d'élargir ce chantier — noté dans HANDOFF.md comme futur chantier séparé.
- *
- * ⚠️ DÉCOUVERTE 3 : showGrammarNiveauxScreen (monolithe ligne ~4881, miroir grammaire de
- * showNiveauxScreen) et vraisemblablement un équivalent kanji quelque part n'ont pas non plus
- * été portés — appartiennent logiquement à la "famille" de ui/dashboard.js::showNiveauxScreen
- * plutôt qu'à ce fichier (qui ne concerne que le parcours DE LEÇON, pas la navigation par
- * niveau). Non lus en détail, non portés — même futur chantier que la découverte 2.
+ * MISE À JOUR : les DÉCOUVERTE 2/3 d'origine (système "sélection de révision par catégorie",
+ * showGrammarNiveauxScreen/showKanjiNiveauxScreen) ont depuis été construites dans
+ * ui/cards.js — plus des landmines. startOnboardingChoice() ne référence d'ailleurs plus ces
+ * fonctions : l'écran "Par où commencer ?" propose maintenant "Apprendre les kanas" et
+ * "Parcours Guidé" uniquement (fusion Introduction/Parcours guidé demandée, voir
+ * ui/cards.js::startIntroductionOrResume()).
  */
 
 import { state } from '../core/state.js';
@@ -41,8 +34,8 @@ import { buildConfusionBoxHtml, buildParticleComparisonHtml, showLessonReference
 import { COMMON_PARTICLES } from '../features/vocabulary.js';
 import { showRevisionKanaPicker } from '../features/kana.js';
 import { showFreeTrainingConfig } from '../features/free-training.js';
-import { mdBold } from '../ui/common.js';
-import { completeLearningStep, startLearningStep, advanceConceptSubStep } from './learning-path.js';
+import { mdBold, continueFAB } from '../ui/common.js';
+import { completeLearningStep, startLearningStep, advanceConceptSubStep, showLearningPathHome } from './learning-path.js';
 
 /* ══════════════════════════════════════════════════
    SWIPE / TAP — navigation globale par geste, partagée entre ce fichier et learning-path.js
@@ -150,7 +143,7 @@ export function initSwipeNavigation() {
    pas de SRS) pour ne pas fragiliser la logique de leçon réelle.
 ══════════════════════════════════════════════════ */
 const LESSON_ONBOARDING_KEY = 'kanji_trad_lesson_onboarding_seen';
-function hasSeenLessonOnboarding() {
+export function hasSeenLessonOnboarding() {
     try { return localStorage.getItem(LESSON_ONBOARDING_KEY) === '1'; } catch (e) { return true; }
 }
 function markLessonOnboardingSeen() {
@@ -307,18 +300,11 @@ export function showOnboardingChoiceScreen() {
                     <div class="onboarding-choice-sub">La base indispensable pour bien démarrer en japonais.</div>
                 </div>
             </div>
-            <div class="onboarding-choice-card" onclick="startOnboardingChoice('vocab')">
-                <div class="onboarding-choice-icon">語</div>
+            <div class="onboarding-choice-card" onclick="startOnboardingChoice('learning-path')">
+                <div class="onboarding-choice-icon">🗺️</div>
                 <div class="onboarding-choice-info">
-                    <div class="onboarding-choice-title">Mes premiers mots de vocabulaire</div>
-                    <div class="onboarding-choice-sub">Connaître les kanas aide, mais chaque mot a son romaji — pas de souci si tu ne les connais pas encore.</div>
-                </div>
-            </div>
-            <div class="onboarding-choice-card" onclick="startOnboardingChoice('grammar')">
-                <div class="onboarding-choice-icon">文</div>
-                <div class="onboarding-choice-info">
-                    <div class="onboarding-choice-title">Ma première leçon de grammaire</div>
-                    <div class="onboarding-choice-sub">Là aussi, le romaji est toujours affiché — tu peux commencer sans connaître les kanas.</div>
+                    <div class="onboarding-choice-title">Parcours Guidé</div>
+                    <div class="onboarding-choice-sub">Vocabulaire, kanji et grammaire ensemble, unité par unité — le romaji est toujours affiché.</div>
                 </div>
             </div>
         </div>
@@ -326,13 +312,11 @@ export function showOnboardingChoiceScreen() {
 }
 
 /**
- * ⚠️ ATTENTION : showRevisionLevelPicker('vocab') — n'a JAMAIS été portée nulle part (voir
- * DÉCOUVERTE 2 en en-tête de fichier). Vrai appel JS non importé.
+ * Démarre l'option choisie sur l'écran "Par où commencer ?".
  */
 export function startOnboardingChoice(choice) {
     if (choice === 'kana') showRevisionKanaPicker();
-    else if (choice === 'vocab') showRevisionLevelPicker('vocab');
-    else if (choice === 'grammar') startGrammarLessonFlowActual();
+    else if (choice === 'learning-path') showLearningPathHome('n5');
 }
 
 /* ══════════════════════════════════════════════════
@@ -617,7 +601,7 @@ function renderLessonExercise(step) {
     return `
         <div class="section-sub-title" style="text-align:center;margin-bottom:10px">Entraîne-toi</div>
         ${bodyHtml}
-        ${answered ? `<button class="review-continue-btn" onclick="advanceLessonStep()" style="margin-top:16px">Continuer →</button>` : ''}
+        ${answered ? continueFAB('advanceLessonStep()') : ''}
     `;
 }
 

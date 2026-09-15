@@ -22,7 +22,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    RÉVISION GRAMMAIRE (flashcard + trou à combler + SRS)
@@ -247,7 +247,7 @@ function renderGrammarClozeExercise(entry, session) {
         </div>
         ${isWrong ? buildParticleComparisonHtml(selected, lesson) : ''}
         ${confusion ? buildConfusionBoxHtml(confusion) : ''}
-        ${answered ? `<button class="review-continue-btn" onclick="advanceGrammarReviewQueue()">Continuer →</button>` : ''}
+        ${answered ? continueFAB('advanceGrammarReviewQueue()') : ''}
     `;
 }
 
