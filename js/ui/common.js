@@ -421,3 +421,44 @@ export function hideBottomNav() {
     const nav = document.getElementById('bottom-nav');
     if (nav) nav.style.display = 'none';
 }
+
+/**
+ * Bloc de correction ❌/✅ unifié pour tous les exercices à choix (trou à combler, QCM) —
+ * remplace les multiples présentations différentes qui existaient avant (coloré seul sans
+ * texte pour vocab/entraînement libre/leçon, modal séparée pour le quiz kanji, une quasi-copie
+ * dans learning-path.js). Référence : le système déjà utilisé pour la grammaire.
+ *
+ * Structure :
+ *   ❌ Tu as répondu (mot) [👁️ badge cliquable si onClick fourni]  [: explication si fournie]
+ *   ✅ La bonne réponse était (mot) [👁️ badge si onClick fourni]  [: explication si fournie]
+ *   ⚠️ Nuance : texte   ← uniquement si nuance fournie (vocabulaire), jamais pour la grammaire
+ *      (qui a déjà sa nuance collée à la ligne ✅ via correctExplanation)
+ *
+ * @param {object} p
+ * @param {string} p.wrongText - texte de la mauvaise réponse choisie
+ * @param {string} [p.wrongOnClick] - JS à exécuter au clic sur le badge (ex: "showLessonReferencePopup('...')") — omis = pas de badge, texte en gras simple
+ * @param {string} [p.wrongExplanation] - explication collée à la ligne ❌ (grammaire uniquement)
+ * @param {string} p.correctText - texte de la bonne réponse
+ * @param {string} [p.correctOnClick] - même principe que wrongOnClick
+ * @param {string} [p.correctExplanation] - explication collée à la ligne ✅ (grammaire uniquement)
+ * @param {string} [p.nuance] - bloc ⚠️ séparé en bas (vocabulaire uniquement)
+ */
+export function buildAnswerFeedbackHtml({ wrongText, wrongOnClick, wrongExplanation, correctText, correctOnClick, correctExplanation, nuance }) {
+    const span = (text, onClick) => onClick
+        ? `<span class="eye-badge" onclick="${onClick}">👁️ ${text}</span>`
+        : `<strong>${text}</strong>`;
+
+    return `
+        <div class="particle-compare-box">
+            <div class="particle-compare-row wrong">
+                <span class="particle-compare-icon">❌</span>
+                <div class="particle-compare-text">Tu as répondu ${span(wrongText, wrongOnClick)}${wrongExplanation ? ` : ${mdBold(wrongExplanation)}` : ''}</div>
+            </div>
+            <div class="particle-compare-row correct">
+                <span class="particle-compare-icon">✅</span>
+                <div class="particle-compare-text">La bonne réponse était ${span(correctText, correctOnClick)}${correctExplanation ? ` : ${mdBold(correctExplanation)}` : ''}</div>
+            </div>
+        </div>
+        ${nuance ? `<div class="vocab-nuance-box" style="margin-top:10px;text-align:left">⚠️ ${mdBold(nuance)}</div>` : ''}
+    `;
+}

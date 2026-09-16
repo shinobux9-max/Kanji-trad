@@ -18,9 +18,9 @@ import { pushModalState } from '../core/navigation.js';
 import { getKanaFlatList } from '../core/data-loader.js';
 import { getSrsInfo, getRawItemsForTypeLevel, makeQueueEntry, getEntryTrackingId } from '../learning/srs.js';
 import { updateWeaknessTracking } from '../learning/weakness.js';
-import { prepareSessionItem, getPrimaryMeaning } from './vocabulary.js';
-import { prepareGrammarSessionItem } from './grammar.js';
-import { mdBold, showFicheCorrectionModal, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
+import { prepareSessionItem, getPrimaryMeaning, showVocabReferencePopup } from './vocabulary.js';
+import { prepareGrammarSessionItem, buildParticleComparisonHtml, buildConfusionBoxHtml } from './grammar.js';
+import { mdBold, showFicheCorrectionModal, continueFAB, backFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    STATS GLOBALES D'ENTRAÎNEMENT LIBRE (compteurs cumulés, distincts du SRS)
@@ -458,31 +458,65 @@ function renderTrainingQuizExercise(container, headerHtml, entry, exercise) {
     if (exercise.type === 'cloze') {
         const word = entry.item;
         const clozeInfo = exercise.clozeInfo;
-        const sentenceHtml = clozeInfo.tokens.map((tok, i) => {
-            if (i !== clozeInfo.blankIndex) return `<span>${tok}</span>`;
-            if (!answered) return `<span class="cloze-blank">＿＿</span>`;
-            const cls = selected === clozeInfo.correct ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
-            return `<span class="${cls}">${selected}</span>`;
-        }).join(' ');
+        const isGrammar = entry.type === 'grammar';
+
+        // buildGrammarCloze() (grammar.js) retourne des options en chaînes simples ;
+        // buildVocabWordCloze()/buildClozeParticle() (vocabulary.js) retournent des objets
+        // {word, romaji, reading, id} — deux formats différents pour la même famille
+        // d'exercice (bug trouvé lors de l'harmonisation des feedbacks de quiz : ce rendu
+        // partagé traitait les deux de la même façon, cassant l'un des deux selon la
+        // source). Normalise ici en objets {label, id} pour un traitement uniforme.
+        const options = isGrammar
+            ? clozeInfo.options.map(o => ({ label: o, id: null }))
+            : clozeInfo.options.map(o => ({ label: o.word, id: o.id || null }));
+        const correctLabel = clozeInfo.correct;
+
+        const sentenceHtml = isGrammar
+            ? `${clozeInfo.before}${!answered ? `<span class="cloze-blank">＿＿＿</span>` : `<span class="cloze-blank-filled ${selected === correctLabel ? 'correct' : 'incorrect'}">${selected}</span>`}${clozeInfo.after}`
+            : clozeInfo.tokens.map((tok, i) => {
+                if (i !== clozeInfo.blankIndex) return `<span>${tok}</span>`;
+                if (!answered) return `<span class="cloze-blank">＿＿</span>`;
+                const cls = selected === correctLabel ? 'cloze-blank-filled correct' : 'cloze-blank-filled incorrect';
+                return `<span class="${cls}">${selected}</span>`;
+            }).join(' ');
+
+        const isWrong = answered && selected !== correctLabel;
+
         bodyHtml = `
             <div class="review-card review-cloze-card">
-                <div class="review-quiz-instruction">Complète la phrase avec la bonne particule</div>
+                <div class="review-quiz-instruction">Complète la phrase avec ${isGrammar ? "le bon élément grammatical" : "la bonne particule"}</div>
                 <div class="cloze-sentence">${sentenceHtml}</div>
                 <div class="review-romaji">${word.romaji || ''}</div>
-                <div class="review-example-fr-only">${mdBold((word.example && word.example.french) || '')}</div>
+                <div class="review-example-fr-only">${mdBold(clozeInfo.french || (word.example && word.example.french) || '')}</div>
             </div>
             <div class="review-options review-options-particles">
-                ${clozeInfo.options.map(opt => {
+                ${options.map(opt => {
                     let cls = 'review-option-btn';
-                    if (answered) { if (opt === clozeInfo.correct) cls += ' correct'; else if (opt === selected) cls += ' incorrect'; }
-                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitTrainingQuizAnswer('${opt}')">${opt}</button>`;
+                    if (answered) { if (opt.label === correctLabel) cls += ' correct'; else if (opt.label === selected) cls += ' incorrect'; }
+                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitTrainingQuizAnswer('${opt.label.replace(/'/g, "\\'")}')">${opt.label}</button>`;
                 }).join('')}
             </div>
-            ${(answered && selected !== clozeInfo.correct && word.nuance) ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>` : ''}
+            ${isWrong ? (
+                isGrammar
+                    ? buildParticleComparisonHtml(selected, word)
+                    : (() => {
+                        const selectedOpt = options.find(o => o.label === selected);
+                        const correctOpt = options.find(o => o.label === correctLabel);
+                        return buildAnswerFeedbackHtml({
+                            wrongText: selected,
+                            wrongOnClick: selectedOpt && selectedOpt.id ? `showVocabReferencePopup('${selectedOpt.id}')` : null,
+                            correctText: correctLabel,
+                            correctOnClick: correctOpt && correctOpt.id ? `showVocabReferencePopup('${correctOpt.id}')` : null,
+                            nuance: clozeInfo.nuance || word.nuance || ''
+                        });
+                    })()
+            ) : ''}
+            ${(isWrong && isGrammar && Array.isArray(word.confusions) && word.confusions.length) ? buildConfusionBoxHtml(word.confusions.find(c => c.with === selected) || word.confusions[0]) : ''}
         `;
     } else { // qcm (vocab uniquement)
         const word = entry.item;
         const qcmInfo = exercise.qcmInfo;
+        const selectedOpt = answered ? qcmInfo.options.find(o => o.meaning === selected) : null;
         bodyHtml = `
             <div class="review-card review-qcm-card">
                 <div class="review-word">${word.word || ''}</div>
@@ -492,10 +526,17 @@ function renderTrainingQuizExercise(container, headerHtml, entry, exercise) {
             <div class="review-options">
                 ${qcmInfo.options.map(opt => {
                     let cls = 'review-option-btn';
-                    if (answered) { if (opt === qcmInfo.correct) cls += ' correct'; else if (opt === selected) cls += ' incorrect'; }
-                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitTrainingQuizAnswer('${opt.replace(/'/g, "\\'")}')">${mdBold(opt)}</button>`;
+                    if (answered) { if (opt.meaning === qcmInfo.correct) cls += ' correct'; else if (opt.meaning === selected) cls += ' incorrect'; }
+                    return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitTrainingQuizAnswer('${opt.meaning.replace(/'/g, "\\'")}')">${mdBold(opt.meaning)}</button>`;
                 }).join('')}
             </div>
+            ${(answered && selected !== qcmInfo.correct) ? buildAnswerFeedbackHtml({
+                wrongText: selectedOpt ? selectedOpt.meaning : selected,
+                wrongOnClick: selectedOpt && selectedOpt.id ? `showVocabReferencePopup('${selectedOpt.id}')` : null,
+                correctText: qcmInfo.correct,
+                correctOnClick: qcmInfo.correctId ? `showVocabReferencePopup('${qcmInfo.correctId}')` : null,
+                nuance: qcmInfo.nuance
+            }) : ''}
         `;
     }
 

@@ -17,7 +17,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, countDueItems, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { openDetail, stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
+import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
 
 const VOCAB_CATEGORY_MAP = {
     'action': '🎬 Action', 'color': '🎨 Couleurs', 'descriptor': '✨ Descripteurs',
@@ -80,8 +80,8 @@ function buildVocabWordCloze(word, pool) {
     if (distractorPool.length < 2) return null;
     const distractorWords = shuffleArray(distractorPool).slice(0, 3);
     const options = shuffleArray([
-        { word: target, romaji: targetRomaji, reading: targetReading },
-        ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '', reading: w.reading || '' }))
+        { word: target, romaji: targetRomaji, reading: targetReading, id: word.id },
+        ...distractorWords.map(w => ({ word: w.word, romaji: w.romaji || '', reading: w.reading || '', id: w.id }))
     ]);
 
     const tokens = [autoWrapRubyLocal(rawBefore), target, autoWrapRubyLocal(rawAfter)];
@@ -96,8 +96,8 @@ function buildVocabWordCloze(word, pool) {
     }
 
     return {
-        tokens, blankIndex: 1, correct: target, options, french: ex.french || '',
-        sentenceRomaji, sentenceRomajiMasked, targetReading
+        tokens, blankIndex: 1, correct: target, correctId: word.id, options, french: ex.french || '',
+        sentenceRomaji, sentenceRomajiMasked, targetReading, nuance: word.nuance || ''
     };
 }
 
@@ -121,7 +121,7 @@ function buildClozeParticle(word) {
     const distractors = shuffleArray(distractorPool).slice(0, 3);
     const options = shuffleArray([validParticle, ...distractors]).map(p => ({ word: p, romaji: '' }));
 
-    return { tokens, blankIndex, correct: validParticle, options };
+    return { tokens, blankIndex, correct: validParticle, options, nuance: word.nuance || '' };
 }
 
 // Génère un QCM sur le sens du mot, avec 3 distracteurs pris ailleurs dans le pool
@@ -130,9 +130,12 @@ export function buildMeaningQCM(word, pool) {
     const others = pool.filter(w => w.id !== word.id && getPrimaryMeaning(w) && getPrimaryMeaning(w) !== primary);
     if (others.length < 3) return null;
 
-    const distractors = shuffleArray(others).slice(0, 3).map(getPrimaryMeaning);
-    const options = shuffleArray([primary, ...distractors]);
-    return { correct: primary, options };
+    const distractors = shuffleArray(others).slice(0, 3);
+    const options = shuffleArray([
+        { meaning: primary, id: word.id, word: word.word },
+        ...distractors.map(w => ({ meaning: getPrimaryMeaning(w), id: w.id, word: w.word }))
+    ]);
+    return { correct: primary, correctId: word.id, options, nuance: word.nuance || '' };
 }
 
 export function prepareSessionItem(word, pool, forceMode = null) {
@@ -320,6 +323,7 @@ function renderQcmExercise(entry, session) {
     const { word, qcmInfo } = entry;
     const answered = session.answered;
     const selected = session.selected;
+    const selectedOpt = answered ? qcmInfo.options.find(o => o.meaning === selected) : null;
 
     return `
         <div class="review-card review-qcm-card">
@@ -331,12 +335,19 @@ function renderQcmExercise(entry, session) {
             ${qcmInfo.options.map(opt => {
                 let cls = 'review-option-btn';
                 if (answered) {
-                    if (opt === qcmInfo.correct) cls += ' correct';
-                    else if (opt === selected) cls += ' incorrect';
+                    if (opt.meaning === qcmInfo.correct) cls += ' correct';
+                    else if (opt.meaning === selected) cls += ' incorrect';
                 }
-                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt.replace(/'/g, "\\'")}')">${mdBold(opt)}</button>`;
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="submitQuizAnswer('${opt.meaning.replace(/'/g, "\\'")}')">${mdBold(opt.meaning)}</button>`;
             }).join('')}
         </div>
+        ${(answered && selected !== qcmInfo.correct) ? buildAnswerFeedbackHtml({
+            wrongText: selectedOpt ? selectedOpt.meaning : selected,
+            wrongOnClick: selectedOpt ? `showVocabReferencePopup('${selectedOpt.id}')` : null,
+            correctText: qcmInfo.correct,
+            correctOnClick: `showVocabReferencePopup('${qcmInfo.correctId}')`,
+            nuance: qcmInfo.nuance
+        }) : ''}
         ${answered ? continueFAB('advanceReviewQueue()') : ''}
     `;
 }
@@ -380,13 +391,18 @@ function renderClozeExercise(entry, session) {
                 </button>`;
             }).join('')}
         </div>
-        ${(answered && selected !== clozeInfo.correct) ? (
-            entry.relatedGrammarEntry
-                ? `<button class="fiche-correction-btn" style="margin-top:14px" onclick="openReviewRelatedGrammarFiche()">📖 Voir la leçon : ${clozeInfo.correct}</button>`
-                : (entry.relatedGrammarEntry === null && word.nuance)
-                    ? `<div class="vocab-nuance-box" style="margin-top:14px;text-align:left">💡 ${mdBold(word.nuance)}</div>`
-                    : ''
-        ) : ''}
+        ${(() => {
+            if (!answered || selected === clozeInfo.correct) return '';
+            const selectedOpt = clozeInfo.options.find(o => o.word === selected);
+            const correctOpt = clozeInfo.options.find(o => o.word === clozeInfo.correct);
+            return buildAnswerFeedbackHtml({
+                wrongText: selected,
+                wrongOnClick: selectedOpt?.id ? `showVocabReferencePopup('${selectedOpt.id}')` : null,
+                correctText: clozeInfo.correct,
+                correctOnClick: correctOpt?.id ? `showVocabReferencePopup('${correctOpt.id}')` : null,
+                nuance: clozeInfo.nuance
+            }) + (entry.relatedGrammarEntry ? `<button class="fiche-correction-btn" style="margin-top:10px" onclick="openReviewRelatedGrammarFiche()">📖 Voir la leçon de grammaire</button>` : '');
+        })()}
         ${answered ? continueFAB('advanceReviewQueue()') : ''}
     `;
 }
@@ -696,4 +712,45 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
     html += `</div>`;
 
     container.innerHTML = html;
+}
+
+/**
+ * Aperçu léger d'un mot de vocabulaire, en popup — équivalent vocabulaire de
+ * showLessonReferencePopup() (features/grammar.js), même principe : reste DANS la session de
+ * révision en cours au lieu de la remplacer (ce que ferait showVocabDetail()). Construite
+ * suite à la demande d'harmonisation des feedbacks de quiz (badges 👁️ cliquables).
+ *
+ * Recherche uniquement dans state.vocabHomeData.data (le niveau actuellement chargé) — les
+ * badges n'apparaissent que pendant une session de révision, où ce pool contient déjà à la
+ * fois le mot cible et ses distracteurs (mêmes origine).
+ */
+export function showVocabReferencePopup(wordId) {
+    const modal = document.getElementById('vocab-reference-popup-modal');
+    const content = document.getElementById('vocab-reference-popup-content');
+    if (!modal || !content) return;
+
+    const word = (state.vocabHomeData?.data || []).find(w => w.id === wordId);
+    if (!word) {
+        content.innerHTML = `<div style="color:var(--gray);text-align:center;padding:20px">Mot introuvable.</div>`;
+    } else {
+        content.innerHTML = `
+            <div class="fiche-title-card" style="margin-bottom:14px">
+                <div style="font-size:1.375rem;color:var(--accent);font-weight:bold;font-family:'Noto Sans JP',sans-serif">${word.word || ''}</div>
+                ${word.reading ? `<div style="font-size:0.75rem;color:var(--gray);margin-top:2px">${word.reading}</div>` : ''}
+                <div style="font-size:0.9375rem;color:#fff;margin-top:6px">${getPrimaryMeaning(word)}</div>
+            </div>
+            ${word.nuance ? `<div class="fiche-title-card" style="text-align:left;padding:18px">${mdBold(word.nuance)}</div>` : ''}
+            <button class="review-continue-btn" style="margin-top:16px" onclick="closeVocabReferencePopup();openVocabDetailFromState('${word.id}')">Voir la fiche complète →</button>
+        `;
+    }
+
+    modal.classList.add('open');
+    modal.style.display = 'flex';
+}
+
+export function closeVocabReferencePopup() {
+    const modal = document.getElementById('vocab-reference-popup-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.style.display = 'none';
 }

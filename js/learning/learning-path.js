@@ -15,7 +15,7 @@ import { state } from '../core/state.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelConceptsData, kanaToRomajiPrecise } from '../core/data-loader.js';
 import { gradeReview } from './srs.js';
 import { updateWeaknessTracking } from './weakness.js';
-import { mdBold, showFicheCorrectionModal, continueFAB, hideBottomNav } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
 import { buildMeaningQCM } from '../features/vocabulary.js';
 import { buildGrammarCloze, getShortLessonExplanation, showLessonReferencePopup } from '../features/grammar.js';
 
@@ -567,29 +567,11 @@ function findLessonForGrammarOption(optionText, pool) {
     return null;
 }
 
-// Comparatif ❌/✅ pour une question de grammaire du Learning Path — même principe visuel que
-// buildParticleComparisonHtml (features/grammar.js), mais les leçons sont fournies
-// directement (nos options sont des formes conjuguées, pas des items bare).
-function buildLearningGrammarComparisonHtml(selectedText, selectedLesson, correctText, correctLesson) {
-    const wrongExplanation = getShortLessonExplanation(selectedLesson);
-    const correctExplanation = getShortLessonExplanation(correctLesson);
-
-    const span = (text, lesson) => lesson
-        ? `<span class="eye-badge" onclick="showLessonReferencePopup('${lesson.id}')">👁️ ${text}</span>`
-        : `<strong>${text}</strong>`;
-
-    return `
-        <div class="particle-compare-box">
-            <div class="particle-compare-row wrong">
-                <span class="particle-compare-icon">❌</span>
-                <div class="particle-compare-text">Tu as mis ${span(selectedText, selectedLesson)}${wrongExplanation ? ` : ${mdBold(wrongExplanation)}` : ''}</div>
-            </div>
-            <div class="particle-compare-row correct">
-                <span class="particle-compare-icon">✅</span>
-                <div class="particle-compare-text">Il fallait mettre ${span(correctText, correctLesson)}${correctExplanation ? ` : ${mdBold(correctExplanation)}` : ''}</div>
-            </div>
-        </div>`;
-}
+// buildLearningGrammarComparisonHtml() retirée (session d'harmonisation des feedbacks de
+// quiz, demandée explicitement) : quasi-doublon de buildParticleComparisonHtml
+// (features/grammar.js) — remplacée par un appel direct à la fonction partagée
+// buildAnswerFeedbackHtml() (ui/common.js), utilisée maintenant par TOUS les types
+// d'exercices à choix de l'app plutôt que d'avoir une présentation par système.
 
 async function buildLearningExerciseQueue(step) {
     const { unit, levelId } = state.learningSession;
@@ -695,24 +677,24 @@ async function renderLearningExerciseStep(step) {
         if (isCorrect) {
             feedbackHtml = `<div class="dash-card" style="margin-top:14px;">✅ Bonne réponse !</div>`;
         } else if (q.sourceType === 'grammar') {
-            feedbackHtml = buildLearningGrammarComparisonHtml(
-                selectedOpt.label, selectedOpt.lesson, correctOpt.label, correctOpt.lesson
-            );
+            feedbackHtml = buildAnswerFeedbackHtml({
+                wrongText: selectedOpt.label,
+                wrongOnClick: selectedOpt.lesson ? `showLessonReferencePopup('${selectedOpt.lesson.id}')` : null,
+                wrongExplanation: getShortLessonExplanation(selectedOpt.lesson),
+                correctText: correctOpt.label,
+                correctOnClick: correctOpt.lesson ? `showLessonReferencePopup('${correctOpt.lesson.id}')` : null,
+                correctExplanation: getShortLessonExplanation(correctOpt.lesson)
+            });
         } else {
-            const wordBadge = q.sourceWord
-                ? ` <span class="eye-badge" onclick="showLearningFicheCorrection()">👁️ ${q.sourceWord.word_furigana || q.sourceWord.word}</span>`
-                : '';
-            feedbackHtml = `
-                <div class="particle-compare-box">
-                    <div class="particle-compare-row wrong">
-                        <span class="particle-compare-icon">❌</span>
-                        <div class="particle-compare-text">Tu as répondu <span class="md-bold">${selectedOpt.label}</span></div>
-                    </div>
-                    <div class="particle-compare-row correct">
-                        <span class="particle-compare-icon">✅</span>
-                        <div class="particle-compare-text">La bonne réponse était <span class="md-bold">${correctOpt.label}</span>${wordBadge}</div>
-                    </div>
-                </div>`;
+            // Bug trouvé lors de l'harmonisation des feedbacks de quiz : q.feedback (nuance
+            // du mot, voir plus haut "feedback: word.nuance || ''") était construit mais
+            // JAMAIS affiché ici — silencieusement perdu. Corrigé au passage.
+            feedbackHtml = buildAnswerFeedbackHtml({
+                wrongText: selectedOpt.label,
+                correctText: correctOpt.label,
+                correctOnClick: q.sourceWord ? 'showLearningFicheCorrection()' : null,
+                nuance: q.feedback || ''
+            });
         }
         feedbackHtml += continueFAB('continueLearningExercise()');
     }

@@ -35,7 +35,7 @@ import { openDetail, openKanjiFromChar, promptCreateEmptyFolder, promptDeleteFol
 import { speakSentence, speakText, startOralTest } from './features/oral.js';
 import { answerQuiz, revealChoices, showQuizModeModal, skipVocalQuestion, startFolderQuiz, startQuiz, startVoiceRecognition, closeQuiz, closeQuizModal, continueAfterFeedback, launchQuizMode, launchStrokeMode, toggleExamples, togglePause } from './features/quiz.js';
 import { closeStrokeQuiz, sqShowHint, sqSkip, startStrokeQuiz, launchDetailTrace, replayAnimation } from './features/strokes.js';
-import { advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview, submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList, startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard } from './features/vocabulary.js';
+import { advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview, submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList, startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup } from './features/vocabulary.js';
 import { advanceLessonStep, continueToNextLesson, exitLessonFlow, showExploreLessonsScreen, showKanaTablePopup, skipLessonOnboarding, startFreeTrainingFromLesson, startOnboardingChoice, startSpecificGrammarLesson, submitLessonExercise, closeKanaTablePopup, startGrammarLessonFlow } from './learning/exercises.js';
 import { answerLearningExercise, completeLearningStep, continueLearningExercise, continueLearningPath, showLearningFicheCorrection, showLearningPathHome, startLearningPath, startLearningUnitById } from './learning/learning-path.js';
 import { openWeaknessItem, trainWeaknessItems } from './learning/weakness.js';
@@ -76,7 +76,7 @@ const EXPOSED_FUNCTIONS = {
     // vocabulary.js
     advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview,
     submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList,
-    startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard,
+    startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup,
     // exercises.js
     advanceLessonStep, continueToNextLesson, exitLessonFlow, showExploreLessonsScreen,
     showKanaTablePopup, skipLessonOnboarding, startFreeTrainingFromLesson, startOnboardingChoice,

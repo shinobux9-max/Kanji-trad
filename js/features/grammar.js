@@ -22,7 +22,7 @@ import { pushModalState } from '../core/navigation.js';
 import { buildDueQueue, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
-import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
 
 /* ══════════════════════════════════════════════════
    RÉVISION GRAMMAIRE (flashcard + trou à combler + SRS)
@@ -372,22 +372,14 @@ export function buildParticleComparisonHtml(selected, correctLesson) {
     const correctExplanation = getShortLessonExplanation(correctLesson);
     if (!wrongExplanation && !correctExplanation) return '';
 
-    const particleSpan = (text, lesson) => lesson
-        ? `<span class="eye-badge" onclick="showLessonReferencePopup('${lesson.id}')">👁️ ${text}</span>`
-        : `<strong>${text}</strong>`;
-
-    return `
-        <div class="particle-compare-box">
-            <div class="particle-compare-row wrong">
-                <span class="particle-compare-icon">❌</span>
-                <div class="particle-compare-text">Tu as mis ${particleSpan(selected, wrongLesson)}${wrongExplanation ? ` : ${mdBold(wrongExplanation)}` : ''}</div>
-            </div>
-            <div class="particle-compare-row correct">
-                <span class="particle-compare-icon">✅</span>
-                <div class="particle-compare-text">Il fallait mettre ${particleSpan(correctLesson?.item || '', correctLesson)}${correctExplanation ? ` : ${mdBold(correctExplanation)}` : ''}</div>
-            </div>
-        </div>
-    `;
+    return buildAnswerFeedbackHtml({
+        wrongText: selected,
+        wrongOnClick: wrongLesson ? `showLessonReferencePopup('${wrongLesson.id}')` : null,
+        wrongExplanation,
+        correctText: correctLesson?.item || '',
+        correctOnClick: correctLesson ? `showLessonReferencePopup('${correctLesson.id}')` : null,
+        correctExplanation
+    });
 }
 
 /**
