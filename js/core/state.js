@@ -69,7 +69,7 @@ export const state = {
     bulkSelectMode: false,
     bulkSelectRerender: null,
 
-    // Partagés avec animateKanaChar (features/kana.js, pas encore porté) : timeouts de
+    // Partagés avec animateKanaChar (features/kana.js) : timeouts de
     // l'animation de tracé kana en cours + AbortController du fetch KanjiVG associé.
     // closeDetail() les nettoie systématiquement à la fermeture de la fiche détail.
     kanaAnimTimeouts: [],
@@ -106,7 +106,7 @@ export const state = {
     // sinon closeAllOverlaysAndSessions() nettoierait le mauvais état.
     reviewSession: null,          // révision vocab (features/vocabulary.js, pas encore porté)
     grammarReviewSession: null,   // révision grammaire (features/grammar.js, pas encore porté)
-    mixedReviewSession: null,     // révision mixte "Aujourd'hui" (ui/dashboard.js ou learning/, pas encore porté)
+    mixedReviewSession: null,     // révision mixte "Aujourd'hui" (ui/cards.js::launchMixedReviewSession)
     kanjiReviewSession: null,     // révision flashcard kanji (features/kanji.js — la fiche/liste
                                    // sont portées, mais pas encore cette session de révision précise)
     lessonSession: null,          // parcours "Commençons l'apprentissage" (grammaire, pas encore porté)

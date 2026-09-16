@@ -64,14 +64,6 @@ export function saveTrackingData(trackingData) {
     setStorageItem(STORAGE_KEYS.TRACKING, trackingData);
 }
 
-// Conservée pour compatibilité avec le reste du stub existant (accès en lecture seule à
-// l'entrée brute d'un item, y compris son éventuel .srs) — mais ce n'est PAS l'équivalent de
-// getItemStatus() ci-dessous, qui est la fonction réellement utilisée partout dans l'app pour
-// lire un statut ('mastered' / 'favorited' / null).
-export function getItemTracking(itemId) {
-    const tracking = getTrackingData();
-    return tracking[itemId] || null;
-}
 
 /**
  * Équivalent EXACT de trackItem(itemId, status) du monolithe kanji.js.
@@ -130,14 +122,4 @@ export function getFoldersData() {
 
 export function saveFoldersData(foldersData) {
     setStorageItem(STORAGE_KEYS.FOLDERS, foldersData);
-}
-
-// --- SETTINGS / PREFERENCES ---
-
-export function getSettingsData() {
-    return getStorageItem(STORAGE_KEYS.SETTINGS, {});
-}
-
-export function saveSettingsData(settings) {
-    setStorageItem(STORAGE_KEYS.SETTINGS, settings);
 }

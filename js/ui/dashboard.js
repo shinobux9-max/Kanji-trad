@@ -385,9 +385,12 @@ export async function renderDashboardReviewCta() {
 
 /**
  * Lance directement depuis l'accueil la MÊME file que celle annoncée par le bouton.
- * ⚠️ ATTENTION : launchMixedReviewSession n'appartient à aucun module actuellement porté
- * (système de session de révision mixte, probablement partagé avec l'écran "Apprendre" —
- * à localiser précisément lors d'un futur chantier). Vrai appel JS non importé.
+ * Réutilise le mécanisme de session mixte partagé avec l'onglet "Apprendre"
+ * (ui/cards.js::launchMixedReviewSession) — trouvé et porté (bug de quota quotidien
+ * corrigé au passage : addDailyNewCardsUsed() n'était jamais appelée nulle part).
+ * ⚠️ ATTENTION : launchMixedReviewSession vit dans ui/cards.js, qui importe déjà
+ * ui/dashboard.js (cycle direct si import réel dans l'autre sens) — vrai appel JS résolu
+ * via window (exposé par app.js).
  */
 export async function startDashboardReview() {
     const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: getAccueilEffectiveNewLimit(), excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
@@ -464,8 +467,6 @@ export function navDashboard() {
 export function navKana() { showKanaLearningPicker(); }
 // ⚠️ ATTENTION : showNiveauxScreen existe dans ce même fichier (voir plus bas) — appel
 // interne normal, pas une landmine à proprement parler, juste noté pour cohérence.
-export function navNiveaux() { showNiveauxScreen(); }
-
 /* ══════════════════════════════════════════════════
    ÉCRAN "NIVEAUX" — cartes pleine largeur avec vraie progression
 ══════════════════════════════════════════════════ */

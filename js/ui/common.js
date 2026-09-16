@@ -130,13 +130,6 @@ export function toggleDetailMastery() {
     refreshMasteryUI();
 }
 
-export function createBadge(level) {
-    const span = document.createElement('span');
-    span.className = `badge badge-${level ? level.toLowerCase() : 'default'}`;
-    span.textContent = level || 'N/A';
-    return span;
-}
-
 export function escapeHtml(str) {
     if (!str) return '';
     return str

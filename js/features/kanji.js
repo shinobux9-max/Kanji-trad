@@ -35,7 +35,7 @@
  */
 
 import { state } from '../core/state.js';
-import { getFoldersData, setStorageItem, STORAGE_KEYS, getItemStatus, trackItem } from '../core/storage.js';
+import { getFoldersData, saveFoldersData, getItemStatus, trackItem } from '../core/storage.js';
 import { getLevelVocabData, ensureExemplesLoaded, getKanjiLevelExamples } from '../core/data-loader.js';
 import { ALL_JLPT_LEVELS } from '../core/constants.js';
 import { pushModalState } from '../core/navigation.js';
@@ -237,13 +237,6 @@ export function buildReadingChips(k, { maxOn = 4, maxKun = 4, showBadge = true, 
     return onChips + kunChips;
 }
 
-// Label de réponse quiz : "Sens • meilleure lecture" (tronqué si besoin)
-export function choiceLabel(k) {
-    const sens = k.meanings.filter(m => !m.toLowerCase().includes('radical'))[0] || k.meanings[0] || '?';
-    const read = getBestReading(k);
-    const full = read && read !== '?' ? `${sens} • ${read}` : sens;
-    return full.length > 26 ? full.slice(0, 24) + '…' : full;
-}
 
 // Fisher-Yates sur un tableau d'indices (in-place, retourne le même tableau). Copie fidèle du
 // shuffleIndices() du monolithe (distinct de shuffleArray() dans learning/srs.js, qui copie le
@@ -310,7 +303,10 @@ export function getKanjiMastery(kanjiChar) {
    l'accès brut. Toute la logique métier (ajout/retrait/renommage/suppression) est ici.
 ══════════════════════════════════════════════════ */
 function saveFolders(folders) {
-    setStorageItem(STORAGE_KEYS.FOLDERS, folders);
+    // Doublon trouvé lors de l'audit code mort (session d'assainissement) : réécrivait
+    // directement setStorageItem(STORAGE_KEYS.FOLDERS, ...) au lieu d'appeler
+    // saveFoldersData() (core/storage.js), qui fait exactement ça — jamais utilisée jusqu'ici.
+    saveFoldersData(folders);
 }
 
 export function loadFolders() {

@@ -13,64 +13,11 @@ import { state } from '../core/state.js';
 import { trackItem } from '../core/storage.js';
 import { refreshMasteryUI } from '../ui/common.js';
 
-let recognitionInstance = null;
-
-/**
- * Vérifie si la reconnaissance vocale est disponible sur le navigateur
- */
-export function isSpeechAvailable() {
-    return 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
-}
-
-/**
- * Initialise le moteur de reconnaissance vocale en japonais
- */
-export function initSpeechRecognition(onResultCallback, onErrorCallback) {
-    if (!isSpeechAvailable()) {
-        console.warn("La reconnaissance vocale n'est pas supportée par ce navigateur.");
-        return null;
-    }
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognitionInstance = new SpeechRecognition();
-    recognitionInstance.lang = 'ja-JP';
-    recognitionInstance.interimResults = false;
-
-    recognitionInstance.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        if (typeof onResultCallback === 'function') {
-            onResultCallback(transcript);
-        }
-    };
-
-    recognitionInstance.onerror = (event) => {
-        console.error("Erreur de reconnaissance vocale:", event.error);
-        if (typeof onErrorCallback === 'function') {
-            onErrorCallback(event.error);
-        }
-    };
-
-    return recognitionInstance;
-}
-
-/**
- * Démarre l'écoute du microphone
- */
-export function startListening() {
-    if (recognitionInstance) {
-        recognitionInstance.start();
-    }
-}
 /* ══════════════════════════════════════════════════
    QUIZ VOCAL — NORMALISATION DU RÉSULTAT MICRO
    Gère : chiffres arabes, kanji+okurigana, katakana. Équivalent EXACT de la section du même
-   nom dans le monolithe. Utilisée par le test oral de la fiche détail (startOralTest, pas
-   encore porté) ET par le mode vocal du quiz (features/quiz.js::startVoiceRecognition).
-   NOTE : isSpeechAvailable/initSpeechRecognition/startListening ci-dessus sont un wrapper
-   générique SIMPLIFIÉ qui ne correspond PAS au vrai monolithe (qui crée une instance
-   SpeechRecognition ad hoc dans chaque contexte : startOralTest, startVoiceRecognition,
-   initMicSearch — trois implémentations séparées, jamais un wrapper partagé). Pas touché ici,
-   à corriger dans un passage dédié.
+   nom dans le monolithe. Utilisée par le test oral de la fiche détail (startOralTest) ET par
+   le mode vocal du quiz (features/quiz.js::startVoiceRecognition).
 ══════════════════════════════════════════════════ */
 
 // Table inverse : chiffre arabe -> hiragana

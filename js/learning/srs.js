@@ -16,7 +16,7 @@ import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getKanaFlat
 import { updateWeaknessTracking } from './weakness.js';
 
 // Nombre max de nouvelles cartes introduites par session de révision (par combinaison
-// type×niveau pour buildDueQueue — countDueItems/splitDueAndNew en dépendent directement).
+// type×niveau pour buildDueQueue — countDueItems en dépend directement).
 export const SRS_NEW_PER_SESSION = 10;
 
 /* ══════════════════════════════════════════════════
@@ -154,17 +154,6 @@ export function countDueItems(items) {
 }
 
 // Comme buildDueQueue, mais retourne le détail due/nouveaux séparément (affichage à la Hibi)
-export function splitDueAndNew(items) {
-    const now = new Date();
-    let due = 0, fresh = 0;
-    items.forEach(item => {
-        const srs = getSrsInfo(item.id);
-        if (!srs) fresh++;
-        else if (new Date(srs.nextReviewDate) <= now) due++;
-    });
-    return { due, fresh: Math.min(fresh, SRS_NEW_PER_SESSION) };
-}
-
 // Nombre de jours de retard d'un item par rapport à son échéance SRS (0 si pas encore dû ou
 // pas de planning du tout — les nouvelles cartes n'ont pas de "retard").
 export function getDaysOverdue(itemId) {
