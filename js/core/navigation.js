@@ -206,6 +206,11 @@ export const SCREEN_REGISTRY = {
     'revision-kana-picker': () => showRevisionKanaPicker(true),
     // ⚠️ ATTENTION : showKanaLearningPicker, même raison (cycle via pushModalState).
     'kana-learning-picker': () => showKanaLearningPicker(true),
+    // ⚠️ ATTENTION : loadKanas, même raison (cycle via pushModalState). Bug trouvé en test
+    // réel : loadKanas() ne poussait JAMAIS son propre état avant — la "Liste" n'existait
+    // donc pas dans l'historique, et le retour la sautait dans les deux sens (Liste<Apprendre
+    // au lieu de Liste<Choix<Apprendre, et Fiche<Choix au lieu de Fiche<Liste<Choix).
+    'kana-list': (s) => loadKanas(s.script, true),
 };
 
 /**

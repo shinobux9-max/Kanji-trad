@@ -48,7 +48,8 @@ export function kanaDataLoader(char, onLoad, onError) {
 ══════════════════════════════════════════════════ */
 let currentKanaTabType = 'hira'; // suivi de l'onglet actif, utile pour "Tout sélectionner" et le retour en mode normal
 
-export function loadKanas(script = 'hira') {
+export function loadKanas(script = 'hira', isBack = false) {
+    if (!isBack) history.pushState({ view: 'kana-list', script }, '');
     document.getElementById('page-title').innerText = 'Kana';
     renderKanaScreen(script);
 }
@@ -91,10 +92,10 @@ export function showKanaLearningPicker(isBack = false) {
 // le bouton Sélectionner disparaisse/réapparaisse correctement selon bulkSelectMode.
 export function renderKanaScreen(type) {
     currentKanaTabType = type;
+    const label = type === 'hira' ? 'Hiragana あ' : 'Katakana ア';
     document.getElementById('main-content').innerHTML = `${backFAB('history.back()')}
-        <div class="kana-tabs" style="margin-top:56px">
-            <div class="kana-tab ${type === 'hira' ? 'active' : ''}" id="tab-hira" onclick="switchKanaTab('hira')">Hiragana あ</div>
-            <div class="kana-tab ${type === 'kata' ? 'active' : ''}" id="tab-kata" onclick="switchKanaTab('kata')">Katakana ア</div>
+        <div style="margin-top:56px; padding:12px 16px 0; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:1rem; font-weight:bold; color:var(--accent)">${label}</div>
             ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshKanaScreen)">☑ Sélectionner</button>` : ''}
         </div>
         <div id="kana-grid-container" style="padding:12px"></div>`;
@@ -109,10 +110,9 @@ export function refreshKanaScreen() {
     renderKanaScreen(currentKanaTabType);
 }
 
-export function switchKanaTab(type) {
-    renderKanaScreen(type);
-}
-
+// switchKanaTab() retirée (session de nettoyage, demande explicite) : les onglets
+// Hiragana/Katakana en haut de la grille ont été supprimés — le choix se fait maintenant
+// exclusivement via showKanaLearningPicker(), écran dédié avant d'entrer dans la grille.
 export function renderKanaGrid(type) {
     const container = document.getElementById('kana-grid-container');
     container.innerHTML = '';
