@@ -23,7 +23,7 @@ import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow
 import { showLearningPathHome, loadLearningProgress, startLearningPath } from '../learning/learning-path.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
 import { gradeReview, scheduleRelearning, recordSessionCompleted, getEntryTrackingId } from '../learning/srs.js';
-import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList, navFolders } from '../features/kanji.js';
+import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList, navFolders, loadFolders } from '../features/kanji.js';
 import { startStrokeQuiz } from '../features/strokes.js';
 import { showVocabReviewModeSelector, displayVocabList } from '../features/vocabulary.js';
 import { showGrammarReviewModeSelector, showGrammarHome } from '../features/grammar.js';
@@ -172,10 +172,21 @@ export async function startRevisionFor(category, levelId) {
 /* ══════════════════════════════════════════════════
    MODE DE RÉVISION KANJI — flashcard + tracé (normal/hardcore)
 ══════════════════════════════════════════════════ */
-export function showKanjiReviewModeSelector() {
+// Liste de kanji actuellement proposée par le sélecteur de mode — par défaut les kanji dus
+// (onglet Réviser), mais peut être surchargée pour une source différente (ex: le contenu
+// d'un dossier, voir startKanjiQuizForFolder() plus bas). Lue par startKanjiFlashcardReview()/
+// startKanjiTraceReview() au moment du choix du mode.
+let _kanjiReviewModeChars = null;
+
+/**
+ * @param {string[]} [chars] - liste explicite de kanji à réviser (ex: contenu d'un dossier).
+ *   Omis = comportement d'origine, kanji actuellement dus (onglet Réviser).
+ */
+export function showKanjiReviewModeSelector(chars = null) {
     hideBottomNav();
     const container = document.getElementById('category-content');
-    const dueChars = getDueKanjiChars();
+    const dueChars = chars || getDueKanjiChars();
+    _kanjiReviewModeChars = dueChars;
 
     if (dueChars.length === 0) {
         alert('Rien à réviser pour le moment ! 🎉');
@@ -218,14 +229,14 @@ export function startKanjiFreeTrainingFromSelector() {
 
 export function startKanjiTraceReview(mode) {
     hideBottomNav();
-    const dueChars = getDueKanjiChars();
+    const dueChars = _kanjiReviewModeChars || getDueKanjiChars();
     if (dueChars.length === 0) return;
     startStrokeQuiz({ type: 'queue', id: dueChars, mode });
 }
 
 export function startKanjiFlashcardReview() {
     hideBottomNav();
-    const dueChars = getDueKanjiChars();
+    const dueChars = _kanjiReviewModeChars || getDueKanjiChars();
     if (dueChars.length === 0) return;
 
     pushModalState('kanji-review-flashcard');
@@ -772,4 +783,20 @@ export function renderMixedReviewSummary() {
         <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour</button>
     </div>`;
     state.mixedReviewSession = null;
+}
+
+/**
+ * Remplace l'ancien "⚡ Quiz" des dossiers (features/quiz.js::startFolderQuiz, système modal
+ * lecture/sens retiré) — propose maintenant exactement les mêmes modes que Réviser > Kanji
+ * (Flashcard, Tracé normal, Tracé difficile, Entraînement libre), appliqués au contenu du
+ * dossier plutôt qu'aux kanji dus. Demandé explicitement.
+ */
+export function startKanjiQuizForFolder(folderName) {
+    const folders = loadFolders();
+    const chars = folders[folderName];
+    if (!chars || chars.length === 0) {
+        alert('Ce dossier est vide.');
+        return;
+    }
+    showKanjiReviewModeSelector(chars);
 }

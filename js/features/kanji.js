@@ -12,11 +12,15 @@
  * pour des fonctions — strokes.js, quiz.js, ui/dashboard.js — qui le sont maintenant, faute de
  * mise à jour au fil des sessions suivantes).
  *
- * CE FICHIER EST COMPLET pour ce qu'il peut être sans features non portées. Deux fonctions
- * ont été VOLONTAIREMENT DÉPLACÉES vers features/strokes.js et features/quiz.js plutôt que
- * laissées ici, pour éviter des cycles d'import :
+ * CE FICHIER EST COMPLET pour ce qu'il peut être sans features non portées. Une fonction
+ * a été VOLONTAIREMENT DÉPLACÉE vers features/strokes.js plutôt que laissée ici, pour éviter
+ * un cycle d'import :
  * - replayAnimation()/launchDetailTrace() -> features/strokes.js (déclenchent le tracé)
- * - startFolderQuiz() -> features/quiz.js (déclenche showQuizModeModal)
+ *
+ * Le bouton "⚡ Quiz" des dossiers appelle maintenant startKanjiQuizForFolder() (ui/cards.js)
+ * — même sélecteur de mode que Réviser > Kanji (Flashcard/Tracé), appliqué au contenu du
+ * dossier. L'ancien système modal lecture/sens (features/quiz.js::startFolderQuiz,
+ * showQuizModeModal) a été retiré (décision explicite : les autres systèmes suffisent).
  *
  * ENCORE MANQUANT (dépend d'un système jamais porté, hors périmètre de ce fichier — voir
  * HANDOFF.md, "Système de sélection de révision par catégorie") :
@@ -241,8 +245,6 @@ export function buildReadingChips(k, { maxOn = 4, maxKun = 4, showBadge = true, 
 // Fisher-Yates sur un tableau d'indices (in-place, retourne le même tableau). Copie fidèle du
 // shuffleIndices() du monolithe (distinct de shuffleArray() dans learning/srs.js, qui copie le
 // tableau avant de le mélanger — les deux existent séparément dans l'original, préservé tel quel).
-// EXPORTÉE : startQuiz() (features/quiz.js) appelle exactement la même fonction dans
-// l'original (un seul shuffleIndices, utilisé à plusieurs endroits du même fichier source).
 export function shuffleIndices(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -487,8 +489,8 @@ export function confirmNewFolder() {
    PAGE "MES DOSSIERS"
    ─────────────────────────────────────────────────
    NOTE : le HTML généré ci-dessous référence onclick="openKanjiFromChar(...)" et
-   onclick="startFolderQuiz(...)" — toutes deux désormais réellement définies (la première
-   plus bas dans ce même fichier, la seconde dans features/quiz.js) et exposées sur window
+   onclick="startKanjiQuizForFolder(...)" — toutes deux réellement définies (la première
+   plus bas dans ce même fichier, la seconde dans ui/cards.js) et exposées sur window
    par app.js.
 ══════════════════════════════════════════════════ */
 export function navFolders(isBack = false) {
@@ -545,7 +547,7 @@ export function renderFoldersPage() {
             <div class="folder-card-kanjis">${kanjiChips || '<span style="color:var(--gray);font-size:0.75rem">Dossier vide</span>'}</div>
             <div class="folder-card-actions">
                 <button class="folder-action-btn" onclick="promptRenameFolder('${safeN}')">✏ Renommer</button>
-                <button class="folder-action-btn" onclick="startFolderQuiz('${safeN}')">⚡ Quiz</button>
+                <button class="folder-action-btn" onclick="startKanjiQuizForFolder('${safeN}')">⚡ Quiz</button>
                 <button class="folder-action-btn danger" onclick="promptDeleteFolder('${safeN}')">🗑 Supprimer</button>
             </div>`;
 
@@ -589,8 +591,8 @@ export function promptDeleteFolder(name) {
     renderFoldersPage();
 }
 
-// startFolderQuiz(folderName) vit finalement dans features/quiz.js (pas ici) : elle appelle
-// showQuizModeModal(), et l'avoir mise ici aurait recréé un cycle kanji.js<->quiz.js.
+// startKanjiQuizForFolder(folderName) vit dans ui/cards.js (pas ici) : elle appelle
+// showKanjiReviewModeSelector(), déjà importée là-bas.
 export function openKanjiFromChar(char) {
     const idx = state.data.kanjiMap.get(char);
     if (idx === undefined) return;

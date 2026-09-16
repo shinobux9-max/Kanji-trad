@@ -178,24 +178,6 @@
     </div>
 </div>
 
-<!-- ── QUIZ VIEW ─────────────────────────────────── -->
-<div id="quiz-view">
-    <div class="quiz-top-bar">
-        <button onclick="closeQuiz()">←</button>
-        <div class="quiz-score-ok"><span class="quiz-score-icon">✔</span><span id="quiz-correct">0</span></div>
-        <div class="quiz-score-ko"><span class="quiz-score-icon">✘</span><span id="quiz-wrong">0</span></div>
-        <div class="quiz-timer-badge" id="quiz-timer">0:00</div>
-        <button class="quiz-pause-btn" onclick="togglePause()">⏸</button>
-    </div>
-    <div class="quiz-sub-bar">
-        <span id="quiz-counter-sub">1 / 10</span>
-        <button class="quiz-examples-btn" id="quiz-examples-btn" onclick="toggleExamples()" style="display:none">Afficher les exemples</button>
-        <span id="quiz-score-sub">0.0 / 10.0</span>
-    </div>
-    <div class="quiz-prog-wrap"><div class="quiz-prog-bar" id="quiz-prog-bar"></div></div>
-    <div class="quiz-body" id="quiz-body"></div>
-</div>
-
 <!-- ── STROKE QUIZ VIEW ───────────────────────────── -->
 <div id="stroke-quiz-view">
     <div class="sq-top-bar">
@@ -213,56 +195,6 @@
     <div id="stroke-quiz-body"></div>
 </div>
 
-
-<!-- ── QUIZ MODE MODAL ───────────────────────────── -->
-<div id="quiz-mode-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeQuizModal()">
-    <div class="mode-selection-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-            <div class="mode-title" style="margin-bottom:0">Choisir un mode</div>
-            <button onclick="closeQuizModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
-        </div>
-        <div class="mode-section-label">— Reconnaissance</div>
-        <div class="mode-option" onclick="launchQuizMode('kanji-to-read')">
-            <span class="mode-icon">🈳</span>
-            <div><div class="mode-opt-title">Kanji → Onyomi / Kunyomi</div><div class="mode-opt-sub">Trouvez la bonne lecture (on ou kun) du kanji</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('kanji-to-mean')">
-            <span class="mode-icon">🇫🇷</span>
-            <div><div class="mode-opt-title">Kanji → Traduction</div><div class="mode-opt-sub">Trouvez le sens en français</div></div>
-        </div>
-        <div class="mode-section-label">— Rappel inversé</div>
-        <div class="mode-option" onclick="launchQuizMode('read-to-kanji')">
-            <span class="mode-icon">🔄</span>
-            <div><div class="mode-opt-title">Onyomi / Kunyomi → Kanji</div><div class="mode-opt-sub">Lecture(s) affichée(s), trouvez le kanji</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('mean-to-kanji')">
-            <span class="mode-icon">🔁</span>
-            <div><div class="mode-opt-title">Français → Kanji</div><div class="mode-opt-sub">Traduction affichée, trouvez le kanji</div></div>
-        </div>
-        <div class="mode-section-label">— Tracé</div>
-        <div class="mode-option" onclick="launchStrokeMode('trace-easy')">
-            <span class="mode-icon">✏️</span>
-            <div><div class="mode-opt-title">Tracé guidé</div><div class="mode-opt-sub">Ordre des traits avec aide visuelle</div></div>
-        </div>
-        <div class="mode-option" onclick="launchStrokeMode('trace-hard')">
-            <span class="mode-icon">💀</span>
-            <div><div class="mode-opt-title">Tracé Hardcore</div><div class="mode-opt-sub">Sans ombre — de mémoire pure</div></div>
-        </div>
-        <div class="mode-section-label">— Avancé</div>
-        <div class="mode-option" onclick="launchQuizMode('mixte')">
-            <span class="mode-icon">🎲</span>
-            <div><div class="mode-opt-title">Mixte</div><div class="mode-opt-sub">Lectures + traductions aléatoirement</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('vocal')">
-            <span class="mode-icon">🎤</span>
-            <div><div class="mode-opt-title">Audio</div><div class="mode-opt-sub">Sens affiché, prononcez la lecture</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('survie')">
-            <span class="mode-icon">🔥</span>
-            <div><div class="mode-opt-title">Hardcore Mixte</div><div class="mode-opt-sub">Tous les modes mélangés aléatoirement</div></div>
-        </div>
-    </div>
-</div>
 
 <!-- ── KANA TRACE MODE MODAL ──────────────────────── -->
 <div id="kana-trace-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeKanaTraceModal()">
@@ -337,26 +269,6 @@
 <!-- ── FICHE CORRECTION MODAL (correction contextuelle en révision) ── -->
 <div id="fiche-correction-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeFicheCorrectionModal()">
     <div class="mode-selection-card" id="fiche-correction-content"></div>
-</div>
-
-<!-- ── QUIZ FEEDBACK MODAL ────────────────────────── -->
-<div id="quiz-feedback-modal">
-    <div class="qfm-card" id="qfm-card">
-        <div class="qfm-kanji" id="qfm-kanji"></div>
-        <div class="qfm-meaning" id="qfm-meaning"></div>
-        <div class="qfm-readings">
-            <div class="qfm-read-block">
-                <div class="qfm-read-label">On'yomi</div>
-                <div class="qfm-read-tags" id="qfm-on"></div>
-            </div>
-            <div class="qfm-read-block">
-                <div class="qfm-read-label">Kun'yomi</div>
-                <div class="qfm-read-tags" id="qfm-kun"></div>
-            </div>
-        </div>
-        <div class="qfm-verdict" id="qfm-verdict"></div>
-        <button class="qfm-continue-btn" onclick="continueAfterFeedback()">Continuer →</button>
-    </div>
 </div>
 
     <!-- Script principal (modularisé en ESM, voir js/) -->

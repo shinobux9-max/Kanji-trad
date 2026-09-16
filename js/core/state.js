@@ -84,46 +84,21 @@ export const state = {
 
     /* ══════════════════════════════════════════════════
        SESSIONS PONCTUELLES — placeholders null.
-       IMPORTANT : ne PAS inventer de forme ici. La vraie structure de chacune de ces sessions
-       est créée entièrement par la fonction de démarrage correspondante dans sa feature
-       (startQuiz() -> features/quiz.js, startStrokeQuiz() -> features/stroke.js, etc.), pas
-       encore portée. Un ancien stub donnait à quizState/strokeQuizState une forme inventée
-       ({active, questions, currentIndex, score} / {active, timerInterval, isPaused}) qui ne
-       correspond à RIEN dans le monolithe réel — corrigé ici en simple `null`.
     ══════════════════════════════════════════════════ */
-    quizState: null,          // { indices, poolIndices, idx, correct, wrong, answered, revealed,
-                               //   title, sourceType, sourceId, elapsedSec, mode } une fois démarré
-    strokeQuizState: null,    // forme définie par startStrokeQuiz() (features/stroke.js, à porter)
+    strokeQuizState: null,    // forme définie par startStrokeQuiz() (features/strokes.js)
     learningSession: null,    // { levelId, unit, stepIndex, testResults, coveredNew, recentNew }
                                // une fois démarré (learning/learning-path.js)
 
-    // Ajoutés lors du portage de core/navigation.js::closeAllOverlaysAndSessions() : cette
-    // fonction (déjà réellement portée) doit nettoyer TOUTES les sessions ponctuelles de l'app
-    // à chaque changement d'écran/retour, y compris celles dont le module propriétaire n'est
-    // PAS ENCORE porté — même logique de placeholder anticipé que kanaTraceState ci-dessus.
-    // Quand vocabulary.js/grammar.js/free-training.js/ui/dashboard.js seront portés, ILS
-    // devront lire/écrire ces champs state.* (pas recréer des variables locales à leur module),
-    // sinon closeAllOverlaysAndSessions() nettoierait le mauvais état.
-    reviewSession: null,          // révision vocab (features/vocabulary.js, pas encore porté)
-    grammarReviewSession: null,   // révision grammaire (features/grammar.js, pas encore porté)
+    // Nettoyées à chaque changement d'écran/retour par
+    // core/navigation.js::closeAllOverlaysAndSessions().
+    reviewSession: null,          // révision vocab (features/vocabulary.js)
+    grammarReviewSession: null,   // révision grammaire (features/grammar.js)
     mixedReviewSession: null,     // révision mixte "Aujourd'hui" (ui/cards.js::launchMixedReviewSession)
-    kanjiReviewSession: null,     // révision flashcard kanji (features/kanji.js — la fiche/liste
-                                   // sont portées, mais pas encore cette session de révision précise)
-    lessonSession: null,          // parcours "Commençons l'apprentissage" (grammaire, pas encore porté)
-    trainingSession: null,        // entraînement libre (features/free-training.js, pas encore porté)
+    kanjiReviewSession: null,     // révision flashcard kanji (features/kanji.js)
+    lessonSession: null,          // parcours "Commençons l'apprentissage" (learning/exercises.js)
+    trainingSession: null,        // entraînement libre (features/free-training.js)
     trainingChronoInterval: null, // idem — id de setInterval du chrono d'entraînement libre
     activeSwipeContext: null      // 'lesson' | 'onboarding' | 'learning-path' | null — contexte de
-                                   // swipe actif, lu par le listener tactile global (pas encore
-                                   // porté) qui décide comment interpréter un swipe/tap selon l'écran
+                                   // swipe actif, lu par le listener tactile global
+                                   // (learning/exercises.js::initSwipeNavigation)
 };
-
-/**
- * Remet quizState à null — équivalent d'un simple `quizState = null;` direct dans le
- * monolithe (il n'existe PAS de fonction resetQuizState() dans le monolithe : quizState y est
- * réassigné entièrement par startQuiz()/closeQuiz() à chaque fois). Cette fonction est un
- * wrapper de confort ajouté pour l'ESM, pas un portage direct — à utiliser à la place d'une
- * assignation directe pour rester cohérent si la forme évolue.
- */
-export function resetQuizState() {
-    state.quizState = null;
-}

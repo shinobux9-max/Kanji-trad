@@ -33,7 +33,6 @@ import { advanceGrammarReviewQueue, closeLessonReferencePopup, showGrammarHome, 
 import { kanaTraceHint, kanaTraceSkip, openKanaDetail, replayKanaTraceQuiz, showKanaRevisionModeSelector, startKanaFlashcardReview, startKanaTraceQuiz, startKanaTraceReview, submitKanaReviewGrade, showRevisionKanaPicker, refreshKanaScreen, closeKanaTraceModal, launchKanaTraceMode, resetKanaReviewSession, flipKanaReviewCard, loadKanas, showKanaLearningPicker, showKanaTraceModal, animateKanaChar } from './features/kana.js';
 import { openDetail, openKanjiFromChar, promptCreateEmptyFolder, promptDeleteFolder, promptRenameFolder, toggleFmNewRow, toggleKanjiInFolder, refreshKanjiList, closeFolderModal, confirmNewFolder, openFolderModal, displayKanjiList, closeDetail, getJLPTLevel, navFolders } from './features/kanji.js';
 import { speakSentence, speakText, startOralTest } from './features/oral.js';
-import { answerQuiz, revealChoices, showQuizModeModal, skipVocalQuestion, startFolderQuiz, startQuiz, startVoiceRecognition, closeQuiz, closeQuizModal, continueAfterFeedback, launchQuizMode, launchStrokeMode, toggleExamples, togglePause } from './features/quiz.js';
 import { closeStrokeQuiz, sqShowHint, sqSkip, startStrokeQuiz, launchDetailTrace, replayAnimation } from './features/strokes.js';
 import { advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview, submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList, startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup } from './features/vocabulary.js';
 import { advanceLessonStep, continueToNextLesson, exitLessonFlow, showExploreLessonsScreen, showKanaTablePopup, skipLessonOnboarding, startFreeTrainingFromLesson, startOnboardingChoice, startSpecificGrammarLesson, submitLessonExercise, closeKanaTablePopup, startGrammarLessonFlow } from './learning/exercises.js';
@@ -42,7 +41,7 @@ import { openWeaknessItem, trainWeaknessItems } from './learning/weakness.js';
 import { closeFicheCorrectionModal, enterBulkSelectMode, handleListItemClick, showFicheCorrectionModal, toggleCategoryMasteryLive, exitBulkSelectMode, toggleDetailMastery } from './ui/common.js';
 import { navDashboard, showDailyGoalModal, showProgressionDetail, startDashboardReview, closeDailyGoalModal, saveDailyGoalFromModal, showNiveauxScreen, navKana } from './ui/dashboard.js';
 import { openGrammarFromSearch, openKanjiFromSearchHit, openVocabFromSearch, toggleSearchFilter, resetSearchFilters, clearSearch, debouncedDoSearch, showSearchPanel, hideSearchPanel } from './ui/modals.js';
-import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume, launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade } from './ui/cards.js';
+import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume, launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade, startKanjiQuizForFolder } from './ui/cards.js';
 
 /* ══════════════════════════════════════════════════
    EXPOSITION SUR window — UNE SEULE PASSE, ici et nulle part ailleurs (voir HANDOFF.md)
@@ -68,9 +67,6 @@ const EXPOSED_FUNCTIONS = {
     closeFolderModal, confirmNewFolder, openFolderModal, displayKanjiList, closeDetail, getJLPTLevel, navFolders,
     // oral.js
     speakSentence, speakText, startOralTest,
-    // quiz.js
-    answerQuiz, revealChoices, showQuizModeModal, skipVocalQuestion, startFolderQuiz, startQuiz, startVoiceRecognition,
-    closeQuiz, closeQuizModal, continueAfterFeedback, launchQuizMode, launchStrokeMode, toggleExamples, togglePause,
     // strokes.js
     closeStrokeQuiz, sqShowHint, sqSkip, startStrokeQuiz, launchDetailTrace, replayAnimation,
     // vocabulary.js
@@ -100,7 +96,7 @@ const EXPOSED_FUNCTIONS = {
     startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor,
     submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen,
     showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume,
-    launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade,
+    launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade, startKanjiQuizForFolder,
 };
 Object.entries(EXPOSED_FUNCTIONS).forEach(([name, fn]) => { window[name] = fn; });
 

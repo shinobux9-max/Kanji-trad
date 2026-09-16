@@ -15,7 +15,7 @@
  * et dans closeAllOverlaysAndSessions() appartiennent soit à des modules PAS ENCORE PORTÉS
  * (ui/dashboard.js, features/vocabulary.js, features/grammar.js, features/free-training.js,
  * et le routeur cross-feature showCategoryDirect/loadJLPTCategory qui n'appartient à aucun
- * fichier actuel), soit à des modules DÉJÀ portés (kanji.js, strokes.js, quiz.js, kana.js)
+ * fichier actuel), soit à des modules DÉJÀ portés (kanji.js, strokes.js, kana.js)
  * mais qui importent TOUS déjà pushModalState() depuis CE fichier — un import réel en retour
  * créerait un cycle direct (confirmé programmatiquement à l'écriture de ce fichier, voir plus
  * bas). Seul ui/common.js est importable ici sans risque (n'importe jamais navigation.js).
@@ -41,11 +41,11 @@ import { state } from './state.js';
 import { updateBulkActionBar } from '../ui/common.js';
 
 /**
- * ⚠️ IMPORTANT — pourquoi AUCUNE fonction de kanji.js/strokes.js/quiz.js/kana.js n'est
- * importée ici, alors que closeDetail, closeStrokeQuiz, closeQuiz, loadCategory,
- * loadSeriesPage, displayKanjiList, showRevisionKanaPicker existent bel et bien comme
- * exports réels dans ces fichiers (vérifié avant d'écrire ce fichier) :
- * kanji.js, strokes.js (via kanji.js), quiz.js ET kana.js importent TOUS déjà
+ * ⚠️ IMPORTANT — pourquoi AUCUNE fonction de kanji.js/strokes.js/kana.js n'est
+ * importée ici, alors que closeDetail, closeStrokeQuiz, displayKanjiList,
+ * showRevisionKanaPicker existent bel et bien comme exports réels dans ces fichiers
+ * (vérifié avant d'écrire ce fichier) :
+ * kanji.js, strokes.js (via kanji.js) ET kana.js importent TOUS déjà
  * pushModalState() depuis CE fichier. Si navigation.js importait quoi que ce soit en retour
  * depuis l'un d'eux, ce serait un cycle direct (confirmé programmatiquement : la première
  * tentative d'écriture de ce fichier important closeDetail/loadCategory/loadSeriesPage/
@@ -177,8 +177,9 @@ export const SCREEN_REGISTRY = {
     // 'category'/'series' retirées (session de nettoyage) : loadCategory/loadSeriesPage
     // (ancienne navigation par grade Primaire/Collège) n'existent plus nulle part —
     // écrans jamais atteignables depuis l'interface actuelle, supprimés à la demande de
-    // l'utilisateur. Le moteur de quiz par modal (showQuizModeModal/launchQuizMode) qu'ils
-    // utilisaient reste lui bien vivant, utilisé par le bouton "⚡ Quiz" des dossiers.
+    // l'utilisateur. Le moteur de quiz par modal (showQuizModeModal/launchQuizMode)
+    // qu'ils utilisaient a lui aussi été retiré depuis (features/quiz.js supprimé —
+    // décision explicite, "les autres systèmes suffisent").
     // ⚠️ ATTENTION : les 6 suivantes n'appartiennent à aucun module porté actuellement
     'niveaux': () => showNiveauxScreen(true),
     'apprendre': () => showApprendreScreen(true),
@@ -220,21 +221,19 @@ export const SCREEN_REGISTRY = {
  * bouton retour matériel (via onpopstate) OU bottom-nav (reste cliquable en permanence, même
  * par-dessus une session active, puisqu'elle est en position fixe et ne passe jamais par
  * l'historique). Toutes les sessions nettoyées ici vivent dans state.* (voir core/state.js,
- * section ajoutée lors de ce portage) — MÊME celles dont le module propriétaire n'est pas
- * encore porté : la PARTIE ÉTAT de cette fonction est donc du vrai code fonctionnel dès
- * maintenant. En revanche closeDetail()/closeStrokeQuiz()/closeQuiz()/resetKanaReviewSession()
- * restent des landmines (existent réellement dans kanji.js/strokes.js/quiz.js/kana.js, mais
- * cycle via pushModalState si importées ici — voir en-tête de fichier) : cette fonction
- * FONCTIONNERA (nettoie l'état correctement) mais lèvera une ReferenceError sur ces 4 appels
- * tant qu'ils ne sont pas résolus autrement (probablement via window.* exposé par app.js,
- * comme les onclick — à confirmer lors du chantier app.js).
+ * section ajoutée lors de ce portage). En revanche closeDetail()/closeStrokeQuiz()
+ * restent des landmines (existent réellement dans kanji.js/strokes.js, mais cycle via
+ * pushModalState si importées ici — voir en-tête de fichier), résolues via window.*
+ * (exposées par app.js).
  */
 export function closeAllOverlaysAndSessions() {
-    // ⚠️ ATTENTION : les 3 suivantes existent réellement (kanji.js/strokes.js/quiz.js) mais
+    // ⚠️ ATTENTION : les 2 suivantes existent réellement (kanji.js/strokes.js) mais
     // cycleraient via pushModalState si importées ici (voir en-tête de fichier).
+    // closeQuiz() (features/quiz.js) retirée : le système modal lecture/sens a été
+    // supprimé (décision explicite, "les autres systèmes suffisent") — plus d'overlay à
+    // fermer ici. Bug trouvé en nettoyant : cet appel tournait à CHAQUE navigation.
     closeDetail();
     closeStrokeQuiz();
-    closeQuiz();
     if (state.searchOpen) closeSearchOverlay();
 
     if (state.bulkSelectMode) {
