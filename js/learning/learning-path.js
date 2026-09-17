@@ -15,7 +15,7 @@ import { state } from '../core/state.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelConceptsData, kanaToRomajiPrecise } from '../core/data-loader.js';
 import { gradeReview } from './srs.js';
 import { updateWeaknessTracking } from './weakness.js';
-import { mdBold, showFicheCorrectionModal, continueFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
+import { mdBold, showFicheCorrectionModal, continueFAB, backFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
 import { buildMeaningQCM } from '../features/vocabulary.js';
 import { buildGrammarCloze, getShortLessonExplanation, showLessonReferencePopup } from '../features/grammar.js';
 
@@ -321,13 +321,13 @@ export async function completeLearningUnit() {
 ══════════════════════════════════════════════════ */
 
 // Bouton retour flottant (FAB), présent sur tout le parcours sauf l'écran de liste des unités
-// lui-même — ramène toujours à cette liste plutôt qu'en haut de la page courante.
+// lui-même. Corrigé (audit Phase 3) : appelait showLearningPathHome(levelId) directement, en
+// violation de la règle stricte de navigation (poussait un NOUVEL état à chaque clic au lieu
+// d'y revenir) — remplacé par le vrai backFAB() partagé (ui/common.js) sur history.back(),
+// qui retombe correctement sur l'unique état 'learning-path-home' poussé par
+// showLearningPathHome() (aucun écran de ce fichier ne pousse son propre état intermédiaire).
 function learningPathFAB() {
-    const levelId = state.learningSession ? state.learningSession.levelId : 'n5';
-    return `<button onclick="showLearningPathHome('${levelId}')"
-        style="position:fixed;top:10px;left:10px;z-index:600;width:38px;height:38px;border-radius:50%;
-        background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;
-        box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">←</button>`;
+    return backFAB('history.back()');
 }
 
 // Aplatit concept.sections en une liste de micro-écrans : un titre au tout début, puis un

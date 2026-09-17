@@ -7,13 +7,9 @@
  * globales, donc chaque fonction encore référencée depuis du HTML généré doit être exposée
  * explicitement sur window ici, en une seule passe (voir HANDOFF.md, "Risque transversal").
  *
- * 90 fonctions sur 92 référencées en onclick à travers les 20 fichiers déjà portés ont été
+ * Toutes les fonctions référencées en onclick à travers les fichiers déjà portés sont
  * retrouvées et exposées ci-dessous (extraction programmatique par script, pas manuelle —
- * évite tout risque de faute de frappe sur un si grand nombre de noms). Les 2 restantes
- * (showCategoryDirect, showKanjiReviewModeSelector) sont des landmines confirmées : elles
- * n'existent encore dans AUCUN fichier porté (voir HANDOFF.md, futur chantier "sélection de
- * révision par catégorie") — leurs onclick resteront de vraies ReferenceError jusqu'à ce
- * chantier, comportement attendu et documenté, pas un oubli.
+ * évite tout risque de faute de frappe sur un si grand nombre de noms).
  */
 
 import { state } from './core/state.js';
@@ -41,7 +37,10 @@ import { openWeaknessItem, trainWeaknessItems } from './learning/weakness.js';
 import { closeFicheCorrectionModal, enterBulkSelectMode, handleListItemClick, showFicheCorrectionModal, toggleCategoryMasteryLive, exitBulkSelectMode, toggleDetailMastery } from './ui/common.js';
 import { navDashboard, showDailyGoalModal, showProgressionDetail, startDashboardReview, closeDailyGoalModal, saveDailyGoalFromModal, showNiveauxScreen, navKana } from './ui/dashboard.js';
 import { openGrammarFromSearch, openKanjiFromSearchHit, openVocabFromSearch, toggleSearchFilter, resetSearchFilters, clearSearch, debouncedDoSearch, showSearchPanel, hideSearchPanel } from './ui/modals.js';
-import { showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor, submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen, showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume, launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade, startKanjiQuizForFolder } from './ui/cards.js';
+import { showRevisionLevelPicker, startRevisionFor, showRevisionsScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume } from './ui/cards.js';
+import { showKanjiReviewModeSelector, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector, startKanjiTraceReview, submitKanjiReviewGrade, flipKanjiReviewCard, startKanjiQuizForFolder } from './ui/kanji-review.js';
+import { showGrammarNiveauxScreen, showKanjiNiveauxScreen } from './ui/niveaux-screens.js';
+import { launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade } from './ui/mixed-review.js';
 
 /* ══════════════════════════════════════════════════
    EXPOSITION SUR window — UNE SEULE PASSE, ici et nulle part ailleurs (voir HANDOFF.md)
@@ -92,11 +91,15 @@ const EXPOSED_FUNCTIONS = {
     openGrammarFromSearch, openKanjiFromSearchHit, openVocabFromSearch, toggleSearchFilter,
     resetSearchFilters, clearSearch, debouncedDoSearch, showSearchPanel, hideSearchPanel,
     // ui/cards.js
-    showKanjiReviewModeSelector, showRevisionLevelPicker, startKanjiFlashcardReview,
-    startKanjiFreeTrainingFromSelector, startKanjiTraceReview, startRevisionFor,
-    submitKanjiReviewGrade, flipKanjiReviewCard, showRevisionsScreen, showGrammarNiveauxScreen,
-    showKanjiNiveauxScreen, showApprendreScreen, showCategoryDirect, loadJLPTCategory, startIntroductionOrResume,
-    launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade, startKanjiQuizForFolder,
+    showRevisionLevelPicker, startRevisionFor, showRevisionsScreen, showApprendreScreen,
+    showCategoryDirect, loadJLPTCategory, startIntroductionOrResume,
+    // ui/kanji-review.js
+    showKanjiReviewModeSelector, startKanjiFlashcardReview, startKanjiFreeTrainingFromSelector,
+    startKanjiTraceReview, submitKanjiReviewGrade, flipKanjiReviewCard, startKanjiQuizForFolder,
+    // ui/niveaux-screens.js
+    showGrammarNiveauxScreen, showKanjiNiveauxScreen,
+    // ui/mixed-review.js
+    launchMixedReviewSession, flipMixedReviewCard, openMixedReviewCurrentFiche, submitMixedReviewGrade,
 };
 Object.entries(EXPOSED_FUNCTIONS).forEach(([name, fn]) => { window[name] = fn; });
 
@@ -180,7 +183,7 @@ async function init() {
         // réseau vers raw.githubusercontent.com qui pouvait faire planter tout init()).
         const [mappingRes, kanjiRes] = await Promise.all([
             fetch('./data/mapping.json', { cache: 'no-store' }),
-            fetch('./kanji_jouyou_fr.json', { cache: 'no-store' })
+            fetch('./data/kanji_jouyou_fr.json', { cache: 'no-store' })
         ]);
 
         if (!kanjiRes.ok) throw new Error(`Erreur réseau kanji : ${kanjiRes.status}`);

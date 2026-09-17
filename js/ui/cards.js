@@ -1,35 +1,30 @@
 /**
  * js/ui/cards.js
- * Système de sélection de révision par catégorie — onglet "Réviser" (choix catégorie ->
- * niveau -> mode), écrans "Niveaux" pour grammaire/kanji (miroirs de
- * ui/dashboard.js::showNiveauxScreen), et la session de révision flashcard kanji elle-même
- * (parallèle à celles déjà dans vocabulary.js/grammar.js).
+ * Écrans d'accueil des onglets "Réviser"/"Apprendre" (choix catégorie -> niveau -> mode) et
+ * routeur cross-feature showCategoryDirect/loadJLPTCategory.
+ *
+ * Depuis l'audit Phase 5 (ETAT-ACTUEL.md), les 3 autres responsabilités historiquement
+ * regroupées ici ont été extraites dans leurs propres fichiers :
+ *   - ui/kanji-review.js  : sélecteurs de mode + session flashcard kanji + dossiers
+ *   - ui/niveaux-screens.js : écrans "Niveaux" grammaire/kanji
+ *   - ui/mixed-review.js  : révision mixte (Vocab+Grammaire+Kanji+Kana)
  *
  * ⚠️ CHANTIER DÉCOUVERT EN COURS DE ROUTE, PAS DANS LE PLAN INITIAL (voir HANDOFF.md) —
  * jamais lu ni porté avant cette session, malgré plusieurs landmines documentées le
  * référençant depuis navigation.js, ui/modals.js et features/kanji.js.
- *
- * Placement dans ui/cards.js (stub vide jusqu'ici) : ce système a besoin d'importer à la
- * fois features/kanji.js ET features/strokes.js — impossible depuis kanji.js lui-même
- * (strokes.js importe déjà kanji.js, cycle direct sinon) ni depuis strokes.js (même
- * raison inversée). Vérifié SANS cycle avant d'écrire.
  */
 
 import { state } from '../core/state.js';
-import { backFAB, showBottomNav, hideBottomNav, showFicheCorrectionModal } from './common.js';
-import { pushModalState, closeAllOverlaysAndSessions } from '../core/navigation.js';
+import { backFAB, showBottomNav, hideBottomNav } from './common.js';
 import { getLevelVocabData, getLevelGrammarData, getLevelKanjiChars, getLevelVocabGrammarStats, flattenIfNested } from '../core/data-loader.js';
-import { getSavedLessonProgress, findActiveLearningLevel, startGrammarLessonFlow, hasSeenLessonOnboarding, startGrammarLessonFlowActual, showLessonOnboarding, showOnboardingChoiceScreen } from '../learning/exercises.js';
-import { showLearningPathHome, loadLearningProgress, startLearningPath } from '../learning/learning-path.js';
+import { getSavedLessonProgress, findActiveLearningLevel, hasSeenLessonOnboarding, startGrammarLessonFlowActual, showLessonOnboarding, showOnboardingChoiceScreen } from '../learning/exercises.js';
+import { loadLearningProgress, startLearningPath } from '../learning/learning-path.js';
 import { renderWeaknessWidget } from '../learning/weakness.js';
-import { gradeReview, scheduleRelearning, recordSessionCompleted, getEntryTrackingId } from '../learning/srs.js';
-import { getDueKanjiChars, buildReadingChips, getKanjiMastery, displayKanjiList, navFolders, loadFolders } from '../features/kanji.js';
-import { startStrokeQuiz } from '../features/strokes.js';
+import { displayKanjiList } from '../features/kanji.js';
 import { showVocabReviewModeSelector, displayVocabList } from '../features/vocabulary.js';
 import { showGrammarReviewModeSelector, showGrammarHome } from '../features/grammar.js';
-import { showRevisionKanaPicker } from '../features/kana.js';
-import { showFreeTrainingConfig, buildCardDisplay, getEntryLabel } from '../features/free-training.js';
-import { buildNiveauxWaveSvg, navKana, addDailyNewCardsUsed } from './dashboard.js';
+import { showKanjiReviewModeSelector } from './kanji-review.js';
+import { buildNiveauxWaveSvg } from './dashboard.js';
 
 /* ══════════════════════════════════════════════════
    ONGLET "RÉVISER" — choix catégorie -> choix niveau/script -> lance direct la révision
@@ -169,289 +164,6 @@ export async function startRevisionFor(category, levelId) {
     }
 }
 
-/* ══════════════════════════════════════════════════
-   MODE DE RÉVISION KANJI — flashcard + tracé (normal/hardcore)
-══════════════════════════════════════════════════ */
-// Liste de kanji actuellement proposée par le sélecteur de mode — par défaut les kanji dus
-// (onglet Réviser), mais peut être surchargée pour une source différente (ex: le contenu
-// d'un dossier, voir startKanjiQuizForFolder() plus bas). Lue par startKanjiFlashcardReview()/
-// startKanjiTraceReview() au moment du choix du mode.
-let _kanjiReviewModeChars = null;
-
-/**
- * @param {string[]} [chars] - liste explicite de kanji à réviser (ex: contenu d'un dossier).
- *   Omis = comportement d'origine, kanji actuellement dus (onglet Réviser).
- */
-export function showKanjiReviewModeSelector(chars = null) {
-    hideBottomNav();
-    const container = document.getElementById('category-content');
-    const dueChars = chars || getDueKanjiChars();
-    _kanjiReviewModeChars = dueChars;
-
-    if (dueChars.length === 0) {
-        alert('Rien à réviser pour le moment ! 🎉');
-        return;
-    }
-
-    pushModalState('kanji-review-selector');
-
-    container.innerHTML = `
-        <div class="review-mode-selector">
-            ${backFAB()}
-            <div class="review-mode-title">Choisis ton mode de révision</div>
-            <div class="review-mode-count">${dueChars.length} kanji à revoir</div>
-
-            <button class="review-mode-btn" onclick="startKanjiFlashcardReview()">
-                <span class="review-mode-icon">🗂️</span>
-                <div><div class="review-mode-name">Flashcard</div><div class="review-mode-desc">Lecture et sens</div></div>
-            </button>
-            <button class="review-mode-btn" onclick="startKanjiTraceReview('trace-easy')">
-                <span class="review-mode-icon">✍️</span>
-                <div><div class="review-mode-name">Tracé normal</div><div class="review-mode-desc">Avec assistance</div></div>
-            </button>
-            <button class="review-mode-btn" onclick="startKanjiTraceReview('trace-hard')">
-                <span class="review-mode-icon">🔥</span>
-                <div><div class="review-mode-name">Tracé difficile</div><div class="review-mode-desc">Sans assistance (hardcore)</div></div>
-            </button>
-            <button class="review-mode-btn" onclick="startKanjiFreeTrainingFromSelector()">
-                <span class="review-mode-icon">🏋️</span>
-                <div><div class="review-mode-name">Entraînement libre</div><div class="review-mode-desc">Configurable, sans impact sur le SRS</div></div>
-            </button>
-        </div>`;
-}
-
-// Équivalent du onclick="showFreeTrainingConfig(false, {type:'kanji', level: kanjiHomeData
-// ?.levelId})" du monolithe — adapté car state.kanjiHomeData est une propriété d'import de
-// module, inaccessible depuis un attribut onclick. Même principe que replayKanaTraceQuiz.
-export function startKanjiFreeTrainingFromSelector() {
-    showFreeTrainingConfig(false, { type: 'kanji', level: state.kanjiHomeData?.levelId });
-}
-
-export function startKanjiTraceReview(mode) {
-    hideBottomNav();
-    const dueChars = _kanjiReviewModeChars || getDueKanjiChars();
-    if (dueChars.length === 0) return;
-    startStrokeQuiz({ type: 'queue', id: dueChars, mode });
-}
-
-export function startKanjiFlashcardReview() {
-    hideBottomNav();
-    const dueChars = _kanjiReviewModeChars || getDueKanjiChars();
-    if (dueChars.length === 0) return;
-
-    pushModalState('kanji-review-flashcard');
-
-    state.kanjiReviewSession = {
-        queue: dueChars,
-        index: 0,
-        results: { again: 0, hard: 0, good: 0, easy: 0 },
-        flipped: false
-    };
-    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
-    renderKanjiReviewScreen();
-}
-
-export function renderKanjiReviewScreen() {
-    const container = document.getElementById('category-content');
-    const session = state.kanjiReviewSession;
-
-    if (!session || session.index >= session.queue.length) {
-        renderKanjiReviewSummary();
-        return;
-    }
-
-    const char = session.queue[session.index];
-    const kanjiData = state.data.kanjiDb.find(k => k.char === char);
-    const progress = session.index + 1;
-    const total = session.queue.length;
-    const flipped = session.flipped;
-
-    const meanings = (kanjiData?.meanings || []).filter(m => !m.toLowerCase().includes('radical'));
-    const onReadings = kanjiData?.on || [];
-    const kunReadings = kanjiData?.kun || [];
-
-    container.innerHTML = `${backFAB('history.back()', '✕')}<div class="review-page">
-        <div class="review-header">
-            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
-            <div class="review-progress-text">${progress} / ${total}</div>
-        </div>
-
-        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipKanjiReviewCard()'}">
-            <div class="review-card-front">
-                <div class="review-word" style="font-size:3.5rem;">${char}</div>
-            </div>
-            ${flipped ? `
-                <div class="review-card-back">
-                    ${(onReadings.length || kunReadings.length) ? `<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">${buildReadingChips(kanjiData, { maxOn: 3, maxKun: 3 })}</div>` : ''}
-                    <div class="review-meaning">${meanings.slice(0, 3).join(' / ') || '–'}</div>
-                </div>
-            ` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
-        </div>
-
-        ${flipped ? `
-            <div class="review-grade-buttons">
-                <button class="grade-btn grade-again" onclick="submitKanjiReviewGrade(0)">Encore</button>
-                <button class="grade-btn grade-hard" onclick="submitKanjiReviewGrade(1)">Difficile</button>
-                <button class="grade-btn grade-good" onclick="submitKanjiReviewGrade(2)">Bien</button>
-                <button class="grade-btn grade-easy" onclick="submitKanjiReviewGrade(3)">Facile</button>
-            </div>
-        ` : ''}
-    </div>`;
-}
-
-export function flipKanjiReviewCard() {
-    if (!state.kanjiReviewSession) return;
-    state.kanjiReviewSession.flipped = true;
-    renderKanjiReviewScreen();
-}
-
-export function submitKanjiReviewGrade(quality) {
-    if (!state.kanjiReviewSession) return;
-    const char = state.kanjiReviewSession.queue[state.kanjiReviewSession.index];
-    gradeReview(char, quality, { type: 'kanji', label: char });
-    if (quality === 0) scheduleRelearning(state.kanjiReviewSession, char);
-
-    const labels = ['again', 'hard', 'good', 'easy'];
-    state.kanjiReviewSession.results[labels[quality]]++;
-
-    state.kanjiReviewSession.index++;
-    state.kanjiReviewSession.flipped = false;
-    renderKanjiReviewScreen();
-}
-
-export function renderKanjiReviewSummary() {
-    recordSessionCompleted();
-    const container = document.getElementById('category-content');
-    const r = state.kanjiReviewSession.results;
-    const total = state.kanjiReviewSession.queue.length;
-
-    container.innerHTML = `<div class="review-summary">
-        <div class="review-summary-title">Session terminée ! 🎉</div>
-        <div class="review-summary-count">${total} kanji révisé${total > 1 ? 's' : ''}</div>
-        <div class="review-summary-stats">
-            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
-            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
-            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
-            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
-        </div>
-        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour aux kanji</button>
-    </div>`;
-    state.kanjiReviewSession = null;
-}
-
-/* ══════════════════════════════════════════════════
-   ÉCRANS "NIVEAUX" GRAMMAIRE / KANJI (miroirs de ui/dashboard.js::showNiveauxScreen)
-══════════════════════════════════════════════════ */
-
-/**
- * ⚠️ ATTENTION : showCategoryDirect (routeur cross-feature showCategoryDirect/
- * loadJLPTCategory, hors périmètre de tout fichier actuel — même landmine que dans
- * core/navigation.js et features/kanji.js::displayKanjiListFromHome()). Vrai appel JS non
- * importé.
- */
-export async function showGrammarNiveauxScreen(isBack = false) {
-    if (!isBack) history.pushState({ view: 'grammar-niveaux' }, '');
-    hideBottomNav();
-    const mainContent = document.getElementById('main-content');
-    document.getElementById('page-title').innerText = 'Grammaire';
-
-    if (!state.jlptMapping) {
-        mainContent.innerHTML = '<div style="padding:20px;color:var(--gray)">Chargement des niveaux…</div>';
-        return;
-    }
-
-    mainContent.innerHTML = `${backFAB()}
-        <div class="niveaux-wrap">
-            <div class="niveaux-header">
-                <div class="niveaux-title-main">Grammaire</div>
-                <div class="niveaux-subtitle-main">Choisis ton niveau JLPT.</div>
-            </div>
-            <div id="niveaux-list">
-                <div style="padding:20px;text-align:center;color:var(--gray)"><div class="spinner"></div></div>
-            </div>
-        </div>`;
-
-    const listEl = document.getElementById('niveaux-list');
-    const sortedLevels = Object.entries(state.jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
-
-    const cardsHtml = await Promise.all(sortedLevels.map(async ([levelId, levelData]) => {
-        const vg = await getLevelVocabGrammarStats(levelId);
-        const hasData = vg.grammarTotal > 0;
-        const pct = hasData ? Math.round((vg.grammarMastered / vg.grammarTotal) * 100) : 0;
-
-        if (!hasData) {
-            return `
-                <div class="niveaux-card locked">
-                    <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
-                    <div class="niveaux-info">
-                        <div class="niveaux-card-title">${levelData.label_full}</div>
-                        <div class="niveaux-card-sub">${levelData.description}</div>
-                    </div>
-                    <div class="niveaux-soon">Bientôt</div>
-                </div>`;
-        }
-
-        return `
-            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59; background:${levelData.color}1f;" onclick="showCategoryDirect('${levelId}','grammar')">
-                <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
-                <div class="niveaux-info">
-                    <div class="niveaux-card-title">${levelData.label_full}</div>
-                    <div class="niveaux-card-sub">${vg.grammarMastered} / ${vg.grammarTotal} leçons</div>
-                    <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${pct}%;background:${levelData.color}"></div></div>
-                    ${buildNiveauxWaveSvg(levelData.color)}
-                </div>
-                <div class="niveaux-pct">${pct}%</div>
-            </div>`;
-    }));
-
-    listEl.innerHTML = cardsHtml.join('');
-}
-
-/**
- * ⚠️ ATTENTION : showCategoryDirect — même landmine que ci-dessus.
- */
-export async function showKanjiNiveauxScreen(isBack = false) {
-    if (!isBack) history.pushState({ view: 'kanji-niveaux' }, '');
-    hideBottomNav();
-    const mainContent = document.getElementById('main-content');
-    document.getElementById('page-title').innerText = 'Kanji';
-
-    if (!state.jlptMapping) {
-        mainContent.innerHTML = '<div style="padding:20px;color:var(--gray)">Chargement des niveaux…</div>';
-        return;
-    }
-
-    const sortedLevels = Object.entries(state.jlptMapping.levels).sort((a, b) => a[1].order - b[1].order);
-
-    const cardsHtml = (await Promise.all(sortedLevels.map(async ([levelId, levelData]) => {
-        const chars = await getLevelKanjiChars(levelId) || [];
-        const totalKanji = chars.length;
-        const totalMastery = chars.reduce((sum, c) => sum + getKanjiMastery(c), 0);
-        const avgMastery = chars.length > 0 ? Math.round(totalMastery / chars.length) : 0;
-
-        return `
-            <div class="niveaux-card" style="border-color:${levelData.color}99; box-shadow:0 0 18px ${levelData.color}59; background:${levelData.color}1f;" onclick="showCategoryDirect('${levelId}','kanji')">
-                <div class="niveaux-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</div>
-                <div class="niveaux-info">
-                    <div class="niveaux-card-title">${levelData.label_full}</div>
-                    <div class="niveaux-card-sub">${totalKanji} kanji · ${avgMastery}% en moyenne</div>
-                    <div class="niveaux-progress-bar"><div class="niveaux-progress-fill" style="width:${avgMastery}%;background:${levelData.color}"></div></div>
-                    ${buildNiveauxWaveSvg(levelData.color)}
-                </div>
-                <div class="niveaux-pct">${avgMastery}%</div>
-            </div>`;
-    }))).join('');
-
-    mainContent.innerHTML = `${backFAB()}
-        <div class="niveaux-wrap">
-            <div class="niveaux-header">
-                <div class="niveaux-title-main">Kanji</div>
-                <div class="niveaux-subtitle-main">Choisis ton niveau JLPT.</div>
-            </div>
-            <div id="niveaux-list">${cardsHtml}</div>
-        </div>`;
-}
-
 /**
  * Équivalent EXACT de showApprendreScreen(isBack) du monolithe — écran d'accueil de l'onglet
  * "Apprendre". N'existait dans AUCUN fichier porté jusqu'ici (vrai trou, pas juste une
@@ -533,7 +245,7 @@ export async function showApprendreScreen(isBack = false) {
    ─────────────────────────────────────────────────
    Écran générique "kanji|vocab|grammaire d'un niveau JLPT donné", distribue vers
    displayKanjiList/displayVocabList/showGrammarHome selon la catégorie. Dernière landmine
-   connue résolue (référencée depuis core/navigation.js, ui/cards.js lui-même — pour les
+   connue résolue (référencée depuis core/navigation.js, ui/niveaux-screens.js — pour les
    écrans "Niveaux" — et features/kanji.js::displayKanjiListFromHome()).
 ══════════════════════════════════════════════════ */
 export async function showCategoryDirect(levelId, category, isBack = false) {
@@ -655,148 +367,4 @@ export function startIntroductionOrResume() {
         document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
         showOnboardingChoiceScreen();
     }
-}
-
-/* ══════════════════════════════════════════════════
-   RÉVISION MIXTE (Vocab + Grammaire + Kanji-flashcard + Kana mélangés)
-   ─────────────────────────────────────────────────
-   Partagée entre l'onglet "Apprendre" et le bouton "Réviser aujourd'hui" de l'accueil —
-   seule la file en entrée et le nom d'état modal (destination du bouton retour) diffèrent.
-   Retrouvée et portée fidèlement depuis le monolithe original (remis temporairement dans le
-   Project sous le nom monolithe_kanji.js) après un premier passage où j'avais dû signaler ne
-   plus y avoir accès. Réutilise buildCardDisplay()/getEntryLabel() (features/free-training.js)
-   et getEntryTrackingId() (learning/srs.js), déjà portées — aucune duplication.
-══════════════════════════════════════════════════ */
-export function launchMixedReviewSession(queue, exitState = 'apprendre-discovery', trackDailyQuota = false) {
-    if (queue.length === 0) {
-        alert("Rien à réviser aujourd'hui, tous types confondus ! 🎉");
-        return;
-    }
-
-    pushModalState(exitState);
-
-    state.mixedReviewSession = {
-        queue,
-        index: 0,
-        results: { again: 0, hard: 0, good: 0, easy: 0 },
-        flipped: false,
-        // true uniquement pour "Réviser aujourd'hui" (accueil) — crédite le quota journalier
-        // carte par carte au fur et à mesure de la notation, pas d'un coup au lancement
-        // (sinon quitter en cours de session faisait croire à tort que tout avait déjà été vu).
-        trackDailyQuota
-    };
-
-    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
-    renderMixedReviewScreen();
-}
-
-export function renderMixedReviewScreen() {
-    const container = document.getElementById('category-content');
-    const session = state.mixedReviewSession;
-
-    if (!session || session.index >= session.queue.length) {
-        renderMixedReviewSummary();
-        return;
-    }
-
-    const entry = session.queue[session.index];
-    const progress = session.index + 1;
-    const total = session.queue.length;
-    const flipped = session.flipped;
-
-    const { front, back, typeLabel, frontSize } = buildCardDisplay(entry);
-
-    container.innerHTML = `<div class="review-page">
-        <div class="review-header">
-            <button class="back-btn" onclick="history.back()">✕</button>
-            <div class="review-progress-bar"><div class="review-progress-fill" style="width:${(session.index / total) * 100}%"></div></div>
-            <div class="review-progress-text">${progress} / ${total}</div>
-        </div>
-        <div class="review-type-tag">${typeLabel}</div>
-        <div class="review-card ${flipped ? 'flipped' : ''}" onclick="${flipped ? '' : 'flipMixedReviewCard()'}">
-            <div class="review-card-front">
-                <div class="review-word" style="font-size:${frontSize}px;">${front}</div>
-            </div>
-            ${flipped ? `<div class="review-card-back">${back}<button class="fiche-correction-btn" onclick="openMixedReviewCurrentFiche()">📖 Voir la fiche</button></div>` : `<div class="review-tap-hint">Touche la carte pour révéler</div>`}
-        </div>
-        ${flipped ? `
-            <div class="review-grade-buttons">
-                <button class="grade-btn grade-again" onclick="submitMixedReviewGrade(0)">Encore</button>
-                <button class="grade-btn grade-hard" onclick="submitMixedReviewGrade(1)">Difficile</button>
-                <button class="grade-btn grade-good" onclick="submitMixedReviewGrade(2)">Bien</button>
-                <button class="grade-btn grade-easy" onclick="submitMixedReviewGrade(3)">Facile</button>
-            </div>
-        ` : ''}
-    </div>`;
-}
-
-export function flipMixedReviewCard() {
-    if (!state.mixedReviewSession) return;
-    state.mixedReviewSession.flipped = true;
-    renderMixedReviewScreen();
-}
-
-// Équivalent du onclick="showFicheCorrectionModal(mixedReviewSession.queue[mixedReviewSession
-// .index])" du monolithe — adapté car state.mixedReviewSession est une propriété d'import de
-// module, inaccessible depuis un attribut onclick. Même principe que openTrainingCurrentFiche
-// (features/free-training.js) / replayKanaTraceQuiz (features/kana.js).
-export function openMixedReviewCurrentFiche() {
-    if (!state.mixedReviewSession) return;
-    const entry = state.mixedReviewSession.queue[state.mixedReviewSession.index];
-    if (entry) showFicheCorrectionModal(entry);
-}
-
-export function submitMixedReviewGrade(quality) {
-    if (!state.mixedReviewSession) return;
-    const entry = state.mixedReviewSession.queue[state.mixedReviewSession.index];
-    const id = getEntryTrackingId(entry);
-    gradeReview(id, quality, { type: entry.type, label: getEntryLabel(entry) });
-    if (quality === 0) scheduleRelearning(state.mixedReviewSession, entry);
-    if (state.mixedReviewSession.trackDailyQuota && entry.isNew && !entry._dailyCredited) {
-        addDailyNewCardsUsed(1);
-        entry._dailyCredited = true;
-    }
-
-    const labels = ['again', 'hard', 'good', 'easy'];
-    state.mixedReviewSession.results[labels[quality]]++;
-
-    state.mixedReviewSession.index++;
-    state.mixedReviewSession.flipped = false;
-    renderMixedReviewScreen();
-}
-
-export function renderMixedReviewSummary() {
-    recordSessionCompleted();
-    const container = document.getElementById('category-content');
-    const r = state.mixedReviewSession.results;
-    const total = state.mixedReviewSession.queue.length;
-
-    container.innerHTML = `<div class="review-summary">
-        <div class="review-summary-title">Session terminée ! 🎉</div>
-        <div class="review-summary-count">${total} carte${total > 1 ? 's' : ''} révisée${total > 1 ? 's' : ''}</div>
-        <div class="review-summary-stats">
-            <div class="review-stat"><span class="review-stat-dot again"></span>Encore : ${r.again}</div>
-            <div class="review-stat"><span class="review-stat-dot hard"></span>Difficile : ${r.hard}</div>
-            <div class="review-stat"><span class="review-stat-dot good"></span>Bien : ${r.good}</div>
-            <div class="review-stat"><span class="review-stat-dot easy"></span>Facile : ${r.easy}</div>
-        </div>
-        <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour</button>
-    </div>`;
-    state.mixedReviewSession = null;
-}
-
-/**
- * Remplace l'ancien "⚡ Quiz" des dossiers (features/quiz.js::startFolderQuiz, système modal
- * lecture/sens retiré) — propose maintenant exactement les mêmes modes que Réviser > Kanji
- * (Flashcard, Tracé normal, Tracé difficile, Entraînement libre), appliqués au contenu du
- * dossier plutôt qu'aux kanji dus. Demandé explicitement.
- */
-export function startKanjiQuizForFolder(folderName) {
-    const folders = loadFolders();
-    const chars = folders[folderName];
-    if (!chars || chars.length === 0) {
-        alert('Ce dossier est vide.');
-        return;
-    }
-    showKanjiReviewModeSelector(chars);
 }

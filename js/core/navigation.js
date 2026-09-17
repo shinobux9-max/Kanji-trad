@@ -212,6 +212,14 @@ export const SCREEN_REGISTRY = {
     // donc pas dans l'historique, et le retour la sautait dans les deux sens (Liste<Apprendre
     // au lieu de Liste<Choix<Apprendre, et Fiche<Choix au lieu de Fiche<Liste<Choix).
     'kana-list': (s) => loadKanas(s.script, true),
+    // ⚠️ ATTENTION : showLearningPathHome (learning/learning-path.js), même raison de cycle
+    // (learning-path.js importe features/grammar.js, qui importe déjà pushModalState d'ici).
+    // Entrée manquante trouvée en audit Phase 3 : showLearningPathHome() poussait bien
+    // { view: 'learning-path-home' } mais sans entrée correspondante ici, un history.back()
+    // qui y retombait tombait dans le cas par défaut (showDashboard) au lieu de rafraîchir la
+    // liste des unités — masqué jusqu'ici car learningPathFAB() appelait la fonction
+    // directement au lieu de history.back() (corrigé dans le même audit).
+    'learning-path-home': (s) => showLearningPathHome(s.levelId, true),
 };
 
 /**

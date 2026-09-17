@@ -32,8 +32,12 @@ const VOCAB_CATEGORY_MAP = {
 
 /* ══════════════════════════════════════════════════
    RÉVISION VOCABULAIRE (flashcard + QCM + trou à combler + SRS)
+   Session dans state.reviewSession (core/state.js) — PAS une variable locale au module :
+   corrigé lors de l'audit Phase 3 (utilisait un `let reviewSession` local jamais lu/nettoyé
+   par core/navigation.js::closeAllOverlaysAndSessions(), qui ne touchait que
+   state.reviewSession sans effet réel). { queue: [{word, type, clozeInfo, qcmInfo}], index,
+   results, flipped, answered, selected }
 ══════════════════════════════════════════════════ */
-let reviewSession = null; // { queue: [{word, type, clozeInfo, qcmInfo}], index, results, flipped, answered, selected }
 
 export const COMMON_PARTICLES = ['は', 'が', 'を', 'に', 'で', 'と', 'へ', 'も', 'から', 'まで', 'の'];
 
@@ -241,7 +245,7 @@ export function startVocabReview(forceMode = null) {
 
     pushModalState('vocab-review');
 
-    reviewSession = {
+    state.reviewSession = {
         queue, index: 0,
         results: { again: 0, hard: 0, good: 0, easy: 0 },
         flipped: false, answered: false, selected: null
@@ -252,7 +256,7 @@ export function startVocabReview(forceMode = null) {
 
 export function renderReviewScreen() {
     const container = document.getElementById('category-content');
-    const session = reviewSession;
+    const session = state.reviewSession;
 
     if (!session || session.index >= session.queue.length) {
         renderReviewSummary();
@@ -408,8 +412,8 @@ function renderClozeExercise(entry, session) {
 }
 
 export function flipReviewCard() {
-    if (!reviewSession) return;
-    reviewSession.flipped = true;
+    if (!state.reviewSession) return;
+    state.reviewSession.flipped = true;
     renderReviewScreen();
 }
 
@@ -428,8 +432,8 @@ async function findGrammarLessonForItem(itemText) {
 }
 
 export async function submitQuizAnswer(selected) {
-    if (!reviewSession || reviewSession.answered) return;
-    const session = reviewSession;
+    if (!state.reviewSession || state.reviewSession.answered) return;
+    const session = state.reviewSession;
     const entry = session.queue[session.index];
     const correct = entry.type === 'cloze' ? entry.clozeInfo.correct : entry.qcmInfo.correct;
     const isCorrect = selected === correct;
@@ -448,39 +452,39 @@ export async function submitQuizAnswer(selected) {
     if (entry.type === 'cloze' && !isCorrect && entry.relatedGrammarEntry === undefined) {
         const found = await findGrammarLessonForItem(entry.clozeInfo.correct);
         entry.relatedGrammarEntry = found || null;
-        if (reviewSession === session && session.queue[session.index] === entry) {
+        if (state.reviewSession === session && session.queue[session.index] === entry) {
             renderReviewScreen();
         }
     }
 }
 
 // Équivalent du onclick="showFicheCorrectionModal(reviewSession.queue[reviewSession.index]
-// .relatedGrammarEntry)" du monolithe — adapté car reviewSession est un `let` local à ce
-// module, inaccessible depuis un attribut onclick (contexte global). Même principe que
-// replayKanaTraceQuiz (features/kana.js) / openKanjiFromSearchHit (ui/modals.js).
+// .relatedGrammarEntry)" du monolithe — adapté car state.reviewSession est une propriété
+// d'import de module, inaccessible depuis un attribut onclick (contexte global). Même
+// principe que openMixedReviewCurrentFiche (ui/cards.js) / replayKanaTraceQuiz (features/kana.js).
 export function openReviewRelatedGrammarFiche() {
-    if (!reviewSession) return;
-    const entry = reviewSession.queue[reviewSession.index];
+    if (!state.reviewSession) return;
+    const entry = state.reviewSession.queue[state.reviewSession.index];
     if (entry && entry.relatedGrammarEntry) showFicheCorrectionModal(entry.relatedGrammarEntry);
 }
 
 export function advanceReviewQueue() {
-    if (!reviewSession) return;
-    reviewSession.index++;
-    reviewSession.flipped = false;
-    reviewSession.answered = false;
-    reviewSession.selected = null;
+    if (!state.reviewSession) return;
+    state.reviewSession.index++;
+    state.reviewSession.flipped = false;
+    state.reviewSession.answered = false;
+    state.reviewSession.selected = null;
     renderReviewScreen();
 }
 
 export function submitReviewGrade(quality) {
-    if (!reviewSession) return;
-    const entry = reviewSession.queue[reviewSession.index];
+    if (!state.reviewSession) return;
+    const entry = state.reviewSession.queue[state.reviewSession.index];
     gradeReview(entry.word.id, quality, { type: 'vocab', label: entry.word.word });
-    if (quality === 0) scheduleRelearning(reviewSession, entry);
+    if (quality === 0) scheduleRelearning(state.reviewSession, entry);
 
     const labels = ['again', 'hard', 'good', 'easy'];
-    reviewSession.results[labels[quality]]++;
+    state.reviewSession.results[labels[quality]]++;
 
     advanceReviewQueue();
 }
@@ -488,8 +492,8 @@ export function submitReviewGrade(quality) {
 export function renderReviewSummary() {
     recordSessionCompleted();
     const container = document.getElementById('category-content');
-    const r = reviewSession.results;
-    const total = reviewSession.queue.length;
+    const r = state.reviewSession.results;
+    const total = state.reviewSession.queue.length;
 
     container.innerHTML = `<div class="review-summary">
         <div class="review-summary-title">Session terminée ! 🎉</div>
@@ -502,7 +506,7 @@ export function renderReviewSummary() {
         </div>
         <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour au vocabulaire</button>
     </div>`;
-    reviewSession = null;
+    state.reviewSession = null;
 }
 
 /* ══════════════════════════════════════════════════

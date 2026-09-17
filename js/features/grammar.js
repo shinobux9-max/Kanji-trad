@@ -26,8 +26,12 @@ import { mdBold, showFicheCorrectionModal, isBulkSelected, handleListItemClick, 
 
 /* ══════════════════════════════════════════════════
    RÉVISION GRAMMAIRE (flashcard + trou à combler + SRS)
+   Session dans state.grammarReviewSession (core/state.js) — PAS une variable locale au
+   module : corrigé lors de l'audit Phase 3 (utilisait une variable locale au module (let),
+   jamais lue/nettoyée par core/navigation.js::closeAllOverlaysAndSessions(), qui ne touchait
+   que state.grammarReviewSession sans effet réel). { queue: [{lesson,type,clozeInfo}],
+   index, results, flipped, answered, selected }
 ══════════════════════════════════════════════════ */
-let grammarReviewSession = null; // { queue: [{lesson,type,clozeInfo}], index, results, flipped, answered, selected }
 
 // Génère un trou à combler grammaire : utilise example.highlight (déjà la forme exacte
 // présente dans la phrase).
@@ -144,7 +148,7 @@ export function startGrammarReview(forceMode = null) {
 
     pushModalState('grammar-review');
 
-    grammarReviewSession = {
+    state.grammarReviewSession = {
         queue, index: 0,
         results: { again: 0, hard: 0, good: 0, easy: 0 },
         flipped: false, answered: false, selected: null
@@ -155,7 +159,7 @@ export function startGrammarReview(forceMode = null) {
 
 export function renderGrammarReviewScreen() {
     const container = document.getElementById('category-content');
-    const session = grammarReviewSession;
+    const session = state.grammarReviewSession;
 
     if (!session || session.index >= session.queue.length) {
         renderGrammarReviewSummary();
@@ -283,14 +287,14 @@ export function buildConfusionBoxHtml(confusion) {
 }
 
 export function flipGrammarReviewCard() {
-    if (!grammarReviewSession) return;
-    grammarReviewSession.flipped = true;
+    if (!state.grammarReviewSession) return;
+    state.grammarReviewSession.flipped = true;
     renderGrammarReviewScreen();
 }
 
 export function submitGrammarQuizAnswer(selected) {
-    if (!grammarReviewSession || grammarReviewSession.answered) return;
-    const session = grammarReviewSession;
+    if (!state.grammarReviewSession || state.grammarReviewSession.answered) return;
+    const session = state.grammarReviewSession;
     const entry = session.queue[session.index];
     const isCorrect = selected === entry.clozeInfo.correct;
 
@@ -307,22 +311,22 @@ export function submitGrammarQuizAnswer(selected) {
 }
 
 export function advanceGrammarReviewQueue() {
-    if (!grammarReviewSession) return;
-    grammarReviewSession.index++;
-    grammarReviewSession.flipped = false;
-    grammarReviewSession.answered = false;
-    grammarReviewSession.selected = null;
+    if (!state.grammarReviewSession) return;
+    state.grammarReviewSession.index++;
+    state.grammarReviewSession.flipped = false;
+    state.grammarReviewSession.answered = false;
+    state.grammarReviewSession.selected = null;
     renderGrammarReviewScreen();
 }
 
 export function submitGrammarReviewGrade(quality) {
-    if (!grammarReviewSession) return;
-    const entry = grammarReviewSession.queue[grammarReviewSession.index];
+    if (!state.grammarReviewSession) return;
+    const entry = state.grammarReviewSession.queue[state.grammarReviewSession.index];
     gradeReview(entry.lesson.id, quality, { type: 'grammar', label: entry.lesson.item || entry.lesson.pattern });
-    if (quality === 0) scheduleRelearning(grammarReviewSession, entry);
+    if (quality === 0) scheduleRelearning(state.grammarReviewSession, entry);
 
     const labels = ['again', 'hard', 'good', 'easy'];
-    grammarReviewSession.results[labels[quality]]++;
+    state.grammarReviewSession.results[labels[quality]]++;
 
     advanceGrammarReviewQueue();
 }
@@ -330,8 +334,8 @@ export function submitGrammarReviewGrade(quality) {
 export function renderGrammarReviewSummary() {
     recordSessionCompleted();
     const container = document.getElementById('category-content');
-    const r = grammarReviewSession.results;
-    const total = grammarReviewSession.queue.length;
+    const r = state.grammarReviewSession.results;
+    const total = state.grammarReviewSession.queue.length;
 
     container.innerHTML = `<div class="review-summary">
         <div class="review-summary-title">Session terminée ! 🎉</div>
@@ -344,7 +348,7 @@ export function renderGrammarReviewSummary() {
         </div>
         <button class="revise-btn" style="margin-top:20px;" onclick="history.back()">Retour à la grammaire</button>
     </div>`;
-    grammarReviewSession = null;
+    state.grammarReviewSession = null;
 }
 
 /* ══════════════════════════════════════════════════

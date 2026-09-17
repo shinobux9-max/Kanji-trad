@@ -45,6 +45,7 @@ export function recordTrainingSession(correct, total) {
 ══════════════════════════════════════════════════ */
 export function showFreeTrainingConfig(isBack = false, preset = null) {
     if (!isBack) history.pushState({ view: 'free-training-config' }, '');
+    hideBottomNav();
     document.getElementById('page-title').innerText = 'Entraînement libre';
     const presetType = preset?.type || 'all';
 
