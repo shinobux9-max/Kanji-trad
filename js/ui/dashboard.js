@@ -193,23 +193,23 @@ export function renderDailyGoalModalContent() {
         : ALL_JLPT_LEVELS.map(id => [id, { label: id.toUpperCase(), label_full: '', color: '#00E5FF' }]);
 
     levelsContainer.innerHTML = levels.map(([levelId, levelData]) => `
-        <label class="daily-goal-row">
+        <label class="ft-radio-row">
             <input type="checkbox" class="daily-goal-checkbox" value="${levelId}"
                 ${currentLevels.includes(levelId) ? 'checked' : ''}
                 style="accent-color:${levelData.color || 'var(--accent)'}">
-            <span class="daily-goal-row-label" style="color:${levelData.color || 'var(--text)'}">${levelData.label || levelId.toUpperCase()}</span>
-            <span class="daily-goal-row-sub">${levelData.label_full || ''}</span>
+            <span class="ft-radio-label" style="color:${levelData.color || 'var(--text)'}">${levelData.label || levelId.toUpperCase()}</span>
+            <span class="ft-radio-sub">${levelData.label_full || ''}</span>
         </label>
     `).join('');
 
     if (kanaContainer) {
         const currentKana = getDailyGoalKanaScripts();
         kanaContainer.innerHTML = ALL_KANA_SCRIPTS.map(script => `
-            <label class="daily-goal-row">
+            <label class="ft-radio-row">
                 <input type="checkbox" class="daily-goal-kana-checkbox" value="${script}"
                     ${currentKana.includes(script) ? 'checked' : ''}
                     style="accent-color:#9D6EFF">
-                <span class="daily-goal-row-label" style="color:#9D6EFF">${KANA_SCRIPT_LABELS[script]}</span>
+                <span class="ft-radio-label" style="color:#9D6EFF">${KANA_SCRIPT_LABELS[script]}</span>
             </label>
         `).join('');
     }
@@ -438,7 +438,7 @@ export function showDashboard(isBack = false) {
             </div>
             <div class="dash-card weakness-widget" id="dashboard-weakness-widget" style="display:none;"></div>
             <div class="dash-card dash-mastery-card">
-                <div class="section-title" style="font-size:0.6875rem;color:var(--text);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Progression</div>
+                <div class="dash-widget-title">Progression</div>
                 <div id="progression-list"></div>
             </div>
         </div>`;

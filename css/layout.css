@@ -8,7 +8,7 @@
 
     /* Page Mes Dossiers */
     .folders-wrap { padding: 56px 16px 16px; }
-    .folder-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
+    .folder-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.15s; }
     .folder-card:active { border-color: var(--accent); }
     .folder-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .folder-card-icon { font-size: 1.375rem; }

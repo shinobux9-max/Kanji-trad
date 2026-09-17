@@ -520,11 +520,15 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
     });
 
     const sortedUnits = Object.keys(groupedByUnit).sort((a, b) => Number(a) - Number(b));
+    const dueCount = buildDueQueue(data).length;
 
     let html = `<div class="grammar-container">`;
 
     html += `<div style="display:flex;gap:8px">
-        ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(refreshGrammarHome)">☑ Sélectionner</button>` : ''}
+        <button class="vocab-review-cta" style="flex:1" onclick="showGrammarReviewModeSelector()">
+            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+        </button>
+        ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshGrammarHome)">☑ Sélectionner</button>` : ''}
     </div>`;
 
     html += sortedUnits.map((unitKey, unitIdx) => {

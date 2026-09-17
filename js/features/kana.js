@@ -94,8 +94,8 @@ export function renderKanaScreen(type) {
     currentKanaTabType = type;
     const label = type === 'hira' ? 'Hiragana あ' : 'Katakana ア';
     document.getElementById('main-content').innerHTML = `${backFAB('history.back()')}
-        <div style="margin-top:56px; padding:12px 16px 0; display:flex; justify-content:space-between; align-items:center;">
-            <div style="font-size:1rem; font-weight:bold; color:var(--accent)">${label}</div>
+        <div class="cat-header" style="padding-top:56px; display:flex; justify-content:space-between; align-items:center;">
+            <div class="cat-header-title" style="text-align:left">${label}</div>
             ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshKanaScreen)">☑ Sélectionner</button>` : ''}
         </div>
         <div id="kana-grid-container" style="padding:12px"></div>`;

@@ -142,7 +142,7 @@ export async function renderWeaknessWidget(elementId = 'dashboard-weakness-widge
     const typeIcons = { vocab: '📚', grammar: '📝', kanji: '🔤', kana: 'あ' };
 
     el.innerHTML = `
-        <div class="section-title" style="font-size:0.6875rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">🧠 À renforcer</div>
+        <div class="dash-widget-title">🧠 À renforcer</div>
         <div class="weakness-list">
             ${entries.map(([id, rec]) => `
                 <div class="weakness-row" onclick="openWeaknessItem('${id.replace(/'/g, "\\'")}')">

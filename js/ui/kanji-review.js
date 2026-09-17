@@ -26,23 +26,33 @@ import { gradeReview, scheduleRelearning, recordSessionCompleted } from '../lear
 // d'un dossier, voir startKanjiQuizForFolder() plus bas). Lue par startKanjiFlashcardReview()/
 // startKanjiTraceReview() au moment du choix du mode.
 let _kanjiReviewModeChars = null;
+// true quand la file vient d'un dossier (startKanjiQuizForFolder) plutôt que d'un niveau JLPT
+// (onglet Réviser) — détermine où le bouton retour du sélecteur ET de la session flashcard
+// doit renvoyer (navFolders() au lieu de loadJLPTCategory(state.kanjiHomeData...), qui n'a pas
+// de sens quand on n'est jamais passé par un niveau JLPT). Bug trouvé en test réel : le retour
+// depuis une session lancée par un dossier retombait sur un niveau JLPT sans rapport (ou ne
+// faisait rien si state.kanjiHomeData était vide) — voir les entrées *-folder du registre dans
+// core/navigation.js.
+let _kanjiReviewFromFolder = false;
 
 /**
  * @param {string[]} [chars] - liste explicite de kanji à réviser (ex: contenu d'un dossier).
  *   Omis = comportement d'origine, kanji actuellement dus (onglet Réviser).
+ * @param {boolean} [fromFolder] - true si chars vient d'un dossier (voir _kanjiReviewFromFolder).
  */
-export function showKanjiReviewModeSelector(chars = null) {
+export function showKanjiReviewModeSelector(chars = null, fromFolder = false) {
     hideBottomNav();
     const container = document.getElementById('category-content');
     const dueChars = chars || getDueKanjiChars();
     _kanjiReviewModeChars = dueChars;
+    _kanjiReviewFromFolder = fromFolder;
 
     if (dueChars.length === 0) {
         alert('Rien à réviser pour le moment ! 🎉');
         return;
     }
 
-    pushModalState('kanji-review-selector');
+    pushModalState(fromFolder ? 'kanji-review-selector-folder' : 'kanji-review-selector');
 
     container.innerHTML = `
         <div class="review-mode-selector">
@@ -88,7 +98,7 @@ export function startKanjiFlashcardReview() {
     const dueChars = _kanjiReviewModeChars || getDueKanjiChars();
     if (dueChars.length === 0) return;
 
-    pushModalState('kanji-review-flashcard');
+    pushModalState(_kanjiReviewFromFolder ? 'kanji-review-flashcard-folder' : 'kanji-review-flashcard');
 
     state.kanjiReviewSession = {
         queue: dueChars,
@@ -201,5 +211,9 @@ export function startKanjiQuizForFolder(folderName) {
         alert('Ce dossier est vide.');
         return;
     }
-    showKanjiReviewModeSelector(chars);
+    // Bug trouvé en test réel : showKanjiReviewModeSelector() écrit directement dans
+    // #category-content, que cette fonction ne créait jamais (contrairement à startRevisionFor
+    // dans ui/cards.js, le seul autre appelant) — TypeError silencieuse au clic sur "⚡ Quiz".
+    document.getElementById('main-content').innerHTML = `<div id="category-content" style="padding:16px"></div>`;
+    showKanjiReviewModeSelector(chars, true);
 }

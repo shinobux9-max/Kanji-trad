@@ -25,12 +25,12 @@ import { recordDailyActivity, renderDashboard, setActiveBottomNav, showDashboard
 // ── Toutes les fonctions encore référencées depuis des attributs onclick="..." générés en
 // HTML, groupées par fichier d'origine (générées programmatiquement, voir en-tête) ──
 import { advanceTrainingQuiz, answerTrainingCard, endTrainingSession, onFreeTrainingModeChange, onFreeTrainingTypeChange, openTrainingCurrentFiche, retrainMistakes, showFreeTrainingConfig, startFreeTraining, submitTrainingQuizAnswer, launchFreeTraining, flipTrainingCard } from './features/free-training.js';
-import { advanceGrammarReviewQueue, closeLessonReferencePopup, showGrammarHome, showLessonReferencePopup, startGrammarReview, submitGrammarQuizAnswer, submitGrammarReviewGrade, refreshGrammarHome, startGrammarFreeTrainingFromSelector, showGrammarDetail, renderSectionBody, buildConfusionBoxHtml, flipGrammarReviewCard } from './features/grammar.js';
+import { advanceGrammarReviewQueue, closeLessonReferencePopup, showGrammarHome, showLessonReferencePopup, startGrammarReview, submitGrammarQuizAnswer, submitGrammarReviewGrade, refreshGrammarHome, startGrammarFreeTrainingFromSelector, showGrammarDetail, renderSectionBody, buildConfusionBoxHtml, flipGrammarReviewCard, showGrammarReviewModeSelector } from './features/grammar.js';
 import { kanaTraceHint, kanaTraceSkip, openKanaDetail, replayKanaTraceQuiz, showKanaRevisionModeSelector, startKanaFlashcardReview, startKanaTraceQuiz, startKanaTraceReview, submitKanaReviewGrade, showRevisionKanaPicker, refreshKanaScreen, closeKanaTraceModal, launchKanaTraceMode, resetKanaReviewSession, flipKanaReviewCard, loadKanas, showKanaLearningPicker, showKanaTraceModal, animateKanaChar } from './features/kana.js';
 import { openDetail, openKanjiFromChar, promptCreateEmptyFolder, promptDeleteFolder, promptRenameFolder, toggleFmNewRow, toggleKanjiInFolder, refreshKanjiList, closeFolderModal, confirmNewFolder, openFolderModal, displayKanjiList, closeDetail, getJLPTLevel, navFolders } from './features/kanji.js';
 import { speakSentence, speakText, startOralTest } from './features/oral.js';
 import { closeStrokeQuiz, sqShowHint, sqSkip, startStrokeQuiz, launchDetailTrace, replayAnimation } from './features/strokes.js';
-import { advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview, submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList, startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup } from './features/vocabulary.js';
+import { advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview, submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList, startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup, showVocabReviewModeSelector } from './features/vocabulary.js';
 import { advanceLessonStep, continueToNextLesson, exitLessonFlow, showExploreLessonsScreen, showKanaTablePopup, skipLessonOnboarding, startFreeTrainingFromLesson, startOnboardingChoice, startSpecificGrammarLesson, submitLessonExercise, closeKanaTablePopup, startGrammarLessonFlow } from './learning/exercises.js';
 import { answerLearningExercise, completeLearningStep, continueLearningExercise, continueLearningPath, showLearningFicheCorrection, showLearningPathHome, startLearningPath, startLearningUnitById } from './learning/learning-path.js';
 import { openWeaknessItem, trainWeaknessItems } from './learning/weakness.js';
@@ -55,7 +55,7 @@ const EXPOSED_FUNCTIONS = {
     // grammar.js
     advanceGrammarReviewQueue, closeLessonReferencePopup, showGrammarHome, showLessonReferencePopup,
     startGrammarReview, submitGrammarQuizAnswer, submitGrammarReviewGrade, refreshGrammarHome,
-    startGrammarFreeTrainingFromSelector, showGrammarDetail, renderSectionBody, buildConfusionBoxHtml, flipGrammarReviewCard,
+    startGrammarFreeTrainingFromSelector, showGrammarDetail, renderSectionBody, buildConfusionBoxHtml, flipGrammarReviewCard, showGrammarReviewModeSelector,
     // kana.js
     kanaTraceHint, kanaTraceSkip, openKanaDetail, replayKanaTraceQuiz, showKanaRevisionModeSelector,
     startKanaFlashcardReview, startKanaTraceQuiz, startKanaTraceReview, submitKanaReviewGrade,
@@ -71,7 +71,7 @@ const EXPOSED_FUNCTIONS = {
     // vocabulary.js
     advanceReviewQueue, displayVocabList, openReviewRelatedGrammarFiche, startVocabReview,
     submitQuizAnswer, submitReviewGrade, openVocabDetailFromState, refreshVocabList,
-    startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup,
+    startVocabFreeTrainingFromSelector, showVocabDetail, flipReviewCard, showVocabReferencePopup, closeVocabReferencePopup, showVocabReviewModeSelector,
     // exercises.js
     advanceLessonStep, continueToNextLesson, exitLessonFlow, showExploreLessonsScreen,
     showKanaTablePopup, skipLessonOnboarding, startFreeTrainingFromLesson, startOnboardingChoice,

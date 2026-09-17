@@ -452,6 +452,6 @@ export function buildAnswerFeedbackHtml({ wrongText, wrongOnClick, wrongExplanat
                 <div class="particle-compare-text">La bonne réponse était ${span(correctText, correctOnClick)}${correctExplanation ? ` : ${mdBold(correctExplanation)}` : ''}</div>
             </div>
         </div>
-        ${nuance ? `<div class="vocab-nuance-box" style="margin-top:10px;text-align:left">⚠️ ${mdBold(nuance)}</div>` : ''}
+        ${nuance ? `<div class="vocab-nuance-box" style="text-align:left">⚠️ ${mdBold(nuance)}</div>` : ''}
     `;
 }

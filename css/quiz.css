@@ -32,7 +32,9 @@
 }
 
 .mode-title { font-size: 1.0625rem; font-weight: 800; text-align: center; }
-.mode-section-label { font-size: 0.625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin: 14px 0 8px; }
+/* Alignée sur .detail-section-label (fiche kanji, css/components.css) — même harmonisation
+   typographique que les fiches de détail et le widget Progression de l'accueil. */
+.mode-section-label { font-size: 0.5625rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin: 14px 0 8px; }
 
 .mode-option {
     display: flex; align-items: center; gap: 14px; background: var(--card);
@@ -49,7 +51,7 @@
 /* ── QUIZ RESULTS & BREAKDOWN ────── */
 .quiz-results { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; text-align: center; }
 .quiz-results-emoji { font-size: 4.5rem; margin-bottom: 16px; }
-.quiz-score-big { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--accent); background: linear-gradient(135deg, var(--accent), var(--accent2)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.quiz-score-big { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--accent); }
 .quiz-score-label { font-size: 0.9375rem; color: var(--gray); margin-top: 6px; }
 
 .quiz-breakdown { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 24px; width: 100%; max-width: 280px; }

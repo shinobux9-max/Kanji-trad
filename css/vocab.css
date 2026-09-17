@@ -64,7 +64,9 @@
 
 .vocab-nuance-box { font-size: 0.9375rem; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 14px; line-height: 1.6; }
 
-.vocab-section-title { font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 8px; }
+/* Alignée sur .detail-section-label (fiche kanji, css/components.css) — harmonisation
+   typographique des titres de section entre les deux fiches de détail. */
+.vocab-section-title { font-size: 0.5625rem; color: var(--accent-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1.2px; margin-top: 10px; margin-bottom: 4px; }
 
 .vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; text-align: center; }
 .vocab-example-box .example-jp { font-size: 1.375rem; color: #fff; margin-bottom: 8px; font-weight: 500; line-height: 1.7; }

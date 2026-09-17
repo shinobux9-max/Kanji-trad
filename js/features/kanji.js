@@ -803,7 +803,7 @@ export async function renderExemples(char) {
 
     if (!liste || liste.length === 0) {
         container.innerHTML = `
-            <div style="font-size:0.5625rem;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
+            <div class="detail-section-label">Exemples et Lectures</div>
             <div style="color:var(--gray);font-size:0.8125rem;text-align:center;padding:20px;border:1px dashed var(--border);border-radius:10px;">Aucun exemple disponible</div>`;
         return;
     }
@@ -823,7 +823,7 @@ export async function renderExemples(char) {
     }).join('');
 
     container.innerHTML = `
-        <div style="font-size:0.5625rem;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:12px">Exemples et Lectures</div>
+        <div class="detail-section-label">Exemples et Lectures</div>
         ${items}`;
 }
 

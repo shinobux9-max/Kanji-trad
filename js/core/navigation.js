@@ -150,6 +150,14 @@ export const MODAL_EXIT_REGISTRY = {
     // ⚠️ ATTENTION : loadJLPTCategory (routeur cross-feature, ui/cards.js), même raison de cycle.
     'kanji-review-selector': () => { if (state.kanjiHomeData) loadJLPTCategory(state.kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { state.kanjiReviewSession = null; if (state.kanjiHomeData) loadJLPTCategory(state.kanjiHomeData.levelId, 'kanji', true); },
+    // Variantes "dossier" : mêmes écrans (ui/kanji-review.js), mais atteints depuis
+    // features/kanji.js::navFolders() plutôt qu'un niveau JLPT — state.kanjiHomeData n'a alors
+    // aucun sens (null, ou périmé d'une visite JLPT antérieure). Bug trouvé en test réel : le
+    // retour depuis une session de quiz lancée par un dossier retombait sur un niveau JLPT sans
+    // rapport, ou ne faisait rien. navFolders existe dans features/kanji.js, même raison de
+    // cycle que displayKanjiList ci-dessous (cards.js importe déjà kanji.js).
+    'kanji-review-selector-folder': () => navFolders(true),
+    'kanji-review-flashcard-folder': () => { state.kanjiReviewSession = null; navFolders(true); },
     // ⚠️ ATTENTION : showApprendreScreen (idem ci-dessus)
     'apprendre-discovery': () => { state.mixedReviewSession = null; showApprendreScreen(true); },
     // ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js) — dashboard.js importe

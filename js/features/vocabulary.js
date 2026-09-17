@@ -537,7 +537,10 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
     let html = `<div class="vocab-container">`;
 
     html += `<div style="display:flex;gap:8px">
-        ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" style="flex:1" onclick="enterBulkSelectMode(refreshVocabList)">☑ Sélectionner</button>` : ''}
+        <button class="vocab-review-cta" style="flex:1" onclick="showVocabReviewModeSelector()">
+            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
+        </button>
+        ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshVocabList)">☑ Sélectionner</button>` : ''}
     </div>`;
 
     html += sortedCats.map(cat => {
