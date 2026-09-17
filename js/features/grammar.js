@@ -427,7 +427,7 @@ export function closeLessonReferencePopup() {
 /* ══════════════════════════════════════════════════
    RENDU D'UNE SECTION DE LEÇON — partagé fiche détail + popup "Aperçu"
 ══════════════════════════════════════════════════ */
-export function renderSectionBody(section) {
+export function renderSectionBody(section, { includeBlocks = true } = {}) {
     let body = '';
 
     if (section.text) {
@@ -446,7 +446,7 @@ export function renderSectionBody(section) {
         body += `<ul class="section-list">${section.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
     }
 
-    if (Array.isArray(section.blocks)) {
+    if (includeBlocks && Array.isArray(section.blocks)) {
         body += section.blocks.map(block => {
             let blockHtml = '';
             if (block.sub_title) {
@@ -463,6 +463,30 @@ export function renderSectionBody(section) {
     }
 
     return body;
+}
+
+/**
+ * Rend chaque block d'une section (ex: "Structure de base") comme sa propre boîte
+ * .detail-section, séparée du corps principal de la section (voir renderSectionBody
+ * appelée avec includeBlocks:false dans showGrammarDetail).
+ */
+export function renderSectionBlocks(section) {
+    if (!Array.isArray(section.blocks)) return '';
+
+    return section.blocks.map(block => {
+        let blockHtml = '';
+        if (Array.isArray(block.paragraphs)) {
+            blockHtml += block.paragraphs.map(p => `<div class="section-paragraph">${mdBold(p)}</div>`).join('');
+        }
+        if (Array.isArray(block.list)) {
+            blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
+        }
+        return `
+            <div class="detail-section">
+                <div class="section-label">${block.sub_title || 'Détail'}</div>
+                <div class="section-content-box">${blockHtml}</div>
+            </div>`;
+    }).join('');
 }
 
 /* ══════════════════════════════════════════════════
@@ -664,14 +688,19 @@ export function showGrammarDetail(lessonId, isBack = false) {
             </button>
         </div>
 
-        ${lesson.sections && Array.isArray(lesson.sections) ? lesson.sections.map(section => `
-            <div class="detail-section">
-                <div class="section-label">${section.label || 'Section'}</div>
-                <div class="section-content-box">
-                    ${renderSectionBody(section)}
+        ${lesson.sections && Array.isArray(lesson.sections) ? lesson.sections.map(section => {
+            const hasBlocks = Array.isArray(section.blocks) && section.blocks.length > 0;
+            const wrapperClass = hasBlocks ? 'detail-section grammar-usage-box' : 'detail-section';
+            return `
+                <div class="${wrapperClass}">
+                    <div class="section-label">${section.label || 'Section'}</div>
+                    <div class="section-content-box">
+                        ${renderSectionBody(section, { includeBlocks: false })}
+                    </div>
                 </div>
-            </div>
-        `).join('') : ''}
+                ${hasBlocks ? renderSectionBlocks(section) : ''}
+            `;
+        }).join('') : ''}
 
         ${resolvedExamples.length > 0 ? `
             <div class="examples-section">

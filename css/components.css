@@ -104,6 +104,7 @@
 
     /* ── DASHBOARD COMPONENTS ────────── */
 .dash-card { background: var(--surface); border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); }
+.dash-card.dash-mastery-card { background: transparent; }
 .tanuki-img { width: 52px; height: 52px; margin-right: 14px; border-radius: 50%; }
 
 /* Titre de section partagé par les widgets de l'accueil (Progression, À renforcer, ...) —
@@ -125,7 +126,7 @@
 
 /* ── KANA COMPONENTS ──────────────── */
 .kana-section-title { font-size: 0.625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; padding: 12px 2px 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-.kana-cell { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 4px; text-align: center; cursor: pointer; transition: 0.15s; }
+.kana-cell { border: 1px solid var(--border); border-radius: 8px; padding: 9px 4px; text-align: center; cursor: pointer; transition: 0.15s; }
 .kana-cell:active { background: var(--card); transform: scale(0.95); }
 .kana-cell .kana-char { font-family: 'Noto Sans JP', sans-serif; font-size: 1.5rem; display: block; color: #fff; line-height: 1.2; }
 .kana-cell .kana-char.yoon { font-size: 1.125rem; }

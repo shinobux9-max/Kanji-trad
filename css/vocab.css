@@ -50,7 +50,7 @@
 .vocab-favorite-btn:hover { opacity: 0.7; }
 .vocab-favorite-btn.active { color: #ff6b9d; }
 
-.vocab-detail-main-box { padding: 24px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; position: relative; }
+.vocab-detail-main-box { padding: 24px 20px; border: 1px solid var(--border); border-radius: 12px; text-align: center; position: relative; }
 .vocab-reading { font-size: 0.75rem; color: var(--accent); margin-bottom: 8px; }
 .vocab-word { font-size: 3.5rem; color: #fff; font-weight: bold; margin: 12px 0; line-height: 1.2; }
 .vocab-romaji { font-size: 0.875rem; color: var(--gray); margin-bottom: 4px; }
@@ -58,7 +58,7 @@
 .vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; }
 .vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
 
-.vocab-meanings { padding: 14px 12px; background: var(--surface); border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; }
+.vocab-meanings { padding: 14px 12px; border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; }
 .vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
 .vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
 
@@ -68,7 +68,7 @@
    typographique des titres de section entre les deux fiches de détail. */
 .vocab-section-title { font-size: 0.5625rem; color: var(--accent-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1.2px; margin-top: 10px; margin-bottom: 4px; }
 
-.vocab-example-box { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; position: relative; text-align: center; }
+.vocab-example-box { padding: 12px; background: transparent; border: 1px solid var(--border); border-radius: 10px; position: relative; text-align: center; }
 .vocab-example-box .example-jp { font-size: 1.375rem; color: #fff; margin-bottom: 8px; font-weight: 500; line-height: 1.7; }
 .vocab-example-box .example-ro { font-size: 0.8125rem; color: var(--accent); margin-bottom: 6px; }
 .vocab-example-box .example-fr { font-size: 0.875rem; color: var(--gray); line-height: 1.4; }
@@ -83,7 +83,7 @@
 /* ══════════════════════════════════════════════════
    CARTE MOT — style "pilule"
 ══════════════════════════════════════════════════ */
-.vocab-pill-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s; }
+.vocab-pill-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s; }
 .vocab-pill-card:hover { border-color: var(--accent); }
 
 .vocab-pill-badge {
