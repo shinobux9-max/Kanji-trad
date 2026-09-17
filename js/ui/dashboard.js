@@ -388,9 +388,10 @@ export async function renderDashboardReviewCta() {
  * Réutilise le mécanisme de session mixte partagé avec l'onglet "Apprendre"
  * (ui/cards.js::launchMixedReviewSession) — trouvé et porté (bug de quota quotidien
  * corrigé au passage : addDailyNewCardsUsed() n'était jamais appelée nulle part).
- * ⚠️ ATTENTION : launchMixedReviewSession vit dans ui/cards.js, qui importe déjà
- * ui/dashboard.js (cycle direct si import réel dans l'autre sens) — vrai appel JS résolu
- * via window (exposé par app.js).
+ * ⚠️ ATTENTION : launchMixedReviewSession vit dans ui/mixed-review.js (déplacé depuis
+ * ui/cards.js lors du découpage Phase 5), qui importe déjà ui/dashboard.js (addDailyNewCardsUsed)
+ * — cycle direct si import réel dans l'autre sens — vrai appel JS résolu via window (exposé
+ * par app.js).
  */
 export async function startDashboardReview() {
     const queue = await buildReviewQueue({ types: ['vocab', 'grammar', 'kanji'], levels: getDailyGoalLevels(), newLimit: getAccueilEffectiveNewLimit(), excludeMastered: true, includeKana: true, kanaScripts: getDailyGoalKanaScripts() });
@@ -473,8 +474,8 @@ export function navKana() { showKanaLearningPicker(); }
 
 /**
  * Équivalent EXACT de showNiveauxScreen(isBack) du monolithe.
- * ⚠️ ATTENTION : showCategoryDirect (routeur cross-feature, hors périmètre de tout
- * fichier actuel — même landmine que dans core/navigation.js).
+ * ⚠️ ATTENTION : showCategoryDirect (routeur cross-feature, ui/cards.js) — même landmine
+ * que dans core/navigation.js.
  */
 export async function showNiveauxScreen(isBack = false) {
     if (!isBack) history.pushState({ view: 'niveaux' }, '');

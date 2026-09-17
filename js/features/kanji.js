@@ -920,10 +920,11 @@ export function displayKanjiList(levelId, data, isBack = false) {
 
 // ⚠️ ATTENTION, différent des forward-refs onclick="..." ailleurs dans ce fichier (inertes
 // tant qu'on ne clique pas) : loadJLPTCategory() ci-dessous est un VRAI appel JS, pas une
-// chaîne HTML — si cette fonction est invoquée avant que loadJLPTCategory (routeur
-// cross-feature showCategoryDirect/loadJLPTCategory, distribue vers displayKanjiList/
-// displayVocabList/showGrammarHome selon la catégorie, hors périmètre de features/kanji.js)
-// ne soit porté, ça lève une ReferenceError immédiate. Ne pas appeler tant que ce n'est pas fait.
+// chaîne HTML. loadJLPTCategory (routeur cross-feature showCategoryDirect/loadJLPTCategory,
+// distribue vers displayKanjiList/displayVocabList/showGrammarHome selon la catégorie) vit
+// dans ui/cards.js, hors périmètre de features/kanji.js — ui/cards.js importe déjà
+// displayKanjiList d'ici, donc un import en retour créerait un cycle direct. Landmine
+// résolue via window.* (exposé par app.js).
 // Équivalent du onclick="displayKanjiList('${levelId}', {chars: kanjiHomeData.chars}, true)"
 // du monolithe (bouton "Sélectionner") — bug trouvé et corrigé lors de la revérification
 // finale : kanjiHomeData référencé en bare, copié tel quel du monolithe où c'était une

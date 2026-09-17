@@ -11,17 +11,15 @@
  *
  * ⚠️ CHANTIER MASSIVEMENT CROSS-CUTTING : ce fichier est, par nature, le point de
  * convergence de TOUTES les features de l'app (chaque écran/session doit pouvoir être fermé
- * proprement au retour). La grande majorité des fonctions référencées dans les deux registres
- * et dans closeAllOverlaysAndSessions() appartiennent soit à des modules PAS ENCORE PORTÉS
- * (ui/dashboard.js, features/vocabulary.js, features/grammar.js, features/free-training.js,
- * et le routeur cross-feature showCategoryDirect/loadJLPTCategory qui n'appartient à aucun
- * fichier actuel), soit à des modules DÉJÀ portés (kanji.js, strokes.js, kana.js)
- * mais qui importent TOUS déjà pushModalState() depuis CE fichier — un import réel en retour
- * créerait un cycle direct (confirmé programmatiquement à l'écriture de ce fichier, voir plus
- * bas). Seul ui/common.js est importable ici sans risque (n'importe jamais navigation.js).
- * Chaque référence non importable est donc un vrai appel JS non importé (landmine), marquée
- * explicitement ⚠️ ATTENTION avec sa raison précise plutôt que contournée par un import
- * fantôme ou une valeur par défaut.
+ * proprement au retour). Toutes les fonctions référencées dans les deux registres et dans
+ * closeAllOverlaysAndSessions() sont aujourd'hui bel et bien portées (ui/dashboard.js,
+ * ui/cards.js, features/*, learning/*) — mais chacune importe, directement ou
+ * transitivement, pushModalState() depuis CE fichier : un import réel en retour créerait donc
+ * un cycle direct (vérifié fonction par fonction via un script DFS lors de l'audit Phase 4,
+ * aucune exception trouvée). Seul ui/common.js est importable ici sans risque (n'importe
+ * jamais navigation.js). Chaque référence non importable est donc un vrai appel JS non
+ * importé (landmine), marquée explicitement ⚠️ ATTENTION avec sa raison précise plutôt que
+ * contournée par un import fantôme ou une valeur par défaut.
  *
  * ⚠️ DÉCOUVERTE EN COURS DE CHANTIER : toggleSearch() dépend d'un sous-système de recherche
  * unifiée bien plus large que la simple navigation (searchFilters, renderSearchFilterPills,
@@ -139,21 +137,23 @@ export const MODAL_EXIT_REGISTRY = {
     // simplement l'overlay.
     'kanji-detail': () => closeDetail(),
     'kana-detail': () => closeDetail(),
-    // ⚠️ ATTENTION : showRevisionLevelPicker (features/vocabulary.js, pas encore porté)
+    // ⚠️ ATTENTION : showRevisionLevelPicker (ui/cards.js) — cards.js importe ui/kanji-review.js,
+    // qui importe déjà pushModalState() d'ici : import réel en retour = cycle transitif.
     'vocab-review': () => { state.reviewSession = null; showRevisionLevelPicker('vocab', true); },
     'vocab-review-selector': () => showRevisionLevelPicker('vocab', true),
-    // ⚠️ ATTENTION : showRevisionLevelPicker (features/grammar.js, pas encore porté)
+    // ⚠️ ATTENTION : showRevisionLevelPicker (ui/cards.js), même raison que ci-dessus.
     'grammar-review': () => { state.grammarReviewSession = null; showRevisionLevelPicker('grammar', true); },
     'grammar-review-selector': () => showRevisionLevelPicker('grammar', true),
-    // ⚠️ ATTENTION : showApprendreScreen (pas encore porté, quel que soit le module qui l'accueillera)
+    // ⚠️ ATTENTION : showApprendreScreen (ui/cards.js), même raison de cycle transitif.
     'grammar-lesson-flow': () => { state.lessonSession = null; showApprendreScreen(true); },
     'lesson-onboarding': () => showApprendreScreen(true),
-    // ⚠️ ATTENTION : loadJLPTCategory (routeur cross-feature, hors périmètre de tout fichier actuel)
+    // ⚠️ ATTENTION : loadJLPTCategory (routeur cross-feature, ui/cards.js), même raison de cycle.
     'kanji-review-selector': () => { if (state.kanjiHomeData) loadJLPTCategory(state.kanjiHomeData.levelId, 'kanji', true); },
     'kanji-review-flashcard': () => { state.kanjiReviewSession = null; if (state.kanjiHomeData) loadJLPTCategory(state.kanjiHomeData.levelId, 'kanji', true); },
     // ⚠️ ATTENTION : showApprendreScreen (idem ci-dessus)
     'apprendre-discovery': () => { state.mixedReviewSession = null; showApprendreScreen(true); },
-    // ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js, pas encore porté)
+    // ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js) — dashboard.js importe
+    // features/kanji.js, qui importe déjà pushModalState() d'ici : cycle transitif.
     'mixed-review-dashboard': () => { state.mixedReviewSession = null; showDashboard(true); renderDashboard(); },
     'search': () => closeSearchOverlay(),
     // ⚠️ ATTENTION : showRevisionKanaPicker existe dans features/kana.js, mais kana.js importe
@@ -170,9 +170,10 @@ export const MODAL_EXIT_REGISTRY = {
 };
 
 export const SCREEN_REGISTRY = {
-    // ⚠️ ATTENTION : ui/dashboard.js, pas encore porté
+    // ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js) — même raison de cycle
+    // transitif que dans MODAL_EXIT_REGISTRY ci-dessus.
     'dashboard': () => { showDashboard(true); renderDashboard(); },
-    // ⚠️ ATTENTION : features/free-training.js, pas encore porté
+    // ⚠️ ATTENTION : showFreeTrainingConfig (features/free-training.js) — cycle confirmé.
     'free-training-config': () => showFreeTrainingConfig(true),
     // 'category'/'series' retirées (session de nettoyage) : loadCategory/loadSeriesPage
     // (ancienne navigation par grade Primaire/Collège) n'existent plus nulle part —
@@ -180,27 +181,28 @@ export const SCREEN_REGISTRY = {
     // l'utilisateur. Le moteur de quiz par modal (showQuizModeModal/launchQuizMode)
     // qu'ils utilisaient a lui aussi été retiré depuis (features/quiz.js supprimé —
     // décision explicite, "les autres systèmes suffisent").
-    // ⚠️ ATTENTION : les 6 suivantes n'appartiennent à aucun module porté actuellement
+    // ⚠️ ATTENTION : les 6 suivantes sont toutes portées (ui/dashboard.js, ui/cards.js,
+    // learning/exercises.js, ui/niveaux-screens.js) mais cyclent toutes via pushModalState().
     'niveaux': () => showNiveauxScreen(true),
     'apprendre': () => showApprendreScreen(true),
     'explore-lessons': () => showExploreLessonsScreen(true),
     'grammar-niveaux': () => showGrammarNiveauxScreen(true),
     'kanji-niveaux': () => showKanjiNiveauxScreen(true),
     'progression': () => showProgressionDetail(true),
-    // ⚠️ ATTENTION : showCategoryDirect, routeur cross-feature (voir plus haut)
+    // ⚠️ ATTENTION : showCategoryDirect, routeur cross-feature (ui/cards.js, voir plus haut)
     'category-direct': (s) => showCategoryDirect(s.levelId, s.category, true),
     // ⚠️ ATTENTION : displayKanjiList existe dans features/kanji.js, même raison que ci-dessus.
     'kanji-list': () => { if (state.kanjiHomeData) displayKanjiList(state.kanjiHomeData.levelId, { chars: state.kanjiHomeData.chars }, true); },
     // ⚠️ ATTENTION : navFolders existe dans features/kanji.js, même raison de cycle que
     // loadCategory/loadSeriesPage juste au-dessus.
     'folders': () => navFolders(true),
-    // ⚠️ ATTENTION : features/vocabulary.js, pas encore porté
+    // ⚠️ ATTENTION : displayVocabList (features/vocabulary.js) — cycle confirmé.
     'vocab-list': () => { if (state.vocabHomeData) displayVocabList(state.vocabHomeData.levelId, state.vocabHomeData.data, state.vocabHomeData.examples, true); },
     'vocab-detail': (s) => { if (state.vocabHomeData) showVocabDetail(s.wordId, state.vocabHomeData.data, true); },
-    // ⚠️ ATTENTION : features/grammar.js, pas encore porté
+    // ⚠️ ATTENTION : showGrammarHome (features/grammar.js) — cycle confirmé.
     'grammar-home': () => { if (state.grammarHomeData) showGrammarHome(state.grammarHomeData.levelId, state.grammarHomeData.data, state.grammarHomeData.examples, true); },
     'grammar-detail': (s) => showGrammarDetail(s.lessonId, true),
-    // ⚠️ ATTENTION : révision vocab/grammaire, pas encore portées
+    // ⚠️ ATTENTION : showRevisionsScreen/showRevisionLevelPicker (ui/cards.js) — cycle confirmé.
     'revisions': () => showRevisionsScreen(true),
     'revision-level-picker': (s) => showRevisionLevelPicker(s.category, true),
     // ⚠️ ATTENTION : showRevisionKanaPicker, même raison (cycle via pushModalState).
@@ -266,19 +268,17 @@ export function closeAllOverlaysAndSessions() {
 
 /**
  * Équivalent EXACT de window.onpopstate du monolithe.
- * ⚠️ ATTENTION : kanjiDb (garde "app pas encore chargée") et showDashboard/renderDashboard
- * (repli sur l'accueil) ne sont pas encore accessibles ici — kanjiDb sera state.data.kanjiDb
- * (bootstrap pas encore porté, voir HANDOFF.md), showDashboard/renderDashboard appartiennent
- * à ui/dashboard.js. Cette fonction doit être appelée par app.js (pas auto-exécutée ici,
- * contrairement au monolithe qui l'assigne directement à window.onpopstate au chargement du
- * script) — voir initNavigation() ci-dessous, à appeler explicitement depuis app.js une fois
- * le bootstrap terminé.
+ * ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js) restent des appels JS non
+ * importés ici — même raison de cycle transitif que partout ailleurs dans ce fichier (voir
+ * en-tête). Cette fonction doit être appelée par app.js (pas auto-exécutée ici, contrairement
+ * au monolithe qui l'assigne directement à window.onpopstate au chargement du script) — voir
+ * initNavigation() ci-dessous, à appeler explicitement depuis app.js une fois le bootstrap
+ * terminé (app.js::init(), qui alimente state.data.kanjiDb).
  */
 export function handlePopState(event) {
-    // ⚠️ ATTENTION : state.data.kanjiDb n'est alimenté par aucun bootstrap porté pour l'instant
-    // (voir HANDOFF.md, chantier "Bootstrap kanjiDb/kanjiMap/jlptMapping") — cette garde est
-    // donc TOUJOURS vraie tant que ce bootstrap n'existe pas, ce qui bloque silencieusement
-    // toute navigation par historique. Comportement fidèle au monolithe, pas un bug introduit ici.
+    // Garde-fou normal (pas un TODO) : ignore tout popstate survenant avant la fin du
+    // bootstrap (state.data.kanjiDb pas encore alimenté par app.js::init()) — évite de
+    // naviguer sur un état applicatif incomplet. Comportement fidèle au monolithe.
     if (state.data.kanjiDb.length === 0) return;
 
     closeAllOverlaysAndSessions();
@@ -288,7 +288,7 @@ export function handlePopState(event) {
     } else if (event.state && SCREEN_REGISTRY[event.state.view]) {
         SCREEN_REGISTRY[event.state.view](event.state);
     } else {
-        // ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js, pas encore porté)
+        // ⚠️ ATTENTION : showDashboard/renderDashboard (ui/dashboard.js) — cycle transitif.
         showDashboard(true);
         renderDashboard();
     }
@@ -303,9 +303,9 @@ export function initNavigation() {
 
 /**
  * Équivalent EXACT de bottomNavGo(target) du monolithe.
- * ⚠️ ATTENTION : setActiveBottomNav, navDashboard, showApprendreScreen, showRevisionsScreen —
- * aucun n'appartient à un module actuellement porté (ui/dashboard.js et l'écran Apprendre/
- * Révisions n'existent pas encore comme code réel).
+ * ⚠️ ATTENTION : setActiveBottomNav/navDashboard (ui/dashboard.js) et showApprendreScreen/
+ * showRevisionsScreen (ui/cards.js) sont tous portés, mais cyclent tous via pushModalState()
+ * — même raison que partout ailleurs dans ce fichier (voir en-tête).
  */
 export function bottomNavGo(target) {
     setActiveBottomNav(target);

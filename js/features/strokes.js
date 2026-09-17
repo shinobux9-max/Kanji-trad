@@ -364,9 +364,10 @@ export function sqSkip() {
     renderStrokeQuizQuestion();
 }
 
-// ⚠️ ATTENTION : appelle renderDashboard() (ui/dashboard.js, pas encore porté) quand
-// sourceType === 'single' — un vrai appel JS, pas un onclick="..." : lèvera une
-// ReferenceError dans ce cas précis tant que ui/dashboard.js n'existe pas.
+// ⚠️ ATTENTION : appelle renderDashboard() (ui/dashboard.js) quand sourceType === 'single' —
+// un vrai appel JS, pas un onclick="..." : dashboard.js est porté mais importe déjà
+// features/kana.js, qui importe déjà ce fichier (cycle transitif si importé ici en retour).
+// Landmine résolue via window.* (exposé par app.js).
 export function renderStrokeQuizResults() {
     if (sqTimerInterval) { clearInterval(sqTimerInterval); sqTimerInterval = null; }
     if (!strokeQuizState) return;
