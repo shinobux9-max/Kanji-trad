@@ -64,7 +64,7 @@ body {
 #bottom-nav { box-shadow: 0 0 20px rgba(0,229,255,0.10), 0 8px 24px rgba(0,0,0,0.4); }
 
 /* CTA principaux : halo plus marqué autour du cyan plein */
-.review-cta-btn, .revise-btn, .vocab-review-cta, .review-continue-btn {
+.review-cta-btn, .revise-btn, .review-continue-btn {
     box-shadow: 0 0 20px rgba(0,229,255,0.35);
 }
 
