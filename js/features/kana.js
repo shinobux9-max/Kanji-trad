@@ -364,10 +364,9 @@ export function showKanaRevisionModeSelector(script) {
 
 // kanaReviewSession reste une variable locale au module (comme currentKanaTabType plus haut) :
 // contrairement à kanaTraceState/kanaTraceWriter/kanaTraceTimerInterval, RIEN dans
-// features/strokes.js ne la lit ni ne la nettoie. Seuls MODAL_EXIT_REGISTRY et
-// closeAllOverlaysAndSessions (core/navigation.js, pas encore porté — voir HANDOFF.md) la
-// remettent à null dans le monolithe ; à traiter quand navigation.js sera porté (probablement
-// en exposant une fonction resetKanaReviewSession() exportée d'ici, ou via state.*).
+// features/strokes.js ne la lit ni ne la nettoie. Seule resetKanaReviewSession() (exportée
+// d'ici) la remet à null — appelée par core/navigation.js::closeAllOverlaysAndSessions() via
+// window.* (cycle : kana.js importe déjà pushModalState depuis navigation.js).
 let kanaReviewSession = null;
 
 export function startKanaFlashcardReview(script) {

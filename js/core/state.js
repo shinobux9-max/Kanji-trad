@@ -57,9 +57,9 @@ export const state = {
 
     searchOpen: false,
 
-    // Tracé kana (features/kana.js, pas encore porté) — partagé avec le même overlay
-    // #stroke-quiz-view que le tracé kanji. closeStrokeQuiz() (features/strokes.js) nettoie
-    // ces trois champs systématiquement, même avant que le tracé kana lui-même soit porté.
+    // Tracé kana (features/kana.js, porté et fonctionnel : startKanaTraceQuiz/
+    // launchKanaTraceMode) — partagé avec le même overlay #stroke-quiz-view que le tracé
+    // kanji. closeStrokeQuiz() (features/strokes.js) nettoie ces trois champs systématiquement.
     kanaTraceState: null,
     kanaTraceWriter: null,
     kanaTraceTimerInterval: null,

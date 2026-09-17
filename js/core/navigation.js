@@ -67,8 +67,8 @@ export function pushModalState(name) {
 /* ══════════════════════════════════════════════════
    RECHERCHE — coordination ouverture/fermeture via l'historique uniquement.
    Le panneau de résultats/filtres lui-même (resetSearchFilters, showSearchPanel,
-   renderSearchFilterPills, ...) est un chantier séparé, pas encore porté — landmines
-   ci-dessous, volontairement.
+   renderSearchFilterPills, ...) est porté dans ui/modals.js — restent des landmines
+   ci-dessous, volontairement, pour la seule raison du cycle d'import (voir plus bas).
 ══════════════════════════════════════════════════ */
 let searchJustOpened = false; // local au module : jamais lu ailleurs (contrairement à state.searchOpen)
 

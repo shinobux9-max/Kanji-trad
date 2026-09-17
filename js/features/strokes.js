@@ -306,8 +306,8 @@ export function closeStrokeQuiz() {
     strokeWriter = null;
     strokeQuizState = null;
 
-    // Nettoyage du tracé kana (même overlay #stroke-quiz-view, état séparé, pas encore porté
-    // — voir core/state.js pour ces trois emplacements réservés)
+    // Nettoyage du tracé kana (même overlay #stroke-quiz-view, état séparé — voir
+    // core/state.js pour ces trois champs)
     if (state.kanaTraceTimerInterval) clearInterval(state.kanaTraceTimerInterval);
     if (state.kanaTraceState && state.kanaTraceState._nextTimer) clearTimeout(state.kanaTraceState._nextTimer);
     if (state.kanaTraceWriter) { try { state.kanaTraceWriter.cancelQuiz(); } catch(_) {} }
@@ -428,9 +428,9 @@ export function renderStrokeQuizResults() {
    déclencheurs du système de tracé — kanji.js n'a pas besoin de les connaître, et les
    mettre dans kanji.js aurait recréé le cycle kanji.js<->strokes.js qu'on vient de résoudre.
    ⚠️ La branche 'kana' ci-dessous appelle animateKanaChar()/showKanaTraceModal()
-   (features/kana.js, tracé kana pas encore porté) — de vrais appels JS, pas des onclick :
-   lèveront une ReferenceError si l'utilisateur ouvre une fiche kana et appuie sur ces
-   boutons, tant que kana.js n'aura pas porté sa partie tracé.
+   (features/kana.js, tracé kana porté et fonctionnel) — de vrais appels JS, pas des onclick :
+   landmine résolue via window.* (exposées par app.js), même famille que les autres
+   références cross-fichier de ce bloc.
 ══════════════════════════════════════════════════ */
 export function replayAnimation() {
     if (state.currentType === 'kanji' && typeof state.writer !== 'undefined' && state.writer) {

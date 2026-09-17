@@ -4,12 +4,11 @@
  * du SRS (flip-card, cloze, QCM), résultats, et les petites stats globales qui lui sont propres
  * (TRAINING_STATS_KEY).
  *
- * buildCardDisplay()/getEntryLabel() sont exportées bien qu'utilisées seulement ici pour
- * l'instant : le monolithe les réutilise aussi dans launchMixedReviewSession() (~ligne 6235,
- * système de révision mixte de l'onglet "Apprendre"/bouton "Réviser aujourd'hui" de l'accueil),
- * pas encore porté (emplacement final pas encore tranché — dashboard.js ou un futur fichier
- * dédié). Quand ce chantier viendra, il devra importer ces deux fonctions D'ICI plutôt que de
- * les redéfinir.
+ * buildCardDisplay()/getEntryLabel() sont exportées bien qu'utilisées seulement ici : le
+ * monolithe les réutilise aussi dans launchMixedReviewSession() (système de révision mixte de
+ * l'onglet "Apprendre"/bouton "Réviser aujourd'hui" de l'accueil), aujourd'hui portée dans
+ * ui/mixed-review.js — qui importe bien ces deux fonctions D'ICI plutôt que de les redéfinir,
+ * comme prévu.
  */
 
 import { state } from '../core/state.js';
