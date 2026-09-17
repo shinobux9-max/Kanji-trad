@@ -5,12 +5,8 @@
 
 
 /* ══════════════════════════════════════════════════
-   RÉVISION SRS — bouton d'entrée + écran de session
+   RÉVISION SRS — écran de session
 ══════════════════════════════════════════════════ */
-.vocab-review-cta { width: 100%; padding: 14px; background: var(--accent); color: var(--bg); border: none; border-radius: 12px; font-size: 0.875rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px; }
-.vocab-review-cta:hover { background: var(--accent-muted); }
-.vocab-review-badge { background: rgba(13,17,23,0.25); padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; }
-
 .review-page { display: flex; flex-direction: column; gap: 20px; padding: 56px 0 160px; align-items: center; }
 
 .review-header { width: 100%; display: flex; align-items: center; gap: 12px; }

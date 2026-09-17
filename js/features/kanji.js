@@ -44,7 +44,7 @@ import { getLevelVocabData, ensureExemplesLoaded, getKanjiLevelExamples } from '
 import { ALL_JLPT_LEVELS } from '../core/constants.js';
 import { pushModalState } from '../core/navigation.js';
 import { kanaToRomaji } from '../core/data-loader.js';
-import { countDueItems, buildDueQueue } from '../learning/srs.js';
+import { buildDueQueue } from '../learning/srs.js';
 import { isBulkSelected, refreshMasteryUI, buildSpeakableExampleHtml, backFAB, hideBottomNav } from '../ui/common.js';
 // NOTE : le fichier réel de ce projet s'appelle strokes.js (avec un "s"), alors que
 // l'arborescence cible communiquée liste "stroke.js" (singulier) — divergence de nommage à
@@ -888,8 +888,6 @@ export function displayKanjiList(levelId, data, isBack = false) {
     state.kanjiHomeData = { levelId, chars: data.chars };
     state.currentLevelId = levelId;
 
-    const dueCount = countDueItems(data.chars.map(c => ({ id: c })));
-
     const grid = data.chars.map(char => {
         const kanjiData = state.data.kanjiDb.find(k => k.char === char);
         if (!kanjiData) return '';
@@ -902,12 +900,9 @@ export function displayKanjiList(levelId, data, isBack = false) {
     }).join('');
 
     container.innerHTML = `
-        <div style="display:flex;gap:8px">
-            <button class="vocab-review-cta" style="flex:1" onclick="showKanjiReviewModeSelector()">
-                🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-            </button>
-            ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshKanjiList)">☑ Sélectionner</button>` : ''}
-        </div>
+        ${!state.bulkSelectMode ? `<div style="display:flex;gap:8px">
+            <button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshKanjiList)">☑ Sélectionner</button>
+        </div>` : ''}
         ${state.bulkSelectMode ? `
         <label class="bulk-cat-row-standalone">
             <input type="checkbox" class="bulk-cat-checkbox" onclick='toggleCategoryMasteryLive(this, ${JSON.stringify(data.chars)})' ${data.chars.every(c => getItemStatus(c) === 'mastered') ? 'checked' : ''}>

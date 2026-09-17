@@ -65,7 +65,7 @@ export async function showRevisionsScreen(isBack = false) {
                     <div class="apprendre-card-title">Kanji</div>
                     <div class="apprendre-card-sub">Choisir un niveau</div>
                 </div>
-                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:#9D6EFF1f;" onclick="showRevisionKanaPicker()">
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="showRevisionKanaPicker()">
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana / Katakana</div>
@@ -225,20 +225,16 @@ export async function showApprendreScreen(isBack = false) {
                     <div class="apprendre-card-title">Kanji</div>
                     <div class="apprendre-card-sub">Caractères et tracé</div>
                 </div>
-                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59; background:#9D6EFF1f;" onclick="navKana()">
+                <div class="apprendre-card" style="border-color:#9D6EFF99; box-shadow:0 0 18px #9D6EFF59;" onclick="navKana()">
                     <div class="apprendre-card-icon" style="background:rgba(157,139,255,0.15);color:#9D6EFF;">あ</div>
                     <div class="apprendre-card-title">Kana</div>
                     <div class="apprendre-card-sub">Hiragana & Katakana</div>
                 </div>
-            </div>
-
-            <div class="dash-card" style="display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="navFolders()">
-                <div style="flex-shrink:0;width:40px;height:40px;border-radius:10px;background:rgba(139,148,158,0.15);color:var(--gray);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">📁</div>
-                <div style="flex:1;">
-                    <div style="font-size:0.875rem;color:#fff;font-weight:bold;">Mes dossiers</div>
-                    <div style="font-size:0.6875rem;color:var(--gray);margin-top:2px;">Favoris et kanji enregistrés</div>
+                <div class="apprendre-card" style="border-color:#FBBF2499; box-shadow:0 0 18px #FBBF2459;" onclick="navFolders()">
+                    <div class="apprendre-card-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24;">📁</div>
+                    <div class="apprendre-card-title">Mes dossiers</div>
+                    <div class="apprendre-card-sub">Favoris et kanji enregistrés</div>
                 </div>
-                <span style="color:var(--gray);font-size:1.125rem;">→</span>
             </div>
         </div>`;
     renderWeaknessWidget('apprendre-weakness-widget');

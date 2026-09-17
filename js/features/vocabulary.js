@@ -14,7 +14,7 @@ import { ALL_JLPT_LEVELS } from '../core/constants.js';
 import { getItemStatus, trackItem } from '../core/storage.js';
 import { getVocabExtraExamples, getLevelGrammarData, kanaToRomaji } from '../core/data-loader.js';
 import { pushModalState } from '../core/navigation.js';
-import { buildDueQueue, countDueItems, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
+import { buildDueQueue, getSrsConfidencePct, gradeReview, scheduleRelearning, recordSessionCompleted, shuffleArray } from '../learning/srs.js';
 import { openDetail, stripRubyForSpeech } from './kanji.js';
 import { speakText } from './oral.js';
 import { mdBold, stripRtTags, extractReadingFromRawRt, buildCleanToRawIndexMap, showFicheCorrectionModal, isBulkSelected, handleListItemClick, toggleCategoryMasteryLive, enterBulkSelectMode, buildSpeakableExampleHtml, continueFAB, backFAB, hideBottomNav, buildAnswerFeedbackHtml } from '../ui/common.js';
@@ -27,7 +27,32 @@ const VOCAB_CATEGORY_MAP = {
     'communication': '💬 Communication', 'movement': '🚶 Mouvement', 'question': '❓ Questions',
     'interrogative': '❓ Interrogatifs', 'number': '🔢 Nombres', 'animal': '🐶 Animaux',
     'abstract': '🧠 Concepts', 'art': '🎭 Arts', 'language': '🗣️ Langues',
-    'clothing': '👕 Vêtements', 'phrase': '💭 Expressions', 'grammar': '📚 Grammaire'
+    'clothing': '👕 Vêtements', 'phrase': '💭 Expressions', 'grammar': '📚 Grammaire',
+    'actions_generiques': '⚡ Actions / verbes génériques',
+    'abstrait': '💭 Concepts abstraits',
+    'adverbes_expressions': '💬 Adverbes & expressions',
+    'descriptions_qualites': '✨ Descriptions & qualités',
+    'pronoms_demonstratifs': '🫵 Pronoms & démonstratifs',
+    'questions': '❓ Questions',
+    'nombres_quantites': '🔢 Nombres & quantités',
+    'position_direction': '🧭 Position & direction',
+    'temps_calendrier': '📅 Temps & calendrier',
+    'meteo_saisons': '🌤️ Météo & saisons',
+    'nature_animaux': '🌿 Nature & animaux',
+    'lieux': '🏛️ Lieux & bâtiments',
+    'objets': '📦 Objets du quotidien',
+    'maison_quotidien': '🏠 Maison & quotidien',
+    'medias_technologie': '💻 Médias & technologie',
+    'loisirs': '🎮 Loisirs & hobbies',
+    'achats_argent': '💳 Achats & argent',
+    'transports': '🚗 Transports & déplacements',
+    'travail_entreprise': '💼 Travail & entreprise',
+    'ecole_apprentissage': '📚 École & apprentissage',
+    'nourriture_boissons': '🍱 Nourriture & boissons',
+    'vetements': '👕 Vêtements',
+    'corps_sante': '🫀 Corps & santé',
+    'personnes_famille': '👨‍👩‍👧‍👦 Personnes & famille',
+    'emotions_sentiments': '❤️ Émotions & sentiments'
 };
 
 /* ══════════════════════════════════════════════════
@@ -532,16 +557,12 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
     });
 
     const sortedCats = Object.keys(grouped).sort();
-    const dueCount = countDueItems(data);
 
     let html = `<div class="vocab-container">`;
 
-    html += `<div style="display:flex;gap:8px">
-        <button class="vocab-review-cta" style="flex:1" onclick="showVocabReviewModeSelector()">
-            🔁 Réviser${dueCount > 0 ? ` <span class="vocab-review-badge">${dueCount}</span>` : ''}
-        </button>
-        ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshVocabList)">☑ Sélectionner</button>` : ''}
-    </div>`;
+    html += !state.bulkSelectMode ? `<div style="display:flex;gap:8px">
+        <button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshVocabList)">☑ Sélectionner</button>
+    </div>` : '';
 
     html += sortedCats.map(cat => {
         const label = VOCAB_CATEGORY_MAP[cat] || `📌 ${cat}`;
