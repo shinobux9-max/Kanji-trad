@@ -482,7 +482,7 @@ export function renderSectionBlocks(section) {
             blockHtml += `<ul class="section-list">${block.list.map(item => `<li>${mdBold(item)}</li>`).join('')}</ul>`;
         }
         return `
-            <div class="detail-section">
+            <div class="detail-section grammar-block-box">
                 <div class="section-label">${block.sub_title || 'Détail'}</div>
                 <div class="section-content-box">${blockHtml}</div>
             </div>`;
@@ -703,16 +703,14 @@ export function showGrammarDetail(lessonId, isBack = false) {
         }).join('') : ''}
 
         ${resolvedExamples.length > 0 ? `
-            <div class="examples-section">
-                <div class="section-label">EXEMPLES</div>
-                <div class="examples-container">
-                    ${resolvedExamples.map(example => buildSpeakableExampleHtml(
-                        highlightText(example.japanese || '', example.highlight || ''),
-                        example.romaji || '',
-                        example.french || '',
-                        stripRubyForSpeech(example.japanese || '').replace(/'/g, "\\'")
-                    )).join('')}
-                </div>
+            <div class="examples-section-label">EXEMPLES</div>
+            <div class="examples-container">
+                ${resolvedExamples.map(example => buildSpeakableExampleHtml(
+                    highlightText(example.japanese || '', example.highlight || ''),
+                    example.romaji || '',
+                    example.french || '',
+                    stripRubyForSpeech(example.japanese || '').replace(/'/g, "\\'")
+                )).join('')}
             </div>
         ` : ''}
 

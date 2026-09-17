@@ -68,11 +68,13 @@
 
 .detail-section { padding: 16px; border: 1px solid var(--border); border-radius: 10px; }
 .grammar-usage-box { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); }
+.grammar-block-box { background: transparent; }
 .detail-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
 .section-content-box { font-size: 0.8125rem; color: #fff; line-height: 1.6; }
 
 .examples-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
 .examples-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+.examples-section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
 .examples-container { display: flex; flex-direction: column; gap: 12px; }
 .example-jp { font-size: 1rem; color: #fff; margin-bottom: 4px; font-weight: 500; line-height: 1.6; }
 .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 4px; }
