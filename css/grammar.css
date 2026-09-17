@@ -73,12 +73,9 @@
 .examples-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
 .examples-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
 .examples-container { display: flex; flex-direction: column; gap: 12px; }
-.example-item { padding: 12px; background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent); border-radius: 6px; position: relative; }
 .example-jp { font-size: 1rem; color: #fff; margin-bottom: 4px; font-weight: 500; line-height: 1.6; }
 .example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 4px; }
 .example-fr { font-size: 0.75rem; color: var(--gray); }
-.speak-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--accent); cursor: pointer; font-size: 1.125rem; }
-.speak-btn:hover { opacity: 0.7; }
 
 .highlight-grammar { color: var(--accent); font-weight: bold; }
 
@@ -102,7 +99,6 @@
 .section-list li::marker { color: var(--accent); }
 
 /* Mise en évidence d'un mot/expression au sein d'un paragraphe */
-.inline-highlight { color: var(--accent); font-weight: 600; }
 
 /* Rendu du markdown dans les sections */
 .md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }

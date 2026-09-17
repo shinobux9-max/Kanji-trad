@@ -35,10 +35,10 @@ body {
 /* ══════════════════════════════════════════════════
    THÈME NAVY GLOW — halo lumineux sur les cartes principales
 ══════════════════════════════════════════════════ */
-.dash-card, .prog-level-card, .streak-compact, .streak-detail-card,
+.dash-card, .prog-level-card, .streak-detail-card,
 .progression-stat-card, .grammar-point-box, .detail-section, .examples-section,
 .apprendre-card, .vocab-detail-main-box, .vocab-meanings, .vocab-example-box,
-.vocab-nuance-box, .lesson-card-in-box, .vocab-word-card, .vocab-pill-card,
+.vocab-nuance-box, .lesson-card-in-box, .vocab-pill-card,
 .niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
 .review-mode-btn, .cat-header, .review-mode-selector .back-btn,
 .review-option-btn, .kana-cell, .vocab-category-header, .kanji-grid-cell, .unit-box-header, .readings-box, .info-card {

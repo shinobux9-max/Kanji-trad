@@ -10,10 +10,6 @@
 /* ══════════════════════════════════════════════════
    MICRO-INTERACTIONS - Parcours "Commençons l'apprentissage"
 ══════════════════════════════════════════════════ */
-.lesson-example-hidden { display: none; }
-.lesson-example-reveal.open .lesson-example-hidden { display: block; }
-.lesson-example-reveal.open .lesson-example-hint { display: none; }
-.lesson-example-hint { font-size: 0.6875rem; color: var(--gray); text-align: center; margin-top: 8px; }
 
 /* Texte flottant centré, un paragraphe à la fois (au lieu d'un mur de texte d'un coup) */
 .lesson-tap-advance { cursor: pointer; min-height: calc(100vh - 220px); display: flex; flex-direction: column; justify-content: center; }
