@@ -1,0 +1,742 @@
+[
+  {
+    "particle": "は",
+    "romaji": "wa",
+    "grammar_id": "n5_g_8",
+    "examples": [
+      {
+        "japanese": "<ruby>私<rt>わたし</rt></ruby> **は** <ruby>学生<rt>がくせい</rt></ruby> です 。",
+        "romaji": "watashi **wa** gakusei desu.",
+        "french": "**Je** suis étudiant.",
+        "highlight": ["は", "wa"]
+      },
+      {
+        "japanese": "これ **は** <ruby>本<rt>ほん</rt></ruby> です 。",
+        "romaji": "kore **wa** hon desu.",
+        "french": "Ceci **est** un livre.",
+        "highlight": ["は", "wa"]
+      },
+      {
+        "japanese": "<ruby>今日<rt>きょう</rt></ruby> **は** <ruby>暑<rt>あつ</rt></ruby>い です 。",
+        "romaji": "kyou **wa** atsui desu.",
+        "french": "Aujourd'hui, il fait **chaud**.",
+        "highlight": ["は", "wa"]
+      },
+      {
+        "japanese": "あの <ruby>人<rt>ひと</rt></ruby> **は** <ruby>先生<rt>せんせい</rt></ruby> です 。",
+        "romaji": "ano hito **wa** sensei desu.",
+        "french": "Cette personne **est** professeur.",
+        "highlight": ["は", "wa"]
+      },
+      {
+        "japanese": "<ruby>日本<rt>にほん</rt></ruby> **は** <ruby>綺麗<rt>きれい</rt></ruby> です 。",
+        "romaji": "nihon **wa** kirei desu.",
+        "french": "Le **Japon** est beau.",
+        "highlight": ["は", "wa"]
+      }
+    ]
+  },
+  {
+    "particle": "が",
+    "romaji": "ga",
+    "grammar_id": "n5_g_9",
+    "examples": [
+      {
+        "japanese": "<ruby>猫<rt>ねこ</rt></ruby> **が** います 。",
+        "romaji": "neko **ga** imasu.",
+        "french": "Il y a **un chat**.",
+        "highlight": ["が", "ga"]
+      },
+      {
+        "japanese": "<ruby>私<rt>わたし</rt></ruby> **が** 行きます 。",
+        "romaji": "watashi **ga** ikimasu.",
+        "french": "C'est **moi** qui y vais.",
+        "highlight": ["が", "ga"]
+      },
+      {
+        "japanese": "<ruby>日本語<rt>にほんご</rt></ruby> **が** <ruby>分<rt>わ</rt></ruby>かります 。",
+        "romaji": "nihongo **ga** wakarimasu.",
+        "french": "Je comprends **le japonais**.",
+        "highlight": ["が", "ga"]
+      },
+      {
+        "japanese": "<ruby>雨<rt>あめ</rt></ruby> **が** <ruby>降<rt>ふ</rt></ruby>っています 。",
+        "romaji": "ame **ga** futte iru.",
+        "french": "Il **pleut**.",
+        "highlight": ["が", "ga"]
+      },
+      {
+        "japanese": "<ruby>車<rt>くるま</rt></ruby> **が** 欲しい です 。",
+        "romaji": "kuruma **ga** hoshii desu.",
+        "french": "Je veux **une voiture**.",
+        "highlight": ["が", "ga"]
+      }
+    ]
+  },
+  {
+    "particle": "を",
+    "romaji": "o",
+    "grammar_id": "n5_g_10",
+    "examples": [
+      {
+        "japanese": "<ruby>本<rt>ほん</rt></ruby> **を** <ruby>読<rt>よ</rt></ruby>みます 。",
+        "romaji": "hon **o** yomimasu.",
+        "french": "Je lis **un livre**.",
+        "highlight": ["を", "o"]
+      },
+      {
+        "japanese": "<ruby>水<rt>みず</rt></ruby> **を** <ruby>飲<rt>の</rt></ruby>みます 。",
+        "romaji": "mizu **o** nomimasu.",
+        "french": "Je bois **de l'eau**.",
+        "highlight": ["を", "o"]
+      },
+      {
+        "japanese": "<ruby>映画<rt>えいが</rt></ruby> **を** <ruby>見<rt>み</rt></ruby>ます 。",
+        "romaji": "eiga **o** mimasu.",
+        "french": "Je regarde **un film**.",
+        "highlight": ["を", "o"]
+      },
+      {
+        "japanese": "りんご **を** <ruby>食<rt>た</rt></ruby>べます 。",
+        "romaji": "ringo **o** tabemasu.",
+        "french": "Je mange **une pomme**.",
+        "highlight": ["を", "o"]
+      },
+      {
+        "japanese": "<ruby>音楽<rt>おんがく</rt></ruby> **を** <ruby>聞<rt>き</rt></ruby>きます 。",
+        "romaji": "ongaku **o** kikimasu.",
+        "french": "J'écoute **de la musique**.",
+        "highlight": ["を", "o"]
+      }
+    ]
+  },
+  {
+    "particle": "に",
+    "romaji": "ni",
+    "grammar_id": "n5_g_11",
+    "examples": [
+      {
+        "japanese": "<ruby>東京<rt>とうきょう</rt></ruby> **に** <ruby>住<rt>す</rt></ruby>んでいます 。",
+        "romaji": "toukyou **ni** sunde imasu.",
+        "french": "J'habite **à** Tokyo.",
+        "highlight": ["に", "ni"]
+      },
+      {
+        "japanese": "<ruby>学校<rt>がっこう</rt></ruby> **に** <ruby>行<rt>い</rt></ruby>きます 。",
+        "romaji": "gakkou **ni** ikimasu.",
+        "french": "Je vais **à** l'école.",
+        "highlight": ["に", "ni"]
+      },
+      {
+        "japanese": "7<ruby>時<rt>じ</rt></ruby> **に** <ruby>起<rt>お</rt></ruby>きます 。",
+        "romaji": "shichi-ji **ni** okimasu.",
+        "french": "Je me lève **à** 7 heures.",
+        "highlight": ["に", "ni"]
+      },
+      {
+        "japanese": "<ruby>机<rt>つくえ</rt></ruby> の <ruby>上<rt>うえ</rt></ruby> **に** <ruby>本<rt>ほん</rt></ruby> が あります 。",
+        "romaji": "tsukue no ue **ni** hon ga arimasu.",
+        "french": "Il y a un livre **sur** le bureau.",
+        "highlight": ["に", "ni"]
+      },
+      {
+        "japanese": "<ruby>友達<rt>ともだち</rt></ruby> **に** プレゼント を あげました 。",
+        "romaji": "tomodachi **ni** purezento o agemashita.",
+        "french": "J'ai donné un cadeau **à** mon ami.",
+        "highlight": ["に", "ni"]
+      }
+    ]
+  },
+  {
+    "particle": "で",
+    "romaji": "de",
+    "grammar_id": "n5_g_12",
+    "examples": [
+      {
+        "japanese": "<ruby>図書館<rt>としょかん</rt></ruby> **で** <ruby>勉強<rt>べんきょう</rt></ruby>します 。",
+        "romaji": "toshokan **de** benkyou shimasu.",
+        "french": "J'étudie **à** la bibliothèque.",
+        "highlight": ["で", "de"]
+      },
+      {
+        "japanese": "<ruby>箸<rt>はし</rt></ruby> **で** ごはん を <ruby>食<rt>た</rt></ruby>べます 。",
+        "romaji": "hashi **de** gohan o tabemasu.",
+        "french": "Je mange **avec** des baguettes.",
+        "highlight": ["で", "de"]
+      },
+      {
+        "japanese": "<ruby>日本語<rt>にほんご</rt></ruby> **で** <ruby>話<rt>はな</rt></ruby>して ください 。",
+        "romaji": "nihongo **de** hanashite kudasai.",
+        "french": "Parlez **en** japonais, s'il vous plaît.",
+        "highlight": ["で", "de"]
+      },
+      {
+        "japanese": "<ruby>家<rt>いえ</rt></ruby> **で** 映画 を 見ます 。",
+        "romaji": "ie **de** eiga o mimasu.",
+        "french": "Je regarde un film **à** la maison.",
+        "highlight": ["で", "de"]
+      },
+      {
+        "japanese": "バス **で** <ruby>会社<rt>かいしゃ</rt></ruby> へ 行きます 。",
+        "romaji": "basu **de** kaisha e ikimasu.",
+        "french": "Je vais au bureau **en** bus.",
+        "highlight": ["で", "de"]
+      }
+    ]
+  },
+  {
+    "particle": "へ",
+    "romaji": "e",
+    "grammar_id": "n5_g_13",
+    "examples": [
+      {
+        "japanese": "<ruby>日本<rt>にほん</rt></ruby> **へ** <ruby>行<rt>い</rt></ruby>きます 。",
+        "romaji": "nihon **e** ikimasu.",
+        "french": "Je vais **vers** le Japon.",
+        "highlight": ["へ", "e"]
+      },
+      {
+        "japanese": "<ruby>家<rt>いえ</rt></ruby> **へ** <ruby>帰<rt>かえ</rt></ruby>ります 。",
+        "romaji": "ie **e** kaerimasu.",
+        "french": "Je rentre **vers** la maison.",
+        "highlight": ["へ", "e"]
+      },
+      {
+        "japanese": "<ruby>学校<rt>がっこう</rt></ruby> **へ** <ruby>歩<rt>ある</rt></ruby>いて 行きます 。",
+        "romaji": "gakkou **e** aruite ikimasu.",
+        "french": "Je vais **à** l'école à pied.",
+        "highlight": ["へ", "e"]
+      },
+      {
+        "japanese": "<ruby>明日<rt>あした</rt></ruby> フランス **へ** <ruby>出発<rt>しゅっぱつ</rt></ruby>します 。",
+        "romaji": "ashita furansu **e** shuppatsu shimasu.",
+        "french": "Je pars **pour** la France demain.",
+        "highlight": ["へ", "e"]
+      },
+      {
+        "japanese": "どこ **へ** 行きます か 。",
+        "romaji": "doko **e** ikimasu ka.",
+        "french": "Où allez-vous **?** (Vers où allez-vous ?)",
+        "highlight": ["へ", "e"]
+      }
+    ]
+  },
+  {
+    "particle": "と",
+    "romaji": "to",
+    "grammar_id": "n5_g_14",
+    "examples": [
+      {
+        "japanese": "私 **と** <ruby>友達<rt>ともだち</rt></ruby> が 行きます 。",
+        "romaji": "watashi **to** tomodachi ga ikimasu.",
+        "french": "Mon ami **et** moi y allons.",
+        "highlight": ["と", "to"]
+      },
+      {
+        "japanese": "りんご **と** バナナ を <ruby>買<rt>か</rt></ruby>いました 。",
+        "romaji": "ringo **to** banana o kaimashita.",
+        "french": "J'ai acheté des pommes **et** des bananes.",
+        "highlight": ["と", "to"]
+      },
+      {
+        "japanese": "<ruby>家族<rt>かぞく</rt></ruby> **と** <ruby>日本<rt>にほん</rt></ruby> に <ruby>住<rt>す</rt></ruby>んでいます 。",
+        "romaji": "kazoku **to** nihon ni sunde imasu.",
+        "french": "J'habite au Japon **avec** ma famille.",
+        "highlight": ["と", "to"]
+      },
+      {
+        "japanese": "彼 **と** <ruby>映画<rt>えいが</rt></ruby> を 見ました 。",
+        "romaji": "kare **to** eiga o mimashita.",
+        "french": "J'ai regardé un film **avec** lui.",
+        "highlight": ["と", "to"]
+      },
+      {
+        "japanese": "猫 **と** <ruby>犬<rt>いぬ</rt></ruby> が 好き です 。",
+        "romaji": "neko **to** inu ga suki desu.",
+        "french": "J'aime les chats **et** les chiens.",
+        "highlight": ["と", "to"]
+      }
+    ]
+  },
+  {
+    "particle": "も",
+    "romaji": "mo",
+    "grammar_id": "n5_g_15",
+    "examples": [
+      {
+        "japanese": "<ruby>私<rt>わたし</rt></ruby> **も** <ruby>学生<rt>がくせい</rt></ruby> です 。",
+        "romaji": "watashi **mo** gakusei desu.",
+        "french": "Je suis étudiant **aussi**.",
+        "highlight": ["も", "mo"]
+      },
+      {
+        "japanese": "これ **も** <ruby>美味<rt>おい</rt></ruby>しい です 。",
+        "romaji": "kore **mo** oishii desu.",
+        "french": "Ceci **aussi** est délicieux.",
+        "highlight": ["も", "mo"]
+      },
+      {
+        "japanese": "<ruby>昨日<rt>きのう</rt></ruby> **も** <ruby>今日<rt>きょう</rt></ruby> **も** <ruby>暑<rt>あつ</rt></ruby>い です 。",
+        "romaji": "kinou **mo** kyou **mo** atsui desu.",
+        "french": "Il fait chaud hier **et aussi** aujourd'hui.",
+        "highlight": ["も", "mo"]
+      },
+      {
+        "japanese": "コーヒー **も** お茶 **も** 好き です 。",
+        "romaji": "koohii **mo** ocha **mo** suki desu.",
+        "french": "J'aime **autant** le café **que** le thé.",
+        "highlight": ["も", "mo"]
+      },
+      {
+        "japanese": "どこ **も** 行きません でした 。",
+        "romaji": "doko **mo** ikimasen deshita.",
+        "french": "Je ne suis allé **nulle part**.",
+        "highlight": ["も", "mo"]
+      }
+    ]
+  },
+  {
+    "particle": "の",
+    "romaji": "no",
+    "grammar_id": "n5_g_16",
+    "examples": [
+      {
+        "japanese": "これ **は** <ruby>私<rt>わたし</rt></ruby> **の** <ruby>本<rt>ほん</rt></ruby> です 。",
+        "romaji": "kore **wa** watashi **no** hon desu.",
+        "french": "Ceci est **mon** livre (le livre **de** moi).",
+        "highlight": ["の", "no"]
+      },
+      {
+        "japanese": "<ruby>日本語<rt>にほんご</rt></ruby> **の** <ruby>先生<rt>せんせい</rt></ruby> です 。",
+        "romaji": "nihongo **no** sensei desu.",
+        "french": "C'est un professeur **de** japonais.",
+        "highlight": ["の", "no"]
+      },
+      {
+        "japanese": "<ruby>大学<rt>だいがく</rt></ruby> **の** <ruby>友達<rt>ともだち</rt></ruby> です 。",
+        "romaji": "daigaku **no** tomodachi desu.",
+        "french": "C'est un ami **de l'**université.",
+        "highlight": ["の", "no"]
+      },
+      {
+        "japanese": "あそこ **の** スーパー は 安い です 。",
+        "romaji": "asoko **no** suupaa wa yasui desu.",
+        "french": "Le supermarché **de** là-bas est bon marché.",
+        "highlight": ["の", "no"]
+      },
+      {
+        "japanese": "この <ruby>車<rt>くるま</rt></ruby> **は** 誰 **の** です か 。",
+        "romaji": "kono kuruma **wa** dare **no** desu ka.",
+        "french": "À **qui** est cette voiture ?",
+        "highlight": ["の", "no"]
+      }
+    ]
+  },
+  {
+    "particle": "か",
+    "romaji": "ka",
+    "grammar_id": "n5_g_17",
+    "examples": [
+      {
+        "japanese": "これ は <ruby>本<rt>ほん</rt></ruby> です **か** 。",
+        "romaji": "kore wa hon desu **ka**.",
+        "french": "Est-ce **que** c'est un livre ?",
+        "highlight": ["か", "ka"]
+      },
+      {
+        "japanese": "<ruby>明日<rt>あした</rt></ruby> は <ruby>雨<rt>あめ</rt></ruby> です **か** 。",
+        "romaji": "ashita wa ame desu **ka**.",
+        "french": "Est-ce qu'il pleuvra **demain** ?",
+        "highlight": ["か", "ka"]
+      },
+      {
+        "japanese": "何時 に <ruby>起<rt>お</rt></ruby>きます **か** 。",
+        "romaji": "nan-ji ni okimasu **ka**.",
+        "french": "À quelle heure te **lèves-tu** ?",
+        "highlight": ["か", "ka"]
+      },
+      {
+        "japanese": "コーヒー と お茶 、どちら が いい です **か** 。",
+        "romaji": "koohii to ocha, dochira ga ii desu **ka**.",
+        "french": "Du café ou du thé, **lequel** préférez-vous ?",
+        "highlight": ["か", "ka"]
+      },
+      {
+        "japanese": "あの <ruby>人<rt>ひと</rt></ruby> は 誰 です **か** 。",
+        "romaji": "ano hito wa dare desu **ka**.",
+        "french": "Qui est **cette** personne ?",
+        "highlight": ["か", "ka"]
+      }
+    ]
+  },
+  {
+    "particle": "ね",
+    "romaji": "ne",
+    "grammar_id": "n5_g_18",
+    "examples": [
+      {
+        "japanese": "きょう は <ruby>暑<rt>あつ</rt></ruby>い です **ね** 。",
+        "romaji": "kyou wa atsui desu **ne**.",
+        "french": "Il fait chaud aujourd'hui, **n'est-ce pas** ?",
+        "highlight": ["ね", "ne"]
+      },
+      {
+        "japanese": "この <ruby>料理<rt>りょうり</rt></ruby> は <ruby>美味<rt>おい</rt></ruby>しい です **ね** 。",
+        "romaji": "kono ryouri wa oishii desu **ne**.",
+        "french": "Ce plat est délicieux, **tu ne trouves pas** ?",
+        "highlight": ["ね", "ne"]
+      },
+      {
+        "japanese": "あした 、また <ruby>会<rt>あ</rt></ruby>いましょう **ね** 。",
+        "romaji": "ashita, mata aimashou **ne**.",
+        "french": "On se revoit demain, **d'accord** ?",
+        "highlight": ["ね", "ne"]
+      },
+      {
+        "japanese": "<ruby>日本語<rt>にほんご</rt></ruby> は <ruby>難<rt>むずか</rt></ruby>しい です **ね** 。",
+        "romaji": "nihongo wa muzukashii desu **ne**.",
+        "french": "Le japonais est difficile, **n'est-ce pas** ?",
+        "highlight": ["ね", "ne"]
+      },
+      {
+        "japanese": "きれい な <ruby>写真<rt>しゃしん</rt></ruby> です **ね** 。",
+        "romaji": "kirei na shashin desu **ne**.",
+        "french": "C'est une belle photo, **hein** ?",
+        "highlight": ["ね", "ne"]
+      }
+    ]
+  },
+  {
+    "particle": "よ",
+    "romaji": "yo",
+    "grammar_id": "n5_g_19",
+    "examples": [
+      {
+        "japanese": "この <ruby>本<rt>ほん</rt></ruby> は <ruby>面白<rt>おもしろ</rt></ruby>い です **よ** 。",
+        "romaji": "kono hon wa omoshiroi desu **yo**.",
+        "french": "Ce livre est intéressant, **je t'assure**.",
+        "highlight": ["よ", "yo"]
+      },
+      {
+        "japanese": "<ruby>明日<rt>あした</rt></ruby> は <ruby>日曜日<rt>にちようび</rt></ruby> です **よ** 。",
+        "romaji": "ashita wa nichiyoubi desu **yo**.",
+        "french": "Demain, c'est **dimanche** !",
+        "highlight": ["よ", "yo"]
+      },
+      {
+        "japanese": "あぶない です **よ** 。",
+        "romaji": "abunai desu **yo**.",
+        "french": "C'est **dangereux** !",
+        "highlight": ["よ", "yo"]
+      },
+      {
+        "japanese": "<ruby>私<rt>わたし</rt></ruby> が <ruby>行<rt>い</rt></ruby>きます **よ** 。",
+        "romaji": "watashi ga ikimasu **yo**.",
+        "french": "C'est **moi** qui y vais (laisse-moi faire).",
+        "highlight": ["よ", "yo"]
+      },
+      {
+        "japanese": "<ruby>傘<rt>かさ</rt></ruby> を <ruby>持<rt>も</rt></ruby>っていった <ruby>方<rt>ほう</rt></ruby> が いい です **よ** 。",
+        "romaji": "kasa o motte itta hou ga ii desu **yo**.",
+        "french": "Il vaudrait mieux prendre un parapluie, **tu sais**.",
+        "highlight": ["よ", "yo"]
+      }
+    ]
+  },
+  {
+    "particle": "から",
+    "romaji": "kara",
+    "grammar_id": "n5_g_20",
+    "examples": [
+      {
+        "japanese": "<ruby>東京<rt>とうきょう</rt></ruby> **から** <ruby>来<rt>き</rt></ruby>ました 。",
+        "romaji": "toukyou **kara** kimashita.",
+        "french": "Je viens **de** Tokyo.",
+        "highlight": ["から", "kara"]
+      },
+      {
+        "japanese": "9<ruby>時<rt>じ</rt></ruby> **から** <ruby>仕事<rt>しごと</rt></ruby> が 始まります 。",
+        "romaji": "ku-ji **kara** shigoto ga hajimarimasu.",
+        "french": "Le travail commence **à partir de** 9 heures.",
+        "highlight": ["から", "kara"]
+      },
+      {
+        "japanese": "<ruby>家<rt>いえ</rt></ruby> **から** <ruby>会社<rt>かいしゃ</rt></ruby> まで <ruby>歩<rt>ある</rt></ruby>きます 。",
+        "romaji": "ie **kara** kaisha made arukimasu.",
+        "french": "Je marche **de** la maison jusqu'au bureau.",
+        "highlight": ["から", "kara"]
+      },
+      {
+        "japanese": "お<ruby>酒<rt>さけ</rt></ruby> **から** ジュース を 作ります 。",
+        "romaji": "osake **kara** juusu o tsukurimasu.",
+        "french": "On fabrique du jus **à partir** de...",
+        "highlight": ["から", "kara"]
+      },
+      {
+        "japanese": "昼<rt>ひる</rt></ruby> ごはん を <ruby>食<rt>た</rt></ruby>べた **から** 、出かけます 。",
+        "romaji": "hiru gohan o tabeta **kara**, dekakemasu.",
+        "french": "Je sors **après** avoir mangé le déjeuner.",
+        "highlight": ["から", "kara"]
+      }
+    ]
+  },
+  {
+    "particle": "まで",
+    "romaji": "made",
+    "grammar_id": "n5_g_21",
+    "examples": [
+      {
+        "japanese": "<ruby>駅<rt>えき</rt></ruby> **まで** <ruby>歩<rt>ある</rt></ruby>いて 行きます 。",
+        "romaji": "eki **made** aruite ikimasu.",
+        "french": "J'y vais à pied **jusqu'à** la gare.",
+        "highlight": ["まで", "made"]
+      },
+      {
+        "japanese": "月曜日 **から** 金曜日 **まで** <ruby>働<rt>はたら</rt></ruby>きます 。",
+        "romaji": "getsuyoubi **kara** kinyoubi **made** hatarakimasu.",
+        "french": "Je travaille **de** lundi **jusqu'à** vendredi.",
+        "highlight": ["まで", "made"]
+      },
+      {
+        "japanese": "5<ruby>時<rt>じ</rt></ruby> **まで** ここ に います 。",
+        "romaji": "go-ji **made** koko ni imasu.",
+        "french": "Je reste ici **jusqu'à** 5 heures.",
+        "highlight": ["まで", "made"]
+      },
+      {
+        "japanese": "明日 **まで** に <ruby>宿題<rt>しゅくだい</rt></ruby> を 出して ください 。",
+        "romaji": "ashita **made** ni shukudai o dashite kudasai.",
+        "french": "Veuillez rendre vos devoirs **d'ici** demain.",
+        "highlight": ["までに", "made ni"]
+      },
+      {
+        "japanese": "どこ **まで** 行きます か 。",
+        "romaji": "doko **made** ikimasu ka.",
+        "french": "**Jusqu'où** allez-vous ?",
+        "highlight": ["まで", "made"]
+      }
+    ]
+  },
+  {
+    "particle": "より",
+    "romaji": "yori",
+    "grammar_id": "n5_g_22",
+    "examples": [
+      {
+        "japanese": "りんご は バナナ **より** <ruby>赤<rt>あか</rt></ruby>い です 。",
+        "romaji": "ringo wa banana **yori** akai desu.",
+        "french": "La pomme est plus rouge **que** la banane.",
+        "highlight": ["より", "yori"]
+      },
+      {
+        "japanese": "<ruby>今日<rt>きょう</rt></ruby> は <ruby>昨日<rt>きのう</rt></ruby> **より** 寒いです 。",
+        "romaji": "kyou wa kinou **yori** samui desu.",
+        "french": "Il fait plus froid aujourd'hui **qu'**hier.",
+        "highlight": ["より", "yori"]
+      },
+      {
+        "japanese": "バス **より** 電車 の 方 が 早い です 。",
+        "romaji": "basu **yori** densha no hou ga hayai desu.",
+        "french": "Le train est plus rapide **que** le bus.",
+        "highlight": ["より", "yori"]
+      },
+      {
+        "japanese": "私 は <ruby>犬<rt>いぬ</rt></ruby> **より** 猫 が 好き です 。",
+        "romaji": "watashi wa inu **yori** neko ga suki desu.",
+        "french": "J'aime les chats **plus que** les chiens.",
+        "highlight": ["より", "yori"]
+      },
+      {
+        "japanese": "思っていた **より** 難しかったです 。",
+        "romaji": "omotte ita **yori** muzukashikatta desu.",
+        "french": "C'était plus difficile **que** ce que je pensais.",
+        "highlight": ["より", "yori"]
+      }
+    ]
+  },
+  {
+    "particle": "だけ",
+    "romaji": "dake",
+    "grammar_id": "n5_g_23",
+    "examples": [
+      {
+        "japanese": "りんご を 1つ **だけ** <ruby>食<rt>た</rt></ruby>べました 。",
+        "romaji": "ringo o hitotsu **dake** tabemashita.",
+        "french": "J'ai mangé **seulement** une pomme.",
+        "highlight": ["だけ", "dake"]
+      },
+      {
+        "japanese": "<ruby>私<rt>わたし</rt></ruby> **だけ** 日本語 が 分かります 。",
+        "romaji": "watashi **dake** nihongo ga wakarimasu.",
+        "french": "**Seul** moi comprends le japonais.",
+        "highlight": ["だけ", "dake"]
+      },
+      {
+        "japanese": "今日 は <ruby>時間<rt>じかん</rt></ruby> が 少し **だけ** あります 。",
+        "romaji": "kyou wa jikan ga sukoshi **dake** arimasu.",
+        "french": "Aujourd'hui, j'ai **seulement** un peu de temps.",
+        "highlight": ["だけ", "dake"]
+      },
+      {
+        "japanese": "水 **だけ** を <ruby>飲<rt>の</rt></ruby>みました 。",
+        "romaji": "mizu **dake** o nomimashita.",
+        "french": "J'ai bu **uniquement** de l'eau.",
+        "highlight": ["だけ", "dake"]
+      },
+      {
+        "japanese": "見 る **だけ** です 。",
+        "romaji": "miru **dake** desu.",
+        "french": "C'est **juste** pour regarder.",
+        "highlight": ["だけ", "dake"]
+      }
+    ]
+  },
+  {
+    "particle": "ごろ",
+    "romaji": "goro",
+    "grammar_id": "n5_g_24",
+    "examples": [
+      {
+        "japanese": "毎朝 7<ruby>時<rt>じ</rt></ruby> **ごろ** に <ruby>起<rt>お</rt></ruby>きます 。",
+        "romaji": "maiasa shichi-ji **goro** ni okimasu.",
+        "french": "Je me lève **vers** 7 heures tous les matins.",
+        "highlight": ["ごろ", "goro"]
+      },
+      {
+        "japanese": "<ruby>夜<rt>よる</rt></ruby> 10<ruby>時<rt>じ</rt></ruby> **ごろ** <ruby>寝<rt>ね</rt></ruby>ます 。",
+        "romaji": "yoru juu-ji **goro** nemasu.",
+        "french": "Je dors **vers** 10 heures du soir.",
+        "highlight": ["ごろ", "goro"]
+      },
+      {
+        "japanese": "来年 の 4<ruby>月<rt>がつ</rt></ruby> **ごろ** 日本 へ 行きます 。",
+        "romaji": "rainen no shi-gatsu **goro** nihon e ikimasu.",
+        "french": "J'irai au Japon **vers** le mois d'avril de l'année prochaine.",
+        "highlight": ["ごろ", "goro"]
+      },
+      {
+        "japanese": "何時 **ごろ** 駅 に 着きます か 。",
+        "romaji": "nan-ji **goro** eki ni tsukimasu ka.",
+        "french": "Arriverez-vous à la gare **vers** quelle heure ?",
+        "highlight": ["ごろ", "goro"]
+      },
+      {
+        "japanese": "お昼 **ごろ** ごはん を 食べます 。",
+        "romaji": "ohiru **goro** gohan o tabemasu.",
+        "french": "Je mange **vers** midi.",
+        "highlight": ["ごろ", "goro"]
+      }
+    ]
+  },
+  {
+    "particle": "くらい / ぐらい",
+    "romaji": "kurai / gurai",
+    "grammar_id": "n5_g_25",
+    "examples": [
+      {
+        "japanese": "<ruby>家<rt>いえ</rt></ruby> から 駅 まで 20<ruby>分<rt>ふん</rt></ruby> **くらい** かかります 。",
+        "romaji": "ie kara eki made nijuppun **kurai** kakarimasu.",
+        "french": "Il faut **environ** 20 minutes de la maison à la gare.",
+        "highlight": ["くらい", "kurai"]
+      },
+      {
+        "japanese": "カバン に 1万円 **ぐらい** あります 。",
+        "romaji": "kaban ni ichiman-en **gurai** arimasu.",
+        "french": "Il y a **environ** 10 000 yens dans le sac.",
+        "highlight": ["ぐらい", "gurai"]
+      },
+      {
+        "japanese": "<ruby>毎日<rt>まいにち</rt></ruby> 30<ruby>分<rt>ぷん</rt></ruby> **くらい** <ruby>日本語<rt>にほんご</rt></ruby> を 勉強します 。",
+        "romaji": "mainichi sanjuppun **kurai** nihongo o benkyou shimasu.",
+        "french": "J'étudie le japonais **pendant environ** 30 minutes chaque jour.",
+        "highlight": ["くらい", "kurai"]
+      },
+      {
+        "japanese": "りんご を 3つ **ぐらい** 買いました 。",
+        "romaji": "ringo o mittsu **gurai** kaimashita.",
+        "french": "J'ai acheté **environ** 3 pommes.",
+        "highlight": ["ぐらい", "gurai"]
+      },
+      {
+        "japanese": "パーティー に 50<ruby>人<rt>にん</rt></ruby> **くらい** 来ました 。",
+        "romaji": "paatii ni gojuu-nin **kurai** kimashita.",
+        "french": "Il y a eu **environ** 50 personnes venues à la fête.",
+        "highlight": ["くらい", "kurai"]
+      }
+    ]
+  },
+  {
+    "particle": "や",
+    "romaji": "ya",
+    "grammar_id": "n5_g_26",
+    "examples": [
+      {
+        "japanese": "カバン の <ruby>中<rt>なか</rt></ruby> に <ruby>本<rt>ほん</rt></ruby> **や** ノート が あります 。",
+        "romaji": "kaban no naka ni hon **ya** nooto ga arimasu.",
+        "french": "Il y a des livres **et** des cahiers (entre autres) dans le sac.",
+        "highlight": ["や", "ya"]
+      },
+      {
+        "japanese": "<ruby>日曜日<rt>にちようび</rt></ruby> は <ruby>映画<rt>えいが</rt></ruby> **や** 買い物 に 行きます 。",
+        "romaji": "nichiyoubi wa eiga **ya** kaimono ni ikimasu.",
+        "french": "Le dimanche, je vais voir un film **et** faire des courses (entre autres).",
+        "highlight": ["や", "ya"]
+      },
+      {
+        "japanese": "りんご **や** バナナ を <ruby>食<rt>た</rt></ruby>べました 。",
+        "romaji": "ringo **ya** banana o tabemashita.",
+        "french": "J'ai mangé des pommes **et** des bananes (entre autres).",
+        "highlight": ["や", "ya"]
+      },
+      {
+        "japanese": "<ruby>部屋<rt>へや</rt></ruby> に 机 **や** ベッド が あります 。",
+        "romaji": "heya ni tsukue **ya** beddo ga arimasu.",
+        "french": "Il y a un bureau **et** un lit dans la chambre (entre autres).",
+        "highlight": ["や", "ya"]
+      },
+      {
+        "japanese": "コーヒー **や** お茶 が 好き です 。",
+        "romaji": "koohii **ya** ocha ga suki desu.",
+        "french": "J'aime le café **et** le thé (entre autres).",
+        "highlight": ["や", "ya"]
+      }
+    ]
+  },
+  {
+    "particle": "など",
+    "romaji": "nado",
+    "grammar_id": "n5_g_27",
+    "examples": [
+      {
+        "japanese": "カバン の 中 に 本 や ノート **など** が あります 。",
+        "romaji": "kaban no naka ni hon ya nooto **nado** ga arimasu.",
+        "french": "Il y a des livres, des cahiers, **etc.** dans le sac.",
+        "highlight": ["など", "nado"]
+      },
+      {
+        "japanese": "日曜日 は 映画 や 買い物 **など** に 行きます 。",
+        "romaji": "nichiyoubi wa eiga ya kaimono **nado** ni ikimasu.",
+        "french": "Le dimanche, je vais voir un film, faire des courses, **etc.**",
+        "highlight": ["など", "nado"]
+      },
+      {
+        "japanese": "りんご や バナナ **など** を 食べました 。",
+        "romaji": "ringo ya banana **nado** o tabemashita.",
+        "french": "J'ai mangé des pommes, des bananes, **etc.**",
+        "highlight": ["など", "nado"]
+      },
+      {
+        "japanese": "日本 の 食べ物 では 、すし **や** ラーメン **など** が 有名 です 。",
+        "romaji": "nihon no tabemono de wa, sushi **ya** raamen **nado** ga yuumei desu.",
+        "french": "Parmi la nourriture japonaise, les sushis, les ramens, **etc.** sont célèbres.",
+        "highlight": ["など", "nado"]
+      },
+      {
+        "japanese": "部屋 に 机 や ベッド **など** が あります 。",
+        "romaji": "heya ni tsukue ya beddo **nado** ga arimasu.",
+        "french": "Il y a un bureau, un lit, **etc.** dans la chambre.",
+        "highlight": ["など", "nado"]
+      }
+    ]
+  }
+]
