@@ -11,6 +11,12 @@
   --glow-cyan: 0 0 16px rgba(0,229,255,0.12), inset 0 0 24px rgba(0,229,255,0.02);
 }
 
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 /* --- SÉPARATION TYPOGRAPHIQUE UI / JAPONAIS (SYNTHESE-UI-UX.md §2) ---
    body utilise la police d'interface latine (Inter). Le japonais (kanji/kana/mots) reste sur
    Noto Sans JP, appliqué soit directement aux classes dédiées qui n'affichent QUE du japonais
@@ -48,7 +54,7 @@ body {
 .vocab-nuance-box, .lesson-card-in-box, .vocab-pill-card,
 .niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
 .review-mode-btn, .cat-header, .review-mode-selector .back-btn,
-.review-option-btn, .kana-cell, .vocab-category-header, .kanji-grid-cell, .unit-box-header, .readings-box, .info-card,
+.review-option-btn, .kana-cell, .kanji-grid-cell, .readings-box, .info-card,
 .folder-card {
     background:
         radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
@@ -66,6 +72,69 @@ body {
 /* CTA principaux : halo plus marqué autour du cyan plein */
 .review-cta-btn, .revise-btn, .review-continue-btn {
     box-shadow: 0 0 20px rgba(0,229,255,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   BOX TITRE (en-têtes accordéon Vocabulaire/Grammaire) — carte de verre animée.
+   Structure reprise de border.html (fourni par l'utilisateur) : voile de verre +
+   bordure conique tournante + reflets néon haut/bas. Repris à l'identique pour la
+   structure ; les styles de texte, le badge et le speak-btn de border.html ne sont
+   PAS repris ici (.unit-box-title/.vocab-category-title, .unit-box-counter/
+   .vocab-cat-counter gardent leurs styles existants, inchangés).
+══════════════════════════════════════════════════ */
+.unit-box-header, .vocab-category-header {
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.16), transparent 70%),
+        linear-gradient(135deg, rgba(15,25,45,0.4), rgba(5,10,20,0.6));
+    backdrop-filter: blur(6px) saturate(150%);
+    -webkit-backdrop-filter: blur(6px) saturate(150%);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        inset 0 -2px 6px rgba(0,0,0,0.35);
+}
+.unit-box-header::before, .vocab-category-header::before {
+    content: "";
+    position: absolute;
+    inset: -1px -1px 0 -1px;
+    z-index: -1;
+    background: conic-gradient(
+        from var(--angle),
+        transparent 70%,
+        rgba(125,211,252,0.3),
+        rgba(255,255,255,0.8),
+        rgba(56,189,248,0.5),
+        transparent 95%
+    );
+    border-radius: 15px 15px 0 0;
+    animation: glassBorderSpin 4s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1px;
+}
+.unit-box-header::after, .vocab-category-header::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+    box-shadow: 0 0 10px 1px rgba(255,255,255,0.8), 0 0 20px 2px rgba(125,211,252,0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+.glass-reflect-bottom {
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+    box-shadow: 0 0 10px 1px rgba(255,255,255,0.8), 0 0 20px 2px rgba(125,211,252,0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+@keyframes glassBorderSpin {
+    to { --angle: 360deg; }
 }
 
 /* ══════════════════════════════════════════════════

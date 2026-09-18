@@ -578,6 +578,7 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
                         <span>${label}</span>
                     </div>
                     <div class="vocab-cat-counter">${words.length}</div>
+                    <div class="glass-reflect-bottom"></div>
                 </div>
 
                 <div class="vocab-category-content" id="${catId}">

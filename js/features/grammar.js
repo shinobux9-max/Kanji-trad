@@ -567,6 +567,7 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
                         <span>${lessonNumber} - ${unit.title.toUpperCase()}</span>
                     </div>
                     <div class="unit-box-counter">${unitMastered}/${unit.lessons.length}</div>
+                    <div class="glass-reflect-bottom"></div>
                 </div>
 
                 <div class="unit-box-content" id="${unitId}">
