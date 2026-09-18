@@ -674,11 +674,14 @@ export function showGrammarDetail(lessonId, isBack = false) {
         </div>
 
         <div class="grammar-point-box">
-            <div class="section-label">POINT DE GRAMMAIRE</div>
-            <div class="item-display">${itemText}</div>
-            ${getItemRomaji(itemText, lesson.item_romaji) ? `<div class="item-romaji">${getItemRomaji(itemText, lesson.item_romaji)}</div>` : ''}
-            <div class="item-description">${titleText}</div>
-            <div class="pattern-box">${highlightText(patternText, itemText)}</div>
+            <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
+            <div class="grammar-point-content">
+                <div class="section-label">POINT DE GRAMMAIRE</div>
+                <div class="item-display">${itemText}</div>
+                ${getItemRomaji(itemText, lesson.item_romaji) ? `<div class="item-romaji">${getItemRomaji(itemText, lesson.item_romaji)}</div>` : ''}
+                <div class="item-description">${titleText}</div>
+                <div class="pattern-box">${highlightText(patternText, itemText)}</div>
+            </div>
         </div>
 
         <div class="action-buttons">

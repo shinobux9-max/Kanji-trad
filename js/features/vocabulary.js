@@ -684,11 +684,14 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
     </div>`;
 
     html += `<div class="vocab-detail-main-box">
-        <div class="vocab-reading">${word.reading || ''}</div>
-        <div class="vocab-word">${word.word || ''}</div>
-        <div class="vocab-romaji">${word.romaji || ''}</div>
-        ${buildTypeBadge()}
-        <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
+        <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
+        <div class="vocab-detail-main-content">
+            <div class="vocab-reading">${word.reading || ''}</div>
+            <div class="vocab-word">${word.word || ''}</div>
+            <div class="vocab-romaji">${word.romaji || ''}</div>
+            ${buildTypeBadge()}
+            <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
+        </div>
     </div>`;
 
     html += `<div class="vocab-section-title">Signification</div>`;
