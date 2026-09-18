@@ -683,6 +683,7 @@ export function showGrammarDetail(lessonId, isBack = false) {
                 <div class="item-description">${titleText}</div>
                 <div class="pattern-box">${highlightText(patternText, itemText)}</div>
             </div>
+            <div class="glass-reflect-bottom"></div>
         </div>
 
         <div class="action-buttons">

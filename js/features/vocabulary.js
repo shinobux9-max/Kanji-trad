@@ -693,6 +693,7 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
             ${buildTypeBadge()}
             <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
         </div>
+        <div class="glass-reflect-bottom"></div>
     </div>`;
 
     html += `<div class="vocab-section-title">Signification</div>`;
