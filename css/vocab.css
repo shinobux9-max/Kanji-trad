@@ -38,9 +38,12 @@
 ══════════════════════════════════════════════════ */
 .vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
 /* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .vocab-detail-main-box :
-   z-index -1 pour rester sous les éléments en flux (isolation: isolate ci-dessus contient ce
-   z-index négatif dans la fiche, sans affecter le reste de la page). */
-.vocab-detail-page > .stars-bg { z-index: -1; }
+   position: fixed pour remplacer complètement le fond de la page (niveaux-bg.webp, voir
+   body dans base.css) au lieu de laisser dépasser un liseré visible autour de
+   .vocab-detail-page (padding de #category-content). z-index -1 pour rester sous les
+   éléments en flux (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche,
+   sans affecter le reste de la page). */
+.vocab-detail-page > .stars-bg { position: fixed; z-index: -1; }
 
 .vocab-detail-header { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
 .vocab-detail-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
@@ -62,7 +65,7 @@
 .vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; }
 .vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
 
-.vocab-meanings { padding: 14px 12px; background: transparent; border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; }
+.vocab-meanings { padding: 14px 12px; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; }
 .vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
 .vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
 

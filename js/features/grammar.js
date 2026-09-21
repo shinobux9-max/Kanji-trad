@@ -716,10 +716,8 @@ export function showGrammarDetail(lessonId, isBack = false) {
         ` : ''}
 
         ${Array.isArray(lesson.confusions) && lesson.confusions.length ? `
-            <div class="examples-section">
-                <div class="section-label">POINTS DE VIGILANCE</div>
-                ${lesson.confusions.map(c => buildConfusionBoxHtml(c)).join('')}
-            </div>
+            <div class="examples-section-label">POINTS DE VIGILANCE</div>
+            ${lesson.confusions.map(c => buildConfusionBoxHtml(c)).join('')}
         ` : ''}
 
         <div class="favorite-btn-section">

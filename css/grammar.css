@@ -45,9 +45,12 @@
 ══════════════════════════════════════════════════ */
 .detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
 /* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .grammar-point-box :
-   z-index -1 pour rester sous les éléments en flux (isolation: isolate ci-dessus contient ce
-   z-index négatif dans la fiche, sans affecter le reste de la page). */
-.detail-page > .stars-bg { z-index: -1; }
+   position: fixed pour remplacer complètement le fond de la page (niveaux-bg.webp, voir
+   body dans base.css) au lieu de laisser dépasser un liseré visible autour de .detail-page
+   (padding de #category-content). z-index -1 pour rester sous les éléments en flux
+   (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche, sans affecter le
+   reste de la page). */
+.detail-page > .stars-bg { position: fixed; z-index: -1; }
 
 .detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
 .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
@@ -70,14 +73,12 @@
 .revise-btn:hover { background: var(--accent-muted); }
 .revise-btn.active { background: #3ecf8e; color: var(--bg); }
 
-.detail-section { padding: 16px; border: 1px solid var(--border); border-radius: 10px; }
+.detail-section { padding: 16px; background: rgba(0,229,255,0.08); border: 1px solid var(--border); border-radius: 10px; }
 .grammar-usage-box { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); }
 .grammar-block-box { background: transparent; }
 .detail-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
 .section-content-box { font-size: 0.8125rem; color: #fff; line-height: 1.6; }
 
-.examples-section { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
-.examples-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
 .examples-section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
 .examples-container { display: flex; flex-direction: column; gap: 12px; }
 .example-jp { font-size: 1rem; color: #fff; margin-bottom: 4px; font-weight: 500; line-height: 1.6; }

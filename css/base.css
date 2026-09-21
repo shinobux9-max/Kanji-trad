@@ -49,7 +49,7 @@ body {
    THÈME NAVY GLOW — halo lumineux sur les cartes principales
 ══════════════════════════════════════════════════ */
 .dash-card, .prog-level-card, .streak-detail-card,
-.progression-stat-card, .grammar-point-box, .detail-section, .examples-section,
+.progression-stat-card, .grammar-point-box, .detail-section,
 .apprendre-card, .vocab-detail-main-box, .vocab-meanings, .vocab-example-box,
 .vocab-nuance-box, .lesson-card-in-box, .vocab-pill-card,
 .niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
@@ -149,8 +149,9 @@ body {
 ══════════════════════════════════════════════════ */
 .grammar-point-box, .vocab-detail-main-box {
     background:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.16), transparent 70%),
-        linear-gradient(135deg, rgba(15,25,45,0.4), rgba(5,10,20,0.6));
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.72);
     backdrop-filter: blur(6px) saturate(150%);
     -webkit-backdrop-filter: blur(6px) saturate(150%);
     border: 1px solid rgba(255,255,255,0.2);

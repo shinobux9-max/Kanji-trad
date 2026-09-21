@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Grammaire N5 - Glassmorphism</title>
+  <title>Grammaire N5</title>
   <style>
     @property --angle {
       syntax: "<angle>";
@@ -17,49 +17,110 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       margin: 0;
       font-family: 'Inter', sans-serif;
-      padding: 20px;
       overflow-x: hidden;
       
-      /* Intégration de ton image de fond */
       background-image: url('niveaux-bg.webp');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
     }
 
-    /* En-tête de la page */
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
+    /* Grand bandeau supérieur sur toute la largeur avec ton fond dégradé */
+    .page-header {
+      width: 100%;
+      padding: 16px 20px 24px 20px;
+      box-sizing: border-box;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.16), transparent 70%),
+        linear-gradient(135deg, rgba(15,25,45,0.4), rgba(5,10,20,0.6));
+      backdrop-filter: blur(6px) saturate(150%);
+      -webkit-backdrop-filter: blur(6px) saturate(150%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 -2px 6px rgba(0,0,0,0.35);
+      margin-bottom: 20px;
     }
 
-    .header h1 {
-      font-size: 1.25rem;
+    .header-content {
+      max-width: 420px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      flex-shrink: 0;
+    }
+
+    .header-titles {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .header-titles h1 {
+      font-size: 1.1rem;
       font-weight: 600;
-      margin: 0 0 4px 0;
+      margin: 0;
       color: #fff;
     }
 
-    .header p {
-      font-size: 0.8rem;
+    .header-titles p {
+      font-size: 0.75rem;
       color: #8B949E;
-      margin: 0;
+      margin: 4px 0 0 0;
     }
 
-    /* Conteneur global de la liste */
-    .lessons-container {
+    /* Conteneur principal */
+    .main-container {
       width: 100%;
       max-width: 420px;
+      padding: 0 16px;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    /* Style exact des box */
-    .unit-box-header, .vocab-category-header {
+    /* Bouton Sélectionner */
+    .select-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #F0F6FC;
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      align-self: flex-start;
+    }
+
+    /* Liste des leçons */
+    .lessons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Style exact de tes box de leçons */
+    .unit-box-header {
       position: relative;
       height: 54px;
       padding: 0 16px;
@@ -78,7 +139,7 @@
         inset 0 -2px 6px rgba(0,0,0,0.35);
     }
 
-    .unit-box-header::before, .vocab-category-header::before {
+    .unit-box-header::before {
       content: "";
       position: absolute;
       inset: -1px -1px 0 -1px;
@@ -99,10 +160,10 @@
       padding: 1px;
     }
 
-    .unit-box-header::after, .vocab-category-header::after {
+    .unit-box-header::after {
       content: "";
       position: absolute;
-      top: 0; left: 10%; right: 0%; height: 1px;
+      top: 0; left: 10%; right: 10%; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
       box-shadow: 0 0 10px 1px rgba(255,255,255,0.8), 0 0 20px 2px rgba(125,211,252,0.6);
       border-radius: 50%;
@@ -112,7 +173,7 @@
 
     .glass-reflect-bottom {
       position: absolute;
-      bottom: 0; left: 0%; right: 30%; height: 1px;
+      bottom: 0; left: 10%; right: 10%; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
       box-shadow: 0 0 10px 1px rgba(255,255,255,0.8), 0 0 20px 2px rgba(125,211,252,0.6);
       border-radius: 50%;
@@ -124,7 +185,6 @@
       to { --angle: 360deg; }
     }
 
-    /* Éléments internes de test */
     .lesson-info {
       display: flex;
       align-items: center;
@@ -143,37 +203,41 @@
 </head>
 <body>
 
-  <div class="header">
-    <h1>Grammaire N5</h1>
-    <p>75 leçons · 0 maîtrisées</p>
+  <!-- Grand bandeau supérieur sur toute la largeur avec le fond dégradé -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="back-btn">←</div>
+      <div class="header-titles">
+        <h1>Grammaire N5</h1>
+        <p>75 leçons · 0 maîtrisées</p>
+      </div>
+    </div>
   </div>
 
-  <div class="lessons-container">
-    <!-- Leçon 1 -->
-    <div class="unit-box-header">
-      <div class="lesson-info">
-        <span>▶</span> 1 - LES BASES DE LA PHRASE
-      </div>
-      <div class="lesson-progress">0/7</div>
-      <div class="glass-reflect-bottom"></div>
+  <!-- Contenu principal -->
+  <div class="main-container">
+    <div class="select-btn">
+      ☑ Sélectionner
     </div>
 
-    <!-- Leçon 2 -->
-    <div class="unit-box-header">
-      <div class="lesson-info">
-        <span>▶</span> 2 - LES PARTICULES FONDAMENTALES
+    <div class="lessons-container">
+      <div class="unit-box-header">
+        <div class="lesson-info"><span>▶</span> 1 - LES BASES DE LA PHRASE</div>
+        <div class="lesson-progress">0/7</div>
+        <div class="glass-reflect-bottom"></div>
       </div>
-      <div class="lesson-progress">0/12</div>
-      <div class="glass-reflect-bottom"></div>
-    </div>
 
-    <!-- Leçon 3 -->
-    <div class="unit-box-header">
-      <div class="lesson-info">
-        <span>▶</span> 3 - ORIGINE, LIMITES ET COMPARAISONS
+      <div class="unit-box-header">
+        <div class="lesson-info"><span>▶</span> 2 - LES PARTICULES FONDAMENTALES</div>
+        <div class="lesson-progress">0/12</div>
+        <div class="glass-reflect-bottom"></div>
       </div>
-      <div class="lesson-progress">0/8</div>
-      <div class="glass-reflect-bottom"></div>
+
+      <div class="unit-box-header">
+        <div class="lesson-info"><span>▶</span> 3 - ORIGINE, LIMITES ET COMPARAISONS</div>
+        <div class="lesson-progress">0/8</div>
+        <div class="glass-reflect-bottom"></div>
+      </div>
     </div>
   </div>
 
