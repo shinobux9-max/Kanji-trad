@@ -49,6 +49,7 @@ export async function showRevisionsScreen(isBack = false) {
                 </div>
                 <span class="free-training-chevron">→</span>
             </div>
+            <div class="dash-card weakness-widget" id="revisions-weakness-widget" style="display:none;"></div>
             <div class="apprendre-grid">
                 <div class="apprendre-card" style="border-color:#4ADE8099; box-shadow:0 0 18px #4ADE8059;" onclick="showRevisionLevelPicker('grammar')">
                     <div class="apprendre-card-icon" style="background:rgba(74,222,128,0.15);color:#4ADE80;">文</div>
@@ -77,6 +78,7 @@ export async function showRevisionsScreen(isBack = false) {
                 </div>
             </div>
         </div>`;
+    renderWeaknessWidget('revisions-weakness-widget');
 }
 
 export async function showRevisionLevelPicker(category, isBack = false) {
@@ -272,11 +274,20 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
         subtitle = `${chars ? chars.length : 0} kanji`;
     }
 
-    mainContent.innerHTML = `${backFAB('history.back()')}
-        <div class="cat-header" style="padding-top:56px">
-            <div class="cat-header-info">
-                <div class="cat-header-title">${catLabel} ${levelData.label}</div>
-                <div class="cat-header-sub">${subtitle}</div>
+    const headerImages = { grammar: 'images/header.png', vocab: 'images/niveaux-bg-2.webp', kanji: 'images/niveaux-bg-4.webp' };
+    const headerImg = headerImages[category] || 'images/niveaux-bg.webp';
+
+    mainContent.innerHTML = `
+        <div class="list-page-header" style="--header-img:url('${headerImg}')">
+            <div class="list-page-header-content">
+                <button class="list-page-back-btn" onclick="history.back()">←</button>
+                <div class="list-page-header-titles">
+                    <div class="list-page-title-row">
+                        <span class="list-page-title">${catLabel}</span>
+                        <span class="list-page-badge" style="background:${levelData.color}22;color:${levelData.color};border:1px solid ${levelData.color}44">${levelData.label}</span>
+                    </div>
+                    <div class="list-page-subtitle">${subtitle}</div>
+                </div>
             </div>
         </div>
         <div id="category-content" style="padding:16px">

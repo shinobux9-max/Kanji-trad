@@ -129,29 +129,19 @@ export async function renderWeaknessWidget(elementId = 'dashboard-weakness-widge
     if (!el) return;
 
     const data = getWeaknessData();
-    const entries = Object.entries(data)
-        .sort((a, b) => computeWeaknessPriority(b[1]) - computeWeaknessPriority(a[1]))
-        .slice(0, 5);
+    const total = Object.keys(data).length;
 
-    if (entries.length === 0) {
+    if (total === 0) {
         el.style.display = 'none'; // pas de carte vide qui ne sert à rien
         return;
     }
     el.style.display = '';
 
-    const typeIcons = { vocab: '📚', grammar: '📝', kanji: '🔤', kana: 'あ' };
-
     el.innerHTML = `
-        <div class="dash-widget-title">🧠 À renforcer</div>
-        <div class="weakness-list">
-            ${entries.map(([id, rec]) => `
-                <div class="weakness-row" onclick="openWeaknessItem('${id.replace(/'/g, "\\'")}')">
-                    <span class="weakness-icon">${typeIcons[rec.type] || '❓'}</span>
-                    <span class="weakness-label">${rec.label}</span>
-                    <span class="weakness-count">${rec.consecutiveFails}×</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="weakness-train-btn" onclick="trainWeaknessItems()">🎯 S'entraîner sur ${entries.length > 1 ? `ces ${entries.length} notions` : 'cette notion'}</button>
+        <button class="weakness-compact-row" onclick="trainWeaknessItems()">
+            <span class="weakness-compact-icon">🧠</span>
+            <span class="weakness-compact-label">Notion${total > 1 ? 's' : ''} à renforcer</span>
+            <span class="weakness-count">${total}</span>
+        </button>
     `;
 }

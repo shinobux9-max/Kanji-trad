@@ -92,10 +92,22 @@ export function showKanaLearningPicker(isBack = false) {
 // le bouton Sélectionner disparaisse/réapparaisse correctement selon bulkSelectMode.
 export function renderKanaScreen(type) {
     currentKanaTabType = type;
-    const label = type === 'hira' ? 'Hiragana あ' : 'Katakana ア';
-    document.getElementById('main-content').innerHTML = `${backFAB('history.back()')}
-        <div class="cat-header" style="padding-top:56px; display:flex; justify-content:space-between; align-items:center;">
-            <div class="cat-header-title" style="text-align:left">${label}</div>
+    const scriptLabel = type === 'hira' ? 'Hiragana' : 'Katakana';
+    const count = getKanaFlatList(type).length;
+    document.getElementById('main-content').innerHTML = `
+        <div class="list-page-header" style="--header-img:url('images/niveaux-bg-3.webp')">
+            <div class="list-page-header-content">
+                <button class="list-page-back-btn" onclick="history.back()">←</button>
+                <div class="list-page-header-titles">
+                    <div class="list-page-title-row">
+                        <span class="list-page-title">Kana</span>
+                        <span class="list-page-badge" style="background:#9D6EFF22;color:#9D6EFF;border:1px solid #9D6EFF44">${scriptLabel}</span>
+                    </div>
+                    <div class="list-page-subtitle">${count} caractères</div>
+                </div>
+            </div>
+        </div>
+        <div style="padding:16px 16px 0">
             ${!state.bulkSelectMode ? `<button class="bulk-select-toggle-btn" onclick="enterBulkSelectMode(refreshKanaScreen)">☑ Sélectionner</button>` : ''}
         </div>
         <div id="kana-grid-container" style="padding:12px"></div>`;

@@ -5,12 +5,11 @@
  * dont dépend la carte de révision de l'accueil.
  *
  * Périmètre volontairement délimité (cf. HANDOFF.md, méthode point 6) : ce fichier NE
- * contient PAS le détail du sous-système de faiblesse lui-même (resolveWeaknessEntry,
- * openWeaknessItem, trainWeaknessItems — vivent dans learning/weakness.js, importé ici
- * seulement pour renderWeaknessWidget) ni les statistiques d'entraînement libre
- * (TRAINING_STATS_KEY et consorts — features/free-training.js), bien que ces blocs soient
- * physiquement entremêlés avec le code ci-dessous dans le monolithe (même région du
- * fichier).
+ * contient PAS le sous-système de faiblesse (learning/weakness.js — son widget vit
+ * désormais sur Apprendre/Réviser, plus sur cet écran, voir ui/cards.js) ni les
+ * statistiques d'entraînement libre (TRAINING_STATS_KEY et consorts —
+ * features/free-training.js), bien que ces blocs soient physiquement entremêlés avec le
+ * code ci-dessous dans le monolithe (même région du fichier).
  *
  * ⚠️ IMPORTANT POUR LA SUITE — vérifié programmatiquement avant d'écrire ce fichier :
  * ce fichier importe features/kanji.js (pour getKanjiMastery), qui importe lui-même
@@ -28,7 +27,6 @@ import { state } from '../core/state.js';
 import { getLevelKanjiChars, getLevelVocabGrammarStats } from '../core/data-loader.js';
 import { getKanjiMastery } from '../features/kanji.js';
 import { buildReviewQueue, getStats } from '../learning/srs.js';
-import { renderWeaknessWidget } from '../learning/weakness.js';
 import { showKanaLearningPicker } from '../features/kana.js';
 import { backFAB, showBottomNav, hideBottomNav } from './common.js';
 
@@ -436,14 +434,12 @@ export function showDashboard(isBack = false) {
                 </div>
                 ${buildWeekStreakHtml(streak)}
             </div>
-            <div class="dash-card weakness-widget" id="dashboard-weakness-widget" style="display:none;"></div>
             <div class="dash-card dash-mastery-card">
                 <div class="dash-widget-title">Progression</div>
                 <div id="progression-list"></div>
             </div>
         </div>`;
     if (typeof renderDashboard === 'function') renderDashboard();
-    renderWeaknessWidget();
     renderDashboardReviewCta();
 }
 
