@@ -671,7 +671,8 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
         return `<span class="vocab-type-badge" style="background: ${info.color}22; color: ${info.color}; border: 1px solid ${info.color}66; box-shadow: 0 0 8px ${info.color}33;">${word.type}${groupLabel}</span>`;
     };
 
-    let html = `<div class="vocab-detail-page">`;
+    let html = `<div class="vocab-detail-page">
+        <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>`;
 
     html += backFAB('history.back()') + `<div class="vocab-detail-header" style="justify-content:flex-end">
         <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
@@ -685,7 +686,6 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
     </div>`;
 
     html += `<div class="vocab-detail-main-box">
-        <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
         <div class="vocab-detail-main-content">
             <div class="vocab-reading">${word.reading || ''}</div>
             <div class="vocab-word">${word.word || ''}</div>

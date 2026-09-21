@@ -36,7 +36,11 @@
 /* ══════════════════════════════════════════════════
    VOCABULARY DETAIL PAGE
 ══════════════════════════════════════════════════ */
-.vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; }
+.vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
+/* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .vocab-detail-main-box :
+   z-index -1 pour rester sous les éléments en flux (isolation: isolate ci-dessus contient ce
+   z-index négatif dans la fiche, sans affecter le reste de la page). */
+.vocab-detail-page > .stars-bg { z-index: -1; }
 
 .vocab-detail-header { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
 .vocab-detail-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }

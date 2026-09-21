@@ -660,13 +660,10 @@ export function showGrammarDetail(lessonId, isBack = false) {
         );
     };
 
-    const levelIdForExamples = (lesson.id || '').split('_')[0];
-    const resolvedExamples = [
-        ...(Array.isArray(lesson.examples) ? lesson.examples : []),
-        ...getGrammarExtraExamples(levelIdForExamples, lesson.id)
-    ];
+    const resolvedExamples = Array.isArray(lesson.examples) ? lesson.examples : [];
 
     let html = backFAB('history.back()') + `<div class="detail-page">
+        <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
         <div class="detail-header-top">
             <div class="header-info">
                 <div class="lesson-title">Leçon ${lessonNum}</div>
@@ -675,7 +672,6 @@ export function showGrammarDetail(lessonId, isBack = false) {
         </div>
 
         <div class="grammar-point-box">
-            <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
             <div class="grammar-point-content">
                 <div class="section-label">POINT DE GRAMMAIRE</div>
                 <div class="item-display">${itemText}</div>
