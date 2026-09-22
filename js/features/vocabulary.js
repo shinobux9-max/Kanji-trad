@@ -641,8 +641,6 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
 
     const status = getItemStatus(word.id);
     const level = word.level || 'N5';
-    const currentIndex = allWords.findIndex(w => w.id === wordId);
-    const totalWords = allWords.length;
 
     const normalizeMeanings = () => {
         const m = word.meanings;
@@ -674,9 +672,7 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
 
     let html = `<div class="vocab-detail-page">`;
 
-    html += backFAB('history.back()') + `<div class="vocab-detail-header" style="justify-content:flex-end">
-        <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>
-    </div>`;
+    html += backFAB('history.back()');
 
     html += `<div class="vocab-detail-top">
         <span class="vocab-level-badge">${level}</span>
@@ -693,19 +689,18 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
             ${buildTypeBadge()}
             <button class="vocab-speak-btn" onclick="speakText('${(word.word || '').replace(/'/g, "\\'")}')" title="Écouter">🔊</button>
         </div>
-        <div class="glass-reflect-bottom"></div>
     </div>`;
 
-    html += `<div class="vocab-section-title">Signification</div>`;
     html += `<div class="vocab-meanings">`;
+    html += `<div class="section-label">Signification</div>`;
     html += `<div class="vocab-meaning-primary">${mdBold(primaryMeaning)}</div>`;
-    secondaryMeanings.forEach(m => {
-        html += `<div class="vocab-meaning-secondary">${mdBold(m)}</div>`;
-    });
+    if (secondaryMeanings.length) {
+        html += `<div class="vocab-meaning-secondary">${secondaryMeanings.map(m => mdBold(m)).join(', ')}</div>`;
+    }
     html += `</div>`;
 
     if (word.nuance) {
-        html += `<div class="vocab-nuance-box">💡 ${mdBold(word.nuance)}</div>`;
+        html += `<div class="vocab-nuance-box"><div class="section-label">Détail</div>💡 ${mdBold(word.nuance)}</div>`;
     }
 
     if (word.example && word.example.japanese) {

@@ -37,10 +37,17 @@
 }
 
 .vocab-category-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+.vocab-category-box.active .vocab-category-header { border: 1px solid rgba(0,0,0,0.4); }
 
 /* Titre — même traitement que .unit-box-title (css/grammar.css) : texte quasi-blanc + flèche
-   bleu clair au lieu de l'accent cyan uppercase. */
-.vocab-category-title { font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; }
+   bleu clair au lieu de l'accent cyan uppercase, contour noir pour rester lisible sur le fond
+   Ocean Wave. */
+.vocab-category-title {
+    font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px;
+    display: flex; align-items: center; gap: 10px;
+    -webkit-text-stroke: 0.6px rgba(0,0,0,0.8);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
 .vocab-cat-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .vocab-cat-arrow.open { transform: rotate(90deg); }
 
@@ -69,6 +76,7 @@
     width: 100%;
     height: 100%;
     background: rgba(56, 189, 248, 0.55);
+    border: 1px solid rgba(0, 0, 0, 0.4);
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .vocab-category-header .wave::before,
@@ -125,7 +133,19 @@
 .vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; }
 .vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
 
-.vocab-meanings { padding: 14px 12px; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+/* Même dégradé que les cellules de la liste kanji (.kanji-grid-cell, thème "Navy Glow" partagé
+   de css/base.css) — demande explicite de réutiliser ce dégradé sur la box "Signification". */
+.vocab-meanings {
+    padding: 14px 12px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.9);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 .vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
 .vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
 
@@ -150,7 +170,13 @@
 /* ══════════════════════════════════════════════════
    CARTE MOT — style "pilule"
 ══════════════════════════════════════════════════ */
-.vocab-pill-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s; }
+.vocab-pill-card {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s;
+    background: linear-gradient(135deg, rgba(15,25,45,0.6), rgba(8,15,28,0.75));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 .vocab-pill-card:hover { border-color: var(--accent); }
 
 .vocab-pill-badge {
@@ -173,7 +199,13 @@
    PUCES DE KANJIS (vocabulaire)
 ══════════════════════════════════════════════════ */
 .vocab-kanji-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.vocab-kanji-chip { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; cursor: pointer; transition: border-color 0.15s; }
+.vocab-kanji-chip {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; cursor: pointer; transition: border-color 0.15s;
+    background: linear-gradient(135deg, rgba(15,25,45,0.6), rgba(8,15,28,0.75));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 .vocab-kanji-chip:hover { border-color: var(--accent); }
 .vocab-kanji-chip-char { font-size: 1.375rem; font-weight: bold; color: var(--accent); }
 .vocab-kanji-chip-meaning { font-size: 0.75rem; color: var(--gray); }

@@ -15,7 +15,20 @@
 /* ── STROKE ORDER GUIDE & EXAMPLES ── */
 .stroke-guide-row { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none; }
 .stroke-guide-row::-webkit-scrollbar { display: none; }
-.stroke-guide-cell { flex-shrink: 0; width: 72px; height: 72px; position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+/* Même famille de dégradé que .kanji-main-card/.readings-box/.info-card (css/components.css) —
+   translucide + flouté au lieu du fond opaque var(--surface). */
+.stroke-guide-cell {
+    flex-shrink: 0; width: 72px; height: 72px; position: relative;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 .stroke-guide-cell svg { width: 100%; height: 100%; }
 .stroke-guide-num { position: absolute; top: 3px; right: 4px; font-size: 0.5625rem; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); line-height: 1; }
 

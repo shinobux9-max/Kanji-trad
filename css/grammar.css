@@ -20,7 +20,7 @@
 .unit-box-wrapper {
     border-radius: 14px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255,255,255,0.15);
     background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -32,6 +32,7 @@
 }
 
 .unit-box-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+.unit-box-wrapper.active .unit-box-header { border: 1px solid rgba(0,0,0,0.4); }
 
 /* Jauge "Ocean Wave" — se remplit quand l'unité est ouverte (maquette "menu grammaire.html").
    .Ocean est inséré en tout premier enfant de .unit-box-header (grammar.js) : peint donc AVANT
@@ -55,6 +56,7 @@
     width: 100%;
     height: 100%;
     background: rgba(56, 189, 248, 0.55);
+    border: 1px solid rgba(0, 0, 0, 0.4);
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .unit-box-header .wave::before,
@@ -85,7 +87,12 @@
 
 /* Titre — repris de .lesson-info (maquette "menu grammaire.html") : texte quasi-blanc au
    lieu de l'accent cyan uppercase, plus lisible sur le fond dégradé des unit boxes. */
-.unit-box-title { font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; }
+.unit-box-title {
+    font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px;
+    display: flex; align-items: center; gap: 10px;
+    -webkit-text-stroke: 0.6px rgba(0,0,0,0.8);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
 .unit-box-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .unit-box-arrow.open { transform: rotate(90deg); }
 
@@ -109,11 +116,16 @@
 /* ══════════════════════════════════════════════════
    GRAMMAR DETAIL VIEW - Page de détail d'un point
 ══════════════════════════════════════════════════ */
-/* Le fond stars-bg a été retiré (demande explicite) : la fiche retombe sur le fond global de
-   l'app (global-bg.webp, voir body dans css/base.css), plus rien ne le masque ici. */
 .detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
+/* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .grammar-point-box :
+   position: fixed pour remplacer complètement le fond de la page (global-bg.webp, voir
+   body dans base.css) au lieu de laisser dépasser un liseré visible autour de .detail-page
+   (padding de #category-content). z-index -1 pour rester sous les éléments en flux
+   (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche, sans affecter le
+   reste de la page). */
+.detail-page > .stars-bg { position: fixed; z-index: -1; }
 
-.detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
 .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
 .back-btn:hover { background: rgba(0,201,167,0.2); }
 .header-info { flex: 1; }
@@ -134,10 +146,25 @@
 .revise-btn:hover { background: var(--accent-muted); }
 .revise-btn.active { background: #3ecf8e; color: var(--bg); }
 
-.detail-section { padding: 16px; background: rgba(0,229,255,0.08); border: 1px solid var(--border); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+/* Même dégradé que les cellules de la liste kanji (.kanji-grid-cell, thème "Navy Glow" partagé
+   de css/base.css) — demande explicite de réutiliser ce dégradé sur les box de section (dont
+   "EXPLICATION"). */
+.detail-section {
+    padding: 16px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 .grammar-usage-box { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); }
 .grammar-block-box { background: transparent; }
-.detail-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
+/* .vocab-meanings/.vocab-nuance-box (css/vocab.css) réutilisent ce même .section-label — demande
+   explicite d'aligner "Signification"/"Détail" sur le style de "EXPLICATION" côté grammaire. */
+.detail-section .section-label, .vocab-meanings .section-label, .vocab-nuance-box .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
 .section-content-box { font-size: 0.8125rem; color: #fff; line-height: 1.6; }
 
 .examples-section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }

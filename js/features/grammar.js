@@ -660,9 +660,6 @@ export function showGrammarDetail(lessonId, isBack = false) {
     const itemText = lesson.item || lesson.pattern || 'Formule';
     const titleText = lesson.title || lesson.meaning || 'Sans titre';
     const patternText = lesson.pattern || itemText;
-    const lessonNum = lesson.lesson_number ? String(lesson.lesson_number).padStart(2, '0') : '01';
-    const unitText = lesson.unit_title || `Unité ${lesson.unit}`;
-    const levelLabel = lesson.level || (levelId ? levelId.toUpperCase() : 'N5');
 
     const highlightText = (text, highlight) => {
         const target = Array.isArray(highlight) ? highlight[0] : highlight;
@@ -676,12 +673,6 @@ export function showGrammarDetail(lessonId, isBack = false) {
     const resolvedExamples = Array.isArray(lesson.examples) ? lesson.examples : [];
 
     let html = backFAB('history.back()') + `<div class="detail-page">
-        <div class="detail-header-top">
-            <div class="header-info">
-                <div class="lesson-title">Leçon ${lessonNum}</div>
-                <div class="lesson-subtitle">${levelLabel} • ${unitText}</div>
-            </div>
-        </div>
 
         <div class="grammar-point-box">
             <div class="grammar-point-content">
@@ -691,7 +682,6 @@ export function showGrammarDetail(lessonId, isBack = false) {
                 <div class="item-description">${titleText}</div>
                 <div class="pattern-box">${highlightText(patternText, itemText)}</div>
             </div>
-            <div class="glass-reflect-bottom"></div>
         </div>
 
         <div class="action-buttons">
@@ -728,7 +718,6 @@ export function showGrammarDetail(lessonId, isBack = false) {
         ` : ''}
 
         ${Array.isArray(lesson.confusions) && lesson.confusions.length ? `
-            <div class="examples-section-label">POINTS DE VIGILANCE</div>
             ${lesson.confusions.map(c => buildConfusionBoxHtml(c)).join('')}
         ` : ''}
 
