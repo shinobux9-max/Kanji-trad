@@ -144,7 +144,7 @@
     background:
         radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
         radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
-        rgba(10, 17, 32, 0.9);
+        rgba(10, 17, 32, 0.5);
     border: 1px solid rgba(0,229,255,0.15);
     border-radius: 10px;
     backdrop-filter: blur(8px);
