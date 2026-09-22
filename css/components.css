@@ -412,7 +412,15 @@
 /* ══════════════════════════════════════════════════
    CARTE "Série en cours" avec vue hebdomadaire
 ══════════════════════════════════════════════════ */
-.streak-week-card { cursor: pointer; }
+/* Même opacité + flou que .free-training-card (box "Introduction", plus haut dans ce fichier) —
+   sélecteur composé .dash-card.streak-week-card (pas juste .streak-week-card) : même piège de
+   spécificité que .weakness-widget (css/base.css) évité d'entrée. */
+.dash-card.streak-week-card {
+    cursor: pointer;
+    background: rgba(10, 17, 32, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
 .streak-week-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .streak-week-icon-box { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: rgba(0,229,255,0.12); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; font-weight: bold; }
 .streak-week-title-block { flex: 1; }
