@@ -280,7 +280,7 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
     // par rapport à la page HTML. Un simple préfixe '/' casserait à son tour le déploiement
     // GitHub Pages (site servi sous /Kanji-trad/, pas à la racine du domaine) — d'où le passage
     // par new URL(..., document.baseURI) qui tient compte du sous-dossier réel de déploiement.
-    const headerImages = { grammar: 'images/header-grammar.png', vocab: 'images/header-vocab.png', kanji: 'images/header-kanji.png' };
+    const headerImages = { grammar: 'images/header-grammar.webp', vocab: 'images/header-vocab.webp', kanji: 'images/header-kanji.webp' };
     const headerImg = new URL(headerImages[category] || headerImages.grammar, document.baseURI).href;
     // Fond de page partagé par toutes les pages de liste (vocab/kanji/grammaire/kana),
     // distinct à la fois des bannières (--header-img ci-dessus) et du fond par défaut de

@@ -15,12 +15,78 @@
 ══════════════════════════════════════════════════ */
 .grammar-container { display: flex; flex-direction: column; gap: 20px; }
 
-.unit-box-wrapper { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
+/* Conteneur d'unité — dégradé + bordure + halo au survol repris de la maquette
+   "menu grammaire.html" (racine du repo), remplace l'ancienne bordure cyan unie. */
+.unit-box-wrapper {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.unit-box-wrapper:hover {
+    border-color: rgba(255,255,255,0.35);
+    box-shadow: 0 4px 25px rgba(255,255,255,0.08);
+}
 
 .unit-box-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
 
-.unit-box-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
-.unit-box-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
+/* Jauge "Ocean Wave" — se remplit quand l'unité est ouverte (maquette "menu grammaire.html").
+   .Ocean est inséré en tout premier enfant de .unit-box-header (grammar.js) : peint donc AVANT
+   le SVG de bordure et le titre/compteur qui suivent dans le DOM (tous en z-index:auto — pas
+   de z-index négatif nécessaire, .unit-box-header a déjà overflow:hidden + position:relative,
+   voir css/base.css). */
+.unit-box-header .Ocean {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.unit-box-wrapper.active .Ocean { transform: scaleY(1); }
+
+.unit-box-header .wave {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(56, 189, 248, 0.55);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.unit-box-header .wave::before,
+.unit-box-header .wave::after {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.unit-box-header .wave::before {
+    border-radius: 40%;
+    background: rgba(56, 189, 248, 0.75);
+    animation: unitBoxWave 8s linear infinite;
+}
+.unit-box-header .wave::after {
+    border-radius: 35%;
+    background: rgba(255, 255, 255, 0.25);
+    animation: unitBoxWave 12s linear infinite;
+}
+@keyframes unitBoxWave {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    50%  { transform: translate(-50%, -65%) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Titre — repris de .lesson-info (maquette "menu grammaire.html") : texte quasi-blanc au
+   lieu de l'accent cyan uppercase, plus lisible sur le fond dégradé des unit boxes. */
+.unit-box-title { font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; }
+.unit-box-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .unit-box-arrow.open { transform: rotate(90deg); }
 
 .unit-box-counter { font-size: 0.625rem; color: var(--gray); }

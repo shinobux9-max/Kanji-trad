@@ -40,6 +40,22 @@ body {
 }
 
 /* ══════════════════════════════════════════════════
+   PÉTALES DE SAKURA — arrière-plan global (maquette "menu grammaire.html", racine du repo).
+   Élément fixe unique du shell (index.html, avant #main-content), initialisé une seule fois
+   par app.js::initSakuraBackground() — survit aux innerHTML de #main-content au lieu d'être
+   recréé à chaque écran. z-index explicite -1 : juste au-dessus de .list-page-bg
+   (css/components.css, z-index:-2) et en dessous de TOUT le reste (header/unit boxes/menus,
+   z-index:auto par défaut) — empilement garanti indépendamment de l'ordre DOM.
+══════════════════════════════════════════════════ */
+#sakura-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════
    NAVBAR — kanji au lieu d'icônes, surbrillance sur l'onglet actif
 ══════════════════════════════════════════════════ */
 .bnav-kanji { font-size: 1.375rem; font-weight: bold; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray); transition: all 0.15s; }

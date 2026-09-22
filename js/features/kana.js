@@ -97,7 +97,7 @@ export function renderKanaScreen(type) {
     // new URL(..., document.baseURI) plutôt qu'un chemin '/images/...' : le site peut être servi
     // depuis un sous-dossier (ex. GitHub Pages /Kanji-trad/), voir cards.js::showCategoryDirect.
     const pageBg = new URL('images/list-bg.webp', document.baseURI).href;
-    const headerImg = new URL('images/header-kana.png', document.baseURI).href;
+    const headerImg = new URL('images/header-kana.webp', document.baseURI).href;
     document.getElementById('main-content').innerHTML = `
         <div class="list-page-bg" style="--page-bg:url('${pageBg}')"></div>
         <div class="list-page-header" style="--header-img:url('${headerImg}')">

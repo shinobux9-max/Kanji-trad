@@ -231,6 +231,17 @@
     background: rgba(10, 17, 32, 0.05);
 }
 
+/* .apprendre-card (écrans "Apprendre" ET "Réviser", qui partagent la même classe — voir
+   showApprendreScreen()/showRevisionsScreen() dans js/ui/cards.js) : même opacité + même flou
+   que .niveaux-card ci-dessus (le titre de cette section le promettait déjà, seule
+   .niveaux-card l'appliquait réellement — .apprendre-card n'avait qu'un fond opaque hérité du
+   thème "Navy Glow" partagé, css/base.css). */
+.apprendre-card {
+    background: rgba(10, 17, 32, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
 #bulk-action-bar {
     position: fixed;
     bottom: 84px;

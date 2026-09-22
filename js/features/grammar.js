@@ -561,6 +561,7 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
         return `
             <div class="unit-box-wrapper">
                 <div class="unit-box-header">
+                    <div class="Ocean"><div class="wave"></div></div>
                     <svg xmlns="http://www.w3.org/2000/svg"><rect class="border" pathLength="100"></rect></svg>
                     <div class="unit-box-title">
                         ${state.bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(unit.lessons.map(l => l.id))})' ${unit.lessons.every(l => getItemStatus(l.id) === 'mastered') ? 'checked' : ''}>` : ''}
@@ -612,10 +613,22 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
 
     document.querySelectorAll('.unit-box-header').forEach(header => {
         header.addEventListener('click', function() {
-            const arrow = this.querySelector('.unit-box-arrow');
-            const content = this.nextElementSibling;
-            arrow.classList.toggle('open');
-            content.classList.toggle('open');
+            const wrapper = this.closest('.unit-box-wrapper');
+            const isOpen = wrapper.classList.contains('active');
+
+            // Accordéon strict (maquette "menu grammaire.html") : ferme toutes les autres
+            // unités avant d'ouvrir celle cliquée — une seule ouverte à la fois.
+            document.querySelectorAll('.unit-box-wrapper.active').forEach(el => {
+                el.classList.remove('active');
+                el.querySelector('.unit-box-arrow')?.classList.remove('open');
+                el.querySelector('.unit-box-content')?.classList.remove('open');
+            });
+
+            if (!isOpen) {
+                wrapper.classList.add('active');
+                this.querySelector('.unit-box-arrow').classList.add('open');
+                this.nextElementSibling.classList.add('open');
+            }
         });
     });
 }

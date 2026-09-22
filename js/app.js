@@ -104,6 +104,29 @@ const EXPOSED_FUNCTIONS = {
 Object.entries(EXPOSED_FUNCTIONS).forEach(([name, fn]) => { window[name] = fn; });
 
 /* ══════════════════════════════════════════════════
+   PÉTALES DE SAKURA — arrière-plan global (maquette "menu grammaire.html", racine du repo)
+   ─────────────────────────────────────────────────
+   #sakura-container (index.html, avant #main-content — voir css/base.css pour le z-index) est
+   un élément fixe du shell, jamais recréé par les innerHTML d'écran : une seule instance
+   Sakura pour toute la durée de vie de l'app, appelée une fois par init() comme
+   initPullToRefresh()/initMicSearch() ci-dessous — pas de ré-init à chaque navigation, pas de
+   fuite d'intervalles/pétales empilés.
+══════════════════════════════════════════════════ */
+function initSakuraBackground() {
+    if (typeof Sakura === 'undefined' || !document.getElementById('sakura-container')) return;
+    new Sakura('#sakura-container', {
+        fallSpeed: 1.2,
+        minSize: 8,
+        maxSize: 16,
+        delay: 1000,
+        colors: [
+            { gradientColorStart: 'rgba(255, 183, 197, 0.9)', gradientColorEnd: 'rgba(255, 197, 208, 0.9)', gradientColorDegree: 120 },
+            { gradientColorStart: 'rgba(255, 255, 255, 0.9)', gradientColorEnd: 'rgba(254, 240, 138, 0.9)', gradientColorDegree: 90 }
+        ]
+    });
+}
+
+/* ══════════════════════════════════════════════════
    PULL-TO-REFRESH — tirer vers le bas en haut de l'écran pour actualiser
    ─────────────────────────────────────────────────
    Équivalent EXACT de l'IIFE initPullToRefresh() du monolithe. Entièrement autonome (aucune
@@ -208,6 +231,7 @@ async function init() {
         initSwipeNavigation();
         initMicSearch();
         initPullToRefresh();
+        initSakuraBackground();
 
         let text = await kanjiRes.text();
         text = text.trim();

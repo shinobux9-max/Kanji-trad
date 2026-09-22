@@ -20,6 +20,24 @@
         ],
         "createdAt": "2026-09-17T14:52:40.983Z",
         "reason": "user confirmed: Inter explicitement nomme par l'utilisateur dans la demande de separation typographique (index.html/base.css/.jp-text), choix delibere conserve malgre le signalement 'police generique'"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "css/grammar.css"
+        ],
+        "createdAt": "2026-09-22T18:55:01.810Z",
+        "reason": "pre-existing .lesson-card-in-box border-left accent, explicitly protected by user restriction (lesson-card dropdown design must not change)"
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "css/layout.css"
+        ],
+        "createdAt": "2026-09-22T18:55:06.203Z",
+        "reason": "pre-existing .niveaux-progress-fill width transition, predates this session, out of scope for the mockup styling task"
       }
     ]
   }
