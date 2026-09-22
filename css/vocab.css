@@ -144,11 +144,11 @@
     background:
         radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
         radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
-        rgba(10, 17, 32, 0.5);
+        rgba(10, 17, 32, 0.05);
     border: 1px solid rgba(0,229,255,0.15);
     border-radius: 10px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 .vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
 .vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
