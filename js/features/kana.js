@@ -95,8 +95,8 @@ export function renderKanaScreen(type) {
     const scriptLabel = type === 'hira' ? 'Hiragana' : 'Katakana';
     const count = getKanaFlatList(type).length;
     document.getElementById('main-content').innerHTML = `
-        <div class="list-page-bg" style="--page-bg:url('images/list-bg.webp')"></div>
-        <div class="list-page-header" style="--header-img:url('images/header-kana.png')">
+        <div class="list-page-bg" style="--page-bg:url('/images/list-bg.webp')"></div>
+        <div class="list-page-header" style="--header-img:url('/images/header-kana.png')">
             <div class="list-page-header-content">
                 <button class="list-page-back-btn" onclick="history.back()">←</button>
                 <div class="list-page-header-titles">

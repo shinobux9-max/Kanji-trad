@@ -274,12 +274,16 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
         subtitle = `${chars ? chars.length : 0} kanji`;
     }
 
-    const headerImages = { grammar: 'images/header-grammar.png', vocab: 'images/header-vocab.png', kanji: 'images/header-kanji.png' };
-    const headerImg = headerImages[category] || 'images/header-grammar.png';
+    // Chemins en racine absolue (/images/...) : --header-img/--page-bg sont des custom
+    // properties consommées via var() dans css/components.css, donc une URL relative comme
+    // 'images/...' se résoudrait par rapport à /css/ (le fichier où var() est utilisé), pas
+    // par rapport à la page HTML — d'où un 404 sur /css/images/... si on ne préfixe pas par /.
+    const headerImages = { grammar: '/images/header-grammar.png', vocab: '/images/header-vocab.png', kanji: '/images/header-kanji.png' };
+    const headerImg = headerImages[category] || '/images/header-grammar.png';
     // Fond de page partagé par toutes les pages de liste (vocab/kanji/grammaire/kana),
     // distinct à la fois des bannières (--header-img ci-dessus) et du fond par défaut de
     // l'app (global-bg.webp, css/base.css).
-    const pageBg = 'images/list-bg.webp';
+    const pageBg = '/images/list-bg.webp';
 
     mainContent.innerHTML = `
         <div class="list-page-bg" style="--page-bg:url('${pageBg}')"></div>
