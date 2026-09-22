@@ -12,7 +12,7 @@
 
 /* ── SEARCH BAR (agrandie, filtres type + niveau) ── */
     #search-bar {
-        background: linear-gradient(180deg, rgba(6,11,24,0.92) 0%, rgba(6,11,24,0.98) 100%), url('../images/niveaux-bg.webp');
+        background: linear-gradient(180deg, rgba(6,11,24,0.92) 0%, rgba(6,11,24,0.98) 100%), url('../images/global-bg.webp');
         background-size: cover; background-position: center;
         padding: 10px 12px 12px; position: fixed; top: 0; width: 100%; z-index: 990;
         border-bottom: 1px solid var(--border);
@@ -52,7 +52,7 @@
         /* ── SEARCH RESULTS ── même fond que les autres grands overlays de l'app */
     #search-results {
         position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.92) 100%), url('../images/niveaux-bg.webp');
+        background: linear-gradient(180deg, rgba(6,11,24,0.7) 0%, rgba(6,11,24,0.92) 100%), url('../images/global-bg.webp');
         background-size: cover; background-position: center; background-attachment: fixed;
         z-index: 980; overflow-y: auto; display: none;
         padding-top: 160px; /* laisse la place à la barre + ses 2 rangées de filtres, plus haute qu'avant */
@@ -210,7 +210,7 @@
    écran fixe sa propre image via la custom property --header-img (voir cards.js et
    kana.js) : c'est pourquoi le voile est neutre (même voile que le body, css/base.css)
    plutôt que teinté verdâtre comme dans la maquette d'origine — ce voile-là était
-   calibré spécifiquement pour header.png et jurerait sur les 3 autres images.
+   calibré spécifiquement pour header-grammar.png et jurerait sur les 3 autres images.
 ══════════════════════════════════════════════════ */
 .list-page-header {
     width: 100%;
@@ -297,6 +297,27 @@
     margin-top: 4px;
     font-weight: 400;
     letter-spacing: 0.2px;
+}
+
+/* ══════════════════════════════════════════════════
+   FOND DE PAGE (listes vocabulaire/kanji/grammaire/kana) — arrière-plan plein écran
+   propre à chaque type de liste, distinct de l'image de bannière (.list-page-header
+   ci-dessus) ET du fond par défaut de l'app (body, css/base.css). Inséré en tout
+   premier enfant de #main-content par cards.js/kana.js (--page-bg fixée par écran) :
+   position fixed + z-index négatif, donc toujours sous le contenu normal et
+   remplacé/retiré automatiquement au prochain innerHTML (pas de fuite vers les
+   autres écrans, pas de nettoyage manuel nécessaire).
+══════════════════════════════════════════════════ */
+.list-page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.8) 100%),
+        var(--page-bg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 /* ══════════════════════════════════════════════════

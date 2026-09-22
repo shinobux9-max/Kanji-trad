@@ -32,7 +32,7 @@ body {
   margin: 0; color: var(--text); overflow: hidden;
   background:
     linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%),
-    url('../images/niveaux-bg.webp');
+    url('../images/global-bg.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -75,55 +75,58 @@ body {
 }
 
 /* ══════════════════════════════════════════════════
-   BOX TITRE (en-têtes accordéon Vocabulaire/Grammaire) — carte de verre animée.
-   Structure reprise de border.html (fourni par l'utilisateur) : voile de verre +
-   bordure conique tournante + reflets néon haut/bas. Repris à l'identique pour la
-   structure ; les styles de texte, le badge et le speak-btn de border.html ne sont
-   PAS repris ici (.unit-box-title/.vocab-category-title, .unit-box-counter/
-   .vocab-cat-counter gardent leurs styles existants, inchangés).
+   BOX DE LEÇON (en-têtes accordéon Vocabulaire/Grammaire) — reprend EXACTEMENT la
+   structure et le style de .unit-box-header défini dans "menu grammaire.html"
+   (racine du repo, maquette fournie par l'utilisateur) : voile de verre + bordure
+   pointillée animée en SVG (plus la bordure conique tournante utilisée avant).
+   Hauteur fixe 54px, rayon 15px, overflow hidden — repris à l'identique. Le SVG
+   <rect class="border"> est un enfant direct ajouté dans le HTML (grammar.js/
+   vocabulary.js), pas généré par CSS. Les styles de texte/badge
+   (.unit-box-title/.vocab-category-title, .unit-box-counter/.vocab-cat-counter)
+   gardent leurs styles existants, inchangés.
 ══════════════════════════════════════════════════ */
 .unit-box-header, .vocab-category-header {
     position: relative;
+    height: 54px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
     background:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.16), transparent 70%),
-        linear-gradient(135deg, rgba(15,25,45,0.4), rgba(5,10,20,0.6));
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0), transparent 70%),
+        linear-gradient(135deg, rgba(15,25,45,0.37), rgba(5,10,20,0.6));
     backdrop-filter: blur(6px) saturate(150%);
     -webkit-backdrop-filter: blur(6px) saturate(150%);
-    border: 1px solid rgba(255,255,255,0.2);
     box-shadow:
         inset 0 2px 4px rgba(255,255,255,0.2),
         inset 0 -2px 6px rgba(0,0,0,0.35);
+    overflow: hidden;
 }
-.unit-box-header::before, .vocab-category-header::before {
-    content: "";
+.unit-box-header svg, .vocab-category-header svg {
     position: absolute;
-    inset: -1px -1px 0 -1px;
-    z-index: -1;
-    background: conic-gradient(
-        from var(--angle),
-        transparent 70%,
-        rgba(125,211,252,0.3),
-        rgba(255,255,255,0.8),
-        rgba(56,189,248,0.5),
-        transparent 95%
-    );
-    border-radius: 15px 15px 0 0;
-    animation: glassBorderSpin 4s linear infinite;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    padding: 1px;
-}
-.unit-box-header::after, .vocab-category-header::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 10%; right: 10%; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
-    box-shadow: 0 0 10px 1px rgba(255,255,255,0.8), 0 0 20px 2px rgba(125,211,252,0.6);
-    border-radius: 50%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
     pointer-events: none;
-    z-index: 2;
+    fill: none;
+    border-radius: 15px;
+}
+.unit-box-header .border, .vocab-category-header .border {
+    width: 100%;
+    height: 100%;
+    stroke: rgba(125, 211, 252, 0.6);
+    stroke-width: 1px;
+    fill: #0000;
+    rx: 15px;
+    ry: 15px;
+    stroke-dasharray: 100;
+    animation: 0s linear infinite stroke-animation;
+}
+@keyframes stroke-animation {
+    0% { stroke-dashoffset: 100; }
+    to { stroke-dashoffset: 0; }
 }
 .glass-reflect-bottom {
     position: absolute;
@@ -139,26 +142,18 @@ body {
 }
 
 /* ══════════════════════════════════════════════════
-   BOX TITRE DES FICHES (grammaire/vocabulaire) — reprend EXACTEMENT le design de
-   .unit-box-header/.vocab-category-header (box des unités de grammaire), demande
-   explicite pour unifier les deux familles de "box titre". .stars-bg n'est plus un
-   enfant direct de ces boîtes (déplacé sur .detail-page/.vocab-detail-page, voir
-   css/stars.css et grammar.css/vocab.css) : la boîte est une vraie carte de verre
-   semi-transparente, avec le champ d'étoiles qui transparaît derrière via
-   backdrop-filter. Structure texte/badge/speak-btn (.vocab-reading/.vocab-word/
-   .vocab-romaji/.vocab-type-badge/.vocab-speak-btn, idem côté grammaire) non
-   reprise, inchangée.
+   BOX TITRE DES FICHES (grammaire/vocabulaire) — même opacité et même effet de
+   style que la box "explication" (.detail-section, css/grammar.css) : fond plat
+   rgba(0,229,255,0.08) + bordure var(--border), sans flou ni halo, demande explicite
+   d'harmonisation. .stars-bg reste le fond de toute la fiche (.detail-page/
+   .vocab-detail-page, voir css/stars.css) — cette boîte redevient transparente au
+   lieu d'opaque, le champ d'étoiles transparaît directement à travers, sans flou.
+   Structure texte/badge/speak-btn (.vocab-reading/.vocab-word/.vocab-romaji/
+   .vocab-type-badge/.vocab-speak-btn, idem côté grammaire) non reprise, inchangée.
 ══════════════════════════════════════════════════ */
 .grammar-point-box, .vocab-detail-main-box {
-    background:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.16), transparent 70%),
-        linear-gradient(135deg, rgba(15,25,45,0.4), rgba(5,10,20,0.6));
-    backdrop-filter: blur(6px) saturate(150%);
-    -webkit-backdrop-filter: blur(6px) saturate(150%);
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow:
-        inset 0 2px 4px rgba(255,255,255,0.2),
-        inset 0 -2px 6px rgba(0,0,0,0.35);
+    background: rgba(0,229,255,0.08);
+    border: 1px solid var(--border);
 }
 .grammar-point-box::before, .vocab-detail-main-box::before {
     content: "";
@@ -195,7 +190,7 @@ body {
 /* ══════════════════════════════════════════════════
    HALO PERSONNALISÉ — appliqué aux boîtes clés
 ══════════════════════════════════════════════════ */
-.dash-review-cta, .dash-mastery-card, #bottom-nav, .grammar-point-box, .review-card, .vocab-detail-main-box {
+.dash-review-cta, .dash-mastery-card, #bottom-nav, .review-card {
     border: 1px solid #1d4e76;
     box-shadow:
         0 0 13px 3px rgba(29, 78, 118, 1),

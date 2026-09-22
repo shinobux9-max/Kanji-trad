@@ -204,9 +204,6 @@ export async function showApprendreScreen(isBack = false) {
                 <span class="free-training-chevron">→</span>
             </div>
 
-
-            <div class="dash-card weakness-widget" id="apprendre-weakness-widget" style="display:none;"></div>
-
             <div class="apprendre-section-header">
                 <span>Fiches</span>
             </div>
@@ -239,7 +236,6 @@ export async function showApprendreScreen(isBack = false) {
                 </div>
             </div>
         </div>`;
-    renderWeaknessWidget('apprendre-weakness-widget');
 }
 
 /* ══════════════════════════════════════════════════
@@ -274,10 +270,15 @@ export async function showCategoryDirect(levelId, category, isBack = false) {
         subtitle = `${chars ? chars.length : 0} kanji`;
     }
 
-    const headerImages = { grammar: 'images/header.png', vocab: 'images/niveaux-bg-2.webp', kanji: 'images/niveaux-bg-4.webp' };
-    const headerImg = headerImages[category] || 'images/niveaux-bg.webp';
+    const headerImages = { grammar: 'images/header-grammar.png', vocab: 'images/header-vocab.png', kanji: 'images/header-kanji.png' };
+    const headerImg = headerImages[category] || 'images/header-grammar.png';
+    // Fond de page partagé par toutes les pages de liste (vocab/kanji/grammaire/kana),
+    // distinct à la fois des bannières (--header-img ci-dessus) et du fond par défaut de
+    // l'app (global-bg.webp, css/base.css).
+    const pageBg = 'images/list-bg.webp';
 
     mainContent.innerHTML = `
+        <div class="list-page-bg" style="--page-bg:url('${pageBg}')"></div>
         <div class="list-page-header" style="--header-img:url('${headerImg}')">
             <div class="list-page-header-content">
                 <button class="list-page-back-btn" onclick="history.back()">←</button>

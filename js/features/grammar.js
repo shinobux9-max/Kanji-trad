@@ -561,6 +561,7 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
         return `
             <div class="unit-box-wrapper">
                 <div class="unit-box-header">
+                    <svg xmlns="http://www.w3.org/2000/svg"><rect class="border" pathLength="100"></rect></svg>
                     <div class="unit-box-title">
                         ${state.bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(unit.lessons.map(l => l.id))})' ${unit.lessons.every(l => getItemStatus(l.id) === 'mastered') ? 'checked' : ''}>` : ''}
                         <span class="unit-box-arrow">▶</span>

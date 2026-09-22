@@ -38,7 +38,7 @@
 ══════════════════════════════════════════════════ */
 .vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
 /* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .vocab-detail-main-box :
-   position: fixed pour remplacer complètement le fond de la page (niveaux-bg.webp, voir
+   position: fixed pour remplacer complètement le fond de la page (global-bg.webp, voir
    body dans base.css) au lieu de laisser dépasser un liseré visible autour de
    .vocab-detail-page (padding de #category-content). z-index -1 pour rester sous les
    éléments en flux (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche,

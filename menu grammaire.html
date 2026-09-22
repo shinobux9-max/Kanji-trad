@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Grammaire N5</title>
+  <style>
+    body {
+      background: #060B18;
+      color: #F0F6FC;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      
+      background-image: url('list-bg.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* Grand bandeau supérieur avec ton image de fond intégrée */
+    .page-header {
+      width: 100%;
+      padding: 24px 20px;
+      box-sizing: border-box;
+      
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 70%),
+        linear-gradient(135deg, rgba(15,35,25,0.4), rgba(5,15,10,0.6)),
+        url('header grammar.png');
+      
+      background-size: cover;
+      background-position: center;
+      
+      backdrop-filter: blur(8px) saturate(150%);
+      -webkit-backdrop-filter: blur(8px) saturate(150%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        inset 0 -2px 6px rgba(0,0,0,0.4),
+        0 10px 30px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+
+    .header-content {
+      max-width: 420px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      position: relative;
+      min-height: 50px;
+    }
+
+    /* Bouton retour circulaire */
+    .back-btn {
+      background: rgba(10, 25, 18, 0.6);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #E2E8F0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.15), inset 0 1px 3px rgba(255,255,255,0.2);
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+
+    .back-btn:hover {
+      border-color: rgba(212, 175, 55, 0.8);
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Titre, Badge N5 et Sous-titre centrés */
+    .header-titles {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .header-titles h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin: 0;
+      color: #F1F5F9;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Badge N5 */
+    .n5-badge {
+      background: linear-gradient(135deg, #0d5c3a, #063821);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      color: #34D399;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 10px 10px;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 2px 6px rgba(0,0,0,0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      margin-top: 4px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    /* Conteneur principal */
+    .main-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 0 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Bouton Sélectionner */
+    .select-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #F0F6FC;
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      align-self: flex-start;
+    }
+
+    /* Liste des leçons */
+    .lessons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Style des box de leçons avec la nouvelle animation de bordure SVG */
+    .unit-box-header {
+      position: relative;
+      height: 54px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 15px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0), transparent 70%),
+        linear-gradient(135deg, rgba(15, 25, 45, 0.37), rgba(5,10,20,0.6));
+      backdrop-filter: blur(6px) saturate(150%);
+      -webkit-backdrop-filter: blur(6px) saturate(150%);
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        inset 0 -2px 6px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+
+    /* SVG pour l'animation de bordure en pointillés animés */
+    .unit-box-header svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      fill: none;
+      border-radius: 15px;
+    }
+
+    .unit-box-header .border {
+      width: 100%;
+      height: 100%;
+      stroke: rgba(125, 211, 252, 0.6);
+      stroke-width: 1px;
+      fill: #0000;
+      rx: 15px;
+      ry: 15px;
+      stroke-dasharray: 100;
+      animation: 0s linear infinite stroke-animation;
+    }
+
+    @keyframes stroke-animation {
+      0% {
+        stroke-dashoffset: 100;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .glass-reflect-bottom {
+      position: absolute;
+      bottom: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+      box-shadow: 0 0 0px 0px rgba(255,255,255,0.8), 0 0 0px 0px rgba(125,211,252,0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .lesson-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #38BDF8;
+      letter-spacing: 0.3px;
+      z-index: 2;
+    }
+
+    .lesson-progress {
+      font-size: 0.8rem;
+      color: #8B949E;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Grand bandeau supérieur avec l'image de fond -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="back-btn">←</div>
+      <div class="header-titles">
+        <div class="title-row">
+          <h1>Grammaire</h1>
+          <div class="n5-badge">N5</div>
+        </div>
+        <div class="header-subtitle">75 leçons · 0 maîtrisées</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="main-container">
+    <div class="select-btn">
+      ☑ Sélectionner
+    </div>
+
+    <div class="lessons-container">
+      <div class="unit-box-header">
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <rect class="border" pathLength="100"></rect>
+        </svg>
+        <div class="lesson-info"><span>▶</span> 1 - LES BASES DE LA PHRASE</div>
+        <div class="lesson-progress">0/7</div>
+        <div class="glass-reflect-bottom"></div>
+      </div>
+
+      <div class="unit-box-header">
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <rect class="border" pathLength="100"></rect>
+        </svg>
+        <div class="lesson-info"><span>▶</span> 2 - LES PARTICULES FONDAMENTALES</div>
+        <div class="lesson-progress">0/12</div>
+        <div class="glass-reflect-bottom"></div>
+      </div>
+
+      <div class="unit-box-header">
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <rect class="border" pathLength="100"></rect>
+        </svg>
+        <div class="lesson-info"><span>▶</span> 3 - ORIGINE, LIMITES ET COMPARAISONS</div>
+        <div class="lesson-progress">0/8</div>
+        <div class="glass-reflect-bottom"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -572,6 +572,7 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
         return `
             <div class="vocab-category-box">
                 <div class="vocab-category-header" onclick="const content = document.getElementById('${catId}'); content.classList.toggle('open'); this.querySelector('.vocab-cat-arrow').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg"><rect class="border" pathLength="100"></rect></svg>
                     <div class="vocab-category-title">
                         ${state.bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(words.map(w => w.id))})' ${words.every(w => getItemStatus(w.id) === 'mastered') ? 'checked' : ''}>` : ''}
                         <span class="vocab-cat-arrow">▶</span>
