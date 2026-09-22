@@ -20,7 +20,7 @@
 .unit-box-wrapper {
     border-radius: 14px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255, 255, 255, 0);
     background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -109,16 +109,11 @@
 /* ══════════════════════════════════════════════════
    GRAMMAR DETAIL VIEW - Page de détail d'un point
 ══════════════════════════════════════════════════ */
+/* Le fond stars-bg a été retiré (demande explicite) : la fiche retombe sur le fond global de
+   l'app (global-bg.webp, voir body dans css/base.css), plus rien ne le masque ici. */
 .detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
-/* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .grammar-point-box :
-   position: fixed pour remplacer complètement le fond de la page (global-bg.webp, voir
-   body dans base.css) au lieu de laisser dépasser un liseré visible autour de .detail-page
-   (padding de #category-content). z-index -1 pour rester sous les éléments en flux
-   (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche, sans affecter le
-   reste de la page). */
-.detail-page > .stars-bg { position: fixed; z-index: -1; }
 
-.detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+.detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
 .back-btn:hover { background: rgba(0,201,167,0.2); }
 .header-info { flex: 1; }
@@ -132,14 +127,14 @@
 .item-description { font-size: 0.875rem; color: #fff; font-weight: 500; margin-bottom: 12px; }
 .pattern-box { font-size: 0.75rem; color: var(--gray); background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; }
 
-.action-buttons { display: flex; gap: 8px; background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(14,22,48,0.5)); border: 1px solid var(--border); border-radius: 12px; padding: 10px; }
+.action-buttons { display: flex; gap: 8px; background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(14,22,48,0.5)); border: 1px solid var(--border); border-radius: 12px; padding: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .link-btn { flex: 1; padding: 12px; background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(14,22,48,0.6)); border: 1px solid var(--border); border-radius: 8px; color: #fff; cursor: pointer; font-size: 0.75rem; }
 .link-btn:hover { background: linear-gradient(135deg, rgba(0,229,255,0.18), rgba(14,22,48,0.7)); }
 .revise-btn { flex: 1; padding: 12px; background: var(--accent); border: none; border-radius: 8px; color: var(--bg); cursor: pointer; font-size: 0.8125rem; font-weight: bold; }
 .revise-btn:hover { background: var(--accent-muted); }
 .revise-btn.active { background: #3ecf8e; color: var(--bg); }
 
-.detail-section { padding: 16px; background: rgba(0,229,255,0.08); border: 1px solid var(--border); border-radius: 10px; }
+.detail-section { padding: 16px; background: rgba(0,229,255,0.08); border: 1px solid var(--border); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .grammar-usage-box { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); }
 .grammar-block-box { background: transparent; }
 .detail-section .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
@@ -154,7 +149,7 @@
 .highlight-grammar { color: var(--accent); font-weight: bold; }
 
 .favorite-btn-section { padding: 16px; text-align: center; }
-.favorite-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 0.8125rem; }
+.favorite-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 0.8125rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .favorite-btn:hover { background: rgba(255,255,255,0.1); }
 .favorite-btn.active { background: rgba(255, 107, 157, 0.2); border-color: #ff6b9d; color: #ff6b9d; }
 
@@ -181,7 +176,7 @@
 /* ══════════════════════════════════════════════════
    EXPLICATIONS DE CONFUSION & COMPARAISON DE PARTICULES
 ══════════════════════════════════════════════════ */
-.confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; }
+.confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .confusion-box-title { font-size: 0.9375rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
 .confusion-box-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
 .confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; line-height: 1.7; padding: 4px 0; }

@@ -170,6 +170,8 @@ body {
 .grammar-point-box, .vocab-detail-main-box {
     background: rgba(0,229,255,0.08);
     border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 .grammar-point-box::before, .vocab-detail-main-box::before {
     content: "";

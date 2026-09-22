@@ -571,7 +571,8 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
 
         return `
             <div class="vocab-category-box">
-                <div class="vocab-category-header" onclick="const content = document.getElementById('${catId}'); content.classList.toggle('open'); this.querySelector('.vocab-cat-arrow').classList.toggle('open')">
+                <div class="vocab-category-header" onclick="this.closest('.vocab-category-box').classList.toggle('active'); const content = document.getElementById('${catId}'); content.classList.toggle('open'); this.querySelector('.vocab-cat-arrow').classList.toggle('open')">
+                    <div class="Ocean"><div class="wave"></div></div>
                     <svg xmlns="http://www.w3.org/2000/svg"><rect class="border" pathLength="100"></rect></svg>
                     <div class="vocab-category-title">
                         ${state.bulkSelectMode ? `<input type="checkbox" class="bulk-cat-checkbox" onclick='event.stopPropagation(); toggleCategoryMasteryLive(this, ${JSON.stringify(words.map(w => w.id))})' ${words.every(w => getItemStatus(w.id) === 'mastered') ? 'checked' : ''}>` : ''}
@@ -579,7 +580,6 @@ export function displayVocabList(levelId, data, examples = null, isBack = false)
                         <span>${label}</span>
                     </div>
                     <div class="vocab-cat-counter">${words.length}</div>
-                    <div class="glass-reflect-bottom"></div>
                 </div>
 
                 <div class="vocab-category-content" id="${catId}">
@@ -672,8 +672,7 @@ export function showVocabDetail(wordId, allWords = [], isBack = false) {
         return `<span class="vocab-type-badge" style="background: ${info.color}22; color: ${info.color}; border: 1px solid ${info.color}66; box-shadow: 0 0 8px ${info.color}33;">${word.type}${groupLabel}</span>`;
     };
 
-    let html = `<div class="vocab-detail-page">
-        <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>`;
+    let html = `<div class="vocab-detail-page">`;
 
     html += backFAB('history.back()') + `<div class="vocab-detail-header" style="justify-content:flex-end">
         <div class="vocab-progress">${currentIndex + 1} / ${totalWords}</div>

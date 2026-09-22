@@ -19,12 +19,29 @@
 ══════════════════════════════════════════════════ */
 .vocab-container { display: flex; flex-direction: column; gap: 20px; }
 
-.vocab-category-box { border: 2px solid rgba(0,229,255,0.25); border-radius: 14px; overflow: hidden; background: rgba(24,24,31,0.6); }
+/* Conteneur de catégorie — même dégradé/bordure/halo que .unit-box-wrapper (css/grammar.css),
+   repris de la maquette "menu grammaire.html" : les box de liste vocab et grammaire doivent
+   avoir la même apparence. */
+.vocab-category-box {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.vocab-category-box:hover {
+    border-color: rgba(255,255,255,0.35);
+    box-shadow: 0 4px 25px rgba(255,255,255,0.08);
+}
 
 .vocab-category-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
 
-.vocab-category-title { font-size: 0.75rem; color: var(--accent); font-weight: bold; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
-.vocab-cat-arrow { display: inline-block; transition: transform 0.2s; transform: rotate(0deg); }
+/* Titre — même traitement que .unit-box-title (css/grammar.css) : texte quasi-blanc + flèche
+   bleu clair au lieu de l'accent cyan uppercase. */
+.vocab-category-title { font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; }
+.vocab-cat-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .vocab-cat-arrow.open { transform: rotate(90deg); }
 
 .vocab-cat-counter { font-size: 0.625rem; color: var(--gray); }
@@ -32,20 +49,63 @@
 .vocab-category-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
 .vocab-category-content.open { display: flex; }
 
+/* Jauge "Ocean Wave" — même mécanique que .unit-box-header .Ocean (css/grammar.css) : .Ocean
+   est le tout premier enfant de .vocab-category-header (vocabulary.js), peint donc AVANT le
+   SVG de bordure et le titre/compteur qui suivent dans le DOM. */
+.vocab-category-header .Ocean {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.vocab-category-box.active .Ocean { transform: scaleY(1); }
+
+.vocab-category-header .wave {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(56, 189, 248, 0.55);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.vocab-category-header .wave::before,
+.vocab-category-header .wave::after {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.vocab-category-header .wave::before {
+    border-radius: 40%;
+    background: rgba(56, 189, 248, 0.75);
+    animation: vocabCatWave 8s linear infinite;
+}
+.vocab-category-header .wave::after {
+    border-radius: 35%;
+    background: rgba(255, 255, 255, 0.25);
+    animation: vocabCatWave 12s linear infinite;
+}
+@keyframes vocabCatWave {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    50%  { transform: translate(-50%, -65%) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 
 /* ══════════════════════════════════════════════════
    VOCABULARY DETAIL PAGE
 ══════════════════════════════════════════════════ */
+/* Le fond stars-bg a été retiré (demande explicite) : la fiche retombe sur le fond global de
+   l'app (global-bg.webp, voir body dans css/base.css), plus rien ne le masque ici. */
 .vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
-/* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .vocab-detail-main-box :
-   position: fixed pour remplacer complètement le fond de la page (global-bg.webp, voir
-   body dans base.css) au lieu de laisser dépasser un liseré visible autour de
-   .vocab-detail-page (padding de #category-content). z-index -1 pour rester sous les
-   éléments en flux (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche,
-   sans affecter le reste de la page). */
-.vocab-detail-page > .stars-bg { position: fixed; z-index: -1; }
 
-.vocab-detail-header { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+.vocab-detail-header { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .vocab-detail-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
 .vocab-detail-header .back-btn:hover { background: rgba(0,201,167,0.2); }
 .vocab-progress { margin-left: auto; font-size: 0.75rem; color: var(--gray); }
@@ -65,11 +125,11 @@
 .vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; }
 .vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
 
-.vocab-meanings { padding: 14px 12px; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; }
+.vocab-meanings { padding: 14px 12px; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
 .vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
 
-.vocab-nuance-box { font-size: 0.9375rem; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 14px; line-height: 1.6; }
+.vocab-nuance-box { font-size: 0.9375rem; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 14px; line-height: 1.6; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 
 /* Alignée sur .detail-section-label (fiche kanji, css/components.css) — harmonisation
    typographique des titres de section entre les deux fiches de détail. */
@@ -83,7 +143,7 @@
 /* ── ACTIONS & VOCABULARY DETAIL EXTRAS ── */
 
 .vocab-detail-actions { padding: 16px; }
-.vocab-master-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 0.8125rem; font-weight: 500; }
+.vocab-master-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 0.8125rem; font-weight: 500; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .vocab-master-btn:hover { background: rgba(255,255,255,0.1); }
 .vocab-master-btn.active { background: rgba(0,201,167,0.2); border-color: var(--accent); color: var(--accent); }
 

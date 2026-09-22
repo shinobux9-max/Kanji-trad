@@ -569,7 +569,6 @@ export function showGrammarHome(levelId, data, examples = null, isBack = false) 
                         <span>${lessonNumber} - ${unit.title.toUpperCase()}</span>
                     </div>
                     <div class="unit-box-counter">${unitMastered}/${unit.lessons.length}</div>
-                    <div class="glass-reflect-bottom"></div>
                 </div>
 
                 <div class="unit-box-content" id="${unitId}">
@@ -677,7 +676,6 @@ export function showGrammarDetail(lessonId, isBack = false) {
     const resolvedExamples = Array.isArray(lesson.examples) ? lesson.examples : [];
 
     let html = backFAB('history.back()') + `<div class="detail-page">
-        <div class="stars-bg"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
         <div class="detail-header-top">
             <div class="header-info">
                 <div class="lesson-title">Leçon ${lessonNum}</div>
