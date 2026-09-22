@@ -94,9 +94,13 @@ export function renderKanaScreen(type) {
     currentKanaTabType = type;
     const scriptLabel = type === 'hira' ? 'Hiragana' : 'Katakana';
     const count = getKanaFlatList(type).length;
+    // new URL(..., document.baseURI) plutôt qu'un chemin '/images/...' : le site peut être servi
+    // depuis un sous-dossier (ex. GitHub Pages /Kanji-trad/), voir cards.js::showCategoryDirect.
+    const pageBg = new URL('images/list-bg.webp', document.baseURI).href;
+    const headerImg = new URL('images/header-kana.png', document.baseURI).href;
     document.getElementById('main-content').innerHTML = `
-        <div class="list-page-bg" style="--page-bg:url('/images/list-bg.webp')"></div>
-        <div class="list-page-header" style="--header-img:url('/images/header-kana.png')">
+        <div class="list-page-bg" style="--page-bg:url('${pageBg}')"></div>
+        <div class="list-page-header" style="--header-img:url('${headerImg}')">
             <div class="list-page-header-content">
                 <button class="list-page-back-btn" onclick="history.back()">←</button>
                 <div class="list-page-header-titles">
