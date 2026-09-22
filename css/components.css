@@ -208,18 +208,13 @@
    PAGE HEADER (listes vocabulaire/kanji/grammaire/kana) — bandeau plein largeur avec
    image de fond, repris de la maquette "menu grammaire.html" (racine du repo). Chaque
    écran fixe sa propre image via la custom property --header-img (voir cards.js et
-   kana.js) : c'est pourquoi le voile est neutre (même voile que le body, css/base.css)
-   plutôt que teinté verdâtre comme dans la maquette d'origine — ce voile-là était
-   calibré spécifiquement pour header-grammar.png et jurerait sur les 3 autres images.
+   kana.js), affichée sans voile de couleur superposé.
 ══════════════════════════════════════════════════ */
 .list-page-header {
     width: 100%;
     padding: 24px 20px;
     box-sizing: border-box;
-    background-image:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 70%),
-        linear-gradient(180deg, rgba(6,11,24,0.5) 0%, rgba(6,11,24,0.82) 100%),
-        var(--header-img);
+    background-image: var(--header-img);
     background-size: cover;
     background-position: center;
     backdrop-filter: blur(8px) saturate(150%);
@@ -312,9 +307,7 @@
     position: fixed;
     inset: 0;
     z-index: -1;
-    background-image:
-        linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.8) 100%),
-        var(--page-bg);
+    background-image: var(--page-bg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
