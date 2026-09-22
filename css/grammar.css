@@ -32,7 +32,10 @@
 }
 
 .unit-box-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
-.unit-box-wrapper.active .unit-box-header { border: 1px solid rgba(0,0,0,0.4); }
+/* box-shadow (pas border) : le SVG décoratif de .unit-box-header (css/base.css) dessine son
+   propre liseré animé exactement sur le même pixel de bordure et le recouvrait entièrement —
+   l'anneau en box-shadow se dessine juste à l'extérieur, donc reste visible par-dessus. */
+.unit-box-wrapper.active .unit-box-header { box-shadow: 0 0 0 2px rgba(0,0,0,0.6); }
 
 /* Jauge "Ocean Wave" — se remplit quand l'unité est ouverte (maquette "menu grammaire.html").
    .Ocean est inséré en tout premier enfant de .unit-box-header (grammar.js) : peint donc AVANT
@@ -90,8 +93,10 @@
 .unit-box-title {
     font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px;
     display: flex; align-items: center; gap: 10px;
-    -webkit-text-stroke: 0.6px rgba(0,0,0,0.8);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9);
 }
 .unit-box-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .unit-box-arrow.open { transform: rotate(90deg); }
@@ -154,10 +159,10 @@
     background:
         radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
         radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
-        rgba(10, 17, 32, 0.9);
+        rgba(10, 17, 32, 0.05);
     border: 1px solid var(--border);
     border-radius: 10px;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(8px);
 }
 .grammar-usage-box { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); }

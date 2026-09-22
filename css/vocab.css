@@ -37,7 +37,9 @@
 }
 
 .vocab-category-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
-.vocab-category-box.active .vocab-category-header { border: 1px solid rgba(0,0,0,0.4); }
+/* box-shadow (pas border) : même raison que .unit-box-wrapper.active .unit-box-header
+   (css/grammar.css) — le SVG décoratif recouvre un border classique sur ce même pixel. */
+.vocab-category-box.active .vocab-category-header { box-shadow: 0 0 0 2px rgba(0,0,0,0.6); }
 
 /* Titre — même traitement que .unit-box-title (css/grammar.css) : texte quasi-blanc + flèche
    bleu clair au lieu de l'accent cyan uppercase, contour noir pour rester lisible sur le fond
@@ -45,8 +47,10 @@
 .vocab-category-title {
     font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px;
     display: flex; align-items: center; gap: 10px;
-    -webkit-text-stroke: 0.6px rgba(0,0,0,0.8);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9);
 }
 .vocab-cat-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .vocab-cat-arrow.open { transform: rotate(90deg); }
@@ -170,12 +174,14 @@
 /* ══════════════════════════════════════════════════
    CARTE MOT — style "pilule"
 ══════════════════════════════════════════════════ */
+/* Même opacité + flou que .free-training-card (box "Introduction", css/components.css) —
+   demande explicite de réutiliser exactement ce traitement ici. */
 .vocab-pill-card {
     display: flex; align-items: center; gap: 12px; padding: 12px 14px;
     border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s;
-    background: linear-gradient(135deg, rgba(15,25,45,0.6), rgba(8,15,28,0.75));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 17, 32, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 .vocab-pill-card:hover { border-color: var(--accent); }
 

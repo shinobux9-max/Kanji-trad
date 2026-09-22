@@ -82,15 +82,17 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.025);
 }
 
-/* Widget "À renforcer" (.dash-card.weakness-widget, js/learning/weakness.js) — même famille de
-   dégradé que le thème "Navy Glow" ci-dessus, mais translucide + flouté au lieu d'opaque. */
-.weakness-widget {
-    background:
-        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
-        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
-        rgba(10, 17, 32, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+/* Widget "À renforcer" (js/learning/weakness.js) — même opacité + flou que .free-training-card
+   (box "Introduction", css/components.css), demande explicite. Sélecteur composé
+   .dash-card.weakness-widget (pas juste .weakness-widget) : .dash-card seul est redéfini plus
+   loin dans css/components.css (chargé après ce fichier) avec un fond opaque — même
+   spécificité qu'un sélecteur à une classe, donc l'ordre de chargement des fichiers
+   l'emportait sur cette règle. Le sélecteur composé a une spécificité plus élevée et gagne
+   quel que soit l'ordre des fichiers. */
+.dash-card.weakness-widget {
+    background: rgba(10, 17, 32, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 
 /* La navbar flottante profite aussi d'un léger halo */

@@ -204,9 +204,6 @@ export async function showApprendreScreen(isBack = false) {
                 <span class="free-training-chevron">→</span>
             </div>
 
-
-            <div class="dash-card weakness-widget" id="apprendre-weakness-widget" style="display:none;"></div>
-
             <div class="apprendre-section-header">
                 <span>Fiches</span>
             </div>
@@ -239,7 +236,6 @@ export async function showApprendreScreen(isBack = false) {
                 </div>
             </div>
         </div>`;
-    renderWeaknessWidget('apprendre-weakness-widget');
 }
 
 /* ══════════════════════════════════════════════════
