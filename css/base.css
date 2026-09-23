@@ -132,6 +132,12 @@ body {
         inset 0 -2px 6px rgba(0,0,0,0.35);
     overflow: hidden;
 }
+/* Titre/compteur au-dessus de la vague .Ocean et du SVG : ceux-ci sont position:absolute,
+   donc peints APRÈS tout contenu non positionné quel que soit l'ordre DOM — sans ça la
+   vague recouvrait le texte (seule la flèche, transformée donc elle aussi positionnée en
+   peinture, restait visible). */
+.unit-box-title, .vocab-category-title,
+.unit-box-counter, .vocab-cat-counter { position: relative; z-index: 1; }
 .unit-box-header svg, .vocab-category-header svg {
     position: absolute;
     inset: 0;

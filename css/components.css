@@ -149,14 +149,20 @@
 }
 
 /* .readings-box/.info-card (fiche kanji) partagent le fond "Navy Glow" opaque (css/base.css) —
-   même famille de couleur que .kanji-main-card ci-dessus, mais translucide + flouté. */
-.readings-box, .info-card {
+   même famille de couleur que .kanji-main-card ci-dessus, mais translucide + flouté.
+   .linked-vocab-chip (mots qui utilisent ce kanji) reprend le même fond, demande explicite. */
+.readings-box, .info-card, .linked-vocab-chip {
     background:
         radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
         radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
-        rgba(10, 17, 32, 0.9);
+        rgba(10, 17, 32, 0.05);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+}
+/* Contenu toujours au-dessus du fond/flou : même protection que les titres d'en-têtes
+   (css/base.css) si un calque décoratif position:absolute est ajouté plus tard. */
+.readings-box > *, .info-card > *, .linked-vocab-chip > *, .vocab-kanji-chip > * {
+    position: relative; z-index: 1;
 }
 .kmc-badge { background: rgba(56,189,248,0.10); border: 1px solid rgba(56,189,248,0.3); color: var(--accent-muted); font-size: 0.6875rem; padding: 4px 10px; border-radius: 8px; font-weight: 700; }
 .kmc-badge b { font-weight: 700; }
