@@ -21,13 +21,15 @@
 
 /* Conteneur de catégorie — même dégradé/bordure/halo que .unit-box-wrapper (css/grammar.css),
    repris de la maquette "menu grammaire.html" : les box de liste vocab et grammaire doivent
-   avoir la même apparence. */
+   avoir la même apparence.
+   Fond quasi transparent et SANS backdrop-filter : un backdrop-filter ici fait de la box une
+   "backdrop root" — le flou des .vocab-pill-card enfants ne verrait plus que ce fond (opaque
+   avant), jamais global-bg.webp du body. Le header et les pill cards ont leur propre flou. */
 .vocab-category-box {
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.15);
-    background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
-    backdrop-filter: blur(8px);
+    background: rgba(10, 17, 32, 0.05);
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -55,7 +57,11 @@
 .vocab-cat-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .vocab-cat-arrow.open { transform: rotate(90deg); }
 
-.vocab-cat-counter { font-size: 0.625rem; color: var(--gray); }
+.vocab-cat-counter { font-size: 0.625rem; color: var(--gray);
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9); }
 
 .vocab-category-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
 .vocab-category-content.open { display: flex; }
@@ -179,9 +185,9 @@
 .vocab-pill-card {
     display: flex; align-items: center; gap: 12px; padding: 12px 14px;
     border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s;
-    background: rgba(10, 17, 32, 0.05);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(10, 17, 32, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 .vocab-pill-card:hover { border-color: var(--accent); }
 

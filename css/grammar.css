@@ -16,13 +16,15 @@
 .grammar-container { display: flex; flex-direction: column; gap: 20px; }
 
 /* Conteneur d'unité — dégradé + bordure + halo au survol repris de la maquette
-   "menu grammaire.html" (racine du repo), remplace l'ancienne bordure cyan unie. */
+   "menu grammaire.html" (racine du repo), remplace l'ancienne bordure cyan unie.
+   Fond quasi transparent et SANS backdrop-filter — même raison que .vocab-category-box
+   (css/vocab.css) : un backdrop-filter ici ferait de la box une "backdrop root" et le flou
+   du header / des .lesson-card-in-box ne verrait plus global-bg.webp du body. */
 .unit-box-wrapper {
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.15);
-    background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
-    backdrop-filter: blur(8px);
+    background: rgba(10, 17, 32, 0.05);
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -101,13 +103,19 @@
 .unit-box-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
 .unit-box-arrow.open { transform: rotate(90deg); }
 
-.unit-box-counter { font-size: 0.625rem; color: var(--gray); }
+.unit-box-counter { font-size: 0.625rem; color: var(--gray);
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9); }
 
 .unit-box-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
 .unit-box-content.open { display: flex; }
 
-.lesson-card-in-box { padding: 10px; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,201,167,0.2); border-left: 3px solid var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; position: relative; }
-.lesson-card-in-box:hover { background: rgba(0, 201, 167, 0.08); border-left-color: #35D6C7; }
+/* Même verre fumé que .vocab-pill-card (css/vocab.css) — visible depuis que .unit-box-wrapper
+   n'est plus opaque ni backdrop root. */
+.lesson-card-in-box { padding: 10px; background: rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0,201,167,0.2); border-left: 3px solid var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; position: relative; }
+.lesson-card-in-box:hover { background: rgba(15, 23, 42, 0.40); border-left-color: #35D6C7; }
 
 .card-header-in-box { display: flex; justify-content: space-between; align-items: center; }
 .lesson-badge-in-box { font-size: 0.4375rem; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.2px; white-space: nowrap; }
