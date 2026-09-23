@@ -105,7 +105,8 @@
     text-shadow:
         -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
         -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
-        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9); 
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9);
+}
 
 .unit-box-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
 .unit-box-content.open { display: flex; }
@@ -226,4 +227,4 @@
 .particle-compare-icon { flex-shrink: 0; font-size: 0.9375rem; line-height: 1.6; }
 .particle-compare-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; }
 .particle-compare-row.wrong .particle-compare-text { color: #FB7185; }
-.particle-compare-row.correct .particle-compare-text { color: #4ADE80; }}
+.particle-compare-row.correct .particle-compare-text { color: #4ADE80; }
