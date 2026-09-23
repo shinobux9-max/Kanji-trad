@@ -21,15 +21,32 @@
     <!-- Renommer en hanzi-writer.js -->
     <script src="hanzi-writer.js"></script>
 
+    <!-- Pétales de sakura en arrière-plan global (https://github.com/jhammann/sakura) -->
+    <script src="sakura.js"></script>
+
     <!-- Icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="kanji.css?v=20260906_option_padding">
+    <!-- Styles (modularisés en 9 fichiers, voir css/) -->
+    <!-- ?v= : casse le cache navigateur/CDN GitHub Pages à chaque mise à jour de design — sans
+         ça, un CSS déjà en cache peut rester affiché des heures après un déploiement, alors que
+         le fichier servi est déjà correct (vécu plusieurs fois pendant cette refonte). Incrémenter
+         la valeur à chaque session de retouches CSS. -->
+    <link rel="stylesheet" href="css/base.css?v=20260923e">
+    <link rel="stylesheet" href="css/layout.css?v=20260923e">
+    <link rel="stylesheet" href="css/components.css?v=20260923e">
+    <link rel="stylesheet" href="css/kanji.css?v=20260923e">
+    <link rel="stylesheet" href="css/vocab.css?v=20260923e">
+    <link rel="stylesheet" href="css/grammar.css?v=20260923e">
+    <link rel="stylesheet" href="css/review.css?v=20260923e">
+    <link rel="stylesheet" href="css/quiz.css?v=20260923e">
+    <link rel="stylesheet" href="css/learning.css?v=20260923e">
+    <link rel="stylesheet" href="css/stars.css?v=20260923e">
+    <link rel="stylesheet" href="sakura.css?v=20260923e">
 </head>
 <body>
 
@@ -62,13 +79,16 @@
     </div>
 </div>
 
+<!-- ── PÉTALES DE SAKURA (arrière-plan global, derrière tout le contenu) ── -->
+<div id="sakura-container"></div>
+
 <!-- ── MAIN CONTENT ──────────────────────────────── -->
 <div class="container" id="main-content"></div>
 
 <!-- ── DETAIL VIEW ───────────────────────────────── -->
 <div id="detail-view">
+    <button onclick="history.back()" style="position:fixed;top:10px;left:10px;z-index:600;width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;">←</button>
     <div class="toolbar">
-        <button onclick="history.back()">←</button>
         <div class="toolbar-title" id="detail-char-title"></div>
     </div>
     <div class="detail-content">
@@ -151,7 +171,7 @@
 </div>
 
 <!-- ── MODAL DOSSIERS ─────────────────────────────── -->
-<div id="folder-modal">
+<div id="folder-modal" onclick="if(event.target===this)closeFolderModal()">
     <div class="fm-sheet">
         <div class="fm-handle"></div>
         <div class="fm-header">
@@ -168,24 +188,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- ── QUIZ VIEW ─────────────────────────────────── -->
-<div id="quiz-view">
-    <div class="quiz-top-bar">
-        <button onclick="closeQuiz()">←</button>
-        <div class="quiz-score-ok"><span class="quiz-score-icon">✔</span><span id="quiz-correct">0</span></div>
-        <div class="quiz-score-ko"><span class="quiz-score-icon">✘</span><span id="quiz-wrong">0</span></div>
-        <div class="quiz-timer-badge" id="quiz-timer">0:00</div>
-        <button class="quiz-pause-btn" onclick="togglePause()">⏸</button>
-    </div>
-    <div class="quiz-sub-bar">
-        <span id="quiz-counter-sub">1 / 10</span>
-        <button class="quiz-examples-btn" id="quiz-examples-btn" onclick="toggleExamples()" style="display:none">Afficher les exemples</button>
-        <span id="quiz-score-sub">0.0 / 10.0</span>
-    </div>
-    <div class="quiz-prog-wrap"><div class="quiz-prog-bar" id="quiz-prog-bar"></div></div>
-    <div class="quiz-body" id="quiz-body"></div>
 </div>
 
 <!-- ── STROKE QUIZ VIEW ───────────────────────────── -->
@@ -205,56 +207,6 @@
     <div id="stroke-quiz-body"></div>
 </div>
 
-
-<!-- ── QUIZ MODE MODAL ───────────────────────────── -->
-<div id="quiz-mode-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeQuizModal()">
-    <div class="mode-selection-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-            <div class="mode-title" style="margin-bottom:0">Choisir un mode</div>
-            <button onclick="closeQuizModal()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
-        </div>
-        <div class="mode-section-label">— Reconnaissance</div>
-        <div class="mode-option" onclick="launchQuizMode('kanji-to-read')">
-            <span class="mode-icon">🈳</span>
-            <div><div class="mode-opt-title">Kanji → Onyomi / Kunyomi</div><div class="mode-opt-sub">Trouvez la bonne lecture (on ou kun) du kanji</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('kanji-to-mean')">
-            <span class="mode-icon">🇫🇷</span>
-            <div><div class="mode-opt-title">Kanji → Traduction</div><div class="mode-opt-sub">Trouvez le sens en français</div></div>
-        </div>
-        <div class="mode-section-label">— Rappel inversé</div>
-        <div class="mode-option" onclick="launchQuizMode('read-to-kanji')">
-            <span class="mode-icon">🔄</span>
-            <div><div class="mode-opt-title">Onyomi / Kunyomi → Kanji</div><div class="mode-opt-sub">Lecture(s) affichée(s), trouvez le kanji</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('mean-to-kanji')">
-            <span class="mode-icon">🔁</span>
-            <div><div class="mode-opt-title">Français → Kanji</div><div class="mode-opt-sub">Traduction affichée, trouvez le kanji</div></div>
-        </div>
-        <div class="mode-section-label">— Tracé</div>
-        <div class="mode-option" onclick="launchStrokeMode('trace-easy')">
-            <span class="mode-icon">✏️</span>
-            <div><div class="mode-opt-title">Tracé guidé</div><div class="mode-opt-sub">Ordre des traits avec aide visuelle</div></div>
-        </div>
-        <div class="mode-option" onclick="launchStrokeMode('trace-hard')">
-            <span class="mode-icon">💀</span>
-            <div><div class="mode-opt-title">Tracé Hardcore</div><div class="mode-opt-sub">Sans ombre — de mémoire pure</div></div>
-        </div>
-        <div class="mode-section-label">— Avancé</div>
-        <div class="mode-option" onclick="launchQuizMode('mixte')">
-            <span class="mode-icon">🎲</span>
-            <div><div class="mode-opt-title">Mixte</div><div class="mode-opt-sub">Lectures + traductions aléatoirement</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('vocal')">
-            <span class="mode-icon">🎤</span>
-            <div><div class="mode-opt-title">Audio</div><div class="mode-opt-sub">Sens affiché, prononcez la lecture</div></div>
-        </div>
-        <div class="mode-option" onclick="launchQuizMode('survie')">
-            <span class="mode-icon">🔥</span>
-            <div><div class="mode-opt-title">Hardcore Mixte</div><div class="mode-opt-sub">Tous les modes mélangés aléatoirement</div></div>
-        </div>
-    </div>
-</div>
 
 <!-- ── KANA TRACE MODE MODAL ──────────────────────── -->
 <div id="kana-trace-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeKanaTraceModal()">
@@ -302,6 +254,19 @@
     </div>
 </div>
 
+<!-- ── APERÇU MOT DE VOCABULAIRE (popup légère depuis les badges 👁️ de feedback de quiz) ──
+     Équivalent vocabulaire de lesson-reference-popup-modal ci-dessus — même principe : rester
+     dans la session en cours plutôt que d'y renvoyer showVocabDetail() qui la remplacerait. -->
+<div id="vocab-reference-popup-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeVocabReferencePopup()">
+    <div class="mode-selection-card" style="max-height:82vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div class="mode-title" style="margin-bottom:0">Aperçu</div>
+            <button onclick="closeVocabReferencePopup()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+        </div>
+        <div id="vocab-reference-popup-content"></div>
+    </div>
+</div>
+
 <!-- ── TABLE HIRAGANA/KATAKANA (popup, accessible depuis les mots cliquables des slides d'intro) ── -->
 <div id="kana-table-popup-modal" class="mode-selection-overlay" onclick="if(event.target===this)closeKanaTablePopup()">
     <div class="mode-selection-card" style="max-height:82vh;overflow-y:auto">
@@ -318,28 +283,8 @@
     <div class="mode-selection-card" id="fiche-correction-content"></div>
 </div>
 
-<!-- ── QUIZ FEEDBACK MODAL ────────────────────────── -->
-<div id="quiz-feedback-modal">
-    <div class="qfm-card" id="qfm-card">
-        <div class="qfm-kanji" id="qfm-kanji"></div>
-        <div class="qfm-meaning" id="qfm-meaning"></div>
-        <div class="qfm-readings">
-            <div class="qfm-read-block">
-                <div class="qfm-read-label">On'yomi</div>
-                <div class="qfm-read-tags" id="qfm-on"></div>
-            </div>
-            <div class="qfm-read-block">
-                <div class="qfm-read-label">Kun'yomi</div>
-                <div class="qfm-read-tags" id="qfm-kun"></div>
-            </div>
-        </div>
-        <div class="qfm-verdict" id="qfm-verdict"></div>
-        <button class="qfm-continue-btn" onclick="continueAfterFeedback()">Continuer →</button>
-    </div>
-</div>
-
-    <!-- Script principal -->
-    <script src="kanji.js?v=20260910_lp_bugfixes2"></script>
+    <!-- Script principal (modularisé en ESM, voir js/) -->
+    <script type="module" src="js/app.js"></script>
 
     <!-- ── BULK ACTION BAR (mode maîtrise rapide) ────────── -->
     <div id="bulk-action-bar" style="display:none;">

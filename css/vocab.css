@@ -1,0 +1,223 @@
+/* ══════════════════════════════════════════════════
+   vocab.css — Vocabulaire, Listes Mots & Exemples
+   Lien dans index.html : <link rel="stylesheet" href="css/vocab.css">
+══════════════════════════════════════════════════ */
+
+
+/* ── CONTRASTE SECTIONS DYNAMIQUES ── */
+[data-words] { background: var(--surface) !important; }
+
+/* ── LINKED VOCABULARY LIST ─────── */
+.linked-vocab-list { display: flex; flex-direction: column; gap: 6px; padding: 0 16px 20px; }
+.linked-vocab-chip { display: flex; justify-content: space-between; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; cursor: pointer; }
+.linked-vocab-chip:active { border-color: var(--accent); }
+.linked-vocab-word { font-family: 'Noto Sans JP', sans-serif; font-size: 1rem; font-weight: bold; color: var(--accent); flex-shrink: 0; }
+.linked-vocab-meaning { font-size: 0.75rem; color: var(--gray); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ══════════════════════════════════════════════════
+   VOCABULARY LIST - Design avec boxes comme Grammaire
+══════════════════════════════════════════════════ */
+.vocab-container { display: flex; flex-direction: column; gap: 20px; }
+
+/* Conteneur de catégorie — même dégradé/bordure/halo que .unit-box-wrapper (css/grammar.css),
+   repris de la maquette "menu grammaire.html" : les box de liste vocab et grammaire doivent
+   avoir la même apparence.
+   Fond quasi transparent et SANS backdrop-filter : un backdrop-filter ici fait de la box une
+   "backdrop root" — le flou des .vocab-pill-card enfants ne verrait plus que ce fond (opaque
+   avant), jamais global-bg.webp du body. Le header et les pill cards ont leur propre flou. */
+.vocab-category-box {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(10, 17, 32, 0.05);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.vocab-category-box:hover {
+    border-color: rgba(255,255,255,0.35);
+    box-shadow: 0 4px 25px rgba(255,255,255,0.08);
+}
+
+.vocab-category-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+/* box-shadow (pas border) : même raison que .unit-box-wrapper.active .unit-box-header
+   (css/grammar.css) — le SVG décoratif recouvre un border classique sur ce même pixel. */
+.vocab-category-box.active .vocab-category-header { box-shadow: 0 0 0 2px rgba(0,0,0,0.6); }
+
+/* Titre — même traitement que .unit-box-title (css/grammar.css) : texte quasi-blanc + flèche
+   bleu clair au lieu de l'accent cyan uppercase, contour noir pour rester lisible sur le fond
+   Ocean Wave. */
+.vocab-category-title {
+    font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px;
+    display: flex; align-items: center; gap: 10px;
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9);
+}
+.vocab-cat-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
+.vocab-cat-arrow.open { transform: rotate(90deg); }
+
+.vocab-cat-counter { font-size: 0.625rem; color: var(--gray);
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9); }
+
+.vocab-category-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
+.vocab-category-content.open { display: flex; }
+
+/* Jauge "Ocean Wave" — même mécanique que .unit-box-header .Ocean (css/grammar.css) : .Ocean
+   est le tout premier enfant de .vocab-category-header (vocabulary.js), peint donc AVANT le
+   SVG de bordure et le titre/compteur qui suivent dans le DOM. */
+.vocab-category-header .Ocean {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.vocab-category-box.active .Ocean { transform: scaleY(1); }
+
+.vocab-category-header .wave {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(56, 189, 248, 0.55);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.vocab-category-header .wave::before,
+.vocab-category-header .wave::after {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.vocab-category-header .wave::before {
+    border-radius: 40%;
+    background: rgba(56, 189, 248, 0.75);
+    animation: vocabCatWave 8s linear infinite;
+}
+.vocab-category-header .wave::after {
+    border-radius: 35%;
+    background: rgba(255, 255, 255, 0.25);
+    animation: vocabCatWave 12s linear infinite;
+}
+@keyframes vocabCatWave {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    50%  { transform: translate(-50%, -65%) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/* ══════════════════════════════════════════════════
+   VOCABULARY DETAIL PAGE
+══════════════════════════════════════════════════ */
+/* Le fond stars-bg a été retiré (demande explicite) : la fiche retombe sur le fond global de
+   l'app (global-bg.webp, voir body dans css/base.css), plus rien ne le masque ici. */
+.vocab-detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
+
+.vocab-detail-header { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.vocab-detail-header .back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+.vocab-detail-header .back-btn:hover { background: rgba(0,201,167,0.2); }
+.vocab-progress { margin-left: auto; font-size: 0.75rem; color: var(--gray); }
+
+.vocab-detail-top { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
+.vocab-level-badge { font-size: 0.5625rem; color: #fff; background: rgba(0,201,167,0.3); padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; }
+.vocab-favorite-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; }
+.vocab-favorite-btn:hover { opacity: 0.7; }
+.vocab-favorite-btn.active { color: #ff6b9d; }
+
+.vocab-detail-main-box { padding: 24px 20px; border-radius: 12px; text-align: center; position: relative; overflow: hidden; }
+.vocab-detail-main-content { position: relative; z-index: 1; }
+.vocab-reading { font-size: 0.75rem; color: var(--accent); margin-bottom: 8px; }
+.vocab-word { font-size: 3.5rem; color: #fff; font-weight: bold; margin: 12px 0; line-height: 1.2; }
+.vocab-romaji { font-size: 0.875rem; color: var(--gray); margin-bottom: 4px; }
+.vocab-type-badge { display: inline-block; margin-top: 8px; font-size: 0.5625rem; color: var(--bg); padding: 4px 10px; border-radius: 4px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px; }
+.vocab-speak-btn { position: absolute; top: 16px; right: 16px; background: rgba(0,201,167,0.2); border: 1px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; color: var(--accent); cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; }
+.vocab-speak-btn:hover { background: rgba(0,201,167,0.3); }
+
+/* Même dégradé que les cellules de la liste kanji (.kanji-grid-cell, thème "Navy Glow" partagé
+   de css/base.css) — demande explicite de réutiliser ce dégradé sur la box "Signification". */
+.vocab-meanings {
+    padding: 14px 12px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.05);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.vocab-meaning-primary { font-size: 1.0625rem; color: #fff; font-weight: 600; padding: 4px 0 8px; }
+.vocab-meaning-secondary { font-size: 0.75rem; color: var(--gray); padding: 3px 0; line-height: 1.4; }
+
+.vocab-nuance-box { font-size: 0.9375rem; color: var(--text); background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 14px; line-height: 1.6; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+/* Alignée sur .detail-section-label (fiche kanji, css/components.css) — harmonisation
+   typographique des titres de section entre les deux fiches de détail. */
+.vocab-section-title { font-size: 0.5625rem; color: var(--accent-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1.2px; margin-top: 10px; margin-bottom: 4px; }
+
+.vocab-example-box { padding: 12px; background: transparent; border: 1px solid var(--border); border-radius: 10px; position: relative; text-align: center; }
+.vocab-example-box .example-jp { font-size: 1.375rem; color: #fff; margin-bottom: 8px; font-weight: 500; line-height: 1.7; }
+.vocab-example-box .example-ro { font-size: 0.8125rem; color: var(--accent); margin-bottom: 6px; }
+.vocab-example-box .example-fr { font-size: 0.875rem; color: var(--gray); line-height: 1.4; }
+
+/* ── ACTIONS & VOCABULARY DETAIL EXTRAS ── */
+
+.vocab-detail-actions { padding: 16px; }
+.vocab-master-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 0.8125rem; font-weight: 500; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.vocab-master-btn:hover { background: rgba(255,255,255,0.1); }
+.vocab-master-btn.active { background: rgba(0,201,167,0.2); border-color: var(--accent); color: var(--accent); }
+
+/* ══════════════════════════════════════════════════
+   CARTE MOT — style "pilule"
+══════════════════════════════════════════════════ */
+/* Même opacité + flou que .free-training-card (box "Introduction", css/components.css) —
+   demande explicite de réutiliser exactement ce traitement ici. */
+.vocab-pill-card {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    border: 1px solid var(--border); border-radius: 16px; cursor: pointer; transition: border-color 0.15s;
+    background: rgba(10, 17, 32, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.vocab-pill-card:hover { border-color: var(--accent); }
+
+.vocab-pill-badge {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6875rem; font-weight: bold; color: var(--accent);
+    background: conic-gradient(var(--accent) calc(var(--pct) * 1%), rgba(255,255,255,0.08) 0);
+}
+.vocab-pill-badge span { background: var(--surface); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+.vocab-pill-left { flex-shrink: 0; min-width: 64px; }
+.vocab-pill-word { font-size: 0.9375rem; color: #fff; font-weight: bold; }
+.vocab-pill-reading { font-size: 0.6875rem; color: var(--accent); margin-top: 1px; }
+
+.vocab-pill-right { flex: 1; min-width: 0; text-align: right; }
+.vocab-pill-meaning { font-size: 0.75rem; color: var(--text); line-height: 1.3; }
+.vocab-pill-romaji { font-size: 0.625rem; color: var(--gray); margin-top: 2px; }
+
+/* ══════════════════════════════════════════════════
+   PUCES DE KANJIS (vocabulaire)
+══════════════════════════════════════════════════ */
+.vocab-kanji-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.vocab-kanji-chip {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; cursor: pointer; transition: border-color 0.15s;
+    background: linear-gradient(135deg, rgba(15,25,45,0.2), rgba(8,15,28,0.5));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.vocab-kanji-chip:hover { border-color: var(--accent); }
+.vocab-kanji-chip-char { font-size: 1.375rem; font-weight: bold; color: var(--accent); }
+.vocab-kanji-chip-meaning { font-size: 0.75rem; color: var(--gray); }

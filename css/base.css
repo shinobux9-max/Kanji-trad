@@ -1,0 +1,231 @@
+/* ══════════════════════════════════════════════════
+   base.css — Variables globales & styles de base
+   Lien dans index.html : <link rel="stylesheet" href="css/base.css">
+══════════════════════════════════════════════════ */
+
+
+:root {
+  --bg: #060B18; --surface: #0E1630; --card: #0E1630; --text: #F0F6FC;
+  --accent: #00E5FF; --accent-muted: #38BDF8; --accent2: #7b61ff; --gray: #8B949E; --border: rgba(0,229,255,0.28);
+  --grade-prim: #3ecf8e; --grade-mid: #6c7bff; --highlight-warm: #FFD166;
+  --glow-cyan: 0 0 16px rgba(0,229,255,0.12), inset 0 0 24px rgba(0,229,255,0.02);
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* --- SÉPARATION TYPOGRAPHIQUE UI / JAPONAIS (SYNTHESE-UI-UX.md §2) ---
+   body utilise la police d'interface latine (Inter). Le japonais (kanji/kana/mots) reste sur
+   Noto Sans JP, appliqué soit directement aux classes dédiées qui n'affichent QUE du japonais
+   (.kana-char, .kgc-char, .kfiche-char, .review-word — voir components.css/kanji.css/
+   learning.css/review.css), soit via .jp-text ci-dessous pour tout cas non couvert par une
+   classe existante. */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-variant-east-asian: jis04; }
+
+.jp-text { font-family: 'Noto Sans JP', 'Noto Serif JP', sans-serif; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0; color: var(--text); overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(6,11,24,0.55) 0%, rgba(6,11,24,0.75) 100%),
+    url('../images/global-bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* ══════════════════════════════════════════════════
+   PÉTALES DE SAKURA — arrière-plan global (maquette "menu grammaire.html", racine du repo).
+   Élément fixe unique du shell (index.html, avant #main-content), initialisé une seule fois
+   par app.js::initSakuraBackground() — survit aux innerHTML de #main-content au lieu d'être
+   recréé à chaque écran. z-index explicite -1 : juste au-dessus de .list-page-bg
+   (css/components.css, z-index:-2) et en dessous de TOUT le reste (header/unit boxes/menus,
+   z-index:auto par défaut) — empilement garanti indépendamment de l'ordre DOM.
+══════════════════════════════════════════════════ */
+#sakura-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════
+   NAVBAR — kanji au lieu d'icônes, surbrillance sur l'onglet actif
+══════════════════════════════════════════════════ */
+.bnav-kanji { font-size: 1.375rem; font-weight: bold; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray); transition: all 0.15s; }
+.bnav-btn.active .bnav-kanji { background: rgba(0,229,255,0.18); color: var(--accent); }
+
+/* ══════════════════════════════════════════════════
+   THÈME NAVY GLOW — halo lumineux sur les cartes principales
+══════════════════════════════════════════════════ */
+.dash-card, .prog-level-card, .streak-detail-card,
+.progression-stat-card, .grammar-point-box, .detail-section,
+.apprendre-card, .vocab-detail-main-box, .vocab-meanings, .vocab-example-box,
+.vocab-nuance-box, .lesson-card-in-box, .vocab-pill-card,
+.niveaux-card, .unit-box-wrapper, .vocab-category-box, .review-card,
+.review-mode-btn, .review-mode-selector .back-btn,
+.review-option-btn, .kana-cell, .kanji-grid-cell, .readings-box, .info-card,
+.folder-card {
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        #0a1120;
+    box-shadow:
+        var(--glow-cyan),
+        0 8px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* Widget "À renforcer" (js/learning/weakness.js) — même opacité + flou que .free-training-card
+   (box "Introduction", css/components.css), demande explicite. Sélecteur composé
+   .dash-card.weakness-widget (pas juste .weakness-widget) : .dash-card seul est redéfini plus
+   loin dans css/components.css (chargé après ce fichier) avec un fond opaque — même
+   spécificité qu'un sélecteur à une classe, donc l'ordre de chargement des fichiers
+   l'emportait sur cette règle. Le sélecteur composé a une spécificité plus élevée et gagne
+   quel que soit l'ordre des fichiers. */
+.dash-card.weakness-widget {
+    background: rgba(10, 17, 32, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* La navbar flottante profite aussi d'un léger halo */
+#bottom-nav { box-shadow: 0 0 20px rgba(0,229,255,0.10), 0 8px 24px rgba(0,0,0,0.4); }
+
+/* CTA principaux : halo plus marqué autour du cyan plein */
+.review-cta-btn, .revise-btn, .review-continue-btn {
+    box-shadow: 0 0 20px rgba(0,229,255,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   BOX DE LEÇON (en-têtes accordéon Vocabulaire/Grammaire) — reprend EXACTEMENT la
+   structure et le style de .unit-box-header défini dans "menu grammaire.html"
+   (racine du repo, maquette fournie par l'utilisateur) : voile de verre + bordure
+   pointillée animée en SVG (plus la bordure conique tournante utilisée avant).
+   Hauteur fixe 54px, rayon 15px, overflow hidden — repris à l'identique. Le SVG
+   <rect class="border"> est un enfant direct ajouté dans le HTML (grammar.js/
+   vocabulary.js), pas généré par CSS. Les styles de texte/badge
+   (.unit-box-title/.vocab-category-title, .unit-box-counter/.vocab-cat-counter)
+   gardent leurs styles existants, inchangés.
+══════════════════════════════════════════════════ */
+.unit-box-header, .vocab-category-header {
+    position: relative;
+    height: 54px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0), transparent 70%),
+        linear-gradient(135deg, rgba(15,25,45,0.37), rgba(5,10,20,0.6));
+    backdrop-filter: blur(6px) saturate(150%);
+    -webkit-backdrop-filter: blur(6px) saturate(150%);
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        inset 0 -2px 6px rgba(0,0,0,0.35);
+    overflow: hidden;
+}
+/* Titre/compteur au-dessus de la vague .Ocean et du SVG : ceux-ci sont position:absolute,
+   donc peints APRÈS tout contenu non positionné quel que soit l'ordre DOM — sans ça la
+   vague recouvrait le texte (seule la flèche, transformée donc elle aussi positionnée en
+   peinture, restait visible). */
+.unit-box-title, .vocab-category-title,
+.unit-box-counter, .vocab-cat-counter { position: relative; z-index: 1; }
+.unit-box-header svg, .vocab-category-header svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    fill: none;
+    border-radius: 15px;
+}
+.unit-box-header .border, .vocab-category-header .border {
+    width: 100%;
+    height: 100%;
+    stroke: rgba(125, 211, 252, 0.6);
+    stroke-width: 1px;
+    fill: #0000;
+    rx: 15px;
+    ry: 15px;
+    stroke-dasharray: 100;
+    animation: 0s linear infinite stroke-animation;
+}
+@keyframes stroke-animation {
+    0% { stroke-dashoffset: 100; }
+    to { stroke-dashoffset: 0; }
+}
+.glass-reflect-bottom {
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+    box-shadow: 0 0 10px 1px rgba(255,255,255,0.8), 0 0 20px 2px rgba(125,211,252,0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+@keyframes glassBorderSpin {
+    to { --angle: 360deg; }
+}
+
+/* ══════════════════════════════════════════════════
+   BOX TITRE DES FICHES (grammaire/vocabulaire) — même opacité et même effet de
+   style que la box "explication" (.detail-section, css/grammar.css) : fond plat
+   rgba(0,229,255,0.08) + bordure var(--border), sans flou ni halo, demande explicite
+   d'harmonisation. .stars-bg reste le fond de toute la fiche (.detail-page/
+   .vocab-detail-page, voir css/stars.css) — cette boîte redevient transparente au
+   lieu d'opaque, le champ d'étoiles transparaît directement à travers, sans flou.
+   Structure texte/badge/speak-btn (.vocab-reading/.vocab-word/.vocab-romaji/
+   .vocab-type-badge/.vocab-speak-btn, idem côté grammaire) non reprise, inchangée.
+══════════════════════════════════════════════════ */
+.grammar-point-box, .vocab-detail-main-box {
+    background: rgba(0,229,255,0.08);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.grammar-point-box::before, .vocab-detail-main-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: conic-gradient(
+        from var(--angle),
+        transparent 70%,
+        rgba(125,211,252,0.3),
+        rgba(255,255,255,0.8),
+        rgba(56,189,248,0.5),
+        transparent 95%
+    );
+    border-radius: 12px;
+    animation: glassBorderSpin 4s linear infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    padding: 1px;
+}
+
+/* ══════════════════════════════════════════════════
+   HALO PERSONNALISÉ — appliqué aux boîtes clés
+══════════════════════════════════════════════════ */
+.dash-review-cta, .dash-mastery-card, #bottom-nav, .review-card {
+    border: 1px solid #1d4e76;
+    box-shadow:
+        0 0 13px 3px rgba(29, 78, 118, 1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ══════════════════════════════════════════════════
+   FURIGANA NATIF (<ruby>/<rt>)
+══════════════════════════════════════════════════ */
+ruby { ruby-align: center; }
+rt { font-size: 0.62em; color: var(--accent-muted); font-weight: normal; user-select: none; }

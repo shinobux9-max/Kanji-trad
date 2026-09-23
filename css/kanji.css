@@ -1,0 +1,46 @@
+/* ══════════════════════════════════════════════════
+   kanji.css — Dictionnaire, Tracés & Fiches Kanji
+   Lien dans index.html : <link rel="stylesheet" href="css/kanji.css">
+══════════════════════════════════════════════════ */
+
+/* ── KANJI DETAIL BODY & TAGS ─────── */
+.detail-body { padding: 0 16px 16px; }
+.section-title { font-size: 0.5625rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin: 14px 0 8px; }
+
+.tag-container { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag { padding: 3px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; }
+.tag-on  { background: #1e3a32; color: #a3d2ca; }
+.tag-kun { background: rgba(212,175,55,0.15); color: #D4AF37; }
+
+/* ── STROKE ORDER GUIDE & EXAMPLES ── */
+.stroke-guide-row { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none; }
+.stroke-guide-row::-webkit-scrollbar { display: none; }
+/* Même famille de dégradé que .kanji-main-card/.readings-box/.info-card (css/components.css) —
+   translucide + flouté au lieu du fond opaque var(--surface). */
+.stroke-guide-cell {
+    flex-shrink: 0; width: 72px; height: 72px; position: relative;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.stroke-guide-cell svg { width: 100%; height: 100%; position: relative; z-index: 0; }
+.stroke-guide-num { position: absolute; z-index: 1; top: 3px; right: 4px; font-size: 0.5625rem; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); line-height: 1; }
+
+.examples-wrap { padding: 0 16px 30px; }
+#kana-writer-svg { width: 140px; height: 140px; }
+
+/* ── SERIES CARD & LIST ──────────── */
+
+/* ══════════════════════════════════════════════════
+   CASES DE KANJI (liste par niveau) — nouvelle classe, remplace le style inline
+══════════════════════════════════════════════════ */
+.kanji-grid-cell { padding: 16px; text-align: center; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+.kanji-grid-cell:hover { background: rgba(255,255,255,0.08); }
+.kanji-grid-cell .kgc-char { font-family: 'Noto Sans JP', sans-serif; font-size: 2rem; font-weight: bold; }
+.kanji-grid-cell .kgc-meaning { font-size: 0.6875rem; color: var(--gray); margin-top: 6px; }

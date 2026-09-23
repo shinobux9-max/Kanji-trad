@@ -8,9 +8,9 @@
       "title": "Se présenter",
       "description": "Poser les bases de la phrase japonaise et identifier une personne ou son métier.",
       "objectives": [
-        "Utiliser **です** pour affirmer/identifier",
-        "Reconnaître et lire les kanji **学** et **生**",
-        "Connaître le vocabulaire de l'école : **étudiant**, **professeur**"
+        "Utiliser です pour affirmer/identifier",
+        "Reconnaître et lire les kanji 学 et 生",
+        "Connaître le vocabulaire de l'école : étudiant, professeur"
       ],
       "content": {
         "new": {
@@ -18,15 +18,12 @@
           "kanji": ["学", "生"],
           "grammar": ["n5_g_1"]
         },
-        "review": {
-          "vocabulary": [],
-          "kanji": [],
-          "grammar": []
-        }
+        "review": { "vocabulary": [], "kanji": [], "grammar": [] }
       },
       "steps": [
         { "id": "intro", "type": "introduction" },
         { "id": "vocab_01", "type": "vocabulary", "items": ["n5_v_32", "n5_v_22"] },
+        { "id": "kanji_01", "type": "kanji", "items": ["学", "生"] },
         { "id": "grammar_01", "type": "grammar", "items": ["n5_g_1"] },
         { "id": "practice_01", "type": "mixed_practice" },
         { "id": "test_01", "type": "test", "questionCount": 6 }
@@ -35,20 +32,17 @@
     {
       "id": "n5_u02",
       "order": 2,
-      "title": "Les particules fondamentales",
-      "description": "Relier les éléments d'une phrase entre eux : sujet, objet, lieu, destination et nuances de conversation.",
+      "title": "Les verbes japonais",
+      "description": "Découvrir les verbes de base et le principe des groupes de conjugaison.",
       "objectives": [
-        "Distinguer **は** et **が**",
-        "Utiliser **を** pour marquer l'objet d'une action",
-        "Utiliser **に**、**で**、**へ** pour le lieu et la destination",
-        "Utiliser **と**、**も**、**の** pour relier des éléments",
-        "Utiliser **か**、**ね**、**よ** pour nuancer une phrase"
+        "Comprendre les 3 groupes de verbes (godan, ichidan, irréguliers)",
+        "Connaître 4 verbes d'action courants : aller, manger, boire, étudier"
       ],
       "content": {
         "new": {
           "vocabulary": ["n5_v_156", "n5_v_127", "n5_v_117", "n5_v_66"],
-          "kanji": ["行", "校", "食", "飲"],
-          "grammar": ["n5_g_8", "n5_g_9", "n5_g_10", "n5_g_11", "n5_g_12", "n5_g_13", "n5_g_14", "n5_g_15", "n5_g_16", "n5_g_17", "n5_g_18", "n5_g_19"]
+          "kanji": [],
+          "grammar": []
         },
         "review": {
           "vocabulary": ["n5_v_32", "n5_v_22"],
@@ -59,6 +53,36 @@
       "steps": [
         { "id": "concept_verbes", "type": "concept", "conceptId": "n5_verbes" },
         { "id": "vocab_01", "type": "vocabulary", "items": ["n5_v_156", "n5_v_127", "n5_v_117", "n5_v_66"] },
+        { "id": "practice_01", "type": "mixed_practice" },
+        { "id": "test_02", "type": "test", "questionCount": 6 }
+      ]
+    },
+    {
+      "id": "n5_u03",
+      "order": 3,
+      "title": "Les particules fondamentales",
+      "description": "Relier les éléments d'une phrase entre eux : sujet, objet, lieu, destination et nuances de conversation.",
+      "objectives": [
+        "Distinguer は et が",
+        "Utiliser を pour marquer l'objet d'une action",
+        "Utiliser に、で、へ pour le lieu et la destination",
+        "Utiliser と、も、の pour relier des éléments",
+        "Utiliser か、ね、よ pour nuancer une phrase"
+      ],
+      "content": {
+        "new": {
+          "vocabulary": [],
+          "kanji": ["行", "校", "食", "飲"],
+          "grammar": ["n5_g_8", "n5_g_9", "n5_g_10", "n5_g_11", "n5_g_12", "n5_g_13", "n5_g_14", "n5_g_15", "n5_g_16", "n5_g_17", "n5_g_18", "n5_g_19"]
+        },
+        "review": {
+          "vocabulary": ["n5_v_32", "n5_v_22", "n5_v_156", "n5_v_127", "n5_v_117", "n5_v_66"],
+          "kanji": ["学"],
+          "grammar": ["n5_g_1"]
+        }
+      },
+      "steps": [
+        { "id": "kanji_01", "type": "kanji", "items": ["行", "校", "食", "飲"] },
         { "id": "concept_particules_base", "type": "concept", "conceptId": "n5_particules_base" },
         { "id": "grammar_base", "type": "grammar", "items": ["n5_g_8", "n5_g_9", "n5_g_10"], "skipRender": true },
         { "id": "practice_base", "type": "mixed_practice" },
@@ -70,7 +94,7 @@
         { "id": "practice_relation", "type": "mixed_practice" },
         { "id": "grammar_nuances", "type": "grammar", "items": ["n5_g_17", "n5_g_18", "n5_g_19"], "skipRender": true },
         { "id": "practice_nuances", "type": "mixed_practice" },
-        { "id": "test_02", "type": "test", "questionCount": 10 }
+        { "id": "test_03", "type": "test", "questionCount": 10 }
       ]
     }
   ]

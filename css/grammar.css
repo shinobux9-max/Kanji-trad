@@ -1,0 +1,230 @@
+/* ══════════════════════════════════════════════════
+   grammar.css — Points de Grammaire & Explications
+   Lien dans index.html : <link rel="stylesheet" href="css/grammar.css">
+══════════════════════════════════════════════════ */
+
+
+/* ── CONTRASTE SECTIONS DYNAMIQUES ── */
+[data-patterns] { background: var(--surface) !important; }
+
+/* ── CLASSES POUR SECTIONS DYNAMIQUES ── */
+/* ── GRAMMAR CONTAINER ── */
+
+/* ══════════════════════════════════════════════════
+   GRAMMAR HOME - Design avec boxes englobantes
+══════════════════════════════════════════════════ */
+.grammar-container { display: flex; flex-direction: column; gap: 20px; }
+
+/* Conteneur d'unité — dégradé + bordure + halo au survol repris de la maquette
+   "menu grammaire.html" (racine du repo), remplace l'ancienne bordure cyan unie. */
+.unit-box-wrapper {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: linear-gradient(135deg, rgba(15,25,45,0.85), rgba(8,15,28,0.95));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.unit-box-wrapper:hover {
+    border-color: rgba(255,255,255,0.35);
+    box-shadow: 0 4px 25px rgba(255,255,255,0.08);
+}
+
+.unit-box-header { padding: 14px 16px; border-radius: 14px 14px 0 0; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+/* box-shadow (pas border) : le SVG décoratif de .unit-box-header (css/base.css) dessine son
+   propre liseré animé exactement sur le même pixel de bordure et le recouvrait entièrement —
+   l'anneau en box-shadow se dessine juste à l'extérieur, donc reste visible par-dessus. */
+.unit-box-wrapper.active .unit-box-header { box-shadow: 0 0 0 2px rgba(0,0,0,0.6); }
+
+/* Jauge "Ocean Wave" — se remplit quand l'unité est ouverte (maquette "menu grammaire.html").
+   .Ocean est inséré en tout premier enfant de .unit-box-header (grammar.js) : peint donc AVANT
+   le SVG de bordure et le titre/compteur qui suivent dans le DOM (tous en z-index:auto — pas
+   de z-index négatif nécessaire, .unit-box-header a déjà overflow:hidden + position:relative,
+   voir css/base.css). */
+.unit-box-header .Ocean {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.unit-box-wrapper.active .Ocean { transform: scaleY(1); }
+
+.unit-box-header .wave {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(56, 189, 248, 0.55);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.unit-box-header .wave::before,
+.unit-box-header .wave::after {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.unit-box-header .wave::before {
+    border-radius: 40%;
+    background: rgba(56, 189, 248, 0.75);
+    animation: unitBoxWave 8s linear infinite;
+}
+.unit-box-header .wave::after {
+    border-radius: 35%;
+    background: rgba(255, 255, 255, 0.25);
+    animation: unitBoxWave 12s linear infinite;
+}
+@keyframes unitBoxWave {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    50%  { transform: translate(-50%, -65%) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Titre — repris de .lesson-info (maquette "menu grammaire.html") : texte quasi-blanc au
+   lieu de l'accent cyan uppercase, plus lisible sur le fond dégradé des unit boxes. */
+.unit-box-title {
+    font-size: 0.85rem; color: #E2E8F0; font-weight: 600; letter-spacing: 0.3px;
+    display: flex; align-items: center; gap: 10px;
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9);
+}
+.unit-box-arrow { display: inline-block; color: #93C5FD; transition: transform 0.2s; transform: rotate(0deg); }
+.unit-box-arrow.open { transform: rotate(90deg); }
+
+.unit-box-counter { font-size: 0.625rem; color: var(--gray);
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.9), 0 -1px 0 rgba(0,0,0,0.9), 1px -1px 0 rgba(0,0,0,0.9),
+        -1px  0   0 rgba(0,0,0,0.9),                            1px  0   0 rgba(0,0,0,0.9),
+        -1px  1px 0 rgba(0,0,0,0.9), 0  1px 0 rgba(0,0,0,0.9), 1px  1px 0 rgba(0,0,0,0.9);
+}
+
+.unit-box-content { display: none; flex-direction: column; gap: 10px; padding: 12px; }
+.unit-box-content.open { display: flex; }
+
+.lesson-card-in-box { padding: 10px; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,201,167,0.2); border-left: 3px solid var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; position: relative; }
+.lesson-card-in-box:hover { background: rgba(0, 201, 167, 0.08); border-left-color: #35D6C7; }
+
+.card-header-in-box { display: flex; justify-content: space-between; align-items: center; }
+.lesson-badge-in-box { font-size: 0.4375rem; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.2px; white-space: nowrap; }
+.status-icon-in-box { font-size: 0.75rem; color: #4ADE80; }
+.status-icon-in-box.favorited { color: #ff6b9d; }
+
+.card-item-in-box { font-size: 1.125rem; font-weight: bold; color: #fff; line-height: 1.1; margin: 2px 0; }
+.card-title-in-box { font-size: 0.625rem; color: var(--accent); font-weight: 400; line-height: 1.3; }
+.card-description-in-box { font-size: 0.5625rem; color: var(--gray); line-height: 1.3; }
+
+/* ══════════════════════════════════════════════════
+   GRAMMAR DETAIL VIEW - Page de détail d'un point
+══════════════════════════════════════════════════ */
+.detail-page { display: flex; flex-direction: column; gap: 16px; padding: 56px 0 12px; position: relative; isolation: isolate; }
+/* .stars-bg (css/stars.css) est le fond de toute la fiche, pas juste de .grammar-point-box :
+   position: fixed pour remplacer complètement le fond de la page (global-bg.webp, voir
+   body dans base.css) au lieu de laisser dépasser un liseré visible autour de .detail-page
+   (padding de #category-content). z-index -1 pour rester sous les éléments en flux
+   (isolation: isolate ci-dessus contient ce z-index négatif dans la fiche, sans affecter le
+   reste de la page). */
+.detail-page > .stars-bg { position: fixed; z-index: -1; }
+
+.detail-header-top { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px; }
+.back-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; color: var(--gray); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+.back-btn:hover { background: rgba(0,201,167,0.2); }
+.header-info { flex: 1; }
+.lesson-title { font-size: 1.125rem; color: #fff; font-weight: bold; }
+.lesson-subtitle { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+
+.grammar-point-box { padding: 20px; border-radius: 12px; text-align: center; position: relative; overflow: hidden; }
+.grammar-point-content { position: relative; z-index: 1; }
+.item-display { font-size: 3rem; color: var(--accent); font-weight: bold; margin: 12px 0; line-height: 1.2; }
+.item-romaji { font-size: 0.8125rem; color: var(--gray); margin-bottom: 6px; }
+.item-description { font-size: 0.875rem; color: #fff; font-weight: 500; margin-bottom: 12px; }
+.pattern-box { font-size: 0.75rem; color: var(--gray); background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 6px; }
+
+.action-buttons { display: flex; gap: 8px; background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(14,22,48,0.5)); border: 1px solid var(--border); border-radius: 12px; padding: 10px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.link-btn { flex: 1; padding: 12px; background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(14,22,48,0.6)); border: 1px solid var(--border); border-radius: 8px; color: #fff; cursor: pointer; font-size: 0.75rem; }
+.link-btn:hover { background: linear-gradient(135deg, rgba(0,229,255,0.18), rgba(14,22,48,0.7)); }
+.revise-btn { flex: 1; padding: 12px; background: var(--accent); border: none; border-radius: 8px; color: var(--bg); cursor: pointer; font-size: 0.8125rem; font-weight: bold; }
+.revise-btn:hover { background: var(--accent-muted); }
+.revise-btn.active { background: #3ecf8e; color: var(--bg); }
+
+/* Même dégradé que les cellules de la liste kanji (.kanji-grid-cell, thème "Navy Glow" partagé
+   de css/base.css) — demande explicite de réutiliser ce dégradé sur les box de section (dont
+   "EXPLICATION"). */
+.detail-section {
+    padding: 16px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(25, 75, 140, 0.40), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(70, 45, 130, 0.20), transparent 55%),
+        rgba(10, 17, 32, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.grammar-usage-box { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25); }
+.grammar-block-box { background: transparent; }
+/* .vocab-meanings/.vocab-nuance-box (css/vocab.css) réutilisent ce même .section-label — demande
+   explicite d'aligner "Signification"/"Détail" sur le style de "EXPLICATION" côté grammaire. */
+.detail-section .section-label, .vocab-meanings .section-label, .vocab-nuance-box .section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
+.section-content-box { font-size: 0.8125rem; color: #fff; line-height: 1.6; }
+
+.examples-section-label { font-size: 0.6875rem; color: var(--accent-muted); text-transform: uppercase; font-weight: bold; margin-bottom: 12px; letter-spacing: 0.5px; }
+.examples-container { display: flex; flex-direction: column; gap: 12px; }
+.example-jp { font-size: 1rem; color: #fff; margin-bottom: 4px; font-weight: 500; line-height: 1.6; }
+.example-ro { font-size: 0.6875rem; color: var(--accent); margin-bottom: 4px; }
+.example-fr { font-size: 0.75rem; color: var(--gray); }
+
+.highlight-grammar { color: var(--accent); font-weight: bold; }
+
+.favorite-btn-section { padding: 16px; text-align: center; }
+.favorite-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--gray); cursor: pointer; font-size: 0.8125rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.favorite-btn:hover { background: rgba(255,255,255,0.1); }
+.favorite-btn.active { background: rgba(255, 107, 157, 0.2); border-color: #ff6b9d; color: #ff6b9d; }
+
+/* ── GRAMMAR DETAIL - CONTENU RICHE ── */
+.section-paragraph { font-size: 0.9375rem; color: #fff; line-height: 1.8; margin-bottom: 10px; }
+.section-paragraph:last-child { margin-bottom: 0; }
+
+.section-sub-title { font-size: 1.0625rem; color: var(--accent-muted); font-weight: 700; margin: 16px 0 8px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-sub-title:first-child { margin-top: 0; }
+
+/* Bloc groupé (ex: Groupe 1 / Groupe 2 / Irréguliers) : léger décalage + séparateur visuel */
+.section-content-box > .section-sub-title:not(:first-child) { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+.section-list { margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; }
+.section-list li { font-size: 0.9375rem; color: #fff; line-height: 1.9; font-family: 'Courier New', monospace; }
+.section-list li::marker { color: var(--accent); }
+
+/* Mise en évidence d'un mot/expression au sein d'un paragraphe */
+
+/* Rendu du markdown dans les sections */
+.md-bold, .detail-page strong { color: var(--highlight-warm); font-weight: 700; }
+.md-italic { font-style: italic; color: var(--accent-muted); }
+
+/* ══════════════════════════════════════════════════
+   EXPLICATIONS DE CONFUSION & COMPARAISON DE PARTICULES
+══════════════════════════════════════════════════ */
+.confusion-box { margin-top: 14px; padding: 14px; background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.3); border-radius: 12px; text-align: left; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.confusion-box-title { font-size: 0.9375rem; font-weight: bold; color: var(--highlight-warm); margin-bottom: 8px; }
+.confusion-box-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+.confusion-example-row { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; line-height: 1.7; padding: 4px 0; }
+.confusion-example-row.wrong { color: #FB7185; }
+.confusion-example-row.ok { color: #4ADE80; }
+.confusion-example-fr { font-size: 0.875rem; color: var(--gray); margin-top: 4px; }
+.confusion-example-romaji { font-size: 0.8125rem; color: var(--gray); margin: 2px 0 4px 22px; font-style: italic; }
+
+.particle-compare-box { margin-top: 14px; padding: 14px; background: rgba(14,22,48,0.5); border: 1px solid var(--border); border-radius: 12px; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.particle-compare-row { display: flex; align-items: flex-start; gap: 8px; }
+.particle-compare-icon { flex-shrink: 0; font-size: 0.9375rem; line-height: 1.6; }
+.particle-compare-text { font-size: 0.9375rem; color: var(--text); line-height: 1.6; }
+.particle-compare-row.wrong .particle-compare-text { color: #FB7185; }
+.particle-compare-row.correct .particle-compare-text { color: #4ADE80; }
