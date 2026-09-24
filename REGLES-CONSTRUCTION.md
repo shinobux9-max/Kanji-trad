@@ -56,9 +56,17 @@ scripts de détection simples.
   (`ui/common.js`). Tout bouton retour/continuer est en position fixe — plus aucun bouton
   inline dans le flux normal du contenu. Penser à ajuster le `padding-top`/`padding-bottom`
   du conteneur pour que le FAB ne recouvre pas de contenu.
-- **Barre de navigation du bas** : visible UNIQUEMENT sur Accueil/Apprendre/Réviser
-  (`showBottomNav()`/`hideBottomNav()`, `ui/common.js`). Tout sous-écran (niveau, liste,
-  fiche, sélecteur de mode, session) appelle `hideBottomNav()` à son entrée.
+- **Barre de navigation du bas** (règle mise à jour le 2026-09-24, maquette unifiée v2) :
+  cinq onglets, 🧭 Apprendre · 🎒 Explorer · 📖 Lire · 🎯 Pratiquer · 🔄 Réviser. Elle
+  est visible sur l'Accueil et sur l'écran principal de chacun de ces cinq piliers,
+  jamais ailleurs (`showBottomNav()`/`hideBottomNav()`, `ui/common.js`). Tout sous-écran
+  (niveau, liste, fiche, sélecteur de mode, session, recherche, paramètres) appelle
+  `hideBottomNav()` à son entrée. Rechercher n'est plus un onglet : il passe dans le
+  header permanent (⌂ Accueil · 🔎 Rechercher · 🔊/🔇 Musique · ⚙ Paramètres), qui
+  remplace le ☰.
+  ⚠️ Tant que l'intégration n'est pas faite, le code montre encore l'ancienne barre
+  (Accueil/Apprendre/Réviser, voir ETAT-ACTUEL.md). Ne pas « corriger » le code vers la
+  nouvelle barre hors du chantier d'intégration de la v2.
 - **Feedback de quiz** : `buildAnswerFeedbackHtml()` (`ui/common.js`) — structure fixe :
   ❌ Tu as répondu (mot) [badge 👁️ si une fiche existe] / ✅ La bonne réponse était (mot)
   [badge] / ⚠️ Nuance (si fournie, séparée). Utilisée par TOUS les exercices à choix, sans
@@ -86,6 +94,11 @@ automatiquement via `popstate` — c'est TOUJOURS la bonne réponse pour un bout
 
 Si un écran est nouveau et n'a pas encore d'entrée dans le registre, l'ajouter AVANT de
 créer son bouton retour, pas après.
+
+**Seule exception, ⌂ Accueil et les onglets de la barre du bas (v2)** : ils ne sont pas
+des « retours ». Ils REMPLACENT la pile (l'écran visé devient la seule entrée), ils ne
+l'empilent jamais. Sinon, Accueil → leçon → ⌂ → retour ramènerait dans la leçon, ce qui
+crée exactement le type de boucle décrit ci-dessus.
 
 ## Sessions d'état
 
