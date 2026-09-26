@@ -106,6 +106,7 @@ Toute session active (révision, entraînement, leçon...) vit dans `state.*`
 (`core/state.js`), jamais en variable locale à un module. Elle est nettoyée
 automatiquement par `core/navigation.js::closeAllOverlaysAndSessions()` à chaque
 navigation — pas besoin de la nettoyer manuellement ailleurs.
+⚠️ Exception prévue (maquette v4, non intégrée) : certaines sessions longues doivent survivre à la navigation pour permettre « Reprendre » : la session du mode guidé et la mission en cours (clé kanji_trad_missions). À traiter lors de l'intégration avec un mécanisme commun, sans modifier closeAllOverlaysAndSessions() avant.
 
 ## Ce qui a été délibérément retiré — ne pas réintégrer sans raison explicite
 
