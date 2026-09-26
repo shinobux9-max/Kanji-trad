@@ -1,0 +1,58 @@
+[
+  {
+    "id": "konbini",
+    "name": "Konbini",
+    "name_ja": "コンビニ",
+    "romaji": "konbini",
+    "emoji": "🏪",
+    "description": "Payer, faire réchauffer un plat, refuser un sac.",
+    "vocab_categories": [
+      "nourriture_boissons",
+      "achats_argent"
+    ],
+    "background": "konbini",
+    "order": 1
+  },
+  {
+    "id": "gare",
+    "name": "Gare",
+    "name_ja": "<ruby>駅<rt>えき</rt></ruby>",
+    "romaji": "eki",
+    "emoji": "🚉",
+    "description": "Acheter un billet, trouver le bon quai, changer de ligne.",
+    "vocab_categories": [
+      "transports",
+      "lieux",
+      "position_direction"
+    ],
+    "background": "gare",
+    "order": 2
+  },
+  {
+    "id": "restaurant",
+    "name": "Restaurant",
+    "name_ja": "レストラン",
+    "romaji": "resutoran",
+    "emoji": "🍜",
+    "description": "Commander, préciser, demander l'addition.",
+    "vocab_categories": [
+      "nourriture_boissons"
+    ],
+    "background": "restaurant",
+    "order": 3
+  },
+  {
+    "id": "hotel",
+    "name": "Hôtel",
+    "name_ja": "ホテル",
+    "romaji": "hoteru",
+    "emoji": "🏨",
+    "description": "Arrivée, horaires, petits problèmes dans la chambre.",
+    "vocab_categories": [
+      "maison_quotidien",
+      "temps_calendrier"
+    ],
+    "background": "hotel",
+    "order": 4
+  }
+]

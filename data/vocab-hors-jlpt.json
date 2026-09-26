@@ -1,0 +1,68 @@
+[
+  {
+    "id": "hj_v_1",
+    "level": "hors_jlpt",
+    "word": "レジ袋",
+    "word_furigana": "レジ<ruby>袋<rt>ぶくろ</rt></ruby>",
+    "reading": "れじぶくろ",
+    "romaji": "rejibukuro",
+    "meanings": {
+      "primary": "Sac de caisse",
+      "secondary": [
+        "Sac plastique (magasin)"
+      ]
+    },
+    "nuance": "Sac proposé à la caisse, payant au Japon depuis 2020 : le caissier demande presque toujours si on en veut un.",
+    "type": "nom",
+    "group": "",
+    "category": "achats_argent",
+    "subcategory": "commerce",
+    "kanji_list": [
+      "袋"
+    ],
+    "particles": [],
+    "places": [
+      "konbini"
+    ],
+    "example": {
+      "japanese": "レジ<ruby>袋<rt>ぶくろ</rt></ruby>、お<ruby>願<rt>ねが</rt></ruby>いします。",
+      "romaji": "rejibukuro, onegai shimasu.",
+      "french": "Un **sac**, s'il vous plaît.",
+      "highlight": [
+        "レジ袋",
+        "rejibukuro"
+      ]
+    }
+  },
+  {
+    "id": "hj_v_2",
+    "level": "hors_jlpt",
+    "word": "ポイントカード",
+    "word_furigana": "ポイントカード",
+    "reading": "ぽいんとかーど",
+    "romaji": "pointo kaado",
+    "meanings": {
+      "primary": "Carte de fidélité",
+      "secondary": []
+    },
+    "nuance": "Le caissier demande souvent 「ポイントカードはお持ちですか」 : on répond simplement いいえ ou on la montre.",
+    "type": "nom",
+    "group": "",
+    "category": "achats_argent",
+    "subcategory": "commerce",
+    "kanji_list": [],
+    "particles": [],
+    "places": [
+      "konbini"
+    ],
+    "example": {
+      "japanese": "ポイントカードはありません。",
+      "romaji": "pointo kaado wa arimasen.",
+      "french": "Je n'ai pas de **carte de fidélité**.",
+      "highlight": [
+        "ポイントカード",
+        "pointo kaado"
+      ]
+    }
+  }
+]

@@ -1,0 +1,224 @@
+[
+  {
+    "id": "ex_1",
+    "level": "N5",
+    "meaning_fr": "Merci",
+    "situation": "remercier",
+    "category": "politesse",
+    "variants": [
+      {
+        "register": "familier",
+        "japanese": "ありがとう",
+        "romaji": "arigatou",
+        "audience": "amis, famille"
+      },
+      {
+        "register": "poli",
+        "japanese": "ありがとうございます",
+        "romaji": "arigatou gozaimasu",
+        "audience": "tout le monde, par défaut"
+      },
+      {
+        "register": "humble",
+        "japanese": "<ruby>恐<rt>おそ</rt></ruby>れ<ruby>入<rt>い</rt></ruby>ります",
+        "romaji": "osoreirimasu",
+        "audience": "client, supérieur",
+        "level": "hors_jlpt",
+        "note": "Remercie en s'excusant presque du dérangement causé."
+      }
+    ],
+    "said_by": "tous",
+    "user_says": true,
+    "responses": [
+      {
+        "japanese": "いいえ",
+        "romaji": "iie",
+        "french": "Mais non, de rien",
+        "register": "poli"
+      },
+      {
+        "japanese": "どういたしまして",
+        "romaji": "dou itashimashite",
+        "french": "Je vous en prie",
+        "register": "poli",
+        "note": "Correct, mais plus rare à l'oral qu'on ne le croit."
+      }
+    ],
+    "note": "Au passé (ありがとうございました), on remercie pour quelque chose de terminé : fin d'un achat, d'un service.",
+    "sounds_textbook": [],
+    "places": [],
+    "refs": {
+      "vocab": [],
+      "grammar": []
+    },
+    "related": [
+      "ex_2"
+    ],
+    "examples": [
+      {
+        "japanese": "プレゼント、ありがとう！",
+        "romaji": "purezento, arigatou!",
+        "french": "Merci pour le cadeau !",
+        "register": "familier",
+        "refs": [],
+        "grammar": []
+      }
+    ]
+  },
+  {
+    "id": "ex_2",
+    "level": "N5",
+    "meaning_fr": "Pardon / Excusez-moi",
+    "situation": "s'excuser, interpeller",
+    "category": "politesse",
+    "variants": [
+      {
+        "register": "familier",
+        "japanese": "ごめん",
+        "romaji": "gomen",
+        "audience": "amis, famille"
+      },
+      {
+        "register": "poli",
+        "japanese": "すみません",
+        "romaji": "sumimasen",
+        "audience": "tout le monde",
+        "note": "Sert aussi à interpeller un serveur ou à remercier quelqu'un qui s'est dérangé."
+      },
+      {
+        "register": "humble",
+        "japanese": "<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ございません",
+        "romaji": "moushiwake gozaimasen",
+        "audience": "client, supérieur",
+        "level": "hors_jlpt",
+        "note": "Excuse sérieuse, fréquente dans le service."
+      }
+    ],
+    "said_by": "tous",
+    "user_says": true,
+    "responses": [
+      {
+        "japanese": "<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>です",
+        "romaji": "daijoubu desu",
+        "french": "Ce n'est rien",
+        "register": "poli"
+      }
+    ],
+    "sounds_textbook": [
+      {
+        "japanese": "ごめんなさい、メニューをください。",
+        "romaji": "gomen nasai, menyuu o kudasai.",
+        "why": "ごめんなさい est une vraie excuse, pas une façon d'interpeller un serveur.",
+        "natural": "すみません、メニューください。",
+        "natural_romaji": "sumimasen, menyuu kudasai."
+      }
+    ],
+    "places": [
+      "restaurant",
+      "konbini"
+    ],
+    "refs": {
+      "vocab": [],
+      "grammar": []
+    },
+    "related": [
+      "ex_1"
+    ],
+    "examples": []
+  },
+  {
+    "id": "ex_3",
+    "level": "hors_jlpt",
+    "meaning_fr": "Bienvenue (dans un commerce)",
+    "situation": "entrée dans un commerce",
+    "category": "commerce",
+    "variants": [
+      {
+        "register": "familier",
+        "japanese": "いらっしゃい",
+        "romaji": "irasshai",
+        "audience": "petit commerce de quartier, à la maison"
+      },
+      {
+        "register": "respectueux",
+        "japanese": "いらっしゃいませ",
+        "romaji": "irasshaimase",
+        "audience": "tout client"
+      }
+    ],
+    "said_by": "personnel",
+    "user_says": false,
+    "responses": [],
+    "note": "On n'y répond pas : un léger signe de tête suffit. Ne jamais la dire soi-même en entrant.",
+    "sounds_textbook": [],
+    "places": [
+      "konbini",
+      "restaurant",
+      "hotel"
+    ],
+    "refs": {
+      "vocab": [],
+      "grammar": []
+    },
+    "related": [],
+    "examples": []
+  },
+  {
+    "id": "ex_4",
+    "level": "N5",
+    "meaning_fr": "Tu vas bien ? / Vous allez bien ?",
+    "situation": "prendre des nouvelles",
+    "category": "salutations",
+    "variants": [
+      {
+        "register": "familier",
+        "japanese": "<ruby>元気<rt>げんき</rt></ruby>？",
+        "romaji": "genki?",
+        "audience": "amis"
+      },
+      {
+        "register": "poli",
+        "japanese": "お<ruby>元気<rt>げんき</rt></ruby>ですか。",
+        "romaji": "o-genki desu ka.",
+        "audience": "quelqu'un qu'on n'a pas vu depuis longtemps"
+      }
+    ],
+    "said_by": "tous",
+    "user_says": true,
+    "responses": [
+      {
+        "japanese": "うん、<ruby>元気<rt>げんき</rt></ruby>だよ。",
+        "romaji": "un, genki da yo.",
+        "french": "Oui, ça va !",
+        "register": "familier"
+      },
+      {
+        "japanese": "はい、おかげさまで。",
+        "romaji": "hai, okagesama de.",
+        "french": "Oui, merci.",
+        "register": "poli"
+      }
+    ],
+    "note": "Ce n'est pas un « ça va ? » quotidien : on le demande après une longue absence. Au quotidien, on salue et on parle plutôt du temps qu'il fait.",
+    "sounds_textbook": [
+      {
+        "japanese": "あなたは元気ですか。",
+        "romaji": "anata wa genki desu ka.",
+        "why": "あなた est évité quand on s'adresse directement à quelqu'un, et le sujet est déjà évident.",
+        "natural": "お元気ですか。",
+        "natural_romaji": "o-genki desu ka."
+      }
+    ],
+    "places": [],
+    "refs": {
+      "vocab": [
+        "n5_v_433"
+      ],
+      "grammar": [
+        "n5_g_17"
+      ]
+    },
+    "related": [],
+    "examples": []
+  }
+]

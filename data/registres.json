@@ -1,0 +1,47 @@
+[
+  {
+    "id": "familier",
+    "label": "Familier",
+    "label_ja": "タメ口",
+    "romaji": "tameguchi",
+    "axis": "base",
+    "order": 1,
+    "description": "Entre amis, en famille, avec plus jeune que soi. Formes courtes, contractions (〜てる, 〜ちゃう), particules ね/よ, sujet souvent omis."
+  },
+  {
+    "id": "poli",
+    "label": "Poli",
+    "label_ja": "<ruby>丁寧語<rt>ていねいご</rt></ruby>",
+    "romaji": "teineigo",
+    "axis": "base",
+    "order": 2,
+    "description": "Registre par défaut avec les inconnus, collègues et commerçants. Formes en です/ます."
+  },
+  {
+    "id": "respectueux",
+    "label": "Respectueux",
+    "label_ja": "<ruby>尊敬語<rt>そんけいご</rt></ruby>",
+    "romaji": "sonkeigo",
+    "axis": "keigo",
+    "order": 3,
+    "description": "Élève l'autre : pour parler de ce que fait un client, un supérieur, un aîné. Très présent dans le service."
+  },
+  {
+    "id": "humble",
+    "label": "Humble",
+    "label_ja": "<ruby>謙譲語<rt>けんじょうご</rt></ruby>",
+    "romaji": "kenjougo",
+    "axis": "keigo",
+    "order": 3,
+    "description": "Abaisse sa propre action : pour parler de ce qu'on fait soi-même envers quelqu'un de respecté. S'emploie avec le respectueux, pas à sa place."
+  },
+  {
+    "id": "ecrit",
+    "label": "Écrit neutre",
+    "label_ja": "<ruby>常体<rt>じょうたい</rt></ruby>",
+    "romaji": "joutai",
+    "axis": "style",
+    "order": 4,
+    "description": "Forme simple à l'écrit (journal, récit, article). Ce n'est pas du familier : c'est le style neutre de l'écrit."
+  }
+]

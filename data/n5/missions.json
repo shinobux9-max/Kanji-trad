@@ -1,0 +1,216 @@
+[
+  {
+    "id": "n5_m_1",
+    "place": "konbini",
+    "level": "N5",
+    "order": 1,
+    "title": "Un bento, sans sac",
+    "situation": "Tu achètes un bento au konbini. Le caissier te propose de le réchauffer, puis te demande si tu veux un sac.",
+    "goals": [
+      "Comprendre « 温めますか »",
+      "Accepter poliment",
+      "Refuser le sac avec naturel"
+    ],
+    "estimated_minutes": 6,
+    "characters": [
+      {
+        "id": "caissier",
+        "name": "Caissier",
+        "name_ja": "<ruby>店員<rt>てんいん</rt></ruby>",
+        "relation": "personnel"
+      },
+      {
+        "id": "moi",
+        "name": "Toi",
+        "name_ja": "<ruby>私<rt>わたし</rt></ruby>",
+        "relation": "client",
+        "is_user": true
+      }
+    ],
+    "vocab": [
+      "n5_v_84",
+      "hj_v_1",
+      "hj_v_2"
+    ],
+    "expressions": [
+      "ex_3",
+      "ex_1"
+    ],
+    "grammar": [
+      "n5_g_17"
+    ],
+    "dialogue": [
+      {
+        "speaker": "caissier",
+        "japanese": "いらっしゃいませ。",
+        "romaji": "irasshaimase.",
+        "french": "Bienvenue.",
+        "register": "respectueux",
+        "refs": [
+          {
+            "text": "いらっしゃいませ",
+            "expression": "ex_3"
+          }
+        ],
+        "grammar": []
+      },
+      {
+        "speaker": "caissier",
+        "japanese": "お<ruby>弁当<rt>べんとう</rt></ruby>、<ruby>温<rt>あたた</rt></ruby>めますか。",
+        "romaji": "obentou, atatamemasu ka.",
+        "french": "Je vous réchauffe le bento ?",
+        "register": "poli",
+        "refs": [
+          {
+            "text": "お弁当",
+            "vocab": "n5_v_84"
+          }
+        ],
+        "grammar": [
+          "n5_g_17"
+        ]
+      },
+      {
+        "speaker": "moi",
+        "japanese": "はい、お<ruby>願<rt>ねが</rt></ruby>いします。",
+        "romaji": "hai, onegai shimasu.",
+        "french": "Oui, s'il vous plaît.",
+        "register": "poli",
+        "refs": [
+          {
+            "text": "はい",
+            "vocab": "n5_v_344"
+          }
+        ],
+        "grammar": []
+      },
+      {
+        "speaker": "caissier",
+        "japanese": "レジ<ruby>袋<rt>ぶくろ</rt></ruby>はご<ruby>利用<rt>りよう</rt></ruby>ですか。",
+        "romaji": "rejibukuro wa go-riyou desu ka.",
+        "french": "Vous prenez un sac ?",
+        "register": "respectueux",
+        "refs": [
+          {
+            "text": "レジ袋",
+            "vocab": "hj_v_1"
+          }
+        ],
+        "grammar": [
+          "n5_g_8"
+        ]
+      },
+      {
+        "speaker": "moi",
+        "japanese": "いえ、<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>です。",
+        "romaji": "ie, daijoubu desu.",
+        "french": "Non, ça ira.",
+        "register": "poli",
+        "refs": [],
+        "grammar": [
+          "n5_g_1"
+        ],
+        "sounds_textbook": [
+          {
+            "japanese": "いいえ、いりません。",
+            "romaji": "iie, irimasen.",
+            "why": "Correct, mais sec : « je n'en veux pas ». 大丈夫です refuse en douceur.",
+            "natural": "いえ、大丈夫です。",
+            "natural_romaji": "ie, daijoubu desu."
+          }
+        ]
+      },
+      {
+        "speaker": "caissier",
+        "japanese": "<ruby>五百八十円<rt>ごひゃくはちじゅうえん</rt></ruby>です。",
+        "romaji": "gohyaku hachijuu en desu.",
+        "french": "Ça fera 580 yens.",
+        "register": "poli",
+        "refs": [],
+        "grammar": [
+          "n5_g_1"
+        ]
+      },
+      {
+        "speaker": "caissier",
+        "japanese": "ありがとうございました。",
+        "romaji": "arigatou gozaimashita.",
+        "french": "Merci (pour votre achat).",
+        "register": "poli",
+        "refs": [
+          {
+            "text": "ありがとうございました",
+            "expression": "ex_1"
+          }
+        ],
+        "grammar": []
+      }
+    ],
+    "exercises": [
+      {
+        "type": "choice",
+        "skill": "naturel",
+        "prompt": "Le caissier demande 「レジ袋はご利用ですか」. Tu n'en veux pas. Quelle réponse sonne la plus naturelle ?",
+        "choices": [
+          {
+            "japanese": "いえ、<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>です。",
+            "romaji": "ie, daijoubu desu.",
+            "french": "Non, ça ira."
+          },
+          {
+            "japanese": "いいえ、いりません。",
+            "romaji": "iie, irimasen.",
+            "french": "Non, je n'en veux pas."
+          },
+          {
+            "japanese": "はい、お<ruby>願<rt>ねが</rt></ruby>いします。",
+            "romaji": "hai, onegai shimasu.",
+            "french": "Oui, s'il vous plaît."
+          }
+        ],
+        "answer": 0,
+        "explanation": "Les deux premières sont correctes, mais いりません est sec. 大丈夫です est la réponse qu'on entend vraiment.",
+        "dialogue_ref": 4
+      },
+      {
+        "type": "choice",
+        "skill": "registre",
+        "prompt": "Qui dit 「いらっしゃいませ」 ?",
+        "choices": [
+          {
+            "japanese": "",
+            "romaji": "",
+            "french": "Le caissier"
+          },
+          {
+            "japanese": "",
+            "romaji": "",
+            "french": "Le client en entrant"
+          },
+          {
+            "japanese": "",
+            "romaji": "",
+            "french": "Les deux"
+          }
+        ],
+        "answer": 0,
+        "explanation": "C'est le personnel qui accueille. Le client ne la dit jamais, un signe de tête suffit.",
+        "expression_ref": "ex_3"
+      },
+      {
+        "type": "fill",
+        "skill": "vocabulaire",
+        "prompt": "Complète la réponse pour accepter.",
+        "sentence": "はい、お___いします。",
+        "answer": "願",
+        "romaji": "hai, onegai shimasu.",
+        "french": "Oui, s'il vous plaît.",
+        "distractors": [
+          "休",
+          "待"
+        ],
+        "explanation": "お願いします = s'il vous plaît."
+      }
+    ]
+  }
+]

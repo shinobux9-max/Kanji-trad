@@ -1,0 +1,710 @@
+[
+  {
+    "id": "n5_l_1",
+    "type": "histoire",
+    "level": "N5",
+    "order": 1,
+    "title": "Le matin de Yuki",
+    "title_ja": "ゆきさんの<ruby>朝<rt>あさ</rt></ruby>",
+    "summary": "La routine matinale d'une étudiante.",
+    "estimated_minutes": 3,
+    "theme": "quotidien",
+    "place": null,
+    "requires": {
+      "grammar": [
+        "n5_g_4",
+        "n5_g_8",
+        "n5_g_11"
+      ],
+      "vocab": [
+        "n5_v_333",
+        "n5_v_577",
+        "n5_v_459",
+        "n5_v_97",
+        "n5_v_53"
+      ]
+    },
+    "characters": [
+      {
+        "id": "yuki",
+        "name": "Yuki",
+        "name_ja": "ゆき",
+        "relation": "narration"
+      }
+    ],
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "lines": [
+          {
+            "japanese": "<ruby>毎朝<rt>まいあさ</rt></ruby>、ゆきさんは<ruby>七時<rt>しちじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。",
+            "romaji": "maiasa, Yuki-san wa shichiji ni okimasu.",
+            "french": "Tous les matins, Yuki se lève à sept heures.",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "毎朝",
+                "vocab": "n5_v_333"
+              },
+              {
+                "text": "起きます",
+                "vocab": "n5_v_577"
+              }
+            ],
+            "grammar": [
+              "n5_g_8",
+              "n5_g_11"
+            ]
+          },
+          {
+            "japanese": "<ruby>朝<rt>あさ</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby>は、いつもパンです。",
+            "romaji": "asagohan wa, itsumo pan desu.",
+            "french": "Au petit-déjeuner, c'est toujours du pain.",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "朝ご飯",
+                "vocab": "n5_v_459"
+              },
+              {
+                "text": "いつも",
+                "vocab": "n5_v_494"
+              },
+              {
+                "text": "パン",
+                "vocab": "n5_v_97"
+              }
+            ],
+            "grammar": [
+              "n5_g_8",
+              "n5_g_1"
+            ],
+            "sounds_textbook": [
+              {
+                "japanese": "ゆきさんはいつも朝ご飯にパンを食べます。",
+                "romaji": "Yuki-san wa itsumo asagohan ni pan o tabemasu.",
+                "why": "Correct, mais on ne répète pas le sujet une fois qu'on sait de qui on parle.",
+                "natural": "朝ご飯は、いつもパンです。",
+                "natural_romaji": "asagohan wa, itsumo pan desu."
+              }
+            ]
+          },
+          {
+            "japanese": "それから、<ruby>駅<rt>えき</rt></ruby>まで<ruby>歩<rt>ある</rt></ruby>きます。",
+            "romaji": "sore kara, eki made arukimasu.",
+            "french": "Ensuite, elle marche jusqu'à la gare.",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "駅",
+                "vocab": "n5_v_162"
+              },
+              {
+                "text": "歩きます",
+                "vocab": "n5_v_53"
+              }
+            ],
+            "grammar": []
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Que mange Yuki le matin ?",
+        "choices": [
+          "Du riz",
+          "Du pain",
+          "Rien"
+        ],
+        "answer": 1,
+        "explanation": "朝ご飯は、いつもパンです。",
+        "line_ref": [
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "id": "n5_l_2",
+    "type": "dialogue",
+    "level": "N5",
+    "order": 2,
+    "title": "Dimanche, on sort ?",
+    "title_ja": "<ruby>日曜日<rt>にちようび</rt></ruby>",
+    "summary": "Deux amis s'organisent pour aller au cinéma.",
+    "estimated_minutes": 2,
+    "theme": "loisirs",
+    "place": null,
+    "requires": {
+      "grammar": [
+        "n5_g_18",
+        "n5_g_19"
+      ],
+      "vocab": [
+        "n5_v_317",
+        "n5_v_457",
+        "n5_v_196",
+        "n5_v_698",
+        "n5_v_156"
+      ]
+    },
+    "characters": [
+      {
+        "id": "ken",
+        "name": "Ken",
+        "name_ja": "けん",
+        "relation": "ami"
+      },
+      {
+        "id": "yuki",
+        "name": "Yuki",
+        "name_ja": "ゆき",
+        "relation": "ami"
+      }
+    ],
+    "blocks": [
+      {
+        "kind": "line",
+        "speaker": "ken",
+        "japanese": "ねえ、<ruby>日曜日<rt>にちようび</rt></ruby>、ひま？",
+        "romaji": "nee, nichiyoubi, hima?",
+        "french": "Dis, dimanche, t'es libre ?",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "日曜日",
+            "vocab": "n5_v_317"
+          },
+          {
+            "text": "ひま",
+            "vocab": "n5_v_457"
+          }
+        ],
+        "grammar": []
+      },
+      {
+        "kind": "line",
+        "speaker": "yuki",
+        "japanese": "うん、ひまだよ。どうして？",
+        "romaji": "un, hima da yo. doushite?",
+        "french": "Oui, je suis libre. Pourquoi ?",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "ひま",
+            "vocab": "n5_v_457"
+          }
+        ],
+        "grammar": [
+          "n5_g_19"
+        ]
+      },
+      {
+        "kind": "line",
+        "speaker": "ken",
+        "japanese": "<ruby>映画<rt>えいが</rt></ruby>、<ruby>見<rt>み</rt></ruby>に<ruby>行<rt>い</rt></ruby>かない？",
+        "romaji": "eiga, mi ni ikanai?",
+        "french": "On va voir un film ?",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "映画",
+            "vocab": "n5_v_196"
+          },
+          {
+            "text": "見",
+            "vocab": "n5_v_698"
+          },
+          {
+            "text": "行かない",
+            "vocab": "n5_v_156"
+          }
+        ],
+        "grammar": [],
+        "sounds_textbook": [
+          {
+            "japanese": "日曜日に一緒に映画を見に行きませんか。",
+            "romaji": "nichiyoubi ni issho ni eiga o mi ni ikimasen ka.",
+            "why": "Correct, mais bien trop poli entre amis. À l'oral familier, on laisse aussi tomber を.",
+            "natural": "映画、見に行かない？",
+            "natural_romaji": "eiga, mi ni ikanai?"
+          }
+        ]
+      },
+      {
+        "kind": "line",
+        "speaker": "yuki",
+        "japanese": "いいね！<ruby>行<rt>い</rt></ruby>こう！",
+        "romaji": "ii ne! ikou!",
+        "french": "Bonne idée ! Allons-y !",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "行こう",
+            "vocab": "n5_v_156"
+          }
+        ],
+        "grammar": [
+          "n5_g_18"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Que propose Ken ?",
+        "choices": [
+          "D'aller au parc",
+          "D'aller voir un film",
+          "De manger ensemble"
+        ],
+        "answer": 1,
+        "explanation": "映画、見に行かない？ = on va voir un film ?",
+        "line_ref": [
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "n5_l_3",
+    "type": "carnet",
+    "level": "N5",
+    "order": 3,
+    "title": "Mon journal : dimanche",
+    "title_ja": "<ruby>日記<rt>にっき</rt></ruby>",
+    "summary": "Une journée au parc, écrite comme un vrai journal.",
+    "estimated_minutes": 2,
+    "theme": "loisirs",
+    "place": null,
+    "requires": {
+      "grammar": [
+        "n5_g_11",
+        "n5_g_12"
+      ],
+      "vocab": [
+        "n5_v_317",
+        "n5_v_215",
+        "n5_v_23",
+        "n5_v_530",
+        "n5_v_269",
+        "n5_v_5"
+      ]
+    },
+    "characters": [
+      {
+        "id": "moi",
+        "name": "Auteur du journal",
+        "name_ja": "<ruby>私<rt>わたし</rt></ruby>",
+        "relation": "narration"
+      }
+    ],
+    "blocks": [
+      {
+        "kind": "entry",
+        "date": "<ruby>日曜日<rt>にちようび</rt></ruby>",
+        "date_romaji": "nichiyoubi",
+        "date_fr": "Dimanche",
+        "lines": [
+          {
+            "japanese": "<ruby>日曜日<rt>にちようび</rt></ruby>、<ruby>公園<rt>こうえん</rt></ruby>で<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>った。",
+            "romaji": "nichiyoubi, kouen de tomodachi ni atta.",
+            "french": "Dimanche, j'ai vu un ami au parc.",
+            "register": "ecrit",
+            "refs": [
+              {
+                "text": "公園",
+                "vocab": "n5_v_215"
+              },
+              {
+                "text": "友達",
+                "vocab": "n5_v_23"
+              },
+              {
+                "text": "会った",
+                "vocab": "n5_v_530"
+              }
+            ],
+            "grammar": [
+              "n5_g_12",
+              "n5_g_11"
+            ],
+            "sounds_textbook": [
+              {
+                "japanese": "私は日曜日に公園で友達に会いました。",
+                "romaji": "watashi wa nichiyoubi ni kouen de tomodachi ni aimashita.",
+                "why": "Un journal s'écrit en forme simple, et sans 私は : on sait qui écrit.",
+                "natural": "日曜日、公園で友達に会った。",
+                "natural_romaji": "nichiyoubi, kouen de tomodachi ni atta."
+              }
+            ]
+          },
+          {
+            "japanese": "<ruby>天気<rt>てんき</rt></ruby>がよくて、<ruby>楽<rt>たの</rt></ruby>しかった。",
+            "romaji": "tenki ga yokute, tanoshikatta.",
+            "french": "Il faisait beau, c'était sympa.",
+            "register": "ecrit",
+            "refs": [
+              {
+                "text": "天気",
+                "vocab": "n5_v_269"
+              },
+              {
+                "text": "よくて",
+                "vocab": "n5_v_583"
+              },
+              {
+                "text": "楽しかった",
+                "vocab": "n5_v_5"
+              }
+            ],
+            "grammar": [
+              "n5_g_9"
+            ]
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Où l'auteur a-t-il vu son ami ?",
+        "choices": [
+          "À la gare",
+          "Au parc",
+          "À l'école"
+        ],
+        "answer": 1,
+        "explanation": "公園で = au parc.",
+        "line_ref": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "n5_l_4",
+    "type": "lettre",
+    "level": "N5",
+    "order": 4,
+    "title": "Une lettre à Marie",
+    "title_ja": "<ruby>手紙<rt>てがみ</rt></ruby>",
+    "summary": "Hana écrit à une amie française.",
+    "estimated_minutes": 2,
+    "theme": "communication",
+    "place": null,
+    "requires": {
+      "grammar": [
+        "n5_g_1",
+        "n5_g_8",
+        "n5_g_13"
+      ],
+      "vocab": [
+        "n5_v_52",
+        "n5_v_433",
+        "n5_v_269",
+        "n5_v_530"
+      ]
+    },
+    "characters": [
+      {
+        "id": "hana",
+        "name": "Hana",
+        "name_ja": "はな",
+        "relation": "amie"
+      }
+    ],
+    "blocks": [
+      {
+        "kind": "header",
+        "japanese": "マリーさんへ",
+        "romaji": "Marii-san e",
+        "french": "Chère Marie,",
+        "register": "poli",
+        "refs": [],
+        "grammar": [
+          "n5_g_13"
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "lines": [
+          {
+            "japanese": "お<ruby>元気<rt>げんき</rt></ruby>ですか。",
+            "romaji": "o-genki desu ka.",
+            "french": "Tu vas bien ?",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "元気",
+                "vocab": "n5_v_433"
+              },
+              {
+                "text": "お元気ですか",
+                "expression": "ex_4"
+              }
+            ],
+            "grammar": [
+              "n5_g_17"
+            ],
+            "sounds_textbook": [
+              {
+                "japanese": "あなたは元気ですか。",
+                "romaji": "anata wa genki desu ka.",
+                "why": "あなた est évité quand on s'adresse à quelqu'un qu'on connaît.",
+                "natural": "お元気ですか。",
+                "natural_romaji": "o-genki desu ka."
+              }
+            ]
+          },
+          {
+            "japanese": "こちらは<ruby>毎日<rt>まいにち</rt></ruby>いい<ruby>天気<rt>てんき</rt></ruby>です。",
+            "romaji": "kochira wa mainichi ii tenki desu.",
+            "french": "Ici, il fait beau tous les jours.",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "天気",
+                "vocab": "n5_v_269"
+              }
+            ],
+            "grammar": [
+              "n5_g_8",
+              "n5_g_1"
+            ]
+          },
+          {
+            "japanese": "また<ruby>会<rt>あ</rt></ruby>いましょう。",
+            "romaji": "mata aimashou.",
+            "french": "Revoyons-nous bientôt.",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "会い",
+                "vocab": "n5_v_530"
+              }
+            ],
+            "grammar": []
+          }
+        ]
+      },
+      {
+        "kind": "closing",
+        "speaker": "hana",
+        "japanese": "はなより",
+        "romaji": "Hana yori",
+        "french": "Hana",
+        "register": "poli",
+        "refs": [],
+        "grammar": []
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Quel temps fait-il chez Hana ?",
+        "choices": [
+          "Il pleut",
+          "Il fait beau",
+          "Il neige"
+        ],
+        "answer": 1,
+        "explanation": "いい天気 = beau temps.",
+        "line_ref": [
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "id": "n5_l_5",
+    "type": "dialogue",
+    "level": "N5",
+    "order": 5,
+    "title": "Midi au konbini",
+    "title_ja": "<ruby>昼<rt>ひる</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby>はコンビニで",
+    "summary": "Deux amis choisissent leur déjeuner au konbini.",
+    "estimated_minutes": 2,
+    "theme": "nourriture",
+    "place": "konbini",
+    "requires": {
+      "grammar": [
+        "n5_g_11",
+        "n5_g_12",
+        "n5_g_13",
+        "n5_g_18"
+      ],
+      "vocab": [
+        "n5_v_45",
+        "n5_v_105",
+        "n5_v_187",
+        "n5_v_401",
+        "n5_v_85",
+        "n5_v_97",
+        "n5_v_185"
+      ]
+    },
+    "characters": [
+      {
+        "id": "ken",
+        "name": "Ken",
+        "name_ja": "けん",
+        "relation": "ami"
+      },
+      {
+        "id": "yuki",
+        "name": "Yuki",
+        "name_ja": "ゆき",
+        "relation": "ami"
+      },
+      {
+        "id": "narration",
+        "name": "Narration",
+        "name_ja": "",
+        "relation": "narration"
+      }
+    ],
+    "blocks": [
+      {
+        "kind": "line",
+        "speaker": "ken",
+        "japanese": "お<ruby>腹<rt>なか</rt></ruby>すいた…。<ruby>昼<rt>ひる</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby>、コンビニで<ruby>買<rt>か</rt></ruby>わない？",
+        "romaji": "onaka suita... hirugohan, konbini de kawanai?",
+        "french": "J'ai faim… On s'achète le déjeuner au konbini ?",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "お腹",
+            "vocab": "n5_v_45"
+          },
+          {
+            "text": "昼ご飯",
+            "vocab": "n5_v_105"
+          },
+          {
+            "text": "買わない",
+            "vocab": "n5_v_187"
+          }
+        ],
+        "grammar": [
+          "n5_g_12"
+        ]
+      },
+      {
+        "kind": "line",
+        "speaker": "yuki",
+        "japanese": "いいね。<ruby>何<rt>なに</rt></ruby>にする？",
+        "romaji": "ii ne. nani ni suru?",
+        "french": "Bonne idée. Tu prends quoi ?",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "何",
+            "vocab": "n5_v_401"
+          }
+        ],
+        "grammar": [
+          "n5_g_18",
+          "n5_g_11"
+        ],
+        "sounds_textbook": [
+          {
+            "japanese": "何を買いますか。",
+            "romaji": "nani o kaimasu ka.",
+            "why": "Trop poli entre amis. Pour demander ce que l'autre choisit, on dit 〜にする.",
+            "natural": "何にする？",
+            "natural_romaji": "nani ni suru?"
+          }
+        ]
+      },
+      {
+        "kind": "line",
+        "speaker": "ken",
+        "japanese": "おにぎりとお<ruby>茶<rt>ちゃ</rt></ruby>かな。",
+        "romaji": "onigiri to ocha ka na.",
+        "french": "Des onigiri et du thé, je crois.",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "お茶",
+            "vocab": "n5_v_85"
+          }
+        ],
+        "grammar": []
+      },
+      {
+        "kind": "line",
+        "speaker": "yuki",
+        "japanese": "じゃあ、わたしはパンにする。<ruby>安<rt>やす</rt></ruby>いから。",
+        "romaji": "jaa, watashi wa pan ni suru. yasui kara.",
+        "french": "Alors moi, je prends du pain. C'est pas cher.",
+        "register": "familier",
+        "refs": [
+          {
+            "text": "パン",
+            "vocab": "n5_v_97"
+          },
+          {
+            "text": "安い",
+            "vocab": "n5_v_185"
+          }
+        ],
+        "grammar": [
+          "n5_g_8",
+          "n5_g_11"
+        ]
+      },
+      {
+        "kind": "paragraph",
+        "lines": [
+          {
+            "japanese": "ふたりは<ruby>昼休<rt>ひるやす</rt></ruby>みにコンビニへ<ruby>行<rt>い</rt></ruby>きました。",
+            "romaji": "futari wa hiruyasumi ni konbini e ikimashita.",
+            "french": "Pendant la pause de midi, ils sont allés tous les deux au konbini.",
+            "register": "poli",
+            "refs": [
+              {
+                "text": "行きました",
+                "vocab": "n5_v_156"
+              }
+            ],
+            "grammar": [
+              "n5_g_8",
+              "n5_g_11",
+              "n5_g_13"
+            ]
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Que prend Yuki ?",
+        "choices": [
+          "Des onigiri",
+          "Du pain",
+          "Du thé"
+        ],
+        "answer": 1,
+        "explanation": "わたしはパンにする = moi, je prends du pain.",
+        "line_ref": [
+          3
+        ]
+      },
+      {
+        "prompt": "Pourquoi Yuki choisit-elle du pain ?",
+        "choices": [
+          "C'est bon",
+          "Ce n'est pas cher",
+          "Elle n'a pas faim"
+        ],
+        "answer": 1,
+        "explanation": "安いから = parce que ce n'est pas cher.",
+        "line_ref": [
+          3
+        ]
+      }
+    ]
+  }
+]
