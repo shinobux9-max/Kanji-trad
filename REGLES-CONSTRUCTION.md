@@ -1,127 +1,250 @@
-# Kanji-trad — Règles de construction
+# Ocha v2 — Règles de construction
 
-Playbook technique établi au fil des sessions. Voir aussi `ETAT-ACTUEL.md` (architecture,
-état du projet) et `HANDOFF.md` (historique de la modularisation ESM).
+**Statut** : 🔒 verrouillé (version 2).
 
-## Méthode de travail générale
+**S'applique à** : la branche `ocha-v2` uniquement. La branche `main` (Ocha actuel) garde son
+propre `REGLES-CONSTRUCTION.md`, qui ne s'applique **pas** ici.
 
-- Patcher par `str_replace` ciblé — jamais réécrire un fichier entier, sauf création.
-- `node --input-type=module --check < fichier.js` après CHAQUE fichier JS modifié, avant
-  de le livrer.
-- Ne jamais demander d'upload d'un fichier déjà présent dans le contexte/le Project.
-- Ne jamais improviser un comportement non vérifié. Si le monolithe original n'est plus
-  accessible (le Project a été entièrement remplacé par les fichiers modulaires), demander
-  à l'utilisateur de le remettre temporairement (`monolithe_kanji.js`) plutôt que de deviner.
-- **Messages de commit git sur une seule ligne.** L'utilisateur est sur PowerShell (Windows),
-  pas bash — un message multi-lignes avec guillemets échappés casse le terminal
-  (`pathspec '...' did not match any file(s)`).
+**Rôle de ce fichier** : transformer le document de conception (`docs/conception/`) en
+consignes opérationnelles pour quiconque modifie le dépôt, humain ou agent. En cas de doute,
+**le document de conception fait référence**, et ce fichier dit comment le respecter.
 
-## Vérifications avant de livrer un changement JS
+---
 
-1. **Syntaxe** : `node --check` sur chaque fichier touché.
-2. **Cycle d'import** : script DFS sur le graphe d'imports (extrait via regex `from '...'`)
-   après tout nouvel import ajouté, dans les deux sens.
-3. **Exposition `window.*`** : voir section dédiée ci-dessous — c'est la source de bug la
-   plus fréquente et la plus difficile à repérer visuellement.
+## 1. Avant toute tâche
 
-## Le mécanisme window.* — piège n°1 du projet
+1. Lire `docs/conception/00-sommaire.md`, puis les parties concernées par la tâche.
+2. Lire `ETAT-ACTUEL.md` : étape de reconstruction en cours, ce qui est fait, ce qui reste.
+3. Vérifier qu'on est sur la branche `ocha-v2` :
+   ```
+   git branch --show-current
+   ```
+4. Ne jamais demander l'envoi d'un fichier déjà présent dans le dépôt ou le Project.
 
-Le HTML est généré dynamiquement avec des `onclick="maFonction(...)"`. Ces fonctions ne
-sont PAS automatiquement globales en ESM (modules) : elles doivent être explicitement
-exposées via `window.maFonction = maFonction` dans `app.js`. Un oubli = `ReferenceError`
-silencieuse au clic, invisible à la compilation.
+---
 
-**Trois formes à vérifier, pas juste la plus simple :**
-- `onclick="maFonction(...)"` — la plus facile à repérer.
-- `onclick="${condition ? '' : 'maFonction()'}"` — conditionnelle, ratée par une recherche
-  simple de `onclick="maFonction(`.
-- Argument nu passé à une autre fonction : `enterBulkSelectMode(maFonction)`.
-- **Appel brut hors onclick**, dans le code JS d'un AUTRE fichier (landmine de cycle
-  d'import) — ex: `navigation.js` appelle `closeDetail()` sans l'importer, car
-  `kanji.js` importe déjà `navigation.js` (cycle direct sinon).
+## 2. Ne jamais improviser
 
-**Méthode fiable** : extraire tout le contenu des template strings de tous les fichiers,
-chercher tous les `on\w+="..."` (y compris `${...}` imbriqués), croiser avec les imports de
-`app.js`. Séparément, chercher les appels de fonctions non déclarées localement dans chaque
-fichier (approche proche d'un lint "no-undef") pour capter les landmines hors-onclick.
+- **Si le cahier des charges ne dit pas quoi faire** : s'arrêter et poser la question. Ne pas
+  inventer un comportement, même raisonnable.
+- **Si deux règles semblent se contredire** : le signaler, avec les références (partie,
+  section), sans trancher seul.
+- **Les parties de conception sont verrouillées.** Elles ne se modifient pas en passant. Toute
+  évolution passe par un **addendum** explicite, validé avant d'être codé, comme l'addendum 2.10.
+- **Les paramètres chiffrés** (seuils, durées, quotas) ne se choisissent pas : ils viennent de
+  `src/config.js` (`GUIDED_CONFIG`), qui reprend les valeurs des parties 1 à 5.
 
-Avant de conclure qu'une fonction est "manquante", vérifier que ce n'est pas un faux
-positif : les CONSTANTES/objets (`MODAL_EXIT_REGISTRY[x]`, pas un appel de fonction) et les
-classes CSS utilisées via `class="nom${...}"` (collé, sans espace) échappent souvent aux
-scripts de détection simples.
+---
 
-## Conventions de design établies — à réutiliser, jamais recréer
+## 3. Ordre de travail
 
-- **FAB (bouton flottant)** : `backFAB(onclick, icone)` / `continueFAB(onclick, label)`
-  (`ui/common.js`). Tout bouton retour/continuer est en position fixe — plus aucun bouton
-  inline dans le flux normal du contenu. Penser à ajuster le `padding-top`/`padding-bottom`
-  du conteneur pour que le FAB ne recouvre pas de contenu.
-- **Barre de navigation du bas** (règle mise à jour le 2026-09-24, maquette unifiée v2) :
-  cinq onglets, 🧭 Apprendre · 🎒 Explorer · 📖 Lire · 🎯 Pratiquer · 🔄 Réviser. Elle
-  est visible sur l'Accueil et sur l'écran principal de chacun de ces cinq piliers,
-  jamais ailleurs (`showBottomNav()`/`hideBottomNav()`, `ui/common.js`). Tout sous-écran
-  (niveau, liste, fiche, sélecteur de mode, session, recherche, paramètres) appelle
-  `hideBottomNav()` à son entrée. Rechercher n'est plus un onglet : il passe dans le
-  header permanent (⌂ Accueil · 🔎 Rechercher · 🔊/🔇 Musique · ⚙ Paramètres), qui
-  remplace le ☰.
-  ⚠️ Tant que l'intégration n'est pas faite, le code montre encore l'ancienne barre
-  (Accueil/Apprendre/Réviser, voir ETAT-ACTUEL.md). Ne pas « corriger » le code vers la
-  nouvelle barre hors du chantier d'intégration de la v2.
-- **Feedback de quiz** : `buildAnswerFeedbackHtml()` (`ui/common.js`) — structure fixe :
-  ❌ Tu as répondu (mot) [badge 👁️ si une fiche existe] / ✅ La bonne réponse était (mot)
-  [badge] / ⚠️ Nuance (si fournie, séparée). Utilisée par TOUS les exercices à choix, sans
-  exception — ne jamais recréer une variante locale, même "juste pour ce cas".
-- **Exemples de phrases** : `buildSpeakableExampleHtml()` (`ui/common.js`) — même design
-  partout (bordure gauche accent, 🔊 cliquable sur toute la carte, pas juste l'icône).
-- **Popups légères "aperçu"** (par opposition à navigation complète) : pattern
-  `showXReferencePopup()`/`closeXReferencePopup()` — reste DANS l'écran courant (une
-  session de révision, par exemple) au lieu de la remplacer. Voir
-  `showLessonReferencePopup` (grammaire) et `showVocabReferencePopup` (vocabulaire) comme
-  modèles avant d'en créer une nouvelle pour un autre type de contenu.
+La reconstruction suit les étapes 0 à 7 de la partie 9 (9.9).
 
-## Navigation — règle stricte à ne jamais enfreindre
+- **On ne commence pas une étape tant que les tests de la précédente ne sont pas verts.**
+- **On ne travaille pas sur l'interface avant l'étape 5**, même pour « voir le rendu ».
+- **La maquette v4 est une référence visuelle**, jamais une base de code à copier.
+- Après chaque tâche, **mettre à jour `ETAT-ACTUEL.md`** : étape, fait, reste, points ouverts.
 
-**Un bouton retour/FAB doit TOUJOURS appeler `history.back()`, jamais la fonction de
-l'écran parent directement.** Appeler `showEcranParent()` directement (même sans argument)
-pousse un NOUVEL état d'historique au lieu d'y revenir — créant une boucle infinie
-(rencontrée et corrigée 3 fois sur ce projet : `showCategoryDirect`, la grille kana,
-`showProgressionDetail`).
+---
 
-Le bon pattern : le registre (`SCREEN_REGISTRY`/`MODAL_EXIT_REGISTRY` dans
-`core/navigation.js`) doit déjà avoir une entrée qui appelle la fonction d'écran avec
-`isBack = true` (pas de nouveau push). `history.back()` déclenche cette entrée
-automatiquement via `popstate` — c'est TOUJOURS la bonne réponse pour un bouton "retour".
+## 4. Les couches
 
-Si un écran est nouveau et n'a pas encore d'entrée dans le registre, l'ajouter AVANT de
-créer son bouton retour, pas après.
+```
+src/content/     données en lecture seule, graphe
+src/store/       persistance : IndexedDB (apprentissage) ; store/settings.js (paramètres, localStorage)
+src/learning/    recordLearningEvent, état, SRS, faiblesses, budget, journal
+src/exercises/   représentation, morphologie, générateurs
+src/engine/      moteur guidé
+src/ui/          écrans, composants, navigation
+```
 
-**Seule exception, ⌂ Accueil et les onglets de la barre du bas (v2)** : ils ne sont pas
-des « retours ». Ils REMPLACENT la pile (l'écran visé devient la seule entrée), ils ne
-l'empilent jamais. Sinon, Accueil → leçon → ⌂ → retour ramènerait dans la leçon, ce qui
-crée exactement le type de boucle décrit ci-dessus.
+### Qui peut importer quoi
 
-## Sessions d'état
+| Couche | Peut importer |
+|---|---|
+| `content` | `config` uniquement |
+| `store` | `config` uniquement |
+| `learning` | `content`, `store`, `config` |
+| `exercises` | `content`, `learning` (lecture seule), `config` |
+| `engine` | `content`, `learning` (lecture seule), `exercises`, `config` |
+| `ui` | `engine`, `exercises`, `learning`, `content`, `config`, et **`store/settings.js` seulement** — jamais le reste de `store` |
 
-Toute session active (révision, entraînement, leçon...) vit dans `state.*`
-(`core/state.js`), jamais en variable locale à un module. Elle est nettoyée
-automatiquement par `core/navigation.js::closeAllOverlaysAndSessions()` à chaque
-navigation — pas besoin de la nettoyer manuellement ailleurs.
-⚠️ Exception prévue (maquette v4, non intégrée) : certaines sessions longues doivent survivre à la navigation pour permettre « Reprendre » : la session du mode guidé et la mission en cours (clé kanji_trad_missions). À traiter lors de l'intégration avec un mécanisme commun, sans modifier closeAllOverlaysAndSessions() avant.
+### Deux circuits d'écriture
 
-## Ce qui a été délibérément retiré — ne pas réintégrer sans raison explicite
+```
+État pédagogique                       Paramètres de l'utilisateur
+UI / ENGINE / EXERCISES                UI (panneau Paramètres)
+        ↓ recordLearningEvent                  ↓
+     LEARNING                          store/settings.js
+        ↓                                      ↓
+  store (IndexedDB)                      localStorage (ocha_settings)
+```
 
-- `features/quiz.js` (modal lecture/sens kanji) — décision utilisateur, les autres
-  systèmes de révision suffisent.
-- Ancienne navigation par grade (Primaire/Collège) — `loadCategory`/`loadSeriesPage`.
-- ~10 fonctions mortes confirmées + ~100 classes CSS mortes associées (détail dans
-  l'historique git, pas la peine de le retracer ici).
+Les deux circuits ne se croisent pas : les paramètres ne contiennent **aucun** état
+pédagogique, et l'état pédagogique ne passe **jamais** par `localStorage` (partie 9, 9.2).
 
-## Nettoyage de code mort — méthode
+### Règles absolues
 
-Une fonction exportée mais jamais "vraiment" utilisée nulle part (ni import, ni onclick,
-ni appel interne) est candidate à la suppression — mais vérifier D'ABORD dans le monolithe
-d'origine (si disponible) si elle a un usage prévu qu'on aurait simplement oublié de
-brancher (cas vécu : `addDailyNewCardsUsed`, `launchMixedReviewSession` — pas du code
-mort, du code jamais fini). Ne jamais supprimer une fonction sans avoir vérifié ses
-usages avec le script de détection complet (constantes + appels bruts + onclick), pas
-une simple recherche visuelle.
+1. **Seule `learning` peut demander une écriture de l'état pédagogique dans `store`.** Toute
+   modification de progression passe par `recordLearningEvent` (partie 3). Aucun autre
+   fichier n'appelle IndexedDB.
+   **Exception indépendante** : les paramètres sont lus et écrits par `store/settings.js`, seul
+   fichier à utiliser `localStorage`, appelé uniquement par l'interface.
+   `engine` et `exercises` n'importent pas les paramètres : ils reçoivent les valeurs utiles
+   (format de session, budget, furigana, romaji…) **en argument**, ce qui les garde testables
+   sans navigateur.
+2. **`content`, `learning`, `exercises` et `engine` n'accèdent jamais au DOM** : pas de
+   `document`, `window`, `navigator`, `localStorage`, `indexedDB`. Ils doivent tourner dans
+   Node pour les tests.
+3. **Les écrans ne recalculent jamais un état** : ils demandent un instantané à `learning`.
+4. **Aucun champ « état » n'est stocké** (Nouveau, Acquis…) : l'état est toujours calculé
+   (partie 1).
+
+### Vérification
+
+Le script `tools/check-layers.mjs` (étape 0) vérifie automatiquement :
+
+- les **déclarations `import`** de chaque fichier, analysées comme telles (pas une simple
+  recherche de texte), contre le tableau ci-dessus ;
+- les **accès aux API du navigateur** (`document.…`, `window.…`, `navigator.…`,
+  `localStorage.…`, `indexedDB.…`) hors de `src/ui/` et `src/store/`. Le script vise les
+  accès réels, pas la présence du mot : `reviewWindowDays`, un commentaire ou une chaîne de
+  caractères ne sont pas des violations ;
+- l'absence d'accès à IndexedDB hors de `src/store/`, et à `localStorage` hors de
+  `src/store/settings.js`.
+
+Un garde-fou qui produit de fausses alertes finit contourné : le script doit rester précis.
+
+Il est lancé avant chaque commit, avec les tests.
+
+---
+
+## 5. Identifiants et données
+
+- **Les références suivent la forme `{ type, id }`** en interne (partie 2). Dans les données,
+  les clés sont `grammar`, `vocab`, `kanji`, `kana`, `expression`.
+- **Ne jamais inventer un identifiant** de contenu (`n5_v_…`, `n5_g_…`, `ex_…`, `hj_v_…`). Un
+  contenu manquant se signale, il ne se crée pas au passage.
+- **Les identifiants de questions générées** suivent `gen:<générateur>:<cible>:<variante>` et
+  doivent être stables : la même question produit toujours le même identifiant.
+- **Toute modification de données** passe le validateur avant commit :
+  ```
+  node tools/validate-data.mjs
+  ```
+  Aucune erreur n'est acceptée ; les avertissements sont lus et justifiés.
+- **Le nouveau contenu** (lectures, missions, expressions, gabarits) suit
+  `GUIDE-CONTENU.md` : romaji sans macron (`gakkou`), furigana hors okurigana, japonais naturel.
+- Les clés de stockage utilisent le préfixe `ocha_` ; la base IndexedDB s'appelle `ocha`.
+
+---
+
+## 6. Interface
+
+- **Événements par délégation** : les éléments cliquables portent `data-action="…"`, et un
+  écouteur unique par écran les traite. **Interdit** : `onclick`, `onsubmit` ou tout autre
+  gestionnaire écrit dans le HTML généré, et toute fonction exposée sur `window` pour
+  l'interface.
+- **Retour** : toujours `history.back()`, jamais l'appel direct à l'écran parent.
+  **Exception** : ⌂ et les onglets de la barre du bas **remplacent** la pile au lieu d'empiler.
+- **Les sessions survivent à la navigation** : aucun nettoyage global de session lors d'un
+  changement d'écran. Une session ne se termine que par sa fin, son abandon (12 h) ou une
+  action explicite (partie 4).
+- **Paramètres** : panneau par-dessus l'écran courant, sans navigation.
+- **Japonais** : tout **contenu japonais pédagogique issu des données** passe par le système
+  commun de représentation (partie 5). Aucun écran ni générateur ne fabrique ses propres
+  furigana, son propre romaji ou ses propres règles d'adaptation. Un titre statique, un badge
+  ou un élément décoratif en japonais n'est pas concerné.
+- **Attendre l'enregistrement** : un événement pédagogique est **attendu** (`await`) avant
+  toute transition d'interface qui dépend de son succès. Une réponse n'est jamais présentée
+  comme enregistrée, et la question suivante n'est jamais affichée, avant la confirmation de
+  `recordLearningEvent` (partie 9, 9.3 et 9.4).
+- **CSS** : uniquement les jetons du design system (couleurs, espacements, rayons). Aucune
+  couleur en dur. Le flou glassy s'applique aux grands conteneurs, jamais à chaque ligne d'une
+  liste. Respect de « réduire les animations ».
+- **Textes** : tutoiement, aucun terme technique visible (SRS, prérequis, état, score…).
+
+---
+
+## 7. Tests
+
+- **Outil** : l'exécuteur intégré de Node, sans dépendance :
+  ```
+  node --test tests/
+  ```
+- **Tout module arrive avec ses tests**, dans le même commit.
+- **Les critères bloquants de la partie 7** (S, C, R) sont des tests automatiques, écrits avec
+  le module qu'ils couvrent. Chaque test indique en commentaire le critère qu'il vérifie
+  (`// Partie 7 · S6`).
+- **Les cinq sessions de la partie 8** deviennent des scénarios automatiques à l'étape 4.
+- **Les modules repris de l'ancienne app** ont un test de non-régression tiré de leur liste
+  de contrôle (stratégie de reconstruction).
+- **Interdit** : désactiver, sauter ou affaiblir un test pour faire passer une modification. Un
+  test qui échoue révèle soit une erreur de code, soit une contradiction à signaler (§2).
+- Les tests de `learning`, `engine`, `exercises` et `content` utilisent le **stockage en
+  mémoire**, jamais IndexedDB.
+
+---
+
+## 8. Modifier les fichiers
+
+- **Fichier nouveau, en construction initiale** : il peut être écrit en entier.
+- **Fichier existant et déjà commité** : modification **ciblée** (`str_replace`), jamais de
+  réécriture complète sans raison explicite, annoncée avant.
+- **Après chaque fichier JavaScript modifié** :
+  ```
+  node --check chemin/du/fichier.js
+  ```
+- **Un module est repris de l'ancienne app** (liste de la stratégie de reconstruction) : on
+  reprend sa **logique**, adaptée aux nouvelles interfaces, avec sa liste de contrôle. On ne
+  copie pas le fichier tel quel, et on ne reproduit pas les comportements listés comme à
+  éviter (maîtrise automatique après une seule réussite, clés `mastered_…`, favori et maîtrise
+  dans le même champ, nettoyage global des sessions…).
+
+---
+
+## 9. Git
+
+- **Messages de commit sur une seule ligne** : l'utilisateur travaille sous PowerShell, où un
+  message sur plusieurs lignes casse la commande.
+  ```
+  git commit -m "Etape 1: recordLearningEvent et transaction IndexedDB"
+  ```
+- **Un commit par unité cohérente** (un module et ses tests), préfixé par l'étape.
+- **Ne jamais commiter** : `__pycache__/`, fichiers de référence temporaires (comme
+  `glassy-box.html`), fichiers générés. Ils sont listés dans `.gitignore`.
+- **Ne jamais toucher à `main`** depuis ce chantier. La bascule a lieu à l'étape 7 seulement.
+
+---
+
+## 10. Liste de contrôle avant de livrer une tâche
+
+- [ ] Branche `ocha-v2`.
+- [ ] Le comportement vient du cahier des charges, ou la question a été posée.
+- [ ] `node --check` sur chaque fichier JS modifié.
+- [ ] `node --test tests/` : tous les tests passent.
+- [ ] `node tools/check-layers.mjs` : aucune violation de couche.
+- [ ] `node tools/validate-data.mjs` si des données ont changé.
+- [ ] Aucun paramètre chiffré en dur hors de `src/config.js`.
+- [ ] Aucun `onclick` ni fonction exposée sur `window` pour l'interface.
+- [ ] Chaque événement pédagogique est attendu avant la transition d'interface qui en dépend.
+- [ ] `ETAT-ACTUEL.md` mis à jour.
+- [ ] Aucun fichier de conception verrouillé n'a été modifié, sauf addendum explicitement
+      demandé.
+- [ ] Commit sur une seule ligne.
+
+---
+
+## 11. Étape 0 · ce qu'elle doit produire
+
+Pour mémoire, l'étape 0 met en place ce que ce fichier suppose. Elle se fait **une tâche à la
+fois**, dans cet ordre, chacune livrée et commitée avant la suivante :
+
+1. la branche `ocha-v2`, l'arborescence (partie 9, 9.1), `.gitignore` à jour ;
+2. les fichiers de gouvernance : ce fichier, un `ETAT-ACTUEL.md` propre à la v2, et
+   `docs/conception/` avec tout le document de conception, `GUIDE-CONTENU.md` et le README
+   des données ;
+3. `src/config.js` avec `GUIDED_CONFIG` ;
+4. `tools/check-layers.mjs` ;
+5. `tools/validate-data.mjs` ;
+6. le nettoyage des données listé dans la stratégie de reconstruction (§6), jusqu'à une
+   validation sans erreur.
