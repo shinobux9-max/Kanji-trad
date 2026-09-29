@@ -15,17 +15,22 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 | Tâche | Contenu | État |
 |---|---|---|
 | 1 | Branche `ocha-v2`, arborescence, `.gitignore` | ✅ fait (commit `c1a0f7b`) |
-| 2 | Gouvernance et documentation | ✅ fait |
-| 3 | `src/config.js` avec `GUIDED_CONFIG` | ⏳ |
-| 4 | `tools/check-layers.mjs` | ⏳ |
+| 2 | Gouvernance et documentation | ✅ fait (commit `a7b701a`) |
+| 3 | `src/config.js` avec `GUIDED_CONFIG` | ✅ fait |
+| 4 | `tools/check-layers.mjs` | ✅ fait |
 | 5 | `tools/validate-data.mjs` | ⏳ |
 | 6 | Nettoyage des données, validation sans erreur | ⏳ |
+
+Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
+bloque `npm test`).
 
 ---
 
 ## Contenu de la branche
 
-- **Nouvelle base** : `src/`, `tools/`, `tests/` (vides pour l'instant), `docs/conception/`.
+- **Nouvelle base** : `src/config.js`, `tools/check-layers.mjs`, `tests/tools/`,
+  `docs/conception/`, `package.json` (modules ESM). Les autres dossiers de `src/` sont vides
+  pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
   n'est pas modifiée. Son sort (déplacement ou suppression) sera décidé à l'étape 5, quand la
@@ -40,6 +45,21 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 - `Modularisation` : app actuelle, avec le travail de style le plus récent. Non touchée.
 - `UI-sans-refonte` : point de départ de `ocha-v2`. Non touchée.
 
+Le dépôt s'appelle désormais `Ocha` (https://github.com/shinobux9-max/Ocha).
+
+---
+
+## Décisions complémentaires
+
+Décisions prises pendant la reconstruction, qui complètent le document de conception sans
+modifier ses parties verrouillées.
+
+| Date | Décision | Où |
+|---|---|---|
+| 2026-09-29 | Réglages initiaux : 10 nouveautés par jour (contenu seulement, kana exclus), format de session normal | `src/config.js`, `DEFAULT_USER_SETTINGS` |
+| 2026-09-29 | Commande de test : `npm test` (`node --test "tests/**/*.test.js"`), `node --test tests/` ne fonctionnant pas avec Node 22+ | `package.json`, `REGLES-CONSTRUCTION.md` v2.2 |
+| 2026-09-29 | `src/app.js` (démarrage) a les mêmes droits que l'interface : imports, accès au navigateur, `store/settings.js` seulement | `tools/check-layers.mjs`, `REGLES-CONSTRUCTION.md` v2.2 |
+
 ---
 
 ## Points ouverts
@@ -53,4 +73,6 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 | Date | Étape · tâche | Résumé | Commit |
 |---|---|---|---|
 | 2026-09-29 | 0 · 1 | Branche `ocha-v2` créée depuis `UI-sans-refonte`, arborescence, `.gitignore` | `c1a0f7b` |
-| 2026-09-29 | 0 · 2 | Documents de conception, nouvelles règles et état ; anciens documents rangés dans `docs/legacy/` | — |
+| 2026-09-29 | 0 · 2 | Documents de conception, nouvelles règles et état ; anciens documents rangés dans `docs/legacy/` | `a7b701a` |
+| 2026-09-29 | 0 · 3 | `src/config.js` : GUIDED_CONFIG (parties 1 à 5), réglages initiaux de l'utilisateur ; `package.json` en ESM | — |
+| 2026-09-29 | 0 · 4 | `tools/check-layers.mjs` et ses 19 tests, commande `npm test`, droits de `src/app.js` | — |

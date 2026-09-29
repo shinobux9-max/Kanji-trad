@@ -1,6 +1,7 @@
 # Ocha v2 — Règles de construction
 
-**Statut** : 🔒 verrouillé (version 2).
+**Statut** : 🔒 verrouillé (version 2.2 : commande de test corrigée pour Node 22 et plus ;
+droits de `src/app.js` précisés).
 
 **S'applique à** : la branche `ocha-v2` uniquement. La branche `main` (Ocha actuel) garde son
 propre `REGLES-CONSTRUCTION.md`, qui ne s'applique **pas** ici.
@@ -68,6 +69,7 @@ src/ui/          écrans, composants, navigation
 | `exercises` | `content`, `learning` (lecture seule), `config` |
 | `engine` | `content`, `learning` (lecture seule), `exercises`, `config` |
 | `ui` | `engine`, `exercises`, `learning`, `content`, `config`, et **`store/settings.js` seulement** — jamais le reste de `store` |
+| `app.js` (démarrage) | **les mêmes que `ui`**, plus `ui` elle-même : il assemble l'application, mais n'accède pas directement au stockage pédagogique |
 
 ### Deux circuits d'écriture
 
@@ -93,7 +95,8 @@ pédagogique, et l'état pédagogique ne passe **jamais** par `localStorage` (pa
    `engine` et `exercises` n'importent pas les paramètres : ils reçoivent les valeurs utiles
    (format de session, budget, furigana, romaji…) **en argument**, ce qui les garde testables
    sans navigateur.
-2. **`content`, `learning`, `exercises` et `engine` n'accèdent jamais au DOM** : pas de
+2. **`content`, `learning`, `exercises` et `engine` n'accèdent jamais au DOM** (seuls `ui`,
+   `store` et `app.js` le peuvent) : pas de
    `document`, `window`, `navigator`, `localStorage`, `indexedDB`. Ils doivent tourner dans
    Node pour les tests.
 3. **Les écrans ne recalculent jamais un état** : ils demandent un instantané à `learning`.
@@ -107,7 +110,8 @@ Le script `tools/check-layers.mjs` (étape 0) vérifie automatiquement :
 - les **déclarations `import`** de chaque fichier, analysées comme telles (pas une simple
   recherche de texte), contre le tableau ci-dessus ;
 - les **accès aux API du navigateur** (`document.…`, `window.…`, `navigator.…`,
-  `localStorage.…`, `indexedDB.…`) hors de `src/ui/` et `src/store/`. Le script vise les
+  `localStorage.…`, `indexedDB.…`) hors de `src/ui/`, `src/store/` et `src/app.js`
+  (point d'entrée du navigateur : enregistrement du service worker, lecture des paramètres). Le script vise les
   accès réels, pas la présence du mot : `reviewWindowDays`, un commentaire ou une chaîne de
   caractères ne sont pas des violations ;
 - l'absence d'accès à IndexedDB hors de `src/store/`, et à `localStorage` hors de
@@ -169,8 +173,12 @@ Il est lancé avant chaque commit, avec les tests.
 
 - **Outil** : l'exécuteur intégré de Node, sans dépendance :
   ```
-  node --test tests/
+  npm test
   ```
+  qui lance `node --test "tests/**/*.test.js"` (script défini dans `package.json`). Avec
+  Node 22 et plus, il faut ce motif de fichiers : `node --test tests/` ne fonctionne pas.
+- Les fichiers de test se terminent par `.test.js` et reproduisent l'arborescence du code
+  testé (`tests/tools/check-layers.test.js` teste `tools/check-layers.mjs`).
 - **Tout module arrive avec ses tests**, dans le même commit.
 - **Les critères bloquants de la partie 7** (S, C, R) sont des tests automatiques, écrits avec
   le module qu'ils couvrent. Chaque test indique en commentaire le critère qu'il vérifie
@@ -221,7 +229,7 @@ Il est lancé avant chaque commit, avec les tests.
 - [ ] Branche `ocha-v2`.
 - [ ] Le comportement vient du cahier des charges, ou la question a été posée.
 - [ ] `node --check` sur chaque fichier JS modifié.
-- [ ] `node --test tests/` : tous les tests passent.
+- [ ] `npm test` : tous les tests passent.
 - [ ] `node tools/check-layers.mjs` : aucune violation de couche.
 - [ ] `node tools/validate-data.mjs` si des données ont changé.
 - [ ] Aucun paramètre chiffré en dur hors de `src/config.js`.
