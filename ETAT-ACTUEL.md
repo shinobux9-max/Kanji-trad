@@ -59,12 +59,15 @@ modifier ses parties verrouillées.
 | 2026-09-29 | Réglages initiaux : 10 nouveautés par jour (contenu seulement, kana exclus), format de session normal | `src/config.js`, `DEFAULT_USER_SETTINGS` |
 | 2026-09-29 | Commande de test : `npm test` (`node --test "tests/**/*.test.js"`), `node --test tests/` ne fonctionnant pas avec Node 22+ | `package.json`, `REGLES-CONSTRUCTION.md` v2.2 |
 | 2026-09-29 | `src/app.js` (démarrage) a les mêmes droits que l'interface : imports, accès au navigateur, `store/settings.js` seulement | `tools/check-layers.mjs`, `REGLES-CONSTRUCTION.md` v2.2 |
+| 2026-09-30 | Addendum A1 : le champ des constructions générées s'appelle `construction` (`pattern` reste le motif d'affichage) | `docs/conception/addendum-A1-construction.md` |
+| 2026-09-30 | `particles.json` déplacé dans `data/n5/` ; `concepts`, `curriculum` et `mapping` restent en place jusqu'à l'étape 5, car l'ancienne app les charge | `data/` |
 
 ---
 
 ## Points ouverts
 
-*Aucun pour l'instant.*
+ - Le N4 est dans l'ancien format de données (identifiants, `group`, exemples, romaji). À migrer au format v2 avant son intégration au moteur guidé. Le validateur ne couvre que le N5 d'ici là.
+ - À l'étape 5 : déplacer `concepts/n5.json` vers `data/n5/concepts.json`, et `curriculum/n5.json` et `mapping.json` vers `data/legacy/`.
 
 ---
 
