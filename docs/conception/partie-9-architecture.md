@@ -279,7 +279,7 @@ Chaque étape se termine par ses tests verts avant la suivante.
 |---|---|---|
 | 0 · Préparation | branche `ocha-v2`, arborescence, nouvelles règles de construction (9.10), nettoyage des données (stratégie §6), script de validation | validation des données sans erreur |
 | 1 · Stockage et apprentissage | interface de stockage (IndexedDB + mémoire), `recordLearningEvent`, état calculé, SRS et faiblesses repris, budget, journal et compaction, échec d'écriture | S6, S7, C1 à C5, 9.4 |
-| 2 · Contenu et graphe | chargement, normalisation `{ type, id }`, graphe, relations dérivées, `forms` / `pattern` | R1, R4, S1 |
+| 2 · Contenu et graphe | chargement, normalisation `{ type, id }`, graphe, relations dérivées, `forms` / `construction` | R1, R4, S1 |
 | 3 · Exercices | représentation, morphologie et exceptions, générateurs | S3, S4, S5, S8, S9, S11, R3 |
 | 4 · Moteur guidé | composition par rôles, zones de rattrapage, adaptation, reprise, motifs | S2, S10, C6, **scénarios A à E** |
 | 5 · Interface | design system, navigation, header et barre du bas, panneau de paramètres ; écrans dans l'ordre : accueil et session guidée, Réviser, Apprendre et bibliothèque, Pratiquer, Explorer, Lire, recherche, dossiers, premier lancement | parcours manuels ; critères U |

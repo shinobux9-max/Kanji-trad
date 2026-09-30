@@ -2,7 +2,8 @@
 
 ## Partie 5 · Génération et adaptation pédagogique des exercices
 
-**Statut** : 🔒 verrouillée (version 3 : arbitrage O7 de la partie 8 intégré). Les valeurs chiffrées sont des
+**Statut** : 🔒 verrouillée (version 3 : arbitrage O7 de la partie 8 intégré ; addendum A1 :
+champ `construction`, voir `addendum-A1-construction.md`). Les valeurs chiffrées sont des
 paramètres expérimentaux de la v1 (5.6).
 
 **Objet** : transformer une intention pédagogique en exercice adapté à l'utilisateur.
@@ -139,15 +140,15 @@ déclarée par la leçon, en remplacement ou en complément de `forms` (addendum
 
 ```json
 { "id": "n5_g_35", "item": "〜てください",
-  "pattern": { "form": "verb_te", "suffix": "ください" } }
+  "construction": { "form": "verb_te", "suffix": "ください" } }
 { "id": "n5_g_34", "item": "〜たい",
-  "pattern": { "form": "verb_stem", "suffix": "たい" } }
+  "construction": { "form": "verb_stem", "suffix": "たい" } }
 { "id": "n5_g_41", "item": "〜なければならない",
-  "pattern": { "form": "verb_nakereba", "suffix": "ならない" } }
+  "construction": { "form": "verb_nakereba", "suffix": "ならない" } }
 ```
 
 - Une leçon qui enseigne **une forme** (〜ました) déclare `forms`.
-- Une leçon qui enseigne **une construction** (〜てください) déclare `pattern`. Sa cible est la
+- Une leçon qui enseigne **une construction** (〜てください) déclare `construction`. Sa cible est la
   construction ; produire la forme n'en est qu'une étape.
 - Les constructions plus complexes (〜たり〜たりする, 〜てあげる / 〜てくれる / 〜てもらう)
   ne sont pas générées en v1 : leurs exercices restent rédigés.
@@ -352,7 +353,7 @@ const GUIDED_CONFIG = {
 | Kana lisible : au moins En cours, sans faiblesse active (définition unique) | validé |
 | Furigana retirés quand kanji et mot sont Acquis | validé |
 | Phrase : romaji en lecture au-dessus des mots si ≤ 30 %, sinon phrase en romaji | validé, paramètre v1 |
-| Forme ≠ construction (`forms` / `pattern`) | validé |
+| Forme ≠ construction (`forms` / `construction`) | validé |
 | Formes générées, exceptions seules stockées | validé |
 | Phrase d'exercice : exemple transformable, puis gabarit rédigé, puis autre support | validé |
 | Distracteurs de « Retrouver le mot » : connus, même représentation, sens distinct | validé |
@@ -362,7 +363,7 @@ const GUIDED_CONFIG = {
 
 ## Conséquences pour la suite
 
-- **Données** : champs `forms` ou `pattern` sur les leçons concernées ; petit fichier
+- **Données** : champs `forms` ou `construction` sur les leçons concernées ; petit fichier
   d'exceptions de conjugaison ; fichier de gabarits rédigés ; nettoyage de `group` (addendum
   de la partie 2) ; `GUIDE-CONTENU.md` à compléter pour les gabarits.
 - **Code** : module morphologique (formes, furigana, kana, romaji) ; fonction de

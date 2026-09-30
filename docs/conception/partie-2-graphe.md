@@ -3,7 +3,7 @@
 ## Partie 2 · Le graphe pédagogique (`requires` / `teaches`)
 
 **Statut** : 🔒 verrouillée (version 2), avec un addendum (2.10) qui n'en modifie aucune
-décision. Les seuils chiffrés sont des paramètres de la v1 (voir 2.9).
+décision, et l'addendum A1 (champ `construction`, voir `addendum-A1-construction.md`). Les seuils chiffrés sont des paramètres de la v1 (voir 2.9).
 
 **Objet** : définir comment les contenus d'Ocha sont reliés entre eux, pour que le moteur
 sache ce qu'une activité exige, ce qu'elle enseigne, et ce qu'elle fait seulement
@@ -374,9 +374,9 @@ vocabulaire (〜ました : 食べる → 食べました). Elles le déclarent 
 - Chaque forme indique les **catégories de mots** auxquelles elle s'applique (verbes,
   adjectifs en い, adjectifs en な, noms).
 - Une leçon qui enseigne une **construction** (une forme + des éléments fixes, comme
-  〜てください) déclare plutôt `pattern`. La distinction entre forme et construction est
+  〜てください) déclare plutôt `construction` (addendum A1). La distinction entre forme et construction est
   définie en partie 5.
-- Une leçon sans `forms` ni `pattern` n'est simplement pas utilisable par le générateur.
+- Une leçon sans `forms` ni `construction` n'est simplement pas utilisable par le générateur.
 
 ### Le vocabulaire fournit la catégorie
 

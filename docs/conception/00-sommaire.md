@@ -11,7 +11,7 @@ référence : un comportement qui s'en écarte doit être signalé, jamais impro
 |---|---|---|
 | — | `strategie-reconstruction.md` | ce qui est repris, réécrit ou conservé de l'app actuelle ; comportements à ne pas reproduire ; corrections de données |
 | 1 | `partie-1-definitions.md` | éléments, cinq états (Nouveau → Découvert → En cours → Acquis → Maîtrisé), origine, état calculé, notes SRS |
-| 2 | `partie-2-graphe.md` | `requires`, `teaches`, `uses` ; références `{ type, id }` ; validation ; addendum `forms` / `pattern` |
+| 2 | `partie-2-graphe.md` | `requires`, `teaches`, `uses` ; références `{ type, id }` ; validation ; addendum `forms` / `construction` |
 | 3 | `partie-3-evenements.md` | `recordLearningEvent`, types d'événements, effets, faiblesses, journal |
 | 4 | `partie-4-moteur.md` | sélection et composition des sessions guidées, rattrapage, adaptation, reprise |
 | 5 | `partie-5-exercices.md` | représentation adaptative, formes et constructions, générateurs, naturel et registre |
@@ -19,6 +19,7 @@ référence : un comportement qui s'en écarte doit être signalé, jamais impro
 | 7 | `partie-7-criteres.md` | critères de réussite (bloquants et de qualité) |
 | 8 | `partie-8-sessions.md` | cinq sessions d'exemple, arbitrages, replay |
 | 9 | `partie-9-architecture.md` | couches, stockage IndexedDB, atomicité, pannes, tests, ordre de reconstruction |
+| A1 | `addendum-A1-construction.md` | champ `construction` (au lieu de `pattern`) pour les constructions générées |
 | — | `../../REGLES-CONSTRUCTION.md` | règles opérationnelles de la branche `ocha-v2` (à la racine du dépôt) |
 | — | `GUIDE-CONTENU.md`, `README.md` | rédaction du contenu et structure des fichiers de données |
 
