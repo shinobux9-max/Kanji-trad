@@ -10,13 +10,18 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 
 ## Étape en cours
 
-**Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 à 12 faites, tâche 13 à faire.
+**Étape 1 · Stockage et apprentissage — ✅ terminée** le 2026-10-01 (rapport :
+`docs/rapports/etape1.md`).
+
+**Prochaine étape : 2 · Contenu et graphe** (partie 9, 9.9 : chargement, normalisation
+`{ type, id }`, graphe, relations dérivées, `forms` / `construction` ; tests R1, R4, S1), à
+découper en tâches avant tout code. Le chantier A2-01 (schéma ENTRY → SENSE) s'y rattache
+(voir les points ouverts).
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
 
-### Étape 1 · Stockage et apprentissage — en cours
+### Étape 1 · Stockage et apprentissage — ✅ terminée
 
 | Tâche | Contenu | Tests | État |
 |---|---|---|---|
@@ -32,7 +37,7 @@ bloque `npm test`).
 | 10 | Budget quotidien (`src/learning/budget.js`) : éléments qui quittent Nouveau, tous écrans confondus ; kana et déclarations exclus | nouveautés prises hors mode guidé (base de S10) | ✅ fait |
 | 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, état « en échec », `retry()` | 9.4, avec un stockage qui échoue à la demande | ✅ fait |
 | 12 | IndexedDB (`src/store/indexeddb.js`, `src/store/schema.js`) : base `ocha`, schéma v1, migrations numérotées, `meta` | schéma testé dans Node ; adaptateur vérifié par la page `tests/browser/` | ✅ fait |
-| 13 | Clôture : scénario de bout en bout sur la mémoire, `check-layers`, rapport `docs/rapports/etape1.md` | toute la suite verte | à faire |
+| 13 | Clôture : scénario de bout en bout sur la mémoire, `check-layers`, rapport `docs/rapports/etape1.md` | toute la suite verte | ✅ fait |
 
 ### Étape 0 · Préparation — ✅ terminée
 
@@ -52,7 +57,7 @@ bloque `npm test`).
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
   mémoire, schéma et migrations, IndexedDB), `src/learning/` (`index.js`, `record.js`, `srs.js`, `state.js`,
   `weakness.js`, `events.js`, `effects.js`, `journal.js`, `budget.js`,
-  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (261 tests dans Node, plus la page
+  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (262 tests dans Node, plus la page
   `tests/browser/store-contract.html`), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
@@ -194,3 +199,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 10 | Budget quotidien de nouveautés : `elementsLeavingNew`, comptage par type dans le résumé du jour, `getNewContentBudget` ; base de S10 ; `journal.test.js` adapté (champ `introduced`) ; 13 tests | — |
 | 2026-10-01 | 1 · 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, statut `pending`, échec observable, `retry()` dans l'ordre ; trois tests des tâches 8 et 9 adaptés au nouveau comportement ; 16 tests | — |
 | 2026-10-01 | 1 · 12 | IndexedDB : `schema.js` (base `ocha`, version 1, migrations), `indexeddb.js` (même contrat que la mémoire), `meta` initial commun ; page de test navigateur et serveur local ; nouveau cas de contrat (ordre de fin entre magasins différents) ; 9 tests Node, 20 cas navigateur | — |
+| 2026-10-01 | 1 · 13 | Clôture : scénario de bout en bout (`e2e.test.js`, du 1er octobre au 23 décembre, invariants, S6 et S7 après chaque événement, C3, C5, 9.4, budget) ; vérification que le code livré est celui testé ; rapport `docs/rapports/etape1.md`. Aucune logique nouvelle. Étape 1 terminée : 262 tests, 20/20 dans le navigateur | — |
