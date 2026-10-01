@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 à 9 faites, tâche 10 à faire.
+tâches 1 à 10 faites, tâche 11 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -29,7 +29,7 @@ bloque `npm test`).
 | 7 | Effets, 2e partie : `KNOWLEDGE_DECLARED` (entrée SRS de vérification), `KNOWLEDGE_DECLARATION_UNDONE`, avancement des activités | aucun recul pour chaque I de 21 à 45 et chaque note ; annulation | ✅ fait |
 | 8 | `recordLearningEvent` (`src/learning/record.js`, `index.js`) : file un par un, calcul sur copie, une transaction, idempotence, notification, chargement initial, instantané | C2 (test statique), C3, idempotence, ordre | ✅ fait |
 | 9 | Journal (`src/learning/journal.js`) : résumé quotidien, compaction 30 jours / 5 000 événements | C5 | ✅ fait |
-| 10 | Budget quotidien (`src/learning/budget.js`) : éléments qui quittent Nouveau, tous écrans confondus ; kana et déclarations exclus | nouveautés prises hors mode guidé (base de S10) | à faire |
+| 10 | Budget quotidien (`src/learning/budget.js`) : éléments qui quittent Nouveau, tous écrans confondus ; kana et déclarations exclus | nouveautés prises hors mode guidé (base de S10) | ✅ fait |
 | 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, état « en échec », `retry()` | 9.4, avec un stockage qui échoue à la demande | à faire |
 | 12 | IndexedDB (`src/store/indexeddb.js`, `src/store/schema.js`) : base `ocha`, schéma v1, migrations numérotées, `meta` | schéma testé dans Node ; adaptateur vérifié par la page `tests/browser/` | à faire |
 | 13 | Clôture : scénario de bout en bout sur la mémoire, `check-layers`, rapport `docs/rapports/etape1.md` | toute la suite verte | à faire |
@@ -51,8 +51,8 @@ bloque `npm test`).
 
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
   mémoire), `src/learning/` (`index.js`, `record.js`, `srs.js`, `state.js`,
-  `weakness.js`, `events.js`, `effects.js`, `journal.js`, `dates.js`),
-  `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (223 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  `weakness.js`, `events.js`, `effects.js`, `journal.js`, `budget.js`,
+  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (236 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -120,7 +120,10 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Résumé quotidien tenu à jour à chaque événement enregistré, dans la même transaction (et non au moment de la compaction) : aucun jour n'est jamais sans résumé, et la compaction ne fait que supprimer du détail déjà résumé ; doublons, événements rejetés et échecs du stockage n'y comptent pas | `src/learning/journal.js`, `record.js` |
 | 2026-10-01 | Contenu du résumé d'un jour (clé : jour local) : réponses justes et fausses par mode puis par type d'exercice (`none` sans type), révisions SRS par note (pour la régularité), activités terminées, secondes d'activités terminées et minutes de sessions guidées, gardées séparément | `src/learning/journal.js` |
 | 2026-10-01 | Compaction : sont conservés tout le jour en cours, puis le détail des 30 derniers jours locaux (jour en cours compris) dans la limite de 5 000 événements au total, les plus récents d'abord ; un événement daté dans le futur est conservé. Elle a lieu au chargement, une fois par jour au plus (`meta.lastCompaction`) ; un échec est signalé sans bloquer le chargement ; `compactJournal()` la déclenche à la demande | `src/learning/journal.js`, `record.js` |
-| 2026-10-01 | Horloge injectable (`now`) dans `createLearning`, utilisée seulement pour la compaction ; les effets d'un événement utilisent toujours sa date `at` | `src/learning/record.js` |
+| 2026-10-01 | Horloge injectable (`now`) dans `createLearning`, utilisée pour la compaction et pour le jour du budget ; les effets d'un événement utilisent toujours sa date `at` | `src/learning/record.js` |
+| 2026-10-01 | Budget quotidien : un élément « quitte Nouveau » quand son état calculé passe de Nouveau à un autre état sous l'effet d'un événement d'apprentissage (présentation, première réponse évaluée, première note SRS) ; déclarations, annulations et test de positionnement n'en font jamais partie. Ce fait est établi au moment de l'événement et compté par type dans le résumé du jour (`introduced`, kana compris), dans la même transaction ; le budget du jour (kana exclus) se lit dans ce résumé, il ne dépend donc ni de la compaction ni d'un rejeu | `src/learning/budget.js`, `journal.js`, `record.js` |
+| 2026-10-01 | `getNewContentBudget(dailyNewBudget)` donne `{ date, used, limit, remaining }` pour le jour local de l'horloge ; le plafond, réglage de l'utilisateur, est reçu en argument ; `learning` compte, le moteur décide (étape 4) | `src/learning/record.js` |
+| 2026-10-01 | Un élément ramené à Nouveau par l'annulation d'une déclaration consomme le budget s'il est ensuite présenté ou évalué : une déclaration n'est pas un apprentissage | `src/learning/budget.js` |
 | 2026-10-01 | `REVIEW_GRADED` sur un élément sans entrée SRS : la note est sa première évaluation (partie 1 : « question d'exercice ou note SRS »), donc `gradeReview` s'applique aussitôt à partir de l'entrée de départ de l'ancien code, alors que `QUESTION_ANSWERED` crée une entrée à J+1 sans la noter ; date d'introduction et origine `learned` posées si absentes | `src/learning/effects.js` |
 
 ---
@@ -175,3 +178,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 7 | Effets de `KNOWLEDGE_DECLARED` (délai déterministe, cumul des niveaux, trace), de son annulation et de l'avancement des activités ; S6 et S7 sur des journaux avec déclarations ; `computeActivityStatus` ; `effects.test.js` adapté ; délai dépendant de la date de déclaration et de l'identifiant (correctif de relecture) ; 27 tests | — |
 | 2026-10-01 | 1 · 8 | `recordLearningEvent` : validation, calcul sur l'état en mémoire, une transaction (événement, faits, session), idempotence, file interne, notifications, chargement, instantané gelé ; surface publique `index.js` ; C2 (test statique), C3 (rechargement et rejeu) ; 23 tests | — |
 | 2026-10-01 | 1 · 9 | Résumé quotidien dans la transaction de chaque événement, compaction (jour en cours jamais compacté), compaction quotidienne au chargement, `getDailySummaries`, `localDayKey` ; C5 ; horloge fixée dans `record.test.js` ; 15 tests | — |
+| 2026-10-01 | 1 · 10 | Budget quotidien de nouveautés : `elementsLeavingNew`, comptage par type dans le résumé du jour, `getNewContentBudget` ; base de S10 ; `journal.test.js` adapté (champ `introduced`) ; 13 tests | — |

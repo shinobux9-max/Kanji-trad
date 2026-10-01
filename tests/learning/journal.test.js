@@ -47,7 +47,7 @@ test('jour local de l\'appareil : 23 h 30 UTC le 1er octobre est déjà le 2 oct
 test('résumé vide d\'un jour', () => {
   assert.deepEqual(emptyDailySummary('2026-10-01'), {
     date: '2026-10-01', answers: {}, reviews: { 0: 0, 1: 0, 2: 0, 3: 0 },
-    activitiesCompleted: 0, activitySeconds: 0, sessionMinutes: 0
+    activitiesCompleted: 0, activitySeconds: 0, sessionMinutes: 0, introduced: {}
   });
 });
 

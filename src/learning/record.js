@@ -16,14 +16,16 @@
 //
 // Le journal est compacté une fois par jour, au chargement (journal.js ; 3.8).
 //
-// Ce fichier ne traite pas encore : le budget (tâche 10), la reprise après un échec
-// d'écriture (tâche 11). En cas d'échec du stockage, la promesse est rejetée avec l'erreur du
-// stockage.
+// Le budget quotidien de nouveautés se lit dans le résumé du jour (budget.js ; 4.4).
+//
+// Ce fichier ne traite pas encore la reprise après un échec d'écriture (tâche 11). En cas
+// d'échec du stockage, la promesse est rejetée avec l'erreur du stockage.
 
 import { GUIDED_CONFIG } from '../config.js';
 import { validateEvent } from './events.js';
 import { applyEvent, createEmptyLearningState } from './effects.js';
 import { addToDailySummary, planCompaction } from './journal.js';
+import { elementsLeavingNew, budgetStatus } from './budget.js';
 import { localDayKey } from './dates.js';
 
 // Magasins de l'état en mémoire, chargés au démarrage et écrits par les effets.
@@ -157,9 +159,11 @@ export function createLearning({
             else await tx.put(name, record);
           }
         }
-        // Résumé du jour de l'événement, tenu à jour à chaque événement (3.8).
+        // Résumé du jour de l'événement, tenu à jour à chaque événement (3.8), avec les
+        // éléments qu'il a fait quitter l'état Nouveau (budget, 4.4).
         const day = localDayKey(event.at);
-        await tx.put('daily', addToDailySummary(await tx.get('daily', day), event));
+        const leftNew = elementsLeavingNew(state, result.state, event);
+        await tx.put('daily', addToDailySummary(await tx.get('daily', day), event, leftNew));
         if (hasSession) {
           if (options.session === null || options.session === undefined) {
             await tx.delete('sessions', SESSION_KEY);
@@ -240,6 +244,21 @@ export function createLearning({
      */
     getDailySummaries() {
       return enqueue(() => { requireLoaded(); return store.getAll('daily'); });
+    },
+
+    /**
+     * Budget de nouveautés du jour (jour local de `now`), à revérifier par le moteur à la
+     * composition, à la reprise et avant chaque bloc de nouveauté (4.4, 4.7 ; S10).
+     *
+     * @param {number} dailyNewBudget  réglage « Nouveautés par jour » de l'utilisateur
+     * @returns {Promise<{ date: string, used: number, limit: number, remaining: number }>}
+     */
+    getNewContentBudget(dailyNewBudget) {
+      return enqueue(async () => {
+        requireLoaded();
+        const date = localDayKey(now());
+        return { date, ...budgetStatus(await store.get('daily', date), dailyNewBudget) };
+      });
     },
 
     /** Session en cours enregistrée, ou null. */

@@ -33,7 +33,8 @@ export function emptyDailySummary(date) {
     reviews: { 0: 0, 1: 0, 2: 0, 3: 0 }, // révisions SRS par note (Oublié … Facile)
     activitiesCompleted: 0,   // ACTIVITY_COMPLETED
     activitySeconds: 0,       // durées des activités terminées
-    sessionMinutes: 0         // durées des sessions guidées terminées ou abandonnées
+    sessionMinutes: 0,        // durées des sessions guidées terminées ou abandonnées
+    introduced: {}            // [type] → éléments qui ont quitté Nouveau ce jour (budget, 4.4)
   };
 }
 
@@ -43,10 +44,15 @@ export function emptyDailySummary(date) {
  *
  * @param {object|undefined} summary  résumé actuel du jour de l'événement (absent : vide)
  * @param {object} event              événement validé
+ * @param {{type: string}[]} [leftNew] éléments que cet événement a fait quitter l'état Nouveau
+ *                                     (budget.js, elementsLeavingNew)
  */
-export function addToDailySummary(summary, event) {
+export function addToDailySummary(summary, event, leftNew = []) {
   const next = structuredClone(summary || emptyDailySummary(localDayKey(event.at)));
   const { payload, context } = event;
+
+  next.introduced ??= {};
+  for (const { type } of leftNew) next.introduced[type] = (next.introduced[type] || 0) + 1;
 
   switch (event.type) {
     case 'QUESTION_ANSWERED': {
