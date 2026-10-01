@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Ocha v2 — contrat de stockage sur IndexedDB</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; margin: 2rem; }
+    li.ok::marker { content: '✔ '; color: green; }
+    li.ko::marker { content: '✘ '; color: crimson; }
+    li.ko { color: crimson; white-space: pre-wrap; }
+    #summary { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Contrat de stockage sur IndexedDB</h1>
+  <p>Même suite que la version en mémoire (<code>tests/store/contract-cases.js</code>), plus des
+     vérifications propres à IndexedDB. Chaque cas utilise une base de test neuve, supprimée
+     ensuite : la base <code>ocha</code> de l'app n'est pas touchée.</p>
+  <p id="summary">En cours…</p>
+  <ol id="results"></ol>
+  <script type="module" src="./store-contract.js"></script>
+</body>
+</html>

@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 à 11 faites, tâche 12 à faire.
+tâches 1 à 12 faites, tâche 13 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -31,7 +31,7 @@ bloque `npm test`).
 | 9 | Journal (`src/learning/journal.js`) : résumé quotidien, compaction 30 jours / 5 000 événements | C5 | ✅ fait |
 | 10 | Budget quotidien (`src/learning/budget.js`) : éléments qui quittent Nouveau, tous écrans confondus ; kana et déclarations exclus | nouveautés prises hors mode guidé (base de S10) | ✅ fait |
 | 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, état « en échec », `retry()` | 9.4, avec un stockage qui échoue à la demande | ✅ fait |
-| 12 | IndexedDB (`src/store/indexeddb.js`, `src/store/schema.js`) : base `ocha`, schéma v1, migrations numérotées, `meta` | schéma testé dans Node ; adaptateur vérifié par la page `tests/browser/` | à faire |
+| 12 | IndexedDB (`src/store/indexeddb.js`, `src/store/schema.js`) : base `ocha`, schéma v1, migrations numérotées, `meta` | schéma testé dans Node ; adaptateur vérifié par la page `tests/browser/` | ✅ fait |
 | 13 | Clôture : scénario de bout en bout sur la mémoire, `check-layers`, rapport `docs/rapports/etape1.md` | toute la suite verte | à faire |
 
 ### Étape 0 · Préparation — ✅ terminée
@@ -50,9 +50,10 @@ bloque `npm test`).
 ## Contenu de la branche
 
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
-  mémoire), `src/learning/` (`index.js`, `record.js`, `srs.js`, `state.js`,
+  mémoire, schéma et migrations, IndexedDB), `src/learning/` (`index.js`, `record.js`, `srs.js`, `state.js`,
   `weakness.js`, `events.js`, `effects.js`, `journal.js`, `budget.js`,
-  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (252 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (261 tests dans Node, plus la page
+  `tests/browser/store-contract.html`), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -126,6 +127,10 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Un élément ramené à Nouveau par l'annulation d'une déclaration consomme le budget s'il est ensuite présenté ou évalué : une déclaration n'est pas un apprentissage | `src/learning/budget.js` |
 | 2026-10-01 | Échec d'écriture (9.4) : sur une panne du stockage (`StorageError`), compaction immédiate puis une seule nouvelle tentative ; si elle échoue, l'événement passe au statut `pending` et attend dans une file volatile, en mémoire. L'échec est visible par `getWriteFailure()` (`{ since, kind, message, pendingCount }`, `since` étant le début de l'échec) et `onWriteFailureChange()`. Pendant l'échec, tout événement valide rejoint la file sans être tenté, pour garder l'ordre ; un événement invalide reste rejeté. `retry()` enregistre la file dans l'ordre, s'arrête au premier échec, écarte en le signalant un événement devenu incompatible avec l'état ; l'idempotence évite les doublons. La file est perdue si l'app se ferme : aucune seconde persistance | `src/learning/record.js` |
 | 2026-10-01 | Seule une panne du stockage déclenche 9.4 ; toute autre erreur rejette la promesse, sans compaction ni nouvelle tentative | `src/learning/record.js` |
+| 2026-10-01 | `meta` initial : à la création, la base contient `schemaVersion` et `installationId` (9.2) ; la version en mémoire part des mêmes enregistrements (`initialMetaRecords`), pour qu'un stockage neuf soit identique dans les deux implémentations ; le cas de contrat « stockage neuf » le vérifie | `src/store/schema.js`, `memory.js` |
+| 2026-10-01 | Schéma : les magasins, clés et index restent définis dans `contract.js` ; `schema.js` porte la base `ocha`, `SCHEMA_VERSION` (1) et les migrations numérotées, appliquées à `upgradeneeded` ; un retour en arrière ou une version inconnue du code est refusé | `src/store/schema.js` |
+| 2026-10-01 | Adaptateur IndexedDB, même sémantique que la version en mémoire : vérifications communes de `contract.js` avant tout appel à IndexedDB (mêmes `TypeError`), même file d'exécution (IndexedDB peut faire tourner en parallèle des transactions sur des magasins différents), annulation explicite si `work` échoue ; erreurs traduites en `StorageError` (`QuotaExceededError` → `quota` ; `InvalidStateError`, `UnknownError`, `NotFoundError`, base bloquée ou fermée → `unavailable` ; autres → `aborted`) ; une demande de mise à niveau venue d'un autre onglet ferme la base | `src/store/indexeddb.js` |
+| 2026-10-01 | Vérification de l'adaptateur IndexedDB : la suite de contrat commune (sans les pannes simulées), la persistance après réouverture et C3 de bout en bout sont joués dans le navigateur par `tests/browser/store-contract.html`, servie par `node tests/browser/serve.mjs` (aucune dépendance) | `tests/browser/` |
 | 2026-10-01 | `REVIEW_GRADED` sur un élément sans entrée SRS : la note est sa première évaluation (partie 1 : « question d'exercice ou note SRS »), donc `gradeReview` s'applique aussitôt à partir de l'entrée de départ de l'ancien code, alors que `QUESTION_ANSWERED` crée une entrée à J+1 sans la noter ; date d'introduction et origine `learned` posées si absentes | `src/learning/effects.js` |
 
 ---
@@ -143,6 +148,8 @@ modifier ses parties verrouillées.
   jamais directement par l'interface) sera défini à l'étape 5.
 - **Champ de sens dans `QUESTION_ANSWERED`** : nom fixé par A2-01, ajouté ensuite ; rien
   n'est anticipé à l'étape 1.
+- **Tests navigateur** : la page `tests/browser/store-contract.html` se lance à la main ; elle
+  n'est pas jouée par `npm test`. À relancer après toute modification de `src/store/`.
 - **Export / import** (bouton du bandeau 9.4) : étape 6. L'étape 1 expose l'état d'échec et
   `retry()`.
 - **`fake-indexeddb`** : à reconsidérer seulement si la vérification manuelle de l'adaptateur
@@ -186,3 +193,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 9 | Résumé quotidien dans la transaction de chaque événement, compaction (jour en cours jamais compacté), compaction quotidienne au chargement, `getDailySummaries`, `localDayKey` ; C5 ; horloge fixée dans `record.test.js` ; 15 tests | — |
 | 2026-10-01 | 1 · 10 | Budget quotidien de nouveautés : `elementsLeavingNew`, comptage par type dans le résumé du jour, `getNewContentBudget` ; base de S10 ; `journal.test.js` adapté (champ `introduced`) ; 13 tests | — |
 | 2026-10-01 | 1 · 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, statut `pending`, échec observable, `retry()` dans l'ordre ; trois tests des tâches 8 et 9 adaptés au nouveau comportement ; 16 tests | — |
+| 2026-10-01 | 1 · 12 | IndexedDB : `schema.js` (base `ocha`, version 1, migrations), `indexeddb.js` (même contrat que la mémoire), `meta` initial commun ; page de test navigateur et serveur local ; nouveau cas de contrat (ordre de fin entre magasins différents) ; 9 tests Node, 20 cas navigateur | — |

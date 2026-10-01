@@ -9,16 +9,21 @@
 //                                au moment d'enregistrer (rien n'est écrit) ;
 //   setUnavailable(true|false)   toute opération échoue tant que le stockage est
 //                                indisponible ; les données déjà enregistrées sont conservées.
+//
+// Un stockage neuf contient, comme la base IndexedDB à sa création, les enregistrements
+// `meta` initiaux de schema.js (version du schéma, identifiant d'installation).
 
 import {
   STORE_NAMES, STORAGE_ERROR_KINDS, StorageError,
   assertStoreName, normalizeScope, assertKey, keyOf, indexField, normalizeRange, compareKeys
 } from './contract.js';
+import { initialMetaRecords } from './schema.js';
 
 const DELETED = Symbol('deleted');
 
-export function createMemoryStore() {
+export function createMemoryStore({ randomUUID } = {}) {
   const data = new Map(STORE_NAMES.map((name) => [name, new Map()]));
+  for (const record of initialMetaRecords(randomUUID)) data.get('meta').set(record.key, record);
   const pendingFailures = [];
   let unavailable = false;
   let queue = Promise.resolve();

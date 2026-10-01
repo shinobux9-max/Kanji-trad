@@ -18,6 +18,7 @@
 //   setUnavailable(flag)     stockage indisponible ou non (si canFail)
 
 import { STORE_NAMES, STORE_DEFINITIONS, StorageError } from '../../src/store/contract.js';
+import { SCHEMA_VERSION } from '../../src/store/schema.js';
 
 // ── Vérifications minimales, sans dépendance ────────────────────────────────
 
@@ -58,9 +59,16 @@ async function snapshotAll(store) {
 
 export const STORE_CONTRACT_CASES = [
   {
-    name: 'un stockage neuf est vide dans ses 9 magasins',
+    name: 'un stockage neuf : 8 magasins vides, meta avec la version du schéma et l\'identifiant d\'installation',
     async run({ store }) {
-      for (const name of STORE_NAMES) same(await store.getAll(name), [], `magasin ${name}`);
+      for (const name of STORE_NAMES.filter((n) => n !== 'meta')) {
+        same(await store.getAll(name), [], `magasin ${name}`);
+      }
+      const meta = await store.getAll('meta');
+      same(meta.map((r) => r.key), ['installationId', 'schemaVersion'], 'clés de meta');
+      same((await store.get('meta', 'schemaVersion')).value, SCHEMA_VERSION, 'version du schéma');
+      const { value: installationId } = await store.get('meta', 'installationId');
+      if (typeof installationId !== 'string' || installationId === '') fail('identifiant d\'installation vide');
     }
   },
   {
@@ -241,6 +249,21 @@ export const STORE_CONTRACT_CASES = [
       await Promise.all([increment('1'), increment('2'), increment('3')]);
       same((await store.get('meta', 'compteur')).n, 3, 'aucune écriture perdue');
       same(order, ['1', '2', '3'], 'ordre d\'appel');
+    }
+  },
+  {
+    // Partie 9 · 9.3. IndexedDB peut faire tourner en parallèle deux transactions sur des
+    // magasins différents ; le contrat, lui, les exécute une par une.
+    name: 'des transactions sur des magasins différents se terminent aussi dans l\'ordre d\'appel',
+    async run({ store }) {
+      const done = [];
+      const long = store.transaction(['events'], async (tx) => {
+        for (let i = 0; i < 30; i++) await tx.put('events', { id: `evt_${i}`, at: '2026-10-01T08:00:00.000Z' });
+      }).then(() => done.push('longue'));
+      const short = store.transaction(['elements'], (tx) => tx.put('elements', { id: 'a' }))
+        .then(() => done.push('courte'));
+      await Promise.all([long, short]);
+      same(done, ['longue', 'courte'], 'ordre de fin');
     }
   },
   {
