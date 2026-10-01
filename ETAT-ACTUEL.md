@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâche 1 à faire.
+tâches 1 et 2 faites, tâche 3 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -20,8 +20,8 @@ bloque `npm test`).
 
 | Tâche | Contenu | Tests | État |
 |---|---|---|---|
-| 1 | Contrat de stockage et version en mémoire (`src/store/contract.js`, `src/store/memory.js`) : les 9 magasins de 9.2, transaction multi-magasins tout ou rien, panne déclenchable à la demande | suite de contrat réutilisable, atomicité | à faire |
-| 2 | SRS repris (`src/learning/srs.js`) : `gradeReview` pur et `getDaysOverdue` seulement ; constantes dans `GUIDED_CONFIG.srsAlgorithm` | non-régression : chaque note à chaque répétition, intervalles 1, 3, 8, 20, 50, 125 avec « Bien » | à faire |
+| 1 | Contrat de stockage et version en mémoire (`src/store/contract.js`, `src/store/memory.js`) : les 9 magasins de 9.2, transaction multi-magasins tout ou rien, panne déclenchable à la demande | suite de contrat réutilisable, atomicité | ✅ fait |
+| 2 | SRS repris (`src/learning/srs.js`) : `gradeReview` pur et `getDaysOverdue` seulement ; constantes dans `GUIDED_CONFIG.srsAlgorithm` | non-régression : chaque note à chaque répétition, intervalles 1, 3, 8, 20, 50, 125 avec « Bien » | ✅ fait |
 | 3 | État calculé (`src/learning/state.js`) : `new` → `mastered`, par les règles générales (seuils 21 / 60) | invariants 1.8 ; cohérence `declaredVerificationWindowDays.min ≥ acquiredIntervalDays` | à faire |
 | 4 | Faiblesses (`src/learning/weakness.js`) : échec, réussite, résolution après 3 réussites, réactivation, `computeWeaknessPriority` ; constantes dans `GUIDED_CONFIG.weaknessPriority` | tableau 3.5, priorité identique à l'ancien code | à faire |
 | 5 | Format et validation des événements (`src/learning/events.js`) : 12 types, contexte, références `{ type, id }`, identifiant | rejets et acceptations | à faire |
@@ -49,9 +49,10 @@ bloque `npm test`).
 
 ## Contenu de la branche
 
-- **Nouvelle base** : `src/config.js`, `tools/check-layers.mjs`, `tools/validate-data.mjs`,
-  `tests/tools/` (42 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules
-  ESM). Les autres dossiers de `src/` sont vides pour l'instant.
+- **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
+  mémoire), `src/learning/srs.js`, `tools/check-layers.mjs`, `tools/validate-data.mjs`,
+  `tests/` (87 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
   n'est pas modifiée. Son sort (déplacement ou suppression) sera décidé à l'étape 5, quand la
@@ -103,6 +104,10 @@ modifier ses parties verrouillées.
 
 ## Points ouverts
 
+- **`getDaysOverdue`** (tâche 2) : l'ancien code renvoie une valeur négative avant
+  l'échéance, alors que son commentaire annonce 0. La reprise suit le code (comportement
+  réel, fixé par un test). À confirmer, ou à changer par décision complémentaire ; sans
+  effet aujourd'hui, le seul usage connu (étape 4) ne portant que sur des éléments dus.
 - **Dossiers** : le magasin `folders` existe dans le schéma v1 ; son accès (par `learning`,
   jamais directement par l'interface) sera défini à l'étape 5.
 - **Champ de sens dans `QUESTION_ANSWERED`** : nom fixé par A2-01, ajouté ensuite ; rien
@@ -139,3 +144,5 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 0 · 6 | Nettoyage structurel des données : validation sans erreur (rapport : `docs/rapports/etape0-tache6.md`) | — |
 | 2026-10-01 | — | Addendum A2 : liaison entre l'architecture sémantique A2 et la conception | — |
 | 2026-10-01 | 1 · — | Découpage de l'étape 1 en 13 tâches et arbitrages préalables validés | — |
+| 2026-10-01 | 1 · 1 | Contrat de stockage (9 magasins, transactions tout ou rien, `StorageError`), version en mémoire avec pannes à la demande, suite de contrat réutilisable ; 32 tests | — |
+| 2026-10-01 | 1 · 2 | `gradeReview` et `getDaysOverdue` repris en fonctions pures, constantes dans `GUIDED_CONFIG.srsAlgorithm` ; oracle de l'ancien calcul sur toutes les suites de 7 notes ; 13 tests | — |

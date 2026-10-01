@@ -45,6 +45,32 @@ export const GUIDED_CONFIG = deepFreeze({
 
   firstCheckDelayDays: 1,         // 3.4 · première vérification après une première évaluation
 
+  srsAlgorithm: {                 // 3.4 · calcul de gradeReview, repris À L'IDENTIQUE de
+                                  //       l'ancienne app (décision du 2026-10-01) : ces valeurs
+                                  //       explicitent ses paramètres, elles ne le modifient pas
+    initialEaseFactor: 2.5,       //       facilité d'une entrée sans historique
+    minEaseFactor: 1.3,           //       plancher de la facilité
+    forgotten: {                  //       qualité 0 · Oublié : répétitions remises à 0
+      interval: 1,
+      easePenalty: 0.2
+    },
+    hard: {                       //       qualité 1 · Difficile
+      firstInterval: 1,           //       1re répétition
+      multiplier: 1.2,            //       ensuite : intervalle × 1,2
+      easePenalty: 0.15
+    },
+    good: {                       //       qualité 2 · Bien
+      firstInterval: 1,
+      secondInterval: 3           //       ensuite : intervalle × facilité
+    },
+    easy: {                       //       qualité 3 · Facile
+      firstInterval: 2,
+      secondInterval: 4,
+      multiplier: 1.3,            //       ensuite : intervalle × facilité × 1,3
+      easeBonus: 0.15
+    }
+  },
+
   weaknessResolveStreak: 3,       // 3.5 · réussites d'affilée pour rendre une faiblesse inactive
                                   //       (expérimental)
 
