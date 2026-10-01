@@ -7,10 +7,10 @@ import { applyEvent, createEmptyLearningState } from '../../src/learning/effects
  * Rejoue des événements dans l'ordre. `onStep(before, after, event, changed)` est appelé après
  * chaque événement, pour vérifier une propriété pas à pas.
  */
-export function replay(events, { initial = createEmptyLearningState(), onStep, config } = {}) {
+export function replay(events, { initial = createEmptyLearningState(), onStep, config, deps } = {}) {
   let state = initial;
   for (const event of events) {
-    const { state: next, changed } = applyEvent(state, event, config);
+    const { state: next, changed } = applyEvent(state, event, config, deps);
     if (onStep) onStep(state, next, event, changed);
     state = next;
   }

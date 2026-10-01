@@ -110,3 +110,26 @@ export function checkElementFacts(facts) {
 
   return problems;
 }
+
+// ── Avancement d'une activité (partie 1, 1.1 ; partie 3, 3.7) ──────────────
+//
+// Une activité (leçon, mission, lecture) n'a pas d'état pédagogique, mais un avancement,
+// calculé lui aussi à partir des faits enregistrés (date de premier démarrage, date de
+// première fin).
+
+export const ACTIVITY_STATUSES = Object.freeze({
+  NOT_STARTED: 'not_started',
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed'
+});
+
+/**
+ * @param {object|undefined} record  faits d'avancement ({ startedAt, completedAt })
+ * @returns {string}  'not_started', 'in_progress' ou 'completed'
+ */
+export function computeActivityStatus(record) {
+  if (!record) return ACTIVITY_STATUSES.NOT_STARTED;
+  if (record.completedAt) return ACTIVITY_STATUSES.COMPLETED;
+  if (record.startedAt) return ACTIVITY_STATUSES.IN_PROGRESS;
+  return ACTIVITY_STATUSES.NOT_STARTED;
+}

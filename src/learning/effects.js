@@ -8,13 +8,18 @@
 // de ce qui a changé. L'enregistrement (une transaction) est fait par recordLearningEvent
 // (tâche 8).
 //
-// État d'apprentissage :
+// État d'apprentissage (une clé par magasin de 9.2) :
 //   {
-//     elements:   { [idÉlément]: { id, introducedAt, origin, verified, srs } },
-//     weaknesses: { [idÉlément]: { id, consecutiveFails, totalFails, successStreak,
-//                                  lastFailDate, resolvedAt } }
+//     elements:     { [idÉlément]: { id, introducedAt, origin, verified, srs } },
+//     weaknesses:   { [idÉlément]: { id, consecutiveFails, totalFails, successStreak,
+//                                    lastFailDate, resolvedAt } },
+//     declarations: { [idDéclaration]: { id, at, origin, scope | elements, previous,
+//                                        undoneAt } },
+//     activities:   { [idActivité]: { id, startedAt, completedAt } }
 //   }
-// Les clés sont les identifiants d'éléments (magasins `elements` et `weaknesses`, 9.2).
+// Un élément absent de `elements` est Nouveau. Quand l'annulation d'une déclaration ramène
+// un élément à « aucun fait », son entrée disparaît de `elements` : la liste `changed` le
+// mentionne, et l'enregistrement devra alors la supprimer du magasin.
 //
 // Faits d'un élément (partie 1, 1.4 et 1.7) :
 //   introducedAt   date d'introduction (Découvert et au-delà)
@@ -22,14 +27,14 @@
 //   verified       pour 'declared' et 'tested' seulement : vérification faite
 //   srs            entrée SRS (En cours et au-delà)
 //
-// Cette première partie traite CONTENT_INTRODUCED, QUESTION_ANSWERED et REVIEW_GRADED, ainsi
-// que les événements sans effet sur ces faits (SESSION_…, REINFORCEMENT_TRIGGERED). Les
-// déclarations et l'avancement des activités viennent à la tâche 7.
+// Les 12 types d'événements sont traités ; SESSION_…, ACTIVITY_SKIPPED et
+// REINFORCEMENT_TRIGGERED n'ont aucun effet sur l'état (ils ne servent qu'au journal).
 
 import { GUIDED_CONFIG } from '../config.js';
 import { toDate, addCalendarDays } from './dates.js';
 import { gradeReview, QUALITY } from './srs.js';
 import { applyWeaknessFailure, applyWeaknessSuccess } from './weakness.js';
+import { computeState, STATES } from './state.js';
 
 export const ORIGINS = Object.freeze({
   LEARNED: 'learned',   // appris dans Ocha
@@ -37,27 +42,42 @@ export const ORIGINS = Object.freeze({
   TESTED: 'tested'      // déduit du test de positionnement
 });
 
+// Niveaux d'une déclaration, du plus bas au plus haut : déclarer un niveau déclare aussi
+// tous ceux qui le précèdent, kana compris (partie 1, 1.5).
+export const DECLARATION_SCOPE_ORDER = Object.freeze(['kana', 'n5', 'n4', 'n3', 'n2', 'n1']);
+
 /** État d'apprentissage vide : tout élément est Nouveau. */
 export function createEmptyLearningState() {
-  return { elements: {}, weaknesses: {} };
+  return { elements: {}, weaknesses: {}, declarations: {}, activities: {} };
 }
 
 // ── Petits outils de copie ──────────────────────────────────────────────────
 
 // Modifications accumulées pendant le traitement d'un événement ; l'état reçu n'est jamais
 // modifié.
+const STORES = ['elements', 'weaknesses', 'declarations', 'activities'];
+
 function draft(state) {
-  const elements = { ...state.elements };
-  const weaknesses = { ...state.weaknesses };
-  const changed = { elements: new Set(), weaknesses: new Set() };
+  const copies = Object.fromEntries(STORES.map((k) => [k, { ...(state[k] || {}) }]));
+  const changed = Object.fromEntries(STORES.map((k) => [k, new Set()]));
+  const getter = (k) => (id) => copies[k][id];
+  const setter = (k) => (id, value) => {
+    if (value === undefined) delete copies[k][id];
+    else copies[k][id] = value;
+    changed[k].add(id);
+  };
   return {
-    getElement: (id) => elements[id],
-    setElement(id, facts) { elements[id] = facts; changed.elements.add(id); },
-    getWeakness: (id) => weaknesses[id],
-    setWeakness(id, record) { weaknesses[id] = record; changed.weaknesses.add(id); },
+    getElement: getter('elements'),
+    setElement: setter('elements'),
+    getWeakness: getter('weaknesses'),
+    setWeakness: setter('weaknesses'),
+    getDeclaration: getter('declarations'),
+    setDeclaration: setter('declarations'),
+    getActivity: getter('activities'),
+    setActivity: setter('activities'),
     finish: () => ({
-      state: { ...state, elements, weaknesses },
-      changed: { elements: [...changed.elements], weaknesses: [...changed.weaknesses] }
+      state: { ...state, ...copies },
+      changed: Object.fromEntries(STORES.map((k) => [k, [...changed[k]]]))
     })
   };
 }
@@ -140,11 +160,154 @@ function reviewGraded(d, event, at, config) {
   else if (quality === QUALITY.GOOD || quality === QUALITY.EASY) updateWeakness(d, id, false, at);
 }
 
+// ── Déclarations (partie 1, 1.3 et 1.5 ; partie 3, 3.4) ─────────────────────
+
+// Empreinte stable d'un identifiant (FNV-1a 32 bits sur ses unités UTF-16).
+function stableHash(text) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+
+/**
+ * Délai de la première vérification d'un élément déclaré : entre min et max jours (bornes
+ * incluses), réparti selon l'empreinte de l'identifiant. Toujours le même pour un même
+ * élément (partie 1, 1.3).
+ */
+export function declarationDelayDays(elementId, config = GUIDED_CONFIG) {
+  const { min, max } = config.declaredVerificationWindowDays;
+  return min + (stableHash(elementId) % (max - min + 1));
+}
+
+// Faits d'un élément après une déclaration (décision du 2026-10-01) : intervalle = délai de
+// vérification, 3 répétitions, facilité initiale, aucune date de dernière révision.
+function declaredFacts(previous, id, at, origin, config) {
+  const delay = declarationDelayDays(id, config);
+  return {
+    ...previous,
+    id,
+    introducedAt: (previous && previous.introducedAt) || at.toISOString(),
+    origin,
+    verified: false,
+    srs: {
+      interval: delay,
+      easeFactor: config.srsAlgorithm.initialEaseFactor,
+      repetitions: 3,
+      lastReviewDate: null,
+      nextReviewDate: addCalendarDays(at, delay).toISOString()
+    }
+  };
+}
+
+const isKnown = (facts) => {
+  const s = computeState(facts);
+  return s === STATES.ACQUIRED || s === STATES.MASTERED;
+};
+
+function declarationTargets(event, deps) {
+  const { elements, scope } = event.payload;
+  if (elements) return elements;
+  if (typeof deps.elementsOfScope !== 'function') {
+    throw new Error('déclaration par niveau : fonction elementsOfScope non fournie');
+  }
+  const upTo = DECLARATION_SCOPE_ORDER.indexOf(scope);
+  return DECLARATION_SCOPE_ORDER.slice(0, upTo + 1).flatMap((level) => deps.elementsOfScope(level));
+}
+
+function knowledgeDeclared(d, event, at, config, deps) {
+  const { declarationId, origin, scope, elements } = event.payload;
+  if (d.getDeclaration(declarationId)) {
+    throw new Error(`déclaration déjà enregistrée : ${declarationId}`);
+  }
+  const previous = {};
+  for (const { id } of declarationTargets(event, deps)) {
+    if (Object.hasOwn(previous, id)) continue;
+    const facts = d.getElement(id);
+    // Une déclaration ne fait jamais reculer : Acquis et Maîtrisé ne sont pas touchés.
+    if (isKnown(facts)) continue;
+    previous[id] = facts === undefined ? null : facts;
+    d.setElement(id, declaredFacts(facts, id, at, origin, config));
+  }
+  // Trace pour l'annulation ; le niveau choisi est conservé même s'il n'a aucun contenu.
+  d.setDeclaration(declarationId, {
+    id: declarationId,
+    at: at.toISOString(),
+    origin,
+    ...(scope !== undefined ? { scope } : { elements }),
+    previous,
+    undoneAt: null
+  });
+}
+
+// Égalité de valeur, indépendante de l'ordre des champs.
+function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map((k) => [k, canonical(value[k])]));
+  }
+  return value;
+}
+function sameFacts(a, b) {
+  return JSON.stringify(canonical(a)) === JSON.stringify(canonical(b));
+}
+
+function knowledgeDeclarationUndone(d, event, at, config) {
+  const { declarationId } = event.payload;
+  const declaration = d.getDeclaration(declarationId);
+  if (!declaration) throw new Error(`déclaration inconnue : ${declarationId}`);
+  if (declaration.undoneAt) return; // déjà annulée : rien à faire
+
+  const declaredAt = toDate(declaration.at);
+  for (const [id, before] of Object.entries(declaration.previous)) {
+    // On ne rétablit un élément que s'il est encore exactement tel que la déclaration l'a
+    // laissé. Un élément révisé depuis (vérifié) ou modifié par une autre déclaration garde
+    // ses faits actuels : ses révisions réelles priment (3.4).
+    const written = declaredFacts(before === null ? undefined : before, id, declaredAt,
+      declaration.origin, config);
+    if (!sameFacts(d.getElement(id), written)) continue;
+    d.setElement(id, before === null ? undefined : before);
+  }
+  d.setDeclaration(declarationId, { ...declaration, undoneAt: at.toISOString() });
+}
+
+// ── Avancement des activités (partie 3, 3.7) ────────────────────────────────
+//
+// Faits : date du premier démarrage, date de la première fin. L'avancement (non commencée,
+// en cours, terminée) se calcule à partir d'eux (state.js). L'étape atteinte d'une mission
+// en cours est enregistrée avec la session (magasin `sessions`), pas ici.
+
+function activityStarted(d, event, at) {
+  const { activityId } = event.payload;
+  const record = d.getActivity(activityId);
+  if (record && record.startedAt) return;
+  d.setActivity(activityId, { completedAt: null, ...record, id: activityId, startedAt: at.toISOString() });
+}
+
+function activityCompleted(d, event, at) {
+  const { activityId } = event.payload;
+  const record = d.getActivity(activityId);
+  if (record && record.completedAt) return;
+  d.setActivity(activityId, {
+    id: activityId,
+    startedAt: (record && record.startedAt) || at.toISOString(),
+    completedAt: at.toISOString()
+  });
+}
+
 const HANDLERS = {
   CONTENT_INTRODUCED: contentIntroduced,
   QUESTION_ANSWERED: questionAnswered,
   REVIEW_GRADED: reviewGraded,
-  // Sans effet sur le suivi, le SRS et les faiblesses (3.4).
+  KNOWLEDGE_DECLARED: knowledgeDeclared,
+  KNOWLEDGE_DECLARATION_UNDONE: knowledgeDeclarationUndone,
+  ACTIVITY_STARTED: activityStarted,
+  ACTIVITY_COMPLETED: activityCompleted,
+  // Sans effet sur l'état : ils ne servent qu'au journal (3.4 ; une étape passée compte pour
+  // la rotation du moteur, partie 4, 4.7, qui la lit dans le journal).
+  ACTIVITY_SKIPPED: () => {},
   SESSION_STARTED: () => {},
   SESSION_COMPLETED: () => {},
   SESSION_ABANDONED: () => {},
@@ -157,15 +320,19 @@ const HANDLERS = {
  * @param {object} state   état actuel (non modifié)
  * @param {object} event   événement validé par validateEvent
  * @param {object} config  configuration (GUIDED_CONFIG par défaut)
- * @returns {{ state: object, changed: { elements: string[], weaknesses: string[] } }}
+ * @param {object} deps
+ * @param {(level: string) => {type: string, id: string}[]} [deps.elementsOfScope]
+ *        éléments d'UN niveau (`kana`, `n5`…), pour une déclaration par niveau. Fournie par
+ *        le contenu (étape 2) ; un faux catalogue dans les tests.
+ * @returns {{ state: object, changed: { elements: string[], weaknesses: string[],
+ *             declarations: string[], activities: string[] } }}
+ *          une erreur est levée si l'événement est incompatible avec l'état (déclaration
+ *          inconnue à annuler, identifiant de déclaration déjà utilisé)
  */
-export function applyEvent(state, event, config = GUIDED_CONFIG) {
+export function applyEvent(state, event, config = GUIDED_CONFIG, deps = {}) {
   const handler = HANDLERS[event.type];
-  if (!handler) {
-    // ACTIVITY_… et KNOWLEDGE_… : tâche 7.
-    throw new Error(`effets de ${event.type} non encore implémentés`);
-  }
+  if (!handler) throw new Error(`type d'événement non géré : ${event.type}`);
   const d = draft(state);
-  handler(d, event, toDate(event.at), config);
+  handler(d, event, toDate(event.at), config, deps);
   return d.finish();
 }

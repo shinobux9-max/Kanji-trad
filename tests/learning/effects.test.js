@@ -40,6 +40,7 @@ const graded = (ref, quality, at = day(0), context = REVIEW) =>
   ev('REVIEW_GRADED', at, { element: ref, quality }, context);
 
 const stateOf = (s, ref) => computeState(s.elements[ref.id]);
+const NOTHING = { elements: [], weaknesses: [], declarations: [], activities: [] };
 
 function deepFreeze(o) {
   if (o && typeof o === 'object') { Object.values(o).forEach(deepFreeze); Object.freeze(o); }
@@ -59,7 +60,7 @@ test('une seconde présentation ne change rien', () => {
   const first = replay([introduced(R.wa, day(0))]);
   const { state, changed } = applyEvent(first, introduced(R.wa, day(3)));
   assert.deepEqual(state.elements, first.elements);
-  assert.deepEqual(changed, { elements: [], weaknesses: [] });
+  assert.deepEqual(changed, NOTHING);
 });
 
 test('première évaluation juste : → En cours, origine learned, SRS créé à J+1, pas de faiblesse', () => {
@@ -120,7 +121,7 @@ test('test de positionnement : réponses sans aucun effet (3.4 ; 3.10, invariant
   const placement = { mode: 'free', source: 'onboarding', activityType: 'placement', exerciseType: 'qcm' };
   const { state, changed } = applyEvent(createEmptyLearningState(), answered([R.word, R.wa], false, day(0), placement));
   assert.deepEqual(state, createEmptyLearningState());
-  assert.deepEqual(changed, { elements: [], weaknesses: [] });
+  assert.deepEqual(changed, NOTHING);
 });
 
 test('une question à plusieurs cibles fait évoluer chacune', () => {
@@ -164,21 +165,20 @@ test('événements sans effet : sessions et renforcement (3.4)', () => {
   for (const e of [session, reinforcement]) {
     const { state, changed } = applyEvent(start, e);
     assert.deepEqual(state, start);
-    assert.deepEqual(changed, { elements: [], weaknesses: [] });
+    assert.deepEqual(changed, NOTHING);
   }
 });
 
-test('ACTIVITY_… et KNOWLEDGE_… : refusés tant que la tâche 7 ne les traite pas', () => {
-  const e = ev('KNOWLEDGE_DECLARED', day(0), { scope: 'n5', origin: 'declared', declarationId: 'd1' },
-    { mode: 'free', source: 'onboarding', activityType: 'declaration' });
-  assert.throws(() => applyEvent(createEmptyLearningState(), e), /non encore implémentés/);
+test('un type d\'événement inconnu est refusé explicitement', () => {
+  const e = { ...introduced(R.wa), type: 'CARD_FLIPPED' };
+  assert.throws(() => applyEvent(createEmptyLearningState(), e), /non géré/);
 });
 
 test('fonction pure : l\'état reçu n\'est pas modifié ; « changed » liste ce qui a bougé', () => {
   const start = deepFreeze(replay([answered(R.word, false, day(0))]));
   const { state, changed } = applyEvent(start, graded(R.word, 2, day(1)));
   assert.notEqual(state, start);
-  assert.deepEqual(changed, { elements: ['n5_v_117'], weaknesses: ['n5_v_117'] });
+  assert.deepEqual(changed, { ...NOTHING, elements: ['n5_v_117'], weaknesses: ['n5_v_117'] });
   assert.equal(start.elements[R.word.id].srs.repetitions, 0);
 });
 
@@ -216,7 +216,7 @@ test('C1 : une même réponse a le même effet depuis le mode guidé, Pratiquer,
 test('C4 : REVIEW_GRADED porte à lui seul SRS et faiblesse ; une carte ratée compte un seul échec', () => {
   const start = replay([answered(R.mizu, true, day(0))]);
   const { state, changed } = applyEvent(start, graded(R.mizu, 0, day(1)));
-  assert.deepEqual(changed, { elements: ['水'], weaknesses: ['水'] });
+  assert.deepEqual(changed, { ...NOTHING, elements: ['水'], weaknesses: ['水'] });
   assert.equal(state.weaknesses[R.mizu.id].consecutiveFails, 1);
   assert.equal(state.weaknesses[R.mizu.id].totalFails, 1);
   assert.equal(state.elements[R.mizu.id].srs.repetitions, 0);

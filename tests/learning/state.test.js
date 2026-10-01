@@ -126,3 +126,13 @@ test('checkElementFacts et computeState ne modifient pas l\'entrée', () => {
 test('GUIDED_CONFIG est utilisé par défaut', () => {
   assert.equal(computeState(facts(GUIDED_CONFIG.stateThresholds.acquiredIntervalDays)), 'acquired');
 });
+
+// Partie 3 · 3.7
+test('avancement d\'une activité : non commencée, en cours, terminée', async () => {
+  const { computeActivityStatus, ACTIVITY_STATUSES } = await import('../../src/learning/state.js');
+  assert.deepEqual({ ...ACTIVITY_STATUSES },
+    { NOT_STARTED: 'not_started', IN_PROGRESS: 'in_progress', COMPLETED: 'completed' });
+  assert.equal(computeActivityStatus(undefined), 'not_started');
+  assert.equal(computeActivityStatus({ id: 'n5_m_1', startedAt: T0, completedAt: null }), 'in_progress');
+  assert.equal(computeActivityStatus({ id: 'n5_m_1', startedAt: T0, completedAt: T0 }), 'completed');
+});
