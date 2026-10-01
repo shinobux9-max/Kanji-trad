@@ -24,8 +24,11 @@ const elementsOfScope = (level) => CATALOG[level];
 
 async function setup(store = createMemoryStore()) {
   const warnings = [];
+  // Horloge fixée : la compaction faite au chargement ne dépend pas du jour où l'on lance les
+  // tests.
   const learning = createLearning({ store, elementExists, elementsOfScope,
-    warn: (message, detail) => warnings.push({ message, detail }) });
+    warn: (message, detail) => warnings.push({ message, detail }),
+    now: () => new Date(Date.UTC(2026, 9, 1, 8)) });
   await learning.load();
   return { store, learning, warnings };
 }

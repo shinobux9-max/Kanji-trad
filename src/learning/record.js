@@ -7,24 +7,29 @@
 //   recordLearningEvent(event, { session })
 //     1. valider     events.js (type, contexte, charge utile, éléments existants)
 //     2. calculer    effects.js, sur l'état en mémoire, sans le modifier
-//     3. persister   UNE transaction : événement + faits modifiés + session, ensemble ;
-//                    un événement déjà enregistré (même identifiant) n'a aucun effet
+//     3. persister   UNE transaction : événement + faits modifiés + résumé du jour + session,
+//                    ensemble ; un événement déjà enregistré (même identifiant) n'a aucun effet
 //     4. réussite    le nouvel état remplace l'état en mémoire ; les abonnés sont notifiés
 //        échec       l'état en mémoire est inchangé
 //
 // Les événements sont traités un par un, dans l'ordre d'appel (file interne).
 //
-// Ce fichier ne traite pas encore : le résumé quotidien et la compaction du journal
-// (tâche 9), le budget (tâche 10), la reprise après un échec d'écriture (tâche 11). En cas
-// d'échec du stockage, la promesse est rejetée avec l'erreur du stockage.
+// Le journal est compacté une fois par jour, au chargement (journal.js ; 3.8).
+//
+// Ce fichier ne traite pas encore : le budget (tâche 10), la reprise après un échec
+// d'écriture (tâche 11). En cas d'échec du stockage, la promesse est rejetée avec l'erreur du
+// stockage.
 
 import { GUIDED_CONFIG } from '../config.js';
 import { validateEvent } from './events.js';
 import { applyEvent, createEmptyLearningState } from './effects.js';
+import { addToDailySummary, planCompaction } from './journal.js';
+import { localDayKey } from './dates.js';
 
 // Magasins de l'état en mémoire, chargés au démarrage et écrits par les effets.
 const FACT_STORES = ['elements', 'weaknesses', 'declarations', 'activities'];
 const SESSION_KEY = 'current';
+const LAST_COMPACTION_KEY = 'lastCompaction';
 
 export const RECORD_STATUS = Object.freeze({
   RECORDED: 'recorded',   // enregistré, effets appliqués
@@ -50,13 +55,16 @@ function deepFreeze(value) {
  * @param {(level) => object[]} [options.elementsOfScope]  éléments d'un niveau (contenu)
  * @param {(message: string, detail: any) => void} [options.warn]  signalement d'un événement
  *                                           rejeté (console.warn par défaut, 3.9)
+ * @param {() => Date} [options.now]         horloge, pour la compaction seulement (les effets
+ *                                           d'un événement utilisent sa date `at`)
  */
 export function createLearning({
   store,
   config = GUIDED_CONFIG,
   elementExists,
   elementsOfScope,
-  warn = (message, detail) => console.warn(message, detail)
+  warn = (message, detail) => console.warn(message, detail),
+  now = () => new Date()
 }) {
   if (!store) throw new TypeError('createLearning : stockage requis');
 
@@ -76,7 +84,23 @@ export function createLearning({
     if (!state) throw new Error('état d\'apprentissage non chargé : appeler load() d\'abord');
   }
 
-  /** Charge l'état depuis le stockage (démarrage, 9.5). */
+  // Compaction du journal (3.8) : une transaction sur le détail et la date de compaction.
+  async function compact() {
+    const at = now();
+    return store.transaction(['events', 'meta'], async (tx) => {
+      const events = await tx.getAllByIndex('events', 'at');
+      const toDelete = planCompaction(events, at, config);
+      for (const id of toDelete) await tx.delete('events', id);
+      await tx.put('meta', { key: LAST_COMPACTION_KEY, value: at.toISOString() });
+      return { deleted: toDelete.length };
+    });
+  }
+
+  /**
+   * Charge l'état depuis le stockage (démarrage, 9.5), puis compacte le journal si ce n'est
+   * pas encore fait aujourd'hui. Un échec de la compaction est signalé sans bloquer le
+   * chargement : l'état ne dépend pas du journal.
+   */
   function load() {
     return enqueue(async () => {
       const loaded = createEmptyLearningState();
@@ -86,6 +110,15 @@ export function createLearning({
       const current = await store.get('sessions', SESSION_KEY);
       state = deepFreeze(loaded);
       session = current ? deepFreeze(current.value) : null;
+
+      const last = await store.get('meta', LAST_COMPACTION_KEY);
+      if (!last || localDayKey(last.value) !== localDayKey(now())) {
+        try {
+          await compact();
+        } catch (error) {
+          warn('Compaction du journal impossible', error);
+        }
+      }
     });
   }
 
@@ -102,7 +135,7 @@ export function createLearning({
     let rejection = null;
 
     const outcome = await store.transaction(
-      ['events', ...FACT_STORES, 'sessions'],
+      ['events', ...FACT_STORES, 'daily', 'sessions'],
       async (tx) => {
         // Idempotence : un même événement n'a d'effet qu'une fois (9.3).
         if (await tx.get('events', event.id)) return { duplicate: true };
@@ -124,6 +157,9 @@ export function createLearning({
             else await tx.put(name, record);
           }
         }
+        // Résumé du jour de l'événement, tenu à jour à chaque événement (3.8).
+        const day = localDayKey(event.at);
+        await tx.put('daily', addToDailySummary(await tx.get('daily', day), event));
         if (hasSession) {
           if (options.session === null || options.session === undefined) {
             await tx.delete('sessions', SESSION_KEY);
@@ -186,6 +222,24 @@ export function createLearning({
     getSnapshot() {
       requireLoaded();
       return state;
+    },
+
+    /**
+     * Compacte le journal maintenant (3.8). Utilisée aussi, à la tâche 11, pour libérer de
+     * la place après un échec d'écriture.
+     * @returns {Promise<{deleted: number}>}
+     */
+    compactJournal() {
+      return enqueue(() => { requireLoaded(); return compact(); });
+    },
+
+    /**
+     * Résumés quotidiens enregistrés, du plus ancien au plus récent (régularité,
+     * statistiques). Lecture seule.
+     * @returns {Promise<object[]>}
+     */
+    getDailySummaries() {
+      return enqueue(() => { requireLoaded(); return store.getAll('daily'); });
     },
 
     /** Session en cours enregistrée, ou null. */

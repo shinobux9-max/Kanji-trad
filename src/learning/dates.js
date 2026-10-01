@@ -29,3 +29,14 @@ export function addCalendarDays(date, days) {
   result.setDate(result.getDate() + days);
   return result;
 }
+
+/**
+ * Jour LOCAL d'une date, au format AAAA-MM-JJ (décision du 2026-10-01 : la frontière du jour
+ * est celle de l'appareil). Sert de clé au résumé quotidien et au budget.
+ * @param {string|Date} value
+ */
+export function localDayKey(value) {
+  const date = toDate(value);
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
