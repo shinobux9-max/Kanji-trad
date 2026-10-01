@@ -1281,7 +1281,7 @@
     },
     {
       "japanese": "あした<ruby>会社<rt>かいしゃ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きますか。",
-      "romaji": "Ashita gaisha e ikimasu ka.",
+      "romaji": "Ashita kaisha e ikimasu ka.",
       "french": "Vas-tu au travail demain ?",
       "highlight": [
         "か",

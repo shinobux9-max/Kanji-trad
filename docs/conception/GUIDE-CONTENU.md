@@ -231,6 +231,7 @@ Quatre types : `histoire`, `dialogue`, `carnet`, `lettre`.
   "theme": "quotidien",
   "place": null,
   "requires": { "grammar": ["n5_g_8"], "vocab": ["n5_v_333"] },
+  "teaches": { "vocab": ["n5_v_45"] },
   "characters": [{ "id": "yuki", "name": "Yuki", "name_ja": "ゆき", "relation": "narration" }],
   "blocks": [],
   "questions": []
@@ -254,12 +255,18 @@ dialogue selon la relation des personnages, carnet en `ecrit`, lettre en `poli` 
 **`requires`** liste la grammaire et le vocabulaire nécessaires pour comprendre le texte.
 L'application s'en sert pour proposer une lecture adaptée à ce que l'utilisateur connaît.
 
+**`teaches`** (optionnel) liste les éléments que la lecture présente comme nouveaux, par
+exemple un mot glosé. Un élément ne peut pas être à la fois dans `requires` et `teaches`,
+et `teaches` contient 8 éléments au plus (partie 2 du document de conception).
+
 **`place`** : identifiant d'un lieu d'Explorer si la lecture s'y passe, sinon `null`.
 
 **Questions de compréhension :**
 
 ```json
 {
+  "id": "n5_l_1_q1",
+  "target": { "vocab": ["n5_v_97"] },
   "prompt": "Que mange Yuki le matin ?",
   "choices": ["Du riz", "Du pain", "Rien"],
   "answer": 1,
@@ -268,6 +275,9 @@ L'application s'en sert pour proposer une lecture adaptée à ce que l'utilisate
 }
 ```
 
+`id` est l'identifiant de la question : identifiant de la lecture, puis `_q` et un numéro.
+`target` est ce que la question vérifie, groupé par type comme `requires` ; ce doit être un
+élément de `requires` ou de `teaches` de la lecture.
 `answer` est l'indice de la bonne réponse (0 = première). `line_ref` indique où se
 trouve la réponse : `[bloc, ligne]` pour un paragraphe, `[bloc]` pour une réplique.
 Une à trois questions par lecture ; les mauvaises réponses doivent être plausibles.
@@ -297,7 +307,8 @@ Une à trois questions par lecture ; les mauvaises réponses doivent être plaus
 | `title`, `situation`, `goals` | Ce que l'utilisateur doit accomplir, en français |
 | `estimated_minutes` | Durée estimée |
 | `characters` | Avec `relation` (`client`, `personnel`…) ; l'utilisateur a `"is_user": true` |
-| `vocab`, `expressions`, `grammar` | Identifiants des éléments travaillés |
+| `requires` | Éléments que l'utilisateur doit déjà connaître, groupés par type (`grammar`, `vocab`, `kanji`, `expression`) ; jamais de kana |
+| `teaches` | Éléments que la mission enseigne (8 au plus), jamais aussi dans `requires` |
 | `dialogue` | Liste de phrases avec `speaker` |
 | `exercises` | Voir ci-dessous |
 
@@ -305,6 +316,8 @@ Une à trois questions par lecture ; les mauvaises réponses doivent être plaus
 
 ```json
 {
+  "id": "n5_m_1_q1",
+  "target": { "expression": ["ex_5"] },
   "type": "choice",
   "skill": "naturel",
   "prompt": "Le caissier demande 「レジ袋はご利用ですか」. Tu n'en veux pas. Quelle réponse sonne la plus naturelle ?",
@@ -320,6 +333,8 @@ Une à trois questions par lecture ; les mauvaises réponses doivent être plaus
 
 ```json
 {
+  "id": "n5_m_1_q3",
+  "target": { "expression": ["ex_6"] },
   "type": "fill",
   "skill": "vocabulaire",
   "prompt": "Complète la réponse pour accepter.",
@@ -332,6 +347,9 @@ Une à trois questions par lecture ; les mauvaises réponses doivent être plaus
 }
 ```
 
+- `id` : identifiant de la mission, puis `_q` et un numéro (`n5_m_1_q1`).
+- `target` : ce que l'exercice vérifie, groupé par type ; doit figurer dans `requires` ou
+  `teaches` de la mission.
 - `type` : `choice` (QCM) ou `fill` (texte à trous), seulement ces deux-là.
 - `skill` : `naturel` (choisir la phrase naturelle), `registre` (qui dit quoi, à qui),
   `vocabulaire`, `comprehension`.
@@ -372,6 +390,10 @@ Avant de rendre le contenu, vérifier :
       (ね, よ, contractions, réactions).
 - [ ] Au moins un `sounds_textbook` quand une tournure scolaire est tentante, avec son
       `natural_romaji`.
+- [ ] Chaque question a un `id` et une `target`, et sa cible figure dans `requires` ou
+      `teaches` de l'activité.
+- [ ] Aucun élément n'est à la fois dans `requires` et `teaches`.
+- [ ] `node tools/validate-data.mjs` ne signale aucune erreur.
 - [ ] Le contenu respecte le niveau demandé.
 - [ ] Les mots manquants sont listés dans « À AJOUTER ».
 

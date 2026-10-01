@@ -220,5 +220,90 @@
     },
     "related": [],
     "examples": []
+  },
+  {
+    "id": "ex_5",
+    "level": "N5",
+    "meaning_fr": "Non merci, ça ira",
+    "situation": "refuser poliment une proposition",
+    "category": "politesse",
+    "variants": [
+      {
+        "register": "familier",
+        "japanese": "<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>。",
+        "romaji": "daijoubu.",
+        "audience": "amis, famille"
+      },
+      {
+        "register": "poli",
+        "japanese": "いえ、<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>です。",
+        "romaji": "ie, daijoubu desu.",
+        "audience": "commerçants, inconnus, par défaut"
+      }
+    ],
+    "said_by": "tous",
+    "user_says": true,
+    "responses": [],
+    "note": "Refus doux et très courant, par exemple quand on vous propose un sac ou une serviette.",
+    "sounds_textbook": [
+      {
+        "japanese": "いいえ、いりません。",
+        "romaji": "iie, irimasen.",
+        "why": "Correct, mais sec : « je n'en veux pas ».",
+        "natural": "いえ、大丈夫です。",
+        "natural_romaji": "ie, daijoubu desu."
+      }
+    ],
+    "places": [
+      "konbini",
+      "restaurant"
+    ],
+    "refs": {
+      "vocab": [],
+      "grammar": [
+        "n5_g_1"
+      ]
+    },
+    "related": [],
+    "examples": []
+  },
+  {
+    "id": "ex_6",
+    "level": "N5",
+    "meaning_fr": "S'il vous plaît (pour accepter ou demander)",
+    "situation": "accepter une proposition, faire une demande",
+    "category": "politesse",
+    "variants": [
+      {
+        "register": "familier",
+        "japanese": "お<ruby>願<rt>ねが</rt></ruby>い。",
+        "romaji": "onegai.",
+        "audience": "amis, famille"
+      },
+      {
+        "register": "poli",
+        "japanese": "お<ruby>願<rt>ねが</rt></ruby>いします。",
+        "romaji": "onegai shimasu.",
+        "audience": "tout le monde, par défaut"
+      }
+    ],
+    "said_by": "tous",
+    "user_says": true,
+    "responses": [],
+    "note": "S'emploie seul pour accepter (« oui, s'il vous plaît »), ou après un objet pour le demander.",
+    "sounds_textbook": [],
+    "places": [
+      "konbini",
+      "restaurant",
+      "hotel"
+    ],
+    "refs": {
+      "vocab": [],
+      "grammar": []
+    },
+    "related": [
+      "ex_5"
+    ],
+    "examples": []
   }
 ]

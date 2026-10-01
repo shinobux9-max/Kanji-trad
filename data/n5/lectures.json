@@ -111,6 +111,7 @@
     ],
     "questions": [
       {
+        "id": "n5_l_1_q1",
         "prompt": "Que mange Yuki le matin ?",
         "choices": [
           "Du riz",
@@ -122,7 +123,12 @@
         "line_ref": [
           0,
           1
-        ]
+        ],
+        "target": {
+          "vocab": [
+            "n5_v_97"
+          ]
+        }
       }
     ]
   },
@@ -253,6 +259,7 @@
     ],
     "questions": [
       {
+        "id": "n5_l_2_q1",
         "prompt": "Que propose Ken ?",
         "choices": [
           "D'aller au parc",
@@ -263,7 +270,12 @@
         "explanation": "映画、見に行かない？ = on va voir un film ?",
         "line_ref": [
           2
-        ]
+        ],
+        "target": {
+          "vocab": [
+            "n5_v_196"
+          ]
+        }
       }
     ]
   },
@@ -368,6 +380,7 @@
     ],
     "questions": [
       {
+        "id": "n5_l_3_q1",
         "prompt": "Où l'auteur a-t-il vu son ami ?",
         "choices": [
           "À la gare",
@@ -379,7 +392,12 @@
         "line_ref": [
           0,
           0
-        ]
+        ],
+        "target": {
+          "vocab": [
+            "n5_v_215"
+          ]
+        }
       }
     ]
   },
@@ -502,6 +520,7 @@
     ],
     "questions": [
       {
+        "id": "n5_l_4_q1",
         "prompt": "Quel temps fait-il chez Hana ?",
         "choices": [
           "Il pleut",
@@ -513,7 +532,12 @@
         "line_ref": [
           1,
           1
-        ]
+        ],
+        "target": {
+          "vocab": [
+            "n5_v_269"
+          ]
+        }
       }
     ]
   },
@@ -536,13 +560,17 @@
         "n5_g_18"
       ],
       "vocab": [
-        "n5_v_45",
         "n5_v_105",
         "n5_v_187",
         "n5_v_401",
         "n5_v_85",
         "n5_v_97",
         "n5_v_185"
+      ]
+    },
+    "teaches": {
+      "vocab": [
+        "n5_v_45"
       ]
     },
     "characters": [
@@ -680,6 +708,7 @@
     ],
     "questions": [
       {
+        "id": "n5_l_5_q1",
         "prompt": "Que prend Yuki ?",
         "choices": [
           "Des onigiri",
@@ -690,9 +719,15 @@
         "explanation": "わたしはパンにする = moi, je prends du pain.",
         "line_ref": [
           3
-        ]
+        ],
+        "target": {
+          "vocab": [
+            "n5_v_97"
+          ]
+        }
       },
       {
+        "id": "n5_l_5_q2",
         "prompt": "Pourquoi Yuki choisit-elle du pain ?",
         "choices": [
           "C'est bon",
@@ -703,7 +738,12 @@
         "explanation": "安いから = parce que ce n'est pas cher.",
         "line_ref": [
           3
-        ]
+        ],
+        "target": {
+          "vocab": [
+            "n5_v_185"
+          ]
+        }
       }
     ]
   }

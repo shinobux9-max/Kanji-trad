@@ -61,11 +61,14 @@ pour qu'un seul rendu applique partout les réglages furigana / romaji / traduct
 `paragraph` (avec `lines`), `line` (une réplique), `entry` (entrée datée d'un carnet),
 `header` et `closing` (lettre). `requires` liste la grammaire et le vocabulaire
 nécessaires : c'est ce qui permettra au mode guidé de choisir une lecture adaptée.
+`teaches` (optionnel) liste les éléments que la lecture enseigne. Chaque question a un `id`
+et une `target`.
 
 ## Missions
 
-Situation, objectifs, personnages, dialogue, puis `exercises` de type `choice` (QCM) ou
-`fill` (texte à trous). Le champ `skill` précise ce qui est travaillé :
+Situation, objectifs, personnages, `requires` et `teaches` (partie 2 du document de
+conception), dialogue, puis `exercises` de type `choice` (QCM) ou `fill` (texte à trous),
+chacun avec un `id` et une `target`. Le champ `skill` précise ce qui est travaillé :
 `naturel` (naturel ou scolaire ?), `registre`, `vocabulaire`.
 
 ## Expressions

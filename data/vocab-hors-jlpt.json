@@ -14,7 +14,7 @@
     },
     "nuance": "Sac proposé à la caisse, payant au Japon depuis 2020 : le caissier demande presque toujours si on en veut un.",
     "type": "nom",
-    "group": "",
+    "group": "nom",
     "category": "achats_argent",
     "subcategory": "commerce",
     "kanji_list": [
@@ -47,7 +47,7 @@
     },
     "nuance": "Le caissier demande souvent 「ポイントカードはお持ちですか」 : on répond simplement いいえ ou on la montre.",
     "type": "nom",
-    "group": "",
+    "group": "nom",
     "category": "achats_argent",
     "subcategory": "commerce",
     "kanji_list": [],

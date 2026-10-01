@@ -27,18 +27,6 @@
         "is_user": true
       }
     ],
-    "vocab": [
-      "n5_v_84",
-      "hj_v_1",
-      "hj_v_2"
-    ],
-    "expressions": [
-      "ex_3",
-      "ex_1"
-    ],
-    "grammar": [
-      "n5_g_17"
-    ],
     "dialogue": [
       {
         "speaker": "caissier",
@@ -80,6 +68,10 @@
           {
             "text": "はい",
             "vocab": "n5_v_344"
+          },
+          {
+            "text": "お願いします",
+            "expression": "ex_6"
           }
         ],
         "grammar": []
@@ -106,7 +98,12 @@
         "romaji": "ie, daijoubu desu.",
         "french": "Non, ça ira.",
         "register": "poli",
-        "refs": [],
+        "refs": [
+          {
+            "text": "いえ、大丈夫です",
+            "expression": "ex_5"
+          }
+        ],
         "grammar": [
           "n5_g_1"
         ],
@@ -148,6 +145,7 @@
     ],
     "exercises": [
       {
+        "id": "n5_m_1_q1",
         "type": "choice",
         "skill": "naturel",
         "prompt": "Le caissier demande 「レジ袋はご利用ですか」. Tu n'en veux pas. Quelle réponse sonne la plus naturelle ?",
@@ -170,9 +168,15 @@
         ],
         "answer": 0,
         "explanation": "Les deux premières sont correctes, mais いりません est sec. 大丈夫です est la réponse qu'on entend vraiment.",
-        "dialogue_ref": 4
+        "dialogue_ref": 4,
+        "target": {
+          "expression": [
+            "ex_5"
+          ]
+        }
       },
       {
+        "id": "n5_m_1_q2",
         "type": "choice",
         "skill": "registre",
         "prompt": "Qui dit 「いらっしゃいませ」 ?",
@@ -195,9 +199,15 @@
         ],
         "answer": 0,
         "explanation": "C'est le personnel qui accueille. Le client ne la dit jamais, un signe de tête suffit.",
-        "expression_ref": "ex_3"
+        "expression_ref": "ex_3",
+        "target": {
+          "expression": [
+            "ex_3"
+          ]
+        }
       },
       {
+        "id": "n5_m_1_q3",
         "type": "fill",
         "skill": "vocabulaire",
         "prompt": "Complète la réponse pour accepter.",
@@ -209,8 +219,32 @@
           "休",
           "待"
         ],
-        "explanation": "お願いします = s'il vous plaît."
+        "explanation": "お願いします = s'il vous plaît.",
+        "target": {
+          "expression": [
+            "ex_6"
+          ]
+        }
       }
-    ]
+    ],
+    "requires": {
+      "grammar": [
+        "n5_g_1",
+        "n5_g_17"
+      ]
+    },
+    "teaches": {
+      "vocab": [
+        "n5_v_84",
+        "hj_v_1",
+        "hj_v_2"
+      ],
+      "expression": [
+        "ex_3",
+        "ex_1",
+        "ex_5",
+        "ex_6"
+      ]
+    }
   }
 ]
