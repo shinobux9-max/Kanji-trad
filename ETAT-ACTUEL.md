@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 à 5 faites, tâche 6 à faire.
+tâches 1 à 6 faites, tâche 7 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -25,7 +25,7 @@ bloque `npm test`).
 | 3 | État calculé (`src/learning/state.js`) : `new` → `mastered`, par les règles générales (seuils 21 / 60) | invariants 1.8 ; cohérence `declaredVerificationWindowDays.min ≥ acquiredIntervalDays` | ✅ fait |
 | 4 | Faiblesses (`src/learning/weakness.js`) : échec, réussite, résolution après 3 réussites, réactivation, `computeWeaknessPriority` ; constantes dans `GUIDED_CONFIG.weaknessPriority` | tableau 3.5, priorité identique à l'ancien code | ✅ fait |
 | 5 | Format et validation des événements (`src/learning/events.js`) : 12 types, contexte, références `{ type, id }`, identifiant | rejets et acceptations | ✅ fait |
-| 6 | Effets, 1re partie (`src/learning/effects.js`) : `CONTENT_INTRODUCED` ; `QUESTION_ANSWERED` avec création de l'entrée SRS à J+1 et exception du test de positionnement ; `REVIEW_GRADED` avec vérification ; outil de rejeu pour les tests | S6, S7, C1, C4, synthèse 3.4 | à faire |
+| 6 | Effets, 1re partie (`src/learning/effects.js`) : `CONTENT_INTRODUCED` ; `QUESTION_ANSWERED` avec création de l'entrée SRS à J+1 et exception du test de positionnement ; `REVIEW_GRADED` avec vérification ; outil de rejeu pour les tests | S6, S7, C1, C4, synthèse 3.4 | ✅ fait |
 | 7 | Effets, 2e partie : `KNOWLEDGE_DECLARED` (entrée SRS de vérification), `KNOWLEDGE_DECLARATION_UNDONE`, avancement des activités | aucun recul pour chaque I de 21 à 45 et chaque note ; annulation | à faire |
 | 8 | `recordLearningEvent` (`src/learning/record.js`, `index.js`) : file un par un, calcul sur copie, une transaction, idempotence, notification, chargement initial, instantané | C2 (test statique), C3, idempotence, ordre | à faire |
 | 9 | Journal (`src/learning/journal.js`) : résumé quotidien, compaction 30 jours / 5 000 événements | C5 | à faire |
@@ -51,7 +51,8 @@ bloque `npm test`).
 
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
   mémoire), `src/learning/` (`srs.js`, `state.js`, `weakness.js`, `events.js`,
-  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (138 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  `effects.js`, `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/`
+  (158 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -104,14 +105,17 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Format des événements : schéma strict (champ inconnu refusé) ; `at` en UTC canonique (forme de `toISOString`) pour que l'index du journal trie correctement ; préfixes `evt_`, `ses_`, `fld_` ; `context.activityType` obligatoire sauf pour les événements de session, où il est sans objet ; `sessionId` obligatoire pour ces derniers ; forme des identifiants d'éléments vérifiée par type (partie 1, 1.1) | `src/learning/events.js` |
 | 2026-10-01 | Déclaration par niveau : `scope` vaut `kana`, `n5`, `n4`, `n3`, `n2` ou `n1` (un seul niveau, celui choisi ; les niveaux inférieurs sont inclus par les effets, partie 1, 1.5) | `src/learning/events.js` |
 | 2026-10-01 | Charges utiles définies par le moteur (`plan`, `completedActivities`, `lastActivity`, `sourceActivity`) : présence vérifiée, contenu fixé à l'étape 4 | `src/learning/events.js` |
+| 2026-10-01 | L'origine technique « appris » est identifiée par `learned` ; les trois origines sont donc `learned`, `declared`, `tested`. `verified` reste un fait distinct de l'origine, posé seulement pour `declared` et `tested` | `src/learning/effects.js` |
+| 2026-10-01 | Entrée SRS d'une première évaluation : intervalle `firstCheckDelayDays` (1 jour), facilité initiale 2,5, 0 répétition, aucune date de dernière révision, échéance le lendemain à la même heure locale ; l'origine `learned` est posée en même temps (un élément Découvert n'a pas d'origine) | `src/learning/effects.js` |
+| 2026-10-01 | `REVIEW_GRADED` sur un élément sans entrée SRS : `gradeReview` part de l'entrée de départ de l'ancien code ; date d'introduction et origine `learned` posées si absentes. Cas normalement impossible (une révision ne présente que des éléments qui ont une entrée), traité sans erreur | `src/learning/effects.js` |
 
 ---
 
 ## Points ouverts
 
-- **Identifiant de code de l'origine « appris »** : la conception fixe `declared` et `tested`
-  (partie 3), mais pas l'identifiant de `appris`. À trancher avant la tâche 6, qui l'écrit
-  à la première évaluation. Proposition : `learned`.
+- **C4 côté écran** : la tâche 6 garantit que `REVIEW_GRADED` porte à lui seul les effets
+  d'une révision. Que l'écran de révision n'émette qu'un seul événement par carte se vérifiera
+  avec l'interface (étape 5).
 - **Dossiers** : le magasin `folders` existe dans le schéma v1 ; son accès (par `learning`,
   jamais directement par l'interface) sera défini à l'étape 5.
 - **Champ de sens dans `QUESTION_ANSWERED`** : nom fixé par A2-01, ajouté ensuite ; rien
@@ -153,3 +157,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 3 | État calculé (`computeState`, `STATES`, `STATE_ORDER`) par l'intervalle seul ; vérification des invariants 2 et 3 (`checkElementFacts`) ; cohérence de la configuration (`tests/config.test.js`) ; 19 tests | — |
 | 2026-10-01 | 1 · 4 | Faiblesses progressives (échec, réussite, résolution après 3 réussites, réactivation), `computeWeaknessPriority` repris à l'identique (constantes dans `GUIDED_CONFIG.weaknessPriority`) ; lecture des dates commune (`dates.js`, `srs.js` patché) ; 17 tests | — |
 | 2026-10-01 | 1 · 5 | Format et validation des 12 types d'événements (`validateEvent`, existence des éléments injectée), invariant 3 de 3.10 (`REVIEW_GRADED` seulement en révision SRS), `createEventId` ; 15 tests | — |
+| 2026-10-01 | 1 · 6 | Effets purs de `CONTENT_INTRODUCED`, `QUESTION_ANSWERED` (exception du test de positionnement) et `REVIEW_GRADED` (vérification) ; rejeu de journaux aléatoires pour S6 et S7, C1, C4 côté traitement ; `addCalendarDays` dans `dates.js` (`srs.js` patché) ; 20 tests | — |

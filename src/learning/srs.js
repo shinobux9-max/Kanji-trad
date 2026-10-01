@@ -22,7 +22,7 @@
 //     faiblesses (partie 3, 3.9 : ce sont des effets du traitement central).
 
 import { GUIDED_CONFIG } from '../config.js';
-import { toDate } from './dates.js';
+import { toDate, addCalendarDays } from './dates.js';
 
 export const QUALITY = Object.freeze({
   FORGOTTEN: 0, // Oublié (ancien « Encore »)
@@ -74,8 +74,7 @@ export function gradeReview(srs, quality, now, config = GUIDED_CONFIG) {
 
   // Échéance : `interval` jours CALENDAIRES plus tard, à la même heure locale (comme
   // l'ancien code, qui utilisait setDate).
-  const nextReviewDate = new Date(date.getTime());
-  nextReviewDate.setDate(nextReviewDate.getDate() + interval);
+  const nextReviewDate = addCalendarDays(date, interval);
 
   return {
     interval,

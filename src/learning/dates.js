@@ -17,3 +17,15 @@ export function toDate(value) {
   if (Number.isNaN(date.getTime())) throw new TypeError(`date invalide : ${String(value)}`);
   return date;
 }
+
+/**
+ * Ajoute des jours CALENDAIRES à une date, à la même heure locale (comportement de setDate,
+ * celui de l'ancien gradeReview). Renvoie une nouvelle Date.
+ * @param {Date} date
+ * @param {number} days
+ */
+export function addCalendarDays(date, days) {
+  const result = new Date(date.getTime());
+  result.setDate(result.getDate() + days);
+  return result;
+}
