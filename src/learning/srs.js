@@ -22,6 +22,7 @@
 //     faiblesses (partie 3, 3.9 : ce sont des effets du traitement central).
 
 import { GUIDED_CONFIG } from '../config.js';
+import { toDate } from './dates.js';
 
 export const QUALITY = Object.freeze({
   FORGOTTEN: 0, // Oublié (ancien « Encore »)
@@ -31,15 +32,6 @@ export const QUALITY = Object.freeze({
 });
 
 const MS_PER_DAY = 86400000;
-
-function toDate(now) {
-  if (typeof now !== 'string' && !(now instanceof Date)) {
-    throw new TypeError('date invalide : chaîne ISO ou Date attendue');
-  }
-  const date = new Date(now instanceof Date ? now.getTime() : now);
-  if (Number.isNaN(date.getTime())) throw new TypeError(`date invalide : ${String(now)}`);
-  return date;
-}
 
 /**
  * Calcule l'entrée SRS après une révision notée.

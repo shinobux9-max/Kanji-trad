@@ -74,6 +74,14 @@ export const GUIDED_CONFIG = deepFreeze({
   weaknessResolveStreak: 3,       // 3.5 · réussites d'affilée pour rendre une faiblesse inactive
                                   //       (expérimental)
 
+  weaknessPriority: {             // 3.5 · computeWeaknessPriority, reprise À L'IDENTIQUE de
+                                  //       l'ancienne app (décision du 2026-10-01)
+    consecutiveFailWeight: 5,     //       poids d'un échec consécutif (fort)
+    totalFailWeight: 1,           //       poids d'un échec au total (faible)
+    recencyWeight: 8,             //       poids de la récence du dernier échec
+    recencyWindowDays: 14         //       la récence décroît linéairement sur 14 jours
+  },
+
   journal: {
     detailDays: 30,               // 3.8 · détail complet conservé
     maxDetailedEvents: 5000       // 3.8 · plafond du détail ; au-delà, résumé quotidien
