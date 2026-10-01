@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 à 10 faites, tâche 11 à faire.
+tâches 1 à 11 faites, tâche 12 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -30,7 +30,7 @@ bloque `npm test`).
 | 8 | `recordLearningEvent` (`src/learning/record.js`, `index.js`) : file un par un, calcul sur copie, une transaction, idempotence, notification, chargement initial, instantané | C2 (test statique), C3, idempotence, ordre | ✅ fait |
 | 9 | Journal (`src/learning/journal.js`) : résumé quotidien, compaction 30 jours / 5 000 événements | C5 | ✅ fait |
 | 10 | Budget quotidien (`src/learning/budget.js`) : éléments qui quittent Nouveau, tous écrans confondus ; kana et déclarations exclus | nouveautés prises hors mode guidé (base de S10) | ✅ fait |
-| 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, état « en échec », `retry()` | 9.4, avec un stockage qui échoue à la demande | à faire |
+| 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, état « en échec », `retry()` | 9.4, avec un stockage qui échoue à la demande | ✅ fait |
 | 12 | IndexedDB (`src/store/indexeddb.js`, `src/store/schema.js`) : base `ocha`, schéma v1, migrations numérotées, `meta` | schéma testé dans Node ; adaptateur vérifié par la page `tests/browser/` | à faire |
 | 13 | Clôture : scénario de bout en bout sur la mémoire, `check-layers`, rapport `docs/rapports/etape1.md` | toute la suite verte | à faire |
 
@@ -52,7 +52,7 @@ bloque `npm test`).
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
   mémoire), `src/learning/` (`index.js`, `record.js`, `srs.js`, `state.js`,
   `weakness.js`, `events.js`, `effects.js`, `journal.js`, `budget.js`,
-  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (236 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/` (252 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -113,7 +113,7 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Annulation d'une déclaration : un élément n'est rétabli que s'il est encore exactement tel que la déclaration l'a laissé (cela couvre « vérifié depuis » et une déclaration plus récente) ; un élément sans faits avant la déclaration est retiré du magasin ; une déclaration déjà annulée est sans effet ; une déclaration inconnue ou un identifiant réutilisé est une erreur | `src/learning/effects.js` |
 | 2026-10-01 | Avancement : faits `startedAt` et `completedAt` (premières dates, jamais repoussées), statut calculé (`computeActivityStatus`) ; `ACTIVITY_SKIPPED` ne change pas l'avancement (le moteur le lit dans le journal) ; l'étape atteinte d'une mission en cours est enregistrée avec la session | `src/learning/effects.js`, `state.js` |
 | 2026-10-01 | `KNOWLEDGE_DECLARATION_UNDONE` constitue l'exception explicite à S6 et S7 : lorsqu'elle rétablit les faits antérieurs à une déclaration, elle peut supprimer ou modifier une entrée SRS et faire reculer l'état sans `REVIEW_GRADED` ni « Oublié ». Aucun autre événement ne bénéficie de cette exception (règle spécifique de 1.5 et 3.4, qui prime sur la formulation générale des critères) | `tests/learning/effects-knowledge.test.js` |
-| 2026-10-01 | Interface du traitement central : `createLearning({ store, config, elementExists, elementsOfScope, warn })` donne `load()`, `recordLearningEvent(event, { session })`, `getSnapshot()`, `getSession()`, `subscribe()`. Résultat : `recorded`, `duplicate` (même identifiant déjà enregistré : aucun effet) ou `rejected` (invalide, ou incompatible avec l'état : rien n'est écrit, signalement par `warn`, `console.warn` par défaut) ; un échec du stockage rejette la promesse, l'état en mémoire restant inchangé | `src/learning/record.js` |
+| 2026-10-01 | Interface du traitement central : `createLearning({ store, config, elementExists, elementsOfScope, warn })` donne `load()`, `recordLearningEvent(event, { session })`, `getSnapshot()`, `getSession()`, `subscribe()`. Résultat : `recorded`, `duplicate` (même identifiant déjà enregistré : aucun effet), `rejected` (invalide, ou incompatible avec l'état : rien n'est écrit, signalement par `warn`, `console.warn` par défaut) ou `pending` (échec du stockage, voir 9.4 ci-dessous) ; l'état en mémoire ne change qu'après confirmation du stockage | `src/learning/record.js` |
 | 2026-10-01 | Session en cours : enregistrée sous la clé `current` du magasin `sessions`, sous la forme `{ id: 'current', value }`, contenu opaque pour `learning` jusqu'à l'étape 4 ; `session: null` l'efface, l'option absente n'y touche pas | `src/learning/record.js` |
 | 2026-10-01 | L'instantané (`getSnapshot`) et la session sont gelés : un écran ne peut pas les modifier | `src/learning/record.js` |
 | 2026-10-01 | Surface publique de `learning` (`index.js`) : traitement central, construction et validation d'événements, fonctions de lecture (état, avancement, faiblesse active, priorité, retard). Aucune fonction d'écriture n'est exposée (`gradeReview`, `applyWeakness…`, `applyEvent`) ; un test statique (C2) refuse tout import d'un module interne de `learning` depuis une autre couche | `src/learning/index.js`, `tests/learning/surface.test.js` |
@@ -124,12 +124,18 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Budget quotidien : un élément « quitte Nouveau » quand son état calculé passe de Nouveau à un autre état sous l'effet d'un événement d'apprentissage (présentation, première réponse évaluée, première note SRS) ; déclarations, annulations et test de positionnement n'en font jamais partie. Ce fait est établi au moment de l'événement et compté par type dans le résumé du jour (`introduced`, kana compris), dans la même transaction ; le budget du jour (kana exclus) se lit dans ce résumé, il ne dépend donc ni de la compaction ni d'un rejeu | `src/learning/budget.js`, `journal.js`, `record.js` |
 | 2026-10-01 | `getNewContentBudget(dailyNewBudget)` donne `{ date, used, limit, remaining }` pour le jour local de l'horloge ; le plafond, réglage de l'utilisateur, est reçu en argument ; `learning` compte, le moteur décide (étape 4) | `src/learning/record.js` |
 | 2026-10-01 | Un élément ramené à Nouveau par l'annulation d'une déclaration consomme le budget s'il est ensuite présenté ou évalué : une déclaration n'est pas un apprentissage | `src/learning/budget.js` |
+| 2026-10-01 | Échec d'écriture (9.4) : sur une panne du stockage (`StorageError`), compaction immédiate puis une seule nouvelle tentative ; si elle échoue, l'événement passe au statut `pending` et attend dans une file volatile, en mémoire. L'échec est visible par `getWriteFailure()` (`{ since, kind, message, pendingCount }`, `since` étant le début de l'échec) et `onWriteFailureChange()`. Pendant l'échec, tout événement valide rejoint la file sans être tenté, pour garder l'ordre ; un événement invalide reste rejeté. `retry()` enregistre la file dans l'ordre, s'arrête au premier échec, écarte en le signalant un événement devenu incompatible avec l'état ; l'idempotence évite les doublons. La file est perdue si l'app se ferme : aucune seconde persistance | `src/learning/record.js` |
+| 2026-10-01 | Seule une panne du stockage déclenche 9.4 ; toute autre erreur rejette la promesse, sans compaction ni nouvelle tentative | `src/learning/record.js` |
 | 2026-10-01 | `REVIEW_GRADED` sur un élément sans entrée SRS : la note est sa première évaluation (partie 1 : « question d'exercice ou note SRS »), donc `gradeReview` s'applique aussitôt à partir de l'entrée de départ de l'ancien code, alors que `QUESTION_ANSWERED` crée une entrée à J+1 sans la noter ; date d'introduction et origine `learned` posées si absentes | `src/learning/effects.js` |
 
 ---
 
 ## Points ouverts
 
+- **9.4 côté écran** (étape 5) : sur `pending`, mettre aussitôt en pause les exercices évalués,
+  afficher le bandeau « Ta dernière réponse n'a pas pu être enregistrée. » avec Réessayer
+  (`retry()`) et Exporter mes données, laisser la consultation possible. L'export (étape 6)
+  devra préciser s'il inclut les événements en attente.
 - **C4 côté écran** : la tâche 6 garantit que `REVIEW_GRADED` porte à lui seul les effets
   d'une révision. Que l'écran de révision n'émette qu'un seul événement par carte se vérifiera
   avec l'interface (étape 5).
@@ -179,3 +185,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 8 | `recordLearningEvent` : validation, calcul sur l'état en mémoire, une transaction (événement, faits, session), idempotence, file interne, notifications, chargement, instantané gelé ; surface publique `index.js` ; C2 (test statique), C3 (rechargement et rejeu) ; 23 tests | — |
 | 2026-10-01 | 1 · 9 | Résumé quotidien dans la transaction de chaque événement, compaction (jour en cours jamais compacté), compaction quotidienne au chargement, `getDailySummaries`, `localDayKey` ; C5 ; horloge fixée dans `record.test.js` ; 15 tests | — |
 | 2026-10-01 | 1 · 10 | Budget quotidien de nouveautés : `elementsLeavingNew`, comptage par type dans le résumé du jour, `getNewContentBudget` ; base de S10 ; `journal.test.js` adapté (champ `introduced`) ; 13 tests | — |
+| 2026-10-01 | 1 · 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, statut `pending`, échec observable, `retry()` dans l'ordre ; trois tests des tâches 8 et 9 adaptés au nouveau comportement ; 16 tests | — |

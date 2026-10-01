@@ -146,8 +146,8 @@ test('doublons, événements rejetés et échecs du stockage ne comptent pas dan
   await learning.recordLearningEvent(e);
   await learning.recordLearningEvent(e);
   await learning.recordLearningEvent({ ...answered(at(0), true), at: 'hier' });
-  store.failNextCommit('quota');
-  await assert.rejects(learning.recordLearningEvent(answered(at(0), true)));
+  store.failNextCommit('quota', 3); // écriture, compaction et nouvelle tentative (9.4)
+  assert.equal((await learning.recordLearningEvent(answered(at(0), true))).status, RECORD_STATUS.PENDING);
   assert.deepEqual((await store.get('daily', '2026-10-01')).answers.free.qcm, { correct: 1, incorrect: 0 });
 });
 

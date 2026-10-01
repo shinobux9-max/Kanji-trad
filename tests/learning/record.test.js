@@ -7,7 +7,6 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createLearning, RECORD_STATUS, computeState } from '../../src/learning/index.js';
 import { createMemoryStore } from '../../src/store/memory.js';
-import { StorageError } from '../../src/store/contract.js';
 import { replay, seededRandom } from './replay.js';
 
 // ── Outils ──────────────────────────────────────────────────────────────────
@@ -207,7 +206,7 @@ test('file interne : chaque événement part de l\'état laissé par le précéd
 
 // ── Atomicité et échec du stockage (9.3) ────────────────────────────────────
 
-test('échec du stockage : promesse rejetée, état en mémoire et stockage inchangés, pas de notification', async () => {
+test('échec persistant du stockage : non enregistré, état en mémoire et stockage inchangés, pas de notification', async () => {
   const { store, learning } = await setup();
   await learning.recordLearningEvent(answered(W1, false));
   const snapshot = learning.getSnapshot();
@@ -215,26 +214,31 @@ test('échec du stockage : promesse rejetée, état en mémoire et stockage inch
   const notices = [];
   learning.subscribe((n) => notices.push(n));
 
-  store.failNextCommit('quota');
-  await assert.rejects(learning.recordLearningEvent(graded(W1, 0, day(1)), { session: { step: 2 } }),
-    (e) => e instanceof StorageError && e.kind === 'quota');
+  // Écriture, compaction et nouvelle tentative échouent (9.4) : l'événement reste en attente.
+  store.failNextCommit('quota', 3);
+  const result = await learning.recordLearningEvent(graded(W1, 0, day(1)), { session: { step: 2 } });
+  assert.equal(result.status, RECORD_STATUS.PENDING);
+  assert.equal(result.failure.kind, 'quota');
   assert.equal(learning.getSnapshot(), snapshot);
   assert.equal(learning.getSession(), null);
   assert.deepEqual({ events: await store.getAll('events'), elements: await store.getAll('elements') }, before);
   assert.deepEqual(await store.getAll('sessions'), []);
   assert.equal(notices.length, 0);
 
-  // L'événement suivant passe normalement.
+  // Après « Réessayer », l'événement en attente est enregistré, puis le suivant passe normalement.
+  assert.equal((await learning.retry()).status, 'recovered');
+  assert.equal(learning.getSession().step, 2);
   assert.equal((await learning.recordLearningEvent(graded(W1, 2, day(2)))).status, RECORD_STATUS.RECORDED);
 });
 
-test('un même événement peut être renvoyé après un échec du stockage', async () => {
+test('un échec ponctuel du stockage est rattrapé par la nouvelle tentative (9.4, étape 3)', async () => {
   const { store, learning } = await setup();
   const event = answered(W1, false);
   store.failNextCommit('aborted');
-  await assert.rejects(learning.recordLearningEvent(event));
   assert.equal((await learning.recordLearningEvent(event)).status, RECORD_STATUS.RECORDED);
+  assert.equal(learning.getWriteFailure(), null);
   assert.equal(learning.getSnapshot().weaknesses['n5_v_1'].consecutiveFails, 1);
+  assert.equal((await learning.recordLearningEvent(event)).status, RECORD_STATUS.DUPLICATE);
 });
 
 // ── Session dans la même transaction (9.5) ──────────────────────────────────

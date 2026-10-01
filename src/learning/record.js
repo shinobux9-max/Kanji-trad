@@ -18,8 +18,11 @@
 //
 // Le budget quotidien de nouveautés se lit dans le résumé du jour (budget.js ; 4.4).
 //
-// Ce fichier ne traite pas encore la reprise après un échec d'écriture (tâche 11). En cas
-// d'échec du stockage, la promesse est rejetée avec l'erreur du stockage.
+// Échec d'écriture (9.4) : compaction immédiate puis UNE nouvelle tentative ; si elle échoue
+// encore, l'événement attend dans une file VOLATILE (en mémoire, perdue si l'app se ferme),
+// l'échec devient visible (getWriteFailure, onWriteFailureChange) et tout événement suivant
+// rejoint la file, dans l'ordre. retry() réenregistre la file. Aucune autre persistance
+// n'est utilisée : elle créerait une seconde source de vérité.
 
 import { GUIDED_CONFIG } from '../config.js';
 import { validateEvent } from './events.js';
@@ -27,6 +30,7 @@ import { applyEvent, createEmptyLearningState } from './effects.js';
 import { addToDailySummary, planCompaction } from './journal.js';
 import { elementsLeavingNew, budgetStatus } from './budget.js';
 import { localDayKey } from './dates.js';
+import { isStorageError } from '../store/contract.js';
 
 // Magasins de l'état en mémoire, chargés au démarrage et écrits par les effets.
 const FACT_STORES = ['elements', 'weaknesses', 'declarations', 'activities'];
@@ -36,7 +40,9 @@ const LAST_COMPACTION_KEY = 'lastCompaction';
 export const RECORD_STATUS = Object.freeze({
   RECORDED: 'recorded',   // enregistré, effets appliqués
   DUPLICATE: 'duplicate', // identifiant déjà enregistré : aucun effet (idempotence)
-  REJECTED: 'rejected'    // événement invalide ou incompatible avec l'état : rien n'est écrit
+  REJECTED: 'rejected',   // événement invalide ou incompatible avec l'état : rien n'est écrit
+  PENDING: 'pending'      // non enregistré : le stockage a échoué, l'événement attend en
+                          // mémoire (9.4) ; l'écran met en pause les exercices évalués
 });
 
 function deepFreeze(value) {
@@ -74,6 +80,9 @@ export function createLearning({
   let session = null;   // session en cours, opaque pour learning (étape 4)
   let queue = Promise.resolve();
   const listeners = new Set();
+  const failureListeners = new Set();
+  let failure = null;   // échec d'écriture en cours (9.4), ou null
+  const pending = [];   // file volatile : { event, options }, dans l'ordre d'émission
 
   // File interne : un événement à la fois, dans l'ordre d'appel (9.3).
   function enqueue(job) {
@@ -124,19 +133,16 @@ export function createLearning({
     });
   }
 
-  async function process(event, options) {
-    requireLoaded();
-
-    const problems = validateEvent(event, { elementExists });
-    if (problems.length > 0) {
-      warn('Événement rejeté', { event, problems });
-      return { status: RECORD_STATUS.REJECTED, problems };
-    }
-
+  // ── Une tentative d'écriture ──────────────────────────────────────────────
+  //
+  // Calcule les effets sur l'état en mémoire et les enregistre en UNE transaction. Renvoie
+  // { duplicate } ou { rejected } ou { result } ; lève l'erreur du stockage en cas d'échec,
+  // sans rien avoir écrit ni modifié en mémoire.
+  async function attempt(event, options) {
     const hasSession = Object.hasOwn(options, 'session');
     let rejection = null;
 
-    const outcome = await store.transaction(
+    return store.transaction(
       ['events', ...FACT_STORES, 'daily', 'sessions'],
       async (tx) => {
         // Idempotence : un même événement n'a d'effet qu'une fois (9.3).
@@ -171,27 +177,32 @@ export function createLearning({
             await tx.put('sessions', { id: SESSION_KEY, value: options.session });
           }
         }
-        return { duplicate: false, result };
+        return { result };
       }
     ).catch((error) => {
       if (error === rejection) return { rejected: error };
-      throw error; // échec du stockage : l'état en mémoire reste inchangé
+      throw error; // échec du stockage : rien n'est écrit, l'état en mémoire reste inchangé
     });
+  }
 
-    if (outcome.rejected) {
-      const problemsFromState = [outcome.rejected.message];
-      warn('Événement rejeté', { event, problems: problemsFromState });
-      return { status: RECORD_STATUS.REJECTED, problems: problemsFromState };
-    }
+  function rejectWith(event, problems) {
+    warn('Événement rejeté', { event, problems });
+    return { status: RECORD_STATUS.REJECTED, problems };
+  }
+
+  // Applique en mémoire le résultat d'une tentative réussie (9.3, étape 4) et notifie.
+  function settle(event, options, outcome) {
+    if (outcome.rejected) return rejectWith(event, [outcome.rejected.message]);
     if (outcome.duplicate) return { status: RECORD_STATUS.DUPLICATE };
 
-    // Réussite : le nouvel état devient l'état en mémoire (9.3, étape 4).
     const { result } = outcome;
     for (const name of FACT_STORES) {
       for (const id of result.changed[name]) deepFreeze(result.state[name][id]);
     }
     state = deepFreeze(result.state);
-    if (hasSession) session = options.session == null ? null : deepFreeze(structuredClone(options.session));
+    if (Object.hasOwn(options, 'session')) {
+      session = options.session == null ? null : deepFreeze(structuredClone(options.session));
+    }
 
     const notice = { event, changed: result.changed };
     for (const listener of listeners) {
@@ -202,6 +213,98 @@ export function createLearning({
       }
     }
     return { status: RECORD_STATUS.RECORDED, changed: result.changed };
+  }
+
+  // ── Échec d'écriture (9.4) ────────────────────────────────────────────────
+
+  function failureSnapshot() {
+    return failure && Object.freeze({ ...failure, pendingCount: pending.length });
+  }
+
+  function notifyFailure() {
+    const snapshot = failureSnapshot();
+    for (const listener of failureListeners) {
+      try {
+        listener(snapshot);
+      } catch (error) {
+        warn('Erreur d\'un abonné', error);
+      }
+    }
+  }
+
+  function setFailure(error) {
+    failure = {
+      since: failure ? failure.since : now().toISOString(),
+      kind: error.kind,
+      message: error.message
+    };
+    notifyFailure();
+  }
+
+  function keepPending(event, options, error) {
+    pending.push({ event, options });
+    setFailure(error);
+    return { status: RECORD_STATUS.PENDING, failure: failureSnapshot() };
+  }
+
+  async function process(event, options) {
+    requireLoaded();
+
+    const problems = validateEvent(event, { elementExists });
+    if (problems.length > 0) return rejectWith(event, problems);
+
+    // Pendant un échec, rien ne doit passer devant les événements en attente : le nouvel
+    // événement les rejoint, dans l'ordre (9.4).
+    if (failure) {
+      pending.push({ event, options });
+      notifyFailure();
+      return { status: RECORD_STATUS.PENDING, failure: failureSnapshot() };
+    }
+
+    let outcome;
+    try {
+      outcome = await attempt(event, options);
+    } catch (error) {
+      if (!isStorageError(error)) throw error;
+      // 9.4, étape 2 : compaction immédiate du journal, puis UNE nouvelle tentative.
+      try {
+        await compact();
+      } catch (compactionError) {
+        warn('Compaction du journal impossible', compactionError);
+      }
+      try {
+        outcome = await attempt(event, options);
+      } catch (secondError) {
+        if (!isStorageError(secondError)) throw secondError;
+        // 9.4, étape 4 : l'événement attend en mémoire ; l'échec devient visible.
+        return keepPending(event, options, secondError);
+      }
+    }
+    return settle(event, options, outcome);
+  }
+
+  // 9.4, étape 6 : « Réessayer ». La file est enregistrée dans l'ordre ; l'idempotence évite
+  // les doublons. On s'arrête au premier échec : le reste attend.
+  async function retryPending() {
+    requireLoaded();
+    if (!failure) return { status: 'ok', recorded: 0, remaining: 0 };
+    let recorded = 0;
+    while (pending.length > 0) {
+      const { event, options } = pending[0];
+      let outcome;
+      try {
+        outcome = await attempt(event, options);
+      } catch (error) {
+        if (!isStorageError(error)) throw error;
+        setFailure(error);
+        return { status: 'still_failing', recorded, remaining: pending.length };
+      }
+      pending.shift();
+      if (settle(event, options, outcome).status === RECORD_STATUS.RECORDED) recorded += 1;
+    }
+    failure = null;
+    notifyFailure();
+    return { status: 'recovered', recorded, remaining: 0 };
   }
 
   return {
@@ -215,8 +318,9 @@ export function createLearning({
      * @param {object} [options]
      * @param {object|null} [options.session]  session en cours à enregistrer dans la même
      *        transaction ; null pour l'effacer ; absent pour ne pas y toucher
-     * @returns {Promise<{status: string, problems?: string[], changed?: object}>}
-     *          rejetée avec l'erreur du stockage si l'écriture échoue
+     * @returns {Promise<{status: string, problems?: string[], changed?: object,
+     *          failure?: object}>}  `recorded` seulement si l'événement est enregistré ;
+     *          `pending` s'il attend en mémoire après un échec du stockage (9.4)
      */
     recordLearningEvent(event, options = {}) {
       return enqueue(() => process(event, options));
@@ -259,6 +363,32 @@ export function createLearning({
         const date = localDayKey(now());
         return { date, ...budgetStatus(await store.get('daily', date), dailyNewBudget) };
       });
+    },
+
+    /**
+     * Échec d'écriture en cours (9.4), ou null :
+     * { since, kind, message, pendingCount } — kind : 'quota', 'aborted' ou 'unavailable'.
+     */
+    getWriteFailure() {
+      return failureSnapshot();
+    },
+
+    /**
+     * S'abonne aux changements de l'échec d'écriture (apparition, nouvel événement en
+     * attente, disparition : null). Renvoie la fonction de désabonnement.
+     */
+    onWriteFailureChange(listener) {
+      failureListeners.add(listener);
+      return () => failureListeners.delete(listener);
+    },
+
+    /**
+     * Réessaie d'enregistrer les événements en attente, dans l'ordre (bouton « Réessayer »).
+     * @returns {Promise<{status: 'ok'|'recovered'|'still_failing', recorded: number,
+     *          remaining: number}>}
+     */
+    retry() {
+      return enqueue(() => retryPending());
     },
 
     /** Session en cours enregistrée, ou null. */
