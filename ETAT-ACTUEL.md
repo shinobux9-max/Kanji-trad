@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 à 7 faites, tâche 8 à faire.
+tâches 1 à 8 faites, tâche 9 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -27,7 +27,7 @@ bloque `npm test`).
 | 5 | Format et validation des événements (`src/learning/events.js`) : 12 types, contexte, références `{ type, id }`, identifiant | rejets et acceptations | ✅ fait |
 | 6 | Effets, 1re partie (`src/learning/effects.js`) : `CONTENT_INTRODUCED` ; `QUESTION_ANSWERED` avec création de l'entrée SRS à J+1 et exception du test de positionnement ; `REVIEW_GRADED` avec vérification ; outil de rejeu pour les tests | S6, S7, C1, C4, synthèse 3.4 | ✅ fait |
 | 7 | Effets, 2e partie : `KNOWLEDGE_DECLARED` (entrée SRS de vérification), `KNOWLEDGE_DECLARATION_UNDONE`, avancement des activités | aucun recul pour chaque I de 21 à 45 et chaque note ; annulation | ✅ fait |
-| 8 | `recordLearningEvent` (`src/learning/record.js`, `index.js`) : file un par un, calcul sur copie, une transaction, idempotence, notification, chargement initial, instantané | C2 (test statique), C3, idempotence, ordre | à faire |
+| 8 | `recordLearningEvent` (`src/learning/record.js`, `index.js`) : file un par un, calcul sur copie, une transaction, idempotence, notification, chargement initial, instantané | C2 (test statique), C3, idempotence, ordre | ✅ fait |
 | 9 | Journal (`src/learning/journal.js`) : résumé quotidien, compaction 30 jours / 5 000 événements | C5 | à faire |
 | 10 | Budget quotidien (`src/learning/budget.js`) : éléments qui quittent Nouveau, tous écrans confondus ; kana et déclarations exclus | nouveautés prises hors mode guidé (base de S10) | à faire |
 | 11 | Échec d'écriture (9.4) : compaction puis une seule nouvelle tentative, file volatile, état « en échec », `retry()` | 9.4, avec un stockage qui échoue à la demande | à faire |
@@ -50,9 +50,9 @@ bloque `npm test`).
 ## Contenu de la branche
 
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
-  mémoire), `src/learning/` (`srs.js`, `state.js`, `weakness.js`, `events.js`,
-  `effects.js`, `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/`
-  (185 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  mémoire), `src/learning/` (`index.js`, `record.js`, `srs.js`, `state.js`,
+  `weakness.js`, `events.js`, `effects.js`, `dates.js`), `tools/check-layers.mjs`,
+  `tools/validate-data.mjs`, `tests/` (208 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -113,6 +113,10 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Annulation d'une déclaration : un élément n'est rétabli que s'il est encore exactement tel que la déclaration l'a laissé (cela couvre « vérifié depuis » et une déclaration plus récente) ; un élément sans faits avant la déclaration est retiré du magasin ; une déclaration déjà annulée est sans effet ; une déclaration inconnue ou un identifiant réutilisé est une erreur | `src/learning/effects.js` |
 | 2026-10-01 | Avancement : faits `startedAt` et `completedAt` (premières dates, jamais repoussées), statut calculé (`computeActivityStatus`) ; `ACTIVITY_SKIPPED` ne change pas l'avancement (le moteur le lit dans le journal) ; l'étape atteinte d'une mission en cours est enregistrée avec la session | `src/learning/effects.js`, `state.js` |
 | 2026-10-01 | `KNOWLEDGE_DECLARATION_UNDONE` constitue l'exception explicite à S6 et S7 : lorsqu'elle rétablit les faits antérieurs à une déclaration, elle peut supprimer ou modifier une entrée SRS et faire reculer l'état sans `REVIEW_GRADED` ni « Oublié ». Aucun autre événement ne bénéficie de cette exception (règle spécifique de 1.5 et 3.4, qui prime sur la formulation générale des critères) | `tests/learning/effects-knowledge.test.js` |
+| 2026-10-01 | Interface du traitement central : `createLearning({ store, config, elementExists, elementsOfScope, warn })` donne `load()`, `recordLearningEvent(event, { session })`, `getSnapshot()`, `getSession()`, `subscribe()`. Résultat : `recorded`, `duplicate` (même identifiant déjà enregistré : aucun effet) ou `rejected` (invalide, ou incompatible avec l'état : rien n'est écrit, signalement par `warn`, `console.warn` par défaut) ; un échec du stockage rejette la promesse, l'état en mémoire restant inchangé | `src/learning/record.js` |
+| 2026-10-01 | Session en cours : enregistrée sous la clé `current` du magasin `sessions`, sous la forme `{ id: 'current', value }`, contenu opaque pour `learning` jusqu'à l'étape 4 ; `session: null` l'efface, l'option absente n'y touche pas | `src/learning/record.js` |
+| 2026-10-01 | L'instantané (`getSnapshot`) et la session sont gelés : un écran ne peut pas les modifier | `src/learning/record.js` |
+| 2026-10-01 | Surface publique de `learning` (`index.js`) : traitement central, construction et validation d'événements, fonctions de lecture (état, avancement, faiblesse active, priorité, retard). Aucune fonction d'écriture n'est exposée (`gradeReview`, `applyWeakness…`, `applyEvent`) ; un test statique (C2) refuse tout import d'un module interne de `learning` depuis une autre couche | `src/learning/index.js`, `tests/learning/surface.test.js` |
 | 2026-10-01 | `REVIEW_GRADED` sur un élément sans entrée SRS : la note est sa première évaluation (partie 1 : « question d'exercice ou note SRS »), donc `gradeReview` s'applique aussitôt à partir de l'entrée de départ de l'ancien code, alors que `QUESTION_ANSWERED` crée une entrée à J+1 sans la noter ; date d'introduction et origine `learned` posées si absentes | `src/learning/effects.js` |
 
 ---
@@ -165,3 +169,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 5 | Format et validation des 12 types d'événements (`validateEvent`, existence des éléments injectée), invariant 3 de 3.10 (`REVIEW_GRADED` seulement en révision SRS), `createEventId` ; 15 tests | — |
 | 2026-10-01 | 1 · 6 | Effets purs de `CONTENT_INTRODUCED`, `QUESTION_ANSWERED` (exception du test de positionnement) et `REVIEW_GRADED` (vérification) ; rejeu de journaux aléatoires pour S6 et S7, C1, C4 côté traitement ; `addCalendarDays` dans `dates.js` (`srs.js` patché) ; 20 tests | — |
 | 2026-10-01 | 1 · 7 | Effets de `KNOWLEDGE_DECLARED` (délai déterministe, cumul des niveaux, trace), de son annulation et de l'avancement des activités ; S6 et S7 sur des journaux avec déclarations ; `computeActivityStatus` ; `effects.test.js` adapté ; délai dépendant de la date de déclaration et de l'identifiant (correctif de relecture) ; 27 tests | — |
+| 2026-10-01 | 1 · 8 | `recordLearningEvent` : validation, calcul sur l'état en mémoire, une transaction (événement, faits, session), idempotence, file interne, notifications, chargement, instantané gelé ; surface publique `index.js` ; C2 (test statique), C3 (rechargement et rejeu) ; 23 tests | — |
