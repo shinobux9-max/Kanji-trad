@@ -10,7 +10,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 
 ## Étape en cours
 
-**Étape 0 · Préparation** (partie 9, 9.9)
+**Étape 1 · Stockage et apprentissage », avec ses tâches à venir** (partie 9, 9.9)
 
 | Tâche | Contenu | État |
 |---|---|---|
