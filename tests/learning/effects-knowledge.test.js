@@ -53,17 +53,37 @@ const run = (events, initial) => replay(events, { deps, initial });
 
 // ── Délai de vérification ───────────────────────────────────────────────────
 
-test('délai de vérification : entre 21 et 45 jours, toujours le même pour un même élément (1.3)', () => {
+test('délai de vérification : entre 21 et 45 jours, réparti sans pic pour une déclaration (1.3)', () => {
   const ids = Array.from({ length: 2000 }, (_, i) => `n5_v_${i}`);
-  const delays = ids.map((id) => declarationDelayDays(id));
+  const delays = ids.map((id) => declarationDelayDays(id, day(0)));
   assert.ok(delays.every((d) => d >= 21 && d <= 45 && Number.isInteger(d)));
   assert.equal(new Set(delays).size, 25, 'toute la fenêtre est utilisée');
-  assert.deepEqual(ids.map((id) => declarationDelayDays(id)), delays);
   // Répartition : aucun jour ne reçoit plus du double de la moyenne (pas de pic).
   const counts = {};
   delays.forEach((d) => { counts[d] = (counts[d] || 0) + 1; });
   assert.ok(Math.max(...Object.values(counts)) < 2 * (2000 / 25));
-  assert.equal(declarationDelayDays('水', { declaredVerificationWindowDays: { min: 30, max: 30 } }), 30);
+  assert.equal(declarationDelayDays('水', day(0), { declaredVerificationWindowDays: { min: 30, max: 30 } }), 30);
+});
+
+test('délai de vérification : même élément et même déclaration → même délai, à chaque calcul (1.3)', () => {
+  const ids = Array.from({ length: 200 }, (_, i) => `n5_v_${i}`);
+  for (const at of [day(0), day(7), new Date(day(7))]) {
+    assert.deepEqual(ids.map((id) => declarationDelayDays(id, at)), ids.map((id) => declarationDelayDays(id, at)));
+  }
+  assert.equal(declarationDelayDays('水', day(7)), declarationDelayDays('水', new Date(day(7))));
+  // Même élément, même date de déclaration : même entrée SRS dans deux journaux distincts.
+  const a = run([declareElements([W1], 'dcl_a', day(3))]);
+  const b = run([declareElements([W1], 'dcl_b', day(3))]);
+  assert.deepEqual(a.elements['n5_v_1'], b.elements['n5_v_1']);
+});
+
+test('délai de vérification : la date de déclaration participe à la répartition (1.3)', () => {
+  // Deux dates peuvent donner le même délai (25 valeurs possibles) : on vérifie seulement que,
+  // sur de nombreuses dates, un même élément ne tombe pas toujours au même délai.
+  const delays = Array.from({ length: 60 }, (_, i) => declarationDelayDays('n5_v_1', day(i)));
+  assert.ok(new Set(delays).size > 1);
+  assert.ok(delays.every((d) => d >= 21 && d <= 45));
+  assert.throws(() => declarationDelayDays('n5_v_1', 'hier'), TypeError);
 });
 
 // ── KNOWLEDGE_DECLARED ──────────────────────────────────────────────────────
@@ -82,7 +102,7 @@ test('déclaration : Nouveau, Découvert et En cours → Acquis, origine declare
 
 test('entrée SRS de déclaration : délai, 3 répétitions, facilité 2,5, sans dernière révision (décision)', () => {
   const s = run([declareElements([W1], 'dcl_1', day(0))]);
-  const delay = declarationDelayDays('n5_v_1');
+  const delay = declarationDelayDays('n5_v_1', day(0));
   assert.deepEqual(s.elements['n5_v_1'].srs, {
     interval: delay, easeFactor: 2.5, repetitions: 3, lastReviewDate: null,
     // 10 h à Paris ; à partir du 25 octobre (heure d'hiver), 10 h = 09:00 UTC.
@@ -92,10 +112,12 @@ test('entrée SRS de déclaration : délai, 3 répétitions, facilité 2,5, sans
 });
 
 test('échéance de déclaration le jour du passage à l\'heure d\'hiver : même heure locale', () => {
-  // n5_v_12 tombe à 24 jours : le 25 octobre, 10 h à Paris = 09:00 UTC.
-  assert.equal(declarationDelayDays('n5_v_12'), 24);
-  const s = run([declareElements([{ type: 'vocab', id: 'n5_v_12' }], 'd', day(0))]);
-  assert.equal(s.elements['n5_v_12'].srs.nextReviewDate, '2026-10-25T09:00:00.000Z');
+  // Un élément dont le délai, pour une déclaration du 1er octobre, tombe le 25 octobre :
+  // 10 h à Paris = 09:00 UTC ce jour-là.
+  let id;
+  for (let i = 0; !id; i++) if (declarationDelayDays(`n5_v_${i}`, day(0)) === 24) id = `n5_v_${i}`;
+  const s = run([declareElements([{ type: 'vocab', id }], 'd', day(0))]);
+  assert.equal(s.elements[id].srs.nextReviewDate, '2026-10-25T09:00:00.000Z');
 });
 
 test('une déclaration ne fait jamais reculer : Acquis et Maîtrisé ne sont pas touchés (1.5)', () => {
@@ -164,7 +186,8 @@ test('première révision d\'un élément déclaré : aucun recul pour chaque d�
   const byDelay = new Map();
   for (let i = 0; byDelay.size < 25 && i < 10000; i++) {
     const id = `n5_v_${i}`;
-    if (!byDelay.has(declarationDelayDays(id))) byDelay.set(declarationDelayDays(id), id);
+    const delay = declarationDelayDays(id, day(0));
+    if (!byDelay.has(delay)) byDelay.set(delay, id);
   }
   assert.equal(byDelay.size, 25);
   for (const [delay, id] of byDelay) {

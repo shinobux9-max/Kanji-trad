@@ -174,18 +174,24 @@ function stableHash(text) {
 
 /**
  * Délai de la première vérification d'un élément déclaré : entre min et max jours (bornes
- * incluses), réparti selon l'empreinte de l'identifiant. Toujours le même pour un même
- * élément (partie 1, 1.3).
+ * incluses), réparti de façon déterministe à partir de la date de la déclaration et d'une
+ * empreinte stable de l'identifiant de l'élément (partie 1, 1.3). Un même élément tombe
+ * toujours au même délai pour une même déclaration.
+ *
+ * @param {string} elementId
+ * @param {string|Date} declaredAt  date de la déclaration (`at` de l'événement)
+ * @param {object} config
  */
-export function declarationDelayDays(elementId, config = GUIDED_CONFIG) {
+export function declarationDelayDays(elementId, declaredAt, config = GUIDED_CONFIG) {
   const { min, max } = config.declaredVerificationWindowDays;
-  return min + (stableHash(elementId) % (max - min + 1));
+  const key = `${toDate(declaredAt).toISOString()}|${elementId}`;
+  return min + (stableHash(key) % (max - min + 1));
 }
 
 // Faits d'un élément après une déclaration (décision du 2026-10-01) : intervalle = délai de
 // vérification, 3 répétitions, facilité initiale, aucune date de dernière révision.
 function declaredFacts(previous, id, at, origin, config) {
-  const delay = declarationDelayDays(id, config);
+  const delay = declarationDelayDays(id, at, config);
   return {
     ...previous,
     id,

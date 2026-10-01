@@ -52,7 +52,7 @@ bloque `npm test`).
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
   mémoire), `src/learning/` (`srs.js`, `state.js`, `weakness.js`, `events.js`,
   `effects.js`, `dates.js`), `tools/check-layers.mjs`, `tools/validate-data.mjs`, `tests/`
-  (183 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  (185 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -107,21 +107,18 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Charges utiles définies par le moteur (`plan`, `completedActivities`, `lastActivity`, `sourceActivity`) : présence vérifiée, contenu fixé à l'étape 4 | `src/learning/events.js` |
 | 2026-10-01 | L'origine technique « appris » est identifiée par `learned` ; les trois origines sont donc `learned`, `declared`, `tested`. `verified` reste un fait distinct de l'origine, posé seulement pour `declared` et `tested` | `src/learning/effects.js` |
 | 2026-10-01 | Entrée SRS d'une première évaluation : intervalle `firstCheckDelayDays` (1 jour), facilité initiale 2,5, 0 répétition, aucune date de dernière révision, échéance le lendemain à la même heure locale ; l'origine `learned` est posée en même temps (un élément Découvert n'a pas d'origine) | `src/learning/effects.js` |
-| 2026-10-01 | Délai de vérification d'une déclaration : 21 + (empreinte FNV-1a 32 bits de l'identifiant modulo 25) jours après la déclaration ; il ne dépend que de l'identifiant | `src/learning/effects.js` |
+| 2026-10-01 | Délai de vérification d'une déclaration : 21 + (empreinte FNV-1a 32 bits de « date de la déclaration \| identifiant de l'élément » modulo 25) jours après la déclaration, la date étant l'horodatage `at` de la déclaration ; même élément et même déclaration donnent toujours le même délai (partie 1, 1.3) | `src/learning/effects.js` |
 | 2026-10-01 | Déclaration par niveau : le contenu fournit les éléments d'un niveau (`elementsOfScope`, injectée) ; `learning` applique le cumul kana → N5 → N4 → … jusqu'au niveau choisi | `src/learning/effects.js` |
 | 2026-10-01 | Trace d'une déclaration (magasin `declarations`) : `{ id, at, origin, scope ou elements, previous, undoneAt }`, où `previous` contient les faits d'avant des seuls éléments modifiés (`null` s'ils n'en avaient pas) ; la trace est conservée après annulation | `src/learning/effects.js` |
 | 2026-10-01 | Annulation d'une déclaration : un élément n'est rétabli que s'il est encore exactement tel que la déclaration l'a laissé (cela couvre « vérifié depuis » et une déclaration plus récente) ; un élément sans faits avant la déclaration est retiré du magasin ; une déclaration déjà annulée est sans effet ; une déclaration inconnue ou un identifiant réutilisé est une erreur | `src/learning/effects.js` |
 | 2026-10-01 | Avancement : faits `startedAt` et `completedAt` (premières dates, jamais repoussées), statut calculé (`computeActivityStatus`) ; `ACTIVITY_SKIPPED` ne change pas l'avancement (le moteur le lit dans le journal) ; l'étape atteinte d'une mission en cours est enregistrée avec la session | `src/learning/effects.js`, `state.js` |
+| 2026-10-01 | `KNOWLEDGE_DECLARATION_UNDONE` constitue l'exception explicite à S6 et S7 : lorsqu'elle rétablit les faits antérieurs à une déclaration, elle peut supprimer ou modifier une entrée SRS et faire reculer l'état sans `REVIEW_GRADED` ni « Oublié ». Aucun autre événement ne bénéficie de cette exception (règle spécifique de 1.5 et 3.4, qui prime sur la formulation générale des critères) | `tests/learning/effects-knowledge.test.js` |
 | 2026-10-01 | `REVIEW_GRADED` sur un élément sans entrée SRS : la note est sa première évaluation (partie 1 : « question d'exercice ou note SRS »), donc `gradeReview` s'applique aussitôt à partir de l'entrée de départ de l'ancien code, alors que `QUESTION_ANSWERED` crée une entrée à J+1 sans la noter ; date d'introduction et origine `learned` posées si absentes | `src/learning/effects.js` |
 
 ---
 
 ## Points ouverts
 
-- **S6, S7 et l'annulation d'une déclaration** : l'annulation « rétablit l'état précédent »
-  (1.5, 3.4), donc un élément peut reculer (Acquis → Nouveau) et son intervalle changer hors
-  `REVIEW_GRADED`. S6 et S7 ne citent pas ce cas. Les tests le traitent comme une exception
-  prévue par la conception. À confirmer.
 - **C4 côté écran** : la tâche 6 garantit que `REVIEW_GRADED` porte à lui seul les effets
   d'une révision. Que l'écran de révision n'émette qu'un seul événement par carte se vérifiera
   avec l'interface (étape 5).
@@ -167,4 +164,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · 4 | Faiblesses progressives (échec, réussite, résolution après 3 réussites, réactivation), `computeWeaknessPriority` repris à l'identique (constantes dans `GUIDED_CONFIG.weaknessPriority`) ; lecture des dates commune (`dates.js`, `srs.js` patché) ; 17 tests | — |
 | 2026-10-01 | 1 · 5 | Format et validation des 12 types d'événements (`validateEvent`, existence des éléments injectée), invariant 3 de 3.10 (`REVIEW_GRADED` seulement en révision SRS), `createEventId` ; 15 tests | — |
 | 2026-10-01 | 1 · 6 | Effets purs de `CONTENT_INTRODUCED`, `QUESTION_ANSWERED` (exception du test de positionnement) et `REVIEW_GRADED` (vérification) ; rejeu de journaux aléatoires pour S6 et S7, C1, C4 côté traitement ; `addCalendarDays` dans `dates.js` (`srs.js` patché) ; 20 tests | — |
-| 2026-10-01 | 1 · 7 | Effets de `KNOWLEDGE_DECLARED` (délai déterministe, cumul des niveaux, trace), de son annulation et de l'avancement des activités ; S6 et S7 sur des journaux avec déclarations ; `computeActivityStatus` ; `effects.test.js` adapté ; 25 tests | — |
+| 2026-10-01 | 1 · 7 | Effets de `KNOWLEDGE_DECLARED` (délai déterministe, cumul des niveaux, trace), de son annulation et de l'avancement des activités ; S6 et S7 sur des journaux avec déclarations ; `computeActivityStatus` ; `effects.test.js` adapté ; délai dépendant de la date de déclaration et de l'identifiant (correctif de relecture) ; 27 tests | — |
