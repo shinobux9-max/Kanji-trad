@@ -11,7 +11,7 @@ devenir est décrit dans `docs/conception/` (verrouillé) ; comment travailler, 
 ## Étape en cours
 
 **Étape 1 · Stockage et apprentissage** (partie 9, 9.9) — découpage validé le 2026-10-01 ;
-tâches 1 et 2 faites, tâche 3 à faire.
+tâches 1 à 3 faites, tâche 4 à faire.
 
 Sous PowerShell, lancer les tests avec `npm.cmd test` (la stratégie d'exécution de Windows
 bloque `npm test`).
@@ -22,7 +22,7 @@ bloque `npm test`).
 |---|---|---|---|
 | 1 | Contrat de stockage et version en mémoire (`src/store/contract.js`, `src/store/memory.js`) : les 9 magasins de 9.2, transaction multi-magasins tout ou rien, panne déclenchable à la demande | suite de contrat réutilisable, atomicité | ✅ fait |
 | 2 | SRS repris (`src/learning/srs.js`) : `gradeReview` pur et `getDaysOverdue` seulement ; constantes dans `GUIDED_CONFIG.srsAlgorithm` | non-régression : chaque note à chaque répétition, intervalles 1, 3, 8, 20, 50, 125 avec « Bien » | ✅ fait |
-| 3 | État calculé (`src/learning/state.js`) : `new` → `mastered`, par les règles générales (seuils 21 / 60) | invariants 1.8 ; cohérence `declaredVerificationWindowDays.min ≥ acquiredIntervalDays` | à faire |
+| 3 | État calculé (`src/learning/state.js`) : `new` → `mastered`, par les règles générales (seuils 21 / 60) | invariants 1.8 ; cohérence `declaredVerificationWindowDays.min ≥ acquiredIntervalDays` | ✅ fait |
 | 4 | Faiblesses (`src/learning/weakness.js`) : échec, réussite, résolution après 3 réussites, réactivation, `computeWeaknessPriority` ; constantes dans `GUIDED_CONFIG.weaknessPriority` | tableau 3.5, priorité identique à l'ancien code | à faire |
 | 5 | Format et validation des événements (`src/learning/events.js`) : 12 types, contexte, références `{ type, id }`, identifiant | rejets et acceptations | à faire |
 | 6 | Effets, 1re partie (`src/learning/effects.js`) : `CONTENT_INTRODUCED` ; `QUESTION_ANSWERED` avec création de l'entrée SRS à J+1 et exception du test de positionnement ; `REVIEW_GRADED` avec vérification ; outil de rejeu pour les tests | S6, S7, C1, C4, synthèse 3.4 | à faire |
@@ -50,8 +50,8 @@ bloque `npm test`).
 ## Contenu de la branche
 
 - **Nouvelle base** : `src/config.js`, `src/store/` (contrat de stockage, version en
-  mémoire), `src/learning/srs.js`, `tools/check-layers.mjs`, `tools/validate-data.mjs`,
-  `tests/` (87 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
+  mémoire), `src/learning/` (`srs.js`, `state.js`), `tools/check-layers.mjs`,
+  `tools/validate-data.mjs`, `tests/` (106 tests), `docs/conception/`, `docs/rapports/`, `package.json` (modules ESM).
   Les autres dossiers de `src/` sont vides pour l'instant.
 - **Ancienne app** (`js/`, `css/`, `index.html`, `sw.js`…) : conservée **comme référence**
   pour reprendre la logique des modules listés dans la stratégie de reconstruction. Elle
@@ -99,15 +99,15 @@ modifier ses parties verrouillées.
 | 2026-10-01 | Choix techniques de `learning` : horloge prise dans `event.at`, existence des éléments vérifiée par une fonction injectée (le contenu arrive à l'étape 2), `src/learning/index.js` seule surface publique (test statique pour C2) | `src/learning/` |
 | 2026-10-01 | `computeQueuePriorityTier`, `prioritizeQueue` et `scheduleRelearning` reportés à l'étape 4 (moteur), avec un hasard injecté | — |
 | 2026-10-01 | IndexedDB sans dépendance de test : contrat testé sur la version en mémoire dans Node, adaptateur IndexedDB vérifié par une page manuelle (`tests/browser/`) | tâche 12 |
+| 2026-10-01 | `getDaysOverdue` reprend le comportement réel de l'ancien code : écart signé à l'échéance, négatif avant l'échéance, malgré l'ancien commentaire qui annonçait 0 | `src/learning/srs.js` |
 
 ---
 
 ## Points ouverts
 
-- **`getDaysOverdue`** (tâche 2) : l'ancien code renvoie une valeur négative avant
-  l'échéance, alors que son commentaire annonce 0. La reprise suit le code (comportement
-  réel, fixé par un test). À confirmer, ou à changer par décision complémentaire ; sans
-  effet aujourd'hui, le seul usage connu (étape 4) ne portant que sur des éléments dus.
+- **Identifiant de code de l'origine « appris »** : la conception fixe `declared` et `tested`
+  (partie 3), mais pas l'identifiant de `appris`. À trancher avant la tâche 6, qui l'écrit
+  à la première évaluation. Proposition : `learned`.
 - **Dossiers** : le magasin `folders` existe dans le schéma v1 ; son accès (par `learning`,
   jamais directement par l'interface) sera défini à l'étape 5.
 - **Champ de sens dans `QUESTION_ANSWERED`** : nom fixé par A2-01, ajouté ensuite ; rien
@@ -146,3 +146,4 @@ modifier ses parties verrouillées.
 | 2026-10-01 | 1 · — | Découpage de l'étape 1 en 13 tâches et arbitrages préalables validés | — |
 | 2026-10-01 | 1 · 1 | Contrat de stockage (9 magasins, transactions tout ou rien, `StorageError`), version en mémoire avec pannes à la demande, suite de contrat réutilisable ; 32 tests | — |
 | 2026-10-01 | 1 · 2 | `gradeReview` et `getDaysOverdue` repris en fonctions pures, constantes dans `GUIDED_CONFIG.srsAlgorithm` ; oracle de l'ancien calcul sur toutes les suites de 7 notes ; 13 tests | — |
+| 2026-10-01 | 1 · 3 | État calculé (`computeState`, `STATES`, `STATE_ORDER`) par l'intervalle seul ; vérification des invariants 2 et 3 (`checkElementFacts`) ; cohérence de la configuration (`tests/config.test.js`) ; 19 tests | — |
