@@ -2,7 +2,8 @@
 
 ## Partie 3 · Journal d'événements et état utilisateur
 
-**Statut** : 🔒 verrouillée (version 2). Les valeurs chiffrées sont des
+**Statut** : 🔒 verrouillée (version 2). Addendum A2 (`addendum-A2-liaison.md`) : `QUESTION_ANSWERED`
+peut porter un identifiant de sens facultatif, sans effet sur l'état, le SRS ni les faiblesses. Les valeurs chiffrées sont des
 paramètres de la v1 (3.11).
 
 **Objet** : définir comment Ocha enregistre ce que fait l'utilisateur, et comment ces

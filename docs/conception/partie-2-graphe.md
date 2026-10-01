@@ -3,7 +3,8 @@
 ## Partie 2 · Le graphe pédagogique (`requires` / `teaches`)
 
 **Statut** : 🔒 verrouillée (version 2), avec un addendum (2.10) qui n'en modifie aucune
-décision, et l'addendum A1 (champ `construction`, voir `addendum-A1-construction.md`). Les seuils chiffrés sont des paramètres de la v1 (voir 2.9).
+décision, et l'addendum A1 (champ `construction`, voir `addendum-A1-construction.md`).
+Addendum A2 (`addendum-A2-liaison.md`) : une référence `vocab` désigne toujours une ENTRY. Les seuils chiffrés sont des paramètres de la v1 (voir 2.9).
 
 **Objet** : définir comment les contenus d'Ocha sont reliés entre eux, pour que le moteur
 sache ce qu'une activité exige, ce qu'elle enseigne, et ce qu'elle fait seulement

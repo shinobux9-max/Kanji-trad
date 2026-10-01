@@ -2,7 +2,8 @@
 
 ## Partie 1 · Définitions fondamentales et échelle d'états
 
-**Statut** : 🔒 verrouillée (version 3). Suppression du favori ; migration simplifiée (Ocha n'a pas encore
+**Statut** : 🔒 verrouillée (version 3). Addendum A2 (`addendum-A2-liaison.md`) : un élément de
+type `vocab` est une ENTRY A2 ; ses SENSE ne sont pas des éléments. Suppression du favori ; migration simplifiée (Ocha n'a pas encore
 d'utilisateurs). Partie validée sur le fond ;
 les seuils chiffrés sont des valeurs initiales à observer (voir 1.2).
 

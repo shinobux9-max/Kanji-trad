@@ -20,6 +20,7 @@ référence : un comportement qui s'en écarte doit être signalé, jamais impro
 | 8 | `partie-8-sessions.md` | cinq sessions d'exemple, arbitrages, replay |
 | 9 | `partie-9-architecture.md` | couches, stockage IndexedDB, atomicité, pannes, tests, ordre de reconstruction |
 | A1 | `addendum-A1-construction.md` | champ `construction` (au lieu de `pattern`) pour les constructions générées |
+| A2 | `addendum-A2-liaison.md` | liaison avec l'architecture sémantique A2 : l'ENTRY est l'unité d'apprentissage, statut des tags |
 | — | `../../REGLES-CONSTRUCTION.md` | règles opérationnelles de la branche `ocha-v2` (à la racine du dépôt) |
 | — | `GUIDE-CONTENU.md`, `README.md` | rédaction du contenu et structure des fichiers de données |
 

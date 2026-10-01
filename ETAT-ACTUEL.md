@@ -63,6 +63,9 @@ modifier ses parties verrouillées.
 | 2026-09-30 | `particles.json` déplacé dans `data/n5/` ; `concepts`, `curriculum` et `mapping` restent en place jusqu'à l'étape 5, car l'ancienne app les charge | `data/` |
 | 2026-09-30 | Unicité des identifiants entre fichiers (par espace), préfixes obligatoires, `kanji_list` à un kanji par entrée | `tools/validate-data.mjs` |
 | 2026-10-01 | 結婚 et 練習 restent des noms (« mariage », « entraînement »), non transformés en verbes en する | data/n5/vocab.json |
+| 2026-10-01 | Addendum A2 : l'ENTRY est l'unique unité de progression du vocabulaire ; tags officiels, non sémantiques, plats et contrôlés | `docs/conception/addendum-A2-liaison.md` |
+
+
 ---
 
 ## Points ouverts
@@ -71,6 +74,8 @@ modifier ses parties verrouillées.
  - À l'étape 5 : déplacer `concepts/n5.json` vers `data/n5/concepts.json`, et `curriculum/n5.json` et `mapping.json` vers `data/legacy/`.
   - `data/n5/exemples.json` à reconstruire : 436 exemples par kanji sans hiragana, exemples de vocabulaire découpés par des espaces (voir docs/rapports/etape0-tache6.md). À traiter avec la migration A2.
   - Architecture lexicale A2 (snapshots du 2026-10-01) : à relier à la conception par un document de liaison, puis projets A2-01 à A2-05 dans l'étape 2. Décision prise : l'unité d'apprentissage v1 reste le mot (ENTRY).
+  - Architecture lexicale A2 : document de liaison validé (`docs/conception/addendum-A2-liaison.md`). Prochain chantier : A2-01, schéma concret ENTRY → SENSE (étape 2). La place des projets A2-06 à A2-09 reste à arbitrer.
+  
 ---
 
 ## Journal des tâches
